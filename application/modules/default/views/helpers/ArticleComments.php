@@ -9,7 +9,7 @@ public function  articleComments($article_id) {
 			->from("beer_articles_comments")
 			->joinLeft("users","users.user_id = beer_articles_comments.comment_brewer",array("user_id","user_name","user_email"))
 			->where("comment_article =?",$article_id)
-			->order("comment_date DESC");
+			->order("comment_date ASC");
 			$this->view->comments=$db->fetchAll($select);
 			$this->view->article_id=$article_id;
 			$out=$this->view->render("articlecomments.phtml");
