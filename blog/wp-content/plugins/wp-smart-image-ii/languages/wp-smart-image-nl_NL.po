@@ -1,0 +1,809 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Smart Image v0.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-27 11:22-0400\n"
+"PO-Revision-Date: 2010-05-01 16:41+0100\n"
+"Last-Translator: \n"
+"Language-Team: WordPress Plugin Guide <info@wppg.me>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_c\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SearchPath-0: wp-smart-image-ii\n"
+
+#: wp-smart-image-ii/wp-smart-image.php:142
+msgid "WP Smart Image II"
+msgstr "WP Smart Image II"
+
+#: wp-smart-image-ii/wp-smart-image.php:149
+msgid "Thumbnail size"
+msgstr "Formaat miniatuurafbeelding"
+
+#: wp-smart-image-ii/wp-smart-image.php:150
+msgid "Medium size"
+msgstr "Medium formaat"
+
+#: wp-smart-image-ii/wp-smart-image.php:151
+msgid "Large size"
+msgstr "Groot formaat"
+
+#: wp-smart-image-ii/wp-smart-image.php:152
+msgid "Full size"
+msgstr "Volledige grootte"
+
+#: wp-smart-image-ii/wp-smart-image.php:158
+msgid "Yes"
+msgstr "Ja"
+
+#: wp-smart-image-ii/wp-smart-image.php:162
+msgid "No"
+msgstr "Nee"
+
+#: wp-smart-image-ii/wp-smart-image.php:200
+#: wp-smart-image-ii/wp-smart-image.php:786
+msgid "Article image"
+msgstr "Afbeelding artikel"
+
+#: wp-smart-image-ii/wp-smart-image.php:201
+#: wp-smart-image-ii/wp-smart-image.php:787
+msgid "Go to article"
+msgstr "Ga naar artikel"
+
+#: wp-smart-image-ii/wp-smart-image.php:243
+#: wp-smart-image-ii/wp-smart-image.php:244
+msgid "Web developer"
+msgstr "Web developer"
+
+#: wp-smart-image-ii/wp-smart-image.php:243
+msgid "Dutch"
+msgstr "Nederlands"
+
+#: wp-smart-image-ii/wp-smart-image.php:244
+msgid "Russian"
+msgstr "Russisch"
+
+#: wp-smart-image-ii/wp-smart-image.php:245
+#: wp-smart-image-ii/wp-smart-image.php:246
+msgid "Web designer"
+msgstr "Web designer"
+
+#: wp-smart-image-ii/wp-smart-image.php:245
+msgid "Portuguese"
+msgstr "Portugees"
+
+#: wp-smart-image-ii/wp-smart-image.php:246
+msgid "Spanish"
+msgstr "Spaans"
+
+#: wp-smart-image-ii/wp-smart-image.php:255
+msgid "Lives in:"
+msgstr "Woont in:"
+
+#: wp-smart-image-ii/wp-smart-image.php:257
+msgid "Profession:"
+msgstr "Beroep:"
+
+#: wp-smart-image-ii/wp-smart-image.php:259
+msgid "Main Website:"
+msgstr "Website:"
+
+#: wp-smart-image-ii/wp-smart-image.php:261
+msgid "Language:"
+msgstr "Taal:"
+
+#: wp-smart-image-ii/wp-smart-image.php:320
+msgid "WP Smart Image II - Settings"
+msgstr "WP Smart Image II - Instellingen"
+
+#: wp-smart-image-ii/wp-smart-image.php:368
+msgid "General Settings"
+msgstr "Algemene instellingen"
+
+#: wp-smart-image-ii/wp-smart-image.php:369
+msgid "RSS"
+msgstr "RSS"
+
+#: wp-smart-image-ii/wp-smart-image.php:370
+msgid "Default images"
+msgstr "Standaard afbeeldingen"
+
+#: wp-smart-image-ii/wp-smart-image.php:371
+msgid "Data management"
+msgstr "Data management"
+
+#: wp-smart-image-ii/wp-smart-image.php:372
+msgid "Help"
+msgstr "Help"
+
+#: wp-smart-image-ii/wp-smart-image.php:391
+msgid "General settings"
+msgstr "Algemene instellingen"
+
+#: wp-smart-image-ii/wp-smart-image.php:405
+msgid "Configuration file"
+msgstr "Configuratie bestand"
+
+#: wp-smart-image-ii/wp-smart-image.php:407
+msgid "Location:"
+msgstr "Locatie:"
+
+#: wp-smart-image-ii/wp-smart-image.php:408
+#: wp-smart-image-ii/wp-smart-image.php:414
+#: wp-smart-image-ii/wp-smart-image.php:422
+msgid "Create a new file"
+msgstr "Creëer een nieuw bestand"
+
+#: wp-smart-image-ii/wp-smart-image.php:415
+msgid "Sure you want to reset the configuration file to default values?"
+msgstr "Ben je er zeker van dat je het configuratiebestand wilt terugzetten naar standaard waarden ?"
+
+#: wp-smart-image-ii/wp-smart-image.php:415
+#: wp-smart-image-ii/wp-smart-image.php:424
+msgid "Restore default data"
+msgstr "Herstel standaard data"
+
+#: wp-smart-image-ii/wp-smart-image.php:416
+#: wp-smart-image-ii/wp-smart-image.php:426
+msgid "View/Edit directly"
+msgstr "Bekijk/Edit rechtstreeks"
+
+#: wp-smart-image-ii/wp-smart-image.php:422
+msgid "The configuration file is already created"
+msgstr "Het configuratiebestand is al gemaakt"
+
+#: wp-smart-image-ii/wp-smart-image.php:424
+msgid "The configuration file does not exists. You must to create it first."
+msgstr "De configuratiebestand bestaat niet. Je moet het eerst aanmaken."
+
+#: wp-smart-image-ii/wp-smart-image.php:426
+msgid "The configuration file does not exists. You must create it first."
+msgstr "De configuratiebestand bestaat niet. Je moet het eerst aanmaken."
+
+#: wp-smart-image-ii/wp-smart-image.php:441
+msgid "Method for managing images from the editor"
+msgstr "Methode voor het beheren van afbeeldingen van de editor"
+
+#: wp-smart-image-ii/wp-smart-image.php:446
+msgid "None"
+msgstr "Geen"
+
+#: wp-smart-image-ii/wp-smart-image.php:455
+msgid "Warning:"
+msgstr "Waarschuwing:"
+
+#: wp-smart-image-ii/wp-smart-image.php:455
+msgid "Your current Wordpress version isn't prepared for <strong>The Post Thumbnail</strong> feature. Upgrade your system (carefully recommended for many reasons) or use the available options."
+msgstr "Je huidige Wordpress versie is niet voorbereid op de <strong>Post Thumbnail</ strong> functie. Upgrade je systeem (voorzichtig wegens vele redenen) of maak gebruik van de beschikbare opties."
+
+#: wp-smart-image-ii/wp-smart-image.php:458
+msgid "Take a few minutes to proove each of these three options and choose your favorite one. All of them are equally stable and recommended."
+msgstr "Neem een paar minuten om elk van deze drie opties te testen en je favoriet te kiezen. Ze zijn allen even stabiel en aanbevolen."
+
+#: wp-smart-image-ii/wp-smart-image.php:458
+msgid "None:"
+msgstr "Geen:"
+
+#: wp-smart-image-ii/wp-smart-image.php:458
+msgid "Use your Media Library tab to choose the posted image. This option is the one which don't generates new fields in your _postmeta table."
+msgstr "Gebruik je Mediabibliotheek tabblad om de geplaatste afbeelding te kiezen. Deze optie genereert geen nieuwe velden in je _postmeta tabel."
+
+#: wp-smart-image-ii/wp-smart-image.php:458
+msgid "The Post Thumbnail method:"
+msgstr "De Post Thumbnail methode:"
+
+#: wp-smart-image-ii/wp-smart-image.php:458
+msgid "Manage your images through this comfortable native Wordpress interface (available from WP 2.9 and above)."
+msgstr "Beheer je foto's door middel van deze comfortabele Wordpress interface (beschikbaar vanaf WP 2.9)."
+
+#: wp-smart-image-ii/wp-smart-image.php:458
+msgid "WP Smart Image II method:"
+msgstr "WP Smart Image II methode:"
+
+#: wp-smart-image-ii/wp-smart-image.php:458
+msgid "A comprehensive tool set which gives multiple options for image management."
+msgstr "Een uitgebreide gereedschapsset met meerdere opties voor het beheer van afbeeldingen."
+
+#: wp-smart-image-ii/wp-smart-image.php:460
+msgid "Document Type Declaration of this website (DTD)"
+msgstr "Document Type Declaration van deze website (DTD)"
+
+#: wp-smart-image-ii/wp-smart-image.php:465
+msgid "XHTML"
+msgstr "XHTML"
+
+#: wp-smart-image-ii/wp-smart-image.php:466
+msgid "HTML"
+msgstr "HTML"
+
+#: wp-smart-image-ii/wp-smart-image.php:471
+msgid "You must to set the correct DTD of this site to point tags to right W3C validation. If you need more info about this topic, visit this"
+msgstr "Je moet de juiste DTD van deze website instellen zodat tags wijzen naar de correcte W3C-validatie. Indien je meer informatie over dit onderwerp nodig hebt lees dit"
+
+#: wp-smart-image-ii/wp-smart-image.php:471
+msgid "en.wikipedia.org/wiki/Document_Type_Declaration"
+msgstr "en.wikipedia.org/wiki/Document_Type_Declaration"
+
+#: wp-smart-image-ii/wp-smart-image.php:471
+msgid "comprehensive Wikipedia article"
+msgstr "omvangrijk Wikipedia artikel (Engelstalig)"
+
+#: wp-smart-image-ii/wp-smart-image.php:471
+msgid "or"
+msgstr "of"
+
+#: wp-smart-image-ii/wp-smart-image.php:471
+msgid "<a href=\"http://wordpress.org/support/\" target=\"_blank\">ask in the Wordpress Forum.</a>"
+msgstr "<a href=\"http://wordpress.org/support/\" target=\"_blank\">stel een vraag in het Wordpress Forum (Engelstalig)</a>"
+
+#: wp-smart-image-ii/wp-smart-image.php:472
+#: wp-smart-image-ii/wp-smart-image.php:557
+#: wp-smart-image-ii/wp-smart-image.php:616
+msgid "Update options &raquo;"
+msgstr "Update opties &raquo;"
+
+#: wp-smart-image-ii/wp-smart-image.php:487
+msgid "Feed Settings"
+msgstr "Feed Instellingen"
+
+#: wp-smart-image-ii/wp-smart-image.php:489
+msgid "Enable images for the following RSS systems"
+msgstr "Schakel afbeeldingen in voor de volgende RSS systemen"
+
+#: wp-smart-image-ii/wp-smart-image.php:504
+msgid "Here you can apply the WP Smart Image function for one or several RSS environments."
+msgstr "Hier kun je de WP Smart Image functie toepassen voor een of meerdere RSS omgevingen."
+
+#: wp-smart-image-ii/wp-smart-image.php:505
+msgid "Select image size"
+msgstr "Selecteer formaat van de afbeelding"
+
+#: wp-smart-image-ii/wp-smart-image.php:521
+msgid "Width:"
+msgstr "Breedte:"
+
+#: wp-smart-image-ii/wp-smart-image.php:523
+msgid "Height:"
+msgstr "Hoogte:"
+
+#: wp-smart-image-ii/wp-smart-image.php:528
+msgid "Setting #"
+msgstr "Instelling #"
+
+#: wp-smart-image-ii/wp-smart-image.php:538
+msgid "Native WP sizes:"
+msgstr "Standaard WP afmetingen:"
+
+#: wp-smart-image-ii/wp-smart-image.php:540
+#: wp-smart-image-ii/wp-smart-image.php:586
+msgid "Thumbnail"
+msgstr "Miniatuurafbeelding"
+
+#: wp-smart-image-ii/wp-smart-image.php:541
+#: wp-smart-image-ii/wp-smart-image.php:590
+msgid "Medium"
+msgstr "Medium"
+
+#: wp-smart-image-ii/wp-smart-image.php:542
+#: wp-smart-image-ii/wp-smart-image.php:594
+msgid "Large"
+msgstr "Groot"
+
+#: wp-smart-image-ii/wp-smart-image.php:543
+#: wp-smart-image-ii/wp-smart-image.php:598
+msgid "Full"
+msgstr "Volledig"
+
+#: wp-smart-image-ii/wp-smart-image.php:547
+msgid "Custom sizes:"
+msgstr "Aangepaste formaten:"
+
+#: wp-smart-image-ii/wp-smart-image.php:556
+msgid "Choose the image size for the feeds. Max Image Size Control custom settings will be detected"
+msgstr "Kies de afbeeldingsgrootte voor de feeds. Aangepaste instellingen voor Maximale Afbeeldingsgrootte Controle worden gedetecteerd"
+
+#: wp-smart-image-ii/wp-smart-image.php:572
+msgid "Default image settings"
+msgstr "Standaard afbeelding instellingen"
+
+#: wp-smart-image-ii/wp-smart-image.php:575
+msgid "Enable Default Images"
+msgstr "Activeer Standaard Afbeeldingen"
+
+#: wp-smart-image-ii/wp-smart-image.php:578
+msgid "If checked, imageless posts will show, by default, the images you have been set below."
+msgstr "Indien aangevinkt zullen er berichten zonder afbeelding getoond worden, standaard de afbeeldingen die je hieronder ingesteld hebt."
+
+#: wp-smart-image-ii/wp-smart-image.php:579
+msgid "Default image path"
+msgstr "Standaard pad voor afbeeldingen"
+
+#: wp-smart-image-ii/wp-smart-image.php:581
+msgid "Change this path if you like to custom image folder location."
+msgstr "Verander dit pad wanneer je een aangepaste locatie voor de afbeeldingsfolder wilt gebruiken."
+
+#: wp-smart-image-ii/wp-smart-image.php:582
+msgid "Assigned images"
+msgstr "Toegewezen afbeeldingen"
+
+#: wp-smart-image-ii/wp-smart-image.php:603
+msgid "Place the image filenames for each size."
+msgstr "Plaats de afbeelding bestandsnamen voor elke maat."
+
+#: wp-smart-image-ii/wp-smart-image.php:604
+msgid "Default Alt &amp; Title settings"
+msgstr "Standaard Alt &amp; Titel instellingen"
+
+#: wp-smart-image-ii/wp-smart-image.php:605
+msgid "Default ALT string:"
+msgstr "Standaard ALT tekenreeks:"
+
+#: wp-smart-image-ii/wp-smart-image.php:608
+#: wp-smart-image-ii/wp-smart-image.php:613
+msgid "Use post title as"
+msgstr "Gebruik de berichttitel als"
+
+#: wp-smart-image-ii/wp-smart-image.php:610
+msgid "Default TITLE string:"
+msgstr "Standaard TITLE (titel) tekenreeks:"
+
+#: wp-smart-image-ii/wp-smart-image.php:615
+msgid "Enter some text to define both <code>ALT</code> and <code>TITLE</code> attribute for default images. Checkboxes activation will overrides the text field data."
+msgstr "Voer wat tekst in om zowel het <code>ALT</ code> als <code>TITEL</ code> attribuut te definiëren voor standaard afbeeldingen. Activering van de selectievakjes overschrijft tekstveld gegevens."
+
+#: wp-smart-image-ii/wp-smart-image.php:633
+msgid "Restoring / Destroying data"
+msgstr "Herstel / Vernietigen van gegevens"
+
+#: wp-smart-image-ii/wp-smart-image.php:635
+msgid "Warning!"
+msgstr "Waarschuwing!"
+
+#: wp-smart-image-ii/wp-smart-image.php:635
+msgid "If you click the wrong button, you will loose all you have been set manually"
+msgstr "Wanneer je op de verkeerde knop klikt kun je alle instellingen verliezen welke manueel ingesteld zijn"
+
+#: wp-smart-image-ii/wp-smart-image.php:637
+msgid "Remove plugin database info"
+msgstr "Verwijder database informatie van de plugin"
+
+#: wp-smart-image-ii/wp-smart-image.php:637
+msgid "Sure you want remove plugin database entry?"
+msgstr "Ben je er zeker van dat je de database instellingen van de plugin wilt verwijderen?"
+
+#: wp-smart-image-ii/wp-smart-image.php:637
+#: wp-smart-image-ii/wp-smart-image.php:641
+msgid "Remove data"
+msgstr "Verwijder data"
+
+#: wp-smart-image-ii/wp-smart-image.php:638
+#: wp-smart-image-ii/wp-smart-image.php:642
+msgid "Populate/Restore plugin database info"
+msgstr "Vullen / Herstellen van plugin database gegevens"
+
+#: wp-smart-image-ii/wp-smart-image.php:638
+msgid "Sure you want populate plugin database entry with default data?"
+msgstr "Ben je er zeker van dat je de plugin item database wilt vullen met standaard gegevens?"
+
+#: wp-smart-image-ii/wp-smart-image.php:638
+msgid "Populate/Restore data"
+msgstr "Vullen / Herstellen van gegevens"
+
+#: wp-smart-image-ii/wp-smart-image.php:639
+#: wp-smart-image-ii/wp-smart-image.php:643
+msgid "Delete post_meta info"
+msgstr "Verwijder post_meta info"
+
+#: wp-smart-image-ii/wp-smart-image.php:639
+msgid "Sure you want delete post_meta info? This will delete all configurations you have been set through editor! Better think twice buddy!"
+msgstr "Ben je er zeker van dat je de post_meta informatie wilt verwijderen ? Hiermee verwijder je alle configuraties die zijn vastgesteld met de editor!"
+
+#: wp-smart-image-ii/wp-smart-image.php:641
+msgid "Use it to remove the <code>wpsi_configuracion</code> field from the <code>_options</code> table of your DB. All default settings will be deleted."
+msgstr "Gebruik het om het <code>wpsi_configuracion</code> veld te verwijderen van de <code>_options</code> tabel van je database. Alle standaard instellingen zullen worden verwijderd"
+
+#: wp-smart-image-ii/wp-smart-image.php:642
+msgid "This button loads some default data to your DB. Use it as start guide to place your own data. Take in mind that this action will overwrite any previous configuration."
+msgstr "Deze knop laadt een aantal standaard gegevens naar je database. Gebruik het als een handleiding om je eigen gegevens te plaatsen. Wees ervan bewust dat deze actie elke vorige configuratie zal overschrijven."
+
+#: wp-smart-image-ii/wp-smart-image.php:643
+msgid "Be careful with this button, because if you press it, all your WP Smart Image <code>postmeta</code> fields will be deleted. Postmeta fields are all the custom setting generated from your editor box, as post image shown."
+msgstr "Wees voorzichtig met deze knop, wanneer je er op drukt worden alle WP Smart Image <code>postmeta</code> velden verwijderd. Postmeta velden zijn alle aangepaste instellingen gegenereerd vanuit je editor, zoals de bericht afbeelding laat zien"
+
+#: wp-smart-image-ii/wp-smart-image.php:650
+msgid "WP Smart Image"
+msgstr "WP Smart Image"
+
+#: wp-smart-image-ii/wp-smart-image.php:650
+msgid "Essential resource for web designers"
+msgstr "Essentiële informatiebron voor webdesigners"
+
+#: wp-smart-image-ii/wp-smart-image.php:652
+msgid "Get support!"
+msgstr "Verkrijg support!"
+
+#: wp-smart-image-ii/wp-smart-image.php:654
+msgid "WP Smart Image II - Main support site"
+msgstr "WP Smart Image II - Algemene support website"
+
+#: wp-smart-image-ii/wp-smart-image.php:655
+msgid "A growing plugin codex."
+msgstr "Een groeiende plugin codex."
+
+#: wp-smart-image-ii/wp-smart-image.php:656
+msgid "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Parameters_Table"
+msgstr "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Parameters_Table"
+
+#: wp-smart-image-ii/wp-smart-image.php:656
+msgid "Parameters table"
+msgstr "Parameters tabel"
+
+#: wp-smart-image-ii/wp-smart-image.php:657
+msgid "A complete index of parameters, well detailed and explained."
+msgstr "Een complete index van parameters, zeer gedetailleerd en goed beschreven."
+
+#: wp-smart-image-ii/wp-smart-image.php:658
+msgid "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Examples,_tricks_and_hacks"
+msgstr "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Examples,_tricks_and_hacks"
+
+#: wp-smart-image-ii/wp-smart-image.php:658
+msgid "Examples, tricks and hacks"
+msgstr "Voorbeelden, trucs en hacks"
+
+#: wp-smart-image-ii/wp-smart-image.php:659
+msgid "Discover more than one way to exploit all power from WP Smart Image II."
+msgstr "Ontdek meerdere manieren om de volledige kracht van WP Smart Image II te benutten."
+
+#: wp-smart-image-ii/wp-smart-image.php:660
+msgid "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Working_on_PHP_Mode"
+msgstr "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Working_on_PHP_Mode"
+
+#: wp-smart-image-ii/wp-smart-image.php:660
+msgid "Working on PHP Mode:"
+msgstr "Werkzaam in PHP Modus:"
+
+#: wp-smart-image-ii/wp-smart-image.php:661
+msgid "All you need to know to activate the PHP Mode on WP Smart Image II."
+msgstr "Alles wat je moet weten om de PHP Modus te activeren voor WP Smart Image II."
+
+#: wp-smart-image-ii/wp-smart-image.php:662
+msgid "Direct support"
+msgstr "Rechtstreekse hulpverlening"
+
+#: wp-smart-image-ii/wp-smart-image.php:663
+msgid "Get help from the Forum Board."
+msgstr "Verkrijg help via het forum."
+
+#: wp-smart-image-ii/wp-smart-image.php:665
+msgid "WP Smart Image II Trac"
+msgstr "WP Smart Image II Trac"
+
+#: wp-smart-image-ii/wp-smart-image.php:666
+msgid "Here you can report bugs and request new features."
+msgstr "Hier kun je fouten rapporteren en nieuwe opties aanvragen."
+
+#: wp-smart-image-ii/wp-smart-image.php:668
+msgid "WP Smart Image II has been translated in your language by:"
+msgstr "WP Image Smart II is vertaald in je taal door:"
+
+#: wp-smart-image-ii/wp-smart-image.php:757
+msgid "The field &#39;wpsi_configuracion&#39; are removed from database."
+msgstr "Het veld &#39;wpsi_configuracion&#39; is verwijderd uit de database"
+
+#: wp-smart-image-ii/wp-smart-image.php:760
+msgid "All default settings are loaded."
+msgstr "Alle standaard instellingen zijn geladen."
+
+#: wp-smart-image-ii/wp-smart-image.php:763
+msgid "All WP Smart Image II &#39;_postmeta&#39; fields has been removed from the database."
+msgstr "Alle WP Smart Image &#39;_postmeta&#39; velden zijn verwijderd uit de database."
+
+#: wp-smart-image-ii/wp-smart-image.php:766
+msgid "All settings were saved."
+msgstr "Alle instellingen zijn opgeslagen."
+
+#: wp-smart-image-ii/wp-smart-image.php:769
+msgid "Now WPSI is running under PHP Mode. Check your settings."
+msgstr "WPSI draait nu onder PHP Mode. Controleer je instellingen."
+
+#: wp-smart-image-ii/wp-smart-image.php:772
+msgid "Normal Mode activated. Check your settings."
+msgstr "Normale Modus geactiveerd. Controleer je instellingen."
+
+#: wp-smart-image-ii/wp-smart-image.php:775
+msgid "(Wait...)"
+msgstr "(Wachten...)"
+
+#: wp-smart-image-ii/wp-smart-image.php:926
+msgid "Title"
+msgstr "Titel"
+
+#: wp-smart-image-ii/wp-smart-image.php:929
+msgid "Edit"
+msgstr "Bewerken"
+
+#: wp-smart-image-ii/wp-smart-image.php:937
+#: wp-smart-image-ii/wp-smart-image.php:970
+#: wp-smart-image-ii/wp-smart-image.php:1044
+msgid "View original in new window"
+msgstr "Bekijk het origineel in een nieuw venster"
+
+#: wp-smart-image-ii/wp-smart-image.php:940
+#: wp-smart-image-ii/wp-smart-image.php:973
+#: wp-smart-image-ii/wp-smart-image.php:990
+#: wp-smart-image-ii/wp-smart-image.php:1047
+#: wp-smart-image-ii/wp-smart-image.php:1074
+#: wp-smart-image-ii/wp-smart-image.php:1093
+msgid "Image ID"
+msgstr "Afbeelding ID"
+
+#: wp-smart-image-ii/wp-smart-image.php:941
+#: wp-smart-image-ii/wp-smart-image.php:980
+#: wp-smart-image-ii/wp-smart-image.php:1056
+msgid "Type"
+msgstr "Type"
+
+#: wp-smart-image-ii/wp-smart-image.php:942
+#: wp-smart-image-ii/wp-smart-image.php:981
+#: wp-smart-image-ii/wp-smart-image.php:1057
+msgid "W:"
+msgstr "B:"
+
+#: wp-smart-image-ii/wp-smart-image.php:942
+#: wp-smart-image-ii/wp-smart-image.php:981
+#: wp-smart-image-ii/wp-smart-image.php:1057
+msgid "H:"
+msgstr "H:"
+
+#: wp-smart-image-ii/wp-smart-image.php:949
+msgid "Random images"
+msgstr "Willekeurige afbeeldingen"
+
+#: wp-smart-image-ii/wp-smart-image.php:956
+msgid "If checked, the images will shown randomly. Very useful in some cases, as dynamic headers, backgrounds or widgets"
+msgstr "Indien aangevinkt zullen de afbeeldingen willekeurig getoond worden. Zeer nuttig in sommige gevallen, zoals dynamische headers, achtergronden of widgets"
+
+#: wp-smart-image-ii/wp-smart-image.php:960
+msgid "Load image from Media Library"
+msgstr "Laad afbeelding uit de Media Bibliotheek"
+
+#: wp-smart-image-ii/wp-smart-image.php:974
+#: wp-smart-image-ii/wp-smart-image.php:1050
+msgid "Attached to post"
+msgstr "Bijgevoegd aan het bericht"
+
+#: wp-smart-image-ii/wp-smart-image.php:989
+#: wp-smart-image-ii/wp-smart-image.php:1073
+msgid "Error"
+msgstr "Fout"
+
+#: wp-smart-image-ii/wp-smart-image.php:989
+msgid "Thid ID is not assigned to any image. Try again"
+msgstr "Deze ID is niet toegewezen aan een afbeelding. Probeer het opnieuw"
+
+#: wp-smart-image-ii/wp-smart-image.php:999
+#: wp-smart-image-ii/wp-smart-image.php:1063
+#: wp-smart-image-ii/wp-smart-image.php:1081
+msgid "Always you can choose and publish any image stored on your "
+msgstr "Je kunt altijd elke afbeelding kiezen en publiceren welke is opgeslagen in je "
+
+#: wp-smart-image-ii/wp-smart-image.php:999
+#: wp-smart-image-ii/wp-smart-image.php:1006
+#: wp-smart-image-ii/wp-smart-image.php:1063
+#: wp-smart-image-ii/wp-smart-image.php:1081
+#: wp-smart-image-ii/wp-smart-image.php:1092
+msgid "Media Library"
+msgstr "Media Bibliotheek"
+
+#: wp-smart-image-ii/wp-smart-image.php:1006
+msgid "Visit your"
+msgstr "Bezoek je"
+
+#: wp-smart-image-ii/wp-smart-image.php:1006
+msgid "find the image ID and enter it in the field below:"
+msgstr "vind de afbeelding ID en voer deze in het veld hieronder in:"
+
+#: wp-smart-image-ii/wp-smart-image.php:1023
+msgid "Save this post to gain access to WP Smart Image functions"
+msgstr "Bewaar dit bericht om toegang te verkrijgen tot de WP Smart Image functies"
+
+#: wp-smart-image-ii/wp-smart-image.php:1029
+msgid "Upload an image for this entry"
+msgstr "Upload een afbeelding voor dit item"
+
+#: wp-smart-image-ii/wp-smart-image.php:1033
+msgid "You have not uploaded an image yet"
+msgstr "Je hebt nog geen afbeelding geupload."
+
+#: wp-smart-image-ii/wp-smart-image.php:1033
+msgid "Do you want to upload one now"
+msgstr "Wil je er nu een uploaden"
+
+#: wp-smart-image-ii/wp-smart-image.php:1033
+msgid "Thumbnail will show here next time you refresh this screen"
+msgstr "Miniatuurafbeelding zal worden weergegeven de volgende keer dat je dit scherm te vernieuwd"
+
+#: wp-smart-image-ii/wp-smart-image.php:1040
+#: wp-smart-image-ii/wp-smart-image.php:1069
+msgid "External image uploaded"
+msgstr "Externe afbeelding geupload"
+
+#: wp-smart-image-ii/wp-smart-image.php:1058
+msgid "These modifications are globals"
+msgstr "Deze wijzigingen zijn globals"
+
+#: wp-smart-image-ii/wp-smart-image.php:1058
+msgid "Edit image"
+msgstr "Bewerk afbeelding"
+
+#: wp-smart-image-ii/wp-smart-image.php:1073
+msgid "This ID is not assigned to any image. Try again"
+msgstr "Deze ID is niet toegewezen aan een afbeelding. Probeer opnieuw"
+
+#: wp-smart-image-ii/wp-smart-image.php:1088
+msgid "... Or load it from Media Library"
+msgstr "... Of laad het van de Media Bibliotheek"
+
+#: wp-smart-image-ii/wp-smart-image.php:1092
+msgid "First, visit your"
+msgstr "Allereerst, bezoek je "
+
+#: wp-smart-image-ii/wp-smart-image.php:1092
+msgid "grab the image ID and enter it in the field below:"
+msgstr "pak de afbeelding ID  en voer deze in het veld hieronder in:"
+
+#: wp-smart-image-ii/wp-smart-image.php:1123
+#: wp-smart-image-ii/wp-smart-image.php:1124
+msgid "Image to show"
+msgstr "Te weergeven afbeelding"
+
+#: wp-smart-image-ii/wp-smart-image.php:1474
+msgid "N/A"
+msgstr "N.B."
+
+#~ msgid "PHP mode enabled"
+#~ msgstr "PHP modus ingeschakeld"
+
+#~ msgid "Where is my config file?"
+#~ msgstr "Waar is mijn configuratiebestand?"
+
+#~ msgid "Your config file is here"
+#~ msgstr "Je configuratiebestand is hier"
+
+#~ msgid "You can edit this file"
+#~ msgstr "Je kan dit bestand bewerken"
+
+#~ msgid "directly from Wordpress interface"
+#~ msgstr "direkt van de WordPress interface"
+
+#~ msgid "or through you favorite text editor"
+#~ msgstr "of met je favoriete tekstbewerkingsprogramma"
+
+#~ msgid "Notice"
+#~ msgstr "Opmerking"
+
+#~ msgid ""
+#~ "Remember backup this file before updating the plugin. So you can preserve "
+#~ "your settings"
+#~ msgstr ""
+#~ "Vergeet niet een backup van dit bestand te maken voordat je de plugin "
+#~ "update, zodat je de huidige instellingen behoudt"
+
+#~ msgid "Activate editor box"
+#~ msgstr "Activeer editorscherm"
+
+#~ msgid "Activate compatibility with"
+#~ msgstr "Activeer de compatibiliteit met"
+
+#~ msgid "Max Image Size Control plugin"
+#~ msgstr "Maximale Afbeeldingsgrootte van de Controle plugin"
+
+#~ msgid "Website DTD"
+#~ msgstr "Website DTD"
+
+#~ msgid "Enable images for feeds"
+#~ msgstr "Activeer afbeeldingen voor feeds"
+
+#~ msgid "Enabled feed engines"
+#~ msgstr "Feed motoren ingeschakeld"
+
+#~ msgid "must be active before set this section"
+#~ msgstr "moet actief zijn vóór het instellen van deze sectie"
+
+#~ msgid "Image size for feeds"
+#~ msgstr "Grootte afbeeldingen voor feeds"
+
+#~ msgid "Default image for thumbnail size"
+#~ msgstr "Standaard afbeelding voor het formaat van de miniatuurafbeelding"
+
+#~ msgid "Default image for medium size"
+#~ msgstr "Standaard afbeelding voor medium formaat"
+
+#~ msgid "Default image for large size"
+#~ msgstr "Standaard afbeelding voor groot formaat"
+
+#~ msgid "Default image for full size"
+#~ msgstr "Standaard afbeelding voor volledig formaat"
+
+#~ msgid "Default ALT string"
+#~ msgstr "Standaard ALT tekenreeks"
+
+#~ msgid "Default TITLE string"
+#~ msgstr "Standaard TITLE tekenreeks"
+
+#~ msgid "Default image options"
+#~ msgstr "Standaard afbeelding opties"
+
+#~ msgid ""
+#~ "If checked, you don't need to sort images from menu anymore. You will can "
+#~ "choose directly the image you wish from post editor through a sidebox. "
+#~ "One little field per post will added in your DB _postmeta table. The "
+#~ "activation of this function will not modifies any configuration you have "
+#~ "been set before"
+#~ msgstr ""
+#~ "Wanneer deze optie geselecteerd is hoeft u geen afbeeldingen meer te "
+#~ "sorteren vanaf het menu. U kunt direct kiezen voor de gewenste afbeelding "
+#~ "uit de berichten editor via een sidebox. Een klein veld zal per bericht "
+#~ "toegevoegd worden aan uw database _postmeta tabel. De activering van deze "
+#~ "functie zal niet de configuratie wijzigen die u ingesteld had"
+
+#~ msgid ""
+#~ "adds the functionality to change the max image size each category and "
+#~ "post. Even you can create extra sizes. Now you can integrate the power of "
+#~ "both plugins"
+#~ msgstr ""
+#~ "voegt de functionaliteit toe om de max. beeldgrootte voor elke categorie "
+#~ "en bericht te veranderen, en je kunt zelfs extra afmetingen creeëren. Nu "
+#~ "kun je de kracht van beide plugins integreren"
+
+#~ msgid "Show thumbnails in RSS feed"
+#~ msgstr "Laat miniatuurafbeeldingen zien in RSS feed"
+
+#~ msgid ""
+#~ "Check this box if you want to show thumbnails in your feeds. Otherwise "
+#~ "leave it blank"
+#~ msgstr ""
+#~ "Vink deze selectiebox alleen aan wanneer je miniatuurafbeeldingen wilt "
+#~ "laten zien in je feeds."
+
+#~ msgid "Choose the image size for the feeds"
+#~ msgstr "Selecteer het afbeeldingsformaat voor de feeds"
+
+#~ msgid ""
+#~ "Set thumbnail filename to show in case it not exists one on your post."
+#~ msgstr ""
+#~ "Stel de bestandsnaam in van de miniatuurafbeelding in geval dat dit nog "
+#~ "niet gedaan is bij je bericht."
+
+#~ msgid ""
+#~ "Set medium size filename to show in case it not exists one on your post."
+#~ msgstr ""
+#~ "Stel de bestandsnaam in van de afbeelding in medium formaat in geval dat "
+#~ "dit nog niet gedaan is bij je bericht."
+
+#~ msgid ""
+#~ "Set large size filename to show in case it not exists one on your post."
+#~ msgstr ""
+#~ "Stel de bestandsnaam in van de afbeelding in groot formaat in geval dat "
+#~ "dit nog niet gedaan is bij je bericht."
+
+#~ msgid ""
+#~ "Set full size filename to show in case it not exists one on your post."
+#~ msgstr ""
+#~ "Stel de bestandsnaam in van de afbeelding in volledig formaat in geval "
+#~ "dat dit nog niet gedaan is bij je bericht."
+
+#~ msgid "Enter some text to define ALT attribute for default images."
+#~ msgstr ""
+#~ "Voer enige tekst in om het ALT attribuut te definieeren voor standaard "
+#~ "afbeeldingen"
+
+#~ msgid "Enter some text to define TITLE attribute for default images."
+#~ msgstr ""
+#~ "Voer enige tekst in om het TITLE attribuut te definieeren voor standaard "
+#~ "afbeeldingen"

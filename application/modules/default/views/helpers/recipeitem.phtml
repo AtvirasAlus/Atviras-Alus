@@ -1,0 +1,17 @@
+
+
+<table><tr><td><div style="height:138px;width:73px;background-color:<?=$this->hex;?>"><img src="/public/images/glass_s.png" /></div>
+</td><td valign="top">
+<div><a href="/alus/receptas/<?=$this->item['recipe_id'];?>-<?=urlencode($this->item['recipe_name']);?>"><h3><? print $this->item['recipe_name'];?> </h3></a>
+<div>Tipas: <? print $this->item['recipe_type'] == "grain" ? "Iš salyklo" : "Iš ekstrakto";?></div>
+<div>Stilius: <a href="/stilius/<? print $this->item['recipe_style'];?>"><? print $this->item['style_name'];?></a></div>
+<div>Aludaris: <a href="/brewers/<? print $this->item['brewer_id'];?>"><? print $this->item['user_name'];?></a></div>
+<div>ABV <? print $this->item['recipe_abv'];?>%</div>
+IBU <? print $this->item['recipe_ibu'];?>
+
+
+
+</div></td>
+</tr>
+</table>
+

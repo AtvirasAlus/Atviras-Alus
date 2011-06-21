@@ -1,0 +1,611 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: viala 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-04-08 08:44+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: David Garlitz <dgarlitz@wesleyan.edu>\n"
+"Language-Team: Dave Garlitz <info@davidgarlitz.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: s\n"
+"X-Poedit-Language: english\n"
+"X-Poedit-Country: united states\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: _e\n"
+"X-Poedit-Basepath: Users/davidgarlitz/Desktop/viala/index.php\n"
+"X-Poedit-SearchPath-0: Users/davidgarlitz/Desktop/viala\n"
+"X-Poedit-SearchPath-1: Users/davidgarlitz/Desktop/viala/index.php\n"
+
+#: archive.php:8
+msgid "Category Archive for"
+msgstr "Archive de la catégorie"
+
+#: archive.php:11
+msgid "Tag Archive"
+msgstr "Archive de tag"
+
+#: archive.php:14
+msgid "Daily Archive for"
+msgstr "Archive journalière pour"
+
+#: archive.php:14
+msgid "F jS, Y"
+msgstr "j F Y"
+
+#: archive.php:17
+msgid "Monthly Archive for"
+msgstr "Archive mensuelle pour"
+
+#: archive.php:17
+msgid "F, Y"
+msgstr "F Y"
+
+#: archive.php:20
+msgid "Yearly Archive for"
+msgstr "Archive annuelle pour"
+
+#: archive.php:20
+#: footer.php:2
+msgid "Y"
+msgstr "Y"
+
+#: archive.php:22
+msgid "Blog Archives"
+msgstr "Archives du blog"
+
+#: archive.php:29
+#: archive.php:36
+#: attachment.php:10
+#: author.php:26
+#: index.php:27
+#: page.php:10
+#: search.php:12
+#: search.php:19
+#: single.php:13
+msgid "Permanent Link to"
+msgstr "Lien permanent vers"
+
+#: archive.php:31
+#: attachment.php:12
+#: index.php:37
+#: search.php:14
+#: single.php:22
+msgid "Posted in"
+msgstr "Publié dans"
+
+#: archive.php:31
+#: attachment.php:12
+#: comments.php:30
+#: search.php:14
+msgid "on"
+msgstr "le"
+
+#: archive.php:31
+#: attachment.php:12
+#: contact.php:63
+#: index.php:28
+#: page-links.php:11
+#: page.php:11
+#: search.php:14
+#: single.php:14
+msgid "M jS, Y"
+msgstr "j M Y"
+
+#: archive.php:36
+#: search.php:19
+msgid "Read Full Post &#187;"
+msgstr "Lire l'article entier &#187;"
+
+#: archive.php:42
+#: index.php:46
+#: search.php:25
+msgid "&#171; Newer Posts"
+msgstr "&#171; Articles plus récents"
+
+#: archive.php:42
+#: index.php:46
+#: search.php:25
+msgid "Older Posts &#187;"
+msgstr "Articles plus anciens &#187;"
+
+#: attachment.php:12
+#: index.php:28
+#: page.php:11
+#: single.php:14
+msgid "Edit"
+msgstr "Editer"
+
+#: attachment.php:12
+#: index.php:37
+msgid "No Comments &#187;"
+msgstr "Pas de commentaires &#187;"
+
+#: attachment.php:12
+#: index.php:37
+msgid "1 Comment &#187;"
+msgstr "1 Commentaire &#187;"
+
+#: attachment.php:12
+#: index.php:37
+msgid "% Comments &#187;"
+msgstr "% Commentaires &#187;"
+
+#: attachment.php:12
+#: index.php:37
+msgid "Comments Off"
+msgstr "Commentaires fermés"
+
+#: attachment.php:24
+#: page-archives.php:33
+msgid "Sorry, no posts matched your criteria."
+msgstr "Aucun article ne correspond à vos critères."
+
+#: author.php:9
+#: functions.php:28
+#: functions.php:32
+msgid "About"
+msgstr "A propos de "
+
+#: author.php:11
+msgid "Full Name"
+msgstr "Nom"
+
+#: author.php:13
+#: comments.php:98
+#: contact.php:77
+msgid "Website"
+msgstr "Site Web"
+
+#: author.php:15
+msgid "Details"
+msgstr "Détails"
+
+#: author.php:19
+msgid "Posts by"
+msgstr "Articles écrit par"
+
+#: author.php:25
+#: comments.php:30
+#: page-archives.php:31
+msgid "d M Y"
+msgstr "d M Y"
+
+#: author.php:30
+msgid "No posts by this author."
+msgstr "Aucun article écrit par cet auteur"
+
+#: comments.php:3
+msgid "Please do not load this page directly. Thanks!"
+msgstr "Faveur de ne pas charger cette page directement. Merci!"
+
+#: comments.php:9
+msgid "This post is password protected. Enter the password to view comments."
+msgstr "Cet article est protégé par un mot de passe. Entrez le mot pour visualiser les commentaires."
+
+#: comments.php:23
+msgid "No Responses"
+msgstr "Pas de réponse"
+
+#: comments.php:23
+msgid "One Response"
+msgstr "Une réponse"
+
+#: comments.php:23
+msgid "% Responses"
+msgstr "% réponses"
+
+#: comments.php:23
+msgid "to"
+msgstr "à"
+
+#: comments.php:30
+msgid "edit this"
+msgstr "édition"
+
+#: comments.php:30
+msgid "at"
+msgstr "à"
+
+#: comments.php:32
+msgid "Your comment is awaiting moderation."
+msgstr "Votre commentaire est en cours d'approbation."
+
+#: comments.php:58
+msgid "Comments are closed."
+msgstr "Les commentaires sont fermés."
+
+#: comments.php:65
+msgid "Trackback URI"
+msgstr "Rétrolien"
+
+#: comments.php:68
+msgid "Comments RSS"
+msgstr "Fil RSS"
+
+#: comments.php:75
+msgid "Leave a Reply"
+msgstr "Ajouter un commentaire"
+
+#: comments.php:78
+msgid "You must be"
+msgstr "Vous devez être"
+
+#: comments.php:78
+msgid "logged in"
+msgstr "connecté"
+
+#: comments.php:78
+msgid "to post a comment."
+msgstr "pour poster un commentaire"
+
+#: comments.php:87
+msgid "Logged in as"
+msgstr "Connecté en tant que"
+
+#: comments.php:87
+msgid "Log out of this account"
+msgstr "Déconnexion de ce compte"
+
+#: comments.php:87
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: comments.php:92
+#: contact.php:73
+msgid "Name"
+msgstr "Nom ou Pseudo"
+
+#: comments.php:92
+#: comments.php:95
+msgid "(required)"
+msgstr "(obligatoire)"
+
+#: comments.php:95
+msgid "Mail (hidden)"
+msgstr "Email (caché)"
+
+#: comments.php:106
+msgid "Submit Comment"
+msgstr "Envoyer le commentaire"
+
+#: contact.php:48
+msgid "Please fill in all required fields."
+msgstr "Merci de bien vouloir remplir tous les champs obligatoires."
+
+#: contact.php:52
+msgid "Your email adress failed to validate."
+msgstr "Votre address mél n'est pas valide."
+
+#: contact.php:56
+msgid "Incorrect Answer to the AntiSpam Question."
+msgstr "Mauvaise réponse à la question anti-robot."
+
+#: contact.php:63
+#: index.php:28
+#: page.php:11
+#: single.php:14
+msgid "by"
+msgstr "par"
+
+#: contact.php:66
+msgid "Continue Reading &#187;"
+msgstr "Lire la suite &#187;"
+
+#: contact.php:68
+msgid "Required Fields"
+msgstr "Champs obligatoires"
+
+#: contact.php:75
+msgid "Email"
+msgstr "Email"
+
+#: contact.php:79
+msgid "AntiSpam Challenge:"
+msgstr "Le Challenge Anti-Robot :"
+
+#: contact.php:80
+msgid "Just to prove you are not a spammer"
+msgstr "Juste pour prouver que vous n'êtes pas un robot."
+
+#: contact.php:81
+msgid "Message"
+msgstr "Message"
+
+#: contact.php:83
+msgid "Send Message"
+msgstr "Envoyer le message"
+
+#: contact.php:102
+msgid "Hey"
+msgstr "Hey"
+
+#: contact.php:102
+msgid "thanks for your message! I'll get back to you as soon as possible."
+msgstr "merci de votre message! Je vous répondrai dés que possible."
+
+#: footer.php:2
+msgid "All Rights Reserved."
+msgstr "Tous droits réservés."
+
+#: footer.php:4
+msgid "Viala theme by David Garlitz"
+msgstr "Théme Viala par David Garlitz"
+
+#: footer.php:4
+msgid "Made possible by Rapid Ear Movement"
+msgstr "Possible grâce au soutien de Rapid Ear Movement"
+
+#: functions.php:20
+#: functions.php:24
+msgid "Links"
+msgstr "Liens"
+
+#: functions.php:34
+msgid "Profile"
+msgstr "Profil"
+
+#: functions.php:36
+msgid "There are"
+msgstr "Il y a"
+
+#: functions.php:36
+msgid "Posts and"
+msgstr "Articles et"
+
+#: functions.php:36
+msgid "Comments so far."
+msgstr "Commentaires jusqu'ici"
+
+#: functions.php:43
+msgid "Recent Posts"
+msgstr "Articles Récents"
+
+#: functions.php:94
+msgid "Viala Options"
+msgstr "Options Viala"
+
+#: functions.php:104
+msgid "Viala Theme: Settings saved."
+msgstr "Théme Viala : Réglages sauvegardés"
+
+#: functions.php:105
+msgid "Viala Theme: Settings reset."
+msgstr "Théme Viala : Réglages réinitialiser."
+
+#: functions.php:118
+msgid "Theme Page:"
+msgstr "Page de Théme :"
+
+#: functions.php:119
+msgid "Designed & Coded by:"
+msgstr "Conçu & Codé par :"
+
+#: functions.php:129
+msgid "Theme Settings"
+msgstr "Réglages de théme"
+
+#: functions.php:131
+msgid "Change the way your blog looks and acts with the many blog settings below"
+msgstr "Changez l'apparence et le fonctionnement de votre blog avec les diverses réglages ci-dessous"
+
+#: functions.php:137
+#: functions.php:216
+msgid "Save Settings"
+msgstr "Sauvegarder Réglages"
+
+#: functions.php:143
+msgid "List Pages / Navigation"
+msgstr "Liste des pages / Navigation"
+
+#: functions.php:152
+msgid "Exclude the Following Pages from the Top Navigation"
+msgstr "Exclure les pages suivantes de la Navigation Principale"
+
+#: functions.php:161
+msgid "Sort the List Pages by"
+msgstr "Trier la liste des pages par"
+
+#: functions.php:163
+msgid "Page Title ?"
+msgstr "Titre ?"
+
+#: functions.php:164
+msgid "Date ?"
+msgstr "Date ?"
+
+#: functions.php:165
+msgid "Page Order ?"
+msgstr "Ordre de tri personnalisé ?"
+
+#: functions.php:166
+msgid "(Each Page can be given a page order number, from the wordpress admin, edit page area)"
+msgstr "(Pour donner un numéro de tri aux pages, veuillez vous diriger à 'éditer pages' dans l'administration de wordpress)"
+
+#: functions.php:172
+msgid "Support for Feature Articles"
+msgstr "Réglages pour les 'Articles de Fond'"
+
+#: functions.php:173
+msgid "You may select a category to run as your 'feature article.' Posts from this category will remain at the top of the home page, while your other posts will be displayed below."
+msgstr "Vous pouvez choisir une catégorie à servir comme votre 'article de fond.' Les article dans cette catégorie resteront en haut de votre page de garde, pendant que les autres articles s'afficheront en-dessous."
+
+#: functions.php:174
+msgid "Learn More at"
+msgstr "Apprenez plus au"
+
+#: functions.php:193
+msgid "Select the category here. Posts under this category will appear at the top of your home page."
+msgstr "Sélectionnez la catégorie ici. Articles dans cette catégorie apparaisseront en haut de votre page de garde."
+
+#: functions.php:195
+msgid "NOT SELECTED"
+msgstr "PAS SELECTIONNE"
+
+#: functions.php:211
+msgid "Number of Sub Articles."
+msgstr "Nombre de sous-articles"
+
+#: functions.php:216
+msgid "Choose the number of articles to display under the feature article."
+msgstr "Choisissez le nombre d'articles à afficher sous l'article de fond. "
+
+#: functions.php:226
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#: functions.php:228
+msgid "If for some reason you want to uninstall Viala then press the reset button to clean things up in the database."
+msgstr "Si pour une raison ou autre vous voulez enlever Viala de votre serveur, cliquez sur le bouton 'réinitialiser' et ça vous netoyyera la base de données."
+
+#: functions.php:229
+msgid "You have to make sure to delete the theme folder, if you want to completely remove the theme."
+msgstr "Il faut aussi supprimer le dossier du thème si vous voulez vraiment enlever le thème du serveur."
+
+#: functions.php:232
+msgid "Reset Settings"
+msgstr "Remise à l'état initial"
+
+#: header.php:6
+msgid "Blog Archive"
+msgstr "Archive du blog"
+
+#: header.php:11
+msgid "RSS Feed"
+msgstr "Fil RSS"
+
+#: header.php:33
+msgid "Home"
+msgstr "Page de garde"
+
+#: header.php:35
+msgid "Search"
+msgstr "Rechercher"
+
+#: header.php:51
+msgid "Feed on"
+msgstr "Fils RSS"
+
+#: header.php:52
+msgid "Posts"
+msgstr "Articles"
+
+#: header.php:53
+msgid "Comments"
+msgstr "Commentaires"
+
+#: index.php:21
+msgid "Permalink:"
+msgstr "Permalien :"
+
+#: index.php:21
+msgid "(edit)"
+msgstr "(éditer)"
+
+#: index.php:32
+msgid "Continue Reading &raquo;"
+msgstr "Lire la suite &raquo;"
+
+#: index.php:34
+#: single.php:20
+msgid "Tags: "
+msgstr "Tags :"
+
+#: 404.php:9
+msgid "Are you lost?"
+msgstr "Vous êtes perdu?"
+
+#: 404.php:12
+msgid "You may have mistyped a URL, or perhaps the link you clicked was out of date."
+msgstr "Vous avez fait une petite faute de frappe, ou bien peut-être vous avez cliquez sur un lien qui n'a pas été mis à jour."
+
+#: 404.php:13
+msgid "Don't worry! You can get back on track."
+msgstr "Ne vous inquietez pas! Vous allez retrouver le bon chemin."
+
+#: 404.php:13
+msgid "Try doing a <strong>search</strong> or browsing through the <strong>Archives</strong>."
+msgstr "Essayez une <strong>recherche</strong> ou visitez les <strong>Archives</strong>."
+
+#: 404.php:13
+msgid "Or, if you think this is not your fault, use the <strong>contact form</strong> to let us know about a bug in the system."
+msgstr "Si vous pensez que tout ça n'est pas de votre faute, utilisez le <strong>formulaire de contact</strong> pour nous signaler l'eventuel bug dans le system."
+
+#: 404.php:13
+msgid "Contact form:"
+msgstr "Formulaire de contact :"
+
+#: page-archives.php:10
+#: page-archives.php:31
+#: page-links.php:10
+msgid "Permanent Link:"
+msgstr "Lien permanent : "
+
+#: page-archives.php:13
+msgid "by Categories"
+msgstr "par Catégorie"
+
+#: page-archives.php:17
+msgid "by Month"
+msgstr "par Mois"
+
+#: page-archives.php:21
+#: sidebar.php:28
+msgid "Tags"
+msgstr "Tags"
+
+#: page-archives.php:27
+msgid "Last 50 Entries"
+msgstr "50 derniers articles"
+
+#: page.php:19
+msgid "This page has the following sub pages."
+msgstr "Cette page contient les sous-pages suivantes."
+
+#: search.php:7
+msgid "Search Results for"
+msgstr "Résultats de la recherche de"
+
+#: sidebar.php:7
+msgid "Archives"
+msgstr "Archives"
+
+#: sidebar.php:12
+msgid "Categories"
+msgstr "Catégories"
+
+#: sidebar.php:35
+msgid "Pages"
+msgstr "Pages"
+
+#: sidebar.php:40
+msgid "Meta"
+msgstr "Meta"
+
+#: sidebar.php:44
+msgid "This page validates as XHTML 1.0 Transitional"
+msgstr "Cette page est valide comme XHTML 1.0 Transitionnel"
+
+#: sidebar.php:44
+msgid "Valid"
+msgstr "Valide"
+
+#: sidebar.php:45
+msgid "XHTML Friends Network"
+msgstr "XHTML Friends Network"
+
+#: sidebar.php:46
+msgid "Powered by WordPress, state-of-the-art semantic personal publishing platform."
+msgstr "Propulsé par WordPress"
+
+#~ msgid ""
+#~ "The Server tried all of its options before returning this page to you."
+#~ msgstr "Le serveur "
+#~ msgid "You are looking for something that is not here now."
+#~ msgstr "Vous cherchez quelque chose qui n'est plus là maintenant."
+#~ msgid "Don't loose your hope just yet."
+#~ msgstr "Ne perdez pas l'espoir."
+#~ msgid "Posted as Not Found"
+#~ msgstr "Publié comme non trouvé"
+

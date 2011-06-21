@@ -1,0 +1,177 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Lightbox Gallery 0.6.2 hu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-11-19 17:29+0900\n"
+"PO-Revision-Date: 2010-01-04 12:01+0100\n"
+"Last-Translator: Zsolt Vereb <zsolt.vereb@gmail.com>\n"
+"Language-Team: iLikeWEB (http://www.google.com/profiles/zsolt.vereb) <zsolt.vereb@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_c\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Hungarian\n"
+"X-Poedit-Country: HUNGARY\n"
+"X-Poedit-SearchPath-0: lightbox-gallery\n"
+
+#: lightbox-gallery/lightbox-gallery.php:157
+msgid "Settings"
+msgstr "Beállítások"
+
+#: lightbox-gallery/lightbox-gallery.php:165
+#: lightbox-gallery/lightbox-gallery.php:191
+msgid "Lightbox Gallery"
+msgstr "Lightbox Galéria"
+
+#: lightbox-gallery/lightbox-gallery.php:179
+msgid "Options updated."
+msgstr "Beállítások frissítve."
+
+#: lightbox-gallery/lightbox-gallery.php:183
+msgid "Options deleted."
+msgstr "Beállítások törölve."
+
+#: lightbox-gallery/lightbox-gallery.php:197
+#: lightbox-gallery/lightbox-gallery.php:262
+#: lightbox-gallery/lightbox-gallery.php:278
+msgid "Click to toggle"
+msgstr "Megnyitás / Bezárás"
+
+#: lightbox-gallery/lightbox-gallery.php:198
+msgid "Lightbox Gallery Options"
+msgstr "Lightbox Galéria beállítások"
+
+#: lightbox-gallery/lightbox-gallery.php:207
+msgid "Choose the gallery loading type"
+msgstr "Válassz a galéria betöltésének típusai közül"
+
+#: lightbox-gallery/lightbox-gallery.php:208
+msgid "Lightbox"
+msgstr "Lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:209
+msgid "Highslide JS"
+msgstr "Highslide JS"
+
+#: lightbox-gallery/lightbox-gallery.php:210
+#, php-format
+msgid "Caution: Highslide JS is licensed under a Creative Commons Attribution-NonCommercial 2.5 License. You need the author's permission to use Highslide JS on commercial websites. <a href=\"%s\" target=\"_blank\">Please look at the author's website.</a>"
+msgstr "Figyelem: A Highslide JS a Creative Commons Attribution-NonCommercial 2.5 License licenszre van bejegyezve. Amennyiben ön a Highslide JS-t üzleti jellegű oldalon szeretné futtatni úgy a készítő hozzájárulása szükséges a használathoz. <a href=\"%s\" target=\"_blank\">Ide kattintva megtekintheti a készítő weboldalát.</a>"
+
+#: lightbox-gallery/lightbox-gallery.php:213
+msgid "In case that you would like to use the lightbox in certain categories (comma-deliminated)"
+msgstr "Abban az esetben, ha a lightboxot kategóriákban szeretné használni (vesszővel elválasztva)"
+
+#: lightbox-gallery/lightbox-gallery.php:217
+msgid "In case that you would like to use the lightbox in certain pages (comma-deliminated)"
+msgstr "Abban az esetben, ha a lightboxot az oldalakon szeretné használni (vesszővel elválasztva)"
+
+#: lightbox-gallery/lightbox-gallery.php:221
+msgid "Enforce loading the lightbox gallery scripts"
+msgstr "A lightbox galéria szkriptjének eröltetett betöltése"
+
+#: lightbox-gallery/lightbox-gallery.php:222
+msgid "The lightbox gallery scripts are loaded in every page"
+msgstr "A lightbox galéria szkript minden oldalon töltődjön be"
+
+#: lightbox-gallery/lightbox-gallery.php:225
+msgid "In case that you would like to disable to load the lightbox-gallery.css"
+msgstr "Abban az esetben, ha ki szeretné kapcsolni a lightbox-gallery.css fájlt"
+
+#: lightbox-gallery/lightbox-gallery.php:226
+msgid "Do not use the lightbox-gallery.css"
+msgstr "Ne használja a lightbox-gallery.css fájlt"
+
+#: lightbox-gallery/lightbox-gallery.php:229
+msgid "In case that you would like to disable to load the column inline css"
+msgstr "Abban az esetben, ha ki szeretné kapcsolni az integrált css oszlopok használatát"
+
+#: lightbox-gallery/lightbox-gallery.php:230
+msgid "Do not use the column inline css"
+msgstr "Ne használja az integrált oszlop beállításokat"
+
+#: lightbox-gallery/lightbox-gallery.php:233
+msgid "In case that you would like to set the default number of columns"
+msgstr "Abban az esetben, ha az általános oszlop számot szeretné beállítani"
+
+#: lightbox-gallery/lightbox-gallery.php:237
+msgid "In case that you would like to set the default thumbnail size"
+msgstr "Amennyiben az általános indexkép méretet be szeretné állítani"
+
+#: lightbox-gallery/lightbox-gallery.php:241
+msgid "In case that you would like to set the default lightbox size"
+msgstr "Amennyiben az általános lightbox méretet be szeretné állítani"
+
+#: lightbox-gallery/lightbox-gallery.php:248
+msgid "Choose the script loading point"
+msgstr "Hol töltődjön be a szkript"
+
+#: lightbox-gallery/lightbox-gallery.php:249
+msgid "Header"
+msgstr "Fejléc"
+
+#: lightbox-gallery/lightbox-gallery.php:250
+msgid "Footer"
+msgstr "Élőláb"
+
+#: lightbox-gallery/lightbox-gallery.php:253
+msgid "Update Options &raquo;"
+msgstr "Beállítások frissítése &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:263
+msgid "Delete Options"
+msgstr "Beállítások törlése"
+
+#: lightbox-gallery/lightbox-gallery.php:265
+msgid "Are you sure to delete options? Options you set will be deleted."
+msgstr "Biztos benne, hogy törölni szeretné a beállításokat? Az összes beállítás el fog veszni."
+
+#: lightbox-gallery/lightbox-gallery.php:269
+msgid "Delete Options &raquo;"
+msgstr "Beállítások törlése &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:279
+msgid "Donation"
+msgstr "Támogatás"
+
+#: lightbox-gallery/lightbox-gallery.php:281
+msgid "If you liked this plugin, please make a donation via paypal! Any amount is welcome. Your support is much appreciated."
+msgstr "Ha tetszik ez a plugin kérlek támogass minket paypal-en keresztül! Bármekkora támogatás elfogadunk. Köszönjük segítséged."
+
+#: lightbox-gallery/lightbox-gallery.php:363
+msgid "Pages:"
+msgstr "Oldalak:"
+
+#: lightbox-gallery/lightbox-gallery.php:365
+msgid "Next page"
+msgstr "Következő oldal"
+
+#: lightbox-gallery/lightbox-gallery.php:366
+msgid "Previous page"
+msgstr "Előző oldal"
+
+#: lightbox-gallery/lightbox-gallery.php:448
+msgid "camera"
+msgstr "kamera"
+
+#: lightbox-gallery/lightbox-gallery.php:450
+msgid "aperture"
+msgstr "ablak"
+
+#: lightbox-gallery/lightbox-gallery.php:452
+msgid "focal_length"
+msgstr "fókusztávolság"
+
+#: lightbox-gallery/lightbox-gallery.php:454
+msgid "ISO"
+msgstr "ISO"
+
+#: lightbox-gallery/lightbox-gallery.php:458
+msgid "shutter_speed"
+msgstr "zársebesség"
+
+#: lightbox-gallery/lightbox-gallery.php:461
+msgid "created_timestamp"
+msgstr "létrehozási_idő"
+

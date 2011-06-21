@@ -1,0 +1,1393 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Smart Image\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-05-02 18:49-0400\n"
+"PO-Revision-Date: 2010-05-02 18:50-0400\n"
+"Last-Translator: Darío Ferrer <wp@darioferrer.com>\n"
+"Language-Team: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_c\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-Country: VENEZUELA\n"
+"X-Poedit-SearchPath-0: wp-smart-image-ii\n"
+
+#: wp-smart-image-ii/wp-smart-image.php:109
+msgid "WP Smart Image II"
+msgstr "WP Smart Image II"
+
+#: wp-smart-image-ii/wp-smart-image.php:116
+msgid "Thumbnail size"
+msgstr "Tamaño miniatura"
+
+#: wp-smart-image-ii/wp-smart-image.php:117
+msgid "Medium size"
+msgstr "Tamaño medio"
+
+#: wp-smart-image-ii/wp-smart-image.php:118
+msgid "Large size"
+msgstr "Tamaño grande"
+
+#: wp-smart-image-ii/wp-smart-image.php:119
+msgid "Full size"
+msgstr "Tamaño original"
+
+#: wp-smart-image-ii/wp-smart-image.php:125
+msgid "Yes"
+msgstr "Sí"
+
+#: wp-smart-image-ii/wp-smart-image.php:129
+msgid "No"
+msgstr "No"
+
+#: wp-smart-image-ii/wp-smart-image.php:167
+#: wp-smart-image-ii/wp-smart-image.php:726
+msgid "Article image"
+msgstr "Imagen del artículo"
+
+#: wp-smart-image-ii/wp-smart-image.php:168
+#: wp-smart-image-ii/wp-smart-image.php:727
+msgid "Go to article"
+msgstr "Ir al artículo"
+
+#: wp-smart-image-ii/wp-smart-image.php:208
+#: wp-smart-image-ii/wp-smart-image.php:209
+msgid "Web developer"
+msgstr "Desarrollador web"
+
+#: wp-smart-image-ii/wp-smart-image.php:208
+msgid "Dutch"
+msgstr "Holandés"
+
+#: wp-smart-image-ii/wp-smart-image.php:208
+msgid "Amsterdam - Holland"
+msgstr "Amsterdam - Holanda"
+
+#: wp-smart-image-ii/wp-smart-image.php:209
+msgid "Russian"
+msgstr "Ruso"
+
+#: wp-smart-image-ii/wp-smart-image.php:209
+msgid "Novosibirsk - Russia"
+msgstr "Novosibirsk - Rusia"
+
+#: wp-smart-image-ii/wp-smart-image.php:210
+#: wp-smart-image-ii/wp-smart-image.php:211
+msgid "Web designer"
+msgstr "Diseñador web"
+
+#: wp-smart-image-ii/wp-smart-image.php:210
+msgid "Portuguese"
+msgstr "Portugués"
+
+#: wp-smart-image-ii/wp-smart-image.php:210
+msgid "Sao Paulo - Brazil"
+msgstr "Sao Paulo - Brasil"
+
+#: wp-smart-image-ii/wp-smart-image.php:211
+msgid "Spanish"
+msgstr "Castellano"
+
+#: wp-smart-image-ii/wp-smart-image.php:211
+msgid "Caracas - Venezuela"
+msgstr "Caracas - Venezuela"
+
+#: wp-smart-image-ii/wp-smart-image.php:220
+msgid "Lives in:"
+msgstr "Vive en:"
+
+#: wp-smart-image-ii/wp-smart-image.php:222
+msgid "Profession:"
+msgstr "Profesión"
+
+#: wp-smart-image-ii/wp-smart-image.php:224
+msgid "Main Website:"
+msgstr "Sitio principal:"
+
+#: wp-smart-image-ii/wp-smart-image.php:226
+msgid "Language:"
+msgstr "Idioma:"
+
+#: wp-smart-image-ii/wp-smart-image.php:283
+msgid "WP Smart Image II - Settings"
+msgstr "WP Smart Image II - Opciones"
+
+#: wp-smart-image-ii/wp-smart-image.php:314
+msgid "General Settings"
+msgstr "Opciones generales"
+
+#: wp-smart-image-ii/wp-smart-image.php:315
+msgid "RSS"
+msgstr "RSS"
+
+#: wp-smart-image-ii/wp-smart-image.php:316
+msgid "Default images"
+msgstr "Imágenes predeterminadas"
+
+#: wp-smart-image-ii/wp-smart-image.php:317
+msgid "Data management"
+msgstr "Gestión de datos"
+
+#: wp-smart-image-ii/wp-smart-image.php:318
+msgid "Help"
+msgstr "Ayuda"
+
+#: wp-smart-image-ii/wp-smart-image.php:329
+msgid "Switch to PHP Mode"
+msgstr "Cambiar a Modo PHP"
+
+#: wp-smart-image-ii/wp-smart-image.php:330
+msgid "PHP Mode unavailable"
+msgstr "Modo PHP no disponible"
+
+#: wp-smart-image-ii/wp-smart-image.php:330
+msgid "(Know why)"
+msgstr "(Saber por qué)"
+
+#: wp-smart-image-ii/wp-smart-image.php:332
+msgid "Switch to PHP Mode for first time"
+msgstr "Cambiar a Modo PHP por primera vez"
+
+#: wp-smart-image-ii/wp-smart-image.php:335
+#: wp-smart-image-ii/wp-smart-image.php:398
+#: wp-smart-image-ii/wp-smart-image.php:483
+#: wp-smart-image-ii/wp-smart-image.php:544
+#: wp-smart-image-ii/wp-smart-image.php:571
+msgid "PHP Mode activated"
+msgstr "Modo PHP activado"
+
+#: wp-smart-image-ii/wp-smart-image.php:335
+#: wp-smart-image-ii/wp-smart-image.php:398
+#: wp-smart-image-ii/wp-smart-image.php:483
+#: wp-smart-image-ii/wp-smart-image.php:544
+#: wp-smart-image-ii/wp-smart-image.php:571
+msgid "Switch to Normal Mode"
+msgstr "Cambiar a Modo Normal"
+
+#: wp-smart-image-ii/wp-smart-image.php:337
+#: wp-smart-image-ii/wp-smart-image.php:400
+#: wp-smart-image-ii/wp-smart-image.php:485
+#: wp-smart-image-ii/wp-smart-image.php:546
+#: wp-smart-image-ii/wp-smart-image.php:573
+msgid "Normal Mode activated"
+msgstr "Modo Normal activado"
+
+#: wp-smart-image-ii/wp-smart-image.php:341
+msgid "General settings"
+msgstr "Opciones generales"
+
+#: wp-smart-image-ii/wp-smart-image.php:347
+#: wp-smart-image-ii/wp-smart-image.php:355
+msgid "Create a new file"
+msgstr "Crear un nuevo archivo"
+
+#: wp-smart-image-ii/wp-smart-image.php:348
+msgid "Restore default data"
+msgstr "Restaurar datos predeterminados"
+
+#: wp-smart-image-ii/wp-smart-image.php:349
+msgid "View/Edit directly"
+msgstr "Ver/Editar directamente"
+
+#: wp-smart-image-ii/wp-smart-image.php:352
+msgid "Configuration file"
+msgstr "Archivo de configuración"
+
+#: wp-smart-image-ii/wp-smart-image.php:354
+msgid "Location:"
+msgstr "Ubicación:"
+
+#: wp-smart-image-ii/wp-smart-image.php:358
+msgid "Method for managing images from the editor"
+msgstr "Método para gestionar imágenes desde el editor"
+
+#: wp-smart-image-ii/wp-smart-image.php:363
+msgid "None"
+msgstr "Ninguno"
+
+#: wp-smart-image-ii/wp-smart-image.php:372
+msgid "Warning:"
+msgstr "Advertencia:"
+
+#: wp-smart-image-ii/wp-smart-image.php:372
+msgid "Your current Wordpress version isn't prepared for <strong>The Post Thumbnail</strong> feature. Upgrade your system (carefully recommended for many reasons) or use the available options."
+msgstr "Tu versión actual de Wordpress no está preparada para la función <strong>The Post Thumbnail</strong>. Actualiza el sistema (encarecidamente recomendado por muchas razones) o utiliza las opciones disponibles."
+
+#: wp-smart-image-ii/wp-smart-image.php:375
+msgid "Take a few minutes to proove each of these three options and choose your favorite one. All of them are equally stable and recommended."
+msgstr "Tómate unos minutos para probar cada una de las siguientes tres opciones y escoge tu favorita. Todas ellas son igualmente estables y recomendadas."
+
+#: wp-smart-image-ii/wp-smart-image.php:375
+msgid "None:"
+msgstr "Ninguno:"
+
+#: wp-smart-image-ii/wp-smart-image.php:375
+msgid "Use your Media Library tab to choose the posted image. This option is the one which don't generates new fields in your _postmeta table."
+msgstr "Utiliza tu Librería Multimedia para elegir la imagen que aparecerá junto a cada entrada. Esta opción es la única que no genera nuevos campos en la tabla _postmeta de tu base de datos."
+
+#: wp-smart-image-ii/wp-smart-image.php:375
+msgid "The Post Thumbnail method:"
+msgstr "Método The Post Thumbnail:"
+
+#: wp-smart-image-ii/wp-smart-image.php:375
+msgid "Manage your images through this comfortable native Wordpress interface (available from WP 2.9 and above)."
+msgstr "Gestiona tus imágenes a través de esta cómoda interfaz que te ofrece Wordpress de forma nativa (disponible en WP 2.9 y superior)."
+
+#: wp-smart-image-ii/wp-smart-image.php:375
+msgid "WP Smart Image II method:"
+msgstr "Método WP Smart Image II:"
+
+#: wp-smart-image-ii/wp-smart-image.php:375
+msgid "A comprehensive tool set which gives multiple options for image management."
+msgstr "Una completa caja de herramientas que ofrece múltples opciones de gestión de imágenes."
+
+#: wp-smart-image-ii/wp-smart-image.php:377
+msgid "Document Type Declaration of this website (DTD)"
+msgstr "Declaración de Tipo de Documento de este sitio (DTD)"
+
+#: wp-smart-image-ii/wp-smart-image.php:382
+msgid "XHTML"
+msgstr "XHTML"
+
+#: wp-smart-image-ii/wp-smart-image.php:383
+msgid "HTML"
+msgstr "HTML"
+
+#: wp-smart-image-ii/wp-smart-image.php:388
+msgid "You must to set the correct DTD of this site to point tags to right W3C validation. If you need more info about this topic, visit this"
+msgstr "Debes configurar la DTD correcta de este sitio para que WP Smart Image II apunte las etiquetas a una buena validación W3C. Si necesitas más información acerca de este tema, visita este"
+
+#: wp-smart-image-ii/wp-smart-image.php:388
+msgid "en.wikipedia.org/wiki/Document_Type_Declaration"
+msgstr "es.wikipedia.org/wiki/Declaraci%C3%B3n_de_tipo_de_documento"
+
+#: wp-smart-image-ii/wp-smart-image.php:388
+msgid "comprehensive Wikipedia article"
+msgstr "completo artículo de la Wikipedia"
+
+#: wp-smart-image-ii/wp-smart-image.php:388
+msgid "or"
+msgstr "o"
+
+#: wp-smart-image-ii/wp-smart-image.php:388
+msgid "<a href=\"http://wordpress.org/support/\" target=\"_blank\">ask in the Wordpress Forum.</a>"
+msgstr "<a href=\"http://wordpress.org/support/\" target=\"_blank\">pregunta en el foro de Wordpress</a>. Para soporte directo en español tambien puedes visitar: <a href=\"http://ayudawordpress.com/foro/\" target=\"_blank\">Ayuda Wordpress</a>, <a href=\"http://www.forowp.org/\" target=\"_blank\">Foro WP</a>, <a href=\"http://www.forosdelweb.com/f118/\" target=\"_blank\">Foros del Web</a> y <a href=\"http://foros.cristalab.com/wordpress-blogs-y-cms-f38/\" target=\"_blank\">Cristalab</a>."
+
+#: wp-smart-image-ii/wp-smart-image.php:389
+#: wp-smart-image-ii/wp-smart-image.php:474
+#: wp-smart-image-ii/wp-smart-image.php:533
+msgid "Update options &raquo;"
+msgstr "Actualizar opciones"
+
+#: wp-smart-image-ii/wp-smart-image.php:404
+#: wp-smart-image-ii/wp-smart-image.php:489
+#: wp-smart-image-ii/wp-smart-image.php:550
+msgid "Feed Settings"
+msgstr "Opciones RSS"
+
+#: wp-smart-image-ii/wp-smart-image.php:406
+msgid "Enable images for the following RSS systems"
+msgstr "Habilitar imágenes para los siguientes sistemas RSS"
+
+#: wp-smart-image-ii/wp-smart-image.php:421
+msgid "Here you can apply the WP Smart Image function for one or several RSS environments."
+msgstr "Aquí puedes aplicar las funciones de WP Smart Image para uno o varios entornos RSS."
+
+#: wp-smart-image-ii/wp-smart-image.php:422
+msgid "Select image size"
+msgstr "Seleccionar tamaño de imagen"
+
+#: wp-smart-image-ii/wp-smart-image.php:438
+msgid "Width:"
+msgstr "Ancho:"
+
+#: wp-smart-image-ii/wp-smart-image.php:440
+msgid "Height:"
+msgstr "Alto:"
+
+#: wp-smart-image-ii/wp-smart-image.php:445
+msgid "Setting #"
+msgstr "Config #"
+
+#: wp-smart-image-ii/wp-smart-image.php:455
+msgid "Native WP sizes:"
+msgstr "Tamaños nativos de WP:"
+
+#: wp-smart-image-ii/wp-smart-image.php:457
+#: wp-smart-image-ii/wp-smart-image.php:503
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#: wp-smart-image-ii/wp-smart-image.php:458
+#: wp-smart-image-ii/wp-smart-image.php:507
+msgid "Medium"
+msgstr "Medio"
+
+#: wp-smart-image-ii/wp-smart-image.php:459
+#: wp-smart-image-ii/wp-smart-image.php:511
+msgid "Large"
+msgstr "Grande"
+
+#: wp-smart-image-ii/wp-smart-image.php:460
+#: wp-smart-image-ii/wp-smart-image.php:515
+msgid "Full"
+msgstr "Original"
+
+#: wp-smart-image-ii/wp-smart-image.php:464
+msgid "Custom sizes:"
+msgstr "Tamaños personalizados:"
+
+#: wp-smart-image-ii/wp-smart-image.php:473
+msgid "Choose the image size for the feeds. Max Image Size Control custom settings will be detected"
+msgstr "Escoge el tamaño de imagen para los feeds de tu sitio. Las configuraciones de Max Image Size control serán detectadas automáticamente"
+
+#: wp-smart-image-ii/wp-smart-image.php:492
+msgid "Enable Default Images"
+msgstr "Habilitar imágenes predeterminadas"
+
+#: wp-smart-image-ii/wp-smart-image.php:495
+msgid "If checked, imageless posts will show, by default, the images you have been set below."
+msgstr "Si está marcado, las entradas sin imágenes mostrarán, por defecto, las imágenes que estén configuradas en los campos de abajo."
+
+#: wp-smart-image-ii/wp-smart-image.php:496
+msgid "Default image path"
+msgstr "Ruta de las imágenes predeterminadas"
+
+#: wp-smart-image-ii/wp-smart-image.php:498
+msgid "Change this path if you like to custom image folder location."
+msgstr "Cambia esta ruta si quieres personalizar la ubicación de la carpeta de imágenes por defecto."
+
+#: wp-smart-image-ii/wp-smart-image.php:499
+msgid "Assigned images"
+msgstr "Imágenes asignadas"
+
+#: wp-smart-image-ii/wp-smart-image.php:520
+msgid "Place the image filenames for each size."
+msgstr "Escribe los nombres de los archivos correspondientes a las imágenes para cada tamaño."
+
+#: wp-smart-image-ii/wp-smart-image.php:521
+msgid "Default Alt &amp; Title settings"
+msgstr "Textos predeterminados para ALT y TITLE"
+
+#: wp-smart-image-ii/wp-smart-image.php:522
+msgid "Default ALT string:"
+msgstr "Texto por defecto para ALT"
+
+#: wp-smart-image-ii/wp-smart-image.php:525
+#: wp-smart-image-ii/wp-smart-image.php:530
+msgid "Use post title as"
+msgstr "Título de la entrada como"
+
+#: wp-smart-image-ii/wp-smart-image.php:527
+msgid "Default TITLE string:"
+msgstr "Texto por defecto para TITLE"
+
+#: wp-smart-image-ii/wp-smart-image.php:532
+msgid "Enter some text to define both <code>ALT</code> and <code>TITLE</code> attribute for default images. Checkboxes activation will overrides the text field data."
+msgstr "Ingresa un texto para definir atributos <code>ALT</code> y <code>TITLE</code> en las imágenes predeterminadas. La activación de los checkboxes sobrescribirá los datos ingresados en el campo de texto."
+
+#: wp-smart-image-ii/wp-smart-image.php:552
+msgid "Warning!"
+msgstr "¡Cuidado!"
+
+#: wp-smart-image-ii/wp-smart-image.php:552
+msgid "If you click the wrong button, you will loose all you have been set manually"
+msgstr "Si presionas el botón equivocado perderás todo lo que hayas configurado manualmente"
+
+#: wp-smart-image-ii/wp-smart-image.php:554
+msgid "Remove plugin database info"
+msgstr "Eliminar info del plugin de la base de datos"
+
+#: wp-smart-image-ii/wp-smart-image.php:554
+msgid "Sure you want remove plugin database entry?"
+msgstr "¿Seguro deseas eliminar la información del plugin de la base de datos?"
+
+#: wp-smart-image-ii/wp-smart-image.php:554
+#: wp-smart-image-ii/wp-smart-image.php:558
+msgid "Remove data"
+msgstr "Eliminar datos"
+
+#: wp-smart-image-ii/wp-smart-image.php:555
+#: wp-smart-image-ii/wp-smart-image.php:559
+msgid "Populate/Restore plugin database info"
+msgstr "Llenar/Restaurar información en la base de datos"
+
+#: wp-smart-image-ii/wp-smart-image.php:555
+msgid "Sure you want populate plugin database entry with default data?"
+msgstr "¿Seguro deseas agregar la información predeterminada del plugin en la base de datos?"
+
+#: wp-smart-image-ii/wp-smart-image.php:555
+msgid "Populate/Restore data"
+msgstr "Llenar/restaurar datos"
+
+#: wp-smart-image-ii/wp-smart-image.php:556
+#: wp-smart-image-ii/wp-smart-image.php:560
+msgid "Delete post_meta info"
+msgstr "Borrar metadatos"
+
+#: wp-smart-image-ii/wp-smart-image.php:556
+msgid "Sure you want delete post_meta info? This will delete all configurations you have been set through editor! Better think twice buddy!"
+msgstr "¿Seguro deseas borrar los metadatos? Esto eliminará toda configuración que hayas efectuado a través de tu editor! ¡Mejor piénsalo dos veces!"
+
+#: wp-smart-image-ii/wp-smart-image.php:558
+msgid "Use it to remove the <code>wpsi_configuracion</code> field from the <code>_options</code> table of your DB. All default settings will be deleted."
+msgstr "Úsalo para remover el campo <code>wpsi_configuracion</code> ubicado en la tabla <code>_options</code> de tu base de datos. Todas las configuraciones predeterminadas se eliminarán."
+
+#: wp-smart-image-ii/wp-smart-image.php:559
+msgid "This button loads some default data to your DB. Use it as start guide to place your own data. Take in mind that this action will overwrite any previous configuration."
+msgstr "Con este botón cargarás alguna información predeterminada a tu base de datos. Puedes usarlo como guía inicial para luego ingresar tu propia configuración. Ten en cuanta que esta acción sobrescribirá cualquier configuración previa."
+
+#: wp-smart-image-ii/wp-smart-image.php:560
+msgid "Be careful with this button, because if you press it, all your WP Smart Image <code>postmeta</code> fields will be deleted. Postmeta fields are all the custom setting generated from your editor box, as post image shown."
+msgstr "Ten cuidado con este botón, porque si lo presionas borrarás todos los campos postmeta generados a través de WP Smart Image. Los campos <code>postmeta</code> contienen todas las configuraciones realizadas con WP Smart Image a través de la caja de tu editor, como por ejemplo la imagen que quieres mostrar."
+
+#: wp-smart-image-ii/wp-smart-image.php:577
+msgid "Get support!"
+msgstr "¡Obtén soporte!"
+
+#: wp-smart-image-ii/wp-smart-image.php:580
+msgid "WP Smart Image"
+msgstr "WP Smart Image"
+
+#: wp-smart-image-ii/wp-smart-image.php:580
+msgid "Essential resource for web designers"
+msgstr "Recurso esencial para diseñadores web"
+
+#: wp-smart-image-ii/wp-smart-image.php:583
+msgid "WP Smart Image II - Main support site"
+msgstr "WP Smart Image II - Página principal de soporte"
+
+#: wp-smart-image-ii/wp-smart-image.php:584
+msgid "A growing plugin codex."
+msgstr "Un codex cada vez más grande."
+
+#: wp-smart-image-ii/wp-smart-image.php:585
+msgid "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Parameters_Table"
+msgstr "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Tabla_de_Par%C3%A1metros"
+
+#: wp-smart-image-ii/wp-smart-image.php:585
+msgid "Parameters table"
+msgstr "Tabla de parámetros"
+
+#: wp-smart-image-ii/wp-smart-image.php:586
+msgid "A complete index of parameters, well detailed and explained."
+msgstr "Un completo índice de parámetros, bien detallado y explicado."
+
+#: wp-smart-image-ii/wp-smart-image.php:587
+msgid "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Examples,_tricks_and_hacks"
+msgstr "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Ejemplos,_trucos_y_hacks"
+
+#: wp-smart-image-ii/wp-smart-image.php:587
+msgid "Examples, tricks and hacks"
+msgstr "Ejemplos, trucos y hacks"
+
+#: wp-smart-image-ii/wp-smart-image.php:588
+msgid "Discover more than one way to exploit all power from WP Smart Image II."
+msgstr "Descubre más de una vía para explotar el poder de WP Smart Image II."
+
+#: wp-smart-image-ii/wp-smart-image.php:589
+msgid "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Working_on_PHP_Mode"
+msgstr "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Trabajando_en_modo_PHP"
+
+#: wp-smart-image-ii/wp-smart-image.php:589
+msgid "Working on PHP Mode:"
+msgstr "Trabajando en el Modo PHP"
+
+#: wp-smart-image-ii/wp-smart-image.php:590
+msgid "All you need to know to activate the PHP Mode on WP Smart Image II."
+msgstr "Todo lo que necesitas saber para activar el Modo PHP en WP Smart Image II."
+
+#: wp-smart-image-ii/wp-smart-image.php:591
+msgid "Direct support"
+msgstr "Soporte directo"
+
+#: wp-smart-image-ii/wp-smart-image.php:592
+msgid "Get help from the Forum Board."
+msgstr "Obtén ayuda en el Foro."
+
+#: wp-smart-image-ii/wp-smart-image.php:594
+msgid "WP Smart Image II Trac"
+msgstr "Trac de WP Smart Image II"
+
+#: wp-smart-image-ii/wp-smart-image.php:595
+msgid "Here you can report bugs and request new features."
+msgstr "Aquí puedes reportar bugs, así como solicitar nuevas características."
+
+#: wp-smart-image-ii/wp-smart-image.php:597
+msgid "WP Smart Image II has been translated in your language by:"
+msgstr "WP Smart Image II ha sido traducido en tu idioma por:"
+
+#: wp-smart-image-ii/wp-smart-image.php:694
+msgid "The field &#39;wpsi_configuracion&#39; has been removed from the database."
+msgstr "El campo &#39;wpsi_configuracion&#39; ha sido removido de la base de datos."
+
+#: wp-smart-image-ii/wp-smart-image.php:697
+#: wp-smart-image-ii/wp-smart-image.php:700
+msgid "All default settings are loaded."
+msgstr "Todas las configuraciones predeterminadas han sido cargadas."
+
+#: wp-smart-image-ii/wp-smart-image.php:703
+msgid "All WP Smart Image II &#39;_postmeta&#39; fields has been removed from the database."
+msgstr "Todos los campos &#39;_postmeta&#39; de WP Smart Image han sido removidos de la base de datos."
+
+#: wp-smart-image-ii/wp-smart-image.php:706
+msgid "All settings were saved."
+msgstr "Se han guardado todas las configuraciones"
+
+#: wp-smart-image-ii/wp-smart-image.php:709
+msgid "Now WPSI is running under PHP Mode. Check your settings."
+msgstr "Ahora WPSI está funcionando en Modo PHP. Revisa tus configuraciones."
+
+#: wp-smart-image-ii/wp-smart-image.php:712
+msgid "Normal Mode activated. Check your settings."
+msgstr "Modo Normal activado. Revisa tus configuraciones."
+
+#: wp-smart-image-ii/wp-smart-image.php:715
+msgid "(Wait...)"
+msgstr "(Espera un momento...)"
+
+#: wp-smart-image-ii/wp-smart-image.php:860
+msgid "Title"
+msgstr "Título"
+
+#: wp-smart-image-ii/wp-smart-image.php:863
+msgid "Edit"
+msgstr "Editar"
+
+#: wp-smart-image-ii/wp-smart-image.php:871
+#: wp-smart-image-ii/wp-smart-image.php:904
+#: wp-smart-image-ii/wp-smart-image.php:978
+msgid "View original in new window"
+msgstr "Ver original en nueva ventana"
+
+#: wp-smart-image-ii/wp-smart-image.php:874
+#: wp-smart-image-ii/wp-smart-image.php:907
+#: wp-smart-image-ii/wp-smart-image.php:924
+#: wp-smart-image-ii/wp-smart-image.php:981
+#: wp-smart-image-ii/wp-smart-image.php:1008
+#: wp-smart-image-ii/wp-smart-image.php:1027
+msgid "Image ID"
+msgstr "ID de imagen"
+
+#: wp-smart-image-ii/wp-smart-image.php:875
+#: wp-smart-image-ii/wp-smart-image.php:914
+#: wp-smart-image-ii/wp-smart-image.php:990
+msgid "Type"
+msgstr "Tipo"
+
+#: wp-smart-image-ii/wp-smart-image.php:876
+#: wp-smart-image-ii/wp-smart-image.php:915
+#: wp-smart-image-ii/wp-smart-image.php:991
+msgid "W:"
+msgstr "An:"
+
+#: wp-smart-image-ii/wp-smart-image.php:876
+#: wp-smart-image-ii/wp-smart-image.php:915
+#: wp-smart-image-ii/wp-smart-image.php:991
+msgid "H:"
+msgstr "Al:"
+
+#: wp-smart-image-ii/wp-smart-image.php:883
+msgid "Random images"
+msgstr "Imágenes aleatorias"
+
+#: wp-smart-image-ii/wp-smart-image.php:890
+msgid "If checked, the images will shown randomly. Very useful in some cases, as dynamic headers, backgrounds or widgets"
+msgstr "Si está activado, se mostrarán imágenes de forma aleatoria. Muy útil en algunos casos tales como cabeceras, fondos y widgets dinámicos"
+
+#: wp-smart-image-ii/wp-smart-image.php:894
+msgid "Load image from Media Library"
+msgstr "Cargar imagen desde Librería Multimedia"
+
+#: wp-smart-image-ii/wp-smart-image.php:908
+#: wp-smart-image-ii/wp-smart-image.php:984
+msgid "Attached to post"
+msgstr "Vinculada a la entrada"
+
+#: wp-smart-image-ii/wp-smart-image.php:923
+#: wp-smart-image-ii/wp-smart-image.php:1007
+msgid "Error"
+msgstr "Error"
+
+#: wp-smart-image-ii/wp-smart-image.php:923
+msgid "Thid ID is not assigned to any image. Try again"
+msgstr "Esta ID no está asignada a ninguna imagen. Inténtalo de nuevo"
+
+#: wp-smart-image-ii/wp-smart-image.php:933
+#: wp-smart-image-ii/wp-smart-image.php:997
+#: wp-smart-image-ii/wp-smart-image.php:1015
+msgid "Always you can choose and publish any image stored on your "
+msgstr "Siempre podrás elegir y publicar cualquier imagen alojada en tu"
+
+#: wp-smart-image-ii/wp-smart-image.php:933
+#: wp-smart-image-ii/wp-smart-image.php:940
+#: wp-smart-image-ii/wp-smart-image.php:997
+#: wp-smart-image-ii/wp-smart-image.php:1015
+#: wp-smart-image-ii/wp-smart-image.php:1026
+msgid "Media Library"
+msgstr "Librería Multimedia"
+
+#: wp-smart-image-ii/wp-smart-image.php:940
+msgid "Visit your"
+msgstr "Visita tu"
+
+#: wp-smart-image-ii/wp-smart-image.php:940
+msgid "find the image ID and enter it in the field below:"
+msgstr "buscar la ID de la imagen e ingresarla en el campo que se muestra a continuación:"
+
+#: wp-smart-image-ii/wp-smart-image.php:957
+msgid "Save this post to gain access to WP Smart Image functions"
+msgstr "Guarda esta entrada para accesar a las funciones de WP Smart Image"
+
+#: wp-smart-image-ii/wp-smart-image.php:963
+msgid "Upload an image for this entry"
+msgstr "Subir una imagen para este artículo"
+
+#: wp-smart-image-ii/wp-smart-image.php:967
+msgid "You have not uploaded an image yet"
+msgstr "Aún no has subido ninguna imagen"
+
+#: wp-smart-image-ii/wp-smart-image.php:967
+msgid "Do you want to upload one now"
+msgstr "Deseas subir una ahora"
+
+#: wp-smart-image-ii/wp-smart-image.php:967
+msgid "Thumbnail will show here next time you refresh this screen"
+msgstr "La miniatura se mostrará en el próximo refrescamiento que hagas a esta pantalla"
+
+#: wp-smart-image-ii/wp-smart-image.php:974
+#: wp-smart-image-ii/wp-smart-image.php:1003
+msgid "External image uploaded"
+msgstr "Imagen externa cargada"
+
+#: wp-smart-image-ii/wp-smart-image.php:992
+msgid "These modifications are globals"
+msgstr "Estas modificaciones son de carácter global"
+
+#: wp-smart-image-ii/wp-smart-image.php:992
+msgid "Edit image"
+msgstr "Editar imagen"
+
+#: wp-smart-image-ii/wp-smart-image.php:1007
+msgid "This ID is not assigned to any image. Try again"
+msgstr "Esta ID no está asignada a ninguna imagen. Inténtalo de nuevo"
+
+#: wp-smart-image-ii/wp-smart-image.php:1022
+msgid "... Or load it from Media Library"
+msgstr "... O carga una desde tu Librería Multimedia"
+
+#: wp-smart-image-ii/wp-smart-image.php:1026
+msgid "First, visit your"
+msgstr "Primero visita tu"
+
+#: wp-smart-image-ii/wp-smart-image.php:1026
+msgid "grab the image ID and enter it in the field below:"
+msgstr "tomar la ID de la imagen e ingresarla en el campo que se muestra a continuación:"
+
+#: wp-smart-image-ii/wp-smart-image.php:1057
+#: wp-smart-image-ii/wp-smart-image.php:1058
+msgid "Image to show"
+msgstr "Imagen para mostrar"
+
+#: wp-smart-image-ii/wp-smart-image.php:1410
+msgid "N/A"
+msgstr "N/A"
+
+#~ msgid "Want to collaborate with this plugin?"
+#~ msgstr "¿Deseas colaborar con este plugin?"
+#~ msgid "Default image settings"
+#~ msgstr "Imágenes predeterminadas"
+#~ msgid "Restoring / Destroying data"
+#~ msgstr "Restaurando / Destruyendo datos"
+#~ msgid "Running under Normal Mode"
+#~ msgstr "Trabajando en Modo Normal"
+#~ msgid "Running under PHP Mode"
+#~ msgstr "Trabajando en Modo PHP"
+#~ msgid "Where is my config file?"
+#~ msgstr "¿Dónde está mi archivo de configuración?"
+#~ msgid "Your config file is here"
+#~ msgstr "Tu archivo de configuración está aquí"
+#~ msgid "You can edit this file"
+#~ msgstr "Puedes editar este archivo"
+#~ msgid "directly from Wordpress interface"
+#~ msgstr "directamente desde la interfaz de Wordpress"
+#~ msgid "or through you favorite text editor."
+#~ msgstr "o a través de tu editor de textos favorito."
+#~ msgid "Notice"
+#~ msgstr "Nota"
+#~ msgid ""
+#~ "Remember backup this file before updating the plugin. So you can preserve "
+#~ "your settings."
+#~ msgstr ""
+#~ "Recuerda respaldar este archivo antes de actualizar el pluign. De esta "
+#~ "manera puedes preservar tus configuraciones."
+#~ msgid "Activate editor box"
+#~ msgstr "Activar caja en editor de artículos"
+#~ msgid "Website DTD"
+#~ msgstr "DTD del sitio"
+#~ msgid "Enable images for feeds"
+#~ msgstr "Habilitar imágenes en feeds"
+#~ msgid "Enabled feed engines"
+#~ msgstr "Motores de feeds habilitados"
+#~ msgid "must be active before set this section."
+#~ msgstr "debe activarse antes de configurar esta sección."
+#~ msgid "Image size for feeds"
+#~ msgstr "Tamaño de imagen para los feeds"
+#~ msgid "Enable Default Images:"
+#~ msgstr "Habilitar imágenes predeterminadas:"
+#~ msgid "Default image path:"
+#~ msgstr "Ruta de las imágenes predeterminadas:"
+#~ msgid "Default image for thumbnail size:"
+#~ msgstr "Miniatura predeterminada:"
+#~ msgid "Default image for medium size:"
+#~ msgstr "Tam. Medio predeterminado:"
+#~ msgid "Default image for large size:"
+#~ msgstr "Tam. Grande predeterminado:"
+#~ msgid "Default image for full size:"
+#~ msgstr "Tam. Full predeterminado:"
+#~ msgid "Default image options:"
+#~ msgstr "Opciones de imágenes predeterminadas:"
+#~ msgid "If you're currently using the_post_thumbnail() tag:"
+#~ msgstr "Si utilizas actualmente la etiqueta the_post_thumbnail():"
+#~ msgid ""
+#~ "There is not conflict between WP Smart Image II and The Post Thumbnail. "
+#~ "However, you must to remove <code>the_post_thumbnail()</code> tag where "
+#~ "you place <code>wpsi()</code> tag. Otherwise your template will show, of "
+#~ "course, two thumbnails."
+#~ msgstr ""
+#~ "No hay conflicto alguno entre WP Smart Image II y The Post Thumbnail. No "
+#~ "obstante, es necesario que elimines la etiqueta <code>the_post_thumbnail()"
+#~ "</code> donde uses la etiqueta <code>wpsi()</code>. De lo contrario tu "
+#~ "plantilla mostrará, por supuesto, dos miniaturas."
+#~ msgid "Choose the image size for the feeds."
+#~ msgstr "Elegir el tamaño de imágenes para los feeds."
+#~ msgid "Hide message"
+#~ msgstr "Ocultar mensaje"
+
+#, fuzzy
+#~ msgid "Remove notice"
+#~ msgstr "Eliminar datos"
+#~ msgid "Show thumbnails in RSS feed"
+#~ msgstr "Mostrar miniaturas en avances RSS"
+#~ msgid ""
+#~ "Check this box if you want to show thumbnails in your feeds. Otherwise "
+#~ "leave it blank."
+#~ msgstr ""
+#~ "Marca esta casilla si deseas mostrar miniaturas en los feeds de tu sitio. "
+#~ "De lo contrario déjala en blanco."
+#~ msgid "Russian:"
+#~ msgstr "Ruso:"
+#~ msgid "(Web developer)"
+#~ msgstr "(Desarrollador web)"
+#~ msgid "Main website:"
+#~ msgstr "Sitio web principal:"
+#~ msgid "Portuguese:"
+#~ msgstr "Portugués:"
+#~ msgid "(Web designer)"
+#~ msgstr "(Diseñador web)"
+#~ msgid "Spanish:"
+#~ msgstr "Español:"
+#~ msgid "must be active before set this section"
+#~ msgstr "debe activarse antes de configurar esta sección"
+#~ msgid "Default ALT string"
+#~ msgstr "Texto por defecto para ALT"
+#~ msgid "Default TITLE string"
+#~ msgstr "Texto por defecto para TITLE"
+#~ msgid "Activate compatibility with"
+#~ msgstr "Activar compatibilidad con"
+#~ msgid "Max Image Size Control plugin"
+#~ msgstr "Max Image Size Control plugin"
+#~ msgid "The Post Thumbnail"
+#~ msgstr "The Post Thumbnail"
+#~ msgid "(Status: Installed)"
+#~ msgstr "(Estado: instalado)"
+#~ msgid "(Status: Not installed)"
+#~ msgstr "(Estado: No instalado)"
+#~ msgid ""
+#~ "adds the functionality to change the max image size each category and "
+#~ "post. Even you can create extra sizes. Now you can integrate the power of "
+#~ "both plugins"
+#~ msgstr ""
+#~ "añade la funcionalidad de cambiar el tamaño máximo de las imágenes en "
+#~ "cada entrada o categoría. Incluso puedes crear nuevos tamaños de imagen. "
+#~ "Ahora puedes integrar el poder de ambos plugins"
+#~ msgid "You're enjoying WP Smart Image in your language thanks to:"
+#~ msgstr "Estás disfrutando WP Smart Image II en tu idioma gracias a:"
+#~ msgid "Enter some text to define ALT attribute for default images."
+#~ msgstr ""
+#~ "Ingresa un texto para definir el atributo ALT en las imágenes "
+#~ "predeterminadas"
+#~ msgid "German:"
+#~ msgstr "Alemán:"
+#~ msgid "Use your Media Library tab to choose the posted image."
+#~ msgstr ""
+#~ "Utiliza tu Librería Multimedia para elegir la imagen que aparecerá junto "
+#~ "a cada entrada."
+#~ msgid ""
+#~ "Take a few minutes to proove each of these three options and choose your "
+#~ "favorite one. All of them are equally stable and recommended. <strong>WP "
+#~ "Smart Image II method:</strong> A complete box which has many options to "
+#~ "post images. <strong>The Post Thumbnail method:</strong> manage images "
+#~ "through this comfortable native Wordpress interface (available on WP 2.9 "
+#~ "and above). <strong>None:</strong> Use your Media Library tab to choose "
+#~ "the posted image."
+#~ msgstr ""
+#~ "Tómate unos minutos para probar cada una de las siguientes tres opciones "
+#~ "y escoge tu favorita. Todas ellas son igualmente estables y recomendadas. "
+#~ "<strong>Método WP Smart Image II:</strong> Una completa caja con "
+#~ "múltiples opciones para la publicación de imágenes. <strong>Método The "
+#~ "Post Thumbnail:</strong> Gestiona tus imágenes a través de esta cómoda "
+#~ "interfaz que te ofrece Wordpress de forma nativa (disponible en WP 2.9 y "
+#~ "superior). <strong>Ninguno:</strong> Utiliza tu Librería Multimedia para "
+#~ "elegir la imagen que aparecerá junto a cada entrada."
+#~ msgid "Managing images through editor"
+#~ msgstr "Gestionando imágenes a través del editor"
+#~ msgid ""
+#~ "If checked, you don't need to sort images from menu anymore. You will can "
+#~ "choose directly the image you wish from post editor through a sidebox. "
+#~ "One little field per post will added in your DB _postmeta table. The "
+#~ "activation of this function will not modifies any configuration you have "
+#~ "been set before"
+#~ msgstr ""
+#~ "Si está activado ya no necesitarás reordenar las imágenes desde el menú, "
+#~ "pues podrás escoger la imagen que desees directamente desde tu editor, "
+#~ "mediante un módulo lateral. Un pequeño campo por artículo será añadido en "
+#~ "la tabla _postmeta de tu base de datos. La activación de esta función no "
+#~ "modificará ninguna de los ajustes de imágenes que hayas efectuado "
+#~ "previamente"
+#~ msgid "WPSI method"
+#~ msgstr "Método WPSI"
+#~ msgid "None of both"
+#~ msgstr "Ninguno"
+#~ msgid ""
+#~ "Set thumbnail filename to show in case it not exists one on your post."
+#~ msgstr ""
+#~ "Coloca el nombre de la miniatura que se mostrará en caso de que tu "
+#~ "artículo no incluya imágenes."
+#~ msgid ""
+#~ "Set medium size filename to show in case it not exists one on your post."
+#~ msgstr ""
+#~ "Coloca el nombre de la imagen tamaño medio que se mostrará en caso de que "
+#~ "tu artículo no incluya imágenes."
+#~ msgid ""
+#~ "Set large size filename to show in case it not exists one on your post."
+#~ msgstr ""
+#~ "Coloca el nombre de la imagen tamaño grande que se mostrará en caso de "
+#~ "que tu artículo no incluya imágenes."
+#~ msgid ""
+#~ "Set full size filename to show in case it not exists one on your post."
+#~ msgstr ""
+#~ "Coloca el nombre de la imagen tamaño full que se mostrará en caso de que "
+#~ "tu artículo no incluya imágenes."
+#~ msgid "WPSI Extension ready"
+#~ msgstr "Extensión WPSI preparada"
+#~ msgid "About"
+#~ msgstr "Acerca de"
+#~ msgid "Image parameters"
+#~ msgstr "Parámetros de la imagen"
+#~ msgid "Parameter"
+#~ msgstr "Parámetro"
+#~ msgid "Value"
+#~ msgstr "Valor"
+#~ msgid "Behavior"
+#~ msgstr "Comportamiento"
+#~ msgid "number"
+#~ msgstr "número"
+#~ msgid "Affects the size of the image"
+#~ msgstr "Afecta el tamaño de la imagen"
+#~ msgid "Shows custom size you have been set previously from "
+#~ msgstr "Te muestra el tamaño personalizado que previamente has fijado desde"
+#~ msgid ""
+#~ "You must install and configure this plugin before using this parameter. "
+#~ "Otherwise will returns Medium Size"
+#~ msgstr ""
+#~ "Debes instalar y configurar previamente este plugin antes de utilizar el "
+#~ "parámetro. De lo contrario recibirás una imagen tamaño Medio"
+#~ msgid "Default"
+#~ msgstr "Por defecto"
+#~ msgid "Example"
+#~ msgstr "Ejemplo"
+#~ msgid "Click to select code"
+#~ msgstr "Clic para seleccionar código"
+#~ msgid "Affects the presentation of the image"
+#~ msgstr "Afecta la presentación de la imagen"
+#~ msgid "Image linked to post"
+#~ msgstr "Imagen con enlace al artículo"
+#~ msgid "Image without link"
+#~ msgstr "Imagen sin enlace"
+#~ msgid "Only image URL"
+#~ msgstr "Sólo URL de la imagen"
+#~ msgid "Image linked to its full version"
+#~ msgstr "Imagen enlazada a su versión full"
+#~ msgid ""
+#~ "Adds width and height attributes to the image. Supposing the image has "
+#~ "100px X 100px"
+#~ msgstr ""
+#~ "Agrega atributos de ancho y alto a la imagen. Suponiendo que la imagen "
+#~ "mide 100px X 100px"
+#~ msgid "Any value"
+#~ msgstr "Cualquier valor"
+#~ msgid "Adds to the image the attribute"
+#~ msgstr "Agrega a la imagen el atributo"
+#~ msgid ""
+#~ "This parameter literally slices the image data in pieces, allowing you to "
+#~ "post each of these properties separatelly. Extremely useful in some cases"
+#~ msgstr ""
+#~ "Este parámetro literalmente corta la imagen en pedazos, permitiéndote "
+#~ "mostrar cada uno de éstos de forma separada. Extremadamente útil en "
+#~ "algunos casos"
+#~ msgid "Image title"
+#~ msgstr "Título de la imagen"
+#~ msgid "Image Alt text"
+#~ msgstr "Texto alternativo"
+#~ msgid "Image type (e.g. jpg, png, gif)"
+#~ msgstr "Tipo de imagen (ejemplo: jpg, png, gif)"
+#~ msgid "Image width"
+#~ msgstr "Ancho"
+#~ msgid "Image height"
+#~ msgstr "Alto"
+#~ msgid ""
+#~ "Width &amp; height values are returned as absolute values for better "
+#~ "handling. E,g, if you wish to print \"300px\" you will obtain \"300\" "
+#~ "dinamically and must to add \"px\" manually"
+#~ msgstr ""
+#~ "Los valores \"width\" y \"height\" son devueltos en forma de cifras "
+#~ "absolutas para un mejor radio de acción de la función. Por ejemplo, si "
+#~ "deseas imprimir \"300px\" obtendrás \"300\" de forma dinámica y debes "
+#~ "escribir \"px\" manualmente"
+#~ msgid "This example will show, for instance,"
+#~ msgstr "El código anterior mostrará, por ejemplo,"
+#~ msgid "Link parameters"
+#~ msgstr "Parámetros del enlace"
+#~ msgid "Adds to the link the attribute"
+#~ msgstr "Agrega al enlace el atributo"
+#~ msgid "Boolean: &#39;0&#39; or &#39;1&#39;"
+#~ msgstr "Booleano: &#39;0&#39; o &#39;1&#39;"
+#~ msgid "Enables or disables \"title\" attribute to links"
+#~ msgstr "Activa o desactiva el atributo \"title\" en los enlaces"
+#~ msgid "The linked url will be opened"
+#~ msgstr "La URL enlazada abrirá"
+#~ msgid "in same window"
+#~ msgstr "en la misma ventana"
+#~ msgid "Default value"
+#~ msgstr "Valor predeterminado"
+#~ msgid "on a new window"
+#~ msgstr "en una nueva ventana"
+#~ msgid "on parent frame"
+#~ msgstr "en el marco padre"
+#~ msgid "using full window size"
+#~ msgstr "usando el total de espacio de la ventana"
+#~ msgid ""
+#~ "in a new window through javascript. Very useful for DTD Strict websites"
+#~ msgstr ""
+#~ "en una nueva ventana mediante javascript. Útil para sitios con DTD "
+#~ "Estricto"
+#~ msgid "Frame name"
+#~ msgstr "Nombre del marco"
+#~ msgid ""
+#~ "with custom frame name. It overrides &#39;target&#39; parameter if both "
+#~ "&#39;target&#39; and &#39;targetname&#39; are present"
+#~ msgstr ""
+#~ "personalizando el nombre del marco. Éste anula el parámetro  &#39;"
+#~ "target&#39; si ambos (&#39;target&#39; and &#39;targetname&#39;) están "
+#~ "presentes"
+#~ msgid "in the frame named as you have been set here"
+#~ msgstr "en el marco cuyo nombre sea el mismo que hayas configurado aquí"
+#~ msgid "Function parameters"
+#~ msgstr "Parámetros de la función"
+#~ msgid "If true, prepares the function to be passed through PHP parameters"
+#~ msgstr ""
+#~ "Si está configurada, preparará la función para ser pasada por parámetros "
+#~ "PHP"
+#~ msgid "More examples"
+#~ msgstr "Más ejemplos"
+#~ msgid "Thumbnail, no link:"
+#~ msgstr "Miniatura, enlace desactivado:"
+#~ msgid "Only image URL, medium size:"
+#~ msgstr "Sólo URL de la imagen, tamaño medio:"
+#~ msgid "Thumbnail, linked to original image:"
+#~ msgstr "Miniatura, enlace a la imagen original:"
+#~ msgid "Adding custom CSS styles:"
+#~ msgstr "Agregando estilos CSS personalizados:"
+#~ msgid "Setting a dynamic CSS background:"
+#~ msgstr "Configurando un fondo CSS dinámico:"
+#~ msgid "External link"
+#~ msgstr "Enlace externo"
+#~ msgid "What you can do with WP Smart Image II"
+#~ msgstr "Lo que puedes hacer con WP Smart Image II"
+#~ msgid "Design &amp; layout"
+#~ msgstr "Diseño y maquetación"
+#~ msgid "Add \"width\" and \"height\" attributes through CSS or HTML methods"
+#~ msgstr ""
+#~ "Agregar atributos \"width\" y \"height\" mediante métodos CSS o HTML"
+#~ msgid ""
+#~ "Customize the \"alt\" and \"title\" attributes if they haven't been "
+#~ "configured yet"
+#~ msgstr ""
+#~ "Personalizar los atributos \"alt\" y \"title\"  de las imágenes en caso "
+#~ "de que éstas no los tengan"
+#~ msgid ""
+#~ "Choose between the four presets WordPress sizes: Thumbnail, Medium, Large "
+#~ "and Full. Additionally, you can create new preset sizes with Max Image "
+#~ "Size Control plugin, and easily handle them through WP Smart Image II"
+#~ msgstr ""
+#~ "Elegir entre todos los tipos de tamaños predeterminados disponibles de "
+#~ "Wordpress: Miniatura, Medio, Grande y Full. Adicionalmente puedes crear "
+#~ "nuevos tamaños predeterminados con el plugin Max Image Size Control y "
+#~ "manipularlos Fácilmente con WP Smart Image II"
+#~ msgid ""
+#~ "Set and show preset images if the post have not one. Also you can choose "
+#~ "to leave it without images"
+#~ msgstr ""
+#~ "Configurar y mostrar imágenes predeterminadas si la entrada no tiene una. "
+#~ "También puedes optar por no usar imágenes predeterminadas"
+#~ msgid ""
+#~ "Link the image to the article or full image version (from any size), or "
+#~ "leave it without a link"
+#~ msgstr ""
+#~ "Enlazar la imagen al artículo o versión full de la imagen (desde "
+#~ "cualquier tamaño), o bien dejarla sin enlace"
+#~ msgid ""
+#~ "Add a link to the full version of the image from the thumbnail or any size"
+#~ msgstr ""
+#~ "Agregar un enlace hacia la versión Full de la imagen desde el tamaño "
+#~ "Miniatura o cualquier tamaño"
+#~ msgid "Show random images per post (instead only one)"
+#~ msgstr "Mostrar imágenes aleatorias por cada entrada (en lugar de sólo una)"
+#~ msgid "Adapt the tag type to website DTD for a right W3C valitation"
+#~ msgstr ""
+#~ "Adaptar el tipo de etiqueta al DTD de tu sitio para una correcta "
+#~ "validación W3C"
+#~ msgid "Choose between \"echo\" or \"return\" the tag"
+#~ msgstr "Elegir el tipo de salida de la función: echo o return"
+#~ msgid ""
+#~ "Add custom CSS classes and ID to properly handling the images through "
+#~ "CSS, javascript, PHP and others web resources"
+#~ msgstr ""
+#~ "Añadir clases e ID personalizados a las imágenes, a fin de procesarlas "
+#~ "apropiadamente mediante CSS, javascript, PHP y otros recursos."
+#~ msgid "Get the image url instead of the whole tag"
+#~ msgstr "Obtener la URL de la imagen en lugar de la etiqueta completa"
+#~ msgid ""
+#~ "Easily add and define attributes to image's links, as \"rel\", \"class\", "
+#~ "\"id\" and \"target\""
+#~ msgstr ""
+#~ "Añadir y definir atributos a los enlaces, tales como  \"rel\", \"class\", "
+#~ "\"id\" y \"target\""
+#~ msgid ""
+#~ "Slice the image data in pieces and post them separately (width, height, "
+#~ "mimetype, ID, etc.)"
+#~ msgstr ""
+#~ "Separar los datos de las imágenes en piezas y mostrarlos individualmente "
+#~ "(Alto, ancho, tipo de archivo, ID, etc)"
+#~ msgid ""
+#~ "Choose to run the plugin under PHP mode, without need to db queries for "
+#~ "common tasks"
+#~ msgstr ""
+#~ "Puedes poner a funcionar el plugin en el Modo PHP, ahorrándote así unos "
+#~ "cuantos queries para tareas comunes del sistema"
+#~ msgid "Blogging"
+#~ msgstr "Blogueo"
+#~ msgid "Choose the image to show throught a friendly box in your editor"
+#~ msgstr ""
+#~ "Elegir la imagen a mostrar a través de una amigable caja en tu editor de "
+#~ "texto"
+#~ msgid "Show/hide thumbnails in RSS feeds"
+#~ msgstr "Mostrar miniaturas en feeds RSS"
+#~ msgid "Customize sizes in RSS feeds"
+#~ msgstr "Personalizar tamaños en feeds RSS"
+#~ msgid "Assing titles of the images directly from your editor box"
+#~ msgstr "Asignar títulos a las imágenes directamente de la caja de tu editor"
+#~ msgid ""
+#~ "Choose any image from your Media Library and assign it to the post, even "
+#~ "if the image isn't attached to the post"
+#~ msgstr ""
+#~ "Elegir cualquier imagen de tu librería multimedia y asignarla al "
+#~ "artículo, aún si dicha imagen no está vinculada a éste"
+#~ msgid "Support:"
+#~ msgstr "Soporte:"
+#~ msgid "Spanish support"
+#~ msgstr "Soporte en español"
+#~ msgid "English support"
+#~ msgstr "Soporte en inglés"
+#~ msgid "How you can help"
+#~ msgstr "Cómo ayudar"
+#~ msgid ""
+#~ "If you find a solution in this plugin maybe you wish to give some help. "
+#~ "There are several way to participate in the continuous improvement of WP "
+#~ "Smart Image II"
+#~ msgstr ""
+#~ "Si has encontrado una solución en este plugin, quizás desees ofrecer algo "
+#~ "de ayuda. Existen muchas formas de participar en el mejoramiento con "
+#~ "tinuo de WP Smart Image II"
+#~ msgid "Translating the plugin"
+#~ msgstr "Traduciendo el plugin"
+#~ msgid ""
+#~ "If you have been translated WP Smart Image II into your language, please "
+#~ "share your work with the world. Send me the .mo and .po files via e-mail "
+#~ "to include them in next version"
+#~ msgstr ""
+#~ "Si has traducido WP Smart Image II en tu idioma, puedes compartir tu "
+#~ "trabajo con el mundo. Envíame al correo los archivos .mo y .po "
+#~ "correspondientes, a fin de incluirlos en la próxima versión."
+#~ msgid "Code optimization"
+#~ msgstr "Optimizando el código"
+#~ msgid ""
+#~ "Also if you're programmer o designer, you can help with some pieces of "
+#~ "code you have been made over parts you think must be improved"
+#~ msgstr ""
+#~ "Igualmente si eres programador o diseñador web, puedes ayudar con piezas "
+#~ "de código que hayas escrito en las partes del plugin que creas "
+#~ "convenientes"
+#~ msgid "Testing, suggestions and requests"
+#~ msgstr "Testeo, sugerencias, solicitudes de nuevas características"
+#~ msgid ""
+#~ "If you see any issue, broken function, feature which can be improved, non "
+#~ "existing feature, or any other thing you whish to discuss, please let me "
+#~ "know through forum or e-mail (preferably forum)"
+#~ msgstr ""
+#~ "Si notas cualquier problema, fallo, característica que pueda ser "
+#~ "mejorada, función inexistente o cualquier otro aspecto que desees exponer "
+#~ "o discutir, por favor házmelo saber a través del foro o el correo "
+#~ "electrónico (preferiblemente el foro)"
+#~ msgid ""
+#~ "With any of these three ways you would be giving an excellent "
+#~ "contribution to many users"
+#~ msgstr ""
+#~ "A través de cualquiera de dichas formas estarías dando una excelente "
+#~ "contribución a favor de muchos usuarios"
+#~ msgid ""
+#~ "My contact e-mail is darioferrer.com@gmail.com and (if you have been "
+#~ "waved by God) darioferrer.com@googlewave.com. Please don't ask for "
+#~ "support through e-mail; for support I invite you to participate in the "
+#~ "forum or -of course the Wordpress Official Support Forum (links above)"
+#~ msgstr ""
+#~ "Mi correo de contacto es darioferrer.com@gmail.com y (si usas Google "
+#~ "Wave) darioferrer.com@googlewave.com. Por favor no uses el correo para "
+#~ "solicitar soporte; para tal fin te invito cordialmente a participar en el "
+#~ "foro (puedes encontrar el enlace más arriba)"
+
+#, fuzzy
+#~ msgid ""
+#~ "Show preset images at the posts list if images are not setting to appear "
+#~ "in the content. Also you can choose to leave it without images"
+#~ msgstr ""
+#~ "Mostrar las imágenes en la lista de entradas, aún si dichas imágenes no "
+#~ "están configuradas para mostrarse en el contenido."
+
+#, fuzzy
+#~ msgid ""
+#~ "Add a link to the image's attachment page from the thumbnail or any size"
+#~ msgstr ""
+#~ "Agregar un enlace hacia la versión Full de la imagen desde el tamaño "
+#~ "Miniatura, Medio o Grande."
+
+#, fuzzy
+#~ msgid "Customize the default images and its paths for all the sizes"
+#~ msgstr ""
+#~ "Personalizar imágenes genéricas y sus rutas para todos los tamaños, en "
+#~ "caso de que la entrada no tenga imágenes."
+#~ msgid "Choose the image to show."
+#~ msgstr "Elegir la imagen a mostrar"
+#~ msgid ""
+#~ "Choose between the four presets WordPress sizes: Thumbnail, Medium, Large "
+#~ "and Full."
+#~ msgstr ""
+#~ "Elegir entre los cuatro tamaños predeterminados de imagen: Miniatura, "
+#~ "Medio, Grande y Full."
+#~ msgid "How to configure your images to be displayed:"
+#~ msgstr "Cómo configurar las imágenes para ser mostradas"
+#~ msgid ""
+#~ "Upload the images through your edition panel (required for database file "
+#~ "association)."
+#~ msgstr ""
+#~ "Sube las imágenes mediante el panel de edición (requerido para establecer "
+#~ "la asociación en la base de datos)"
+#~ msgid ""
+#~ "In the Gallery section, drag the image you want to show to the first "
+#~ "position, then it will be in the cover, even if you don&#39;t use it in "
+#~ "the content."
+#~ msgstr ""
+#~ "En la sección Galería arrastra la imagen elegida hasta la primera "
+#~ "posición. Esto hará que aparezca en la posrtada, aún si no la usas en el "
+#~ "contenido."
+#~ msgid "That&#39;s it."
+#~ msgstr "¡Es todo!"
+#~ msgid "Replaced by parameter"
+#~ msgstr "Reemplazado por el parámetro"
+#~ msgid "see below"
+#~ msgstr "ver más abajo"
+#~ msgid ""
+#~ "Setting MEDIUM SIZE image and respective FULL SIZE url code below it &#40;"
+#~ "ImageShack style&#41;:"
+#~ msgstr ""
+#~ "Configurando imagen de TAMAÑO MEDIO y su respectivo código de la URL del "
+#~ "TAMAÑO FULL bajo ésta &#40;Estilo ImageShack&#41;:"
+#~ msgid "ask in the Wordpress Forum"
+#~ msgstr ""
+#~ "pregunta en el foro de Wordpress. Para soporte directo en español tambien "
+#~ "puedes visitar: <a href=\"http://ayudawordpress.com/foro/\" target="
+#~ "\"_blank\">Ayuda Wordpress</a>, <a href=\"http://www.forowp.org/\" target="
+#~ "\"_blank\">Foro WP</a>, <a href=\"http://www.forosdelweb.com/f118/\" "
+#~ "target=\"_blank\">Foros del Web</a> y <a href=\"http://foros.cristalab."
+#~ "com/wordpress-blogs-y-cms-f38/\" target=\"_blank\">Cristalab</a>"
+#~ msgid "Options updated"
+#~ msgstr "Opciones actualizadas"
+#~ msgid "Default alternate text"
+#~ msgstr "Texto alternativo por defecto"
+#~ msgid ""
+#~ "This string will show with <strong>\"alt\"</strong> attribute in case you "
+#~ "have been not assigned one through your image panel."
+#~ msgstr ""
+#~ "Esta línea de texto reemplazará al atributo <strong>\"alt\"</strong> de "
+#~ "la etiqueta de tu imagen en caso de que no la hayas configurado en el "
+#~ "panel de imagen."
+#~ msgid ""
+#~ "This string will show with <strong>\"title\"</strong> attribute in case "
+#~ "you have been not assigned one through your image panel."
+#~ msgstr ""
+#~ "Esta línea de texto reemplazará al atributo <strong>\"title\"</strong> de "
+#~ "la etiqueta de tu imagen en caso de que no la hayas configurado en el "
+#~ "panel de imagen."
+#~ msgid "Managing data"
+#~ msgstr "Gestionando datos"
+#~ msgid "They have been collaborated on this project"
+#~ msgstr "Colaboraron en este proyecto"
+#~ msgid "Translating revision for version 0.1.1:"
+#~ msgstr "Revisión de traducción al inglés para versión 0.1.1:"
+#~ msgid "Javascript code for target _blank:"
+#~ msgstr "Código javascript para target _blank"
+#~ msgid "Testing background image:"
+#~ msgstr "Imagen de prueba:"
+#~ msgid "Hard heuristic plugin testing:"
+#~ msgstr "Testeo heurístico e intensivo del plugin:"
+#~ msgid "My grandma."
+#~ msgstr "Mi abuela."
+#~ msgid "Coffee and cakes:"
+#~ msgstr "Café y galletas:"
+#~ msgid "Thank you!:"
+#~ msgstr "¡Gracias!:"
+#~ msgid "To"
+#~ msgstr "A"
+#~ msgid ""
+#~ "for his valuable achievements for the webmasters community, and for being "
+#~ "a true example to be followed in this area"
+#~ msgstr ""
+#~ "por sus valiosas acciones a favor de la comunidad de webmasters hispanos "
+#~ "y por ser un verdadero ejemplo a seguir en este campo"
+#~ msgid ""
+#~ "for their constant support and friendship, and for being my teacher in CSS"
+#~ msgstr "por su constante apoyo y amistad, y por ser mi maestro en CSS"
+#~ msgid ""
+#~ "because her represents my first start in the web development area. To me "
+#~ "your vote worth quad"
+#~ msgstr ""
+#~ "por representar mi primer punto de partida en el campo del desarrollo "
+#~ "web. Para mí tu voto vale cuádruple"
+#~ msgid "Mexico"
+#~ msgstr "México"
+#~ msgid "compadre, my brother from life and strict Linux teacher =P"
+#~ msgstr "compadre, hermano de la vida y estricto maestro en Linux =P"
+#~ msgid "respectable abducted javascripter, and even more respectable friend"
+#~ msgstr "respetable javascripter abducido, y aún más respetable amigo"
+#~ msgid ""
+#~ "This first plugin release is dedicated to the memory of "
+#~ "<strong>Enrique33</strong>."
+#~ msgstr ""
+#~ "Esta primera versión del plugin está dedicada a la memoria de "
+#~ "<strong>Enrique33</strong>."
+#~ msgid ""
+#~ "Default setting - Thumbnail, linked to post <span class=\"wpsi-normal\">"
+#~ "(Same behavior if you add both \"$size=&#39;mini&#39;\" and \"$type=&#39;"
+#~ "link&#39;\")</span>:"
+#~ msgstr ""
+#~ "Configuración preterminada - Miniatura, enlace al artículo <span class="
+#~ "\"wpsi-normal\">(Mismo comportamiento si agregaras \"$size=&#39;mini&#39;"
+#~ "\" y \"$type=&#39;link&#39;\")</span>:"
+#~ msgid ""
+#~ "Thumbnail image. This is the default \"$size\" behavior. Link to post "
+#~ "assigned by default too:"
+#~ msgstr ""
+#~ "Imagen tamaño miniatura. Éste es el comportamiento predeterminado de "
+#~ "\"$size\". También el enlace a la entrada está asignado por defecto:"
+#~ msgid "Medium size image, linked to post:"
+#~ msgstr "Imagen tamaño medio, enlace al artículo:"
+#~ msgid "Large size image, linked to post:"
+#~ msgstr "Imagen tamaño grande, enlace al artículo:"
+#~ msgid "Original size image, linked to post:"
+#~ msgstr "Imagen tamaño original, enlace al artículo:"
+#~ msgid "Combo examples:"
+#~ msgstr "Ejemplos de combinaciones:"
+#~ msgid ""
+#~ "Image linked to post. This is the default \"$type\" behavior. Thumbnail "
+#~ "assigned by default too:"
+#~ msgstr ""
+#~ "Imagen con enlace a la entrada. Éste es el comportamiento predeterminado "
+#~ "de \"$type\". También el tamaño miniatura está asignado por defecto:"
+#~ msgid "Some useful examples:"
+#~ msgstr "Algunos ejemplos de utilidad:"
+#~ msgid "Parameters with examples"
+#~ msgstr "Parámetros con ejemplos"
+#~ msgid "Default text to replace $url variable for generic images:"
+#~ msgstr ""
+#~ "Texto predeterminado para reemplazar la variable $url en imágenes "
+#~ "genéricas:"
+#~ msgid ""
+#~ "If you have set images with URL condition, naturally WP Smart Image will "
+#~ "retrieve you a clean url path. In case of <strong>generic images</strong> "
+#~ "this is a obvious contradiction. So here you can customize the results to "
+#~ "set anything you wish to show in this case. HTML tags are allowed here."
+#~ msgstr ""
+#~ "Si acaso has configurado imágenes con la variable $url, naturalmente WP "
+#~ "Smart Image te devolverá una dirección web limpia. En el caso específico "
+#~ "de imágenes genéricas ésto representa una obvia contradicción. En virtud "
+#~ "de ello puedes sustituir aquí dicho resultado con el texto que desees que "
+#~ "se muestre sólo en esas ocasiones."
+#~ msgid "No URL available for this item"
+#~ msgstr "Ninguna URL disponible para este elemento"
+#~ msgid ""
+#~ "<h4>With WP Smart Image you can:</h4><ul><li>Choose the image to show.</"
+#~ "li><li>Choose between the four presets WordPress sizes: Thumbnail, "
+#~ "Medium, Large and Full.</li><li>Link the image to the article or leave it "
+#~ "wit out a link.</li><li>Showing images in the posts list, even if those "
+#~ "images are not setting to appear in the content. </li><li>Get the image "
+#~ "url instead of the whole tag.</li><li>Personalize the alt and title "
+#~ "attributes if they haven&#39;t been configured already.</li><li>Add a "
+#~ "link to the full version of the image from the thumbnail or the medium "
+#~ "size one.</li><li>Personalize the generic images and its paths for all "
+#~ "the sizes.<br></li></ul><h4>How to configure you images to be displayed.</"
+#~ "h4><ul><li>Upload the images from your edition panel.</li><li>In the "
+#~ "Gallery section, drag the image you want to show to the first position, "
+#~ "then it will be in the cover, even if you don&#39;t use it in the content."
+#~ "</li><li>That&#39;s it.</li></ul>"
+#~ msgstr ""
+#~ "<h4>Qué obtienes con WP Smart Image</h4><ul><li>Con WP Smart Image puedes:"
+#~ "</li><li>Elegir la imagen a mostrar.</li><li>Elegir entre los cuatro "
+#~ "tamaños predeterminados de Wordpress: Miniatura, Medio, Grande y full.</"
+#~ "li><li>Enlazar la imagen al artículo o dejarla sin enlace.</"
+#~ "li><li>Mostrar imágenes en la lista de entradas, aún si no están "
+#~ "configuradas para aparecer en el contenido.</li><li>Capturar sólo la URL "
+#~ "de la imagen en lugar de la etiqueta completa.</li><li>Posibilidad de "
+#~ "personalizar atributos ALT y TITLE si éstos no han sido configurados.</"
+#~ "li><li>Agregar enlace a la versión full de la imagen desde la miniatura o "
+#~ "tamaño medio.</li><li>Personalizar las imágenes genéricas (y sus rutas) "
+#~ "para todos los tamaños, las cuales aparecerán cuando el artículo no tenga "
+#~ "imágenes.</li></ul><h4>Cómo configurar mis imágenes para ser mostradas</"
+#~ "h4><ul><li>Sube las imágenes desde tu panel de edición.</li><li>En la "
+#~ "sección Galería arrastras la imagen que quieras mostrar a la primera "
+#~ "posición. Ésta aparecerá en la portada, aún si no la muestras en el "
+#~ "contenido.</li><li>¡Es todo!.</li></ul>"
+#~ msgid "Available uses"
+#~ msgstr "Usos disponibles"
+
+#, fuzzy
+#~ msgid ""
+#~ "Default setting - Thumbnail, linked to post <span class=\"cursiva chiquita"
+#~ "\">(Same result if you add \"$size="
+#~ msgstr ""
+#~ "Configuración preterminada - Miniatura, enlace al artículo <span class="
+#~ "\"wpsi-normal\">(Mismo resultado si agregas \"$size=&#39;mini&#39;\")</"
+#~ "span>:"
+

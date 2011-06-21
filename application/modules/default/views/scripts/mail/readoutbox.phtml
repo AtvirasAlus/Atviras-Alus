@@ -1,0 +1,45 @@
+<style>
+#mail-menu {
+	display:inline;
+	list-style:none;
+}
+#mail-menu li {
+	display:inline;
+	padding-right:10;
+	padding-left:10
+}
+#mail-table {
+}
+#mail-table td{
+	padding-top:3;
+	padding-right:10;
+	padding-left:10
+}
+</style>
+
+<div class="ui-corner-all" style="background-color:#eeeeee;width:820;padding:10">
+<div style="padding-bottom:10" align="right">
+<ul id="mail-menu" >
+	<li><a href="/mail/inbox">Gautieji</a></li>|
+	<li><a href="/mail/compose">Rašyti laišką</a></li>|
+	<li><a href="/mail/outbox"><b>Išiųsti laiškai</b></a></li>
+	
+	
+</ul>
+</div><?if (isset($this->mail)) {?>
+	<div class="ui-corner-all" style="background:#ffffff;width:800;padding:10">
+	<table width="100%">
+	<tr><td width="50"><b>Nuo:</b></td><td align="left"><?=$this->mail['mail_from'];?></td></tr>
+	<tr><td width="50"><b>Kam:</b></td><td align="left"><?=$this->mail['mail_to'];?></td></tr>
+	<tr><td width="50"><b>Data:</b></td><td align="left"><?=$this->mail['mail_date'];?></td></tr>
+	<tr><td width="50"><b>Tema:</b></td><td align="left"><?=$this->mail['mail_subject'];?></td></tr>
+	<tr><td colspan="2" height="50"></td></tr>
+	<tr><td colspan="2"><?=nl2br($this->mail['mail_body']);?></td></tr>
+	<tr><td colspan="2" height="20"></td></tr>
+	
+	</table>
+	</div>
+	
+	<?}?>
+	</div>
+

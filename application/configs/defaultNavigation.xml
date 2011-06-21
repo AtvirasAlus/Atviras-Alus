@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<nav>
+		
+		<about>
+			<label>Alaus stiliai</label>
+			<module>default</module>
+			<controller>styles</controller>
+			<action>index</action>
+			<route>default</route>
+		</about>
+		<practises>
+			<label>Receptai</label>
+			<module>default</module>
+			<controller>recipes</controller>
+			<action>index</action>
+			<route>default</route>
+		</practises>
+		<research>
+			<label>Skaičiuoklė</label>
+			<module>default</module>
+			<controller>index</controller>
+			<action>calculus</action>
+			<route>default</route>
+		</research>
+		<forum>
+			<label>Forumas</label>
+			<module>forum</module>
+		
+			<route>default</route>
+		</forum>
+		<skaitykla>
+			<label>Skaitykla</label>
+			<module>default</module>
+			<controller>content</controller>
+			<action>list</action>
+			<route>skaitykla</route>
+		</skaitykla>
+		<search>
+			<label>Paieška</label>
+			<module>default</module>
+			<controller>recipes</controller>
+			<action>search</action>
+			<route>search</route>
+		</search>
+		<events>
+			<label>Įvykiai</label>
+			<module>default</module>
+			<controller>events</controller>
+			<action>index</action>
+			<route>events</route>
+		</events>
+		<help>
+			<label>Pagalba</label>
+			<module>default</module>
+			<controller>content</controller>
+			<action>read</action>
+			<route>pagalba</route>
+		</help>
+		
+		
+	</nav>
+</config>

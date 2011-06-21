@@ -1,0 +1,178 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Lightbox Gallery 0.6.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-11-19 17:29+0900\n"
+"PO-Revision-Date: 2011-02-04 21:42+0200\n"
+"Last-Translator: Jibo <contact@jibo.ro>\n"
+"Language-Team: Anunturi Jibo <contact@jibo.ro>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_c\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Romanian\n"
+"X-Poedit-Country: ROMANIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: lightbox-gallery\n"
+
+#: lightbox-gallery/lightbox-gallery.php:157
+msgid "Settings"
+msgstr "Setari"
+
+#: lightbox-gallery/lightbox-gallery.php:165
+#: lightbox-gallery/lightbox-gallery.php:191
+msgid "Lightbox Gallery"
+msgstr "Galerie Lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:179
+msgid "Options updated."
+msgstr "Optiuni actualizate."
+
+#: lightbox-gallery/lightbox-gallery.php:183
+msgid "Options deleted."
+msgstr "Optiuni sterse."
+
+#: lightbox-gallery/lightbox-gallery.php:197
+#: lightbox-gallery/lightbox-gallery.php:262
+#: lightbox-gallery/lightbox-gallery.php:278
+msgid "Click to toggle"
+msgstr "Apasa pentru a comuta"
+
+#: lightbox-gallery/lightbox-gallery.php:198
+msgid "Lightbox Gallery Options"
+msgstr "Optiuni Galerie Lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:207
+msgid "Choose the gallery loading type"
+msgstr "Alege tipul de incarcare a galeriei"
+
+#: lightbox-gallery/lightbox-gallery.php:208
+msgid "Lightbox"
+msgstr "Lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:209
+msgid "Highslide JS"
+msgstr "Highslide JS"
+
+#: lightbox-gallery/lightbox-gallery.php:210
+#, php-format
+msgid "Caution: Highslide JS is licensed under a Creative Commons Attribution-NonCommercial 2.5 License. You need the author's permission to use Highslide JS on commercial websites. <a href=\"%s\" target=\"_blank\">Please look at the author's website.</a>"
+msgstr "Aveti grija: Highslide JS este sub licenta Creative Commons Attribution-NonCommercial 2.5. Ai nevoie de permisiunea autorului pentru a folosi Highslide JS in site-uri comerciale. <a href=\"%s\" target=\"_blank\">Te rog sa te uiti la site-ul autorului.</a>"
+
+#: lightbox-gallery/lightbox-gallery.php:213
+msgid "In case that you would like to use the lightbox in certain categories (comma-deliminated)"
+msgstr "In cazul in care vrei sa folosesti Lightbox in unele categorii (separate prin virgula)"
+
+#: lightbox-gallery/lightbox-gallery.php:217
+msgid "In case that you would like to use the lightbox in certain pages (comma-deliminated)"
+msgstr "In cazul in care vrei sa folosesti Lightbox in unele pagini (separate prin virgula)"
+
+#: lightbox-gallery/lightbox-gallery.php:221
+msgid "Enforce loading the lightbox gallery scripts"
+msgstr "Forteaza incarcarea scripturilor lightbox  in galerie"
+
+#: lightbox-gallery/lightbox-gallery.php:222
+msgid "The lightbox gallery scripts are loaded in every page"
+msgstr "Scripturile galeriei lightbox sunt incarcate in fiecare pagina"
+
+#: lightbox-gallery/lightbox-gallery.php:225
+msgid "In case that you would like to disable to load the lightbox-gallery.css"
+msgstr "In cazul in care doresti sa dezactivezi incarcarea fisierului lightbox-gallery.css"
+
+#: lightbox-gallery/lightbox-gallery.php:226
+msgid "Do not use the lightbox-gallery.css"
+msgstr "Nu folosi fisierul lightbox-gallery.css"
+
+#: lightbox-gallery/lightbox-gallery.php:229
+msgid "In case that you would like to disable to load the column inline css"
+msgstr "In cazul in care doresti sa dezactivezi incarcarea CSS inline"
+
+#: lightbox-gallery/lightbox-gallery.php:230
+msgid "Do not use the column inline css"
+msgstr "Nu folosi CSS inline"
+
+#: lightbox-gallery/lightbox-gallery.php:233
+msgid "In case that you would like to set the default number of columns"
+msgstr "In cazul in care doresti sa setezi numarul implicit de coloane"
+
+#: lightbox-gallery/lightbox-gallery.php:237
+msgid "In case that you would like to set the default thumbnail size"
+msgstr "In cazul in care doresti sa setezi marimea implicita a pictogramelor"
+
+#: lightbox-gallery/lightbox-gallery.php:241
+msgid "In case that you would like to set the default lightbox size"
+msgstr "In cazul in care doresti sa setezi marimea implicita a lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:248
+msgid "Choose the script loading point"
+msgstr "Alege punctul de incarcare al scriptului"
+
+#: lightbox-gallery/lightbox-gallery.php:249
+msgid "Header"
+msgstr "Antet"
+
+#: lightbox-gallery/lightbox-gallery.php:250
+msgid "Footer"
+msgstr "Subsol"
+
+#: lightbox-gallery/lightbox-gallery.php:253
+msgid "Update Options &raquo;"
+msgstr "Actualizeaza optiuni &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:263
+msgid "Delete Options"
+msgstr "Sterge optiuni"
+
+#: lightbox-gallery/lightbox-gallery.php:265
+msgid "Are you sure to delete options? Options you set will be deleted."
+msgstr "Esti sigur ca doresti sa stergi optiunile? Optiunile setate vor fi sterse."
+
+#: lightbox-gallery/lightbox-gallery.php:269
+msgid "Delete Options &raquo;"
+msgstr "Sterge optiunile &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:279
+msgid "Donation"
+msgstr "Donatie"
+
+#: lightbox-gallery/lightbox-gallery.php:281
+msgid "If you liked this plugin, please make a donation via paypal! Any amount is welcome. Your support is much appreciated."
+msgstr "Daca iti place acest plugin, te rog sa donezi via PayPal! orice suma este binevenita. Ajutorul tau este foarte apreciat."
+
+#: lightbox-gallery/lightbox-gallery.php:363
+msgid "Pages:"
+msgstr "Pagini:"
+
+#: lightbox-gallery/lightbox-gallery.php:365
+msgid "Next page"
+msgstr "Pagina urmatoare"
+
+#: lightbox-gallery/lightbox-gallery.php:366
+msgid "Previous page"
+msgstr "Pagina anterioara"
+
+#: lightbox-gallery/lightbox-gallery.php:448
+msgid "camera"
+msgstr "camera"
+
+#: lightbox-gallery/lightbox-gallery.php:450
+msgid "aperture"
+msgstr "aperture"
+
+#: lightbox-gallery/lightbox-gallery.php:452
+msgid "focal_length"
+msgstr "focal_length"
+
+#: lightbox-gallery/lightbox-gallery.php:454
+msgid "ISO"
+msgstr "ISO"
+
+#: lightbox-gallery/lightbox-gallery.php:458
+msgid "shutter_speed"
+msgstr "shutter_speed"
+
+#: lightbox-gallery/lightbox-gallery.php:461
+msgid "created_timestamp"
+msgstr "created_timestamp"
+

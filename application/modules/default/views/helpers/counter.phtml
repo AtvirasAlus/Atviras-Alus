@@ -1,0 +1,84 @@
+
+<style>
+#statsWrap {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+#statsDetailsWrap {
+	background: #333333;
+	float: left;
+	padding: 1px 3px 1px 1px;
+	border: #666666 1px inset;
+}
+#statsCount {
+	float: left;
+	padding: 1px 3px;
+	background: #999999;
+	color: #FFFFFF;
+	border: #666666 1px inset;
+	width: 40px;
+	height: 12px;
+}
+#statsMetric {
+	float: left;
+	padding: 3px;
+	color: #FFFFFF;
+	width: 50px;
+	height: 12px;
+}
+#byGoogle {
+	clear: both;
+	color: #666666;
+	font-size: 10px;
+}
+</style>
+
+
+
+<div id="statsWrap">
+	<div id="statsDetailsWrap">
+		<div id="statsCount">
+			<span id="statsPageviews"><?php echo $this->ga->getPageviews() ?></span>
+			<span id="statsVisits"><?php echo $this->ga->getVisits() ?></span>
+		</div>
+		<div id="statsMetric">
+			<span id="statsPageviewsText">puslapio peržiūrų</span>
+			<span id="statsVisitsText">vizitų</span>
+		</div>
+	</div>
+	<div id="byGoogle">Pagal Google Analytics</div>
+</div>
+<script type="text/javascript">
+function rotateMetrics() {
+		$("#statsPageviewsText").slideDown("slow");
+		$("#statsPageviews").slideDown("slow", function() {
+			setTimeout(function() {
+				$("#statsPageviewsText").slideUp("slow");
+				$("#statsPageviews").slideUp("slow", function() {
+					$("#statsVisitsText").slideDown("slow");
+					$("#statsVisits").slideDown("slow", function() {
+						setTimeout(function() {
+							$("#statsVisitsText").slideUp("slow");
+							$("#statsVisits").slideUp("slow", function() {
+								rotateMetrics();
+							}); 
+						}, 10000);
+					}); 
+				}); 
+			}, 10000);
+		});
+		 
+	}
+$(document).ready(function() {   
+						   
+	$("#statsPageviews").hide();
+	$("#statsVisits").hide();
+	$("#statsPageviewsText").hide();
+	$("#statsVisitsText").hide();
+	rotateMetrics(); 
+
+	
+}); 
+</script>
+
+

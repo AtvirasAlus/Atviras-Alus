@@ -1,0 +1,597 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-04-08 08:44+0200\n"
+"PO-Revision-Date: 2008-05-23 08:57+0100\n"
+"Last-Translator: David Garlitz <dgarlitz@wesleyan.edu>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: archive.php:8
+msgid "Category Archive for"
+msgstr "Archive de la catégorie"
+
+#: archive.php:11
+msgid "Tag Archive"
+msgstr "Archive de tag"
+
+#: archive.php:14
+msgid "Daily Archive for"
+msgstr "Archive journalière pour"
+
+#: archive.php:14
+msgid "F jS, Y"
+msgstr "j F Y"
+
+#: archive.php:17
+msgid "Monthly Archive for"
+msgstr "Archive mensuelle pour"
+
+#: archive.php:17
+msgid "F, Y"
+msgstr "F Y"
+
+#: archive.php:20
+msgid "Yearly Archive for"
+msgstr "Archive annuelle pour"
+
+#: archive.php:20
+#: footer.php:2
+msgid "Y"
+msgstr "Y"
+
+#: archive.php:22
+msgid "Blog Archives"
+msgstr "Archives du blog"
+
+#: archive.php:29
+#: archive.php:36
+#: attachment.php:10
+#: author.php:26
+#: index.php:27
+#: page.php:10
+#: search.php:12
+#: search.php:19
+#: single.php:13
+msgid "Permanent Link to"
+msgstr "Lien permanent vers"
+
+#: archive.php:31
+#: attachment.php:12
+#: index.php:37
+#: search.php:14
+#: single.php:22
+msgid "Posted in"
+msgstr "Publié dans"
+
+#: archive.php:31
+#: attachment.php:12
+#: comments.php:30
+#: search.php:14
+msgid "on"
+msgstr "le"
+
+#: archive.php:31
+#: attachment.php:12
+#: contact.php:63
+#: index.php:28
+#: page-links.php:11
+#: page.php:11
+#: search.php:14
+#: single.php:14
+msgid "M jS, Y"
+msgstr "j M Y"
+
+#: archive.php:36
+#: search.php:19
+msgid "Read Full Post &#187;"
+msgstr "Lire l'article entier &#187;"
+
+#: archive.php:42
+#: index.php:46
+#: search.php:25
+msgid "&#171; Newer Posts"
+msgstr "&#171; Articles plus récents"
+
+#: archive.php:42
+#: index.php:46
+#: search.php:25
+msgid "Older Posts &#187;"
+msgstr "Articles plus anciens &#187;"
+
+#: attachment.php:12
+#: index.php:28
+#: page.php:11
+#: single.php:14
+msgid "Edit"
+msgstr "Editer"
+
+#: attachment.php:12
+#: index.php:37
+msgid "No Comments &#187;"
+msgstr "Pas de commentaires &#187;"
+
+#: attachment.php:12
+#: index.php:37
+msgid "1 Comment &#187;"
+msgstr "1 Commentaire &#187;"
+
+#: attachment.php:12
+#: index.php:37
+msgid "% Comments &#187;"
+msgstr "% Commentaires &#187;"
+
+#: attachment.php:12
+#: index.php:37
+msgid "Comments Off"
+msgstr "Commentaires fermés"
+
+#: attachment.php:24
+#: page-archives.php:33
+msgid "Sorry, no posts matched your criteria."
+msgstr "Aucun article ne correspond à vos critères."
+
+#: author.php:9
+#: functions.php:28
+#: functions.php:32
+msgid "About"
+msgstr "A propos de "
+
+#: author.php:11
+msgid "Full Name"
+msgstr ""
+
+#: author.php:13
+#: comments.php:98
+#: contact.php:77
+msgid "Website"
+msgstr ""
+
+#: author.php:15
+msgid "Details"
+msgstr ""
+
+#: author.php:19
+msgid "Posts by"
+msgstr ""
+
+#: author.php:25
+#: comments.php:30
+#: page-archives.php:31
+msgid "d M Y"
+msgstr ""
+
+#: author.php:30
+msgid "No posts by this author."
+msgstr ""
+
+#: comments.php:3
+msgid "Please do not load this page directly. Thanks!"
+msgstr ""
+
+#: comments.php:9
+msgid "This post is password protected. Enter the password to view comments."
+msgstr ""
+
+#: comments.php:23
+msgid "No Responses"
+msgstr ""
+
+#: comments.php:23
+msgid "One Response"
+msgstr ""
+
+#: comments.php:23
+msgid "% Responses"
+msgstr ""
+
+#: comments.php:23
+msgid "to"
+msgstr ""
+
+#: comments.php:30
+msgid "edit this"
+msgstr ""
+
+#: comments.php:30
+msgid "at"
+msgstr ""
+
+#: comments.php:32
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: comments.php:58
+msgid "Comments are closed."
+msgstr ""
+
+#: comments.php:65
+msgid "Trackback URI"
+msgstr ""
+
+#: comments.php:68
+msgid "Comments RSS"
+msgstr ""
+
+#: comments.php:75
+msgid "Leave a Reply"
+msgstr ""
+
+#: comments.php:78
+msgid "You must be"
+msgstr ""
+
+#: comments.php:78
+msgid "logged in"
+msgstr ""
+
+#: comments.php:78
+msgid "to post a comment."
+msgstr ""
+
+#: comments.php:87
+msgid "Logged in as"
+msgstr ""
+
+#: comments.php:87
+msgid "Log out of this account"
+msgstr ""
+
+#: comments.php:87
+msgid "Logout"
+msgstr ""
+
+#: comments.php:92
+#: contact.php:73
+msgid "Name"
+msgstr ""
+
+#: comments.php:92
+#: comments.php:95
+msgid "(required)"
+msgstr ""
+
+#: comments.php:95
+msgid "Mail (hidden)"
+msgstr ""
+
+#: comments.php:106
+msgid "Submit Comment"
+msgstr ""
+
+#: contact.php:48
+msgid "Please fill in all required fields."
+msgstr ""
+
+#: contact.php:52
+msgid "Your email adress failed to validate."
+msgstr ""
+
+#: contact.php:56
+msgid "Incorrect Answer to the AntiSpam Question."
+msgstr ""
+
+#: contact.php:63
+#: index.php:28
+#: page.php:11
+#: single.php:14
+msgid "by"
+msgstr ""
+
+#: contact.php:66
+msgid "Continue Reading &#187;"
+msgstr ""
+
+#: contact.php:68
+msgid "Required Fields"
+msgstr ""
+
+#: contact.php:75
+msgid "Email"
+msgstr ""
+
+#: contact.php:79
+msgid "AntiSpam Challenge:"
+msgstr ""
+
+#: contact.php:80
+msgid "Just to prove you are not a spammer"
+msgstr ""
+
+#: contact.php:81
+msgid "Message"
+msgstr ""
+
+#: contact.php:83
+msgid "Send Message"
+msgstr ""
+
+#: contact.php:102
+msgid "Hey"
+msgstr ""
+
+#: contact.php:102
+msgid "thanks for your message! I'll get back to you as soon as possible."
+msgstr ""
+
+#: footer.php:2
+msgid "All Rights Reserved."
+msgstr ""
+
+#: footer.php:4
+msgid "Viala theme by David Garlitz"
+msgstr ""
+
+#: footer.php:4
+msgid "Made possible by Rapid Ear Movement"
+msgstr ""
+
+#: functions.php:20
+#: functions.php:24
+msgid "Links"
+msgstr ""
+
+#: functions.php:34
+msgid "Profile"
+msgstr ""
+
+#: functions.php:36
+msgid "There are"
+msgstr ""
+
+#: functions.php:36
+msgid "Posts and"
+msgstr ""
+
+#: functions.php:36
+msgid "Comments so far."
+msgstr ""
+
+#: functions.php:43
+msgid "Recent Posts"
+msgstr ""
+
+#: functions.php:94
+msgid "Viala Options"
+msgstr ""
+
+#: functions.php:104
+msgid "Viala Theme: Settings saved."
+msgstr ""
+
+#: functions.php:105
+msgid "Viala Theme: Settings reset."
+msgstr ""
+
+#: functions.php:118
+msgid "Theme Page:"
+msgstr ""
+
+#: functions.php:119
+msgid "Designed & Coded by:"
+msgstr ""
+
+#: functions.php:129
+msgid "Theme Settings"
+msgstr ""
+
+#: functions.php:131
+msgid "Change the way your blog looks and acts with the many blog settings below"
+msgstr ""
+
+#: functions.php:137
+#: functions.php:216
+msgid "Save Settings"
+msgstr ""
+
+#: functions.php:143
+msgid "List Pages / Navigation"
+msgstr ""
+
+#: functions.php:152
+msgid "Exclude the Following Pages from the Top Navigation"
+msgstr ""
+
+#: functions.php:161
+msgid "Sort the List Pages by"
+msgstr ""
+
+#: functions.php:163
+msgid "Page Title ?"
+msgstr ""
+
+#: functions.php:164
+msgid "Date ?"
+msgstr ""
+
+#: functions.php:165
+msgid "Page Order ?"
+msgstr ""
+
+#: functions.php:166
+msgid "(Each Page can be given a page order number, from the wordpress admin, edit page area)"
+msgstr ""
+
+#: functions.php:172
+msgid "Support for Feature Articles"
+msgstr ""
+
+#: functions.php:173
+msgid "You may select a category to run as your 'feature article.' Posts from this category will remain at the top of the home page, while your other posts will be displayed below."
+msgstr ""
+
+#: functions.php:174
+msgid "Learn More at"
+msgstr ""
+
+#: functions.php:193
+msgid "Select the category here. Posts under this category will appear at the top of your home page."
+msgstr ""
+
+#: functions.php:195
+msgid "NOT SELECTED"
+msgstr ""
+
+#: functions.php:211
+msgid "Number of Sub Articles."
+msgstr ""
+
+#: functions.php:216
+msgid "Choose the number of articles to display under the feature article."
+msgstr ""
+
+#: functions.php:226
+msgid "Reset"
+msgstr ""
+
+#: functions.php:228
+msgid "If for some reason you want to uninstall Viala then press the reset button to clean things up in the database."
+msgstr ""
+
+#: functions.php:229
+msgid "You have to make sure to delete the theme folder, if you want to completely remove the theme."
+msgstr ""
+
+#: functions.php:232
+msgid "Reset Settings"
+msgstr ""
+
+#: header.php:6
+msgid "Blog Archive"
+msgstr ""
+
+#: header.php:11
+msgid "RSS Feed"
+msgstr ""
+
+#: header.php:33
+msgid "Home"
+msgstr ""
+
+#: header.php:35
+msgid "Search"
+msgstr ""
+
+#: header.php:51
+msgid "Feed on"
+msgstr ""
+
+#: header.php:52
+msgid "Posts"
+msgstr ""
+
+#: header.php:53
+msgid "Comments"
+msgstr ""
+
+#: index.php:21
+msgid "Permalink:"
+msgstr ""
+
+#: index.php:21
+msgid "(edit)"
+msgstr ""
+
+#: index.php:32
+msgid "Continue Reading &raquo;"
+msgstr ""
+
+#: index.php:34
+#: single.php:20
+msgid "Tags: "
+msgstr ""
+
+#: 404.php:9
+msgid "Are you lost?"
+msgstr ""
+
+#: 404.php:12
+msgid "You may have mistyped a URL, or perhaps the link you clicked was out of date."
+msgstr ""
+
+#: 404.php:13
+msgid "Don't worry! You can get back on track."
+msgstr ""
+
+#: 404.php:13
+msgid "Try doing a <strong>search</strong> or browsing through the <strong>Archives</strong>."
+msgstr ""
+
+#: 404.php:13
+msgid "Or, if you think this is not your fault, use the <strong>contact form</strong> to let us know about a bug in the system."
+msgstr ""
+
+#: 404.php:13
+msgid "Contact form:"
+msgstr ""
+
+#: page-archives.php:10
+#: page-archives.php:31
+#: page-links.php:10
+msgid "Permanent Link:"
+msgstr ""
+
+#: page-archives.php:13
+msgid "by Categories"
+msgstr ""
+
+#: page-archives.php:17
+msgid "by Month"
+msgstr ""
+
+#: page-archives.php:21
+#: sidebar.php:28
+msgid "Tags"
+msgstr ""
+
+#: page-archives.php:27
+msgid "Last 50 Entries"
+msgstr ""
+
+#: page.php:19
+msgid "This page has the following sub pages."
+msgstr ""
+
+#: search.php:7
+msgid "Search Results for"
+msgstr ""
+
+#: sidebar.php:7
+msgid "Archives"
+msgstr ""
+
+#: sidebar.php:12
+msgid "Categories"
+msgstr ""
+
+#: sidebar.php:35
+msgid "Pages"
+msgstr ""
+
+#: sidebar.php:40
+msgid "Meta"
+msgstr ""
+
+#: sidebar.php:44
+msgid "This page validates as XHTML 1.0 Transitional"
+msgstr ""
+
+#: sidebar.php:44
+msgid "Valid"
+msgstr ""
+
+#: sidebar.php:45
+msgid "XHTML Friends Network"
+msgstr ""
+
+#: sidebar.php:46
+msgid "Powered by WordPress, state-of-the-art semantic personal publishing platform."
+msgstr ""
+

@@ -1,0 +1,38 @@
+<table>
+<?
+$z=0;
+$r=0;
+$u_per_row=5;
+foreach ($this->content as $item) {?>
+<? if ($r==0){?>
+	
+	<tr>
+	<?}?>
+	<?
+	$r++;
+	?>
+<td width="100" align="center" height="80">
+<a href="/brewers/<?=$item['user_id'];?>"><div><a href="/brewers/<?=$item['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($item['user_email']);?>?rating=G&size=50&default=mm" border="0"/></a></div>
+<a href="/brewers/<?=$item['user_id'];?>"><?=$item['user_name'];?> </a> (<?=$item['count'];?>)</td>
+<?
+		
+$z++;
+
+if ($r==$u_per_row) {?>
+</tr>
+<?
+$r=0;
+}
+}
+if ($r>0) {
+?>
+</tr>
+<?
+}   
+?>  
+   
+</table>
+
+<?php echo $this->paginationControl($this->content,
+                                    'Sliding',
+                                    'paginator/item.phtml'); ?>

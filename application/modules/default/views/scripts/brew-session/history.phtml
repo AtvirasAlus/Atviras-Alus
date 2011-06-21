@@ -1,0 +1,28 @@
+<div style="margin-top:10;width:800px;;background-color: #FFFFFF;padding:10" align="left" class="ui-corner-all"><?
+$curdate="";
+?>
+<?  if (count($this->content)): ?>
+<table>
+<? foreach ($this->content as $item) :?>
+<tr>
+<?
+
+if (substr($item['session_primarydate'],0,10)!=$curdate) {
+	$curdate=substr($item['session_primarydate'],0,10);
+	?>
+	<td align="center" style="padding-top:20"><span style="font-size:14;font-weight:bold"><?=$curdate;?></span></td></tr><tr>
+<?}?>
+<td><a href="/brewers/<?=$item['user_id'];?>"><?=$item["user_name"]?></a> išvirė <span style="font-size:18;color:#666666"><?=$item['session_size'];?>  </span>litrų <a style="font-size:15" href="/recipes/view/<?=$item['recipe_id'];?>"><?=$item["recipe_name"]?></a> <span style="padding-left:10;font-size:9"><?=$item['session_primarydate'];?></span></td>
+</tr>
+<?  endforeach; ?>
+</table>
+
+<?  endif; ?>
+
+
+
+<?php echo $this->paginationControl($this->content,
+                                    'Sliding',
+                                    'paginator/item.phtml'); ?>
+</div>
+                                    

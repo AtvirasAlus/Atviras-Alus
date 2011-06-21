@@ -1,0 +1,212 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="alexaVerifyID" content="flj8CxyyfEenq5UbyH5vpBlz7DA" />
+		<META name="y_key" content="9421766f5e8b266a" />
+		<meta name="google-site-verification" content="Q15UyxPCIq_du9gHO4mr1INQh_KzSx8YaB6XytiaO4M" />
+		<script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="/public/ui/ui/jquery-ui-1.8.7.custom.js"></script>
+			<?=$this->headTitle()->prepend('Atviras alus ');?>
+			<?= $this->headTitle()?>
+			<meta name="description" content="Atviras alus - naminio alaus aludarių bendruomenė. Alaus receptai. Stiliaus aprašymai. Alaus skaičiuoklė" />
+
+			<?= $this->headMeta() ?>
+			<?= $this->headLink() ?>
+			<?= $this->headStyle() ?>
+		<link type="text/css" href="/public/css/pepper-grinder/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
+		<link type="text/css" href="/public/ui/external/fg.menu.css" rel="stylesheet" />
+		<link type="text/css" href="/public/css/main.css" rel="stylesheet" />
+		<script type="text/javascript" src="/public/ui/ui/jquery.ui.widget.js"></script>
+		<script type="text/javascript" src="/public/ui/ui/jquery.ui.dialog.js"></script>
+		<script type="text/javascript" src="/public/ui/ui/jquery.ui.position.js"></script>
+		<script type="text/javascript" src="/public/ui/external/fg.menu.js"></script>
+		<?= $this->headScript() ?>
+<script>
+$.fn.displayError = function (errors) {
+    var e_div = this.find('#error-content');
+    if (e_div) {
+        e_div.remove()
+    }
+    if (errors.length > 0) {
+        var error = '<div class="ui-widget" id="error-content"><div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p >';
+        for (var i = 0; i < errors.length; i++) {
+            error += '<div>' + errors + '</div>';
+        }
+        error += '</p></div></div>';
+        this.append(error)
+    }
+}
+$.fn.serializeObject = function () {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function () {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+function login() {
+
+	var formvals= $('#login-form').serializeObject()
+    $.ajax({
+        type: 'POST',
+        url: "/auth/login/",
+        data: formvals,
+        success: function (d) {
+            var data = jQuery.parseJSON(d);
+            if (data) {
+                if (data.status == 1) {
+                    var _e = []
+                    for (var i = 0; i < data.errors.length; i++) {
+                        _e.push(data.errors[i].message);
+                    }
+                    $('#login-form').displayError(_e)
+                } else {
+			//formvals.user_name= data.data.user_name
+			
+			//$.ajax({type: 'POST',url: "http://www.atvirasalus.lt/forum/bb-dologin.php", data:formvals})
+			if (window.location.href.indexOf("/calculus")>-1) {	
+			    $("#login-dialog").dialog("destroy")
+			    $("#login-a").remove();
+			    $("#logScreen-user_name")[0].innerHTML = data.data.user_name;
+			    $("#logScreen").css("visibility", "visible")
+			}else{
+                    	    location.reload();
+                    	}
+
+                }
+            }
+        },
+        dataType: ""
+    });
+}
+
+function showLogin() {
+    $("#login-dialog").dialog({
+        disabled: false,
+        modal: true,
+        autoOpen: true
+    });
+    $("#login-dialog").css('visibility', 'visible');
+    $('#login-form')[0].reset()
+    $("#login-dialog").displayError([])
+
+
+}
+$(document).ready(function () {
+    $("#login-button").button();
+    $("#login-button").bind('click', function (e) {
+        login()
+    })
+
+
+    // BUTTON
+    $('.fg-button').hover(
+
+    function () {
+        $(this).removeClass('ui-state-default').addClass('ui-state-focus');
+    }, function () {
+        $(this).removeClass('ui-state-focus').addClass('ui-state-default');
+    });
+
+    // MENU	
+    $('#logScreen').menu({
+        content: $('#logScreen').next().html(),
+        // grab content from this page
+        flyOut: true,
+        showSpeed: 400
+    });
+
+})
+  </script>
+  </head>
+
+
+
+
+
+	<body>
+	<a href="/"><img src="/public/images/logo.png" style="position:absolute;top:5px;left:40px;" width="120" border="0"></a> 
+	<div align="center" style="position:absolute;top:185px;left:20px;width:160;" > 
+	<br/>Mūsų draugai:
+	<div class="ui-corner-all" style="background:#ffffff">
+	<p><a href="http://tikrasalus.lt" target="_blank"><img src="/public/images/TAD.png" width="120" border="0"/></a></p>
+	</div>
+	<div class="ui-corner-all" style="background:#ffffff">
+	<p style="padding-top:10;padding-bottom:10"><a href="http://savasalus.lt" target="_blank"><img src="/public/images/savasalus.jpg" width="120" border="0"/></a></p>
+	</div>
+	</div>
+	<div align="center" style="position:absolute;top:540px;left:20px;width:160;" >
+	v1.0 'Target'
+	<?//$this->projectProgress();?>
+	</div>
+	<div align="center" style="position:absolute;top:570px;left:70px;" >
+	<a href="http://www.facebook.com/pages/atvirasaluslt/#!/pages/atvirasaluslt/182104888497349"><img src="/public/images/ico_facebook.gif" border="0"/></a>
+	<a href="/index/rss"><img src="/public/images/ico_feed.gif" border="0"/></a>
+	<a href="http://twitter.com/#!/AtvirasAlus"><img src="/public/images/ico_twitter.gif" border="0"/></a>
+	</div>
+	<!--<div a>
+	<a href='http://sharega.com/view/66720690.html' title='View Google Analytics statistic for atvirasalus.lt'><img src='http://c.sharega.com/66720690/viewsvisits.gif' alt='Last day site visits and views' border='0'/></a>
+	</div>-->
+	
+<div id="top-header" style="height:50;padding-left:180">
+<p class="pullquote"><?=$this->fortune();?></p>
+<ul id="menu-top">
+
+<? 
+$this->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigation.xml","nav")));
+
+$pages=$this->navigation()->getPages();
+foreach ($pages as $page) {
+		$mark="font-weight:bold;";
+	if ($page->isActive()) {
+		$mark="";
+	}
+	?>
+&nbsp;<li><a href="<?= $page->getHref();?>" style="<?=$mark?>"></li>
+
+<? print  $page->label;?></a>&nbsp; 
+<?
+}
+?>
+</ul>
+<div>
+<?=$this->loginScreen();?>
+</div>
+ </div>
+ <div id="content" style="padding-left:220;padding-top:50">
+	<? echo $this->layout()->content; ?>
+</div>
+<div id="login-dialog"  title="Prisijungti" style="visibility:hidden">
+<form id="login-form" onsubmit="return false">
+<table width="96%">
+<tr><td align="right">El. paštas:</td><td><input type="text" name="user_email" style="width:100%"/></td></tr>
+<tr><td align="right">Slaptažodis:</td><td><input type="password" name="user_password" style="width:100%"/></td></tr>
+<tr><td align="right"></td><td><input type="checkbox" name="remember" id="remember"/><LABEL for="remember"> prisiminti mane: </LABEL></td></tr>
+<tr><td></td><td><button id="login-button">Jungtis</button></td></tr>
+</tr>
+</table>
+</form>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21270974-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

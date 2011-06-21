@@ -1,0 +1,177 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Lightbox Gallery CZ\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-11-19 17:29+0900\n"
+"PO-Revision-Date: 2011-03-25 01:04+0900\n"
+"Last-Translator: \n"
+"Language-Team: Vlastenci.cz <info@vlastenci.cz>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_c\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Czech\n"
+"X-Poedit-Country: CZECH REPUBLIC\n"
+"X-Poedit-SearchPath-0: lightbox-gallery\n"
+
+#: lightbox-gallery/lightbox-gallery.php:157
+msgid "Settings"
+msgstr "Nastavení"
+
+#: lightbox-gallery/lightbox-gallery.php:165
+#: lightbox-gallery/lightbox-gallery.php:191
+msgid "Lightbox Gallery"
+msgstr "Galerie Lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:179
+msgid "Options updated."
+msgstr "Nastavení aktualizována."
+
+#: lightbox-gallery/lightbox-gallery.php:183
+msgid "Options deleted."
+msgstr "Nastavení smazána."
+
+#: lightbox-gallery/lightbox-gallery.php:197
+#: lightbox-gallery/lightbox-gallery.php:262
+#: lightbox-gallery/lightbox-gallery.php:278
+msgid "Click to toggle"
+msgstr "Klikni pro změnu"
+
+#: lightbox-gallery/lightbox-gallery.php:198
+msgid "Lightbox Gallery Options"
+msgstr "Nastavení Galerie Lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:207
+msgid "Choose the gallery loading type"
+msgstr "Vybrat způsb načítání galerie"
+
+#: lightbox-gallery/lightbox-gallery.php:208
+msgid "Lightbox"
+msgstr "Lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:209
+msgid "Highslide JS"
+msgstr "Highslide JS"
+
+#: lightbox-gallery/lightbox-gallery.php:210
+#, php-format
+msgid "Caution: Highslide JS is licensed under a Creative Commons Attribution-NonCommercial 2.5 License. You need the author's permission to use Highslide JS on commercial websites. <a href=\"%s\" target=\"_blank\">Please look at the author's website.</a>"
+msgstr "Upozornění: Highslide JS je licencováno pod licencí Creative Commons - Nekomerční licence 2.5. Musíte mít svolení autora užívat Highslide JS na komerčních stránkách. <a href=\"%s\" target=\"_blank\">Prosím, přečtěte si stránky autora.</a>"
+
+#: lightbox-gallery/lightbox-gallery.php:213
+msgid "In case that you would like to use the lightbox in certain categories (comma-deliminated)"
+msgstr "Použít lightbox v určitých kategoriích (odděl čárkami)"
+
+#: lightbox-gallery/lightbox-gallery.php:217
+msgid "In case that you would like to use the lightbox in certain pages (comma-deliminated)"
+msgstr "Použít lightbox na určitých stránkách (odděl čárkami)"
+
+#: lightbox-gallery/lightbox-gallery.php:221
+msgid "Enforce loading the lightbox gallery scripts"
+msgstr "Vynutit načítání skriptů galerie lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:222
+msgid "The lightbox gallery scripts are loaded in every page"
+msgstr "Skripty galerie lightbox jsou načteny na každé stránce"
+
+#: lightbox-gallery/lightbox-gallery.php:225
+msgid "In case that you would like to disable to load the lightbox-gallery.css"
+msgstr "Zrušit načítání stylů z lightbox-gallery.css"
+
+#: lightbox-gallery/lightbox-gallery.php:226
+msgid "Do not use the lightbox-gallery.css"
+msgstr "Nepoužívat lightbox-gallery.css"
+
+#: lightbox-gallery/lightbox-gallery.php:229
+msgid "In case that you would like to disable to load the column inline css"
+msgstr "Nepoužívat sloupce z inline CSS"
+
+#: lightbox-gallery/lightbox-gallery.php:230
+msgid "Do not use the column inline css"
+msgstr "Zrušit načítání sloupců z kódu inline CSS"
+
+#: lightbox-gallery/lightbox-gallery.php:233
+msgid "In case that you would like to set the default number of columns"
+msgstr "Nastavit standardní  počet sloupců"
+
+#: lightbox-gallery/lightbox-gallery.php:237
+msgid "In case that you would like to set the default thumbnail size"
+msgstr "Nastavit standardní velikost miniatur"
+
+#: lightbox-gallery/lightbox-gallery.php:241
+msgid "In case that you would like to set the default lightbox size"
+msgstr "Nastavení standardní velikosti lightboxu"
+
+#: lightbox-gallery/lightbox-gallery.php:248
+msgid "Choose the script loading point"
+msgstr "Kde se mají načíst skripty"
+
+#: lightbox-gallery/lightbox-gallery.php:249
+msgid "Header"
+msgstr "Hlavička"
+
+#: lightbox-gallery/lightbox-gallery.php:250
+msgid "Footer"
+msgstr "Patička"
+
+#: lightbox-gallery/lightbox-gallery.php:253
+msgid "Update Options &raquo;"
+msgstr "Ulož nastavení &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:263
+msgid "Delete Options"
+msgstr "Smaž nastavení &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:265
+msgid "Are you sure to delete options? Options you set will be deleted."
+msgstr "Chcete opravdu smazat vaše nastavení? Vámi nastavené hodnoty budou smazány!"
+
+#: lightbox-gallery/lightbox-gallery.php:269
+msgid "Delete Options &raquo;"
+msgstr "Smaž nastavení &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:279
+msgid "Donation"
+msgstr "Příspějte"
+
+#: lightbox-gallery/lightbox-gallery.php:281
+msgid "If you liked this plugin, please make a donation via paypal! Any amount is welcome. Your support is much appreciated."
+msgstr "Pokud se vám tento plugin líbil, prosím podpořte nás přes PayPal! Jakákoliv částka je vítána. Vaši podporu velice oceníme."
+
+#: lightbox-gallery/lightbox-gallery.php:363
+msgid "Pages:"
+msgstr "Stránky:"
+
+#: lightbox-gallery/lightbox-gallery.php:365
+msgid "Next page"
+msgstr "Další strana"
+
+#: lightbox-gallery/lightbox-gallery.php:366
+msgid "Previous page"
+msgstr "Předchozí stana"
+
+#: lightbox-gallery/lightbox-gallery.php:448
+msgid "camera"
+msgstr "fotoaparát"
+
+#: lightbox-gallery/lightbox-gallery.php:450
+msgid "aperture"
+msgstr "clona"
+
+#: lightbox-gallery/lightbox-gallery.php:452
+msgid "focal_length"
+msgstr "ohnisková_vzdálenost"
+
+#: lightbox-gallery/lightbox-gallery.php:454
+msgid "ISO"
+msgstr "ISO"
+
+#: lightbox-gallery/lightbox-gallery.php:458
+msgid "shutter_speed"
+msgstr "čas_clony"
+
+#: lightbox-gallery/lightbox-gallery.php:461
+msgid "created_timestamp"
+msgstr "vytvořeno"
+

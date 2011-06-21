@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<nav>
+		<home>
+			<label>Pradinis</label>
+			<module>default</module>
+			<controller>index</controller>
+			<action>index</action>
+			<resource>profile</resource>
+		</home>
+		<practises>
+			<label>Mano praktikų mokymo programos</label>
+			<module>account</module>
+			<controller>practises</controller>
+			<action>index</action>
+			<resource>practises</resource>
+			<pages>
+				<index>
+					<label>Praktikų mokymo programos</label>
+					<module>account</module>
+					<controller>practises</controller>
+					<action>index</action>
+					<resource>practises</resource>
+				</index>
+				<add>
+					<label>Sukurti praktikos mokymo programą</label>
+					<module>account</module>
+					<controller>practises</controller>
+					<action>add-practise</action>
+					<resource>add_practises</resource>
+				</add>
+			</pages>
+		</practises>
+		<profile>
+			<label>Profilis</label>
+			<module>account</module>
+			<controller>profile</controller>
+			<action>index</action>
+			<resource>profile</resource>
+			<pages>
+				<index>
+					<label></label>
+					<module>account</module>
+					<controller>profile</controller>
+					<action>index</action>
+					<resource>profile</resource>
+				</index>
+			</pages>
+		</profile>
+		<mail>
+			<label>Žinutės</label>
+			<module>account</module>
+			<controller>mail</controller>
+			<action>index</action>
+			<resource>mail</resource>
+			<pages>
+				<inbox>
+					<label></label>
+					<module>account</module>
+					<controller>mail</controller>
+					<action>index</action>
+					<resource>mail</resource>
+				</inbox>
+			</pages>
+		</mail>
+		
+		<admin>
+			<label>Administravimas</label>
+			<module>account</module>
+			<controller>settings</controller>
+			<action>index</action>
+			<resource>admin</resource>
+			<pages>
+				<tests>
+					<label>Praktikų statistika</label>
+					<module>account</module>
+					<controller>tests</controller>
+					<action>index</action>
+					<resource>admin</resource>
+				</tests>
+				<users>
+					<label>Vartotojai</label>
+					<module>account</module>
+					<controller>users</controller>
+					<action>index</action>
+					<resource>admin</resource>
+				</users>
+				<orgs>
+					<label>Klasifikatoriai</label>
+					<module>account</module>
+					<controller>orgs</controller>
+					<action>index</action>
+					<resource>admin</resource>
+				</orgs>
+				
+				<news>
+					<label>Turinio valdymas</label>
+					<module>account</module>
+					<controller>news</controller>
+					<action>index</action>
+					<resource>admin</resource>
+				</news>
+				<settings>
+					<label>Nustatymai</label>
+					<module>account</module>
+					<controller>settings</controller>
+					<action>index</action>
+					<resource>admin</resource>
+				</settings>
+			</pages>
+			
+		</admin>
+	</nav>
+</config>

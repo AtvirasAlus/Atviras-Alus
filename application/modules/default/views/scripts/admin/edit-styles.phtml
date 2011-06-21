@@ -1,0 +1,74 @@
+<style>
+#style_name {
+width:300px;
+}
+#style_name_en {
+width:300px;
+}
+textarea {
+width:300px;
+height:170px;
+float: left;
+}
+label {
+padding:5px;
+width:80
+}
+#styles_form div {
+padding:10px;
+}
+</style>
+<div style="padding-bottom:20;padding-left:30">
+Išversta <?= $this->total_translated["count"];?> iš <?= count($this->beer_styles)?> (<?= round($this->total_translated["count"]/count($this->beer_styles)*100)?> %)
+<div style="width:500;height:22;border:1px #666666 solid;background:white" align="left"><div style="width:<?=round($this->total_translated["count"]/count($this->beer_styles)*500);?>;height:20;border:1px #666666 solid;background:green"></div></div>
+<div style="padding-top:10;background:#ffffff;width:500">
+<b><span style="color:green">Vertėjų dėmesiui!</span></b> prie verčiamo stiliaus nurodykite, kategoriją kuriai stilius priklauso. Bei įveskite angliško teksto variantą.<br>
+<b>Dėkui! :)</b>
+</div>
+</div>
+
+
+<table>
+
+<tr>
+<td>
+<ul>
+<?
+for ($i=0;$i<count($this->beer_styles);$i++) {
+?>
+<li><a href="?style_id=<?=$this->beer_styles[$i]['style_id'];?>"><?=$this->beer_styles[$i]['style_name'];?></a></li>
+<?
+}
+?>
+</ul>
+</td>
+
+<td valign="top" align="center" >
+<? if ($this->current_style) { ?>
+<form id="styles_form" action="/admin/mod-styles" method="POST">
+<table>
+<tr><td><label for="style_name">Stilius:</label><input type="text" id="style_name" name="style_name" value="<?= addslashes($this->current_style["style_name"]);?>"></input></td><td><input type="text" id="style_name_en" name="style_name_en" value="<?= addslashes($this->current_style["style_name_en"]);?>"></td></tr>
+<tr><td><label for="style_cat">Kategorija:</label><select  id="style_cat" name="style_cat">
+<option value="0"></option>
+<?
+for ($i=0;$i<count($this->beer_cats);$i++) {
+	?>
+	<option value="<?=$this->beer_cats[$i]["cat_id"];?>" <?= ($this->current_style["style_cat"]==$this->beer_cats[$i]["cat_id"]) ? "selected" : "";?>><?=$this->beer_cats[$i]["cat_name_en"];?></option>
+	<?
+}
+?>
+</select></td><td></td><td></td></tr>
+<tr><td><label for="style_aroma">Aroma:</label><textarea  id="style_aroma" name="style_aroma"><?= $this->current_style["style_aroma"];?></textarea></td><td><textarea  id="style_aroma_en" name="style_aroma_en"><?= $this->current_style["style_aroma_en"];?></textarea></td></tr>
+<tr><td><label for="style_mouthfeel">Mouthfeel:</label><textarea  id="style_mouthfeel" name="style_mouthfeel"><?= $this->current_style["style_mouthfeel"];?></textarea></td><td><textarea  id="style_mouthfeel_en" name="style_mouthfeel_en"><?= $this->current_style["style_mouthfeel_en"];?></textarea></td></tr>
+<tr><td><label for="style_appearance">Appearance:</label><textarea  id="style_appearance" name="style_appearance"><?= $this->current_style["style_appearance"];?></textarea></td><td><textarea  id="style_appearance_en" name="style_appearance_en"><?= $this->current_style["style_appearance_en"];?></textarea></td></tr>
+<tr><td><label for="style_flavor">Flavor:</label><textarea  id="style_flavor" name="style_flavor"><?= $this->current_style["style_flavor"];?></textarea></td><td><textarea  id="style_flavor_en" name="style_flavor_en"><?= $this->current_style["style_flavor_en"];?></textarea></td></tr>
+<tr><td><label for="style_ingredients">Ingredients:</label><textarea  id="style_ingredients" name="style_ingredients"><?= $this->current_style["style_ingredients"];?></textarea></td><td><textarea  id="style_ingredients_en" name="style_ingredients_en"><?= $this->current_style["style_ingredients_en"];?></textarea></td></tr>
+<tr><td><label for="style_history">History:</label><textarea  id="style_history" name="style_history"><?= $this->current_style["style_history"];?></textarea></td><td><textarea  id="style_history_en" name="style_history_en"><?= $this->current_style["style_history_en"];?></textarea></td></tr>
+<tr><td><input type="submit" value="Saugoti">
+<input type="hidden" name="style_id" value="<?=$this->current_style["style_id"];?>"/>
+</table>
+</form>
+<?}?>
+</td>
+</tr>
+</table>

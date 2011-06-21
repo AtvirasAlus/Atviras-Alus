@@ -1,0 +1,237 @@
+<?
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.js");
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");
+
+
+
+$id="mysessions";
+
+?>
+<div>Alaus virimo statistika:</div> 
+ 
+    <div id="placeholder" style="width:600px;height:300px;"></div> 
+    <div id="overview" style="margin-left:50px;margin-top:20px;width:400px;height:50px"></div> 
+ 
+    
+    
+ 
+  
+ 
+<script id="source"> 
+ var stack = 1; 
+ var bars = true; 
+ var lines = false; 
+ var steps = false;
+<?
+
+switch($id) {
+	case "mysessions":
+	?>
+	 var stack = 0; 
+	 var bars = false; 
+	 var lines = true;
+	 var steps = true;
+	var a=<?=$this->sessions_count;?>;
+	var d = [];
+    for (var i=0;i<a.length;i++) {
+    	    d[i]={data:[],points: { show: true },label:a[i].recipe_name};
+    	    d[i].data.push([new Date(a[i].session_primarydate).getTime(),a[i].session_size])
+    	     d[i].data.push([new Date(a[i].session_caskingdate).getTime(),a[i].session_size])
+    	  
+    }
+	
+	
+	<?
+	break;
+case "recipes":
+	?>
+	var a=<?=$this->recipes_count;?>;
+	  var d = [];
+    for (var i=0;i<a.length;i++) {
+    	    d.push([new Date(a[i].day).getTime(),a[i].total])
+    	    
+    }
+    d=[d]
+	<?
+	break;
+case "users":
+	?>
+	var a=<?=$this->user_count;?>;
+	  var d = [];
+    for (var i=0;i<a.length;i++) {
+    	    d.push([new Date(a[i].day).getTime(),a[i].total])
+    }
+    d=[d]
+	<?
+break;
+default: 
+	?>
+	var a=<?=$this->recipes_count;?>;
+	  var d = [];
+	    for (var i=0;i<a.length;i++) {
+	    	  
+		    d.push([new Date(a[i].day).getTime(),a[i].total])
+	    }
+	    d=[d]
+	<?
+	break;
+}
+?>
+
+
+ function showTooltip(x, y, contents) {
+    $('<div id="tooltip">' + contents + '</div>').css({
+        position: 'absolute',
+        display: 'none',
+        top: y + 5,
+        left: x + 5,
+        border: '1px solid #fdd',
+        padding: '2px',
+        'background-color': '#fee',
+        opacity: 0.80
+    }).appendTo("body").fadeIn(200);
+}
+
+function addNull(str) {
+    if (String(str).length > 1) {
+        return str
+    } else {
+        return "0" + String(str)
+    }
+}
+
+function toDate(timeStamp) {
+    var dt = new Date(Number(timeStamp))
+    return dt.getFullYear() + "." + addNull(dt.getMonth() + 1) + "." + addNull(dt.getDate())
+}
+var previousPoint = null;
+$("#placeholder").bind("plothover", function (event, pos, item) {
+    $("#x").text(pos.x.toFixed(2));
+    $("#y").text(pos.y.toFixed(2));
+
+
+    if (item) {
+        if (previousPoint != item.datapoint) {
+            previousPoint = item.datapoint;
+
+            $("#tooltip").remove();
+            var x = item.datapoint[0].toFixed(2),
+                y = item.datapoint[1].toFixed(2);
+
+            showTooltip(item.pageX + 10, item.pageY - 5, toDate(x) + " " + item.series.label + " " + " išvirta " + Number(y) + " litrų");
+        }
+    } else {
+        $("#tooltip").remove();
+        previousPoint = null;
+    }
+
+});
+
+function weekendAreas(axes) {
+    var markings = [];
+    var d = new Date(axes.xaxis.min);
+    // go to the first Saturday
+    d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 1) % 7))
+    d.setUTCSeconds(0);
+    d.setUTCMinutes(0);
+    d.setUTCHours(0);
+    var i = d.getTime();
+    do {
+        // when we don't set yaxis, the rectangle automatically
+        // extends to infinity upwards and downwards
+        markings.push({
+            xaxis: {
+                from: i,
+                to: i + 2 * 24 * 60 * 60 * 1000
+            },
+            color: "#DDDDDD"
+        });
+        i += 7 * 24 * 60 * 60 * 1000;
+    } while (i < axes.xaxis.max);
+
+    return markings;
+}
+
+$(function () {
+
+
+
+
+
+    var options = {
+        xaxis: {
+            mode: "time",
+            minTickSize: [1, "day"]
+        },
+        selection: {
+            mode: "x"
+        },
+        legend: {
+            show: false
+        },
+        grid: {
+            markings: weekendAreas,
+            hoverable: true,
+            clickable: true
+        },
+        lines: {
+            show: true,
+            lineWidth: 3
+        },
+        timeformat: "%y.%m.%d",
+        monthNames: ["saus", "vas", "kov", "bal", "geg", "bir", "liep", "rūgp", "rugs", "spal", "lapkr", "gruod"],
+        stack: stack
+
+
+
+    };
+
+    var plot = $.plot($("#placeholder"), d, options);
+
+    var overview = $.plot($("#overview"), d, {
+        series: {
+            lines: {
+                show: true,
+                lineWidth: 3
+            },
+            shadowSize: 0
+        },
+        legend: {
+            show: false
+        },
+        xaxis: {
+            ticks: [],
+            mode: "time"
+        },
+        yaxis: {
+            ticks: [],
+            min: 0,
+            autoscaleMargin: 0.1
+        },
+        selection: {
+            mode: "x"
+        }
+    });
+
+    // now connect the two
+    $("#placeholder").bind("plotselected", function (event, ranges) {
+        // do the zooming
+        plot = $.plot($("#placeholder"), d, $.extend(true, {}, options, {
+            xaxis: {
+                min: ranges.xaxis.from,
+                max: ranges.xaxis.to
+            }
+        }));
+
+        // don't fire event on the overview to prevent eternal loop
+        overview.setSelection(ranges, true);
+    });
+
+    $("#overview").bind("plotselected", function (event, ranges) {
+        plot.setSelection(ranges);
+    });
+});
+</script> 
+ 
+ </body> 
+</html> 

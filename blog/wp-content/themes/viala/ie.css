@@ -1,0 +1,35 @@
+.wrap { width: 980px; }
+
+.toc { _display: block; _height: 100%; }
+
+#commentform { _width: 500px; _overflow: hidden; }
+
+.nonetWide .subpost { _width: 202px; }
+
+#nav {
+	height: 60px;
+	margin-top: 0;
+	margin-bottom: 20px;
+	_margin-bottom: 0;
+}
+#nav h1 { margin-top: 1px; }
+#nav h1 a { font-size: 60px; }
+#desc {	margin: -9px 0 0 0; _margin: -6px 0 0 0; width: 452px;}
+#nav ul { height: 18px; margin: 42px 14px 0 0; _margin: 65px 14px 0 0; }
+#nav ul li a { line-height: 17px; padding: 0 0 3px 18px; }
+#nav #searchform {margin: 40px 0 0 0; _margin: 62px 0 -3px 0; }
+#searchform input#searchsubmit {
+	font-size: 0;
+	color: #fff;
+	text-align: right;
+	padding-right: 12px;
+	margin-right: -12px;
+	_margin-right: 0;
+}
+#main {
+	margin-top: 14px;
+	_margin-top: 28px;
+	
+}
+#main .post .entry {height: 172px;}
+#subpost .entry {height: 18em;}

@@ -1,0 +1,274 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.2.1\n"
+"Report-Msgid-Bugs-To: http://bbpress.org/plugins/topic/role-manager/\n"
+"POT-Creation-Date: 2009-12-01 22:09+0000\n"
+"PO-Revision-Date: 2009-12-06 15:12-0600\n"
+"Last-Translator: i18n Bot <i18nbot@llamaslayers.net>\n"
+"Language-Team: i18n Bot <i18nbot@llamaslayers.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: role-manager-admin.php:5
+msgid "Nothing to see here."
+msgstr "Nichts zu sehen."
+
+#: role-manager-admin.php:13
+#, php-format
+msgid "<h2>Role <strong>%s</strong> is a default and cannot be deleted.</h2>"
+msgstr "<h2> <strong>Rolle %s</strong> ist standardmäßig aktiviert und kann nicht gelöscht werden. </h2>"
+
+#: role-manager-admin.php:21
+#, php-format
+msgid "<h2>Role <strong>%s</strong> deleted.</h2>"
+msgstr "<h2> <strong>Rolle %s</strong> gelöscht. </h2>"
+
+#: role-manager-admin.php:52
+#, php-format
+msgid "The role %s already exists."
+msgstr "Die Rolle %s ist bereits vorhanden."
+
+#: role-manager-admin.php:64
+#, php-format
+msgid "<h2>Role <strong>%s</strong> created.</h2>"
+msgstr "<h2> <strong>Rolle %s</strong> erstellt. </h2>"
+
+#: role-manager-admin.php:73
+#, php-format
+msgid "Create role %s"
+msgstr "Rolle anlegen %s"
+
+#: role-manager-admin.php:75
+msgid "New role"
+msgstr "Neue Rolle"
+
+#: role-manager-admin.php:79
+msgid "Base role on:"
+msgstr "Base Rolle auf:"
+
+#: role-manager-admin.php:85
+msgid "Start with a blank slate"
+msgstr "Beginnen Sie mit einem unbeschriebenen Blatt"
+
+#: role-manager-admin.php:90
+msgid "Role name:"
+msgstr "Rolle Name:"
+
+#: role-manager-admin.php:97
+msgid "Create role"
+msgstr "Rolle anlegen"
+
+#: role-manager-admin.php:117
+#, php-format
+msgid "Editing role <strong>%s</strong>"
+msgstr "Bearbeiten <strong>Rolle %s</strong>"
+
+#: role-manager-admin.php:123 role-manager-admin.php:129
+msgid "Grant"
+msgstr "Grant"
+
+#: role-manager-admin.php:124 role-manager-admin.php:130
+msgid "Description"
+msgstr "Beschreibung"
+
+#: role-manager-admin.php:144
+msgid "Role"
+msgstr "Rolle"
+
+#: role-manager-admin.php:157
+msgid "Save"
+msgstr "Sichern"
+
+#: role-manager-admin.php:174 role-manager-admin.php:181
+#: role-manager-admin.php:188 role-manager.php:12
+msgid "Roles"
+msgstr "Rollen"
+
+#: role-manager-admin.php:180 role-manager-admin.php:187
+msgid "Name"
+msgstr "Name"
+
+#: role-manager-admin.php:180 role-manager-admin.php:187
+msgid "Add new &raquo;"
+msgstr "Hinzufügen »"
+
+#: role-manager-admin.php:182 role-manager-admin.php:189
+msgid "Capabilities"
+msgstr "Capabilities"
+
+#: role-manager-admin.php:206
+msgid "View"
+msgstr "Anzeigen"
+
+#: role-manager-admin.php:207
+msgid "Edit"
+msgstr "Edit"
+
+#: role-manager-admin.php:209
+msgid "Delete"
+msgstr "Löschen"
+
+#: role-manager.php:128
+msgid "Administrator"
+msgstr "Administrator"
+
+#: role-manager.php:129
+msgid "Moderator"
+msgstr "Moderator"
+
+#: role-manager.php:130
+msgid "Member"
+msgstr "Mitglied"
+
+#: role-manager.php:143
+msgid "Import and export data"
+msgstr "Import und Export von Daten"
+
+#: role-manager.php:144
+msgid "Use the recount feature"
+msgstr "Verwenden Sie die Funktion erzählen"
+
+#: role-manager.php:145
+msgid "Switch the theme"
+msgstr "Schalten Sie das Thema"
+
+#: role-manager.php:146
+msgid "Activate and deactivate plugins"
+msgstr "Aktivieren und Deaktivieren von Plugins"
+
+#: role-manager.php:147
+msgid "Edit the settings of the forum"
+msgstr "Bearbeiten Sie die Einstellungen des Forums"
+
+#: role-manager.php:148
+msgid "Edit other users' profiles"
+msgstr "Edit Profile anderer Nutzer"
+
+#: role-manager.php:149
+msgid "Rename, merge and destroy tags"
+msgstr "Umbenennen, zusammenzuführen und zu zerstören Tags"
+
+#: role-manager.php:150
+msgid "Edit other users' list of favorite topics"
+msgstr "Liste bearbeiten anderer Nutzer bei der bevorzugten Themen"
+
+#: role-manager.php:151
+msgid "Add and rename forums"
+msgstr "Hinzufügen und benennen Foren"
+
+#: role-manager.php:152
+msgid "Delete forums"
+msgstr "Löschen Foren"
+
+#: role-manager.php:153
+msgid "Delete topics"
+msgstr "Themen löschen"
+
+#: role-manager.php:154
+msgid "Close and open topics"
+msgstr "Schließen und öffnen Themen"
+
+#: role-manager.php:155
+msgid "Make topics sticky"
+msgstr "Make Themen klebrigen"
+
+#: role-manager.php:156
+msgid "Move topics to other forums"
+msgstr "Bewegen Sie Themen, die anderen Foren"
+
+#: role-manager.php:157
+msgid "View posts made by users of an IP address"
+msgstr "View posts made by users einer IP-Adresse"
+
+#: role-manager.php:158
+msgid "Edit closed topics"
+msgstr "Edit geschlossene Themen"
+
+#: role-manager.php:159
+msgid "Edit deleted topics and posts"
+msgstr "Edit gestrichen Themen und Beiträge"
+
+#: role-manager.php:160
+msgid "Use the \"deleted\" view"
+msgstr "Verwenden Sie die &quot;gelöscht&quot; Blick"
+
+#: role-manager.php:161
+msgid "Remove tags from a topic"
+msgstr "Entfernen Sie Tags aus einem Thema"
+
+#: role-manager.php:162
+msgid "Edit topics by other users"
+msgstr "Bearbeiten Themen, die von anderen Nutzern"
+
+#: role-manager.php:163
+msgid "Delete posts"
+msgstr "Beiträge löschen"
+
+#: role-manager.php:164
+msgid "Post back to back arbitrarily quickly"
+msgstr "Post Rücken an Rücken beliebig schnell"
+
+#: role-manager.php:165
+msgid "Edit posts on locked topics"
+msgstr "Beiträge editieren auf geschlossene Beiträge"
+
+#: role-manager.php:166
+msgid "Edit posts of other users"
+msgstr "Edit Beiträge von anderen Mitgliedern"
+
+#: role-manager.php:167
+msgid "Edit their list of favorite topics"
+msgstr "Bearbeiten der Liste ihrer Lieblings-Themen"
+
+#: role-manager.php:168
+msgid "Add tags to a topic"
+msgstr "Tags hinzufügen, um ein Thema"
+
+#: role-manager.php:169
+msgid "Edit the title and resolution status of their own topics"
+msgstr "Bearbeiten Sie den Titel und die Auflösung Status ihrer eigenen Themen"
+
+#: role-manager.php:170
+msgid "Edit their own posts"
+msgstr "Ihre eigenen Beiträge bearbeiten"
+
+#: role-manager.php:171
+msgid "Edit their profile settings"
+msgstr "Edit ihr Profil-Einstellungen"
+
+#: role-manager.php:172
+msgid "Make new topics"
+msgstr "Machen Sie neue Themen"
+
+#: role-manager.php:173
+msgid "Make new posts"
+msgstr "Make new posts"
+
+#: role-manager.php:174
+msgid "Change their own password"
+msgstr "Ändern des eigenen Passworts"
+
+#: role-manager.php:175
+msgid "Read the forums"
+msgstr "Lesen Sie die Foren"
+
+#. Plugin Name of an extension
+msgid "Role Manager"
+msgstr "Role Manager"
+
+#. Plugin URI of an extension
+msgid "http://nightgunner5.wordpress.com/tag/role-manager/"
+msgstr "http://nightgunner5.wordpress.com/tag/role-manager/"
+
+#. Description of an extension
+msgid "Allows key masters to change the capabilities that each role has and even create new roles."
+msgstr "Ermöglicht Meister Schlüssel zu ändern, dass die Fähigkeiten jeder Rolle hat und sogar neue Rollen."
+
+#. Author of an extension
+msgid "Nightgunner5"
+msgstr "Nightgunner5"
+
+#. Author URI of an extension
+msgid "http://nightgunner5.wordpress.com/"
+msgstr "http://nightgunner5.wordpress.com/"

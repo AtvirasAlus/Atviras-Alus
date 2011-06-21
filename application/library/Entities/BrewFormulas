@@ -1,0 +1,25 @@
+<?
+class Entities_BrewCalc { 
+public function sg_plato($sg) {
+return (-463.37) + (668.72 * $og) - (205.35 * $sg * $sg);
+}
+public function real_extract($og_plato,$fg_plato) {
+return 0.1808 * $og_plato) + (0.8192 * $fg_plato);
+}
+public function abv($og,$fg) {
+return ($og - $fg)  / 0.75;
+}
+public function calories($og,$fg) {
+   
+	$og_plato = $this->sg_palto($og);
+	$fg_plato = $this->sg_palto($fg);
+	$re = $this->real_extract($og_plato, $fg_plato);
+	$abv = $this->abv($og, $fg);
+	$abw = (0.79 * $abv)  /  $fg;
+	$calories = (6.9 * ($abw*100) + 4*($re-0.1)) * $fg * 3.55;
+	$carb = (($re - 0.1) * $fg * 3.55);
+	return $calories;
+
+} 
+}
+?>

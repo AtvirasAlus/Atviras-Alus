@@ -1,0 +1,15 @@
+<?php
+printf('<h1>%s</h1>', $this->title);
+printf('<p>%s</p>', $this->message);
+ 
+if (APPLICATION_ENV == 'development')
+{
+  echo '<h2>Exception information:</h2>';
+  printf('<p><b>Message:</b> %s</p>', $this->exception->getMessage());
+ 
+  echo '<h2>Stack trace:</h2>';
+  printf('<p>%s</p>', $this->exception->getTraceAsString());
+ 
+  echo '<h3>Request Parameters:</h3>';
+  printf('<p>%s</p>', var_export($this->request->getParams(), 1));
+}

@@ -1,0 +1,125 @@
+<? $this->headTitle()->append(" - Įvykis - ".$this->event['event_name']);?>
+<? $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,degustacija,receptas,alus');?>
+
+<script>
+$(function(){
+	$("#register_to_event").click(function(){
+	//get the id
+	
+	
+	// show the spinner
+	$("#preloader_place").html("<img src='/public/images/spinner.gif'/>");
+	
+	//fadeout the vote-count 
+	
+	
+	//the main ajax request
+	$("#register_to_event").css("display","none");
+	
+		$.ajax({
+			type: "POST",
+			data: "action=in&id=<?=$this->event['event_id'];?>",
+			url: "/events/register",
+			success: function(msg)
+			{
+				$("#preloader_place").html('');
+				 var data = jQuery.parseJSON(msg);
+				
+				
+				$("#register_out_event").css("display","inline");
+				$("#register_to_event").css("display","none");
+				$("#registered").html('')
+				if (data.data.length>0) {
+					$("#registered").html(data.data)
+				}
+			}
+		});
+	});
+	
+	$("#register_out_event").click(function(){
+	//get the id
+	
+	
+	// show the spinner
+	$("#preloader_place").html("<img src='/public/images/spinner.gif'/>");
+	
+	//the main ajax request
+	$("#register_out_event").css("display","none");
+	
+		$.ajax({
+			type: "POST",
+			data: "action=out&id=<?=$this->event['event_id'];?>",
+			url: "/events/register",
+			success: function(msg)
+			{
+				 var data = jQuery.parseJSON(msg);
+				 $("#preloader_place").html('');
+				
+				$("#register_to_event").css("display","inline");
+				$("#register_out_event").css("display","none");
+				$("#registered").html('')
+				if (data.data.length>0) {
+					$("#registered").html(data.data)
+				}
+				
+				
+				
+			}
+		});
+	});
+});
+</script>
+<div style="width:800">
+<div class="ui-corner-all" style="background:#eeeeee;height:300;">
+
+<div style="padding:15">
+
+
+<h1><?=$this->event['event_name'];?></h1>
+<div style="padding-bottom:12"><span style="color:#666666">Data: </span><?=$this->event['event_start'];?></div>
+<div><?=$this->event['event_description'];?></div>
+
+<div style="display:inline;float:left;position:relative;padding-top:10">
+<?
+switch ($this->registration_status) {
+case 0:
+	?>
+	<span style="color:#666666">Norint prisiregistruoti reikia prisijungti prie sistemos
+	<?
+	break;
+case 1:
+	?>
+	
+	<span id="preloader_place"></span>
+	
+	<a href='javascript:;'  id='register_to_event' style="display:block;font-weight:bold">Dalyvausiu</a>
+	<a href='javascript:;'  id='register_out_event' style="display:none;font-weight:bold">Nedalyvausiu</a>
+	
+	<?
+	break;
+case 2:
+	?>
+	
+	<span id="preloader_place"></span>
+	
+	<a href='javascript:;'  id='register_to_event' style="display:none;font-weight:bold">Dalyvausiu</a>
+	<a href='javascript:;'  id='register_out_event' style="display:block;font-weight:bold">Nedalyvausiu</a>
+
+	<?
+	break;
+	
+}
+?></div>
+<div style="padding-top:50;padding-bottom:5">
+Dalyviai:<br/>
+<div id="registered" class="ui-corner-all" style="background:#ffffff;padding:15">
+<?
+if (strlen($this->registered_users['user_name'])) {
+	print  $this->registered_users['user_name'];
+}
+?>
+</div>
+</div>
+</div>
+</div>
+</div>

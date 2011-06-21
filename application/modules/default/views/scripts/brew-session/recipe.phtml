@@ -1,0 +1,59 @@
+<? 
+$this->headLink()->appendStylesheet("/public/css/bs.css");
+if($this->user_id) {
+ $this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
+?>
+<script>
+$(function() {
+		$( "#session_secondarydate" ).datepicker();
+		$( "#session_secondarydate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+		$( "#session_caskingdate" ).datepicker();
+		$( "#session_caskingdate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+		$( "#session_primarydate" ).datepicker();
+		$( "#session_primarydate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+	});
+</script>
+<?
+}
+
+?>
+<div> <h2>Recepto <a href="/recipes/view/<?=$this->recipe["recipe_id"]?>">"<?=$this->recipe["recipe_name"]?>"</a> virimų istorija</h2></div>
+
+<table width="1000" id="bsession" cellpading="0" cellspacing="0">
+<thead>
+<td></td><td >Virimo pavadinimas</td><td>Aludaris</td><td>Receptas</td><td>Alaus kiekis (l.)</td><td>OG</td><td>FG</td><td>Pirminė fermentacija</td><td>Antrinė fermentacija</td><td>Išpilstyta</td><td>Pastabos</td></thead>
+<?
+if (count($this->brew_sessions)) {
+for ($i=0;$i<count($this->brew_sessions);$i++) {
+	
+	if ($this->user_id == $this->brew_sessions[$i]['user_id']) {
+			print $this->brewSession()->infoRow($this->brew_sessions[$i],true,$i);
+		}else{
+	
+			print $this->brewSession()->infoRow($this->brew_sessions[$i],false,$i);
+			}
+		
+
+	
+
+	
+}
+}else{
+?>
+<td colspan="11" align="center"> Virimų nėra</td>
+<?
+}
+?>
+</table>
+
+<? if($this->user_id==0) {
+?>
+Norėdami pridėti alaus virimą <a href="javascript:showLogin()">prisijunkite</a>
+<?
+}else{
+	?>
+	 <a href="/brew-session/new/<?=$this->recipe["recipe_id"];?>">Pridėti alaus virimą</a>
+	<?
+}
+?>
+

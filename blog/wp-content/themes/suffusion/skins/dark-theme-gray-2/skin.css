@@ -1,0 +1,213 @@
+/* Standard Styles */
+a {
+	color:#787878;
+}
+a:visited {
+	color: #787878;
+}
+
+/* main menu */
+#nav .current_page_item a, #nav .current_page_item a:hover,#nav li a:active{
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+	color: #eee;
+}
+
+#nav li a:hover{
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+#nav li a:active{
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+/* Styling for navigation menus */
+#nav ul ul li a:hover{
+	color: #eee;
+}
+
+/* style the links for the top level */
+#nav a:active {
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+/* style the second level hover */
+#nav ul ul a.drop:hover {
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+	color: #eee;
+}
+
+#nav ul ul :hover > a.drop {
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+/* style the third level hover */
+#nav ul ul ul a:hover {
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+	color: #eee;
+}
+
+/* style the top level hover */
+#nav a:hover,
+#nav ul ul a:hover {
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+#nav :hover > a,
+#nav ul ul :hover > a {
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+/* Top menu */
+#nav-top .current_page_item a, #nav-top .current_page_item a:hover,#nav-top li a:active{
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+	color: #eee;
+}
+
+#nav-top li a:hover{
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+#nav-top li a:active{
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+/* Styling for navigation menus */
+#nav-top ul ul li a:hover{
+	color: #eee;
+}
+
+/* style the links for the top level */
+#nav-top a:active {
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+/* style the second level hover */
+#nav-top ul ul a.drop:hover {
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+	color: #eee;
+}
+
+#nav-top ul ul :hover > a.drop {
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+/* style the third level hover */
+#nav-top ul ul ul a:hover {
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+	color: #eee;
+}
+
+/* style the top level hover */
+#nav-top a:hover,
+#nav-top ul ul a:hover {
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+#nav-top :hover > a,
+#nav-top ul ul :hover > a {
+	color: #eee;
+	background: #636466 url(../../images/bg-gray-2.png) repeat-x top left;
+}
+
+/* sub menu */
+#subnav .current_page_item a,
+#subnav .current_page_item a:visited,
+#subnav .current_page_parent a,
+#subnav .current_page_parent a:visited {
+	color: #787878;
+}
+
+#subnav li a:hover {
+	color: #787878;
+}
+
+/* Level 3 */
+.hier-nav .current_page_item a, .hier-nav .current_page_item a:visited {
+	color: #787878;
+}
+
+.hier-nav li a:hover {
+	color: #787878;
+}
+
+/* content */
+.postdata a:hover {
+	color: #787878;
+}
+
+/* post title */
+h1.posttitle a:hover,
+h2.posttitle a:hover {
+	color: #787878;
+}
+.tags a:hover {
+	color: #787878;
+}
+
+/* next & previous page navigation */
+.page-nav a:hover {
+	color: #787878;
+}
+
+/* next & previous post navigation */
+.post-nav a:hover {
+	color: #787878;
+}
+
+.suf-page-nav a.page-numbers,
+.suf-page-nav a.page-numbers:visited {
+	color: #787878;
+}
+
+/* comment list */
+.commentlist cite {
+	color: #787878;
+}
+.commentlist cite a, .commentlist cite a:visited {
+	color: #787878;
+}
+
+/* Credits  */
+#cred a:hover {
+	color: #787878;
+}
+
+.suf-widget h3.scheme,
+.suf-widget h3.scheme:hover,
+.suf-widget h3.scheme a,
+.suf-widget h3.scheme a:visited {
+	color: #eee;
+}
+
+.suf-widget a:hover,
+.suf-widget a:focus,
+.suf-widget a:active,
+.warea a:hover,
+.warea a:focus,
+.warea a:active {
+	color: #787878;
+}
+
+/* These settings are for common plugins */
+.wp-pagenavi a,
+.wp-pagenavi a:visited,
+.wp-pagenavi span {
+	color: #787878;
+}
+
+.wp-pagenavi a:hover {
+	color: #fff;
+}
+
+

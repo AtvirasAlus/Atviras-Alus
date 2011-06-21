@@ -1,0 +1,11 @@
+<? $this->headTitle()->append(" - Straipsnis: ".$this->article['article_title']);?>
+<div class="ui-corner-all" style="background:#ffffff;display: inline-block; padding:10;width:750">
+<div align="center" style="font-size:14;font-weight:bold"><?=$this->article['article_title'];?></div>
+<div style="padding-top:20"><?=$this->article['article_text'];?></div>
+<div style="padding-top:20"><?
+// testuoju
+
+		print $this->articleComments($this->article['article_id']);
+	
+?></div>
+</div>

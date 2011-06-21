@@ -1,0 +1,233 @@
+<? $this->headTitle()->append(" - Receptas: ".$this->data['recipe']['recipe_name']);?>
+<? $this->headMeta()->setName('keywords', 'apyniai, mielės, salyklas,alaus gamyba,naminis,receptai,receptas,alus,'.$this->data['recipe']['recipe_name'].','.$this->data['recipe']['style_name']);?>
+<style>
+.nom {
+	font-weight:bold;
+	font-size:14;
+	font-style:italic;
+	font-family: Verdana;
+}
+thead td {
+	padding:3px;
+	font-style:italic;
+	color:#555555;
+	font-weight:bold;
+}
+hr {
+	border: 0;
+color: #9E9E9E;
+background-color: #9E9E9E;
+	height:1px;
+}
+h2 {
+	margin-bottom:-5px;
+}
+.recipe_title{
+	font-weight:bold;
+	font-size:14;
+	color: #FFFFFF;
+	padding:5;
+	
+}
+.entry {
+	width: 710px;
+	background: #ffffff;
+	padding:8px;
+	border:1px solid #bbbbbb;
+	margin:5px auto;
+	-moz-border-radius:8px;
+}
+
+
+
+
+	
+</style>
+<script>
+$(function(){
+	$("#vote_up_button").click(function(){
+	//get the id
+	
+	
+	// show the spinner
+	$("#vote_icon").html("<img src='/public/images/spinner.gif'/>");
+	
+	//fadeout the vote-count 
+	$("span#votes_count").fadeOut("fast");
+	
+	//the main ajax request
+		$.ajax({
+			type: "POST",
+			data: "action=vote_up&id=<?=$this->data['recipe']['recipe_id'];?>",
+			url: "/recipes/vote",
+			success: function(msg)
+			{
+				$("#vote_icon").html('<img src="/public/images/thumb_up.png">');
+				 var data = jQuery.parseJSON(msg);
+				if (data) {
+				$("span#votes_count").html(data.data.votes);
+				$("span#votes_count").fadeOut();
+				$("span#votes_count").fadeIn();
+				}
+				$("#vote_button").html("Nepatinka");
+				$("#vote_down_button").css("display","inline");
+				$("#vote_up_button").css("display","none");
+			}
+		});
+	});
+	
+	$("#vote_down_button").click(function(){
+	//get the id
+	the_id = $(this).attr('id');
+	
+	// show the spinner
+	$("#vote_icon").html("<img src='/public/images/spinner.gif'/>");
+	
+	//the main ajax request
+		$.ajax({
+			type: "POST",
+			data: "action=vote_down&id=<?=$this->data['recipe']['recipe_id'];?>",
+			url: "/recipes/vote",
+			success: function(msg)
+			{
+				 var data = jQuery.parseJSON(msg);
+				 $("#vote_icon").html('<img src="/public/images/thumb_up.png">');
+				
+				$("#vote_up_button").css("display","inline");
+				$("#vote_down_button").css("display","none");
+				if (data) {
+				$("span#votes_count").html(data.data.votes);
+				$("span#votes_count").fadeOut();
+				$("span#votes_count").fadeIn();
+				}
+				
+				
+				
+			}
+		});
+	});
+});
+</script>
+<?
+function i_bu($ibu,$og) {
+	$bu=round($ibu/(($og*1000)-1000),2);
+	if ($bu>=0 && $bu<=0.19) {
+		return "kartumo nėra, dominuoja salyklas";
+	}else if ($bu>=0.2 && $bu<=0.39) { 
+		return "jaučiami apyniai, dominuoja salyklas";
+	}else if ($bu>=0.4 && $bu<=0.59) { 
+		return "kartumas ir salyklo skonis subalansuotas";
+	}else if ($bu>=0.6 && $bu<=0.79) {
+		return "ryškus apynių skonis";
+	}else if ($bu>=0.8 && $bu<=100) {
+		return "dominuoja apynių skonis";
+	}
+}
+
+	
+	
+	
+
+?>
+<div style="margin-top:10;width:800px;;background-color: #FFFFFF;padding:10" align="left" class="ui-corner-all">
+<p>
+<div style="width:100%;height:30;background-color: #DFDFDF;" class="ui-corner-all"><div class="recipe_title"><?=$this->data['recipe']['recipe_name'];?></div></div>
+<div style="width:100%;height:30;padding-top:8;padding-right:15;line-height:20px" align="right"><div style="display:inline;" valign="bottom"><a href="/brew-session/recipe/<?=$this->data['recipe']['recipe_id'];?>">Virimai (<?=$this->data['brew_session']['count'];?>)</a> | <a href="/index/calculus/<?=$this->data['recipe']['recipe_id'];?>">Į skaičiuoklę</a></div><?
+
+	?><div style="display:inline;float:right;padding-left:5;position:relative;top:-1">| <? if (isset($this->user_info)) {
+	if ($this->recipe_votes["user_vote"]) {?>
+	<a href='javascript:;'  id='vote_up_button'  style="display:none">Patinka</a><a href='javascript:;'  id='vote_down_button'>Nebepatinka</a>
+	<?}else{?>
+	<a href='javascript:;'  id='vote_down_button'  style="display:none">Nebepatinka</a><a href='javascript:;'  id='vote_up_button'>Patinka</a>
+	<?}}?><span id='votes_count'><?=$this->recipe_votes["total"];?></span><div id='vote_icon' style="display:inline;"><img src="/public/images/thumb_up.png"  border="0" /></div>
+	</div>
+</div></p>
+<table width="100%"><tr><td valign="top" align="left">
+<div>
+
+Alaus kiekis: <?=round($this->data['recipe']['recipe_batch']);?></br>
+Efektyvumas: <?=round($this->data['recipe']['recipe_efficiency'],2);?></br>
+Stilius: <a href="/stilius/<? print $this->data['recipe']['recipe_style'];?>"><?=$this->data['recipe']['style_name'];?></a></br>
+Aludaris: <a href="/brewers/<? print $this->data['recipe']['brewer_id'];?>"><?=$this->data['recipe']['user_name'];?></a></br>
+</td>
+<td align="right"><div style="height:138px;width:73px;background-color:<?=$this->colorHex($this->data['recipe']['recipe_ebc']);?>"><img src="/public/images/glass_s.png" /></div</td></tr></table>
+
+<div>
+<div align="left">
+
+<p ><h2 align="left">salyklas</h2>
+<hr/>
+<?
+$total=0;
+for ($i=0;$i<count($this->data['malt']);$i++) {
+	$total+=floatval($this->data['malt'][$i]['malt_weight']);
+}
+?>
+<table width="100%"><tr><td valign="top" align="left">
+<table width="100%" cellpadding="0" cellspacing="0">
+<thead><td>Pavadinimas</td><td>Spalva (EBC)</td><td>Kiekis (kg)</td> <td>Kiekis (%)</td></thead>
+	<? 
+	for ($i=0;$i<count($this->data['malt']);$i++) {
+	?>
+	<tr><td><?=$this->data['malt'][$i]['malt_name'];?></td><td class="td-number"><?=$this->data['malt'][$i]['malt_ebc'];?></td><td class="td-number"><?=$this->data['malt'][$i]['malt_weight'];?></td><td><?=round(floatval ($this->data['malt'][$i]['malt_weight'])/$total*100,1);?></td></tr>
+	<?
+	}
+	?>
+</table>
+</td>
+<td valign="top" align="right">
+<span class="nom" title="Pradinis tankis">OG:</span> <?=$this->data['recipe']['recipe_sg'];?></br>
+<span class="nom" title="Galutinis tankis">FG:</span> <?=$this->data['recipe']['recipe_fg'];?></br>
+<span class="nom" title="Stiprumas">ABV:</span> <?=$this->data['recipe']['recipe_abv'];?>%</br>
+<span class="nom" title="Spalva, EBC">EBC:</span> <?=$this->data['recipe']['recipe_ebc'];?></br>
+<span class="nom" title="Kalorijų kiekis litre">CAL/L:</span> <?=Entities_BrewCalc::calories($this->data['recipe']['recipe_sg'],$this->data['recipe']['recipe_fg']);?></br></td></tr></table>
+</p>
+
+
+<p>
+<p ><h2 align="left">apyniai</h2>
+<hr/><table width="100%"><tr><td valign="top" align="left">
+<table width="100%"  cellpadding="0" cellspacing="0">
+<thead><td>Pavadinimas</td><td>Kartumas (AA%)</td><td>Kiekis (g)</td><td>Laikas</td></thead>
+	<? 
+	for ($i=0;$i<count($this->data['hops']);$i++) {
+	?>
+	<tr><td><?=$this->data['hops'][$i]['hop_name'];?></td><td class="td-number"><?=$this->data['hops'][$i]['hop_alpha'];?></td><td class="td-number"><?=$this->data['hops'][$i]['hop_weight'];?></td><td class="td-number"><?=$this->data['hops'][$i]['hop_time'];?></td></tr>
+	<?
+	}
+	?>
+</table>
+</td><td valign="top" align="right"><? if (count($this->data['hops'])>0) {?><span class="nom">IBU:</span> <?=$this->data['recipe']['recipe_ibu'];?></br>
+	<span class="nom">IBU/OG:</span> <?=round($this->data['recipe']['recipe_ibu']/(($this->data['recipe']['recipe_sg']*1000)-1000),2);?></br>
+<i><? print i_bu($this->data['recipe']['recipe_ibu'],$this->data['recipe']['recipe_sg']);?></i><?}?></td></tr></table>
+</p>
+
+
+<p>
+<h2 align="left">mielės</h2>
+<hr/>
+<table width="600"  cellpadding="0" cellspacing="0">
+<thead><td>Mielės</td><td>Kiekis (g)</td></thead>
+	<? 
+	for ($i=0;$i<count($this->data['yeast']);$i++) {
+	?>
+	<tr><td><?=$this->data['yeast'][$i]['yeast_name'];?></td><td class="td-number"><?=$this->data['yeast'][$i]['yeast_weight'];?></td></tr>
+	<?
+	}
+	?>
+</table>
+
+</p>
+
+<p><h2 align="left">pastabos</h2>
+<hr/>
+<?=nl2br($this->data['recipe']['recipe_comments']);?></br>
+
+</p>
+</div>
+<?
+// testuoju
+
+		print $this->recipeComments($this->data['recipe']['recipe_id']);
+	
+?>

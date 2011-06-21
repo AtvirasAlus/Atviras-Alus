@@ -1,0 +1,274 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.2.1\n"
+"Report-Msgid-Bugs-To: http://bbpress.org/plugins/topic/role-manager/\n"
+"POT-Creation-Date: 2009-12-01 22:09+0000\n"
+"PO-Revision-Date: 2009-12-06 15:12-0600\n"
+"Last-Translator: i18n Bot <i18nbot@llamaslayers.net>\n"
+"Language-Team: i18n Bot <i18nbot@llamaslayers.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: role-manager-admin.php:5
+msgid "Nothing to see here."
+msgstr "אין מה לראות כאן."
+
+#: role-manager-admin.php:13
+#, php-format
+msgid "<h2>Role <strong>%s</strong> is a default and cannot be deleted.</h2>"
+msgstr "<h2 style=\";text-align:right;direction:rtl\"> <strong>%</strong> תפקיד <strong>זה</strong> הוא ברירת המחדל ולא ניתן למחוק. </h2>"
+
+#: role-manager-admin.php:21
+#, php-format
+msgid "<h2>Role <strong>%s</strong> deleted.</h2>"
+msgstr "<h2 style=\";text-align:right;direction:rtl\"> <strong>תפקיד %s</strong> נמחק. </h2>"
+
+#: role-manager-admin.php:52
+#, php-format
+msgid "The role %s already exists."
+msgstr "תפקיד %s כבר קיים."
+
+#: role-manager-admin.php:64
+#, php-format
+msgid "<h2>Role <strong>%s</strong> created.</h2>"
+msgstr "<h2 style=\";text-align:right;direction:rtl\"> <strong>%</strong> תפקיד <strong>זה</strong> נוצר. </h2>"
+
+#: role-manager-admin.php:73
+#, php-format
+msgid "Create role %s"
+msgstr "צור %s תפקיד"
+
+#: role-manager-admin.php:75
+msgid "New role"
+msgstr "תפקיד חדש"
+
+#: role-manager-admin.php:79
+msgid "Base role on:"
+msgstr "תפקיד על בסיס:"
+
+#: role-manager-admin.php:85
+msgid "Start with a blank slate"
+msgstr "התחל עם רשימת ריק"
+
+#: role-manager-admin.php:90
+msgid "Role name:"
+msgstr "שם תפקיד:"
+
+#: role-manager-admin.php:97
+msgid "Create role"
+msgstr "יצירת תפקיד"
+
+#: role-manager-admin.php:117
+#, php-format
+msgid "Editing role <strong>%s</strong>"
+msgstr "עריכת <strong>תפקיד %s</strong>"
+
+#: role-manager-admin.php:123 role-manager-admin.php:129
+msgid "Grant"
+msgstr "גרנט"
+
+#: role-manager-admin.php:124 role-manager-admin.php:130
+msgid "Description"
+msgstr "תיאור"
+
+#: role-manager-admin.php:144
+msgid "Role"
+msgstr "תפקיד"
+
+#: role-manager-admin.php:157
+msgid "Save"
+msgstr "לשמור"
+
+#: role-manager-admin.php:174 role-manager-admin.php:181
+#: role-manager-admin.php:188 role-manager.php:12
+msgid "Roles"
+msgstr "תפקידים"
+
+#: role-manager-admin.php:180 role-manager-admin.php:187
+msgid "Name"
+msgstr "שם"
+
+#: role-manager-admin.php:180 role-manager-admin.php:187
+msgid "Add new &raquo;"
+msgstr "הוסף »חדשות"
+
+#: role-manager-admin.php:182 role-manager-admin.php:189
+msgid "Capabilities"
+msgstr "יכולות"
+
+#: role-manager-admin.php:206
+msgid "View"
+msgstr "תצוגה"
+
+#: role-manager-admin.php:207
+msgid "Edit"
+msgstr "עריכה"
+
+#: role-manager-admin.php:209
+msgid "Delete"
+msgstr "למחוק"
+
+#: role-manager.php:128
+msgid "Administrator"
+msgstr "מנהל"
+
+#: role-manager.php:129
+msgid "Moderator"
+msgstr "מנחה"
+
+#: role-manager.php:130
+msgid "Member"
+msgstr "חבר"
+
+#: role-manager.php:143
+msgid "Import and export data"
+msgstr "נתוני יבוא ויצוא"
+
+#: role-manager.php:144
+msgid "Use the recount feature"
+msgstr "השתמש בתכונת לספר"
+
+#: role-manager.php:145
+msgid "Switch the theme"
+msgstr "החלף את ערכת הנושא"
+
+#: role-manager.php:146
+msgid "Activate and deactivate plugins"
+msgstr "להפעיל לבטל Plugins"
+
+#: role-manager.php:147
+msgid "Edit the settings of the forum"
+msgstr "ערוך את הגדרות הפורום"
+
+#: role-manager.php:148
+msgid "Edit other users' profiles"
+msgstr "משתמשים אחרים ערוך &#39;פרופילים"
+
+#: role-manager.php:149
+msgid "Rename, merge and destroy tags"
+msgstr "שינוי שם, מיזוג ולהרוס תגיות"
+
+#: role-manager.php:150
+msgid "Edit other users' list of favorite topics"
+msgstr "עריכת רשימת משתמשים אחרים &#39;של הנושאים האהובים"
+
+#: role-manager.php:151
+msgid "Add and rename forums"
+msgstr "הוסף ולשנות את שמם בפורומים"
+
+#: role-manager.php:152
+msgid "Delete forums"
+msgstr "בפורומים מחק"
+
+#: role-manager.php:153
+msgid "Delete topics"
+msgstr "נושאים מחק"
+
+#: role-manager.php:154
+msgid "Close and open topics"
+msgstr "נושאים סגור ופתוח"
+
+#: role-manager.php:155
+msgid "Make topics sticky"
+msgstr "נושאים הפוך דביק"
+
+#: role-manager.php:156
+msgid "Move topics to other forums"
+msgstr "להעביר נושאים בפורומים אחרים"
+
+#: role-manager.php:157
+msgid "View posts made by users of an IP address"
+msgstr "הצג הודעות שנעשו על ידי משתמשים של כתובת IP"
+
+#: role-manager.php:158
+msgid "Edit closed topics"
+msgstr "עריכה נעולות"
+
+#: role-manager.php:159
+msgid "Edit deleted topics and posts"
+msgstr "נושאים עריכת הודעות שנמחקו"
+
+#: role-manager.php:160
+msgid "Use the \"deleted\" view"
+msgstr "השתמש &quot;נמחק&quot; נוף"
+
+#: role-manager.php:161
+msgid "Remove tags from a topic"
+msgstr "תגיות הסר נושא"
+
+#: role-manager.php:162
+msgid "Edit topics by other users"
+msgstr "נושאים ערוך על ידי משתמשים אחרים"
+
+#: role-manager.php:163
+msgid "Delete posts"
+msgstr "מחיקת הודעות"
+
+#: role-manager.php:164
+msgid "Post back to back arbitrarily quickly"
+msgstr "פוסט גב אל גב שרירותי במהירות"
+
+#: role-manager.php:165
+msgid "Edit posts on locked topics"
+msgstr "עריכת הודעות בנושאים נעולים"
+
+#: role-manager.php:166
+msgid "Edit posts of other users"
+msgstr "עריכת הודעות של משתמשים אחרים"
+
+#: role-manager.php:167
+msgid "Edit their list of favorite topics"
+msgstr "ערוך רשימה של נושאים האהובים שלהם"
+
+#: role-manager.php:168
+msgid "Add tags to a topic"
+msgstr "הוספת תגים נושא"
+
+#: role-manager.php:169
+msgid "Edit the title and resolution status of their own topics"
+msgstr "ערוך את הכותרת ואת המצב ברזולוציה של נושאים משלהם"
+
+#: role-manager.php:170
+msgid "Edit their own posts"
+msgstr "עריכת ההודעות שלהם"
+
+#: role-manager.php:171
+msgid "Edit their profile settings"
+msgstr "עריכת הגדרות הפרופיל שלהם"
+
+#: role-manager.php:172
+msgid "Make new topics"
+msgstr "הפוך נושאים חדשים"
+
+#: role-manager.php:173
+msgid "Make new posts"
+msgstr "בצע הודעות חדשות"
+
+#: role-manager.php:174
+msgid "Change their own password"
+msgstr "לשנות את הסיסמה שלהם"
+
+#: role-manager.php:175
+msgid "Read the forums"
+msgstr "קרא את הפורומים"
+
+#. Plugin Name of an extension
+msgid "Role Manager"
+msgstr "תפקיד מנהל"
+
+#. Plugin URI of an extension
+msgid "http://nightgunner5.wordpress.com/tag/role-manager/"
+msgstr "http://nightgunner5.wordpress.com/tag/role-manager/"
+
+#. Description of an extension
+msgid "Allows key masters to change the capabilities that each role has and even create new roles."
+msgstr "אמני מפתח מאפשר לשנות את היכולות כי כל תפקיד יש ואפילו ליצור תפקידים חדשים."
+
+#. Author of an extension
+msgid "Nightgunner5"
+msgstr "Nightgunner5"
+
+#. Author URI of an extension
+msgid "http://nightgunner5.wordpress.com/"
+msgstr "http://nightgunner5.wordpress.com/"

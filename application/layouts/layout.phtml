@@ -1,0 +1,27 @@
+<?
+$this->headTitle("VDAA DB");
+?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="lt" lang="lt">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="content-type" />
+<?php echo $this->headTitle() ?>
+<meta name="robots" content="nofollow,noindex,noarchive" />
+<link href="/public/css/main.css" type="text/css" rel="stylesheet" />
+
+<?
+Zend_Dojo::enableView($this);
+$this->dojo()->setLocalPath('/externals/dojo/dojo/dojo.js')
+	->setDjConfigOption('parseOnLoad', true)
+	->addStylesheetModule('dijit.themes.tundra');
+	
+            echo $this->dojo();
+       
+?>
+
+</head>
+<body class="tundra">
+<div align="center">
+<? echo $this->layout()->content; ?>
+</div>
+</body>
+</html>

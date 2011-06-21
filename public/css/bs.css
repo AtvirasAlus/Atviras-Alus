@@ -1,0 +1,46 @@
+
+#bsession thead  td{
+	background:#666666;
+	color:#ffffff;
+	text-align:center;
+}
+#bsession td{
+	padding:5;
+	vertical-align:top;
+}
+#bsession td input {
+	font-size:11;
+}
+#bsession td button {
+	font-size:11;
+	border:1px #BBBBBB solid;
+	background:#ffffff;
+}
+#bsession td textarea {
+	font-size:11;
+	border:1px #666666 solid;
+}
+.bs-tr-0 td{
+	background:#ffffff;
+	border-right:1px #DDDDDD solid;
+	font-size:11px
+}
+.bs-tr-1 td{
+	background:#DDDDDD;
+	border-right:1px #FFFFFF solid;
+	font-size:11px
+}
+.bs_data {
+	background:#ffffff;
+	vertical-align:middle;
+	padding:5;
+	border-bottom:1px #DDDDDD solid;
+}
+.bs_title {
+	background:#666666;
+	vertical-align:top;
+	padding:5;
+	color:#ffffff;
+	border-bottom:1px #DDDDDD solid;
+}
+

@@ -1,0 +1,46 @@
+body.settings_page_wp-smart-image-ii {
+overflow-y: visible;
+}
+
+#wpsi-contenedor {
+filter:expression(document.execCommand("BackgroundImageCache", false, true));
+}
+
+
+
+#wpsi-contenedor ul#wpsi-caja {
+
+overflow: hidden;
+height: 32px;
+}
+
+#wpsi-contenedor ul#wpsi-caja li a {
+display: inline-block;
+border: 1px solid #e3e3e3;
+border-bottom: 1px solid #ccc;
+overflow: hidden;
+}
+
+#wpsi-contenedor ul#wpsi-caja li.wpsi-selected a:hover {
+border-bottom: 1px solid #f1f1f1;
+}
+
+#wpsi-contenedor .tablesizes {
+width: 99%;
+}
+
+#wpsi-contenedor .tablesizes td input {
+width: 95%;
+}
+
+#wpsi-contenedor .tablesizes td.ultima-celda input {
+}
+
+#wpsi-contenedor .wpsi-contenido {
+
+margin-top: 31px;
+}
+
+#wpsi-contenedor p.formulario input#wpsi_ruta_img {
+width: 99%;
+}

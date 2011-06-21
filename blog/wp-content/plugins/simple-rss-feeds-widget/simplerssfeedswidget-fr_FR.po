@@ -1,0 +1,108 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple RSS Feeds Widget\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-06-15 12:54+0100\n"
+"PO-Revision-Date: 2010-06-15 12:57+0100\n"
+"Last-Translator: Martin Korolczuk <martin@petitnuage.fr>\n"
+"Language-Team: Petit Nuage <simplerssfeedswidget.wp@petitnuage.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: simplerssfeedswidget.php:40
+#: simplerssfeedswidget.php:339
+#: simplerssfeedswidget.php:346
+msgid "Simple RSS Feeds Widget"
+msgstr "Simple RSS Feeds Widget"
+
+#: simplerssfeedswidget.php:41
+msgid "Display third party feeds"
+msgstr "Affiche des flux RSS tiers"
+
+#: simplerssfeedswidget.php:50
+msgid "Business and Stock Market News"
+msgstr "Actualités économiques et boursières"
+
+#: simplerssfeedswidget.php:55
+msgid "DEFAULT_RSS_FEEDS"
+msgstr "http://www.labourseenaction.fr/feed/!http://www.capital.fr/rss2/feed/fil-bourse.xml!http://www.moneyweek.fr/feed/!http://rss.feedsportal.com/c/268/f/3632/index.rss!http://www.latribune.fr/rss/rss-bourse.html!http://rss.feedsportal.com/c/499/f/413866/index.rss!http://rss.feedsportal.com/c/499/f/413862/index.rss!http://www.lefigaro.fr/rss/figaro_bourse.xml!http://www.lemonde.fr/rss/tag/economie.xml!http://rss.feedsportal.com/c/32268/f/438247/index.rss!http://rss.feedsportal.com/c/568/f/9917/index.rss!http://rss.nouvelobs.com/c/32262/fe.ed/tempsreel.nouvelobs.com/actualite/economie/rss.xml!http://rss.challenges.fr/c/32261/f/437855/index.rss!http://rss.challenges.fr/c/32261/f/437870/index.rss!http://www.lepoint.fr/content/system/rss/economie/economie_doc.xml"
+
+#: simplerssfeedswidget.php:109
+msgid "Here are some economic and stock market news:"
+msgstr "Vous trouverez ci-après des actualités économiques et boursières&nbsp;:"
+
+#: simplerssfeedswidget.php:133
+msgid "Title:"
+msgstr "Titre&nbsp;:"
+
+#: simplerssfeedswidget.php:140
+msgid "Introduction text:"
+msgstr "Texte d'introduction&nbsp;:"
+
+#: simplerssfeedswidget.php:147
+msgid "RSS feeds (one per line):"
+msgstr "Flux RSS (un par ligne)&nbsp;:"
+
+#: simplerssfeedswidget.php:154
+msgid "Maximum displayed items from same source:"
+msgstr "Nombre d'entrées maximum issus de la même source&nbsp;:"
+
+#: simplerssfeedswidget.php:161
+msgid "Maximum displayed items in total:"
+msgstr "Nombre d'entrées maximum affichées au total&nbsp;:"
+
+#: simplerssfeedswidget.php:168
+msgid "RSS Feed Source:"
+msgstr "Source du flux RSS&nbsp;:"
+
+#: simplerssfeedswidget.php:170
+msgid "Display source"
+msgstr "Afficher la source"
+
+#: simplerssfeedswidget.php:171
+msgid "Hide source"
+msgstr "Masquer la source"
+
+#: simplerssfeedswidget.php:178
+msgid "Widget Signature:"
+msgstr "Signature du widget&nbsp;:"
+
+#: simplerssfeedswidget.php:180
+msgid "Display full signature"
+msgstr "Afficher la signature complète"
+
+#: simplerssfeedswidget.php:181
+msgid "Display short signature"
+msgstr "Afficher la signature réduite"
+
+#: simplerssfeedswidget.php:182
+msgid "Hide signature"
+msgstr "Masquer la signature"
+
+#: simplerssfeedswidget.php:338
+#, php-format
+msgid "Powered by %s supplied by %s"
+msgstr "Propulsé par %s fourni par %s"
+
+#: simplerssfeedswidget.php:339
+#: simplerssfeedswidget.php:346
+msgid "WordPress RSS Widget"
+msgstr "Widget RSS pour WordPress"
+
+#: simplerssfeedswidget.php:345
+#, php-format
+msgid "Powered by %s"
+msgstr "Propulsé par %s"
+
+#~ msgid "Signature:"
+#~ msgstr "Signature&nbsp;:"
+
+#~ msgid "Stock Market News"
+#~ msgstr "Actualités boursières"

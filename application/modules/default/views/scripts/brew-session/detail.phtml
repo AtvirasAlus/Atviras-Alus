@@ -1,0 +1,23 @@
+<?if (isset($this->brew_sessions['session_id'])) {?>
+<div><h2>Recepto virimo "<?=$this->brew_sessions['recipe_name'];?>" informacija</h2> </div>
+<table width="1000" cellpading="0" cellspacing="0">
+<?
+$this->headLink()->appendStylesheet("/public/css/bs.css");
+$this->brew_sessions['session_comments']=nl2br($this->brew_sessions['session_comments']);
+print $this->brewSession()->infoColumn($this->brew_sessions,($this->user_id==$this->brew_sessions['session_brewer']));
+?>
+</table>
+<div style="padding-top:20">
+<a href="<?=$this->backLink("/brew-session/recipe/".$this->brew_sessions['session_recipe']);?>">Atgal</a> 
+<?
+if ($this->user_id==$this->brew_sessions['session_brewer']) {
+	?>
+	 | <a href="/brew-session/edit/<?=$this->brew_sessions['session_id']?>">Redaguoti</a>
+	<?
+}
+?>
+</div>
+<? }else{ ?>
+	<div><h2>Virimo istorija nerasta</h2></div>
+<?}?>
+

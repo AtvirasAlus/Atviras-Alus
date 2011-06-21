@@ -1,0 +1,59 @@
+<? $this->headTitle()->append(" - Alaus stiliai");?>
+<div style="padding-left:10">
+<?
+$style_cat=-1;
+$yeasts_cat=-1;
+$z=0;
+for ($i=0;$i<count($this->beer_styles);$i++) {
+	if ($yeasts_cat !=$this->beer_styles[$i]["yeast_cat"] && $yeasts_cat!=-1) {
+		?>
+		<div style="width:650;padding-top:30;padding-right:10;font-size:16;font-weight:bold;color:#666666" align="center"><?=$this->beer_styles[$i]["yeast_cat_name"];?><hr/></div>
+		<?
+	}
+	$yeasts_cat=$this->beer_styles[$i]["yeast_cat"];
+if ($style_cat !=$this->beer_styles[$i]["style_cat"]) {
+$z=0;
+?>
+<div align="left" style="padding:3;padding-left:10;padding-top:10;width:300;color:#666666;font-weight:bold"><span><?=$this->beer_styles[$i]["cat_name"];?></span></div>
+
+<div class="ui-corner-all" style="background:#ffffff;display: inline-block; padding:3">
+<table border="0">
+<?
+}
+$style_cat=$this->beer_styles[$i]["style_cat"];
+if ($z==0){
+?>
+<tr><td >
+<?
+}
+?>
+<div style="display:inline;padding:3"><a href="/stilius/<?=$this->beer_styles[$i]['style_id'];?>-<?=urlencode(implode("_",explode("/",$this->beer_styles[$i]['style_name'])));?>"><?=$this->beer_styles[$i]['style_name'];?> </a> (<?=$this->beer_styles[$i]['count'];?>)</div>
+<?
+$z++;
+
+if (isset($this->beer_styles[$i+1])) {
+	if ($this->beer_styles[$i+1]["style_cat"]!=$style_cat) {
+		?>
+	</td></tr>
+	</table></div>
+	<?
+	}else{
+		if ($z==3) {
+		?>
+		</td></tr>
+		<?
+		$z=0;
+		}
+	}
+}
+}
+if ($z>0) {
+?>
+</td></tr>
+
+<?
+}
+?> 
+</table> </div>
+</div>     
+                                                                                                             

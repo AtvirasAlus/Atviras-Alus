@@ -1,0 +1,32 @@
+<style>
+#user_email {
+width:250;
+}
+#user_name {
+width:250;
+}
+</style>
+<form action="<?=$this->element->getAction();?>" method="<?= $this->element->getmethod();?>">
+<table width="100%">
+<tr>
+<td align="right"><?=$this->element->user_name->getLabel();?></td>
+<td><?=$this->element->user_name;?></td>
+</tr>
+<tr>
+<td align="right"><? echo $this->element->user_email->getLabel();?></td>
+<td><?=$this->element->user_email;?></td>
+</tr>
+<tr><td>&nbsp;</td><td></td>
+</tr>
+<tr>
+<td colspan="2" align="center" valign="bottom"><?=$this->element->register_action;?></td>
+</tr>
+</table>
+</form>
+<script>
+ 
+   	$("#register_action").button();
+ 
+</script>
+
+

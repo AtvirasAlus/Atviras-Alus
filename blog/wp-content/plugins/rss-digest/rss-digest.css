@@ -1,0 +1,16 @@
+/*
+ * RSS Digest CSS
+ *
+ * http://geekfactor.charrington.com/projects/rss_digest
+ *
+ * Copyright (c) 2009 Sam Charrington. All rights reserved.
+ *
+ * Released under the GPL license, Version 2
+ * http://www.opensource.org/licenses/gpl-license.php
+ *
+ */
+
+ul.scrd_digest { font-size: 90%; margin-top: 0.3em; }
+ul.scrd_digest div { text-indent: 0; }
+ul.scrd_digest img { padding: 0 10px; }
+p.scrd_credit { font-size: 80%; float: right;}

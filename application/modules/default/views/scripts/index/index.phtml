@@ -1,0 +1,182 @@
+<? $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,receptai,receptas,alus,skaičiuoklė,ibu,ebc,abv');?>
+<? $this->headTitle()->append(" - atvira namų aludarių bendruomenė ");?>
+<style>
+.left_col {
+	padding-top:10px
+}
+.right_col {
+	padding-top:10px}
+h1 {
+	font-family:Georgia;
+	font-weight:bold;
+	color:#666666;
+}
+
+</style>
+<div>
+
+<table>
+<tr><td valign="top">
+<!--COLUMN 1-->
+<!--RECEPTAI-->
+<div class="left_col">
+<div class="ui-corner-all" style="background:#ffffff;padding:10;width:450;">
+<h1 style="text-decoration:italic;font-size:12px">Naujausi alaus receptai:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
+<table width="306">
+<? for ($i=0;$i<count($this->recipes);$i++) {?>
+	<tr><td><a style="font-size:15" href="/alus/receptas/<?=$this->recipes[$i]['recipe_id'];?>-<?=$this->escapeParam($this->recipes[$i]['recipe_name']);?>"><?=$this->recipes[$i]['recipe_name'];?></a> <span style="font-size:11"><?=$this->recipes[$i]['style_name'];?></span></td></tr>	
+<?}?>
+</table>
+<div style="padding-top:10"> <a href="/recipes">Peržiūrėti visus</a> (<?=$this->total_recipes["count"]?>) <a href="/recipes/random" style="padding-left:10">Atsitiktinis receptas</a></div>
+</div>
+<div class="left_col">
+<!--NAUJIENOS-->
+<div class="ui-corner-all" style="background:#ffffff;padding:10;width:450"><h1 style="text-decoration:italic;font-size:12px">Atviro alaus naujienos:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
+<p>Per mėnėsį <b><?=$this->total_brewed['brewers_total'];?></b> aludariai išvirė <b><a href="http://atvirasalus.lt/stats/sessions"><?=$this->total_brewed['beer_total'];?></b></a> litrus alaus</p>
+<p>Sveikiname mūsų naująjį aludarį, <a href="/brewers/<?=$this->welcome['user_id'];?>"><?=$this->welcome['user_name'];?></a></p>
+<p><i>2011.04.19 16:13:52 Išanalizavus 192 receptus nustatytas vidutinis efektyvumas 0.68, maksimalus 0.9, minimalus 0.45.</i></p>
+<p><i>2011.04.19 16:08:21 Komentuokite <a href="/skaitykla">straipsnius</a>.</i></p>
+<p><i>2011.03.25 14:11:23 Mes išvirėme 1 toną alaus. <a href="http://www.youtube.com/watch?v=xwy6XMN30CA" target="_blank"> VALIO!</a>.</i></p>
+<p><i>2011.03.18 17:01:43 Įdiegta "prisimink mane" funkcija, pailgintas sesijos laikas.</i></p>
+<p><i>2011.03.01 16:43:21 Pasimetėt? - <a href="/search">Ieškokite.</a></i></p>
+<p><i>2011.02.24 17:03:16 Skaitykite stilių <a href="styles">apibūdinimus</a>. </i></p>
+<p><i>2011.02.23 17:34:41 Rašykite mums info[eta]atvirasalus.lt. </i></p>
+<p><i>2011.02.23 13:22:08 Atidaryta <a href="/skaitykla">skaitykla</a>. </i></p>
+<p><i>2011.02.19 11:44:57 Įdiegta virimų istorija. Žymėkites ponai savo virimų istoriją, tai svarbi informacija Jums ir kitiems. </i></p>
+<p><i>2011.02.16 19:39:32 Su neprigulnybe ponai aludariai... </i></p>
+<p><i>2011.02.15 23:41:10 Dirbam prie logo toliau... </i></p>
+<p><i>2011.02.14 14:26:10 nežinot kokį alų virti, meskit <a href="/recipes/random">kauliuką</a></i></p>
+<p><i>2011.02.11 11:41:10 Įdiegta receptų komentavimo sistema</i></p>
+<p><i>2011.02.11 01:11:10 Mes turime naują vardą atvirasalus.lt</i></p>
+<div style="color:#922C12">
+<i>Pastebėta, jog registruojantis  @gmail pašto adresu,  vartotojai negauna el. pašto patvirtinančio jų registracijos. </br>Gmail pašto sistema šiuos laiškus traktuoja kaip spam'ą, todėl prašome pastitkrinti savo spam folderį.</br>Atsiprašome už nepatogumus. Tikimes, jog perkelus svetainę į naują serverį šios problemos išvengti.</i>
+</div>
+</div>
+</div>
+<!--FORUMAS-->
+<div class="left_col">
+<div class="ui-corner-all" style="background:#ffffff;width:450;padding:10"><h1 style="text-decoration:italic;font-size:12px">Forumas:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
+<table>
+<? for ($i=0;$i<count($this->posts);$i++) {?>
+<tr>
+<td><a href="/forum/topic.php?id=<?=$this->posts[$i]['topic_id'];?>"><?=$this->posts[$i]["topic_title"]?></a> pasisakė <a  href="/brewers/<?=$this->posts[$i]['poster_id'];?>"><?=$this->posts[$i]["user_name"]?></a></td>
+</tr>
+<?}?>
+</table>
+</div>
+</div>
+<!--FAVORITAI-->
+<div class="left_col">
+<div class="ui-corner-all" style="background:#ffffff;width:450;padding:10">
+
+<h1 style="text-decoration:italic;font-size:12px">Mėgstamiausi:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
+<table>
+<? for ($i=0;$i<count($this->fav_recipes);$i++) {?>
+<tr>
+<td><a href="/brewers/<?=$this->fav_recipes[$i]['brewer_id'];?>"><?=$this->fav_recipes[$i]["user_name"]?></a> receptas <a style="font-size:15" href="/alus/receptas/<?=$this->fav_recipes[$i]['recipe_id'];?>-<?=$this->escapeParam($this->fav_recipes[$i]['recipe_name']);?>"><?=$this->fav_recipes[$i]["recipe_name"]?></a></td>
+</tr>
+<?}?>
+</table>
+</div>
+</div>
+<!--END COLUMN 1-->
+</td>
+<td align="left" valign="top" style="padding-left:15">
+<div class="right_col">
+<!--COLUMN 2-->
+<div class="ui-corner-all" style="background:#ffffff;padding:10;width:360">
+<h1 style="text-decoration:italic;font-size:12px">Aludariai:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
+<table width="346">
+
+<?
+$z=0;
+for ($i=0;$i<count($this->users)/3;$i++) {
+	?>
+	<tr>
+	<?
+	for ($ii=0;$ii<3;$ii++) {
+		
+		if (isset($this->users[$z])) {
+?>
+<td width="100" align="center" height="75">
+<a href="/brewers/<?=$this->users[$z]['user_id'];?>"><div><a href="/brewers/<?=$this->users[$z]['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->users[$z]['user_email']);?>?rating=G&size=50&default=mm" border="0"/></a></div>
+<a href="/brewers/<?=$this->users[$z]['user_id'];?>"><?=$this->users[$z]['user_name'];?> </a> (<?=$this->users[$z]['count'];?>)</td>
+<?
+		}
+$z++;
+}
+?>
+</tr>
+<?
+}
+?>        
+</table>
+<div style="padding-top:5"><a href="/brewer/list">Peržiūrėt visus</a> (<?=$this->users_total["count"];?>)</div>
+</div>
+</div>
+</div>
+<div class="right_col">
+<!--KOMENTARAI-->
+<div class="ui-corner-all" style="background:#ffffff;padding:10;width:360;">
+<h1 style="text-decoration:italic;font-size:12px">Komentarai:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
+<table>
+<? for ($i=0;$i<count($this->comments);$i++) {?>
+<tr>
+<td><a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><?=$this->comments[$i]["user_name"]?></a> komentavo <a style="font-size:15" href="/alus/receptas/<?=$this->comments[$i]['recipe_id'];?>-<?=$this->escapeParam($this->comments[$i]['recipe_name']);?>"><?=$this->comments[$i]["recipe_name"]?></a></td>
+</tr>
+<?}?>
+</table>
+<div style="margin-top:5" align="right"><a href="/comments" >Visi komentarai</a></div>
+</div>
+</div>
+<!-- VIRIMAI -->
+<div class="right_col">
+<div class="ui-corner-all" style="background:#ffffff;padding:10;width:360;">
+<h1 style="text-decoration:italic;font-size:12px">Kubiluose gyvena:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
+<table>
+<? for ($i=0;$i<count($this->brew_session);$i++) {?>
+<tr>
+<td><a href="/brewers/<?=$this->brew_session[$i]['user_id'];?>"><?=$this->brew_session[$i]["user_name"]?></a> bravoryja <a style="font-size:15" href="/alus/receptas/<?=$this->brew_session[$i]['recipe_id'];?>-<?=$this->escapeParam($this->brew_session[$i]['recipe_name']);?>"><?=$this->brew_session[$i]["recipe_name"]?></a></td>
+</tr>
+<?}?>
+</table>
+<div style="margin-top:5" align="right"><a href="/brew-session/history" >Visi virimai</a></div>
+</div>
+</div>
+<!-- STRAIPSNIAI-->
+<div class="right_col">
+<div class="ui-corner-all" style="background:#ffffff;padding:10;width:360">
+<h1 style="text-decoration:italic;font-size:12px">Straipsniai:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
+<table>
+<? for ($i=0;$i<count($this->articles);$i++) {?>
+<tr>
+<td>
+<div><a  style="font-size:13;" href="/content/read/<?=$this->articles[$i]['article_cat'];?>/<?=$this->articles[$i]['article_id'];?>-<?=$this->articles[$i]['article_title'];?>"><?=$this->articles[$i]['article_title'];?></a> (<?=intval($this->articles[$i]['total']);?>)<img src="/public/images/comments_icon.png" border=0/> </div>
+
+</td>
+</tr>
+<?}?>
+</table>
+</div>
+</div>
+<!--DIENORAŠTIS-->
+<div class="right_col">
+<div class="ui-corner-all" style="background:#ffffff;padding:10;width:360;"><h1 style="text-decoration:italic;font-size:12px">Iš aludarių dienoraščio:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
+<table>
+<? for ($i=0;$i<count($this->blogs);$i++) {?>
+<tr>
+<td>
+<div><a href="/brewers/<?=$this->blogs[$i]['post_author'];?>"><?=$this->blogs[$i]['user_name'];?></a> - <a  style="font-size:13;" href="<?=$this->blogs[$i]['guid'];?>"><?=$this->blogs[$i]['post_title'];?></a> (<?=intval($this->blogs[$i]['comment_count']);?>)<img src="/public/images/comments_icon.png" border=0/> </div>
+
+</td>
+</tr>
+<?}?>
+</table>
+</div>
+</div>
+<!--END COLUMN 2-->
+
+</td></tr>
+</table>
+</div>
+

@@ -1,0 +1,82 @@
+Version 3.6
+1. The first Internationalized theme by Sadish. Now it is easy to make translations for the theme using .PO and .MO files.
+2. Support for Gravatar when used with WP 2.5
+
+Version 3.5
+1. Made compatible for WP 2.3
+2. Made the tag line in the header to use <p> tag instead of <h2>. [Better for Search Engines]
+3. Made the sidebar headings to use <h3> instead of <h2>. [Better for Search Engines]
+
+Version 3.4
+1. Single Posts now show the previous post and the next post at the top.
+2. Added a file called "notfound.php" which gets included whenever you get a 404.
+3. Changed the profile image that shows up in the sidebar.
+
+Version 3.3.1
+Bug Fix in functions.php approximately line number 150.
+$excludepages = explode(’,', get_settings(’spotlight_excludepages’)); should actually be
+$excludepages = explode(’,', get_settings(’mistylook_excludepages’));
+
+
+Version 3.3
+1. Fixed the height and width of the header image to be exact in the functions.php.
+2. Provided an alternative header image Thanks to http://www.sxc.hu/photo/685577
+[The original mistylook's header is still available as misty2.jpg in the theme folder]
+3. Now if you do not disable the shadow effect applied to images, 
+you can use class="noborder" for those img tags.
+4. Minor style improvements in style.css.
+
+Version 3.2
+1. Highlight the author's comment. if the commenter's email is same as the post author's email, 
+it is highlighted with the border around the comment.
+2. border:none; in style.css is changed to border:0; [for making it valid css]
+3. Emoticons will not show the shaded background now.
+4. Removed the hard coding of "Links" as a title for the blogroll.
+Also made sure it looks the same as other sidebar content.
+5. Changed the letter-spacing:1px; to letter-spacing:0px; attribute from several elements, to make sure the site displays properly for other languages such as Tamil. [If you like it the original way,you can change it back to 1px]
+6. Added some spacing for sidebar's list items, in style.css
+
+
+Version 3.1
+1. Fixed the number of posts shown on the sidebar "about" section.
+This change was done in functions.php.
+2. Added new function in functions.php, to show most recent posts on pages other than home page.
+Sidebar.php modified to make a call to this function.
+3. When viewing the archives, only post's excerpts are shown. 
+we added a link below the excerpt to be able to get to that post easily.
+4. wp_list_categories is used in sidebar.php if it exists.
+
+
+Version 3.0
+overall improvement to the look and feel.
+1. updated footer.php to have wp_footer(), after the closing </div>
+2. Added attachment.php so you can use the wordpress 2.0 feature that allows people
+to comment on an attachment in a post.
+3. comments.php - Now supports Trackback URI and Comments Feed when viewing single post / page.
+4. functions.php - 
+	About Section on the sidebar is made into a widget
+	Support for Custom Image Header - An Amazing way you can create your own header with just a few mouse clicks.
+	WordPress 2.1 puts both link categories and post categories into one table.
+when picking a category for Asides, MistLook is made to list only post categories.
+
+5. sidebar.php - following number 4, about section is made to call to the widget's function.
+				- changed the title for category list to be "Categories". Previously it was called "Tags".
+6. 404.php - made to use the 404.gif that is added to the img folder.
+7. contact.php - added cols and rows to the textarea tag.
+
+
+Version 2.3
+
+1. contact.php updated to have an AntiSpam Question
+2. index.php - added support for posts that span across pages. <?php wp_link_pages(); ?>
+3. single.php - added support for posts that span across pages. <?php wp_link_pages(); ?>
+4. page.php - added support for posts that span across pages. <?php wp_link_pages(); ?>
+			- now displays the list of sub-pages(if any), right under the page's content.
+5. style.css - Updated
+	- Sidebar's heading color changed.
+	- Textbox and the TextArea were assigned a background color.
+	- added a background image for images within the post, 
+		that are float to left or right using class="left" or class="right".
+	- Updated the style for blockquote with a background image.
+6. header.php
+	Added the meta tags for keywords and description

@@ -1,0 +1,168 @@
+* html .searchform {
+	margin-bottom: 3px;
+}
+* html .searchform .searchfield {
+	padding: 0 7px 0 5px;
+	padd\ing: 0 7px 0 5px;
+}
+
+* html .searchform .searchsubmit {
+	height: 24px;
+	width: 24px;
+	border: none;
+	cursor: pointer;
+	text-indent: -999%;
+	margin: 0;
+	padding: 0 3px 0 3px;
+}
+
+/* a hack so that IE5.5 faulty box model is corrected */
+* html #nav a,
+* html #nav a:visited,
+* html #nav-top a,
+* html #nav-top a:visited {
+	font-size:12px;
+	width: auto;
+	display: inline-block;
+}
+
+* html #nav a:hover,
+* html #nav-top a:hover {
+	text-decoration: none;
+}
+
+/* another hack for IE5.5 */
+* html #nav ul ul,
+* html #nav-top ul ul {
+	top:35px;
+	t\op:35px;
+	width:120px;
+	w\idth:120px;
+	padd\ing-right: 0;
+	marg\in-right: 0;
+}
+
+/* position the third level flyout menu */
+* html #nav ul ul ul,
+* html #nav-top ul ul ul {
+	visibility:hidden;
+	position:absolute;
+	lef\t:145px;
+	top:-1px;
+	w\idth:80px;
+	padd\ing-left: 0;
+	margin-left: 0;
+}
+
+/* yet another hack for IE5.5 */
+* html #nav ul ul a,
+* html #nav ul ul a:visited,
+* html #nav-top ul ul a,
+* html #nav-top ul ul a:visited {
+	width:130px;
+	w\idth:130px;
+	overflow: hidden;
+}
+
+* html .fix {
+	height:1%;
+}
+
+* html #commentform label {
+	padd\ing: 6px;
+}
+
+* html #commentform input[type="text"] {
+	padd\ing-top: 6px;
+	margin-left: -4px;
+	marg\in-left: -4px;
+}
+
+* html .post {
+	overflow: hidden;
+	w\idth: 98%;
+}
+
+* html .entry img {
+	width: expression(this.width > (document.getElementById('main-col') == null ? document.getElementById('single-col').offsetWidth : document.getElementById('main-col').offsetWidth) ? '99%' : true);
+}
+* html .entry .wp-caption {
+	width: expression(this.offsetWidth > (document.getElementById('main-col') == null ? document.getElementById('single-col').offsetWidth : document.getElementById('main-col').offsetWidth) ? (document.getElementById('main-col') == null ? (parseInt(document.getElementById('single-col').offsetWidth) - 30) : (parseInt(document.getElementById('main-col').offsetWidth) - 30)) + 'px' : true);
+}
+* html .wp-caption img {
+	w\idth: expression(this.offsetWidth > (document.getElementById('main-col') == null ? document.getElementById('single-col').offsetWidth : document.getElementById('main-col').offsetWidth) ? (document.getElementById('main-col') == null ? (parseInt(document.getElementById('single-col').offsetWidth) - 30) : (parseInt(document.getElementById('main-col').offsetWidth) - 30)) + 'px' : true);
+}
+
+/* See Ruthsarian Menus: Ruthsarian Layouts at http://webhost.bridgew.edu/etribou/layouts/rMenu/rMenu.css
+ * There are details for z-index settings to avoid overlaps on the second line for IE 7
+ */
+#nav ul,
+#nav ul li,
+#nav ul li a,
+#nav-top ul,
+#nav-top ul li,
+#nav-top ul li a {
+	z-index: 10;
+}
+
+#nav ul a:hover ul,
+#nav ul a:hover ul li,
+#nav ul a:hover ul li a,
+#nav ul li:hover ul,
+#nav ul li:hover ul li,
+#nav ul li:hover ul li a,
+#nav-top ul a:hover ul,
+#nav-top ul a:hover ul li,
+#nav-top ul a:hover ul li a,
+#nav-top ul li:hover ul,
+#nav-top ul li:hover ul li,
+#nav-top ul li:hover ul li a {
+	z-index: 100;
+	z-i\ndex: 100;
+}
+
+#nav > ul li:hover ul {
+	position: absolute;
+}
+
+#nav-top > ul li:hover ul {
+	position: absolute;
+}
+
+#nav ul li:hover,
+#nav-top ul li:hover {
+	background-position: 0 0;
+}
+
+.suf-mag-headline-block li.suf-mag-headline a {
+	padd\ing: 0 8px;
+	marg\in: 0;
+}
+
+.sliderPager,
+.sliderControl {
+    padding: 5px 0;
+    margin: 5px 0;
+}
+
+* html #nav .home-icon,
+* html #nav-top .home-icon {
+    w\idth: 20px;
+    he\ight: 17px;
+}
+
+* html .post .date {
+	lef\t: 0;
+}
+
+/* WPML Plugin */
+* html #lang_sel ul ul a,
+* html #lang_sel ul ul a:visited {
+    width:150px;
+    w\idth:138px;
+}
+
+/* Multi-column */
+.suf-mc-col {margin: 0 2px; padding: 4px 3px}
+
+* html .meta-left-pullout { right: 0; }

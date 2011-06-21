@@ -1,0 +1,692 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Smart Image\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-07-12 20:22-0400\n"
+"PO-Revision-Date: 2010-07-12 20:23-0400\n"
+"Last-Translator: Darío Ferrer <wp@darioferrer.com>\n"
+"Language-Team: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_c\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-Country: VENEZUELA\n"
+"X-Poedit-SearchPath-0: wp-smart-image-ii\n"
+
+#: wp-smart-image-ii/wpsi.php:106
+msgid "WP Smart Image II"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:113
+msgid "Thumbnail size"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:114
+msgid "Medium size"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:115
+msgid "Large size"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:116
+msgid "Full size"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:122
+msgid "Yes"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:126
+msgid "No"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:164
+#: wp-smart-image-ii/wpsi.php:722
+msgid "Article image"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:165
+#: wp-smart-image-ii/wpsi.php:723
+msgid "Go to article"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:205
+#: wp-smart-image-ii/wpsi.php:206
+msgid "Web developer"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:205
+msgid "Dutch"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:205
+msgid "Amsterdam - Holland"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:206
+msgid "Russian"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:206
+msgid "Novosibirsk - Russia"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:207
+msgid "Web designer"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:207
+msgid "Spanish"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:207
+msgid "Caracas - Venezuela"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:216
+msgid "Lives in:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:218
+msgid "Profession:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:220
+msgid "Main Website:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:222
+msgid "Language:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:279
+msgid "WP Smart Image II - Settings"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:310
+msgid "General Settings"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:311
+msgid "RSS"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:312
+msgid "Default images"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:313
+msgid "Data management"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:314
+msgid "Help"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:325
+msgid "Switch to PHP Mode"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:326
+msgid "PHP Mode unavailable"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:326
+msgid "(Know why)"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:328
+msgid "Switch to PHP Mode for first time"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:331
+#: wp-smart-image-ii/wpsi.php:394
+#: wp-smart-image-ii/wpsi.php:479
+#: wp-smart-image-ii/wpsi.php:540
+#: wp-smart-image-ii/wpsi.php:567
+msgid "PHP Mode activated"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:331
+#: wp-smart-image-ii/wpsi.php:394
+#: wp-smart-image-ii/wpsi.php:479
+#: wp-smart-image-ii/wpsi.php:540
+#: wp-smart-image-ii/wpsi.php:567
+msgid "Switch to Normal Mode"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:333
+#: wp-smart-image-ii/wpsi.php:396
+#: wp-smart-image-ii/wpsi.php:481
+#: wp-smart-image-ii/wpsi.php:542
+#: wp-smart-image-ii/wpsi.php:569
+msgid "Normal Mode activated"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:337
+msgid "General settings"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:343
+#: wp-smart-image-ii/wpsi.php:351
+msgid "Create a new file"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:344
+msgid "Restore default data"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:345
+msgid "View/Edit directly"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:348
+msgid "Configuration file"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:350
+msgid "Location:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:354
+msgid "Method for managing images from the editor"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:359
+msgid "None"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:368
+msgid "Warning:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:368
+msgid "Your current Wordpress version isn't prepared for <strong>The Post Thumbnail</strong> feature. Upgrade your system (carefully recommended for many reasons) or use the available options."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:371
+msgid "Take a few minutes to proove each of these three options and choose your favorite one. All of them are equally stable and recommended."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:371
+msgid "None:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:371
+msgid "Use your Media Library tab to choose the posted image. This option is the one which don't generates new fields in your _postmeta table."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:371
+msgid "The Post Thumbnail method:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:371
+msgid "Manage your images through this comfortable native Wordpress interface (available from WP 2.9 and above)."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:371
+msgid "WP Smart Image II method:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:371
+msgid "A comprehensive tool set which gives multiple options for image management."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:373
+msgid "Advanced settings"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:376
+msgid "Document Type Declaration of this website (DTD):"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:378
+msgid "XHTML"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:379
+msgid "HTML"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:384
+msgid "You must to set the correct DTD of this site to point tags to right W3C validation. If you need more info about this topic, visit this"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:384
+msgid "en.wikipedia.org/wiki/Document_Type_Declaration"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:384
+msgid "comprehensive Wikipedia article"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:384
+msgid "or"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:384
+msgid "<a href=\"http://wordpress.org/support/\" target=\"_blank\">ask in the Wordpress Forum.</a>"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:385
+#: wp-smart-image-ii/wpsi.php:470
+#: wp-smart-image-ii/wpsi.php:529
+msgid "Update options &raquo;"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:400
+#: wp-smart-image-ii/wpsi.php:485
+#: wp-smart-image-ii/wpsi.php:546
+msgid "Feed Settings"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:402
+msgid "Enable images for the following RSS systems"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:417
+msgid "Here you can apply the WP Smart Image function for one or several RSS environments."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:418
+msgid "Select image size"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:434
+msgid "Width:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:436
+msgid "Height:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:441
+msgid "Setting #"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:451
+msgid "Native WP sizes:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:453
+#: wp-smart-image-ii/wpsi.php:499
+msgid "Thumbnail"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:454
+#: wp-smart-image-ii/wpsi.php:503
+msgid "Medium"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:455
+#: wp-smart-image-ii/wpsi.php:507
+msgid "Large"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:456
+#: wp-smart-image-ii/wpsi.php:511
+msgid "Full"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:460
+msgid "Custom sizes:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:469
+msgid "Choose the image size for the feeds. Max Image Size Control custom settings will be detected"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:488
+msgid "Enable Default Images"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:491
+msgid "If checked, imageless posts will show, by default, the images you have been set below."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:492
+msgid "Default image path"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:494
+msgid "Change this path if you like to custom image folder location."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:495
+msgid "Assigned images"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:516
+msgid "Place the image filenames for each size."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:517
+msgid "Default Alt &amp; Title settings"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:518
+msgid "Default ALT string:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:521
+#: wp-smart-image-ii/wpsi.php:526
+msgid "Use post title as"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:523
+msgid "Default TITLE string:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:528
+msgid "Enter some text to define both <code>ALT</code> and <code>TITLE</code> attribute for default images. Checkboxes activation will overrides the text field data."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:548
+msgid "Warning!"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:548
+msgid "If you click the wrong button, you will loose all you have been set manually"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:550
+msgid "Remove plugin database info"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:550
+msgid "Sure you want remove plugin database entry?"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:550
+#: wp-smart-image-ii/wpsi.php:554
+msgid "Remove data"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:551
+#: wp-smart-image-ii/wpsi.php:555
+msgid "Populate/Restore plugin database info"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:551
+msgid "Sure you want populate plugin database entry with default data?"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:551
+msgid "Populate/Restore data"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:552
+#: wp-smart-image-ii/wpsi.php:556
+msgid "Delete post_meta info"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:552
+msgid "Sure you want delete post_meta info? This will delete all configurations you have been set through editor! Better think twice buddy!"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:554
+msgid "Use it to remove the <code>wpsi_configuracion</code> field from the <code>_options</code> table of your DB. All default settings will be deleted."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:555
+msgid "This button loads some default data to your DB. Use it as start guide to place your own data. Take in mind that this action will overwrite any previous configuration."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:556
+msgid "Be careful with this button, because if you press it, all your WP Smart Image <code>postmeta</code> fields will be deleted. Postmeta fields are all the custom setting generated from your editor box, as post image shown."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:573
+msgid "Get support!"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:576
+msgid "WP Smart Image"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:576
+msgid "Essential resource for web designers"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:579
+msgid "WP Smart Image II - Main support site"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:580
+msgid "A growing plugin codex."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:581
+msgid "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Parameters_Table"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:581
+msgid "Parameters table"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:582
+msgid "A complete index of parameters, well detailed and explained."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:583
+msgid "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Examples,_tricks_and_hacks"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:583
+msgid "Examples, tricks and hacks"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:584
+msgid "Discover more than one way to exploit all power from WP Smart Image II."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:585
+msgid "http://www.lab.darioferrer.com/doc/index.php?title=WPSI_II_-_Working_on_PHP_Mode"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:585
+msgid "Working on PHP Mode:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:586
+msgid "All you need to know to activate the PHP Mode on WP Smart Image II."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:587
+msgid "Direct support"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:588
+msgid "Get help from the Forum Board."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:590
+msgid "WP Smart Image II Trac"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:591
+msgid "Here you can report bugs and request new features."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:593
+msgid "WP Smart Image II was translated on your language by:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:690
+msgid "The field &#39;wpsi_configuracion&#39; has been removed from the database."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:693
+#: wp-smart-image-ii/wpsi.php:696
+msgid "All default settings are loaded."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:699
+msgid "All WP Smart Image II &#39;_postmeta&#39; fields has been removed from the database."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:702
+msgid "All settings were saved."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:705
+msgid "Now WPSI is running under PHP Mode. Check your settings."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:708
+msgid "Normal Mode activated. Check your settings."
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:711
+msgid "(Wait...)"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:856
+msgid "Title"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:859
+msgid "Edit"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:867
+#: wp-smart-image-ii/wpsi.php:900
+#: wp-smart-image-ii/wpsi.php:974
+msgid "View original in new window"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:870
+#: wp-smart-image-ii/wpsi.php:903
+#: wp-smart-image-ii/wpsi.php:920
+#: wp-smart-image-ii/wpsi.php:977
+#: wp-smart-image-ii/wpsi.php:1004
+#: wp-smart-image-ii/wpsi.php:1023
+msgid "Image ID"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:871
+#: wp-smart-image-ii/wpsi.php:910
+#: wp-smart-image-ii/wpsi.php:986
+msgid "Type"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:872
+#: wp-smart-image-ii/wpsi.php:911
+#: wp-smart-image-ii/wpsi.php:987
+msgid "W:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:872
+#: wp-smart-image-ii/wpsi.php:911
+#: wp-smart-image-ii/wpsi.php:987
+msgid "H:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:879
+msgid "Random images"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:886
+msgid "If checked, the images will shown randomly. Very useful in some cases, as dynamic headers, backgrounds or widgets"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:890
+msgid "Load image from Media Library"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:904
+#: wp-smart-image-ii/wpsi.php:980
+msgid "Attached to post"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:919
+#: wp-smart-image-ii/wpsi.php:1003
+msgid "Error"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:919
+msgid "Thid ID is not assigned to any image. Try again"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:929
+#: wp-smart-image-ii/wpsi.php:993
+#: wp-smart-image-ii/wpsi.php:1011
+msgid "Always you can choose and publish any image stored on your "
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:929
+#: wp-smart-image-ii/wpsi.php:936
+#: wp-smart-image-ii/wpsi.php:993
+#: wp-smart-image-ii/wpsi.php:1011
+#: wp-smart-image-ii/wpsi.php:1022
+msgid "Media Library"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:936
+msgid "Visit your"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:936
+msgid "find the image ID and enter it in the field below:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:953
+msgid "Save this post to gain access to WP Smart Image functions"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:959
+msgid "Upload an image for this entry"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:963
+msgid "You have not uploaded an image yet"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:963
+msgid "Do you want to upload one now"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:963
+msgid "Thumbnail will show here next time you refresh this screen"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:970
+#: wp-smart-image-ii/wpsi.php:999
+msgid "External image uploaded"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:988
+msgid "These modifications are globals"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:988
+msgid "Edit image"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:1003
+msgid "This ID is not assigned to any image. Try again"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:1018
+msgid "... Or load it from Media Library"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:1022
+msgid "First, visit your"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:1022
+msgid "grab the image ID and enter it in the field below:"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:1053
+#: wp-smart-image-ii/wpsi.php:1054
+msgid "Image to show"
+msgstr ""
+
+#: wp-smart-image-ii/wpsi.php:1403
+msgid "N/A"
+msgstr ""
+

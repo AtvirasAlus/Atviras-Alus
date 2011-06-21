@@ -1,0 +1,66 @@
+<div dojoType="dojox.data.QueryReadStore" jsId="contactStore"></div>
+
+<table width="98%">
+</td>
+<td>
+<table table width="100%"><tr><td>Tema:</td></tr><tr><td align="left">
+<input type="text" name="mail_subject" id="mail_subject"  style="width:100%" dojoType="dijit.form.ValidationTextBox"  required="true" invalidMessage="Nenurodyta laiško tema">
+</td>
+</tr>
+<tr><td><div>Pasirinkite adresatą:<div style="background:#f5f5f5;padding:5;border:1px solid #999"><div dojoType="app.Table" columnNames="selected;user_name;user_type;practise_name" columnWidth="30;200;150" columnTypes='cb;d;d;d' id="contactsList" store="contactStore" noDataMessage="Kontaktų nerasta">Kraunasi..</div></div></div></td></tr>
+<tr>
+<td><textArea dojoType="dijit.form.Textarea" id="mail_body" style="width:100%;min-height:250px;"></textArea></td>
+</tr>
+<tr>
+<td>
+<button dojoType="dijit.form.Button" type="button" id="sendButton">
+    Siųsti
+    <script type="dojo/method" event="onClick" args="evt">
+var data = dijit.byId("contactsList").getData({selected:true});
+var recipients = [];
+for (var i = 0; i<data.length; i++) {
+	recipients.push(data[i]['user_id']);
+}
+if (recipients.length>0) {
+	var mail_subject = dijit.byId("mail_subject").attr("value");
+	if (mail_subject.length>0) {
+		var mail_body = dijit.byId("mail_body").attr("value");
+		if (mail_body.length>0) {
+			dijit.byId("sendButton").disabled="disabled";
+			doPost({url:"/account/mail/send", content:{user_id:recipients.join(","), mail_subject:mail_subject, mail_body:mail_body}, onLoad:function (r) {
+				dijit.byId("sendButton").disabled=""
+				infoDialog("Žinutė nusiųsta sėkminga");
+			}
+,onError:function(r) {
+dijit.byId("sendButton").disabled=""
+return true;}
+});
+		} else {
+				errorDialog("Parašykite žinutės tekstą!");
+			}
+		} else {
+			errorDialog("Nurodykite žinutės temą!");
+		}
+	} else {
+		errorDialog("Nurodykite žinutės gavėjus!");
+	}
+
+    </script>
+</button>
+
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<script>
+dojo.addOnLoad(function () {
+	/*dijit.byId('inboxlist').setWidgetProperties(0,{onClick:function(){alert(this.attr("row"))}})*/
+	contactStore.url="/account/mail/contacts/?filter=true&type=all";
+	dijit.byId('contactsList').fetch();
+
+	
+	
+});
+</script>

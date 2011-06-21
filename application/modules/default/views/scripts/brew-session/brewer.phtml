@@ -1,0 +1,79 @@
+<? 
+if (isset($this->owner_user_info["user_id"])) {
+$this->headLink()->appendStylesheet("/public/css/bs.css");
+if($this->user_id) {
+ $this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
+
+?>
+<script>
+$(function() {
+		$( "#session_secondarydate" ).datepicker();
+		$( "#session_secondarydate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+		$( "#session_caskingdate" ).datepicker();
+		$( "#session_caskingdate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+		$( "#session_primarydate" ).datepicker();
+		$( "#session_primarydate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+	});
+</script>
+<?
+
+}?>
+<div style="width:900px;padding:5"> <h2 style="display:inline;">Aludario  <a href="/brewers/<?= $this->owner_user_info["user_id"];?>"><?= $this->owner_user_info["user_name"];?></a> virimų istorija</h2><? if (count($this->brew_sessions)>0) {?><div style="display:inline;text-align:right;padding-left:20" align="right"><a href="/stats/mysessions" align="right">Grafikas</a></div>
+<?}?>
+</div>
+
+<table width="900" id="bsession" cellpadding=0 cellspacing=0>
+<thead>
+<td></td><td >Virimo pavadinimas</td><td>Aludaris</td><td>Receptas</td><td>Alaus kiekis (l.)</td><td>OG</td><td>FG</td><td>Pirminė fermentacija</td><td>Antrinė fermentacija</td><td>Išpilstyta</td><td>Pastabos</td></thead>
+<?
+
+if (count($this->brew_sessions)>0) {
+for ($i=0;$i<count($this->brew_sessions);$i++) {
+	
+	
+	if ($this->user_id == $this->brew_sessions[$i]['user_id']) {
+			print $this->brewSession()->infoRow($this->brew_sessions[$i],true,$i);
+		}else{
+			print $this->brewSession()->infoRow($this->brew_sessions[$i],false,$i);
+		}
+
+	
+
+}
+}else{
+	?>
+	<td colspan="11" align="center"> Virimų nėra</td>
+	<?
+}
+?>
+
+</table>
+<?
+if (isset($this->user_recipes)) {
+	if (count($this->user_recipes)>0) {
+	?>
+	<select id="recipes_path">
+	<?
+	for ($i=0;$i<count($this->user_recipes);$i++) {
+	?>
+	<option value="/brew-session/new/<?=$this->user_recipes[$i]['recipe_id'];?>"><?=$this->user_recipes[$i]['recipe_name'];?></option>
+	<?
+	}
+	?>
+	</select>
+	<input type="button" value="Pridėti alaus virimą" onClick="location.href=$('#recipes_path').val()" <?= (count($this->user_recipes)==0) ? "disabled" : "";?>/>
+	<?
+	}
+}
+}else{
+	?>
+	<div><h2>Virimo istorija nerasta</h2>
+	<? if ($this->user_id==0) {?>
+	Norėdami peržiūrėti savo virimų istoriją <a href="javascript:showLogin()">prisiregistruokite</a>
+	<?}?>
+	</div>
+	<?
+}
+?>
+
+

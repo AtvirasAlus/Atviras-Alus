@@ -1,0 +1,36 @@
+  <style type="text/css">
+/* UI Spinner */
+.hidden { position:absolute; top:0; left:-9999px; width:1px; height:1px; overflow:hidden; }
+	
+	.fg-button { clear:left; margin:0 4px 40px 20px; padding: .4em 1em; text-decoration:none !important; cursor:pointer; position: relative; text-align: center; zoom: 1; }
+	.fg-button .ui-icon { position: absolute; top: 50%; margin-top: -8px; left: 50%; margin-left: -8px; }
+	a.fg-button { float:left;  }
+	button.fg-button { width:auto; overflow:visible; } /* removes extra button width in IE */
+	
+	.fg-button-icon-left { padding-left: 2.1em; }
+	.fg-button-icon-right { padding-right: 2.1em; }
+	.fg-button-icon-left .ui-icon { right: auto; left: .2em; margin-left: 0; }
+	.fg-button-icon-right .ui-icon { left: auto; right: .2em; margin-left: 0; }
+	.fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }	 /* solo icon buttons must have block properties for the text-indent to work */	
+	
+	.fg-button.ui-state-loading .ui-icon { background: url(spinner_bar.gif) no-repeat 0 0; }
+#logScreen {position:absolute;left:940px;top:10px;}
+
+</style>
+<? $isloged=isset($this->user_data);?>
+<a tabindex="0" href="#search-engines" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="logScreen" style="visibility:<?=$isloged ? 'visible' : 'hidden';?>"><span class="ui-icon ui-icon-triangle-1-s"></span><span id="logScreen-user_name"><? if ($isloged) { print $this->user_data->user_name; }?> </span></a> 
+<div id="search-engines" class="hidden"> 
+<ul> 
+	<li><a href="/brewer/recipes" rel="nofollow">Mano receptai</a></li> 
+	<li><a href="/mail/inbox" rel="nofollow">Mano paštas</a></li> 
+	<li><a href="/brew-session/brewer" rel="nofollow">Mano virimų istorija</a></li>
+	<li><a href="/brewer/profile" rel="nofollow">Mano profilis</a></li>
+	<li><a href="/auth/logout" rel="nofollow">Atsijungti</a></li> 
+</ul> 
+</div>
+<? if (!$isloged) {?> 
+<div  style="position:absolute;left:930px;top:10px;" id="login-a">
+<a id="login-a" href="#"  onclick="showLogin()">prisijungti </a> / <a href="/auth/register">registruotis</a>
+</div>
+<?}?>
+

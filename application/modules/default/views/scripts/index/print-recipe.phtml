@@ -1,0 +1,130 @@
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Alaus skaičiuoklė</title>
+</head>
+<style type="text/css">
+/* UI Spinner */
+body
+{
+	background: #ffffff;
+	font-family: Arial;
+	font-size:14px;
+	height: 100%;
+	margin: 0;
+	margin-left: 50;
+	padding: 0;
+}
+table {
+	border-left:1px solid #333333;
+	border-bottom:1px solid #333333;
+}
+td {
+	font-size:14px;
+	padding-left:10px;
+	border-right:1px solid #333333;
+}
+.td-number {
+	font-size:14px;
+	text-align:right;
+	padding-right:10px;
+}
+thead {
+	
+	padding-top:20px;
+	
+}
+thead  td{
+	border:1px solid #333333;
+	border-left:0px solid #333333;
+	text-align:center;
+	padding:4;
+	
+}
+</style>
+<div style="margin-top:40;width:800px">
+
+<div>
+
+Alaus kiekis: <?=$_POST['bash_size'];?></br>
+Efektyvumas: <?=$_POST['efficiency'];?></br>
+Atenuacija: <?=$_POST['attenuation'];?></br>
+Stilius: <?=$_POST['beer_style'];?></br>
+Pavadinimas: <?=$_POST['beer_name'];?></br>
+---------------------------------------------</br>
+SG:<?=$_POST['recipe_sg'];?></br>
+FG:<?=$_POST['recipe_fg'];?></br>
+ABV:<?=$_POST['recipe_abv'];?></br>
+IBU:<?=$_POST['recipe_ibu'];?></br>
+EBC:<?=$_POST['recipe_ebc'];?></br>
+---------------------------------------------</br>
+<div>
+<div align="center">
+<?
+if (isset($_POST['malt_list'])) {
+	
+$total=0;
+for ($i=0;$i<count($_POST['malt_weight']);$i++) {
+	$total+=floatval($_POST['malt_weight'][$i]);
+}
+
+?>
+<p ></br><b>Salyklas</b></br></br>
+<table width="800" cellpadding="0" cellspacing="0">
+<thead><td>Salyklas</td><td>Spalva (EBC)</td><td>Kiekis (kg)</td><td>Kiekis (%)</td></thead>
+	<? 
+	for ($i=0;$i<count($_POST['malt_list']);$i++) {
+	?>
+	<tr><td><?=$_POST['malt_list'][$i];?></td><td class="td-number"><?=$_POST['malt_color'][$i];?></td><td class="td-number"><?=$_POST['malt_weight'][$i];?></td><td class="td-number"><?=round($_POST['malt_weight'][$i]/$total*100,1);?></td></tr>
+	<?
+	}
+	?>
+</table>
+</p>
+<?
+}
+?>
+<?
+if (isset($_POST['hop_list'])) {
+?>
+<p>
+</br><b>Apyniai</b></br></br>
+<table width="800"  cellpadding="0" cellspacing="0">
+<thead><td>Apynys</td><td>Kartumas (AA%)</td><td>Kiekis (g)</td><td>Laikas</td></thead>
+	<? 
+	for ($i=0;$i<count($_POST['hop_list']);$i++) {
+	?>
+	<tr><td><?=$_POST['hop_list'][$i];?></td><td class="td-number"><?=$_POST['hop_alpha'][$i];?></td><td class="td-number"><?=$_POST['hop_weight'][$i];?></td><td class="td-number"><?=$_POST['hop_time'][$i];?></td></tr>
+	<?
+	}
+	?>
+</table>
+</p>
+<?
+}
+?>
+<?
+if (isset($_POST['yeast_list'])) {
+?>
+<p>
+</br><b>Mielės</b></br></br>
+<table width="800"  cellpadding="0" cellspacing="0">
+<thead><td>Mielės</td><td>Kiekis (g)</td></thead>
+	<? 
+	for ($i=0;$i<count($_POST['yeast_list']);$i++) {
+	?>
+	<tr><td><?=$_POST['yeast_list'][$i];?></td><td class="td-number"><?=$_POST['yeast_weight'][$i];?></td></tr>
+	<?
+	}
+	?>
+</table>
+
+</p>
+<?
+}
+?>
+</br><b>Pastabos</b><p align="left">
+<?=$_POST['comments'];?></br>
+
+</p>
+</div>
+

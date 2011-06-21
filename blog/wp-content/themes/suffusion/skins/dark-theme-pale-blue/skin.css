@@ -1,0 +1,235 @@
+/* Standard Styles */
+a {
+	color:#97cafe;
+}
+a:visited {
+	color: #97cafe;
+}
+
+/* main menu */
+#nav .current_page_item a, #nav .current_page_item a:hover,#nav li a:active {
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+	color: #555;
+}
+
+#nav li a:hover{
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+#nav li a:active{
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+/* Styling for navigation menus */
+#nav ul ul li a:hover{
+	color: #555;
+}
+
+/* style the links for the top level */
+#nav a:active {
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+/* style the second level hover */
+#nav ul ul.children a:hover {
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+	color: #555;
+}
+
+#nav ul ul.children :hover > a {
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+/* style the second level hover */
+#nav ul ul a.drop:hover {
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+	color: #555;
+}
+
+#nav ul ul :hover > a.drop {
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+/* style the third level hover */
+#nav ul ul ul a:hover {
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+	color: #555;
+}
+
+/* style the top level hover */
+#nav a:hover,
+#nav ul ul a:hover {
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+#nav :hover > a,
+#nav ul ul :hover > a {
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+/* main menu */
+#nav-top .current_page_item a, #nav-top .current_page_item a:hover,#nav-top li a:active {
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+	color: #555;
+}
+
+#nav-top li a:hover{
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+#nav-top li a:active{
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+/* Styling for navigation menus */
+#nav-top ul ul li a:hover{
+	color: #555;
+}
+
+/* style the links for the top level */
+#nav-top a:active {
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+/* style the second level hover */
+#nav-top ul ul a.drop:hover {
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+	color: #555;
+}
+
+#nav-top ul ul :hover > a.drop {
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+/* style the third level hover */
+#nav-top ul ul ul a:hover {
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+	color: #555;
+}
+
+/* style the top level hover */
+#nav-top a:hover,
+#nav-top ul ul a:hover {
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+#nav-top :hover > a,
+#nav-top ul ul :hover > a {
+	color: #555;
+	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
+}
+
+/* sub menu */
+#subnav .current_page_item a,
+#subnav .current_page_item a:visited,
+#subnav .current_page_parent a,
+#subnav .current_page_parent a:visited {
+	color: #97cafe;
+}
+
+#subnav li a:hover {
+	color: #97cafe;
+}
+
+/* Level 3 */
+.hier-nav .current_page_item a, .hier-nav .current_page_item a:visited {
+	color: #97cafe;
+}
+
+.hier-nav li a:hover {
+	color: #97cafe;
+}
+
+/* content */
+.postdata a:hover {
+	color: #97cafe;
+}
+
+/* post title */
+h1.posttitle a:hover,
+h2.posttitle a:hover {
+	color: #97cafe;
+}
+.tags a:hover {
+	color: #97cafe;
+}
+
+/* next & previous page navigation */
+.page-nav a:hover {
+	color: #97cafe;
+}
+
+/* next & previous post navigation */
+.post-nav a:hover {
+	color: #97cafe;
+}
+
+.suf-page-nav span,
+.suf-page-nav a.page-numbers,
+.suf-page-nav a.page-numbers:visited {
+	color: #97cafe;
+}
+
+/* comment list */
+.commentlist cite {
+	color: #97cafe;
+}
+.commentlist cite a, .commentlist cite a:visited {
+	color: #97cafe;
+}
+
+/* Credits  */
+#cred a:hover {
+	color: #97cafe;
+}
+
+.suf-widget h3.scheme,
+.suf-widget h3.scheme:hover,
+.suf-widget h3.scheme a,
+.suf-widget h3.scheme a:visited {
+	color: #555;
+}
+
+div.tab-box div.sidebar-tab-content a:hover,
+div.tab-box div.sidebar-tab-content a:focus,
+div.tab-box div.sidebar-tab-content a:active,
+.suf-widget a:hover,
+.suf-widget a:focus,
+.suf-widget a:active,
+.warea a:hover,
+.warea a:focus,
+.warea a:active {
+	color: #97cafe;
+}
+
+/* These settings are required for Featured Posts */
+.sliderIndex a, .sliderIndex a:visited,
+#sliderIndex a,
+#sliderIndex a:visited {
+	color: #97cafe;
+}
+
+/* These settings are for common plugins */
+.wp-pagenavi a,
+.wp-pagenavi a:visited,
+.wp-pagenavi span {
+	color: #97cafe;
+}
+
+.wp-pagenavi a:hover {
+	color: #fff;
+}
+
+
