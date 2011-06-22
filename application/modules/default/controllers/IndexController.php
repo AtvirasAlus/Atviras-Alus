@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class IndexController extends Zend_Controller_Action {
 	function init() {
 		 //$this->_helper->layout->setLayout('main');
@@ -57,6 +57,7 @@ class IndexController extends Zend_Controller_Action {
 				->join("users","beer_brew_sessions.session_brewer=users.user_id",array("user_id","user_name"))
 				->where("session_primarydate <= CURDATE( )")
 				->where("session_primarydate  >= DATE_SUB(CURDATE(),INTERVAL 2 MONTH)")
+				->where("recipe_publish =?",'1')
 				->where("session_caskingdate  = '0000-00-00' OR session_caskingdate > CURDATE( )")
 				->order("session_primarydate DESC")
 				->limit(10);

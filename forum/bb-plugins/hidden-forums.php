@@ -17,17 +17,17 @@ In the default example below:
 (to get a list of forums by number, use forumname.com?forumlist when this plugin is active)
 */
 
-$hidden_forums['hidden_forums']=array(4);	// hide these forums, list by comma seperated number
+$hidden_forums['hidden_forums']=array(4,9);	// hide these forums, list by comma seperated number
 
 $hidden_forums['allow_roles']['all_forums']=array('keymaster','administrator'); 	// these roles can always see ALL forums regardless
 $hidden_forums['allow_roles'][4]=array('administrator','vak');	// exact formal role name, *not* ability
-$hidden_forums['allow_roles'][4]=array('administrator','vak');	// exact formal role name, *not* ability
+$hidden_forums['allow_roles'][9]=array('administrator','knak');	// exact formal role name, *not* ability
 
 $hidden_forums['allow_users']['all_forums']=array(1);		// these users can always see ALL forums regardless
 $hidden_forums['allow_users'][500]=array(5432,7654);	// list of users by number
 $hidden_forums['allow_users'][501]=array(5432,7654);	// list of users by number
 
-$hidden_forums['label']="[VAK] ";	// text, html, css or image to indicate hidden forums/topics, make it =""; if you don't want any label at all
+$hidden_forums['label']="[Grupei] ";	// text, html, css or image to indicate hidden forums/topics, make it =""; if you don't want any label at all
 
 /*    stop  editing  here    */
 

@@ -49,7 +49,8 @@
 		->join("users","beer_brew_sessions.session_brewer = users.user_id")
 		->joinLeft("beer_recipes","beer_brew_sessions.session_recipe=beer_recipes.recipe_id",array("recipe_id","recipe_name"))
 		->where("beer_brew_sessions.session_primarydate !='0000-00-00'")
-		->where("session_primarydate <= NOW()")
+			->where("session_primarydate <= NOW()")
+		->where("recipe_publish = ?",'1')
 		->order("session_primarydate DESC");
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
