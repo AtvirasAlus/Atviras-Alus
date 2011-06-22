@@ -1,5 +1,5 @@
-<? $this->headTitle()->append(" Stilius: ".$this->current_style['style_name']);?>
-<? $this->headMeta()->setName('keywords', 'alaus stilius, skonis, apyniai, mielės, salyklas,alaus gamyba,naminis,receptai,receptas,alus,skaičiuoklė,ibu,ebc,abv,'.$this->current_style['style_name']);?>
+<? $this->headTitle(" Stilius: ".$this->current_style['style_name']);?>
+<? $this->headMeta()->setName('keywords', $this->current_style['style_name']);?>
 <style>
 .st_title {
 	padding-right:30;
@@ -18,8 +18,17 @@ for ($i=0;$i<count($dfields);$i++) {
 	}
 }
 ?>
+<style>
+h1.title{
+	font-size:16;
+	font-weight:bold;
+	padding-bottom:20px;
+	text-align:center;
+}
+</style>
+
 <div style="width:800">
-<div align="center" style="font-size:16;font-weight:bold;padding-bottom:30"><?=$this->current_style['style_name'];?></div>
+<h1 class="title"><?=$this->current_style['style_name'];?></h1>
 
 <div class="ui-corner-all" style="background:#ffffff;padding-top:30;padding-bottom:30" align="center">
 
