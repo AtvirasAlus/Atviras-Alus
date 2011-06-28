@@ -1,1 +1,106 @@
+<?
+$this->headLink()->appendStylesheet("/public/ui/external/tinysort.js");
+?>
+<style>
+.user_info {
+	font-family:Arial;
+	color:#666666;
+	size:13;
+}
+.user_info span {
+	font-family:Georgia;
+	padding-left:5;
+	font-weight:bold
+}
+#rl {
+	font-family:Georgia;
+	color:#666666;
+	font-weight:bold;
+	font-size:18;
+}
+h1 {
+	font-family:Georgia;
+	color:#666666;
+}
 
+/* Tag cloud */
+
+	#tags ul{
+		margin:1em 0;
+		padding:.5em 10px;
+		text-align:center;
+			
+		}
+	#tags li{
+		margin:0;
+		padding:0;
+		list-style:none;
+		display:inline;
+		}
+	#tags li a{
+		text-decoration:none;
+		color:#fff;
+		padding:0 2px;	
+		}
+	#tags li a:hover{	
+		
+		}		
+	
+	.tag1{font-size:100%;}
+	.tag2{font-size:120%;}
+	.tag3{font-size:140%;}
+	.tag4{font-size:160%;}
+	.tag5{font-size:180%;}
+	
+	/* alternative layout */
+
+	#tags .alt{
+		text-align:left;
+		padding:0;
+		background:none;
+		}
+	#tags .alt li{
+		padding:2px 10px;
+		background:#efefef;
+		display:block;
+		}
+	#tags .alt .tag1, 
+	#tags .alt .tag2, 
+	#tags .alt .tag3, 
+	#tags .alt .tag4, 
+	#tags .alt .tag5{font-size:100%;}
+	
+	
+	
+	
+/* // Tag cloud */
+</style>
+
+<div style="width:800">
+<div class="ui-corner-all" style="background:#ffffff;padding:20">
+<h1 align="left"><?=$this->user_info['user_name'];?> </h1>
+<div class="user_info">
+<div ><div class="ui-corner-all" style="background:#DDDDDD;padding:2;float:right"><img src="http://www.gravatar.com/avatar/<?=md5($this->user_info['user_email']);?>?rating=G&size=80&default=mm" border="0"/></div></div>
+<div>Narys nuo: <span><?=$this->user_info['user_created'];?></span></div>
+<div>Paskutinį kartą lankėsi: <span><?=$this->user_info['user_lastlogin'];?></span></div>
+<div>Išvirė alaus:  <span><?=$this->user_info['total_brewed'];?> l.</span></div>
+</div>
+<div class="ui-corner-all" style="background:#F1F0ED;padding:20;margin-top:20;">
+<div id="tags">
+<div align="left" style="margin-bottom:10"><span id="rl"> Alaus receptai (<?=$this->user_info['total_recipes'];?>)</span>&nbsp;<span><a href="/brewer/recipes/<?=$this->user_info['user_id'];?>"> peržiūrėti</a></span></div>
+
+<ul>
+<?
+for ($i=0;$i<count($this->user_info['recipes']);$i++) {
+	?>
+	<li class="tag<?=rand(1,10);?>" style="background:<?=$this->colorHex($this->user_info['recipes'][$i]['recipe_ebc']);?>;padding:2;margin:5"><a  href="/alus/receptas/<?=$this->user_info['recipes'][$i]['recipe_id'];?>-<?=$this->escapeParam($this->user_info['recipes'][$i]['recipe_name']);?>"><?=$this->user_info['recipes'][$i]['recipe_name'];?></a></li>
+	<?
+}
+?>
+</ul>
+</div>
+</div>
+</div>
+<div>
+
+</div>

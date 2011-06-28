@@ -37,16 +37,14 @@ class StatsController extends Zend_Controller_Action {
     }
     public function sessionsAction() {
     	     $db = Zend_Registry::get('db');
-    	       $select=$db->select();
-    	       
-    	    $select->from("@days",array("day"=>"DATE"))
+    	     $select=$db->select();  
+    	     $select->from("@days",array("day"=>"DATE"))
 				->joinLeft("beer_brew_sessions","`@days`.DATE=beer_brew_sessions.session_primarydate",array("total"=>"COALESCE(sum(session_size),0)","avg"=>"COALESCE(sum(session_size)/count(distinct(session_brewer)),0)","count"=>"count(distinct(session_brewer))"))
-				
 				->where("`@days`.DATE >= ?",new Zend_Db_Expr("DATE(NOW())-(31*6)"))	
 				->where("`@days`.DATE <= ?",new Zend_Db_Expr("NOW()"))
-					->group("day");
-				
-				$this->view->sessions_count= Zend_Json::encode($db->fetchAll($select));
+				->group("day");
+print $select->__toString();
+				//$this->view->sessions_count= Zend_Json::encode($db->fetchAll($select));
 				
     }
      public function mysessionsAction() {
