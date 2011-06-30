@@ -769,7 +769,7 @@ if (isset($this->data["recipe"])) {
 	
 ?>
 
-	
+	setTimeout(function() {$("#duplicate").button( "option", "disabled", false )},500)
 	$("#attenuation").val(<?=$this->data["recipe"]["recipe_attenuation"];?>);
 	$("#efficiency").val(<?=$this->data["recipe"]["recipe_efficiency"];?>);
 	$("#beer_name").val("<?=addslashes($this->data["recipe"]["recipe_name"]);?>");
@@ -777,7 +777,7 @@ if (isset($this->data["recipe"])) {
 	$("#beer_style option[style_id='<?=$this->data["recipe"]["recipe_style"];?>']").attr("selected","selected");
 	$("#recipe_id").val(<?=$this->data["recipe"]["recipe_id"];?>);
 	$("#comments").val(decodeURIComponent('<?=(str_replace("\n", "\\n",addslashes(rawurlencode($this->data["recipe"]["recipe_comments"]))));?>'));
-	setTimeout(function() {$("#duplicate").button( "option", "disabled", false )},200)
+	
 	
 <?
 if (isset($this->data["malt"])) {
