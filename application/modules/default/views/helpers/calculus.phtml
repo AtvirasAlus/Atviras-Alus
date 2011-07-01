@@ -481,6 +481,62 @@ $(document).ready(function () {
 	$('#export').button()
 	$('#export').click(function() {calc_out("/index/print-recipe")[0].submit();});
 	$("#beer_style").trigger('change')
+	//fill form
+	$("#duplicate").button( "option", "disabled", true );
+<? if (isset($this->data)) {
+if (isset($this->data["recipe"])) {
+	
+?>
+
+	setTimeout(function() {$("#duplicate").button( "option", "disabled", false )},500)
+	$("#attenuation").val(<?=$this->data["recipe"]["recipe_attenuation"];?>);
+	$("#efficiency").val(<?=$this->data["recipe"]["recipe_efficiency"];?>);
+	$("#beer_name").val("<?=addslashes($this->data["recipe"]["recipe_name"]);?>");
+	$("#bash_size").val(<?=$this->data["recipe"]["recipe_batch"];?>);
+	$("#beer_style option[style_id='<?=$this->data["recipe"]["recipe_style"];?>']").attr("selected","selected");
+	$("#recipe_id").val(<?=$this->data["recipe"]["recipe_id"];?>);
+	$("#comments").val(decodeURIComponent('<?=(str_replace("\n", "\\n",addslashes(rawurlencode($this->data["recipe"]["recipe_comments"]))));?>'));
+	
+	
+<?
+if (isset($this->data["malt"])) {
+for ($i=0;$i<count($this->data["malt"]);$i++) {
+?>
+createMaltTr(<?=Zend_Json::encode($this->data["malt"][$i]);?>);
+<?
+}
+
+}
+if (isset($this->data["hops"])) {
+for ($i=0;$i<count($this->data["hops"]);$i++) {
+?>
+createHopTr(<?=Zend_Json::encode($this->data["hops"][$i]);?>);
+<?
+}
+
+}
+if (isset($this->data["yeast"])) {
+for ($i=0;$i<count($this->data["yeast"]);$i++) {
+?>
+createYeastsTr(<?=Zend_Json::encode($this->data["yeast"][$i]);?>);
+<?
+}
+
+}
+?>
+$("#status_div")[0].innerHTML = "<i>"+now()+"</i>  -  atidarytas receptas <a href='/recipes/view/<?=$this->data["recipe"]["recipe_id"];?>'>'<?=addslashes($this->data["recipe"]["recipe_name"]);?>'</a>";
+<?
+}else{
+?>
+$("#status_div")[0].innerHTML = "<i>"+now()+"</i>  -  naujas receptas";
+<?
+}
+
+?>
+<?}?>
+calc()
+	
+	//
 });
 
 function calc_out(url) {
@@ -639,10 +695,9 @@ height:30px;
 	<body>
 
 
-<div id="content">
+<div>
 <div id="status_div" style="padding-bottom:40;width:725px" align="center"></div>
-<table  width="725">
-
+<table  width="800">
 <tr><td>
 <table>
 <tr>
@@ -762,59 +817,4 @@ height:30px;
 </div>
 
 <div style="padding-left:40;font-size:10">Kūrė <a href="http://ponasniekas.nespalvotas.lt"  target="_blank">ponasniekas</a>. Dėkui Marijui iš <a href="http://savasalus.lt" target="_blank">"Savas Alus"</a> už suteiktą informaciją</div>
-<script>
-$("#duplicate").button( "option", "disabled", true );
-<? if (isset($this->data)) {
-if (isset($this->data["recipe"])) {
-	
-?>
 
-	setTimeout(function() {$("#duplicate").button( "option", "disabled", false )},500)
-	$("#attenuation").val(<?=$this->data["recipe"]["recipe_attenuation"];?>);
-	$("#efficiency").val(<?=$this->data["recipe"]["recipe_efficiency"];?>);
-	$("#beer_name").val("<?=addslashes($this->data["recipe"]["recipe_name"]);?>");
-	$("#bash_size").val(<?=$this->data["recipe"]["recipe_batch"];?>);
-	$("#beer_style option[style_id='<?=$this->data["recipe"]["recipe_style"];?>']").attr("selected","selected");
-	$("#recipe_id").val(<?=$this->data["recipe"]["recipe_id"];?>);
-	$("#comments").val(decodeURIComponent('<?=(str_replace("\n", "\\n",addslashes(rawurlencode($this->data["recipe"]["recipe_comments"]))));?>'));
-	
-	
-<?
-if (isset($this->data["malt"])) {
-for ($i=0;$i<count($this->data["malt"]);$i++) {
-?>
-createMaltTr(<?=Zend_Json::encode($this->data["malt"][$i]);?>);
-<?
-}
-
-}
-if (isset($this->data["hops"])) {
-for ($i=0;$i<count($this->data["hops"]);$i++) {
-?>
-createHopTr(<?=Zend_Json::encode($this->data["hops"][$i]);?>);
-<?
-}
-
-}
-if (isset($this->data["yeast"])) {
-for ($i=0;$i<count($this->data["yeast"]);$i++) {
-?>
-createYeastsTr(<?=Zend_Json::encode($this->data["yeast"][$i]);?>);
-<?
-}
-
-}
-?>
-$("#status_div")[0].innerHTML = "<i>"+now()+"</i>  -  atidarytas receptas <a href='/recipes/view/<?=$this->data["recipe"]["recipe_id"];?>'>'<?=addslashes($this->data["recipe"]["recipe_name"]);?>'</a>";
-<?
-}else{
-?>
-$("#status_div")[0].innerHTML = "<i>"+now()+"</i>  -  naujas receptas";
-<?
-}
-
-?>
-<?}?>
-calc()
-
-</script>

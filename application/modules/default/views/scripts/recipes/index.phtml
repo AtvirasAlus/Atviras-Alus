@@ -1,6 +1,6 @@
 <? $this->headTitle()->append(" - Receptai ");?>
 <? $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,receptai,receptas,alus');?>
-
+<div align="center" style="width:850">
 <table>
 <?
 $z=0;
@@ -41,3 +41,4 @@ if ($r>0) {
 <?php echo $this->paginationControl($this->content,
                                     'Sliding',
                                     'paginator/item.phtml'); ?>
+</div>
