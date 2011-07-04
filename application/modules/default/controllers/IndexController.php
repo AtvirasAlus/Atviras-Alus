@@ -114,8 +114,8 @@ echo $sitemap->sitemap();
 
     }
     public function rssAction() {  	    
-    	        $this->_helper->layout->setLayout('empty');
-	        $this->_helper->viewRenderer->setNoRender(true);
+    $this->_helper->layout->setLayout('empty');
+	  $this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
 		$feed = new Zend_Feed_Writer_Feed();
 		$feed->setTitle('Atviro Alaus dienoraštis');

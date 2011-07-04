@@ -126,7 +126,12 @@ $(document).ready(function () {
     });
 
 })
+
+
   </script>
+  <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+  {lang: 'lt'}
+</script>
   </head>
   <body>
     <div id="vc-main">
@@ -198,10 +203,11 @@ $(document).ready(function () {
         <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
             <div id="vc-footer" valign="bottom">
             <div style="bottom:0;height:40;border-top:1px #DEDEDE solid;background:#eeeeee;">
-               <table width="99%"><tr><td align="left" style="padding-left:10" ><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a></td><td align="right">
-                  <span>Pasidalink patikusiu turiniu su kitais:</span>
+               <table width="99%"><tr><td align="left" style="padding-left:10" ><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a></td>
+               <td align="right">
                   <div style="display:inline;"><div id="fb-root"></div><script src="http://connect.facebook.net/lt_LT/all.js#appId=259321277854&amp;xfbml=1"></script><fb:like href="http://atvirasalus.lt/<?=$front->getRequest()->getRequestUri() ;?>" send="false" layout="button_count"  show_faces="true" font="tahoma"></fb:like></div>
                   <div style="display:inline;"><a href="http://twitter.com/share" class="twitter-share-button"  data-url="http://atvirasalus.lt/<?=$front->getRequest()->getRequestUri() ;?>" data-count="horizontal" data-via="AtvirasAlus">Tweet</a></div>
+                    <div style="display:inline;"><g:plusone size="small" style="display:inline;"></g:plusone></div>
                   </td></tr></table>
               </div>
               </div>

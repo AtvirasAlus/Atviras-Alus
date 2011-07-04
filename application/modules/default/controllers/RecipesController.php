@@ -22,7 +22,7 @@ class RecipesController extends Zend_Controller_Action {
     }
     public function stylesAction() {
     	$db = Zend_Registry::get("db");
-		$select=$db->select()
+      $select=$db->select()
 			->from("beer_recipes")
 			->join("users","users.user_id = beer_recipes.brewer_id",array("user_name"))
 			->joinLeft("beer_styles","beer_recipes.recipe_style = beer_styles.style_id",array("style_name"));
@@ -33,7 +33,11 @@ class RecipesController extends Zend_Controller_Action {
 			$this->view->content = new Zend_Paginator($adapter);
 			$this->view->content->setCurrentPageNumber($this->_getParam('page'));
 			$this->view->content->setItemCountPerPage(15);
-			$this->_helper->viewRenderer("index");
+			$select=$db->select()
+			->from("beer_styles")
+			->where("beer_styles.style_id= ?",$this->_getParam('style'));
+			$this->view->beer_style=$db->fetchRow($select);
+			$this->_helper->viewRenderer("index");	
     }
     public function searchAction() {
     	    $db = Zend_Registry::get("db");
@@ -208,6 +212,20 @@ class RecipesController extends Zend_Controller_Action {
 	
 	
     }
+    }
+    public function favoritesAction() {
+    	$db = Zend_Registry::get('db');
+      $select=$db->select();
+        $select=$db->select() 
+			 ->from('VIEW_fav_recipes',array("votes"))
+			 ->join("beer_recipes","beer_recipes.recipe_id = VIEW_fav_recipes.recipe_id")
+			 ->join("beer_styles","beer_styles.style_id = beer_recipes.recipe_style",array("style_name"))
+			 ->join("users","users.user_id=VIEW_fav_recipes.brewer_id",array("user_name","user_email"))
+			 ->order("votes DESC");
+			 	$adapter = new Zend_Paginator_Adapter_DbSelect($select);
+			$this->view->content = new Zend_Paginator($adapter);
+			$this->view->content->setCurrentPageNumber($this->_getParam('page'));
+			$this->view->content->setItemCountPerPage(100);
     }
     public function getVotes($recipe_id=0) {
 	$db = Zend_Registry::get('db');

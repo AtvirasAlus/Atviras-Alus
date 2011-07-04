@@ -2,12 +2,18 @@
 class Zend_View_Helper_RecipeItem extends Zend_View_Helper_Abstract{
    public $view; 
 
-function  recipeItem($item) {
-		
-		$this->view->hex=$this->view->colorHex($item['recipe_ebc']);
-		$this->view ->item = $item;
-		$this->view->addScriptPath(APPLICATION_PATH."/modules/default/views/helpers/");
-		return $this->view ->render("recipeitem.phtml");
+function  recipeItem($item,$type="large") { 
+        $this->view->hex=$this->view->colorHex($item['recipe_ebc']);
+        $this->view ->item = $item;
+        $this->view->addScriptPath(APPLICATION_PATH."/modules/default/views/helpers/");
+		switch ($type)  {
+      case "large":
+        return $this->view ->render("recipeitem.phtml");
+      break;
+      case "thumb":
+        return $this->view ->render("recipethumb.phtml");
+      break;
+		}
 	}
 public function setView(Zend_View_Interface $view) 
     { 
