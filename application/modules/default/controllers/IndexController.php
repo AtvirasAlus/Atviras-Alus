@@ -72,7 +72,6 @@ class IndexController extends Zend_Controller_Action {
 			  $select=$db->select() 
 			 ->from('VIEW_fav_recipes')
 			 ->join("users","users.user_id=VIEW_fav_recipes.brewer_id",array("user_name"))
-			 ->order("votes DESC")
 			 ->limit(5);
 			 $this->view->fav_recipes=$db->fetchAll($select);
 			  $select=$db->select() 

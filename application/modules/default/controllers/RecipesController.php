@@ -220,8 +220,7 @@ class RecipesController extends Zend_Controller_Action {
 			 ->from('VIEW_fav_recipes',array("votes"))
 			 ->join("beer_recipes","beer_recipes.recipe_id = VIEW_fav_recipes.recipe_id")
 			 ->join("beer_styles","beer_styles.style_id = beer_recipes.recipe_style",array("style_name"))
-			 ->join("users","users.user_id=VIEW_fav_recipes.brewer_id",array("user_name","user_email"))
-			 ->order("votes DESC");
+			 ->join("users","users.user_id=VIEW_fav_recipes.brewer_id",array("user_name","user_email"));
 			 	$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 			$this->view->content = new Zend_Paginator($adapter);
 			$this->view->content->setCurrentPageNumber($this->_getParam('page'));
