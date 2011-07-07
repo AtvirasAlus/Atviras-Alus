@@ -1,5 +1,5 @@
-<? $this->headTitle()->append(" - Receptas: ".$this->data['recipe']['recipe_name']);?>
-<? $this->headMeta()->setName('keywords', 'apyniai, mielės, salyklas,alaus gamyba,naminis,receptai,receptas,alus,'.$this->data['recipe']['recipe_name'].','.$this->data['recipe']['style_name']);?>
+<? $this->headTitle('- '.$this->data['recipe']['recipe_name']);?>
+<? $this->headMeta()->setName('keywords', $this->data['recipe']['recipe_name'].','.$this->data['recipe']['style_name']);?>
 <style>
 .nom {
 	font-weight:bold;
