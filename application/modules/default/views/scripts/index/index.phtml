@@ -30,7 +30,26 @@ h1 {
 <div style="padding-top:10"> <a href="/recipes">Peržiūrėti visus</a> (<?=$this->total_recipes["count"]?>) <a href="/recipes/random" style="padding-left:10">Atsitiktinis receptas</a></div>
 </div>
 <div class="left_col">
+<!--IVYKIAI-->
+<div class="ui-corner-all" style="background:#ffffff;padding:10;width:450"><h1 style="text-decoration:italic;font-size:12px">Įvykiai:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
+<? if (count($this->events)>0 ) {?> 
+<table>
+<? for ($i=0;$i<count($this->events);$i++) {?>
+<tr>
+<td><a href="/ivykis/<?=$this->events[$i]['event_id'];?>-<?=$this->escapeParam($this->events[$i]['event_name']);?>"><?=$this->events[$i]['event_name'];?></a> - <i><?=$this->events[$i]['event_start'];?></i></td>
+</tr>
+<?}?>
+
+
+</table>
+<?}else{?>
+<div align="center">Nieko nevyksta</div>
+<?}?>
+</div>
+</div>
+
 <!--NAUJIENOS-->
+<div class="left_col">
 <div class="ui-corner-all" style="background:#ffffff;padding:10;width:450"><h1 style="text-decoration:italic;font-size:12px">Atviro alaus naujienos:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
 <p>Per mėnėsį <b><?=$this->total_brewed['brewers_total'];?></b> aludariai išvirė <b><a href="http://atvirasalus.lt/stats/sessions"><?=$this->total_brewed['beer_total'];?></b></a> litrus alaus</p>
 <p>Sveikiname mūsų naująjį aludarį, <a href="/brewers/<?=$this->welcome['user_id'];?>"><?=$this->welcome['user_name'];?></a></p>

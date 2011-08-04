@@ -92,6 +92,12 @@ class IndexController extends Zend_Controller_Action {
 			 ->order("post_date DESC")
 			 ->limit(10);
 			 $this->view->blogs=$db->fetchAll($select);
+			  $select=$db->select() 
+          ->from("beer_events")
+          ->where("event_registration_end >= CURDATE( )")
+          ->where("event_registration_end  != '0000-00-00'")
+          ->order("event_start");
+           $this->view->events=$db->fetchAll($select);
     }
     public function sitemapAction() {
     	     $this->_helper->layout->setLayout('empty');
