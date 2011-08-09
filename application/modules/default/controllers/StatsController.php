@@ -10,23 +10,19 @@ class StatsController extends Zend_Controller_Action {
 		switch($id) {
 
 			case "sessions":
-				$select->from("@days",array("day"=>"DATE"))
-				->joinLeft("beer_brew_sessions","`@days`.DATE=beer_brew_sessions.session_primarydate",array("total"=>"COALESCE(sum(session_size),0)","avg"=>"COALESCE(sum(session_size)/count(distinct(session_brewer)),0)","count"=>"count(distinct(session_brewer))"))
-				
-				->where("`@days`.DATE >= ?",new Zend_Db_Expr("DATE(NOW())-(31*6)"))	
-				->where("`@days`.DATE <= ?",new Zend_Db_Expr("NOW()"))
+				$select->from("VIEW_sessions_stats",array("day"=>"DATE(CONCAT(year,'.',month,'.1'))","total"=>"COALESCE(liters_total)","avg"=>"(liters_total/brewer_count)","count"=>"brewer_count"))
 					->group("day");
 				
 				$this->view->sessions_count= Zend_Json::encode($db->fetchAll($select));
 				
 			break;
 			case "users":
-				$select->from("users",array("total"=>"count(user_id)","day"=>"DATE(user_created)"))
+				$select->from("users",array("total"=>"count(user_id)","day"=>"DATE(Concat(year(user_created),'.',month(user_created),'.1'))"))
 					->group("day");
 				$this->view->user_count= Zend_Json::encode($db->fetchAll($select));
 			break;
 			default:    
-				$select->from("beer_recipes",array("total"=>"count(recipe_id)","day"=>"DATE(recipe_created)"))
+				$select->from("beer_recipes",array("total"=>"count(recipe_id)","day"=>"DATE(Concat(year(recipe_created),'.',month(recipe_created),'.1'))"))
 					->group("day");
 				$this->view->recipes_count= Zend_Json::encode($db->fetchAll($select));
 			break;
@@ -38,13 +34,17 @@ class StatsController extends Zend_Controller_Action {
     public function sessionsAction() {
     	     $db = Zend_Registry::get('db');
     	     $select=$db->select();  
-    	     $select->from("@days",array("day"=>"DATE"))
+    	    /* $select->from("@days",array("day"=>"DATE"))
 				->joinLeft("beer_brew_sessions","`@days`.DATE=beer_brew_sessions.session_primarydate",array("total"=>"COALESCE(sum(session_size),0)","avg"=>"COALESCE(sum(session_size)/count(distinct(session_brewer)),0)","count"=>"count(distinct(session_brewer))"))
 				->where("`@days`.DATE >= ?",new Zend_Db_Expr("DATE(NOW())-(31*6)"))	
 				->where("`@days`.DATE <= ?",new Zend_Db_Expr("NOW()"))
 				->group("day");
-print $select->__toString();
-				//$this->view->sessions_count= Zend_Json::encode($db->fetchAll($select));
+
+				//$this->view->sessions_count= Zend_Json::encode($db->fetchAll($select)); */
+				$select->from("VIEW_sessions_stats",array("day"=>"DATE(CONCAT(year,'.',month,'.1'))","total"=>"COALESCE(liters_total)","avg"=>"(liters_total/brewer_count)","count"=>"brewer_count"))
+					->group("day");
+				$this->view->sessions_count= Zend_Json::encode($db->fetchAll($select));
+				
 				
     }
      public function mysessionsAction() {
