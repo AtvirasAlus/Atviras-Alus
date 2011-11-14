@@ -1,5 +1,5 @@
 
-   html {
+html {
  height: 100%;
 }
 body
@@ -11,14 +11,6 @@ body
 	margin: 0;
 	padding: 0;
 }
-
-#vc-main{min-height:100%; position:relative;}
-#vc-footer{position:absolute; bottom:0; width:100%; height:40px;vertical-align:bottom;margin-top:30/* Height of the footer */}
-#content {
-  padding-left:220;
-  padding-top:60;
-  padding-bottom:70px;
-}
 a {
     color:#755531;
     font-weight:normal;
@@ -28,6 +20,45 @@ a {
 a:hover {
     color: #F8966E;
 }
+td {
+	font-family: Arial;
+	font-size:12px;
+}
+div {
+  font-family: Arial;
+	font-size:12px;
+}
+
+label {
+	font-family: Arial;
+	float: left;
+	margin-right: 4px;
+	font-weight: normal;
+	font-size:11px
+}
+input {
+font-family: Arial;
+border: 1px solid #999;
+background: #FEFEFE url(ui/external/spinner-bg.gif) repeat-x left bottom;
+
+}
+select {
+font-family: Arial;
+border: 1px solid #999;
+background: #FEFEFE url(ui/external/spinner-bg.gif) repeat-x left bottom;
+
+}
+
+input:focus { outline: none }
+
+#vc-main{min-height:100%; position:relative;}
+#vc-footer{position:absolute; bottom:0; width:100%; height:40px;vertical-align:bottom;margin-top:30/* Height of the footer */}
+#content {
+ 
+  padding-top:40;
+  padding-bottom:70px;
+}
+
 .formError  {
 	
 	list-style:none;
@@ -51,43 +82,17 @@ img#logo {
   
 }
 
-td {
-	font-family: Arial;
-	font-size:12px;
-}
-label {
-	font-family: Arial;
-	float: left;
-	margin-right: 4px;
-	font-weight: normal;
-	font-size:11px
-}
-input {
-font-family: Arial;
-border: 1px solid #999;
-background: #FEFEFE url(ui/external/spinner-bg.gif) repeat-x left bottom;
-
-}
-select {
-font-family: Arial;
-border: 1px solid #999;
-background: #FEFEFE url(ui/external/spinner-bg.gif) repeat-x left bottom;
-
-}
-
-input:focus { outline: none }
 
 #menu-top {
 list-style-type: none;
 position:relative;
-top:60px;
 font-family:Georgia;
 font-weight:bold;
+padding-top:10;
 
 }
 #menu-top li{
 display: inline;
-
 padding-right:5px;
 text-decoration:none;
 font-family:Georgia;
@@ -100,7 +105,6 @@ font-family:Georgia;
 font-size:16px;
 text-decoration:none;
 font-family:Georgia;
-
 color: #666666;
 }
 #menu-top  a:visited {

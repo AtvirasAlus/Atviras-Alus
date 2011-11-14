@@ -1,7 +1,7 @@
 <?php 
 /*
  * Plugin Name: Google Analyticator
- * Version: 6.1.3
+ * Version: 6.2
  * Plugin URI: http://ronaldheft.com/code/analyticator/
  * Description: Adds the necessary JavaScript code to enable <a href="http://www.google.com/analytics/">Google's Analytics</a>. After enabling this plugin visit <a href="options-general.php?page=google-analyticator.php">the settings page</a> and enter your Google Analytics' UID and enable logging.
  * Author: Ronald Heft
@@ -9,7 +9,7 @@
  * Text Domain: google-analyticator
  */
 
-define('GOOGLE_ANALYTICATOR_VERSION', '6.1.3');
+define('GOOGLE_ANALYTICATOR_VERSION', '6.2');
 
 // Constants for enabled/disabled state
 define("ga_enabled", "enabled", true);
@@ -31,6 +31,7 @@ define("key_ga_outbound_prefix", "ga_outbound_prefix", true);
 define("key_ga_downloads", "ga_downloads", true);
 define("key_ga_downloads_prefix", "ga_downloads_prefix", true);
 define("key_ga_widgets", "ga_widgets", true);
+define("key_ga_sitespeed", "ga_sitespeed", true);
 
 define("ga_uid_default", "XX-XXXXX-X", true);
 define("ga_status_default", ga_disabled, true);
@@ -45,6 +46,7 @@ define("ga_outbound_prefix_default", 'outgoing', true);
 define("ga_downloads_default", "", true);
 define("ga_downloads_prefix_default", "download", true);
 define("ga_widgets_default", ga_enabled, true);
+define("ga_sitespeed_default", ga_enabled, true);
 
 // Create the default key and status
 add_option(key_ga_status, ga_status_default, '');
@@ -65,6 +67,7 @@ add_option('ga_profileid', '', '');
 add_option(key_ga_widgets, ga_widgets_default, '');
 add_option('ga_google_token', '', '');
 add_option('ga_compatibility', 'off', '');
+add_option(key_ga_sitespeed, ga_sitespeed_default, '');
 
 # Check if we have a version of WordPress greater than 2.8
 if ( function_exists('register_widget') ) {
@@ -235,6 +238,12 @@ function ga_options_page() {
 		if ( $ga_compatibility == '' )
 			$ga_compatibility = 'off';
 		update_option('ga_compatibility', $ga_compatibility);
+		
+		// Update the sitespeed option
+		$ga_sitespeed = $_POST[key_ga_sitespeed];
+		if (($ga_sitespeed != ga_enabled) && ($ga_sitespeed != ga_disabled))
+			$ga_sitespeed = ga_widgets_default;
+		update_option(key_ga_sitespeed, $ga_sitespeed);
 
 		// Give an updated message
 		echo "<div class='updated fade'><p><strong>" . __('Google Analyticator settings saved.', 'google-analyticator') . "</strong></p></div>";
@@ -401,6 +410,29 @@ function ga_options_page() {
 						echo "</select>\n";
 						?>
 						<p style="margin: 5px 10px;" class="setting-description"><?php _e('Selecting the "Remove" option will physically remove the tracking code from logged in users. Selecting the "Use \'admin\' variable" option will assign a variable called \'admin\' to logged in users. This option will allow Google Analytics\' site overlay feature to work, but you will have to manually configure Google Analytics to exclude tracking from pageviews with the \'admin\' variable.', 'google-analyticator'); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th width="30%" valign="top" style="padding-top: 10px;">
+						<label for="<?php echo key_ga_sitespeed ?>"><?php _e('Site speed tracking', 'google-analyticator'); ?>:</label>
+					</th>
+					<td>
+						<?php
+						echo "<select name='".key_ga_sitespeed."' id='".key_ga_sitespeed."'>\n";
+						
+						echo "<option value='".ga_enabled."'";
+						if(get_option(key_ga_sitespeed) == ga_enabled)
+							echo " selected='selected'";
+						echo ">" . __('Enabled', 'google-analyticator') . "</option>\n";
+						
+						echo "<option value='".ga_disabled."'";
+						if(get_option(key_ga_sitespeed) == ga_disabled)
+							echo" selected='selected'";
+						echo ">" . __('Disabled', 'google-analyticator') . "</option>\n";
+						
+						echo "</select>\n";
+						?>
+						<p style="margin: 5px 10px;" class="setting-description"><?php _e('Disabling this option will turn off the tracking required for <a href="http://www.google.com/support/analyticshelp/bin/answer.py?hl=en&answer=1205784&topic=1120718&utm_source=gablog&utm_medium=blog&utm_campaign=newga-blog&utm_content=sitespeed">Google Analytics\' Site Speed tracking report</a>.', 'google-analyticator'); ?></p>
 					</td>
 				</tr>
 				<tr>
@@ -699,14 +731,27 @@ function ga_ajax_accounts()
 	</th>
 	<td>
 		<?php
+		// sort the $ga_accounts array by ga:accountName and then title
+		$sorted_ga_accounts = array();
+		foreach ($ga_accounts as $ga_account) {
+			$sorted_ga_accounts[$ga_account['ga:accountName']][] = $ga_account;
+		}
+		foreach( $sorted_ga_accounts as $id => $sorted_ga_account) {
+			usort($sorted_ga_accounts[$id], 'ga_sort_account_list');
+		}
+		
 		# Create a select box	
 		echo '<select name="' . key_ga_uid . '" id="' . key_ga_uid . '">';
 		echo '<option value="XX-XXXXX-X">' . __('Select an Account', 'google-analyticator') . '</option>';
 	
 		# The list of accounts
-		foreach ( $ga_accounts AS $account ) {
-			$select = ( get_option(key_ga_uid) == $account['ga:webPropertyId'] ) ? ' selected="selected"' : '';
-			echo '<option value="' . $account['ga:webPropertyId'] . '"' . $select . '>' . $account['title'] . '</option>';
+		foreach ( $sorted_ga_accounts AS $account_name => $account_list ) {
+			echo "<optgroup label='".htmlentities($account_name)."'>\n";
+			foreach( $account_list as $account) {
+				$select = ( get_option(key_ga_uid) == $account['ga:webPropertyId'] ) ? ' selected="selected"' : '';
+				echo '<option value="' . $account['ga:webPropertyId'] . '"' . $select . '>' . $account['title'] . '</option>';
+			}
+			echo "</optgroup>\n";
 		}
 	
 		# Close the select box
@@ -718,6 +763,10 @@ function ga_ajax_accounts()
 	<?php
 	}
 	die();
+}
+
+function ga_sort_account_list($a, $b) {
+	return strcmp($a['title'],$b['title']);
 }
 
 /**
@@ -795,26 +844,29 @@ function add_google_analytics()
 		# Determine if the user is an admin, and should see the tracking code
 		if ( ( get_option(key_ga_admin) == ga_enabled || !ga_current_user_is(get_option(key_ga_admin_role)) ) && get_option(key_ga_admin_disable) == 'remove' || get_option(key_ga_admin_disable) != 'remove' )
 		{
-			# Add the notice that Google Analyticator tracking is enabled
-			echo "<!-- Google Analytics Tracking by Google Analyticator " . GOOGLE_ANALYTICATOR_VERSION . ": http://ronaldheft.com/code/analyticator/ -->\n";
+			# Disable the tracking code on the post preview page
+			if ( !function_exists("is_preview") || ( function_exists("is_preview") && !is_preview() ) )
+			{
+				# Add the notice that Google Analyticator tracking is enabled
+				echo "<!-- Google Analytics Tracking by Google Analyticator " . GOOGLE_ANALYTICATOR_VERSION . ": http://ronaldheft.com/code/analyticator/ -->\n";
 			
-			# Add the Adsense data if specified
-			if ( get_option(key_ga_adsense) != '' )
-				echo '<script type="text/javascript">window.google_analytics_uacct = "' . get_option(key_ga_adsense) . "\";</script>\n";
+				# Add the Adsense data if specified
+				if ( get_option(key_ga_adsense) != '' )
+					echo '<script type="text/javascript">window.google_analytics_uacct = "' . get_option(key_ga_adsense) . "\";</script>\n";
 			
-			# Include the file types to track
-			$extensions = explode(',', stripslashes(get_option(key_ga_downloads)));
-			$ext = "";
-			foreach ( $extensions AS $extension )
-				$ext .= "'$extension',";
-			$ext = substr($ext, 0, -1);
+				# Include the file types to track
+				$extensions = explode(',', stripslashes(get_option(key_ga_downloads)));
+				$ext = "";
+				foreach ( $extensions AS $extension )
+					$ext .= "'$extension',";
+				$ext = substr($ext, 0, -1);
 
-			# Include the link tracking prefixes
-			$outbound_prefix = stripslashes(get_option(key_ga_outbound_prefix));
-			$downloads_prefix = stripslashes(get_option(key_ga_downloads_prefix));
-			$event_tracking = get_option(key_ga_event);
+				# Include the link tracking prefixes
+				$outbound_prefix = stripslashes(get_option(key_ga_outbound_prefix));
+				$downloads_prefix = stripslashes(get_option(key_ga_downloads_prefix));
+				$event_tracking = get_option(key_ga_event);
 
-			?>
+				?>
 <script type="text/javascript">
 	var analyticsFileTypes = [<?php echo strtolower($ext); ?>];
 <?php if ( $event_tracking != 'enabled' ) { ?>
@@ -824,32 +876,36 @@ function add_google_analytics()
 	var analyticsEventTracking = '<?php echo $event_tracking; ?>';
 </script>
 <?php
-			# Add the first part of the core tracking code
-			?>
+				# Add the first part of the core tracking code
+				?>
 <script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', '<?php echo $uid; ?>']);
 <?php
 		
-			# Add any tracking code before the trackPageview
-			do_action('google_analyticator_extra_js_before');
-			if ( '' != $extra )
-				echo "	$extra\n";
+				# Add any tracking code before the trackPageview
+				do_action('google_analyticator_extra_js_before');
+				if ( '' != $extra )
+					echo "	$extra\n";
 			
-			# Add the track pageview function
-			echo "	_gaq.push(['_trackPageview']);\n";
+				# Add the track pageview function
+				echo "	_gaq.push(['_trackPageview']);\n";
+			
+				# Add the site speed tracking
+				if ( get_option(key_ga_sitespeed) == ga_enabled )
+					echo "	_gaq.push(['_trackPageLoadTime']);\n";
 		
-			# Disable page tracking if admin is logged in
-			if ( ( get_option(key_ga_admin) == ga_disabled ) && ( ga_current_user_is(get_option(key_ga_admin_role)) ) )
-				echo "	_gaq.push(['_setVar', 'admin']);\n";
+				# Disable page tracking if admin is logged in
+				if ( ( get_option(key_ga_admin) == ga_disabled ) && ( ga_current_user_is(get_option(key_ga_admin_role)) ) )
+					echo "	_gaq.push(['_setCustomVar', 'admin']);\n";
 		
-			# Add any tracking code after the trackPageview
-			do_action('google_analyticator_extra_js_after');
-			if ( '' != $extra_after )
-				echo "	$extra_after\n";
+				# Add any tracking code after the trackPageview
+				do_action('google_analyticator_extra_js_after');
+				if ( '' != $extra_after )
+					echo "	$extra_after\n";
 		
-			# Add the final section of the tracking code
-			?>
+				# Add the final section of the tracking code
+				?>
 
 	(function() {
 		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -858,6 +914,7 @@ function add_google_analytics()
 	})();
 </script>
 <?php
+			}
 		} else {
 			# Add the notice that Google Analyticator tracking is enabled
 			echo "<!-- Google Analytics Tracking by Google Analyticator " . GOOGLE_ANALYTICATOR_VERSION . ": http://ronaldheft.com/code/analyticator/ -->\n";

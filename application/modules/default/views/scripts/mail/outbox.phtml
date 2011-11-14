@@ -33,7 +33,7 @@ $('#deleteButton').click(function() {
 <ul id="mail-menu" >
 	<li><a href="/mail/inbox">Gautieji</a></li>|
 	<li><a href="/mail/compose">Rašyti laišką</a></li>|
-	<li><a href="/mail/outbox"><b>Išiųsti laiškai</b></a></li>
+	<li><a href="/mail/outbox"><b>Išsiųsti laiškai</b></a></li>
 	
 	
 </ul>
@@ -50,8 +50,15 @@ foreach ($this->content as $item) {?>
 
 	
 	<tr onmouseover="$(this).css('background','#eeeeee')" onmouseout="$(this).css('background','')">
-
-	<td width="20"><input type="checkbox" style="border:1 solid #333333" name="mail_id[]" id="chMail" value="<?=$item["mail_id"];?>"/></td><td align="left" width="150" onclick="window.location='/mail/readoutbox?id=<?=$item["mail_id"];?>'"><?=$item["mail_to"];?></td><td width="500" align="left" onclick="window.location='/mail/readoutbox?id=<?=$item["mail_id"];?>'"><a href="/mail/readoutbox?id=<?=$item["mail_id"];?>"><?=$item["mail_subject"];?></a></td><td  width="150" onclick="window.location='/mail/readoutbox?id=<?=$item["mail_id"];?>'"><?=$item["mail_date"];?></td>
+<? $toArr = explode(",",$item["mail_to"]); 
+if (count($toArr)>5) {
+array_splice($toArr,4);
+$to=implode(", ",$toArr) ."...";
+}else{
+$to=implode(", ",$toArr);
+}
+?>
+	<td width="20"><input type="checkbox" style="border:1 solid #333333" name="mail_id[]" id="chMail" value="<?=$item["mail_id"];?>"/></td><td align="left"  width="200" onclick="window.location='/mail/readoutbox?id=<?=$item["mail_id"];?>'" style="overflow:hidden"><?=$to;?></td><td width="450" align="left" onclick="window.location='/mail/readoutbox?id=<?=$item["mail_id"];?>'"><a href="/mail/readoutbox?id=<?=$item["mail_id"];?>"><?=$item["mail_subject"];?></a></td><td  width="150" onclick="window.location='/mail/readoutbox?id=<?=$item["mail_id"];?>'"><?=$item["mail_date"];?></td>
 </tr>
 <?
 }   

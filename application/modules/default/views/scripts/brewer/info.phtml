@@ -76,30 +76,53 @@ h1 {
 /* // Tag cloud */
 </style>
 
-<div style="width:800">
+<div style="width:800" style="padding-bottom:40">
+<p>
   <div class="ui-corner-all" style="background:#ffffff;padding:20">
     <h1 align="left"><?=$this->user_info['user_name'];?> </h1>
-    <div class="user_info">
-      <div ><div class="ui-corner-all" style="background:#DDDDDD;padding:2;float:right"><img src="http://www.gravatar.com/avatar/<?=md5($this->user_info['user_email']);?>?rating=G&size=80&default=mm" border="0"/></div></div>
-      <div>Narys nuo: <span><?=$this->user_info['user_created'];?></span></div>
-      <div>Paskutinį kartą lankėsi: <span><?=$this->user_info['user_lastlogin'];?></span></div>
-      <div>Išvirė alaus:  <span><?=$this->user_info['total_brewed'];?> l.</span></div>
-    </div>
+        <div class="user_info">
+          <div ><div class="ui-corner-all" style="background:#DDDDDD;padding:2;float:right"><img src="http://www.gravatar.com/avatar/<?=md5($this->user_info['user_email']);?>?rating=G&size=80&default=mm" border="0"/></div></div>
+          <div>Narys nuo: <span><?=$this->user_info['user_created'];?></span></div>
+          <div>Paskutinį kartą lankėsi: <span><?=$this->user_info['user_lastlogin'];?></span></div>
+          <div>Išvirė alaus:  <span><?=$this->user_info['total_brewed'];?> l.</span></div>
+        </div>
 
-    <div class="ui-corner-all" style="background:#F1F0ED;padding:20;margin-top:20;">
-          <div align="left" style="margin-bottom:10"><span id="rl"> Alaus receptai (<?=$this->user_info['total_recipes'];?>)</span>&nbsp;<span><a href="/brewer/recipes/<?=$this->user_info['user_id'];?>"> peržiūrėti</a></span></div>
-              <div id="tags">
-                <ul>
+        <div class="ui-corner-all" style="background:#F1F0ED;padding:20;margin-top:20;">
+              <div align="left" style="margin-bottom:10"><span id="rl"> Alaus receptai (<?=$this->user_info['total_recipes'];?>)</span>&nbsp;<span><a href="/brewer/recipes/<?=$this->user_info['user_id'];?>"> peržiūrėti</a></span></div>
+                  <div id="tags">
+                    <ul>
+                    <?
+                    for ($i=0;$i<count($this->user_info['recipes']);$i++) {
+                      ?>
+                      <li class="tag<?=rand(1,10);?>" style="background:<?=$this->colorHex($this->user_info['recipes'][$i]['recipe_ebc']);?>;padding:2;margin:5"><a  href="/alus/receptas/<?=$this->user_info['recipes'][$i]['recipe_id'];?>-<?=$this->escapeParam($this->user_info['recipes'][$i]['recipe_name']);?>"><?=$this->user_info['recipes'][$i]['recipe_name'];?></a></li>
+                      <?
+                    }
+                    ?>
+                    </ul>
+                  </div>
+              </div>
+      
+          <div class="ui-corner-all" style="background:#F1F0ED;padding:20;margin-top:20;">
+            <div align="left" style="margin-bottom:10"><span id="rl"> Komentavo receptus:</span></div>
+            
                 <?
-                for ($i=0;$i<count($this->user_info['recipes']);$i++) {
+                for ($i=0;$i<count($this->user_info['recipes_comments']);$i++) {
                   ?>
-                  <li class="tag<?=rand(1,10);?>" style="background:<?=$this->colorHex($this->user_info['recipes'][$i]['recipe_ebc']);?>;padding:2;margin:5"><a  href="/alus/receptas/<?=$this->user_info['recipes'][$i]['recipe_id'];?>-<?=$this->escapeParam($this->user_info['recipes'][$i]['recipe_name']);?>"><?=$this->user_info['recipes'][$i]['recipe_name'];?></a></li>
+                 
+                  <div class="ui-corner-all" style="background:#FFFFFF;padding:5;margin-top:10;">
+                  <a  href="/alus/receptas/<?=$this->user_info['recipes_comments'][$i]['recipe_id'];?>-<?=$this->escapeParam($this->user_info['recipes_comments'][$i]['recipe_name']);?>"><?=$this->user_info['recipes_comments'][$i]['recipe_name'];?></a>
+                  <i><?=$this->user_info['recipes_comments'][$i]['comment_text'];?></i></div>
+              
+                 
                   <?
                 }
                 ?>
-                </ul>
+              
               </div>
-          </div>
-    </div>
+            </div>
+         </div>
+         
+    </div> 
+    </p>
 </div>
 

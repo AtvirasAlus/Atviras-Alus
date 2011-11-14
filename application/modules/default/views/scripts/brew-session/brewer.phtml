@@ -1,8 +1,8 @@
 <? 
 if (isset($this->owner_user_info["user_id"])) {
-$this->headLink()->appendStylesheet("/public/css/bs.css");
+    $this->headLink()->appendStylesheet("/public/css/bs.css");
 if($this->user_id) {
- $this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
+  $this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
 
 ?>
 <script>
@@ -18,11 +18,11 @@ $(function() {
 <?
 
 }?>
-<div style="width:900px;padding:5"> <h2 style="display:inline;">Aludario  <a href="/brewers/<?= $this->owner_user_info["user_id"];?>"><?= $this->owner_user_info["user_name"];?></a> virimų istorija</h2><? if (count($this->brew_sessions)>0) {?><div style="display:inline;text-align:right;padding-left:20" align="right"><a href="/stats/mysessions" align="right">Grafikas</a></div>
+<div style="padding:5"> <h2 style="display:inline;">Aludario  <a href="/brewers/<?= $this->owner_user_info["user_id"];?>"><?= $this->owner_user_info["user_name"];?></a> virimų istorija</h2><? if (count($this->brew_sessions)>0) {?><div style="display:inline;text-align:right;padding-left:20" align="right"><a href="/stats/mysessions" align="right">Grafikas</a></div>
 <?}?>
 </div>
 
-<table width="900" id="bsession" cellpadding=0 cellspacing=0>
+<table width="900" id="bsession" cellpadding="0" cellspacing="0">
 <thead>
 <td></td><td >Virimo pavadinimas</td><td>Aludaris</td><td>Receptas</td><td>Alaus kiekis (l.)</td><td>OG</td><td>FG</td><td>Pirminė fermentacija</td><td>Antrinė fermentacija</td><td>Išpilstyta</td><td>Pastabos</td></thead>
 <?
@@ -42,7 +42,7 @@ for ($i=0;$i<count($this->brew_sessions);$i++) {
 }
 }else{
 	?>
-	<td colspan="11" align="center"> Virimų nėra</td>
+	<tr><td colspan="11" align="center"> Virimų nėra</td></tr>
 	<?
 }
 ?>

@@ -29,7 +29,7 @@ $('#respondButton').click(function() {
 <ul id="mail-menu" >
 	<li><a href="/mail/inbox"><b>Gautieji</b></a></li>|
 	<li><a href="/mail/compose">Rašyti laišką</a></li>|
-	<li><a href="/mail/outbox">Išiųsti laiškai</a></li>
+	<li><a href="/mail/outbox">Išsiųsti laiškai</a></li>
 	
 	
 </ul>
@@ -41,7 +41,7 @@ $('#respondButton').click(function() {
 	<tr><td width="50"><b>Data:</b></td><td align="left"><?=$this->mail['mail_date'];?></td></tr>
 	<tr><td width="50"><b>Tema:</b></td><td align="left"><?=$this->mail['mail_subject'];?></td></tr>
 	<tr><td colspan="2" height="50"></td></tr>
-	<tr><td colspan="2"><?=nl2br($this->mail['mail_body']);?></td></tr>
+	<tr><td colspan="2"><?= nl2br(preg_replace('/((?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i','<a href="$1" rel="nofollow" target="blank">$1</a>',$this->mail['mail_body']));?></td></tr>
 	<tr><td colspan="2" height="20"></td></tr>
 	
 	</table>

@@ -9,124 +9,88 @@
 			<?=$this->headTitle()->prepend('Atviras alus ');?>
 			<?= $this->headTitle()?>
 			<meta name="description" content="Atviras alus - naminio alaus aludarių bendruomenė. Alaus receptai. Stiliaus aprašymai. Alaus skaičiuoklė" />
-
 			<?= $this->headMeta() ?>
 			<?= $this->headLink() ?>
 			<?= $this->headStyle() ?>
 		<link type="text/css" href="/public/css/pepper-grinder/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
-		<link type="text/css" href="/public/ui/external/fg.menu.css" rel="stylesheet" />
+		
 		<link type="text/css" href="/public/css/main.css" rel="stylesheet" />
+		<link href="/public/css/userScreen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.widget.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.dialog.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.position.js"></script>
-		<script type="text/javascript" src="/public/ui/external/fg.menu.js"></script>
+		
 		<?= $this->headScript() ?>
 		<?  $front = Zend_Controller_Front::getInstance();?>
 <script>
-$.fn.displayError = function (errors) {
-    var e_div = this.find('#error-content');
-    if (e_div) {
-        e_div.remove()
-    }
-    if (errors.length > 0) {
-        var error = '<div class="ui-widget" id="error-content"><div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p >';
-        for (var i = 0; i < errors.length; i++) {
-            error += '<div>' + errors + '</div>';
-        }
-        error += '</p></div></div>';
-        this.append(error)
-    }
-}
-$.fn.serializeObject = function () {
-    var o = {};
-    var a = this.serializeArray();
-    $.each(a, function () {
-        if (o[this.name]) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-        } else {
-            o[this.name] = this.value || '';
-        }
-    });
-    return o;
+$.fn.displayError = function(errors) {
+	var e_div = this.find('#error-content');
+	if (e_div) {
+		e_div.remove();
+	}
+	if (errors.length > 0) {
+		var error = '<div class="ui-widget" id="error-content"><div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p >';
+		for (var i = 0; i < errors.length; i++) {
+			error += '<div>' + errors + '</div>';
+		}
+		error += '</p></div></div>';
+		this.append(error);
+	}
 };
-
+$.fn.serializeObject = function() {
+	var o = {};
+	var a = this.serializeArray();
+	$.each(a, function () {
+		if (o[this.name]) {
+			if (!o[this.name].push) {
+				o[this.name] = [o[this.name]];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+	});
+	return o;
+};
 function login() {
-
-	var formvals= $('#login-form').serializeObject()
-    $.ajax({
-        type: 'POST',
-        url: "/auth/login/",
-        data: formvals,
-        success: function (d) {
-            var data = jQuery.parseJSON(d);
-            if (data) {
-                if (data.status == 1) {
-                    var _e = []
-                    for (var i = 0; i < data.errors.length; i++) {
-                        _e.push(data.errors[i].message);
-                    }
-                    $('#login-form').displayError(_e)
-                } else {
-			//formvals.user_name= data.data.user_name
-			
-			//$.ajax({type: 'POST',url: "http://www.atvirasalus.lt/forum/bb-dologin.php", data:formvals})
-			if (window.location.href.indexOf("/calculus")>-1) {	
-			    $("#login-dialog").dialog("destroy")
-			    $("#login-a").remove();
-			    $("#logScreen-user_name")[0].innerHTML = data.data.user_name;
-			    $("#logScreen").css("display", "block")
-			}else{
-                    	    location.reload();
-                    	}
-
-                }
-            }
-        },
-        dataType: ""
-    });
+	var formvals = $('#login-form').serializeObject();
+	$.ajax({type:'POST', url:"/auth/login/", data:formvals, success:function (d) {
+		var data = jQuery.parseJSON(d);
+		if (data) {
+			if (data.status == 1) {
+				var _e = [];
+				for (var i = 0; i < data.errors.length; i++) {
+					_e.push(data.errors[i].message);
+				}
+				$('#login-form').displayError(_e);
+			} else {
+				//formvals.user_name= data.data.user_name
+				if (window.location.href.indexOf("/calculus") > -1) {
+					$("#login-dialog").dialog("destroy");
+					$("#login-a").remove();
+					$("#userScreen-u")[0].innerHTML = '<span>' + data.data.user_name + '</span>';
+					$("#userScreen").css("display", "block");
+				} else {
+					location.reload();
+				}
+			}
+		}
+	}, dataType:""});
 }
-
 function showLogin() {
-    $("#login-dialog").dialog({
-        disabled: false,
-        modal: true,
-        autoOpen: true
-    });
-    $("#login-dialog").css('visibility', 'visible');
-    $('#login-form')[0].reset()
-    $("#login-dialog").displayError([])
-
-
+	$("#login-dialog").dialog({disabled:false, modal:true, autoOpen:true});
+	$("#login-dialog").css('visibility', 'visible');
+	$('#login-form')[0].reset();
+	$("#login-dialog").displayError([]);
 }
 $(document).ready(function () {
-    $("#login-button").button();
-    $("#login-button").bind('click', function (e) {
-        login()
-    })
-
-
-    // BUTTON
-    $('.fg-button').hover(
-
-    function () {
-        $(this).removeClass('ui-state-default').addClass('ui-state-focus');
-    }, function () {
-        $(this).removeClass('ui-state-focus').addClass('ui-state-default');
-    });
-
-    // MENU	
-    $('#logScreen').menu({
-        content: $('#logScreen').next().html(),
-        // grab content from this page
-        flyOut: true,
-        showSpeed: 400
-    });
-
-})
-
+	$("#login-button").button();
+	$("#login-button").bind('click', function (e) {
+		login();
+	});
+	createUserMenu();
+});
 
   </script>
   <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
@@ -134,28 +98,36 @@ $(document).ready(function () {
 </script>
   </head>
   <body>
-    <div id="vc-main">
-            <a href="/"><img src="/public/images/logo.png" style="position:absolute;top:5px;left:40px;" width="120" border="0"></a> 
-             <div align="center" style="position:absolute;top:185px;left:20px;width:160;" > 
+    <div id="vc-main" style="padding-left:30">
+    <table cellpadding="0" cellspacing="0" border="0"><tr><td width="180" valign="top">
+            <a href="/"><img src="/public/images/logo.png" style="position:relative;top:5px;left:20px;" width="120" border="0"></a> 
+             <div align="center" style="position:relative;top:45px;width:160;" > 
               <br/>Mūsų draugai:
                   <div class="ui-corner-all" style="background:#ffffff">
                     <p><a href="http://tikrasalus.lt" target="_blank"><img src="/public/images/TAD.png" width="120" border="0"/></a></p>
                   </div>
                   <div class="ui-corner-all" style="background:#ffffff">
                     <p style="padding-top:10;padding-bottom:10"><a href="http://savasalus.lt" target="_blank"><img src="/public/images/savasalus.jpg" width="120" border="0"/></a></p>
-                  </div>
-          </div>
-          <div align="center" style="position:absolute;top:540px;left:20px;width:160;" >v1.0 'Target'<?//$this->projectProgress();?>
-          </div>
-          <div align="center" style="position:absolute;top:570px;left:70px;">
+                  </div> 
+                  <div align="center" style="position:relative;top:20px;width:160;" >v1.0 'Target'<?//$this->projectProgress();?> </div>
+         
+          <div align="center" style="position:relative;top:40px;">
             <a href="http://www.facebook.com/pages/atvirasaluslt/#!/pages/atvirasaluslt/182104888497349"><img src="/public/images/ico_facebook.gif" border="0"/></a>
             <a href="/index/rss"><img src="/public/images/ico_feed.gif" border="0"/></a>
             <a href="http://twitter.com/#!/AtvirasAlus"><img src="/public/images/ico_twitter.gif" border="0"/></a>
           </div>
+          </div>
+         
          <!-- end sidebar -->
-          <div id="top-header" style="height:50;padding-left:180">
-            <p class="pullquote"><?=$this->fortune();?></p>
-                <ul id="menu-top">
+         </td>
+         <td valign="top">  
+          <div id="top-header" style="height:50;" >
+          <table width="100%"><tr><td>
+           <p class="pullquote" style="float:left"><?=$this->fortune();?></p>
+            <span style="float:right"><?=$this->loginScreen();?></span>
+          </td>
+           <tr><td>
+                <ul id="menu-top" style="display:inline-block;">
                   <? 
                   $this->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigation.xml","nav")));
 
@@ -166,19 +138,23 @@ $(document).ready(function () {
                       $mark="";
                     }
                     ?>
-                  &nbsp;<li><a href="<?= $page->getHref();?>" style="<?=$mark?>"></li>
+                 <li> &nbsp;<a href="<?= $page->getHref();?>" style="<?=$mark?>">
 
-                  <? print  $page->label;?></a>&nbsp; 
+                  <? print  $page->label;?></a>&nbsp; </li>
                   <?
                   }
                   ?>
               </ul>
           </div>
-          <?=$this->loginScreen();?>
-           <div id="content">
+        </td></tr></table>
+           <div id="content" style="padding-left:20;align:right;display:inline-block;">
             <? echo $this->layout()->content;?>
-            </div>
-         
+            </div> 
+            
+         </td>
+        <td>&nbsp;</td>
+         </tr>
+         </table>
           <div id="login-dialog"  title="Prisijungti" style="display:none">
             <form id="login-form" onsubmit="return false">
                 <table width="96%">
@@ -188,7 +164,7 @@ $(document).ready(function () {
                   <tr><td></td><td><button id="login-button">Jungtis</button></td></tr>
                 </table>
             </form>
-          </div>
+         
         <script type="text/javascript">
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-21270974-1']);
@@ -200,6 +176,7 @@ $(document).ready(function () {
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();
         </script> 
+        <!--
         <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
             <div id="vc-footer" valign="bottom">
             <div style="bottom:0;height:40;border-top:1px #DEDEDE solid;background:#eeeeee;">
@@ -211,8 +188,9 @@ $(document).ready(function () {
                   </td></tr></table>
               </div>
               </div>
-           
-      </div>
+             -->
+   
+     </div>
       
   </body>
 </html>

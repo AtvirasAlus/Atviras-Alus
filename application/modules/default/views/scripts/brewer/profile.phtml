@@ -1,14 +1,12 @@
 
-<div align="center">
-<div style="width:400px"><div class="ui-widget">
-<div class="ui-widget ui-state-highlight ui-corner-all" > 
-<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-login-dialog">
-<span style="font-size:20"> Profilis </span></span></div>
-<div style="padding: 15px">
-<div align="left"> <table><tr><td>
+<div align="center" >
+
+<h1> Profilis </span></h1>
+<div class="ui-corner-all" style="background:#FFF;padding:20;">
+ <table><tr><td>
 <img src="http://www.gravatar.com/avatar/<?=md5($this->user_info->user_email);?>?rating=G&size=50&default=mm" border="0"/></td><td style="padding:10" valign="top">
 Avataras registruotas e-paštu: <?=$this->user_info->user_email;?> svetainėje <a href="http://www.gravatar.com">gravatar.com</a></td></tr></table></br>
-</div>
+
 <? if($this->errors) {
 ?>
 	<div class="ui-state-error ui-corner-all" style="margin-bottom:20px"><ul class="formError">
@@ -29,6 +27,5 @@ print $this->success;
 }
 print $this->changePasswordForm;
 ?>
-</div>
-</div>
+
 </div>

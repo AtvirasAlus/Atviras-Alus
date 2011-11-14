@@ -1,0 +1,33 @@
+<? $image=count($this->images)>0 ? $this->images[0]["url"] : "";?> 
+<? if (count($this->images)>0) {?>
+<div class="images  ui-corner-all" align="center">
+<?
+for ($i=0;$i<count($this->images);$i++) {
+    $width=$this->images[$i]["width"];
+    $height=$this->images[$i]["height"];
+    $src=$this->images[$i]["url"];
+    if ($width>$height) {
+      $i_width=100;
+      $i_height=ceil($height/$width*$i_width);
+    }else{
+      $i_height=100;
+      $i_width=ceil($width/$height*$i_height);
+    }
+      echo "<img src='".$src."' width='".$i_width."' height='".$i_height."' id='".$i."' />";
+			
+}
+?>
+</div>
+
+<div align="center">
+		<ul id="icons" ><li class="ui-state-default" style="display:inline"><span class="ui-icon ui-icon-carat-1-w" id="prev">Atgal</span></li> <li class="ui-state-default" style="display:inline"><span class="ui-icon ui-icon-carat-1-e" id="next">Pirmyn</span></li></ul>
+		
+		<label class="totalimg">
+			
+	Viso: <?=count($this->images);?>
+		</label>
+</div>
+<?}?>
+  <input type="hidden" name="link_image" id="link_image"  value="<?=$image;?>"/>
+  <input type="hidden" name="cur_image" id="cur_image"  value="0"/>
+	<input type="hidden" name="total_images" id="total_images" value="<?php echo count($this->images);?>" />

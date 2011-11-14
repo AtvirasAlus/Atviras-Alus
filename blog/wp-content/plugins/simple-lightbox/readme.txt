@@ -1,8 +1,9 @@
-=== Plugin Name ===
-Contributors: archetyped
+=== Simple Lightbox ===
+Contributors: Archetyped
+Donate link: http://archetyped.com/tools/simple-lightbox/#donate
 Tags: lightbox, gallery, photography, images, theme, template, style
-Requires at least: 3.0
-Tested up to: 3.1.2
+Requires at least: 3.1.2
+Tested up to: 3.2
 Stable tag: trunk
 
 A simple, themeable, and customizable Lightbox for Wordpress
@@ -13,30 +14,28 @@ Simple Lightbox is a very simple and customizable lightbox that is easy to add t
 #### Customization
 Options for customizing the lightbox behavior are located in the **Settings > Media** admin menu in the **Lightbox Settings** section (or just click the **Settings** link below the plugin's name when viewing the list of installed plugins)
 
-* **New: Link Validation** (Optional)
-* **New: Keyboard Navigation**
-* **New: Show/Hide Lightbox Caption**
+* **New: Image Attachment Link Support**
+* **New: Backwards-compatibility with legacy lightbox links**
 * Theme Support
-* Customizable UI Text
-* Enable/Disable Lightbox Functionality (Default: Enabled)
+* Keyboard Navigation
 * Enable Lightbox depending on Page Type (Home, Pages, Archive, etc.)
-* Automatically activate lightbox for links to images on page (no need to add `rel="lightbox"` attribute to link)
-* Group automatically-activated links (play as a slideshow)
-* Group image links by Post (separate slideshow for each Post on page)
-* Enable/Disable Lightbox resizing animation
-* Automatically Start Slideshow (Default: Enabled)
-* Slide Duration (Seconds) (Default: 6)
-* Loop through images (Default: Enabled)
-* Overlay Opacity (0 - 1) (Default: 0.8)
+* Link Validation (optional)
+* Automatically activate links (no manual coding required)
+* Group image links (play as a slideshow)
+* Group image links by Post (e.g. separate slideshow for each post on home page)
+* UI/Animation Customization
+* Slideshow Customization
 
 #### Usage
-* The necessary Javascript and CSS files will be automatically added to the page as long as `wp_head()` is called in the theme
-* That's it!
+1. Insert links to images/image attachments into your posts/pages
+
+**That’s it! The image will be displayed in a lightbox automatically.**
+
+* For more usage tips, go to [Simple Lightbox's official page](http://archetyped.com/tools/simple-lightbox/)
 
 == Installation ==
 
-1. Verify that your theme uses the `wp_head()` template tag (this is where the necessary files will be added to your theme output)
-1. Let plugin automatically add lightbox functionality for links to images or manually add `rel="lightbox"` to any image links that you want to be displayed in a lightbox
+1. Install and activate via admin dashboard
 
 == Upgrade Notice ==
 
@@ -52,6 +51,26 @@ Post your questions and comments on [Simple Lightbox's official page](http://arc
 2. Customized UI Text
 
 == Changelog ==
+= 1.5.5.1 =
+* Fix: Disabled links not being disabled (Disabling Sascha)
+
+= 1.5.5 =
+* Add: Distinct link activation (will not affect other lightboxes)
+* Add: Backwards compatibility with legacy lightbox links (optional)
+* Add: Support for WordPress 3.2
+* Add: Support for links added after page load (e.g. via AJAX, etc.)
+* Add: Admin option to enable/disable attachment links
+* Add: Support for image attachment links
+* Update: Options management overhaul
+* Update: Additional WordPress 3.2 support (Gallery)
+* Update: Cache-management for enqueued files
+* Update: Improved UI consistency
+* Update: Improved compatibility for older versions of PHP
+* Update: Internal optimizations
+* Update: Improved URL handling
+* Fix: Improved options migration from old versions (Hutchison Migration)
+* Fix: XHTML Validation (Hajo Validation)
+
 = 1.5.4 =
 * Add: Optional Link validation
 * Add: Keyboard Navigation
@@ -117,5 +136,6 @@ Post your questions and comments on [Simple Lightbox's official page](http://arc
 * Optimized: Options menu field building
 * Optimized: Loading of default values for plugin options
 * Optimized: General code optimizations
+
 = 1.0 =
 * Initial release

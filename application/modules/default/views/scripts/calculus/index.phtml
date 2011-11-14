@@ -1,0 +1,224 @@
+<style type="text/css">
+label { vertical-align: top; }
+.cErr {color:#ff0000}
+.cResult {font-weight:bold}
+</style>
+<script type="text/javascript">
+function strikeCalc(strike) {
+	var m_r=parseFloat($('#mash_ratio')[0].value)
+	var m_t=parseFloat($('#mash_temp')[0].value)
+	var g_t=parseFloat($('#grain_temp')[0].value)
+
+	if (m_r<=0 | isNaN(m_r)) {
+		 $('#strike_temp')[0].innerHTML="<span class='cErr'>Vandens ir salyklo santykis turi būti didesnis už 0!</span>";
+		return
+		}
+	if (m_t<=0 | isNaN(m_t)) {
+		 $('#strike_temp')[0].innerHTML="<span class='cErr'>Mentalo temperatūra turi būti aukštesnė už 0!</span>";
+		return
+		}
+	if (g_t<=0 | isNaN(g_t)) {
+		 $('#strike_temp')[0].innerHTML="<span class='cErr'>Salyklo temperatūra turi būti aukštesnė už 0!</span>"
+		return
+		}
+
+		if (m_t>100) {
+			 $('#strike_temp')[0].innerHTML="<span class='cErr'>Mentalo temperatūra turi būti žemesnė už virimo (100C)!</span>"
+			return
+			}
+		if (g_t>100) {
+			 $('#strike_temp')[0].innerHTML="<span class='cErr'>Salyklo temperatūra turi būti žemesnė už virimo  (100C)!</span>"
+			return
+			}
+      var Ts=m_t+.4*(m_t-g_t)/m_r+1.7
+      $('#strike_temp')[0].innerHTML= "<span class='cResult'>Užpilamo vandens temperatūra turi būti "+Math.round(Ts)+"C.</span>"
+		}
+	
+       function restCalc(rest) {
+	var Wg=parseFloat($('#bw_mash_weight')[0].value)
+	var MWR=parseFloat($('#bw_mash_ratio')[0].value)
+	var Tm=parseFloat($('#bw_cur_mash_temp')[0].value)
+	var Tn=parseFloat($('#bw_wanted_mash_temp')[0].value)
+
+	if (Wg<=0 | isNaN(Wg)) {
+		$('#bw_result')[0].innerHTML= "<span class='cErr'>Salyklo kiekis turi būti didesnis už 0 kg!</span>"
+		return
+		}
+	if (MWR<=0 | isNaN(MWR)) {
+		$('#bw_result')[0].innerHTML= "<span class='cErr'>Vandens ir salyklo santykis turi būti didesnis už 0!</span>"
+		return
+		}
+	if (Tm<=0 | isNaN(Tm)) {
+		$('#bw_result')[0].innerHTML= "<span class='cErr'>Dabartinė mentalo temperatūra turi būti aukštesnė už 0!</span>"
+		return
+		}
+	if (Tn<=0 | isNaN(Tn)) {
+		$('#bw_result')[0].innerHTML= "<span class='cErr'>Pageidaujama mentalo temperatūra turi būti aukštesnė už 0!</span>"
+		return
+		}
+	if (Tm>=Tn) {
+		$('#bw_result')[0].innerHTML= "<span class='cErr'>Pageidaujama mentalo temperatūra turi būti aukštesnė už dabartinę temperatūra</span>"
+		return
+		}
+	
+		if (Tm>100) {
+			$('#bw_result')[0].innerHTML= "<span class='cErr'>Dabartinė temperatūra turi būti žemesnė už virimo (100C)!</span>"
+			return
+			}
+		if (Tn>100) {
+			$('#bw_result')[0].innerHTML= "<span class='cErr'>Pageidaujama temperatūra turi būti žemesnė už virimo (100C)!</span>"
+			return
+			}
+		var Vm=Wg*(.4+MWR)
+		var Vs=Vm*(Tn-Tm)/(100-Tn)
+		 $('#bw_result')[0].innerHTML= "<span class='cResult'>Pasiekti "+Tn+"C. temperatūrą reikės "+(Math.round(Vs)*100/100)+" litrų verdančio (100C) vandens</span>"
+		
+	}
+	function calc_ABV(sg,fg) {
+    return  (sg - fg )  * 0.131
+  }
+
+function display_ABV() {
+
+var sg=parseFloat($("#sg")[0].value);
+
+var fg=parseFloat($("#fg")[0].value);
+
+if (Number(sg) && Number(fg) ) {
+
+$("#abv")[0].innerHTML="<span class='cResult'>"+(Math.round(calc_ABV(sg,fg)*100)/100) + " % (ABV)</span>";
+
+}else{
+$("#abv")[0].innerHTML="<span class='cErr'>Neteisingai įvesti laukai</span>";
+}
+
+}
+function display_DrinkUnits() {
+  var ml=parseFloat($("#drink_ml")[0].value);
+
+var abv=parseFloat($("#drink_abv")[0].value);
+
+if (Number(ml) && Number(abv) ) {
+$("#drink_units")[0].innerHTML="<span class='cResult'>"+(Math.round(ml*abv/1000*100)/100) + " </span>";
+  }else{
+$("#drink_units")[0].innerHTML="<span class='cErr'>Neteisingai įvesti laukai</span>";
+}
+}
+</script>
+
+
+</body>
+<script>
+	$(function() {
+		$( "#accordion" ).accordion();
+	});
+	</script>
+
+
+
+<div class="ui-corner-all" style="background:#ffffff;width:800;padding:10">
+
+<div id="accordion">
+	<h3><a href="#">Salinimo Temperatūros</a></h3>
+	<div>	
+	<p>Vandens temperatūros skaičiuoklė</p>
+	<div class="ui-corner-all" style="background:#ffffff;width:600;padding:10">
+
+  <p>
+    <label for="mash_ratio"> Vandens salyklo santykis (l/kg)</label>
+    <input type="text" name="mash_ratio" id="mash_ratio" value="2.5"/>
+    
+  </p>
+  <p>
+  <label for="mash_temp"> Pageidaujama salinimo temperatūra (C)</label>
+    <input type="text" name="mash_temp" id="mash_temp" value="65"/>
+  
+  </p>
+  <p>
+    <label for="mash_temp"> Salyklo temperatūra (C)</label>
+    <input type="text" name="grain_temp" id="grain_temp" value="20"/>
+    
+  </p>
+    <p>
+    <span id="strike_temp">&nbsp </span>
+    </p>
+<input type="button" value="Skaičiuoti" onClick="strikeCalc()"/>
+
+
+	</div>
+	
+	<p>Verdančio vandens kiekio skaičiuoklė temperatūrai pasiekti</p>
+	<div class="ui-corner-all" style="background:#ffffff;width:600;padding:10">
+
+  <p>
+    <label for="mash_ratio"> Salyko kiekis (kg)</label>
+    <input type="bw_mash_weight" name="bw_mash_weight" id="bw_mash_weight" value="5"/>
+    
+  </p>
+  <p>
+    <label for="bw_mash_ratio"> Vandens salyklo santykis (l/kg)</label>
+    <input type="text" name="bw_mash_ratio" id="bw_mash_ratio" value="2.5"/>
+    
+  </p>
+  <p>
+  <label for="bw_cur_mash_temp"> Dabartinė mentalo temperatūra (C)</label>
+    <input type="text" name="bw_cur_mash_temp" id="bw_cur_mash_temp" value="65"/>
+  
+  </p>
+  <p>
+    <label for="bw_wanted_mash_temp"> Pageidaujama temperatūra (C)</label>
+    <input type="text" name="bw_wanted_mash_temp" id="bw_wanted_mash_temp" value="78"/>
+    
+  </p>
+    <p>
+    <span id="bw_result">&nbsp </span>
+    </p>
+<input type="button" value="Skaičiuoti" onClick="restCalc()"/>
+
+
+	</div>
+	</div>
+	<h3><a href="#">Alaus savybių skaičiuoklės</a></h3>
+	<div>
+		<p>Alkoholio procento tūryje skaičiuoklė (ABV)</p>
+
+
+								
+									<div class="ui-corner-all" style="background:#ffffff;width:600;padding:10">
+									<p>
+										Pradinis tankis (OG): <input id="sg" name="sg" onchange="display_ABV()" style="width: 60px;" value="1040" />
+										</p>
+											<p>
+										Galutinis tankis (FG): <input id="fg" name="fg" onchange="display_ABV()" style="width: 60px;" type="text" value="1008" />
+										</p>
+											<p>
+										<span id="abv"  style="width: 60px;" >  </span>
+
+										</p>
+										<input type="button" value="Skaičiuoti" onClick="display_ABV()"/>
+	</div>
+	
+</div>
+<h3><a href="#">Kiek galiu išgerti?</a></h3>
+	<div>
+	<p>Alkoholio vienetų skaičiuoklė</p>
+	<div class="ui-corner-all" style="background:#ffffff;width:600;padding:10">
+									<p>Moterims rekomenduojama per dieną išgerti ne daugiau 2 – 3 alkoholio vienetus, vyrams – 3 - 4. <br/>Parengta pagal <a href="http://en.wikipedia.org/wiki/Unit_of_alcohol">Wikipedia</a>
+									</p>
+									<p>
+										Alkoholio procentas tūryje % (ABV): <input id="drink_abv" name="drink_abv" style="width: 60px;" value="5" />
+										</p>
+											<p>
+										Kiekis (ml): <input id="drink_ml" name="drink_ml"  style="width: 60px;" type="text" value="500" />
+										</p>
+											<p>
+										<span id="drink_units"  style="width: 60px;" > ? </span>
+
+										</p>
+										<input type="button" value="Skaičiuoti" onClick="display_DrinkUnits()"/>
+	</div>
+	</div>
+
+</div><!-- End demo -->
+
+

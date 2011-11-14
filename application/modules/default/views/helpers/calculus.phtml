@@ -3,54 +3,117 @@
 <? $this->headScript()->appendFile("/public/ui/external/ui.core.js");?>
 <? $this->headScript()->appendFile("/public/ui/external/ui.spinner.js");?>
 <? $this->headScript()->appendFile("/public/ui/external/jquery.editable-select.js");?>
+  <style type="text/css">
+.style_recom {
+	font-family: Arial;
+	font-size:10px;
+}
+
+
+#malt-table, #yeast-table {
+}
+#malt-table td,#yeast-table td {
+padding:3px;
+padding-left:10;
+height:30px;
+font-size:12px
+}
+#hop-table {
+  height:30px;
+}
+#hop-table {
+}
+#hop-table td {
+  padding:3px;
+  padding-left:10;
+  height:30px;
+  font-size:12px
+}
+#hop-table tr {
+  height:30px;
+}
+
+</style>
 <script type="text/javascript">
+function getMalts() {
+	var malts = '<option malt_id="0" type="malt" ebc="3" extract="1.036">Bazinis salyklas</option>';
+	<?
+	for ($i=0;$i<count($this->malts);$i++) {
+	?>
+	malts+='<option malt_id="<?=trim($this->malts[$i]['malt_id']);?>" type="<?=trim($this->malts[$i]['malt_type']);?>" ebc="<?=trim($this->malts[$i]['malt_ebc']);?>" extract="<?=$this->malts[$i]['malt_extract']?>"><?=addslashes($this->malts[$i]['malt_name']);?></option>';
+	<?
+	}
+	?>
+	return malts;
+}
+function getHops() {
+	var hops = '';
+	<?
+	for ($i=0;$i<count($this->hops);$i++) {
+	?>
+	hops+='<option hop_id="<?=trim($this->hops[$i]['hop_id']);?>" alpha="<?=trim($this->hops[$i]['hop_alpham']);?>"><?=addslashes($this->hops[$i]['hop_name']);?></option>';
+	<?
+	}
+	?>
+	return hops;
+}
+function getYeasts() {
+	var yeasts = '';
+	<? for ($i=0;$i<count($this->yeasts);$i++) {?>
+	yeasts+='<option yeast_id="<?=trim($this->yeasts[$i]['yeast_id']);?>"><?=$this->yeasts[$i]['yeast_name'];?></option>';
+	<?}?>
+	return yeasts;
+
+}
+//beer formulas
 //beer formulas
 function addNull(_s) {
-if (String(_s).length==1) {
-return "0"+_s
-}
-return _s
+	if (String(_s).length == 1) {
+		return "0" + _s;
+	}
+	return _s;
 }
 function now() {
-$d= new Date()
-return $d.getFullYear()+"."+addNull($d.getMonth()+1)+"."+addNull($d.getDate())+ " "+ addNull($d.getHours())+"."+addNull($d.getMinutes())
+	$d = new Date();
+	return $d.getFullYear() + "." + addNull($d.getMonth() + 1) + "." + addNull($d.getDate()) + " " + addNull($d.getHours()) + "." + addNull($d.getMinutes());
 }
 function round_val(v) {
-	return Math.round(v*1000)/1000;
+	return Math.round(v * 1000) / 1000;
 }
-function ecb_to_lovibond(ecb) {s
-	return ecb*0.375-0.46;
+function ecb_to_lovibond(ecb) {
+	s;
+	return ecb * 0.375 - 0.46;
 }
 function srm_to_ecb(srm) {
-	return srm/0.375+0.46;
+	return srm / 0.375 + 0.46;
 }
 function kg_to_pounds(kg) {
-	return kg*2.20462262;
+	return kg * 2.20462262;
 }
 function liters_to_gallons(l) {
-	return l*0.264172052;
+	return l * 0.264172052;
 }
 function gram_to_ounce(g) {
-	return g*0.0352739619;
+	return g * 0.0352739619;
 }
 function calc_ABV(sg, fg) {
-	return (sg-fg)*0.131;
+	return (sg - fg) * 0.131;
 }
 //
 function calc_IBU(hops, liters, gravity) {
 	var gallons = liters_to_gallons(liters);
 	var ttlIBU_Tinseth = 0;
 	var ttlIBU_Rager = 0;
-	for (var i = 0; i<hops.hop_weight.length; i++) {
+	for (var i = 0; i < hops.hop_weight.length; i++) {
 		var thisIBU_Tinseth = 0;
 		var thisIBU_Rager = 0;
 		//calculate IBU if there are no zero values for this row
-		var util = (1.65*Math.pow(0.000125, gravity-1))*((1-Math.exp(-0.04*hops.hop_time[i]))/4.15);
+		var util = (1.65 * Math.pow(0.000125, gravity - 1)) * ((1 - Math.exp(-0.04 * hops.hop_time[i])) / 4.15);
 		//	util = util.toPrecision(5);
-		thisIBU_Tinseth = util*(gram_to_ounce(hops.hop_weight[i])*(hops.hop_alpha[i]/100)*7490)/gallons;
-		thisIBU_Rager = (gram_to_ounce(hops.hop_weight[i])*util*(hops.hop_alpha[i]/100)*7489)/(gallons*gravity);
-		ttlIBU_Tinseth = ttlIBU_Tinseth+thisIBU_Tinseth;
-		ttlIBU_Rager = ttlIBU_Rager+thisIBU_Rager;
+		thisIBU_Tinseth = util * (gram_to_ounce(hops.hop_weight[i]) * (hops.hop_alpha[i] / 100) * 7490) / gallons;
+		thisIBU_Rager = (gram_to_ounce(hops.hop_weight[i]) * util * (hops.hop_alpha[i] / 100) * 7489) / (gallons * gravity);
+		ttlIBU_Tinseth = ttlIBU_Tinseth + thisIBU_Tinseth;
+		ttlIBU_Rager = ttlIBU_Rager + thisIBU_Rager;
 	}
 	return ttlIBU_Tinseth.toPrecision(4);
 	//document.getElementById('ibu_rager').innerHTML = 'IBU (Rager): ' + ttlIBU_Rager.toPrecision(4); 
@@ -59,20 +122,19 @@ function calc_IBU(hops, liters, gravity) {
 //
 function calc_SRM(malt_ecb, malt_kg, water_l) {
 	var mcu = 0;
-	for (var i = 0; i<malt_ecb.length; i++) {
-		mcu += ((malt_ecb[i]/1.97)*kg_to_pounds(malt_kg[i]))/liters_to_gallons(water_l);
+	for (var i = 0; i < malt_ecb.length; i++) {
+		mcu += ((malt_ecb[i] / 1.97) * kg_to_pounds(malt_kg[i])) / liters_to_gallons(water_l);
 	}
-	return (1.4922*Math.pow(mcu, 0.6859));
+	return (1.4922 * Math.pow(mcu, 0.6859));
 }
-function calc_SG(malt_extract, malt_weight, malt_type,water_l,ef) {
+function calc_SG(malt_extract, malt_weight, malt_type, water_l, ef) {
 	//100% efektyvumas
 	var sg = 0;
-	for (var i = 0; i<malt_weight.length; i++) {
-
-		if (malt_type[i]=="malt") {
-		sg += ((kg_to_pounds(malt_weight[i])*((malt_extract[i]*1000)-1000))/liters_to_gallons(water_l))*ef;
-		}else{
-		sg += ((kg_to_pounds(malt_weight[i])*((malt_extract[i]*1000)-1000))/liters_to_gallons(water_l))
+	for (var i = 0; i < malt_weight.length; i++) {
+		if (malt_type[i] == "malt") {
+			sg += ((kg_to_pounds(malt_weight[i]) * ((malt_extract[i] * 1000) - 1000)) / liters_to_gallons(water_l)) * ef;
+		} else {
+			sg += ((kg_to_pounds(malt_weight[i]) * ((malt_extract[i] * 1000) - 1000)) / liters_to_gallons(water_l));
 		}
 	}
 	return sg;
@@ -129,363 +191,333 @@ function colorHex(srm) {
 }
 //
 function kgToPercent() {
-		var _total=0
-		var tot_wdt=$('input[name=malt_weight]');
-		for (var i=0;i<tot_wdt.length;i++) {
-			var o=$(tot_wdt[i])	
-			_total+=parseFloat(o.val())
-		}
-		for (var i=0;i<tot_wdt.length;i++) {
-			var o=$(tot_wdt[i])	
-			var id=o.attr("id").split("_");
-			
-			$("#malt_perc_"+id[2]).html("<b>"+(Math.round((o.val()/_total*100)*10)/10)+" %</b>")
-		}
-		
-		}
+	var _total = 0;
+	var tot_wdt = $('input[name=malt_weight]');
+	for (var i = 0; i < tot_wdt.length; i++) {
+		var o = $(tot_wdt[i]);
+		_total += parseFloat(o.val());
+	}
+	for (var i = 0; i < tot_wdt.length; i++) {
+		var o = $(tot_wdt[i]);
+		var id = o.attr("id").split("_");
+		$("#malt_perc_" + id[2]).html("<b>" + (Math.round((o.val() / _total * 100) * 10) / 10) + " %</b>");
+	}
+}
 //
 function calc() {
 	var malt = $('#malt_form').serializeArray();
-	var o = {malt_color:[], malt_weight:[], malt_extract:[],malt_type:[]};
-	for (var i = 0; i<malt.length; i++) {
+	var o = {malt_color:[], malt_weight:[], malt_extract:[], malt_type:[]};
+	for (var i = 0; i < malt.length; i++) {
 		if (o[malt[i].name]) {
 			o[malt[i].name].push(malt[i].value);
 		}
 	}
 	var bs = $('#bash_size').val();
 	var ef = $("#efficiency").val();
-	var att=$('#attenuation').val();
-	var sg = calc_SG(o.malt_extract, o.malt_weight,o.malt_type, bs,ef);
+	var att = $('#attenuation').val();
+	var sg = calc_SG(o.malt_extract, o.malt_weight, o.malt_type, bs, ef);
 	var srm = calc_SRM(o.malt_color, o.malt_weight, bs);
-	var sgf = round_val((sg+1000)/1000);
-	var fgf = round_val(((sg*(1-att))+1000)/1000);
+	var sgf = round_val((sg + 1000) / 1000);
+	var fgf = round_val(((sg * (1 - att)) + 1000) / 1000);
 	$('#recipe_sg')[0].innerHTML = sgf;
 	//cia
 	$('#recipe_fg')[0].innerHTML = fgf;
-	$('#recipe_abv')[0].innerHTML = (Math.round(calc_ABV(sgf*1000, fgf*1000)*10)/10)+"%";
+	$('#recipe_abv')[0].innerHTML = (Math.round(calc_ABV(sgf * 1000, fgf * 1000) * 10) / 10) + "%";
 	$('#beer_color').css('backgroundColor', colorHex(srm));
 	var hops = $('#hops_form').serializeArray();
 	var o = {hop_alpha:[], hop_weight:[], hop_time:[]};
-	for (var i = 0; i<hops.length; i++) {
+	for (var i = 0; i < hops.length; i++) {
 		if (o[hops[i].name]) {
 			o[hops[i].name].push(hops[i].value);
 		}
 	}
 	var ibu = calc_IBU(o, bs, sgf);
-	$('#recipe_ebc')[0].innerHTML =Math.round(srm_to_ecb(srm));
-	$('#recipe_ibu')[0].innerHTML =Math.round(ibu);
-	kgToPercent()
+	$('#recipe_ebc')[0].innerHTML = Math.round(srm_to_ecb(srm));
+	$('#recipe_ibu')[0].innerHTML = Math.round(ibu);
+	kgToPercent();
 }
 function selectMalt(id) {
-	var sItem = $('#malt-list_'+id).editableSelect("getSelectedItem");
-	$('#malt_color_'+id).attr('value', sItem.ebc);
-	$('#malt_extract_'+id).attr('value', sItem.extract);
-	$('#malt_type_'+id).attr('value', sItem.type)
+	var sItem = $('#malt-list_' + id).editableSelect("getSelectedItem");
+	$('#malt_color_' + id).attr('value', sItem.ebc);
+	$('#malt_extract_' + id).attr('value', sItem.extract);
+	$('#malt_type_' + id).attr('value', sItem.type);
 }
 //
 function createMaltList(id) {
-	$('#malt-list_'+id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
+	$('#malt-list_' + id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
 		selectMalt(id);
 		calc();
-	},onFocus:function() {$('#malt_tr_'+id).click()}});
+	}, onFocus:function () {
+		$('#malt_tr_' + id).click();
+	}});
 	//alert($('#malt-list_'+id).editableSelect('getInstance'))
 }
-function getMalts() {
-	var malts = '<option malt_id="0" type="malt" ebc="3" extract="1.036">Bazinis salyklas</option>';
-	<?
-	for ($i=0;$i<count($this->malts);$i++) {
-	?>
-	malts+='<option malt_id="<?=trim($this->malts[$i]['malt_id']);?>" type="<?=trim($this->malts[$i]['malt_type']);?>" ebc="<?=trim($this->malts[$i]['malt_ebc']);?>" extract="<?=$this->malts[$i]['malt_extract']?>"><?=addslashes($this->malts[$i]['malt_name']);?></option>';
-	<?
-	}
-	?>
-	return malts;
-}
 function createMaltTr(values) {
-	var rid=$('#malt-table').data('last_tr')
-	if (!rid) {	
-		var rid = 0
+	var rid = $('#malt-table').data('last_tr');
+	if (!rid) {
+		var rid = 0;
 	}
-	$('#malt-table > tbody:last').append('<tr id="malt_tr_'+rid+'" class="malt_tr"><td id="malt_perc_'+rid+'"></td><td><select name="malt_list" id="malt-list_'+rid+'" class="editable-select" style="width:260px">'+getMalts()+'</select></td><td><input type="text" id="malt_weight_'+rid+'" value="1" style="height:22" name="malt_weight"></td><td><input type="text" name="malt_extract" id="malt_extract_'+rid+'" value="1.036" style="height:22;"></td><td><input type="text" name="malt_color" id="malt_color_'+rid+'" value="3" style="height:22"></td><td><select onchange="calc()" name="malt_type" id="malt_type_'+rid+'"><option value="malt">Salyklas</option><option value="extract">Ekstraktas</option><option value="sugar">Cukrus</option></select></td></tr>');
-	$("#malt_weight_"+rid).spinner({min:0, stepping:0.05});
-	$("#malt_weight_"+rid).bind('spinchange', function (event, ui) {
+	$('#malt-table > tbody:last').append('<tr id="malt_tr_' + rid + '" class="malt_tr"><td id="malt_perc_' + rid + '"></td><td><select name="malt_list" id="malt-list_' + rid + '" class="editable-select" style="width:260px">' + getMalts() + '</select></td><td><input type="text" id="malt_weight_' + rid + '" value="1" style="height:22" name="malt_weight"></td><td><input type="text" name="malt_extract" id="malt_extract_' + rid + '" value="1.036" style="height:22;"></td><td><input type="text" name="malt_color" id="malt_color_' + rid + '" value="3" style="height:22"></td><td><select onchange="calc()" name="malt_type" id="malt_type_' + rid + '"><option value="malt">Salyklas</option><option value="extract">Ekstraktas</option><option value="sugar">Cukrus</option></select></td></tr>');
+	$("#malt_weight_" + rid).spinner({min:0, stepping:0.05});
+	$("#malt_weight_" + rid).bind('spinchange', function (event, ui) {
 		calc();
 	});
-	$("#malt_extract_"+rid).spinner({min:0, stepping:0.001});
-	$("#malt_extract_"+rid).bind('spinchange', function (event, ui) {
+	$("#malt_extract_" + rid).spinner({min:0, stepping:0.001});
+	$("#malt_extract_" + rid).bind('spinchange', function (event, ui) {
 		calc();
 	});
-	$("#malt_color_"+rid).spinner({min:0});
-	$("#malt_color_"+rid).bind('spinchange', function (event, ui) {
+	$("#malt_color_" + rid).spinner({min:0});
+	$("#malt_color_" + rid).bind('spinchange', function (event, ui) {
 		calc();
 	});
-	$('#malt_tr_'+rid).click(function () {
+	$('#malt_tr_' + rid).click(function () {
 		var prev = $('#malt-table').data('selected_tr');
 		if (prev) {
-			$('#'+prev).css("backgroundColor", "");
+			$('#' + prev).css("backgroundColor", "");
 		}
-		$('#'+this.id).css("backgroundColor", "#695434");
+		$('#' + this.id).css("backgroundColor", "#695434");
 		$('#malt-table').data('selected_tr', this.id);
 	});
 	createMaltList(rid);
-	$('#malt-table').data('last_tr',rid+1);
+	$('#malt-table').data('last_tr', rid + 1);
 	if (values) {
-		$("#malt_weight_"+rid).val(values["malt_weight"]);
-		$("#malt_extract_"+rid).val(values["malt_extract"]);
-		$("#malt_color_"+rid).val(values["malt_ebc"]);
-		$("#malt_type_"+rid).val(values["malt_type"]);
-		$("#malt-list_"+rid).val(values["malt_name"]);
-	
+		$("#malt_weight_" + rid).val(values["malt_weight"]);
+		$("#malt_extract_" + rid).val(values["malt_extract"]);
+		$("#malt_color_" + rid).val(values["malt_ebc"]);
+		$("#malt_type_" + rid).val(values["malt_type"]);
+		$("#malt-list_" + rid).val(values["malt_name"]);
 	}
 	return rid;
 }
 function createHopList(id) {
-	$('#hop-list_'+id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
-		var sItem = $('#hop-list_'+id).editableSelect("getSelectedItem");
-		$('#hop_alpha_'+id).attr('value', sItem.alpha);
+	$('#hop-list_' + id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
+		var sItem = $('#hop-list_' + id).editableSelect("getSelectedItem");
+		$('#hop_alpha_' + id).attr('value', sItem.alpha);
 		calc();
-	},onFocus:function() {$('#hop_tr_'+id).click()}});
+	}, onFocus:function () {
+		$('#hop_tr_' + id).click();
+	}});
 	//alert($('#malt-list_'+id).editableSelect('getInstance'))
 }
-function getHops() {
-	var hops = '';
-	<?
-	for ($i=0;$i<count($this->hops);$i++) {
-	?>
-	hops+='<option hop_id="<?=trim($this->hops[$i]['hop_id']);?>" alpha="<?=trim($this->hops[$i]['hop_alpham']);?>"><?=addslashes($this->hops[$i]['hop_name']);?></option>';
-	<?
-	}
-	?>
-	return hops;
-}
 function createHopTr(values) {
-	var rid=$('#hop-table').data('last_tr')
-	if (!rid) {	
-		var rid = 0
+	var rid = $('#hop-table').data('last_tr');
+	if (!rid) {
+		var rid = 0;
 	}
-	$('#hop-table > tbody:last').append('<tr id="hop_tr_'+rid+'" class="hop_tr"><td><select name="hop_list" id="hop-list_'+rid+'" class="editable-select" style="width:300px">'+getHops()+'</select></td><td><input type="text" name="hop_weight" id="hop_weight_'+rid+'" value="1" style="height:22"></td><td><input type="text" name="hop_alpha" id="hop_alpha_'+rid+'" value="1" style="height:22"></td><td><input type="text" name="hop_time" id="hop_time_'+rid+'" value="60" style="height:22"></td><td></td></tr>');
-	$("#hop_weight_"+rid).spinner({min:0});
-	$("#hop_weight_"+rid).bind('spinchange', function (event, ui) {
+	$('#hop-table > tbody:last').append('<tr id="hop_tr_' + rid + '" class="hop_tr"><td><select name="hop_list" id="hop-list_' + rid + '" class="editable-select" style="width:300px">' + getHops() + '</select></td><td><input type="text" name="hop_weight" id="hop_weight_' + rid + '" value="1" style="height:22"></td><td><input type="text" name="hop_alpha" id="hop_alpha_' + rid + '" value="1" style="height:22"></td><td><input type="text" name="hop_time" id="hop_time_' + rid + '" value="60" style="height:22"></td><td></td></tr>');
+	$("#hop_weight_" + rid).spinner({min:0});
+	$("#hop_weight_" + rid).bind('spinchange', function (event, ui) {
 		calc();
 	});
-	$("#hop_alpha_"+rid).spinner({min:0, max:30, stepping:0.1});
-	$("#hop_alpha_"+rid).bind('spinchange', function (event, ui) {
+	$("#hop_alpha_" + rid).spinner({min:0, max:30, stepping:0.1});
+	$("#hop_alpha_" + rid).bind('spinchange', function (event, ui) {
 		calc();
 	});
-	$("#hop_time_"+rid).spinner({min:0, max:300});
-	$("#hop_time_"+rid).bind('spinchange', function (event, ui) {
+	$("#hop_time_" + rid).spinner({min:0, max:300});
+	$("#hop_time_" + rid).bind('spinchange', function (event, ui) {
 		calc();
 	});
-	$('#hop_tr_'+rid).click(function () {
+	$('#hop_tr_' + rid).click(function () {
 		var prev = $('#hop-table').data('selected_tr');
 		if (prev) {
-			$('#'+prev).css("backgroundColor", "");
+			$('#' + prev).css("backgroundColor", "");
 		}
-		$('#'+this.id).css("backgroundColor", "#695434");
+		$('#' + this.id).css("backgroundColor", "#695434");
 		$('#hop-table').data('selected_tr', this.id);
 	});
-	$('#hop-table').data('last_tr',rid+1)
+	$('#hop-table').data('last_tr', rid + 1);
 	createHopList(rid);
 	if (values) {
-		$("#hop_weight_"+rid).val(values["hop_weight"]);
-		$("#hop_alpha_"+rid).val(values["hop_alpha"]);
-		$("#hop_time_"+rid).val(values["hop_time"]);
-		
-		$("#hop-list_"+rid).val(values["hop_name"]);
-	
+		$("#hop_weight_" + rid).val(values["hop_weight"]);
+		$("#hop_alpha_" + rid).val(values["hop_alpha"]);
+		$("#hop_time_" + rid).val(values["hop_time"]);
+		$("#hop-list_" + rid).val(values["hop_name"]);
 	}
 }
-function getYeasts() {
-	var yeasts = '';
-	<? for ($i=0;$i<count($this->yeasts);$i++) {?>
-	yeasts+='<option yeast_id="<?=trim($this->yeasts[$i]['yeast_id']);?>"><?=$this->yeasts[$i]['yeast_name'];?></option>';
-	<?}?>
-	return yeasts;
-
-}
 function createYeastList(id) {
-	$('#yeast-list_'+id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
+	$('#yeast-list_' + id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
 		//calc();
-	},onFocus:function() {$('#yeast_tr_'+id).click()}});
+	}, onFocus:function () {
+		$('#yeast_tr_' + id).click();
+	}});
 	//alert($('#malt-list_'+id).editableSelect('getInstance'))
 }
 function createYeastsTr(values) {
-	var rid=$('#yeast-table').data('last_tr')
-	if (!rid) {	
-		var rid = 0
+	var rid = $('#yeast-table').data('last_tr');
+	if (!rid) {
+		var rid = 0;
 	}
-	$('#yeast-table > tbody:last').append('<tr id="yeast_tr_'+rid+'" class="yeast_tr"><td><select name="yeast_list" id="yeast-list_'+rid+'" class="editable-select" style="width:400px">'+getYeasts()+'</select></td><td><input type="text" name="yeast_weight" id="yeast_weight_'+rid+'" value="12" style="height:22"></td></tr>');
-	$("#yeast_weight_"+rid).spinner({min:0});
-	$("#yeast_weight_"+rid).bind('spinchange', function (event, ui) {
+	$('#yeast-table > tbody:last').append('<tr id="yeast_tr_' + rid + '" class="yeast_tr"><td><select name="yeast_list" id="yeast-list_' + rid + '" class="editable-select" style="width:400px">' + getYeasts() + '</select></td><td><input type="text" name="yeast_weight" id="yeast_weight_' + rid + '" value="12" style="height:22"></td></tr>');
+	$("#yeast_weight_" + rid).spinner({min:0});
+	$("#yeast_weight_" + rid).bind('spinchange', function (event, ui) {
 		//calc();
 	});
-	
-	$('#yeast_tr_'+rid).click(function () {
+	$('#yeast_tr_' + rid).click(function () {
 		var prev = $('#yeast-table').data('selected_tr');
 		if (prev) {
-			$('#'+prev).css("backgroundColor", "");
+			$('#' + prev).css("backgroundColor", "");
 		}
-		$('#'+this.id).css("backgroundColor", "#695434");
+		$('#' + this.id).css("backgroundColor", "#695434");
 		$('#yeast-table').data('selected_tr', this.id);
 	});
-	$('#yeast-table').data('last_tr',rid+1)
+	$('#yeast-table').data('last_tr', rid + 1);
 	createYeastList(rid);
 	if (values) {
-		$("#yeast_weight_"+rid).val(values["yeast_weight"]);
-		
-		
-		$("#yeast-list_"+rid).val(values["yeast_name"]);
-	
+		$("#yeast_weight_" + rid).val(values["yeast_weight"]);
+		$("#yeast-list_" + rid).val(values["yeast_name"]);
 	}
 }
+function fitTo(l) {
+	if (l * 1 > 0) {
+		var ratio = l / $("#bash_size").val();
+		$('input[name=malt_weight]').each(function (index, value) {
+			var o = $(value);
+			o.val(Math.round((o.val() * ratio) * 1000) / 1000);
+		});
+		$('input[name=hop_weight]').each(function (index, value) {
+			var o = $(value);
+			o.val(Math.round((o.val() * ratio)));
+		});
+		$('input[name=yeast_weight]').each(function (index, value) {
+			var o = $(value);
+			o.val(Math.round((o.val() * ratio)));
+		});
+		$("#bash_size").val(l);
+		calc();
+	}
+}
+
 //
 $(document).ready(function () {
-	$("#attenuation").spinner({min:0, stepping:0.01, max:1});
-	$('#attenuation').bind('spinchange', function (event, ui) {
-		calc();
-	});
-	$("#efficiency").spinner({min:0, stepping:0.01, max:1});
-	$('#efficiency').bind('spinchange', function (event, ui) {
-		calc();
-	});
-	$("#bash_size").spinner({min:0});
-	$('#bash_size').bind('spinchange', function (event, ui) {
-		calc();
-	});
-	$("#beer_style").change(function() {
-	
-			var style_recom=$(this.options[this.selectedIndex])
-			$('#style_sg')[0].innerHTML=" "
-			$('#style_fg')[0].innerHTML=" "
-			$('#style_abv')[0].innerHTML=" "
-			$('#style_ibu')[0].innerHTML=" "
-			$('#style_ebc')[0].innerHTML=" "
-			
-			if (style_recom.attr("style_fghigh").length>0) {
-				$('#style_fg')[0].innerHTML=" ["+style_recom.attr("style_fglow")+" - "+style_recom.attr("style_fghigh")+"] "
-				$('#style_sg')[0].innerHTML=" ["+style_recom.attr("style_oglow")+" - "+style_recom.attr("style_oghigh")+"] "
-				$('#style_abv')[0].innerHTML=" ["+(Math.round(calc_ABV(style_recom.attr("style_oglow")*1000,style_recom.attr("style_fglow")*1000)*10)/10)+"% - "+(Math.round(calc_ABV(style_recom.attr("style_oghigh")*1000,style_recom.attr("style_fglow")*1000)*10)/10)+"%] "
-				$('#style_ibu')[0].innerHTML=" ["+style_recom.attr("style_ibulow")+" - "+style_recom.attr("style_ibuhigh")+"] "
-				$('#style_ebc')[0].innerHTML=" ["+Math.round(srm_to_ecb(style_recom.attr("style_srmlow")))+" - "+Math.round(srm_to_ecb(style_recom.attr("style_srmhigh")))+"] "
-			}
-			
-		
-	})
-	// malt
-	$("#add-malt-btn").button();
-	$("#add-malt-btn").bind('click', function (event, ui) {
-		selectMalt(createMaltTr());
-		calc();
-	});
-	$("#rem-malt-btn").button();
-	$("#rem-malt-btn").bind('click', function (event, ui) {
-		var selItem=$('#malt-table').data('selected_tr')
-		$('#'+selItem).remove();
-		calc();
-	});
-	// hops
-	$("#add-hop-btn").button();
-	$("#add-hop-btn").bind('click', function (event, ui) {
-		createHopTr();
-		calc();
-	});
-	
-	$("#rem-hop-btn").button();
-	$("#rem-hop-btn").bind('click', function (event, ui) {
-		var selItem=$('#hop-table').data('selected_tr')
-		$('#'+selItem).remove();
-		calc();
-	});
-	// yeasts
-	$("#add-yeast-btn").button();
-	$("#add-yeast-btn").bind('click', function (event, ui) {
-		createYeastsTr();
-		calc();
-	});
-	
-	$("#rem-yeast-btn").button();
-	$("#rem-yeast-btn").bind('click', function (event, ui) {
-		var selItem=$('#yeast-table').data('selected_tr')
-		$('#'+selItem).remove();
-		calc();
-	});
-	$('#tabs').tabs();
-	$('#duplicate').button({ disabled: true });
-	
-	
-	$('#duplicate').click(function() {
-			if ($("#duplicate").button( "option", "disabled")) {return false }
-			if (confirm("Ar tikrai norite dublikuoti receptą?")) {
-				
-			
-	var surl="/recipes/save/";
-	$("#status_div")[0].innerHTML = "<img src='/public/images/preload.gif'/>"
-	$.ajax({
-  type: 'POST',
-  url: surl,
-  data: calc_out("").serialize()+"&style_id="+$("#beer_style option:selected").attr("style_id")+"&duplicate=true",
-  success: function(d) {
- // alert(d)
- 
-	var data=jQuery.parseJSON(d);
-	if (data) {
-		if (data.status=="1") {
-		
-			if (data.errors[0].type=="authentication") {
-				$("#status_div")[0].innerHTML = "Norėdami sukurti recepto kopiją turite  prisijungti"
-				showLogin();
-				return
-			}
-		}else{
-		if (data.data.recipe_id) {
-			$("#recipe_id").attr("value",data.data.recipe_id);
-			$("#status_div")[0].innerHTML = "<i>"+now()+"</i>  - '<a href='/recipes/view/"+data.data.recipe_id+"'>"+$("#beer_name").val()+"'</a> sukurta recepto kopija <a href='/brewer/recipes'>Mano receptuose</a>";
-		}
-		}
-	}else{
+  $("#attenuation").spinner({min:0, stepping:0.01, max:1});
+$('#attenuation').bind('spinchange', function (event, ui) {
+	calc();
+});
+$("#efficiency").spinner({min:0, stepping:0.01, max:1});
+$('#efficiency').bind('spinchange', function (event, ui) {
+	calc();
+});
+$("#bash_size").spinner({min:0});
+$('#bash_size').bind('spinchange', function (event, ui) {
+	calc();
+});
+$("#beer_style").change(function () {
+	var style_recom = $(this.options[this.selectedIndex]);
+	$('#style_sg')[0].innerHTML = " ";
+	$('#style_fg')[0].innerHTML = " ";
+	$('#style_abv')[0].innerHTML = " ";
+	$('#style_ibu')[0].innerHTML = " ";
+	$('#style_ebc')[0].innerHTML = " ";
+	if (style_recom.attr("style_fghigh").length > 0) {
+		$('#style_fg')[0].innerHTML = " [" + style_recom.attr("style_fglow") + " - " + style_recom.attr("style_fghigh") + "] ";
+		$('#style_sg')[0].innerHTML = " [" + style_recom.attr("style_oglow") + " - " + style_recom.attr("style_oghigh") + "] ";
+		$('#style_abv')[0].innerHTML = " [" + (Math.round(calc_ABV(style_recom.attr("style_oglow") * 1000, style_recom.attr("style_fglow") * 1000) * 10) / 10) + "% - " + (Math.round(calc_ABV(style_recom.attr("style_oghigh") * 1000, style_recom.attr("style_fglow") * 1000) * 10) / 10) + "%] ";
+		$('#style_ibu')[0].innerHTML = " [" + style_recom.attr("style_ibulow") + " - " + style_recom.attr("style_ibuhigh") + "] ";
+		$('#style_ebc')[0].innerHTML = " [" + Math.round(srm_to_ecb(style_recom.attr("style_srmlow"))) + " - " + Math.round(srm_to_ecb(style_recom.attr("style_srmhigh"))) + "] ";
 	}
-	}}) 
-	}})
-	$('#save').button()
-	
-	$('#save').click(function() {
-	var surl="/recipes/save/";
-	$("#status_div")[0].innerHTML = "<img src='/public/images/preload.gif'/>"
-	$.ajax({
-  type: 'POST',
-  url: surl,
-  data: calc_out("").serialize()+"&style_id="+$("#beer_style option:selected").attr("style_id"),
-  success: function(d) {
- // alert(d)
-	var data=jQuery.parseJSON(d);
-	if (data) {
-		if (data.status=="1") {
-		
-			if (data.errors[0].type=="authentication") {
-				$("#status_div")[0].innerHTML = "Norėdami išsaugoti receptą turite  prisijungti"
-				showLogin();
-				return
-			}
-		}else{
-		if (data.data.recipe_id) {
-			$("#duplicate").button( "option", "disabled", false )
-			$("#recipe_id").attr("value",data.data.recipe_id);
-			$("#status_div")[0].innerHTML = "<i>"+now()+"</i>  - '<a href='/recipes/view/"+data.data.recipe_id+"'>"+$("#beer_name").val()+"'</a> receptas išsaugotas <a href='/brewer/recipes'>Mano receptuose</a>";
-			
-		}
-		}
-	}else{
+});
+// malt
+$("#add-malt-btn").button();
+$("#add-malt-btn").bind('click', function (event, ui) {
+	selectMalt(createMaltTr());
+	calc();
+});
+$("#rem-malt-btn").button();
+$("#rem-malt-btn").bind('click', function (event, ui) {
+	var selItem = $('#malt-table').data('selected_tr');
+	$('#' + selItem).remove();
+	calc();
+});
+// hops
+$("#add-hop-btn").button();
+$("#add-hop-btn").bind('click', function (event, ui) {
+	createHopTr();
+	calc();
+});
+$("#rem-hop-btn").button();
+$("#rem-hop-btn").bind('click', function (event, ui) {
+	var selItem = $('#hop-table').data('selected_tr');
+	$('#' + selItem).remove();
+	calc();
+});
+// yeasts
+$("#add-yeast-btn").button();
+$("#add-yeast-btn").bind('click', function (event, ui) {
+	createYeastsTr();
+	calc();
+});
+$("#rem-yeast-btn").button();
+$("#rem-yeast-btn").bind('click', function (event, ui) {
+	var selItem = $('#yeast-table').data('selected_tr');
+	$('#' + selItem).remove();
+	calc();
+});
+$('#tabs').tabs();
+$('#duplicate').button({disabled:true});
+$('#duplicate').click(function () {
+	if ($("#duplicate").button("option", "disabled")) {
+		return false;
 	}
-	}}) 
-	})
-	$('#export').button()
-	$('#export').click(function() {calc_out("/index/print-recipe")[0].submit();});
-	$("#beer_style").trigger('change')
-	//fill form
-	$("#duplicate").button( "option", "disabled", true );
+	if (confirm("Ar tikrai norite dublikuoti receptą?")) {
+		var surl = "/recipes/save/";
+		$("#status_div")[0].innerHTML = "<img src='/public/images/preload.gif'/>";
+		$.ajax({type:'POST', url:surl, data:calc_out("").serialize() + "&style_id=" + $("#beer_style option:selected").attr("style_id") + "&duplicate=true", success:function (d) {
+			// alert(d)
+			var data = jQuery.parseJSON(d);
+			if (data) {
+				if (data.status == "1") {
+					if (data.errors[0].type == "authentication") {
+						$("#status_div")[0].innerHTML = "Norėdami sukurti recepto kopiją turite  prisijungti";
+						showLogin();
+						return;
+					}
+				} else {
+					if (data.data.recipe_id) {
+						$("#recipe_id").attr("value", data.data.recipe_id);
+						$("#status_div")[0].innerHTML = "<i>" + now() + "</i>  - '<a href='/recipes/view/" + data.data.recipe_id + "'>" + $("#beer_name").val() + "'</a> sukurta recepto kopija <a href='/brewer/recipes'>Mano receptuose</a>";
+					}
+				}
+			} else {
+			}
+		}});
+	}
+});
+$('#save').button();
+$('#save').click(function () {
+	var surl = "/recipes/save/";
+	$("#status_div")[0].innerHTML = "<img src='/public/images/preload.gif'/>";
+	$.ajax({type:'POST', url:surl, data:calc_out("").serialize() + "&style_id=" + $("#beer_style option:selected").attr("style_id"), success:function (d) {
+		// alert(d)
+		var data = jQuery.parseJSON(d);
+		if (data) {
+			if (data.status == "1") {
+				if (data.errors[0].type == "authentication") {
+					$("#status_div")[0].innerHTML = "Norėdami išsaugoti receptą turite  prisijungti";
+					showLogin();
+					return;
+				}
+			} else {
+				if (data.data.recipe_id) {
+					$("#duplicate").button("option", "disabled", false);
+					$("#recipe_id").attr("value", data.data.recipe_id);
+					$("#status_div")[0].innerHTML = "<i>" + now() + "</i>  - '<a href='/recipes/view/" + data.data.recipe_id + "'>" + $("#beer_name").val() + "'</a> receptas išsaugotas <a href='/brewer/recipes'>Mano receptuose</a>";
+				}
+			}
+		} else {
+		}
+	}});
+});
+$('#export').button();
+$('#export').click(function () {
+	calc_out("/index/print-recipe")[0].submit();
+});
+$("#beer_style").trigger('change');
+//fill form
+$("#duplicate").button("option", "disabled", true);
+
+	
 <? if (isset($this->data)) {
-if (isset($this->data["recipe"])) {
-	
+      if (isset($this->data["recipe"])) {
 ?>
 
 	setTimeout(function() {$("#duplicate").button( "option", "disabled", false )},500)
@@ -496,209 +528,103 @@ if (isset($this->data["recipe"])) {
 	$("#beer_style option[style_id='<?=$this->data["recipe"]["recipe_style"];?>']").attr("selected","selected");
 	$("#recipe_id").val(<?=$this->data["recipe"]["recipe_id"];?>);
 	$("#comments").val(decodeURIComponent('<?=(str_replace("\n", "\\n",addslashes(rawurlencode($this->data["recipe"]["recipe_comments"]))));?>'));
-	
-	
 <?
-if (isset($this->data["malt"])) {
-for ($i=0;$i<count($this->data["malt"]);$i++) {
-?>
-createMaltTr(<?=Zend_Json::encode($this->data["malt"][$i]);?>);
-<?
-}
+  if (isset($this->data["malt"])) {
+    for ($i=0;$i<count($this->data["malt"]);$i++) {
+    ?>
+    createMaltTr(<?=Zend_Json::encode($this->data["malt"][$i]);?>);
+    <?
+    }
 
-}
-if (isset($this->data["hops"])) {
-for ($i=0;$i<count($this->data["hops"]);$i++) {
-?>
-createHopTr(<?=Zend_Json::encode($this->data["hops"][$i]);?>);
-<?
-}
+  }
+  if (isset($this->data["hops"])) {
+    for ($i=0;$i<count($this->data["hops"]);$i++) {
+    ?>
+    createHopTr(<?=Zend_Json::encode($this->data["hops"][$i]);?>);
+    <?
+    }
 
-}
-if (isset($this->data["yeast"])) {
-for ($i=0;$i<count($this->data["yeast"]);$i++) {
-?>
-createYeastsTr(<?=Zend_Json::encode($this->data["yeast"][$i]);?>);
-<?
-}
+  }
+  if (isset($this->data["yeast"])) {
+    for ($i=0;$i<count($this->data["yeast"]);$i++) {
+      ?>
+      createYeastsTr(<?=Zend_Json::encode($this->data["yeast"][$i]);?>);
+      <?
+     }
+  }
+  ?>
+  $("#status_div")[0].innerHTML = "<i>"+now()+"</i>  -  atidarytas receptas <a href='/recipes/view/<?=$this->data["recipe"]["recipe_id"];?>'>'<?=addslashes($this->data["recipe"]["recipe_name"]);?>'</a>";
+  <?
+  }else{
+    ?>
+    $("#status_div")[0].innerHTML = "<i>"+now()+"</i>  -  naujas receptas";
+    <?
+  }
 
-}
-?>
-$("#status_div")[0].innerHTML = "<i>"+now()+"</i>  -  atidarytas receptas <a href='/recipes/view/<?=$this->data["recipe"]["recipe_id"];?>'>'<?=addslashes($this->data["recipe"]["recipe_name"]);?>'</a>";
-<?
-}else{
-?>
-$("#status_div")[0].innerHTML = "<i>"+now()+"</i>  -  naujas receptas";
-<?
-}
-
-?>
-<?}?>
-calc()
-	
-	//
-});
+  ?>
+  <?}?>
+  setTimeout(calc,500)
+  });
 
 function calc_out(url) {
-
-		var fields=["bash_size","efficiency","attenuation","beer_name","beer_style","comments","recipe_id"]
-		var constants=["recipe_sg","recipe_fg","recipe_abv","recipe_ibu","recipe_ebc"]
-;
-    var $f = $('<form></form>')
-        .attr({
-            method : 'post',
-            target : '_blank',
-            action : url
-        })
-        .appendTo(document.body)
-    ;
-    var malt = $('#malt_form').serializeArray();
-   var hops= $('#hops_form').serializeArray();
-    var yeast= $('#yeast_form').serializeArray();
-   for (var i=0;i<fields.length;i++) {
-    	    $('<input type="hidden" />')
-            .attr({
-                name : fields[i],
-                value : $('#'+fields[i]).val()
-            })
-            .appendTo($f)
-        ;
-    }
-    for (var i=0;i<constants.length;i++) {
-    	    $('<input type="hidden" />')
-            .attr({
-                name : constants[i],
-                value : $('#'+constants[i])[0].innerHTML
-            })
-            .appendTo($f)
-        ;
-    }
-    var sel=$('#malt_form')[0].elements["malt_list"]
-    
-    if (sel) {
-	sel=sel.length ? sel : [sel]
-    for (var i=0;i<sel.length;i++) {
-    	var e=$("#"+sel[i].id).editableSelect("getSelectedItem").malt_id
-    	   $('<input type="hidden" />')
-            .attr({
-                name : 'malt_id[]',
-                value : ((e == undefined) ? 0 : e)
-            })
-            .appendTo($f)
-        ;
-    
-    }
-    }
-    var sel=$('#hops_form')[0].elements["hop_list"]
-    if (sel) {
-    sel=sel.length ? sel : [sel]
-    for (var i=0;i<sel.length;i++) {
-    	var e=$("#"+sel[i].id).editableSelect("getSelectedItem").hop_id
-    	   $('<input type="hidden" />')
-            .attr({
-                name : 'hop_id[]',
-                value : ((e == undefined) ? 0 : e)
-            })
-            .appendTo($f)
-        ;
-    
-    }
-    }
-    var sel=$('#yeast_form')[0].elements["yeast_list"]
-    if (sel) {
-    sel=sel.length ? sel : [sel]
-    for (var i=0;i<sel.length;i++) {
-    	var e=$("#"+sel[i].id).editableSelect("getSelectedItem").yeast_id
-    	   $('<input type="hidden" />')
-            .attr({
-                name : 'yeast_id[]',
-                value : ((e== undefined) ? 0 : e)
-            })
-            .appendTo($f)
-        ;
-    
-    }
-    }
-    for (var i=0;i<malt.length;i++) {
-   
-   
-        $('<input type="hidden" />')
-            .attr({
-                name : malt[i].name+'[]',
-                value : malt[i].value
-            })
-            .appendTo($f)
-        ;
-    }
-    for (var i=0;i<yeast.length;i++) {
-        $('<input type="hidden" />')
-            .attr({
-                name : yeast[i].name+'[]',
-                value : yeast[i].value
-            })
-            .appendTo($f)
-        ;
-    }
-for (var i=0;i<hops.length;i++) {
-        $('<input type="hidden" />')
-            .attr({
-                name : hops[i].name+'[]',
-                value : hops[i].value
-            })
-            .appendTo($f)
-        ;
-    }
-   
-    return $f;
-
+	var fields = ["bash_size", "efficiency", "attenuation", "beer_name", "beer_style", "comments", "recipe_id"];
+	var constants = ["recipe_sg", "recipe_fg", "recipe_abv", "recipe_ibu", "recipe_ebc"];
+	var $f = $('<form></form>').attr({method:'post', target:'_blank', action:url}).appendTo(document.body);
+	var malt = $('#malt_form').serializeArray();
+	var hops = $('#hops_form').serializeArray();
+	var yeast = $('#yeast_form').serializeArray();
+	for (var i = 0; i < fields.length; i++) {
+		$('<input type="hidden" />').attr({name:fields[i], value:$('#' + fields[i]).val()}).appendTo($f);
+	}
+	for (var i = 0; i < constants.length; i++) {
+		$('<input type="hidden" />').attr({name:constants[i], value:$('#' + constants[i])[0].innerHTML}).appendTo($f);
+	}
+	var sel = $('#malt_form')[0].elements["malt_list"];
+	if (sel) {
+		sel = sel.length ? sel : [sel];
+		for (var i = 0; i < sel.length; i++) {
+			var e = $("#" + sel[i].id).editableSelect("getSelectedItem").malt_id;
+			$('<input type="hidden" />').attr({name:'malt_id[]', value:((e == undefined) ? 0 : e)}).appendTo($f);
+		}
+	}
+	var sel = $('#hops_form')[0].elements["hop_list"];
+	if (sel) {
+		sel = sel.length ? sel : [sel];
+		for (var i = 0; i < sel.length; i++) {
+			var e = $("#" + sel[i].id).editableSelect("getSelectedItem").hop_id;
+			$('<input type="hidden" />').attr({name:'hop_id[]', value:((e == undefined) ? 0 : e)}).appendTo($f);
+		}
+	}
+	var sel = $('#yeast_form')[0].elements["yeast_list"];
+	if (sel) {
+		sel = sel.length ? sel : [sel];
+		for (var i = 0; i < sel.length; i++) {
+			var e = $("#" + sel[i].id).editableSelect("getSelectedItem").yeast_id;
+			$('<input type="hidden" />').attr({name:'yeast_id[]', value:((e == undefined) ? 0 : e)}).appendTo($f);
+		}
+	}
+	for (var i = 0; i < malt.length; i++) {
+		$('<input type="hidden" />').attr({name:malt[i].name + '[]', value:malt[i].value}).appendTo($f);
+	}
+	for (var i = 0; i < yeast.length; i++) {
+		$('<input type="hidden" />').attr({name:yeast[i].name + '[]', value:yeast[i].value}).appendTo($f);
+	}
+	for (var i = 0; i < hops.length; i++) {
+		$('<input type="hidden" />').attr({name:hops[i].name + '[]', value:hops[i].value}).appendTo($f);
+	}
+	return $f;
 }
+
 </script>
 
-  <style type="text/css">
-/* UI Spinner */
-	font-size:12px;
-}
-.style_recom {
-	font-family: Arial;
-	font-size:10px;
-}
 
-
-#malt-table,#yeast-table {
-}
-#malt-table td,#yeast-table td {
-padding:3px;
-padding-left:10;
-height:30px;
-font-size:12px
-}
-#hop-table {
-
-height:30px;
-}
-#hop-table {
-}
-#hop-table td {
-padding:3px;
-padding-left:10;
-
-height:30px;
-font-size:12px
-}
-#hop-table tr {
-
-height:30px;
-}
-
-</style>
-</head>
-	<body>
 
 
 <div>
 <div id="status_div" style="padding-bottom:40;width:725px" align="center"></div>
 <table  width="800">
-<tr><td>
+<tr>
+<td>
 <table>
 <tr>
 <td colspan="5" align="right"><button id="save" title="Saugoti"><span class="ui-icon ui-icon-disk"></span></button><button id="duplicate" title="Dublikuoti"><span class="ui-icon ui-icon-copy"></span></button><button id="export" title="Spausdinti"><span class="ui-icon ui-icon-print"></span></button></td>
@@ -715,11 +641,11 @@ height:30px;
 	<option style_id="<?=$this->styles[$i]['style_id'];?>" style_oglow="<?=$this->styles[$i]['style_oglow'];?>"	style_oghigh="<?=$this->styles[$i]['style_oghigh'];?>"  style_fglow="<?=$this->styles[$i]['style_fglow'];?>" style_fghigh="<?=$this->styles[$i]['style_fghigh'];?>" style_ibulow="<?=$this->styles[$i]['style_ibulow'];?>" style_ibuhigh="<?=$this->styles[$i]['style_ibuhigh'];?>" style_srmlow="<?=$this->styles[$i]['style_srmlow'];?>" style_srmhigh="<?=$this->styles[$i]['style_srmhigh'];?>"><?=$this->styles[$i]['style_name'];?></option>
 	<?
 }?>
-</select></td>
+</select></td><td></td>
 
 </tr>
-</table><br/>
-<div id="tabs" style="height:80%;width:725px">
+</table></td><tr><td>
+<div id="tabs" style="height:400;width:725px">
 
 			<ul>
 				<li><a href="#tabs-1">Salyklas</a></li>
@@ -727,10 +653,10 @@ height:30px;
 				<li><a href="#tabs-3">Mielės</a></li>
 				<li><a href="#tabs-4">Pastabos</a></li>
 			</ul>
-			<div id="tabs-1" >
+			<div id="tabs-1">
 			<div style="height:300;overflow:auto">
 				<form id="malt_form" name="malt_form">
-					<table id="malt-table" cellpading="0" cellspacing="0" class="null">
+					<table id="malt-table" cellpading="0" cellspacing="0">
 						<thead>
 						<td></td><td width="250">Salyklas</td><td width="70">Kiekis (kg)</td><td  width="70">Ekstraktingumas</td><td  width="70">Spalva (EBC)</td><td width="70">Tipas</td>
 						</thead>			  
@@ -742,10 +668,9 @@ height:30px;
 			<div align="right" valign="bottom"><button id="add-malt-btn">+</button><button id="rem-malt-btn">-</button></div>
 			</div>
 			<div id="tabs-2">
-			<div style="height:300;overflow:auto">
-			<form id="hops_form" name="hops_form">
-			
-				<table id="hop-table" cellpading="0" cellspacing="0" class="null">
+        <div style="height:300;overflow:auto">
+        <form id="hops_form" name="hops_form">
+				<table id="hop-table" cellpading="0" cellspacing="0">
 					<thead>
 						<td width="300">Apyniai</td><td width="100">Kiekis (gr.)</td><td  width="100">Alfa (%)</td><td  width="100">Laikas (min.)</td>
 					</thead>
@@ -754,67 +679,48 @@ height:30px;
 				</table>
 			</form>
 			</div>
-			<div align="right"><button id="add-hop-btn">+</button><button id="rem-hop-btn">-</button></div></div>
-			<div id="tabs-3"><div style="height:300;overflow:auto"><form id="yeast_form" name="yeast_form">
-			<table id="yeast-table" cellpading="0" cellspacing="0" class="null">
+			<div align="right"><button id="add-hop-btn">+</button><button id="rem-hop-btn">-</button></div>
+			</div>
+			<div id="tabs-3"><div style="height:300;overflow:auto">
+			<form id="yeast_form" name="yeast_form">
+			<table id="yeast-table" cellpading="0" cellspacing="0" >
 					<thead>
 						<td width="500">Mielės</td><td width="100">Kiekis (gr.)</td>
 					</thead>
 					<tbody>
 					</tbody>
-				</table></form>
-			</div><div align="right"><button id="add-yeast-btn">+</button><button id="rem-yeast-btn">-</button></div></div><div id="tabs-4">
+				</table>
+			</form>
+			</div>
+			<div align="right"><button id="add-yeast-btn">+</button><button id="rem-yeast-btn">-</button></div>
+			</div>
+			<div id="tabs-4">
 				<div style="height:300;overflow:auto">
 					<textarea style="height:280;width:600" id="comments"></textarea>
 				</div>
-			</div></div>
+			</div>
+			</div>
 			
 </div>
 		
-</td><td width="350" style="padding-top:20;padding-left:10"><table width="300">
+</td>
+<td  style="padding-top:20;padding-left:10">
+<table width="100%">
 <tr><td><div><b>OG: </b><span id="style_sg" class="style_recom"></span><div><span id="recipe_sg">?</span><span id="recipe_sg_plato"></span><div></div><div><b>FG: </b><span id="style_fg" class="style_recom"></span><span id="recipe_fg">?</span></div><div><b>ABV: </b><span id="style_abv" class="style_recom"></span><span id="recipe_abv">?</span></div><div><b>IBU: </b><span id="style_ibu" class="style_recom"></span><span id="recipe_ibu">?</span></div><div><b>EBC: </b><span id="style_ebc" class="style_recom"></span><span id="recipe_ebc">?</span><td></tr>
 <tr><td>
 <div id="beer_color" style="width: 116px; height: 200px; background-color: rgb(255, 255, 255);">
 <img border="0" src="/public/images/glass.png" /></div>
 <div style="position:relative;top:60;font-size:11px">
-
-	<script>
-	function fitTo(l) {
-		if (l*1>0) { 
-		var ratio=l/$("#bash_size").val()
-		$('input[name=malt_weight]').each(function(index,value) {
-		var o=$(value)	
-		o.val(Math.round((o.val()*ratio)*1000)/1000)
-		}
-		) 
-		$('input[name=hop_weight]').each(function(index,value) {
-		var o=$(value)	
-		o.val(Math.round((o.val()*ratio)))
-		}
-		) 
-		$('input[name=yeast_weight]').each(function(index,value) {
-		var o=$(value)	
-		o.val(Math.round((o.val()*ratio)))
-		}
-		) 
-		$("#bash_size").val(l)
-		calc()
-		}
-		
-	}
-	</script>
-	Pritaikyti receptą <input type="text" id="recalc" value="20" style="width:35;font-size:12px" onChange="fitTo(this.value)"> &nbsp;<input type="button" onClick="fitTo($('#recalc').val())" value="gerai" style="width:50;"/>
-	
+  <input type="text" id="recalc" value="20" style="width:35;font-size:12px" onChange="fitTo(this.value)"> &nbsp;<input type="button" onClick="fitTo($('#recalc').val())" value="Pritaikyti"/>
 </div>
 </td></tr>
 </td></tr>
 </table>
 </td>
 </tr>
-<tr><td colspan="2"></td></tr>
+
 </table>
 <input type="hidden" name="recipe_id" id="recipe_id" value=""/>
 </div>
-
 <div style="padding-left:40;font-size:10">Kūrė <a href="http://ponasniekas.nespalvotas.lt"  target="_blank">ponasniekas</a>. Dėkui Marijui iš <a href="http://savasalus.lt" target="_blank">"Savas Alus"</a> už suteiktą informaciją</div>
 

@@ -10,12 +10,39 @@
  */
 class SLB_Utilities {
 	
-	function SLB_Utilities() {
-		$this->__construct();
+	/* Properties */
+	
+	/**
+	 * Instance parent
+	 * @var object
+	 */
+	var $parent = null;
+	
+	/**
+	 * Default plugin headers
+	 * @var array
+	 */
+	var $plugin_headers = array (
+		'Name' => 'Plugin Name',
+		'PluginURI' => 'Plugin URI',
+		'Version' => 'Version',
+		'Description' => 'Description',
+		'Author' => 'Author',
+		'AuthorURI' => 'Author URI',
+		'TextDomain' => 'Text Domain',
+		'DomainPath' => 'Domain Path',
+		'Network' => 'Network',
+	);
+	
+	/* Constructors */
+	
+	function SLB_Utilities(&$obj) {
+		$this->__construct(&$obj);
 	}
 	
-	function __construct() {
-		
+	function __construct(&$obj) {
+		if ( is_object($obj) )
+			$this->parent =& $obj;
 	}
 	
 	/**
@@ -32,6 +59,88 @@ class SLB_Utilities {
 	}
 	
 	/* Helper Functions */
+	
+	/*-** Prefix **-*/
+	
+	/**
+	 * Get valid separator
+	 * @param string $sep (optional) Separator supplied
+	 * @return string Separator
+	 */
+	function get_sep($sep = false) {
+		if ( is_null($sep) )
+			$sep = '';
+		if ( !is_string($sep) )
+			$default = '_';
+		return ( is_string($sep) ) ? $sep : $default;
+	}
+	
+	/**
+	 * Retrieve class prefix (with separator if set)
+	 * @param bool|string $sep Separator to append to class prefix (Default: no separator)
+	 * @return string Class prefix
+	 */
+	function get_prefix($sep = null) {
+		$sep = $this->get_sep($sep);
+		$prefix = ( !empty($this->parent->prefix) ) ? $this->parent->prefix . $sep : '';
+		return $prefix;
+	}
+	
+	/**
+	 * Check if a string is prefixed
+	 * @param string $text Text to check for prefix
+	 * @param string $sep (optional) Separator used
+	 */
+	function has_prefix($text, $sep = null) {
+		return ( !empty($text) && strpos($text, $this->get_prefix($sep)) === 0 );
+	}
+	
+	/**
+	 * Prepend plugin prefix to some text
+	 * @param string $text Text to add to prefix
+	 * @param string $sep (optional) Text used to separate prefix and text
+	 * @param bool $once (optional) Whether to add prefix to text that already contains a prefix or not
+	 * @return string Text with prefix prepended
+	 */
+	function add_prefix($text, $sep = '_', $once = true) {
+		if ( $this->has_prefix($text, $sep) )
+			return $text;
+		return $this->get_prefix($sep) . $text;
+	}
+	
+	/**
+	 * Add prefix to variable reference
+	 * Updates actual variable rather than return value
+	 * @uses add_prefix() to add prefix to variable
+	 * @param string $var Variable to add prefix to
+	 * @param string $sep (optional) Separator text
+	 * @param bool $once (optional) Add prefix only once
+	 * @return void
+	 */
+	function add_prefix_ref(&$var, $sep = null, $once = true) {
+		$args = func_get_args();
+		$var = call_user_func_array($this->m($this, 'add_prefix'), $args);
+	}
+	
+	/**
+	 * Remove prefix from specified string
+	 * @param string $text String to remove prefix from
+	 * @param string $sep (optional) Separator used with prefix
+	 */
+	function remove_prefix($text, $sep = '_') {
+		if ( $this->has_prefix($text,$sep) )
+			$text = substr($text, strlen($this->get_prefix($sep)));
+		return $text;
+	}
+	
+	/**
+	 * Returns Database prefix for Cornerstone-related DB Tables
+	 * @return string Database prefix
+	 */
+	function get_db_prefix() {
+		global $wpdb;
+		return $wpdb->prefix . $this->get_prefix('_');
+	}
 	
 	/*-** WP **-*/
 	
@@ -57,6 +166,108 @@ class SLB_Utilities {
 		if (!is_object($post))
 			return false;
 		return true;
+	}
+	
+	/* Hooks */
+	
+	function do_action($tag, $arg = '') {
+		do_action($this->add_prefix($tag), $arg);
+	}
+	
+	function apply_filters($tag, $value) {
+		apply_filters($this->add_prefix($tag), $value);
+	}
+	
+	function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
+		return add_action($this->add_prefix($tag), $function_to_add, $priority, $accepted_args);
+	}
+	
+	function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
+		return add_filter($this->add_prefix(tag), $function_to_add, $priority, $accepted_args);
+	}
+
+	/* Meta */
+	
+	/**
+	 * Retrieves post metadata for internal methods
+	 * Metadata set internally is wrapped in an array so it is unwrapped before returned the retrieved value
+	 * @see get_post_meta()
+	 * @param int $post_id Post ID
+	 * @param string $key Name of metadata to retrieve
+	 * @param boolean $single Whether or not to retrieve single value or not
+	 * @return mixed Retrieved post metadata
+	 */
+	function post_meta_get($post_id, $key, $single = false) {
+		$meta_value = get_post_meta($post_id, $this->post_meta_get_key($key), $single);
+		if (is_array($meta_value) && count($meta_value) == 1)
+			$meta_value = $meta_value[0];
+		return $meta_value;
+	}
+	
+	/**
+	 * Wraps metadata in array for storage in database
+	 * @param mixed $meta_value Value to be set as metadata
+	 * @return array Wrapped metadata value
+	 */
+	function post_meta_prepare_value($meta_value) {
+		return array($meta_value);
+	}
+	
+	/**
+	 * Adds Metadata for a post to database
+	 * For internal methods
+	 * @see add_post_meta
+	 * @param $post_id
+	 * @param $meta_key
+	 * @param $meta_value
+	 * @param $unique
+	 * @return boolean Result of operation
+	 */
+	function post_meta_add($post_id, $meta_key, $meta_value, $unique = false) {
+		$meta_value = $this->post_meta_value_prepare($meta_value);
+		return add_post_meta($post_id, $meta_key, $meta_value, $unique);
+	}
+	
+	/**
+	 * Updates post metadata for internal data/methods
+	 * @see update_post_meta()
+	 * @param $post_id
+	 * @param $meta_key
+	 * @param $meta_value
+	 * @param $prev_value
+	 * @return boolean Result of operation
+	 */
+	function post_meta_update($post_id, $meta_key, $meta_value, $prev_value = '') {
+		$meta_value = $this->post_meta_prepare_value($meta_value);
+		return update_post_meta($post_id, $meta_key, $meta_value, $prev_value);
+	}
+	
+	/**
+	 * Builds postmeta key for custom data set by plugin
+	 * @param string $key Base key name 
+	 * @return string Formatted postmeta key
+	 */
+	function post_meta_get_key($key) {
+		$sep = '_';
+		if ( strpos($key, $sep . $this->prefix) !== 0 ) {
+			$key_base = func_get_args();
+			if ( !empty($key_base) ) {
+				$key = array_merge((array)$this->prefix, $key_base);
+				return $sep . implode($sep, $key);
+			}
+		}
+		
+		return $key;
+	}
+	
+	/**
+	 * Creates a meta key for storing post meta data
+	 * Prefixes standard prefixed text with underscore to hide meta data on post edit forms
+	 * @param string $text Text to use as base of meta key
+	 * @return string Formatted meta key
+	 */
+	function make_meta_key($text = '') {
+		return '_' . $this->add_prefix($text);
 	}
 	
 	/*-** Request **-*/
@@ -133,16 +344,28 @@ class SLB_Utilities {
 		if ( $trailing_slash )
 			$parts .= $sl_f;
 		return $parts;
-	}
+	} 
 	
 	/**
 	 * Returns URL of file (assumes that it is in plugin directory)
 	 * @param string $file name of file get URL
-	 * @return string File path
+	 * @return string File URL
 	 */
 	function get_file_url($file) {
 		if ( is_string($file) && '' != trim($file) ) {
-			$file = $this->normalize_path($this->get_url_base(), $file);
+			$file = str_replace(' ', '%20', $this->normalize_path($this->get_url_base(), $file));
+		}
+		return $file;
+	}
+	
+	/**
+	 * Returns path to plugin file
+	 * @param string $file file name
+	 * @return string File path
+	 */
+	function get_file_path($file) {
+		if ( is_string($file) && '' != trim($file) ) {
+			$file = $this->normalize_path($this->get_path_base(), $file);
 		}
 		return $file;
 	}
@@ -155,13 +378,14 @@ class SLB_Utilities {
 	function get_file_extension($file) {
 		$ret = '';
 		$sep = '.';
-		if ( is_string($icon) && ( $rpos = strrpos($file, $sep) ) !== false ) 
+		if ( ( $rpos = strrpos($file, $sep) ) !== false ) 
 			$ret = substr($file, $rpos + 1);
 		return $ret;
 	}
 	
 	/**
 	 * Checks if file has specified extension
+	 * @uses get_file_extension()
 	 * @param string $file File name/path
 	 * @param string $extension File ending to check $file for
 	 * @return bool TRUE if file has extension
@@ -172,6 +396,8 @@ class SLB_Utilities {
 	
 	/**
 	 * Retrieve base URL for plugin-specific files
+	 * @uses get_plugin_base()
+	 * @uses normalize_path()
 	 * @return string Base URL
 	 */
 	function get_url_base() {
@@ -182,6 +408,13 @@ class SLB_Utilities {
 		return $url_base;
 	}
 	
+	/**
+	 * Retrieve plugin's base path
+	 * @uses WP_PLUGIN_DIR
+	 * @uses get_plugin_base()
+	 * @uses normalize_path()
+	 * @return string Base path
+	 */
 	function get_path_base() {
 		static $path_base = '';
 		if ( '' == $path_base ) {
@@ -190,6 +423,12 @@ class SLB_Utilities {
 		return $path_base;
 	}
 	
+	/**
+	 * Retrieve plugin's base directory
+	 * @uses WP_PLUGIN_DIR
+	 * @uses normalize_path()
+	 * @return string Base directory
+	 */
 	function get_plugin_base() {
 		static $plugin_dir = '';
 		if ( '' == $plugin_dir ) {
@@ -198,14 +437,98 @@ class SLB_Utilities {
 		return $plugin_dir;
 	}
 	
+	/**
+	 * Retrieve plugin's base file path
+	 * @uses get_path_base()
+	 * @uses get_file_path()
+	 * @return string Base file path
+	 */
 	function get_plugin_base_file() {
-		$file = 'main.php';
-		return $this->get_path_base() . '/' . $file;
+		static $file = '';
+		global $cnr;
+		if ( empty($file) ) {
+			$dir = @ opendir($this->get_path_base());
+			if ( $dir ) {
+				while ( ($ftemp = readdir($dir)) !== false ) {
+					//Only process PHP files
+					$ftemp = $this->get_file_path($ftemp);
+					if ( !$this->has_file_extension($ftemp, 'php') || !is_readable($ftemp) )
+						continue;
+					//Check for data
+					$data = get_file_data($ftemp, $this->plugin_headers);
+					if ( !empty($data['Name']) ) {
+						//Set base file
+						$file = $ftemp;
+						break;
+					}
+				}
+			}
+			@closedir($dir);
+		}
+		//Return
+		return $file;
 	}
 	
+	/**
+	 * Retrieve plugin's internal name
+	 * Internal name is used by WP core
+	 * @uses get_plugin_base_file()
+	 * @uses plugin_basename()
+	 * @return string Internal plugin name
+	 */
 	function get_plugin_base_name() {
-		$file = $this->get_plugin_base_file();
-		return plugin_basename($file);
+		static $name = false;
+		if ( !$name ) {
+			$file = $this->get_plugin_base_file();
+			$name = plugin_basename($file);
+		}
+		return $name;
+	}
+	
+	/**
+	 * Retrieve plugin info
+	 * Parses info comment in main plugin file
+	 * @uses get_plugin_base_file()
+	 */
+	function get_plugin_info($field = '') {
+		static $data = array();
+		$ret = '';
+		//Get plugin data
+		if ( empty($data) ) {
+			$file = $this->get_plugin_base_file(); 
+			$data = get_file_data($file, $this->plugin_headers);
+		}
+		//Return specified field
+		if ( !empty($field) ) {
+			if ( isset($data[$field]) )
+				$ret = $data[$field];
+		} else {
+			$ret = $data;
+		}
+		return $ret;
+	}
+	
+	/**
+	 * Retrieve plugin version
+	 * @uses get_plugin_info()
+	 * @param bool $strip_desc Strip any additional version text
+	 * @return string Plugin version
+	 */
+	function get_plugin_version($strip_desc = true) {
+		static $v = '';
+		//Retrieve version
+		if ( empty($v) ) {
+			$field = 'Version';
+			$v = $this->get_plugin_info($field);
+		}
+		//Format
+		$ret = $v;
+		if ( $strip_desc ) {
+			$ret = explode(' ', $ret, 2);
+			$ret = $ret[0];
+		}
+		//Return
+		return $ret;
 	}
 	
 	/**
@@ -247,6 +570,22 @@ class SLB_Utilities {
 	/*-** General **-*/
 	
 	/**
+	 * Checks if last parameter sent to a function is an array of options and returns it
+	 * Calling function should use `func_get_args()` and pass the value to this method
+	 * @param array $args Parameters passed to calling function
+	 * @return array Options array (Default: empty array)
+	 */
+	function func_get_options($args) {
+		$r = array();
+		if ( is_array($args) && !empty($args) ) {
+			$last = count($args) - 1;
+			if ( is_array($args[$last]) )
+				$r = $args[$last];
+		}
+		return $r;
+	}
+	
+	/**
 	 * Checks if a property exists in a class or object
 	 * (Compatibility method for PHP 4
 	 * @param mixed $class Class or object to check 
@@ -282,6 +621,60 @@ class SLB_Utilities {
 			if ( isset($cvars[$property]) )
 				return $cvars[$property];
 		}
+	}
+	
+	/**
+	 * Remap array members based on a
+	 * mapping of source/destination keys
+	 * @param array $properties Associative array of properties
+	 * @param array $map Source/Destination mapping
+	 * > Key: Source member
+	 * > Val: Destination member
+	 * @param bool $overwrite If TRUE, source value will be set in destination regardless of whether member already exists or not
+	 * @return array Remapped properties
+	 */
+	function array_remap($arr, $map = array(), $overwrite = false) {
+		if ( !empty($map) && is_array($map) ) {
+			//Iterate through mappings
+			foreach ( $map as $from => $to ) {
+				if ( !array_key_exists($from, $arr) )
+					continue;
+				$move = $overwrite;
+				//Only remap if parent property doesn't already exist in array
+				if ( !array_key_exists($to, $arr) )
+					$move = true;
+				if ( $move ) {
+					//Move member value to new key
+					$arr[$to] = $arr[$from];
+					//Remove source member
+					unset($arr[$from]);
+				}
+			}
+		}
+		//Return remapped properties
+		return $arr;
+	}
+	
+	function array_filter_keys($arr, $keys) {
+		if ( is_array($arr) && !empty($arr) && is_array($keys) && !empty($keys) ) {
+			foreach ( $keys as $rem ) {
+				if ( array_key_exists($rem, $arr) )
+					unset($arr[$rem]);
+			}
+		}
+
+		return $arr;
+	}
+	
+	/**
+	 * Insert an item into an array at the specified position
+	 * @param mixed $item Item to insert into array 
+	 * @param int $pos Index position to insert item into array
+	 * @return array Modified array
+	 */
+	function array_insert($array, $item, $pos = null) {
+		array_splice($array, $pos, 0, $item);
+		return $array;
 	}
 	
 	/**
@@ -383,6 +776,13 @@ class SLB_Utilities {
 		return $item;
 	}
 	
+	/**
+	 * Build formatted string based on array values
+	 * Array values in formatted string will be ordered by index order
+	 * @param array $attribute Values to build string with
+	 * @param string $format (optional) Format name (Default: Multidimensional array representation > ['value1']['value2']['value3'], etc.)
+	 * @return string Formatted string based on array values
+	 */
 	function get_array_path($attribute = '', $format = null) {
 		//Formatted value
 		$fmtd = '';

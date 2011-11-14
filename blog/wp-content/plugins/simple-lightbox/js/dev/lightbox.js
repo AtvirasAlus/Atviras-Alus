@@ -4,7 +4,7 @@
 // by Archetyped - http://archetyped.com/tools/simple-lightbox/
 // Updated: 2011-01-27
 //
-//	Largely based on Lightbox Slideshow v1.1
+//	Originally based on Lightbox Slideshow v1.1
 //	by Justin Barkhuff - http://www.justinbarkhuff.com/lab/lightbox_slideshow/
 //  2007/08/15
 //
@@ -21,7 +21,7 @@
 /**
  * Lightbox object
  */
-var SLB = null;
+//var SLB = null;
 (function($) {
 SLB = {
 	activeImage : null,
@@ -34,12 +34,12 @@ SLB = {
 	overlayDuration : null,
 	overlayOpacity : null,
 	playSlides : null,
-	refTags : ['a','area'],
+	refTags : ['a'],
 	relAttribute : null,
 	resizeDuration : null,
 	slideShowTimer : null,
 	startImage : null,
-	prefix : 'slb',
+	prefix : '',
 	checkedUrls : {},
 	
 	/**
@@ -62,10 +62,11 @@ SLB = {
 			loop : true, // whether to continuously loop slideshow images
 			overlayDuration : .2, // time to fade in shadow overlay
 			overlayOpacity : .8, // transparency of shadow overlay
-			relAttribute : 'lightbox', // specifies the rel attribute value that triggers lightbox
+			relAttribute : null, // specifies the rel attribute value that triggers lightbox
 			resizeSpeed : 400, // controls the speed of the image resizing (milliseconds)
 			showGroupName : false, // show group name of images in image details
 			slideTime : 4, // time to display images during slideshow
+			altsrc : 'src',
 			strings : { // allows for localization
 				closeLink : 'close',
 				loadingMsg : 'loading',
@@ -93,6 +94,17 @@ SLB = {
 		if (!this.options.layout || this.options.layout.toString().length == 0)
 			this.end();
 		
+		
+		//Validate options
+		if ( 'prefix' in this.options )
+			this.prefix = this.options.prefix;
+		  //Activation Attribute
+		if ( null == this.options.relAttribute )
+			 this.options.relAttribute = [this.prefix];
+		else if ( !$.isArray(this.options.relAttribute) )
+			this.options.relAttribute = [this.options.relAttribute.toString()];
+		this.relAttribute = this.options.relAttribute;
+		
 		if ( this.options.animate ) {
 			this.overlayDuration = Math.max(this.options.overlayDuration,0);
 			this.resizeDuration = this.options.resizeSpeed;
@@ -100,12 +112,10 @@ SLB = {
 			this.overlayDuration = 0;
 			this.resizeDuration = 0;
 		}
-		
 		this.enableSlideshow = this.options.enableSlideshow;
 		this.overlayOpacity = Math.max(Math.min(this.options.overlayOpacity,1),0);
 		this.playSlides = this.options.autoPlay;
 		this.container = $(this.options.containerID);
-		this.relAttribute = this.options.relAttribute;
 		this.updateImageList();
 		var t = this;
 		var objBody = $(this.container).get(0) != document ? this.container : $('body');
@@ -217,20 +227,25 @@ SLB = {
 	 * Finds all compatible image links on page
 	 */
 	updateImageList: function() {
-		var el, els, rel, t = this;
-		for(var i=0; i < this.refTags.length; i++) {
-			els = $(this.container).find(this.refTags[i]);
-			for(var j=0; j < els.length; j++) {
-				el = els[j];
-				rel = $(el).attr('rel');
-				if ($(el).attr('href') && (rel.toLowerCase().match(this.relAttribute))) {
-					$(el).click(function() {
-						t.start(this);
-						return false;
-					});
-				}
+		var el, els, rel, ph = '{relattr}', t = this;
+		var sel = [], selBase = '[href][rel*="' + ph + '"]:not([rel~="' + this.addPrefix('off') + '"])';
+		
+		//Define event handler
+		var handler = function() {
+			//Check if element is valid for lightbox
+			t.start(this);
+			return false;
+		};
+		
+		//Build selector
+		for (var i = 0; i < this.refTags.length; i++) {
+			for (var x = 0; x < this.relAttribute.length; x++) {
+				sel.push(this.refTags[i] + selBase.replace(ph, this.relAttribute[x]));
 			}
 		}
+		sel = sel.join(',');
+		//Add event handler to links
+		$(sel, $(this.container)).live('click', handler);
 	},
 	
 	/**
@@ -271,12 +286,11 @@ SLB = {
 		this.imageArray = [];
 		this.groupName = this.getGroup(imageLink);
 		
-		var rel = $(imageLink).attr('rel');
+		var rel = $(imageLink).attr('rel') || '';
 		var imageTitle = '';
 		var t = this;
 		var groupTemp = {};
-		
-		this.fileExists($(imageLink).attr('href'),
+		this.fileExists(this.getSourceFile(imageLink),
 		function() { //File exists
 			// Stretch overlay to fill page and fade in
 			t.get('overlay')
@@ -304,7 +318,7 @@ SLB = {
 					if ($(el).get(0) == $(imageLink).get(0)) {
 						t.startImage = x;
 					}
-					t.imageArray.push({'link':$(el).attr('href'), 'title':t.getCaption(el)});
+					t.imageArray.push({'link':t.getSourceFile($(el)), 'title':t.getCaption(el)});
 				}
 				// Calculate top offset for the lightbox and display 
 				var lightboxTop = $(document).scrollTop() + ($(window).height() / 15);
@@ -327,7 +341,7 @@ SLB = {
 				var i, el;
 				for (i = 0; i < els.length; i++) {
 					el = $(els[i]);
-					if (el.attr('href') && (t.getGroup(el) == t.groupName)) {
+					if (t.getSourceFile(el) && (t.getGroup(el) == t.groupName)) {
 						//Add links in same group to temp array
 						grpLinks.push(el);
 					}
@@ -337,7 +351,7 @@ SLB = {
 				var processed = 0;
 				for (i = 0; i < grpLinks.length; i++) {
 					el = grpLinks[i];
-					t.fileExists($(el).attr('href'),
+					t.fileExists(t.getSourceFile($(el)),
 						function(args) { //File exists
 							var el = args.els[args.idx];
 							var il = addLink(el, args.idx);
@@ -360,6 +374,21 @@ SLB = {
 	},
 	
 	/**
+	 * Retrieve source URI in link
+	 * @param {Object} el
+	 * @return string Source file URI
+	 */
+	getSourceFile: function(el) {
+		var src = $(el).attr('href');
+		var rel = $(el).attr('rel') || '';
+		var reSrc = new RegExp('\\b' + this.options.altsrc + '\\[(.+?)\\](?:\\b|$)');
+		if ( reSrc.test(rel) ) {
+			src = reSrc.exec(rel)[1];
+		}
+		return src;
+	},
+	
+	/**
 	 * Extract group name from 
 	 * @param obj el Element to extract group name from
 	 * @return string Group name
@@ -367,31 +396,34 @@ SLB = {
 	getGroup: function(el) {
 		//Get full attribute value
 		var g = null;
-		var gTmp = '';
-		var gSt = '[';
-		var gEnd = ']';
-		var rel = $(el).attr('rel');
-		var search = this.relAttribute;
-		var searching = true;
-		var idx;
-		var prefix = ' ';
-		while (searching) {
-			idx = rel.indexOf(search);
-			//Stop processing if value is not found
-			if (idx == -1)
-				return g;
-			//Prefix with space to find whole word
-			if (prefix != search.charAt(0) && idx > 0) {
-				search = prefix + search;
-			} else {
-				searching = false;
+		var rel = $(el).attr('rel') || '';
+		if (rel != '') {
+			var gTmp = '',
+				gSt = '[',
+				gEnd = ']',
+				search = '',
+				idx,
+				prefix = ' ';
+			//Iterate through attributes to find group
+			for (var i = 0; i < this.relAttribute.length; i++) {
+				search = this.relAttribute[i];
+				idx = rel.indexOf(search);
+				//Prefix with space to find whole word
+				if (prefix != search.charAt(0) && idx > 0) {
+					search = prefix + search;
+					idx = rel.indexOf(search);
+				}
+				//Stop processing if value is not found
+				if (idx == -1)
+					continue;
+				gTmp = $.trim(rel.substring(idx).replace(search, ''));
+				//Check if group defined
+				if (gTmp.length && gSt == gTmp.charAt(0) && gTmp.indexOf(gEnd) != -1) {
+					//Extract group name
+					g = gTmp.substring(1, gTmp.indexOf(gEnd));
+					continue;
+				}
 			}
-		}
-		gTmp = $.trim(rel.substring(idx).replace(search, ''));
-		//Check if group defined
-		if (gTmp.length && gSt == gTmp.charAt(0) && gTmp.indexOf(gEnd) != -1) {
-			//Extract group name
-			g = gTmp.substring(1, gTmp.indexOf(gEnd));
 		}
 		return g;
 	},
@@ -735,12 +767,34 @@ SLB = {
 	},
 
 	/**
+	 * Generate separator text
+	 * @param string sep Separator text
+	 * @return string Separator text
+	 */
+	getSep: function(sep) {
+		return ( typeof sep == 'undefined' ) ? '_' : sep;
+	},
+	
+	/**
+	 * Retrieve prefix
+	 * @return string Object prefix
+	 */
+	getPrefix: function() {
+		return this.prefix;
+	},
+
+	/**
 	 * Add prefix to text
 	 * @param string txt Text to add prefix to
+	 * @param string sep (optional) Separator text
 	 * @return string Prefixed text
 	 */
-	addPrefix: function(txt) {
-		return this.prefix + '_' + txt;
+	addPrefix: function(txt, sep) {
+		return this.getPrefix() + this.getSep(sep) + txt;
+	},
+	
+	hasPrefix: function(txt) {
+		return ( txt.indexOf(this.addPrefix('')) == 0 ) ? true : false;
 	},
 	
 	/**

@@ -1,0 +1,15 @@
+<table><tr>
+<td rowspan="2" style="padding-right:9"><div style="height:50px;width:26px;background-color:<?=$this->hex;?>"><img src="/public/images/glass_thumb.png" /></div></td>
+<td>
+<a href="/alus/receptas/<?=$this->item['recipe_id'];?>-<?=$this->escapeParam($this->item['recipe_name']);?>"><b><? print $this->item['recipe_name'];?></b></a> (<a href="/stilius/<? print $this->item['recipe_style'];?>"><? print $this->item['style_name'];?></a>)
+</td>
+<td> - <a href="/brewers/<? print $this->item['brewer_id'];?>"><b><? print $this->item['user_name'];?></b></a></td>
+</td>
+
+
+
+
+</tr>
+<tr><td style="font-size:10;color:#666666" valign="top"><span>ABV:</span><span><? print $this->item['recipe_abv'];?>%</span> <span>IBU:</span><span><? print $this->item['recipe_ibu'];?></span> <span>EBC:</span><span><? print $this->item['recipe_ebc'];?></span></td></tr>
+</table>
+

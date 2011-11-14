@@ -6,7 +6,21 @@ class IndexController extends Zend_Controller_Action {
     public function indexAction() { 
     	  // $this->view->addHelperPath(APPLICATION_PATH .'/default/helpers', 'View_Helper');
     	  	$db = Zend_Registry::get("db");
-    	  		
+    	    $frontendOptions = array(
+              'lifetime' => 7200, // cache lifetime of 2 hours
+              'automatic_serialization' => true
+              );
+     
+           $backendOptions = array(
+                'cache_dir' => './cache/' // Directory where to put the cache files
+          );
+         
+     
+    // getting a Zend_Cache_Core object
+    $cache = Zend_Cache::factory('Core',
+                                 'File',
+                                 $frontendOptions,
+                                 $backendOptions);		
     	  		
 		$select=$db->select()
 				->from("users" ,array("user_name","user_id","user_email"))
@@ -85,13 +99,16 @@ class IndexController extends Zend_Controller_Action {
 			   $select=$db->select() 
 			 ->from("VIEW_bblast_posts");
 			 $this->view->posts=$db->fetchAll($select);
-		
-			  $select=$db->select() 
+		if ($this->view->blogs= $cache->load('blog_latest')) {
+		}else{
+			 $select=$db->select() 
 			 ->from("VIEW_blog_latest")
 			 ->join("users","users.user_id=VIEW_blog_latest.post_author",array("user_name"))
 			 ->order("post_date DESC")
-			 ->limit(10);
+			 ->limit(20);
 			 $this->view->blogs=$db->fetchAll($select);
+			 $cache->save($this->view->blogs, 'blog_latest');
+			 }
 			  $select=$db->select() 
           ->from("beer_events")
           ->where("event_registration_end >= CURDATE( )")
@@ -102,9 +119,8 @@ class IndexController extends Zend_Controller_Action {
     public function sitemapAction() {
     	     $this->_helper->layout->setLayout('empty');
 	        $this->_helper->viewRenderer->setNoRender(true);
-$sitemap=$this->view->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigation.xml","nav")));
-
-      $sitemap->sitemap()
+          $sitemap=$this->view->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigation.xml","nav")));
+          $sitemap->sitemap()
 
      // ->setFormatOutput(true); 
  ->setUseXmlDeclaration(true) // default is true

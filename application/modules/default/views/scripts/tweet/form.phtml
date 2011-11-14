@@ -1,0 +1,171 @@
+<?if ($this->can_post) {?>
+<? $this->headScript()->appendFile("/public/js/jquery-1.4.4.min.js");?>
+<script type="text/javascript">
+	// <![CDATA[	
+	timeOutIdle = null;
+currentURL = null;
+FETCH_LINK_URL = "/tweet/linkparser/";
+FETCH_IMG_URL = "/tweet/imageparser/";
+ADD_TWEET_URL = "/tweet/addtweet/";
+function getImages(img) {
+	$('#imagesContainer').html('<img src="/public/images/load.gif">');
+	$.post(FETCH_IMG_URL, {images:img.join(",")}, function (response) {
+		$('#imagesContainer').html($(response).fadeIn('slow'));
+		$('.images img').hide();
+		$('img#0').fadeIn();
+		$('#cur_image').val(0);
+		$('#next').bind("click", function () {
+			var firstimage = $('#cur_image').val();
+			$('img#' + firstimage).hide();
+			firstimage = parseInt(firstimage);
+			if (firstimage <= $('#total_images').val()) {
+				firstimage++;
+				$('#cur_image').val(firstimage);
+				$('#link_image').val($('img#' + firstimage).attr("src"));
+				$('img#' + firstimage).show();
+			}
+		});
+		// prev image
+		$('#prev').bind("click", function () {
+			var firstimage = $('#cur_image').val();
+			firstimage = parseInt(firstimage);
+			$('img#' + firstimage).hide();
+			if (firstimage > 0) {
+				firstimage--;
+				$('#cur_image').val(firstimage);
+				$('#link_image').val($('img#' + firstimage).attr("src"));
+				$('img#' + firstimage).show();
+			}
+		});
+		// watermark input fields
+	});
+}
+
+function submitLink() {
+	
+	
+	
+	
+	$.post(ADD_TWEET_URL,$('#link_properties').serialize(), function(msg){
+			$("#addNewsBtn").qtip("api").hide();
+			if(parseInt(msg)!=0)
+			{
+				$('ul.statuses li:first-child').before(msg);
+				
+				$("ul.statuses:empty").append(msg);
+				if ($('ul.statuses li').length>5) {
+				$('ul.statuses li:last-child').remove();
+				}
+				}
+		
+	});$('#addNewsBtn').qtip('api').set({'content.text': '<div align="center"><img src="/public/images/load.gif"></div>'});
+}
+function preview() {
+	clearTimeout(timeOutIdle);
+	timeOutIdle = setTimeout("getPreview()", 1000);
+}
+function getPreview() {
+	var curl = getcURL($('#link_message')[0].value);
+	if (curl == null) {
+		currentURL = curl;
+		return false;
+	} else if (curl != currentURL) {
+		currentURL = curl;
+		$('#loader').html('<img src="/public/images/load.gif">');
+		$.post(FETCH_LINK_URL, {url:currentURL}, function (response) {
+			$('#loader').html($(response).fadeIn('slow'));
+		});
+	}
+}
+$(document).ready(function () {
+	// delete event
+	$('#link_message').bind("paste", preview);
+	$('#link_message').bind("click", preview);
+	$('#attach').bind("click", submitLink);
+	// next image
+});
+function getcURL(url) {
+	var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+	var cURL = RegExp.exec(url);
+	if (cURL != null) {
+		return cURL[0];
+	} else {
+		return null;
+	}
+}
+
+
+	// ]]>
+</script>
+ <style>
+.ui-tooltip-wiki{
+   max-width: 440px;
+}
+ 
+   .ui-tooltip-wiki .ui-tooltip-content{
+      padding: 10px;
+      
+      line-height: 12.5px;
+   }
+ 
+   .ui-tooltip-wiki h1{
+      margin: 0 0 7px;
+ 
+      font-size: 1.5em;
+      line-height: 1em;
+   }
+ 
+   .ui-tooltip-wiki img{ padding: 0 10px 0 0; }
+   
+   .ui-tooltip-wiki p{ margin-bottom: 9px; }
+   .ui-tooltip-wiki .note{ margin-bottom: 0; font-style: italic; color: #888; }
+
+.close{ float:left; width:230px;  height:21px;}
+
+.closes:hover{ background:url(closeh.png) center right no-repeat; height:21px;}
+
+.closes{ background:url(close.png) top right no-repeat; width:24px; height:21px; cursor:pointer;}
+
+
+.images{width:100px; height:100px;display:box;background:#ffffff;padding:5;text-align:center;vertical-align:middle}
+#imagesContainer {width:100px; height:100px;}
+#info {float:right;overflow:hidden;margin-top:8px}
+
+
+.title{ font-size:11px; font-weight:bold; cursor:pointer;margin-left:15px; }
+.title:hover{ background-color:#FFFF99}
+.desc{ font-size:11px; margin-top:5px; cursor:pointer;margin-left:15px;  }
+.desc:hover{ background-color:#FFFF99}
+
+#prev{cursor:pointer;}
+#next{cursor:pointer;}
+ul#icons {
+  margin:0;
+  padding:0;
+  display: block;
+}
+ul#icons li{
+  margin: 2px;
+  position: relative;
+  padding: 4px 0;
+  cursor: pointer;
+  float: left;
+  list-style: none;
+}
+
+.totalimg{ font-size:10px; color:#333333;float:left; margin:5px;}
+</style>
+  <div class="box">
+        <form id="link_properties" name="link_properties" method="POST">
+          <textarea name="link_message"  id="link_message" style="height:80px;width:410px;font-size:10;background:#ffffff" rows="2" cols="200" class="text ui-widget-content ui-corner-all"></textarea>
+          <div align="right">
+          <input type="button" name="attach" value="Dalintis" id="attach" class="ui-state-default"/>
+          
+          </div>
+          <div id="loader" align="center"></div>
+        </form>
+  </div>
+<?}else{?>
+<div> Norėdami parašyti žinutę, Jūs turite prisijungti</div>
+<?}?>
+

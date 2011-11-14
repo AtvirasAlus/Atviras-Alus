@@ -2,42 +2,52 @@
 <?$user_id= isset($this->user_info->user_id)  ? $this->user_info->user_id : 0;?>
 	<div align="right" style="padding-top:30;width:100%"><h2 style="color:#666666">komentarai:</h2><hr/>
 	<? if ($this->comments) { ?>
-	<table width="70%">
-	<? for ($i=0;$i<count($this->comments);$i++) {?>
+	<table width="60%">
+	<? for ($i=0;$i<count($this->comments);$i++) { $bg=$i%2==0 ? "#eeeeee" : "#ffffff" ?>
 		<tr>
-		<td ><div class="ui-state-default ui-corner-all" style="padding:10;padding-top:0">
-		<table width="100%">
-		<tr><td align="left" valign="middle" rowspan="2" style="padding:5" width="80">
-		<a href="/brewers/<?=$this->users[$z]['user_id'];?>"><div><a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->comments[$i]['user_email']);?>?rating=G&size=50&default=mm" border="0"/></a></div>
+		<td valign="middle" align="center" style="font-size:11"><a href="/brewers/<?=$this->users[$z]['user_id'];?>"><div><a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->comments[$i]['user_email']);?>?rating=G&size=40&default=mm" border="0"/></a></div>
 <a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><?=$this->comments[$i]['user_name'];?> </a></td>
-		<td align="right" valign="bottom"><?=$this->comments[$i]["comment_date"];?>
+<td>
+<div class="ui-corner-all"  style="padding:10;margin-left:20;padding-top:0;border:1px solid #eeeeee;background:<?=$bg;?>" >
+		<table width="100%">
+		<tr>
+		<td align="right" valign="bottom" style="font-size:10"><?=$this->comments[$i]["comment_date"];?>
 		<? if($user_id==$this->comments[$i]['user_id']) {?>
 			<a href='javascript:deleteComment(<?=$this->comments[$i]['comment_id'];?>)' alt="Trinti" title="Trinti"><span class="ui-icon ui-icon-trash"></span></a>
 		<?}?>
+		</td>
+		</tr>
+		<tr>
+      <td align="left" valign="top" style="padding-top:10;"><?= preg_replace('/((?:[^"\'])(?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i','<a href="$1" rel="nofollow" target="blank">$1</a>',nl2br($this->comments[$i]["comment_text"]));?></td>
+		</tr>
+		</table>
+		</div>
 		</td></tr>
-		<tr><td align="left" valign="top" style="padding-top:15"><?=nl2br($this->comments[$i]["comment_text"]);?></td></tr>
-		
-		</table></div></td></tr>
 	<?}?>
 	</table>
 	<?}else{?>
 		
 	<?}?>	
 		<?if ($user_id) {?>
-			<div>
+		
 			<table width="70%">
-		<tr><td align="left" valign="middle" rowspan="2" style="padding:5" width="80">
-		<a href="/brewers/<?=$user_id;?>"><div><a href="/brewers/<?=$user_id;?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->user_info->user_email);?>?rating=G&size=50&default=mm" border="0"/></a></div>
-<a href="/brewers/<?=$user_id;?>"><?=$this->user_info->user_name;?> </a></td>
-		<td align="right" valign="bottom"></td></tr>
-		<tr><td align="left" valign="top" style="padding-top:15"><form action="/comments/submit" method="POST"><table width="100%"><tr><td><input type="hidden" name="recipe_id" value="<?=$this->recipe_id;?>"/><input type="hidden" name="brewer_id" value="<?=$user_id;?>"/><textarea style="width:100%;height:100px;border:1px #666666 solid" name="comment"></textarea></td></tr><tr><td align="right"><input type="submit" value="Komentuoti"/></td></tr></table></form></td></tr>
+		<tr>
+		<td align="center" valign="middle" style="padding:5;font-size:11">
+      <a href="/brewers/<?=$user_id;?>"><div><a href="/brewers/<?=$user_id;?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->user_info->user_email);?>?rating=G&size=40&default=mm" border="0"/></a></div>
+      <a href="/brewers/<?=$user_id;?>"><?=$this->user_info->user_name;?> </a>
+    </td>
+    <td align="left" valign="top" style="padding-top:15"><form action="/comments/submit" method="POST">
+        <table width="100%"><tr><td><input type="hidden" name="recipe_id" value="<?=$this->recipe_id;?>"/>
+        <input type="hidden" name="brewer_id" value="<?=$user_id;?>"/><textarea style="width:100%;height:100px;border:1px #666666 solid" class="ui-corner-all" name="comment"></textarea></td></tr><tr><td align="right"><input type="submit" value="Komentuoti"/></td></tr></table></form>
+    </td>
+</tr>
 		
 		</table>
 			
-			</div>
+			
 		<?}else{?>
-			<div  style="width:70%">
-			<div class="ui-corner-all"  style="padding:10;text-align:center"><span><i>Norėdami komentuoti receptą turite <a href="javascript:showLogin()">prisijungti</a>.</i></span></div>
+		<div  style="width:70%">
+      <div class="ui-corner-all"  style="padding:10;text-align:center"><span><i>Norėdami komentuoti receptą turite <a href="javascript:showLogin()">prisijungti</a>.</i></span></div>
 		</div>
 		<?}?>
 	</div>

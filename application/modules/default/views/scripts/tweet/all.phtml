@@ -1,0 +1,44 @@
+<? $this->headLink()->appendStylesheet("/public/css/twitter.css"); ?>
+<script type="text/javascript">
+ROWS_COUNT=15;
+REM_TWEET_URL = "/tweet/removetweet/";
+ITEM_TWEET_URL= "/tweet/itemtweet/";
+function removeTweet(id) {
+$.post(REM_TWEET_URL,{id:id}, function(msg){	
+	if(parseInt(msg)!=0){
+		$('#tw-'+id).remove();
+		$.post(ITEM_TWEET_URL,{sid:15}, function(msg){
+			if(parseInt(msg)!=0){
+				$('ul.statuses li:last-child').after(msg);
+			}
+		});
+		
+	}	
+	});
+}
+</script>
+<div style="margin-top:10;width:800px;;background-color: #FFFFFF;padding:10" align="left" class="ui-corner-all">
+<h1 style="text-decoration:italic;font-size:12px">Burbuliatorius:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
+<div id="twitter-container">
+
+<div id="tweet-timeline"><ul class="statuses">
+<?
+$curdate="";
+?>
+<?  if (count($this->content)): ?>
+
+<? foreach ($this->content as $item) :
+print $this->twitter()->tweetItem($item);
+  endforeach; ?>
+</ul>
+</div>
+</div>
+
+<?  endif; ?>
+
+
+
+<?php echo $this->paginationControl($this->content,
+                                    'Sliding',
+                                    'paginator/item.phtml'); ?>
+                                    </div>

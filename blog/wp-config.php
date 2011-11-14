@@ -13,16 +13,15 @@
  *
  * @package WordPress
  */
-
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'db');
+define('DB_NAME', 'v2340_mono');
 
 /** MySQL database username */
-define('DB_USER', 'u');
+define('DB_USER', 'v2340_mono');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'psw');
+define('DB_PASSWORD', 'mono');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
@@ -60,7 +59,6 @@ define('NONCE_SALT',       'z[j4k~674l<u5 =[v]C,q!&KngnNnL})n)SxsQ*?|pZ`K~:lS*:a
  * prefix. Only numbers, letters, and underscores please!
  */
 $table_prefix  = 'wp_';
-
 /**
  * WordPress Localized Language, defaults to English.
  *
@@ -70,7 +68,6 @@ $table_prefix  = 'wp_';
  * language support.
  */
 define ('WPLANG', 'lt_LT');
-
 /**
  * For developers: WordPress debugging mode.
  *
@@ -90,12 +87,9 @@ define( 'DOMAIN_CURRENT_SITE', 'atvirasalus.lt' );
 define( 'PATH_CURRENT_SITE', '/blog/' );
 define( 'SITE_ID_CURRENT_SITE', 1 );
 define( 'BLOG_ID_CURRENT_SITE', 1 );
-
-
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
-

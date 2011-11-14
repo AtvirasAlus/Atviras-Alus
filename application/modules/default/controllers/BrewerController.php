@@ -41,6 +41,16 @@ class BrewerController extends Zend_Controller_Action {
 				if ($rows=$db->fetchAll($select)) {
 					$this->view->user_info["recipes"]=$rows;	
 				}
+				$select=$db->select()
+				->from("beer_recipes_comments",array("comment_text","comment_date"))
+				->join("beer_recipes","comment_recipe=recipe_id",array("recipe_name","recipe_id"))
+				->where("comment_brewer = ?",$brewer)
+				->order("comment_date desc")
+				->limit(10);
+					$this->view->user_info["recipes_comments"]=array();
+          if ($rows=$db->fetchAll($select)) {
+            $this->view->user_info["recipes_comments"]=$rows;	
+          }
 			 }
 	    }
     	   
@@ -59,7 +69,7 @@ class BrewerController extends Zend_Controller_Action {
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($this->_getParam('page'));
-		$this->view->content->setItemCountPerPage(30);
+		$this->view->content->setItemCountPerPage(40);
     }
     public function profileAction() { 
 		$form=new Form_Profile();
