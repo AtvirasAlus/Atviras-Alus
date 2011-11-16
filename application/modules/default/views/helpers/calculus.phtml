@@ -441,6 +441,7 @@ $(document).ready(function () {
   $("#attenuation").spinner({min:0, stepping:0.01, max:1});
 $('#attenuation').bind('spinchange', function (event, ui) {
 	calc();
+	
 });
 $("#efficiency").spinner({min:0, stepping:0.01, max:1});
 $('#efficiency').bind('spinchange', function (event, ui) {
@@ -605,6 +606,7 @@ $("#duplicate").button("option", "disabled", true);
   ?>
   <?}?>
   setTimeout(calc,500)
+  setTimeout(beer_style_change,500)
   });
 
 function calc_out(url) {
