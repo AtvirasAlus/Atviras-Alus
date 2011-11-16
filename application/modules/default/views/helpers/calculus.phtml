@@ -80,8 +80,21 @@ function now() {
 function round_val(v) {
 	return Math.round(v * 1000) / 1000;
 }
+function plato_sg(p, inp) {
+	if (inp == "plato") {
+		return P2SG(p)
+	} else {
+		return Math.round(SG2P(p)*10)/10
+	}
+}
+function P2SG(p) {
+	return 1.00001 + 3.8661E-3 * p + 1.3488E-5 * p * p + 4.3074E-8 * p * p * p;
+}
+function SG2P(sg) {
+	return -668.962 + 1262.45 * sg - 776.43 * sg * sg + 182.94 * sg * sg * sg;
+}
+
 function ecb_to_lovibond(ecb) {
-	s;
 	return ecb * 0.375 - 0.46;
 }
 function srm_to_ecb(srm) {
@@ -204,6 +217,29 @@ function kgToPercent() {
 	}
 }
 //
+function beer_style_change() {
+
+	var style_recom = $($("#beer_style")[0].options[$("#beer_style")[0].selectedIndex]);
+	$('#style_sg')[0].innerHTML = " ";
+	$('#style_fg')[0].innerHTML = " ";
+	$('#style_abv')[0].innerHTML = " ";
+	$('#style_ibu')[0].innerHTML = " ";
+	$('#style_ebc')[0].innerHTML = " ";
+	if (style_recom.attr("style_fghigh").length > 0) {
+      if ($("input[name='extract_m']:checked").val()=="plato") {
+        $('#style_fg')[0].innerHTML = " [" + plato_sg(style_recom.attr("style_fglow"),"sg") + " - " + plato_sg(style_recom.attr("style_fghigh"),"sg") + "] "
+        $('#style_sg')[0].innerHTML = " [" + plato_sg(style_recom.attr("style_oglow"),"sg") + " - " + plato_sg(style_recom.attr("style_oghigh"),"sg") + "] "
+      }else{
+        $('#style_fg')[0].innerHTML = " [" + style_recom.attr("style_fglow") + " - " + style_recom.attr("style_fghigh") + "] ";
+        $('#style_sg')[0].innerHTML = " [" + style_recom.attr("style_oglow") + " - " + style_recom.attr("style_oghigh") + "] ";
+      }
+		$('#style_abv')[0].innerHTML = " [" + (Math.round(calc_ABV(style_recom.attr("style_oglow") * 1000, style_recom.attr("style_fglow") * 1000) * 10) / 10) + "% - " + (Math.round(calc_ABV(style_recom.attr("style_oghigh") * 1000, style_recom.attr("style_fglow") * 1000) * 10) / 10) + "%] ";
+		$('#style_ibu')[0].innerHTML = " [" + style_recom.attr("style_ibulow") + " - " + style_recom.attr("style_ibuhigh") + "] ";
+		$('#style_ebc')[0].innerHTML = " [" + Math.round(srm_to_ecb(style_recom.attr("style_srmlow"))) + " - " + Math.round(srm_to_ecb(style_recom.attr("style_srmhigh"))) + "] ";
+	}
+
+}
+//
 function calc() {
 	var malt = $('#malt_form').serializeArray();
 	var o = {malt_color:[], malt_weight:[], malt_extract:[], malt_type:[]};
@@ -219,10 +255,21 @@ function calc() {
 	var srm = calc_SRM(o.malt_color, o.malt_weight, bs);
 	var sgf = round_val((sg + 1000) / 1000);
 	var fgf = round_val(((sg * (1 - att)) + 1000) / 1000);
-	$('#recipe_sg')[0].innerHTML = sgf;
+	
+	$('#recipe_sg').val( sgf)
+	$('#recipe_fg').val( fgf)
+	$('#recipe_abv').val( (Math.round(calc_ABV(sgf * 1000, fgf * 1000) * 10) / 10))
+	
+	if ($("input[name='extract_m']:checked").val()=="plato") {
+    $('#recipe_sg_span')[0].innerHTML = plato_sg(sgf,"sg")
+    $('#recipe_fg_span')[0].innerHTML = plato_sg(fgf,"sg")
+	}else{
+    $('#recipe_sg_span')[0].innerHTML =sgf
+    $('#recipe_fg_span')[0].innerHTML = fgf
+	}
 	//cia
-	$('#recipe_fg')[0].innerHTML = fgf;
-	$('#recipe_abv')[0].innerHTML = (Math.round(calc_ABV(sgf * 1000, fgf * 1000) * 10) / 10) + "%";
+
+	$('#recipe_abv_span')[0].innerHTML = (Math.round(calc_ABV(sgf * 1000, fgf * 1000) * 10) / 10) + "%";
 	$('#beer_color').css('backgroundColor', colorHex(srm));
 	var hops = $('#hops_form').serializeArray();
 	var o = {hop_alpha:[], hop_weight:[], hop_time:[]};
@@ -231,9 +278,11 @@ function calc() {
 			o[hops[i].name].push(hops[i].value);
 		}
 	}
-	var ibu = calc_IBU(o, bs, sgf);
-	$('#recipe_ebc')[0].innerHTML = Math.round(srm_to_ecb(srm));
-	$('#recipe_ibu')[0].innerHTML = Math.round(ibu);
+		var ibu = calc_IBU(o, bs, sgf);
+	$('#recipe_ebc_span')[0].innerHTML = Math.round(srm_to_ecb(srm));
+	$('#recipe_ibu_span')[0].innerHTML = Math.round(ibu);
+	$('#recipe_ebc').val(Math.round(srm_to_ecb(srm)))
+	$('#recipe_ibu').val(Math.round(ibu))
 	kgToPercent();
 }
 function selectMalt(id) {
@@ -401,21 +450,7 @@ $("#bash_size").spinner({min:0});
 $('#bash_size').bind('spinchange', function (event, ui) {
 	calc();
 });
-$("#beer_style").change(function () {
-	var style_recom = $(this.options[this.selectedIndex]);
-	$('#style_sg')[0].innerHTML = " ";
-	$('#style_fg')[0].innerHTML = " ";
-	$('#style_abv')[0].innerHTML = " ";
-	$('#style_ibu')[0].innerHTML = " ";
-	$('#style_ebc')[0].innerHTML = " ";
-	if (style_recom.attr("style_fghigh").length > 0) {
-		$('#style_fg')[0].innerHTML = " [" + style_recom.attr("style_fglow") + " - " + style_recom.attr("style_fghigh") + "] ";
-		$('#style_sg')[0].innerHTML = " [" + style_recom.attr("style_oglow") + " - " + style_recom.attr("style_oghigh") + "] ";
-		$('#style_abv')[0].innerHTML = " [" + (Math.round(calc_ABV(style_recom.attr("style_oglow") * 1000, style_recom.attr("style_fglow") * 1000) * 10) / 10) + "% - " + (Math.round(calc_ABV(style_recom.attr("style_oghigh") * 1000, style_recom.attr("style_fglow") * 1000) * 10) / 10) + "%] ";
-		$('#style_ibu')[0].innerHTML = " [" + style_recom.attr("style_ibulow") + " - " + style_recom.attr("style_ibuhigh") + "] ";
-		$('#style_ebc')[0].innerHTML = " [" + Math.round(srm_to_ecb(style_recom.attr("style_srmlow"))) + " - " + Math.round(srm_to_ecb(style_recom.attr("style_srmhigh"))) + "] ";
-	}
-});
+$("#beer_style").change(beer_style_change);
 // malt
 $("#add-malt-btn").button();
 $("#add-malt-btn").bind('click', function (event, ui) {
@@ -511,6 +546,12 @@ $('#export').button();
 $('#export').click(function () {
 	calc_out("/index/print-recipe")[0].submit();
 });
+$('#extract_m_plato').click(function() {calc();beer_style_change();});
+$('#extract_m_sg').click(function() {calc();beer_style_change();});
+$('#cnv_recipe_btn').button();
+$('#cnv_recipe_btn').click(function() {
+  fitTo($('#recalc').val())
+})
 $("#beer_style").trigger('change');
 //fill form
 $("#duplicate").button("option", "disabled", true);
@@ -577,7 +618,7 @@ function calc_out(url) {
 		$('<input type="hidden" />').attr({name:fields[i], value:$('#' + fields[i]).val()}).appendTo($f);
 	}
 	for (var i = 0; i < constants.length; i++) {
-		$('<input type="hidden" />').attr({name:constants[i], value:$('#' + constants[i])[0].innerHTML}).appendTo($f);
+		$('<input type="hidden" />').attr({name:constants[i], value:$('#' + constants[i]).val()}).appendTo($f);
 	}
 	var sel = $('#malt_form')[0].elements["malt_list"];
 	if (sel) {
@@ -704,17 +745,34 @@ function calc_out(url) {
 </div>
 		
 </td>
-<td  style="padding-top:20;padding-left:10">
-<table width="100%">
-<tr><td><div><b>OG: </b><span id="style_sg" class="style_recom"></span><div><span id="recipe_sg">?</span><span id="recipe_sg_plato"></span><div></div><div><b>FG: </b><span id="style_fg" class="style_recom"></span><span id="recipe_fg">?</span></div><div><b>ABV: </b><span id="style_abv" class="style_recom"></span><span id="recipe_abv">?</span></div><div><b>IBU: </b><span id="style_ibu" class="style_recom"></span><span id="recipe_ibu">?</span></div><div><b>EBC: </b><span id="style_ebc" class="style_recom"></span><span id="recipe_ebc">?</span><td></tr>
-<tr><td>
-<div id="beer_color" style="width: 116px; height: 200px; background-color: rgb(255, 255, 255);">
-<img border="0" src="/public/images/glass.png" /></div>
-<div style="position:relative;top:60;font-size:11px">
-  <input type="text" id="recalc" value="20" style="width:35;font-size:12px" onChange="fitTo(this.value)"> &nbsp;<input type="button" onClick="fitTo($('#recalc').val())" value="Pritaikyti"/>
+<td  style="margin-top:5;mergin-left:5;border:1px solid #D9D6C4" class="ui-corner-all" valign="top">
+<table width="130" cellpading="0" cellspacing="0">
+<tr><td style="border:1px solid #D9D6C4;background:#F8F7F6;padding:5" class="ui-corner-all" ><div align="center" >
+<input type="radio" name="extract_m" value="plato" id="extract_m_plato"> Plato
+<input type="radio" name="extract_m" value="sg" id="extract_m_sg" checked> SG
 </div>
 </td></tr>
+<tr><td valign="top" style="padding:2;padding-top:10"><div>
+<div><b>OG: </b><span id="style_sg" class="style_recom"></span><span id="recipe_sg_span">?</span></div>
+<div><b>FG: </b><span id="style_fg" class="style_recom"></span><span id="recipe_fg_span">?</span></div>
+<div><b>ABV: </b><span id="style_abv" class="style_recom"></span><span id="recipe_abv_span">?</span></div>
+<div><b>IBU: </b><span id="style_ibu" class="style_recom"></span><span id="recipe_ibu_span">?</span></div>
+<div><b>EBC: </b><span id="style_ebc" class="style_recom"></span><span id="recipe_ebc_span">?</span></div>
+<input type="hidden" name="recipe_sg" id="recipe_sg"/>
+<input type="hidden" name="recipe_fg" id="recipe_fg"/>
+<input type="hidden" name="recipe_abv" id="recipe_abv"/>
+<input type="hidden" name="recipe_ibu" id="recipe_ibu"/>
+<input type="hidden" name="recipe_ebc" id="recipe_ebc"/></div>
 </td></tr>
+
+<tr><td align="center">
+<div id="beer_color" style="width: 116px; height: 230px; background-color: rgb(255, 255, 255);">
+<img border="0" src="/public/images/glass.png" /></div>
+</td></tr>
+
+<tr><td align="center" style="padding-top:20"><div style="font-size:11px">
+  <input type="text" id="recalc" value="20" style="width:35;font-size:10px" onChange="fitTo(this.value)" > &nbsp;<button id="cnv_recipe_btn">Pritaikyti</button>
+</div></td></tr>
 </table>
 </td>
 </tr>
