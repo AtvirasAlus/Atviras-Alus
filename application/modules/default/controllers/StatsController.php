@@ -21,6 +21,65 @@ class StatsController extends Zend_Controller_Action {
 					->group("day");
 				$this->view->user_count= Zend_Json::encode($db->fetchAll($select));
 			break;
+			case "cats":
+			$select->from("VIEW_public_recipes",array("total"=>"count(recipe_id)"))
+          ->joinLeft("beer_styles","VIEW_public_recipes.recipe_style=beer_styles.style_id",array())
+          ->joinLeft("beer_cats","beer_cats.cat_id=beer_styles.style_cat",array("cat_name")) 
+         
+            ->where("VIEW_public_recipes.recipe_style > 0")
+          ->group("beer_styles.style_cat")
+          
+          ->order("total DESC");
+        
+       
+        $this->view->cats= Zend_Json::encode($db->fetchAll($select));
+        $this->_helper->viewRenderer("piechart");	
+			break;
+			case "styles":
+        $select->from("beer_recipes",array("total"=>"count(recipe_id)"))
+          ->joinLeft("beer_styles","beer_recipes.recipe_style=beer_styles.style_id",array("style_name"))
+           ->where("beer_recipes.recipe_publish = 1")
+            ->where("beer_recipes.recipe_style > 0")
+          ->group("style_id")
+          
+          ->order("total DESC")
+          ->limit(30);
+        $this->view->styles= Zend_Json::encode($db->fetchAll($select));
+        $this->_helper->viewRenderer("piechart");	
+			break;
+       case "abv":
+       $selectA = $db->select()
+      ->from('VIEW_public_recipes', array('count'=>'count(recipe_abv)','label'=>"CONCAT('0 - 3,5%')"))
+      ->where('recipe_abv >= 0')
+      ->where('recipe_abv <= 3.5');
+
+      $selectB = $db->select()
+      ->from('VIEW_public_recipes', array('count'=>'count(recipe_abv)','label'=>"CONCAT('3,6- 4,6%')"))
+      ->where('recipe_abv >= 3.6')
+      ->where('recipe_abv <= 4.6');
+      $selectC = $db->select()
+      ->from('VIEW_public_recipes', array('count'=>'count(recipe_abv)','label'=>"CONCAT('4,7- 5,7%')"))
+      ->where('recipe_abv >= 4.7')
+      ->where('recipe_abv <= 5.7');
+       $selectD= $db->select()
+      ->from('VIEW_public_recipes', array('count'=>'count(recipe_abv)','label'=>"CONCAT('5,8 - 6,9%')"))
+      ->where('recipe_abv >= 5.8')
+      ->where('recipe_abv <= 6.9');
+       $selectE= $db->select()
+      ->from('VIEW_public_recipes', array('count'=>'count(recipe_abv)','label'=>"CONCAT('7,0- 9,0%')"))
+      ->where('recipe_abv >= 7')
+      ->where('recipe_abv <= 9');
+       $selectF= $db->select()
+      ->from('VIEW_public_recipes', array('count'=>'count(recipe_abv)','label'=>"CONCAT('> 9,0%')"))
+      ->where('recipe_abv >9');
+
+
+    $select = $db->select()
+    ->union(array($selectA, $selectB,$selectC,$selectD, $selectE,$selectF));
+    $this->view->abv= Zend_Json::encode($db->fetchAll($select));
+    
+        $this->_helper->viewRenderer("piechart");	
+       break;
 			default:    
 				$select->from("beer_recipes",array("total"=>"count(recipe_id)","day"=>"DATE(Concat(year(recipe_created),'.',month(recipe_created),'.1'))"))
 					->group("day");

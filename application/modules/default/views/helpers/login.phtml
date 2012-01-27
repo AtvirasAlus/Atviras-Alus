@@ -2,7 +2,7 @@
 <? $isloged=isset($this->user_data);?>
 <div id="userScreen" style="visibility:<?=$isloged ? 'visible' : 'hidden';?>;">
 
-  <div id="userScreen-nav" class="userScreen-nav"> Prisijungęs:<a href="login" class="userScreen-u"><span><? if ($isloged) { print $this->user_data->user_name; }?> </span></a> </div>
+  <div id="userScreen-nav" class="userScreen-nav"> Prisijungęs:<a href="login" class="userScreen-u"><span><? if ($isloged) { print $this->user_data->user_name; }?> </span><span class="ui-corner-tr ui-corner-bl" style="background:#DEDEDE;padding:3;width:10;height:10">1</span></a> </div>
         <ul style="list-style-type:none;" id="userScreen-menu"> 
           <li><a href="/brewer/recipes" rel="nofollow">Mano receptai</a></li> 
           <li><a href="/mail/inbox" rel="nofollow">Mano paštas</a></li> 

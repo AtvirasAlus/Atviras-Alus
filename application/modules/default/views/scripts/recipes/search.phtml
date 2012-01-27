@@ -171,20 +171,21 @@ function submitForm() {
 	
 }
 </script>
-<div class="ui-corner-all" style="background:#ffffff;width:600;padding:10">
+<div class="ui-corner-all" style="background:#FFFFFF;width:800;padding:10;">
+<h1>Paieška:</h1>
+<div class="ui-corner-all" style="background:#F1F0ED;width:95%;padding:10;border:1px solid #dedede">
 <form onSubmit="submitForm();return false;" id="search_form">
-<table>
-<tr><td colspan="2"><h2>Paieška:</h2></td></tr>
-<tr><td>Recepto pavadinimas:</td><td><input type="text"  id="recipe_name" value="<?=$this->filter_values['recipe_name'];?>"/></td>
+<table width="100%">
+<tr><td>Recepto pavadinimas:</td><td><input type="text"  style="width:100%;border:1px solid #dedede" id="recipe_name" class="ui-corner-all" value="<?=$this->filter_values['recipe_name'];?>"/></td>
 </tr>
-<tr><td>Recepto stilius:</td><td><select id="recipe_style"><option value="0">Nefiltruot</option>
+<tr><td>Recepto stilius:</td><td><select id="recipe_style"  style="width:100%;border:1px solid #dedede"><option value="0">Nefiltruot</option>
 <? for ($i=0;$i<count($this->beer_styles);$i++) {
 	$selected=($this->filter_values['recipe_style']==$this->beer_styles[$i]["style_id"]) ? "selected" : "";?>
 	<option value="<?=$this->beer_styles[$i]["style_id"];?>" <?=$selected;?>><?=$this->beer_styles[$i]["style_name"];?> (<?=$this->beer_styles[$i]["count"];?>)</option>
 <?}?>
 </select></td>
 </tr>
-<tr><td>Recepto tipas:</td><td><select id="recipe_type">
+<tr><td>Recepto tipas:</td><td><select id="recipe_type"  style="width:100%;border:1px solid #dedede">
 <option value="0">Nefiltruot</option>
 <?
 $this->beer_types=array();
@@ -197,11 +198,11 @@ for ($i=0;$i<count($this->beer_types);$i++) {
 
 </select></td>
 </tr>
-<tr><td>Aludaris:</td><td><input id="brewer"  style="width:100%" value="<?=$this->filter_values['user_name'];?>"/> </td></tr>
-<tr><td>Apyniai:</td><td><input id="hops"  style="width:100%" value="<?=$this->filter_values['hop_name'];?>"/> </td></tr>
-<tr><td>Salyklas:</td><td><input id="malts"  style="width:100%" value="<?=$this->filter_values['malt_name'];?>"/> </td></tr>
-<tr><td>Mielės:</td><td><input id="yeasts"  style="width:100%" value="<?=$this->filter_values['yeast_name'];?>"/> </td></tr>
-<tr><td></td><td><input type="submit" value="Ieškot" /></td>
+<tr><td>Aludaris:</td><td><input id="brewer"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['user_name'];?>"/> </td></tr>
+<tr><td>Apyniai:</td><td><input id="hops"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['hop_name'];?>"/> </td></tr>
+<tr><td>Salyklas:</td><td><input id="malts"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['malt_name'];?>"/> </td></tr>
+<tr><td>Mielės:</td><td><input id="yeasts"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['yeast_name'];?>"/> </td></tr>
+<tr><td></td><td align="right"><input type="submit" value="Ieškot" style="border:1px solid #dedede"  class="ui-corner-all"/></td>
 </tr>
 </table>
 </form>
@@ -258,3 +259,4 @@ if ($r>0) {
                                     'paginator/item.phtml'); ?>
 </div>
 <?}?>
+</div>

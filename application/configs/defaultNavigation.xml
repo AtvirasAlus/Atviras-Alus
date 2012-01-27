@@ -15,6 +15,29 @@
 			<controller>recipes</controller>
 			<action>index</action>
 			<route>default</route>
+			<pages>
+				<all>
+					<label>Praktikų mokymo programos</label>
+					<module>account</module>
+					<controller>practises</controller>
+					<action>index</action>
+					<resource>practises</resource>
+				</all>
+				<favorites>
+					<label>Sukurti praktikos mokymo programą</label>
+					<module>account</module>
+					<controller>practises</controller>
+					<action>add-practise</action>
+					<resource>add_practises</resource>
+				</favorites>
+				<create>
+					<label>Sukurti praktikos mokymo programą</label>
+					<module>account</module>
+					<controller>practises</controller>
+					<action>add-practise</action>
+					<resource>add_practises</resource>
+				</create>
+			</pages>
 		</practises>
 		<research>
 			<label>Skaičiuoklė</label>

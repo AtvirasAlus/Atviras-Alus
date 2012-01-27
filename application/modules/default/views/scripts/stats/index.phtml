@@ -1,10 +1,10 @@
-<?
+﻿<?
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.js");
-$this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");?>
-
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");
+?>
 <?
 $id= isset($_GET['id']) ? $_GET['id'] : "";
-$_options=array("recipes"=>"Receptai","users"=>"Vartotojai","sessions"=>"Virimai");
+$_options=array("recipes"=>"Sukurtų receptų skaičius (mėnesiais)","users"=>"Prisiregistravusių naujų vartotojų skaičius (mėnesiais)","sessions"=>"Virimų statistika","styles"=>"Sukurtų receptų skaičius pagal stilių","cats"=>"Sukurtų receptų skaičius pagal kategorijas","abv"=>"Išvirto alaus stiprumas");
 ?>
 <div>Statistikos tipas:<select onchange="window.location=this.value">
 <?
@@ -66,6 +66,23 @@ case "users":
     d=[d]
 	<?
 break;
+case "styles":
+?>
+var a=<?=$this->styles;?>;
+	  var d = [];
+		var total=0
+	    for (var i=0;i<a.length;i++) {
+	    	  
+	
+	total+=a[i].total;
+	    }
+	for (var i=0;i<a.length;i++) {
+	    	  
+		    d[i]={label:a[i].style_name+" "+Math.round((a[i].total/total*100)*100)/100+" %",data:a[i].total/total*100};
+	    }
+	   
+<?
+break;
 default: 
 	?>
 	var a=<?=$this->recipes_count;?>;
@@ -80,7 +97,9 @@ default:
 }
 ?>
 
-
+<?switch ($id){
+default:
+?>
  function showTooltip(x, y, contents) {
         $('<div id="tooltip">' + contents + '</div>').css( {
             position: 'absolute',
@@ -195,6 +214,22 @@ $(function () {
         plot.setSelection(ranges);
     });
 });
+<?break;
+case "styles":
+?>
+$.plot($("#placeholder"), d,
+{
+        series: {
+            pie: {
+                show: true
+            }
+        },
+        grid: {
+            hoverable: true,
+            clickable: true
+        }
+});
+<?break;}?>
 </script> 
  
  </body> 

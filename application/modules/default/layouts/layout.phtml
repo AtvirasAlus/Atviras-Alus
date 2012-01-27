@@ -85,6 +85,26 @@ function showLogin() {
 	$("#login-dialog").displayError([]);
 }
 $(document).ready(function () {
+  	
+$("ul#topnav li").hover(function() { //Hover over event on list item
+	$(this).css({ 'background' : '#DEDEDE'}); //Add background color + image on hovered list item
+	if ($(this).find("span").length>0) {
+    $(this).addClass('ui-corner-tl ui-corner-tr');
+    $(this).find("span").show();
+	}else{
+    $(this).addClass('ui-corner-all');
+	}
+	
+	 //Show the subnav
+} , function() { //on hover out...
+	$(this).css({ 'background' : 'none'}); //Ditch the background
+	if ($(this).find("span").length>0) {
+    $(this).removeClass('ui-corner-tl ui-corner-tr');
+    $(this).find("span").hide();
+	}else{
+    $(this).removeClass('ui-corner-all');
+	}
+});
 	$("#login-button").button();
 	$("#login-button").bind('click', function (e) {
 		login();
@@ -121,13 +141,13 @@ $(document).ready(function () {
          <!-- end sidebar -->
          </td>
          <td valign="top">  
-          <div id="top-header" style="height:50;" >
+       
           <table width="100%"><tr><td>
            <p class="pullquote" style="float:left"><?=$this->fortune();?></p>
             <span style="float:right"><?=$this->loginScreen();?></span>
           </td>
-           <tr><td>
-                <ul id="menu-top" style="display:inline-block;">
+           <tr style="height:20"><td valign="top">
+                <ul id="topnav">
                   <? 
                   $this->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigation.xml","nav")));
 
@@ -138,19 +158,19 @@ $(document).ready(function () {
                       $mark="";
                     }
                     ?>
-                 <li> &nbsp;<a href="<?= $page->getHref();?>" style="<?=$mark?>">
-
-                  <? print  $page->label;?></a>&nbsp; </li>
+                 <li> &nbsp;<a href="<?= $page->getHref();?>" style="<?=$mark?>"><? print  trim($page->label);?></a>&nbsp; </li>
                   <?
                   }
                   ?>
               </ul>
-          </div>
-        </td></tr></table>
+          
+        
+     </td></tr>
+     <tr><td>
            <div id="content" style="padding-left:20;align:right;display:inline-block;">
             <? echo $this->layout()->content;?>
             </div> 
-            
+               </td></tr></table>
          </td>
         <td>&nbsp;</td>
          </tr>
@@ -164,7 +184,7 @@ $(document).ready(function () {
                   <tr><td></td><td><button id="login-button">Jungtis</button></td></tr>
                 </table>
             </form>
-         
+          </div>
         <script type="text/javascript">
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-21270974-1']);
@@ -190,7 +210,7 @@ $(document).ready(function () {
               </div>
              -->
    
-     </div>
+    
       
   </body>
 </html>

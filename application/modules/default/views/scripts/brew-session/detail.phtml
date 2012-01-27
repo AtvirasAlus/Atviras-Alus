@@ -1,6 +1,7 @@
+<div style="padding:10;background:#FFFFFF;width:800" class="ui-corner-all">
 <?if (isset($this->brew_sessions['session_id'])) {?>
 <div><h2>Recepto virimo "<?=$this->brew_sessions['recipe_name'];?>" informacija</h2> </div>
-<table width="1000" cellpading="0" cellspacing="0">
+<table width="100%" cellpading="0" cellspacing="0" class="ui-corner-all" style="background:#F1F0ED;display:inline-block;padding:3;border:1px solid #dedede">
 <?
 $this->headLink()->appendStylesheet("/public/css/bs.css");
 $this->brew_sessions['session_comments']=nl2br($this->brew_sessions['session_comments']);
@@ -20,4 +21,4 @@ if ($this->user_id==$this->brew_sessions['session_brewer']) {
 <? }else{ ?>
 	<div><h2>Virimo istorija nerasta</h2></div>
 <?}?>
-
+</div>

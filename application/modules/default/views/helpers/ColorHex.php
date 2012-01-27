@@ -3,7 +3,8 @@ class Zend_View_Helper_ColorHex extends Zend_View_Helper_Abstract{
   public $view; 
 public function colorHex($srm,$ebc=true) {
 	if ($ebc) {
-	$srm=$srm*0.375-0.46;
+	//$srm=$srm*0.375-0.46;
+	$srm=$srm/1.97;
 	}
 	$srm_rgb =array();
 	$srm_rgb[] = '#FFFFFF';

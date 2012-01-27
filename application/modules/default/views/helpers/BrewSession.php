@@ -18,7 +18,7 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract{
 		}
 		return '<form method="post" action="'.$action.'"><tr><td class="bs_title">'.$fields['session_name'].'</td><td class="bs_data"><input type="text" name="session_name"  style="width:200" value="'.$session["session_name"].'"/></td></tr>
 		<tr><td class="bs_title">'.$fields['user_name'].'</td><td class="bs_data">'. $session['user_name'].'</td></tr>
-		<tr><td class="bs_title">'.$fields['recipe_name'].'</td><td class="bs_data">'.$session["recipe_name"].'</td></tr>
+		<tr><td class="bs_title">'.$fields['recipe_name'].'</td><td class="bs_data"><a href="/alus/receptas/'.$session['recipe_id'].'">'.$session["recipe_name"].'</a></td></tr>
 		<tr><td class="bs_title">'.$fields['session_size'].'</td><td class="bs_data"><input type="text" name="session_size" style="width:55" value="'.$session["session_size"].'"/></td></tr>
 		<tr><td class="bs_title">'.$fields['session_og'].'</td><td class="bs_data"><input type="text" name="session_og" style="width:55" value="'.$session["session_og"].'"/></td></tr>
 		<tr><td class="bs_title">'.$fields['session_fg'].'</td><td class="bs_data"><input type="text" name="session_fg" style="width:55" value="'.$session["session_fg"].'"/></td></tr>
@@ -39,7 +39,13 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract{
 		$fields=array("session_name"=>"Virimo pavadinimas","user_name"=>"Aludaris","recipe_name"=>"Receptas","session_size"=>"Alaus kiekis (l.)","session_og"=>"OG","session_fg"=>"FG","session_primarydate"=>"Pirminė fermentacija","session_secondarydate"=>"Antrinė fermentacija","session_caskingdate"=>"Išpilstyta","session_comments"=>"Pastabos");
 		$str="";
 		foreach ($fields as $key => $value) {
+		if ($key=="user_name") {
+		$str.='<tr><td class="bs_title" width="20%">'.$value.'</td><td class="bs_data"><a href="/brewers/'.$session['user_id'].'">'.$session[$key].'</a></td></tr>';
+		}else if ($key=="recipe_name") {
+       $str.='<tr><td class="bs_title" width="20%">'.$value.'</td><td class="bs_data"><a href="/alus/receptas/'.$session['recipe_id'].'">'.$session[$key].'</a></td></tr>';
+      }else{
 			$str.='<tr><td class="bs_title" width="20%">'.$value.'</td><td class="bs_data">'.$session[$key].'</td></tr>';
+			}
 		}
 
 		return $str;

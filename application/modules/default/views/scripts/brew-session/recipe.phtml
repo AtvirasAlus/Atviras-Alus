@@ -1,3 +1,4 @@
+<div style="padding:10;background:#FFFFFF;width:900" class="ui-corner-all">
 <? 
 $this->headLink()->appendStylesheet("/public/css/bs.css");
 if($this->user_id) {
@@ -19,7 +20,7 @@ $(function() {
 ?>
 <div> <h2>Recepto <a href="/recipes/view/<?=$this->recipe["recipe_id"]?>">"<?=$this->recipe["recipe_name"]?>"</a> virimų istorija</h2></div>
 
-<table width="1000" id="bsession" cellpading="0" cellspacing="0">
+<table width="100%" cellpading="0" cellspacing="0" class="ui-corner-all" style="background:#F1F0ED;display:inline-block;padding:3;border:1px solid #dedede">
 <thead>
 <td></td><td >Virimo pavadinimas</td><td>Aludaris</td><td>Receptas</td><td>Alaus kiekis (l.)</td><td>OG</td><td>FG</td><td>Pirminė fermentacija</td><td>Antrinė fermentacija</td><td>Išpilstyta</td><td>Pastabos</td></thead>
 <?
@@ -52,8 +53,10 @@ Norėdami pridėti alaus virimą <a href="javascript:showLogin()">prisijunkite</
 <?
 }else{
 	?>
+	<div style="padding-top:20">
 	 <a href="/brew-session/new/<?=$this->recipe["recipe_id"];?>">Pridėti alaus virimą</a>
+	 </div>
 	<?
 }
 ?>
-
+</div>

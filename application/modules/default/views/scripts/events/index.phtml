@@ -1,11 +1,11 @@
 <? $this->headTitle()->append(" - Įvykiai ");?>
 <? $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,degustacija,receptas,alus');?>
-<div style="width:800">
+<div style="width:800;background-color:#ffffff;text-align:center;padding:9" class="ui-corner-all">
 <table>
 <?
 $z=0;
 $r=0;
-$u_per_row=2;
+$u_per_row=3;
 foreach ($this->content as $item) {?>
 <? if ($r==0){?>
 	
@@ -15,7 +15,7 @@ foreach ($this->content as $item) {?>
 	$r++;
 	?>
 <td width="280" align="left" style="padding:3">
-<a href="/ivykis/<?=$item["event_id"];?>-<?=urlencode($item["event_name"]);?>"><div class="ui-corner-all" style="background:#eeeeee;height:300;" onmouseover="$(this).css('cursor','hand'); $(this).css('background','#ffffff');" onmouseout="$(this).css('background','#eeeeee');">
+<a href="/ivykis/<?=$item["event_id"];?>-<?=urlencode($item["event_name"]);?>"><div class="ui-corner-all" style="background:#eeeeee;height:300;border:1px solid #DEDEDE" onmouseover="$(this).css('cursor','hand'); $(this).css('background','#ffffff');" onmouseout="$(this).css('background','#eeeeee');">
 
 <table style="padding:7">
 <tr><td>

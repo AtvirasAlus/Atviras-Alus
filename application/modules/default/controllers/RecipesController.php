@@ -335,7 +335,7 @@ class RecipesController extends Zend_Controller_Action {
 		  	  if (isset($u->user_name)) {
 		  	  	   $db = Zend_Registry::get('db');
 		  	  	  
-		  	  	   $fields_recipe=array('recipe_batch'=>'bash_size','recipe_efficiency'=>'efficiency','recipe_attenuation'=>'attenuation','recipe_name'=>'beer_name','recipe_style'=>'style_id','recipe_comments'=>'comments','recipe_sg'=>'recipe_sg','recipe_fg'=>'recipe_fg','recipe_ebc'=>'recipe_ebc','recipe_abv'=>'recipe_abv','recipe_ibu'=>'recipe_ibu');
+		  	  	   $fields_recipe=array('recipe_batch'=>'bash_size','recipe_boiltime'=>'boil_time','recipe_efficiency'=>'efficiency','recipe_attenuation'=>'attenuation','recipe_name'=>'beer_name','recipe_style'=>'style_id','recipe_comments'=>'comments','recipe_sg'=>'recipe_sg','recipe_fg'=>'recipe_fg','recipe_ebc'=>'recipe_ebc','recipe_abv'=>'recipe_abv','recipe_ibu'=>'recipe_ibu');
 		  	  	   $ins=array();
 		  	  	   $recipe_update=false;
 		  	  	   foreach ($fields_recipe as $key => $value) {
