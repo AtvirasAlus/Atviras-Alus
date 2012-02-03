@@ -21,15 +21,24 @@ class StatsController extends Zend_Controller_Action {
 					->group("day");
 				$this->view->user_count= Zend_Json::encode($db->fetchAll($select));
 			break;
+			case "locations":
+				$select=$db->select()
+				->from("users", array("count"=>"count(users.user_id)"))
+				->joinLeft("users_attributes","users_attributes.user_id=users.user_id",array("user_location"))
+				->where("users.user_active = ?", '1')
+				->group("user_location");
+
+				$this->view->location_count= Zend_Json::encode($db->fetchAll($select));
+ 				$this->_helper->viewRenderer("barchart");
+					
+			break;
 			case "cats":
 			$select->from("VIEW_public_recipes",array("total"=>"count(recipe_id)"))
-          ->joinLeft("beer_styles","VIEW_public_recipes.recipe_style=beer_styles.style_id",array())
-          ->joinLeft("beer_cats","beer_cats.cat_id=beer_styles.style_cat",array("cat_name")) 
-         
-            ->where("VIEW_public_recipes.recipe_style > 0")
-          ->group("beer_styles.style_cat")
-          
-          ->order("total DESC");
+			  ->joinLeft("beer_styles","VIEW_public_recipes.recipe_style=beer_styles.style_id",array())
+			  ->joinLeft("beer_cats","beer_cats.cat_id=beer_styles.style_cat",array("cat_name")) 
+			  ->where("VIEW_public_recipes.recipe_style > 0")
+			  ->group("beer_styles.style_cat")
+			  ->order("total DESC");
         
        
         $this->view->cats= Zend_Json::encode($db->fetchAll($select));

@@ -4,7 +4,7 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");
 ?>
 <?
 $id= isset($_GET['id']) ? $_GET['id'] : "";
-$_options=array("recipes"=>"Sukurtų receptų skaičius (mėnesiais)","users"=>"Prisiregistravusių naujų vartotojų skaičius (mėnesiais)","sessions"=>"Virimų statistika","styles"=>"Sukurtų receptų skaičius pagal stilių","cats"=>"Sukurtų receptų skaičius pagal kategorijas","abv"=>"Išvirto alaus stiprumas");
+$_options=array("recipes"=>"Sukurtų receptų skaičius (mėnesiais)","users"=>"Prisiregistravusių naujų vartotojų skaičius (mėnesiais)","sessions"=>"Virimų statistika","styles"=>"Sukurtų receptų skaičius pagal stilių","cats"=>"Sukurtų receptų skaičius pagal kategorijas","abv"=>"Išvirto alaus stiprumas","locations"=>"Vartotojų geografija");
 ?>
 <div>Statistikos tipas:<select onchange="window.location=this.value">
 <?
@@ -45,6 +45,7 @@ switch($id) {
 	
 	<?
 	break;
+
 case "recipes":
 	?>
 	var a=<?=$this->recipes_count;?>;

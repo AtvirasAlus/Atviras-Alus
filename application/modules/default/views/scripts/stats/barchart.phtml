@@ -1,0 +1,70 @@
+<?
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.js");
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");
+
+$id= isset($_GET['id']) ? $_GET['id'] : "";
+$_options=array("recipes"=>"Sukurtų receptų skaičius (mėnesiais)","users"=>"Prisiregistravusių naujų vartotojų skaičius (mėnesiais)","sessions"=>"Virimų statistika","styles"=>"Sukurtų receptų skaičius pagal stilių","cats"=>"Sukurtų receptų skaičius pagal kategorijas","abv"=>"Išvirto alaus stiprumas","locations"=>"Vartotojų geografija");
+?>
+<div>Statistikos tipas:<select onchange="window.location=this.value">
+<?
+foreach ($_options as $key => $value) {
+	$selected = ($id==$key) ? "selected" : "";
+	?>
+    <option value="?id=<?=$key;?>" <?=$selected;?>><?=$value?></option>
+    <?
+}
+?>
+
+</select></div> 
+ <div class="ui-corner-all" style="background:#fff;">
+    <div id="placeholder" style="width:800px;height:300px;"></div>
+    <div id="hover" style="margin-left:50px;margin-top:10px;width:300px"></div> 
+ 
+    
+    
+ 
+  
+ 
+<script id="source"> 
+ var stack = 1, bars = true, lines = false, steps = false;
+
+<?
+
+switch($id) {
+	
+case "locations":
+?>
+
+	var a=<?=$this->location_count;?>;
+	var d = [];
+	var total=0;
+	var dn=[];
+	for (var i=0;i<a.length;i++) {
+		 a[i].user_location=a[i].user_location==null ? "?" : a[i].user_location;
+		 d[i]={label:a[i].user_location+" - " +a[i].count,data:[[i,a[i].count]]};
+		 dn[i]=[i,a[i].user_location]
+	
+	}
+var options = {
+        
+                
+                 bars:{show: true, barWidth: 0.9, align: 'center'}, 
+		 xaxis: { ticks: dn, autoscaleMargin: .10 }, 
+		 grid: { hoverable: true, clickable: true }
+	}
+	   
+<?
+
+break;
+}
+?>
+
+
+$.plot($("#placeholder"),d,options);
+
+
+</script> 
+ </div>
+ </body> 
+</html> 

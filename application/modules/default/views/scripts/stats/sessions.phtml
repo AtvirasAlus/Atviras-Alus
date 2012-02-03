@@ -35,16 +35,17 @@ switch($id) {
 	
 	<?
 	break;
-case "recipes":
-	?>
-	var a=<?=$this->recipes_count;?>;
-	  var d = [];
-    for (var i=0;i<a.length;i++) {
-    	    d.push([new Date(a[i].day).getTime(),a[i].total])
-    	    
-    }
-    d=[d]
-	<?
+	
+	case "recipes":
+		?>
+		var a=<?=$this->recipes_count;?>;
+		  var d = [];
+	    for (var i=0;i<a.length;i++) {
+	    	    d.push([new Date(a[i].day).getTime(),a[i].total])
+	    	    
+	    }
+	    d=[d]
+		<?
 	break;
 case "users":
 	?>

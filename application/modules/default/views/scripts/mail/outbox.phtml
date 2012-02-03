@@ -50,7 +50,13 @@ foreach ($this->content as $item) {?>
 
 	
 	<tr onmouseover="$(this).css('background','#eeeeee')" onmouseout="$(this).css('background','')">
-<? $toArr = explode(",",$item["mail_to"]); 
+<?
+if ($item["group_id"]>0) {
+  $to=$item["mail_to_group"];
+}else{
+ $to=$item["mail_to"];
+}
+ $toArr = explode(",",$to); 
 if (count($toArr)>5) {
 array_splice($toArr,4);
 $to=implode(", ",$toArr) ."...";

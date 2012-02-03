@@ -81,9 +81,7 @@ h1 {
   <div class="ui-corner-all" style="background:#ffffff;padding:20">
     <h1 align="left"><?=$this->user_info['user_name'];?> </h1>
         <div class="user_info">
-          <p>
-          <div><a href="/mail/compose?token=<? print base64_encode($this->user_info['user_name']);?>" rel="nofollow">Rašyti  žinutę </a></div>
-          </p>
+          <div><a href="/mail/compose?token=<?=base64_encode($this->user_info['user_name']);?>" rel="nofollow">Parašyk <?=$this->user_info['user_name'];?>  žinutę </a></div>
           <div ><div class="ui-corner-all" style="background:#DDDDDD;padding:2;float:right"><img src="http://www.gravatar.com/avatar/<?=md5($this->user_info['user_email']);?>?rating=G&size=80&default=mm" border="0"/></div></div>
           <div>Narys nuo: <span><?=$this->user_info['user_created'];?></span></div>
           <div>Paskutinį kartą lankėsi: <span><?=$this->user_info['user_lastlogin'];?></span></div>

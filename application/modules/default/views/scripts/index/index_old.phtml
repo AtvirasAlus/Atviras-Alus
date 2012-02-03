@@ -1,6 +1,5 @@
 <? $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,receptai,receptas,alus,skaičiuoklė,ibu,ebc,abv');?>
 <? $this->headTitle()->append(" - atvira namų aludarių bendruomenė ");?>
-
 <? $this->headLink()->appendStylesheet("/public/ui/external/jquery.zrssfeed.css"); ?>
 <? $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");?>
 <style>
@@ -55,19 +54,13 @@ h1 {
 <div class="left_col">
 <div>
 
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:450"><h1 style="text-decoration:italic;font-size:12px">Burbuliatorius:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<?$tweet=$this->twitter(); print $tweet->tweetList(5,0);?>
-</div>
-<!--NAUJIENOS-->
-<div class="left_col">
-<div>
-
 <div class="ui-corner-all" style="background:#ffffff;padding:10;width:450"><h1 style="text-decoration:italic;font-size:12px">Atviro alaus naujienos:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<p>Per mėnėsį <b><?=$this->total_brewed['brewers_total'];?></b> aludariai išvirė <b><a href="http://www.atvirasalus.lt/stats?id=sessions"><?=$this->total_brewed['beer_total'];?></b></a> litrus alaus</p>
+<p>Per mėnėsį <b><?=$this->total_brewed['brewers_total'];?></b> aludariai išvirė <b><a href="http://atvirasalus.lt/stats/sessions"><?=$this->total_brewed['beer_total'];?></b></a> litrus alaus</p>
 <p>Sveikiname mūsų naująjį aludarį, <a href="/brewers/<?=$this->welcome['user_id'];?>"><?=$this->welcome['user_name'];?></a></p>
 
 </div>
-</div><!--FORUMAS-->
+</div>
+<!--FORUMAS-->
 <div class="left_col">
 <div class="ui-corner-all" style="background:#ffffff;width:450;padding:10"><h1 style="text-decoration:italic;font-size:12px">Forumas:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
 <table>
@@ -132,7 +125,7 @@ $z++;
 }
 ?>        
 </table>
-<div style="padding-top:5"><a href="/brewer/list">Peržiūrėt visus</a> (<?=$this->users_total["count"];?>)  &nbsp;| &nbsp;<a href="/groups" >Grupės</a></div>
+<div style="padding-top:5"><a href="/brewer/list">Peržiūrėt visus</a> (<?=$this->users_total["count"];?>)</div>
 </div>
 </div>
 </div>
@@ -204,7 +197,7 @@ $z++;
 </div>
 <script>
 $('#tad_feed').rssfeed('http://pipes.yahoo.com/pipes/pipe.run?_id=9ddfdd4e9e5549335eff2aa1b862c78a&_render=rss', {
-		limit: 5,header:false,date:false
+		limit: 10,header:false,date:false
 	});
 </script>
 

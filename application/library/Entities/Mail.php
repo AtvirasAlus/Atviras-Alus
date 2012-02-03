@@ -41,7 +41,11 @@ class Entities_Mail extends Zend_Db_Table {
 		->from('mail_users',array("count"=>"count(mail_users.mail_id)"))
 		->where('mail_users.user_id = ?',$this->_user->user_id)
 		->where('mail_users.mail_read = ?','0');
-		return $db->fetchRow($select);
+		$c=$db->fetchRow($select);
+		if (isset($c["count"])) {
+        return $c["count"];
+		}
+		return 0;
 	}
 	function receive($mail_id=0) {
 		if ($mail_id>0) {
@@ -88,6 +92,8 @@ class Entities_Mail extends Zend_Db_Table {
 			}
 		}
 	}
+	function extractGroup() {
+	}
 	function send($recipients,$subject,$body) {
 		if ($this->_user) {
 		 
@@ -106,16 +112,40 @@ class Entities_Mail extends Zend_Db_Table {
 				
 				 $db=$this->getAdapter();
 				 $select=$db->select()
-				 	->from('users')
-				 	->where('user_name IN ('.implode(",",$recipients).')');
-				 	print_r( $select->__toString());
+				 	->from('VIEW_contacts')
+				 	->where('contact_name IN ('.implode(",",$recipients).')');
+				 
 				  $recipients=$db->fetchAll($select);
 				  if (count($recipients)>0) {
+            $contact_groups=array();
+            $i=0;
+            while ($i<count($recipients)) {
+                if ($recipients[$i]["contact_type"]=="group") {
+                  $contact_groups[]=$recipients[$i]["contact_id"];
+                  array_splice($recipients,$i,1);
+                }else{
+                  $i++;
+                };
+            }
+            if (count($contact_groups)>0) {
+              $select=$db->select()
+                ->from('users_groups',array('group_id'))
+                ->join('VIEW_contacts','users_groups.user_id = VIEW_contacts.contact_id')
+                ->where('users_groups.group_id IN ('.implode(",",$contact_groups).')')
+                ->where('VIEW_contacts.contact_type = ?','user')
+                ->where('VIEW_contacts.contact_id != ?',$this->_user->user_id);
+                   $recipients=array_merge ($recipients,$db->fetchAll($select));
+            }
+           
 				  	  if ($id=$this->insert(array('mail_sender'=>$this->_user->user_id,'mail_body'=>$body,'mail_subject'=>$subject))) {
 				  	  	  for ($i=0;$i<count($recipients);$i++) {
 				  	  	  	$recipients[$i]["mail_id"]=$id;
-				  	  	  	$db->insert('mail_users',array('user_id'=>$recipients[$i]['user_id'],'mail_id'=>$id));
-							$smtp_recipients[]=$recipients[$i];	
+				  	  	  	if (isset($recipients[$i]["group_id"])) {
+                      $db->insert('mail_users',array('user_id'=>$recipients[$i]['contact_id'],'mail_id'=>$id,'group_id'=>$recipients[$i]["group_id"]));
+				  	  	  	}else{
+                      $db->insert('mail_users',array('user_id'=>$recipients[$i]['contact_id'],'mail_id'=>$id));
+				  	  	  	}
+                    $smtp_recipients[]=$recipients[$i];	
 				  	  	  }
 						
 						return $smtp_recipients;     

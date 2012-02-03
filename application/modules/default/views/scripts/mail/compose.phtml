@@ -104,8 +104,8 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 <div class="ui-corner-all" style="background:#ffffff;width:800;padding:10">
 <form action="/mail/send" method="post" id="sendMailForm">
 <table width="95%"><tr><td>Adresatas:<div class="ui-widget"> 
-	
-	<input id="mail_to" name="mail_to" style="width:100%" /> 
+	<? $mail_to= isset($_GET["token"]) ? trim($_GET["token"]) : "";?>
+	<input id="mail_to" name="mail_to" style="width:100%" value="<?=base64_decode($mail_to);?>"/> 
 </div> </td></tr>
 <tr><td>Tema:</td></tr><tr><td>
 <input type="text" name="mail_subject" id="mail_subject"  style="width:100%"/>

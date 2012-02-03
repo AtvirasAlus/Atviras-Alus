@@ -15,6 +15,7 @@ class BrewerController extends Zend_Controller_Action {
 		$brewer=$this->_getParam('brewer');
 		$select=$db->select()
 		->from("users")
+		->joinLeft("users_attributes","users_attributes.user_id=users.user_id")
 		->where("users.user_active = ?", '1')
 		->where("users.user_id = ?",$brewer);
 			 $this->view->user_info=$db->fetchRow($select);
@@ -72,29 +73,69 @@ class BrewerController extends Zend_Controller_Action {
 		$this->view->content->setItemCountPerPage(40);
     }
     public function profileAction() { 
-		$form=new Form_Profile();
-		$this->view->changePasswordForm=$form;
-		$this->view->errors=array();
 		$storage=new Zend_Auth_Storage_Session(); 
 		$this->view->user_info=$storage->read();
-	
+		$u = $this->view->user_info;
+		$this->view->changePasswordForm=new Form_Profile();
+		
+		$this->view->userAttributesForm=new Form_Attributes();
+		$this->view->errors=array();
+		
 	 	if($this->getRequest()->isPost()){
-			if($form->isValid($_POST)){
-				$storage = new Zend_Auth_Storage_Session(); 
-	$u=$storage->read(); 
-	
-				if ($this->getRequest()->getPost('user_password')==$this->getRequest()->getPost('user_password_repeat')) {
-					if ($this->updatePassword($u->user_id,$this->getRequest()->getPost('user_password_old'),$this->getRequest()->getPost('user_password'))) {
-						$this->view->success="Slaptažodis pakeistas";
-				}else{
-					 $this->view->errors[] =  array("type"=>"system","message"=>"Neteisingas slaptažodis");
+			$action="";
+			
+			if (isset($_POST['action'])) {
+			
+				$action =$_POST['action'];
+				if ($action=="attributes") {
+          $form=$this->view->userAttributesForm;
+          $form_valid=$form->isValid($_POST);
+				}else if($action=="groups") {
+           $form_valid=true;
 				}
-
-}else{
- $this->view->errors[] =  array("type"=>"system","message"=>"Slaptažodžiai nesutampa");
-}
 			}else{
-			$err_codes=new Entities_FormErrors();
+				$action = "psw";
+				$form=$this->view->changePasswordForm;
+				$form_valid=$form->isValid($_POST);
+			}
+			if($form_valid){
+				
+				switch($action) {
+				case "psw":
+					
+	
+					if ($this->getRequest()->getPost('user_password')==$this->getRequest()->getPost('user_password_repeat')) {
+						if ($this->updatePassword($u->user_id,$this->getRequest()->getPost('user_password_old'),$this->getRequest()->getPost('user_password'))) {
+							$this->view->success="Slaptažodis pakeistas";
+						}else{
+							 $this->view->errors[] =  array("type"=>"system","message"=>"Neteisingas slaptažodis");
+						}
+				
+
+					}else{
+					 	$this->view->errors[] =  array("type"=>"system","message"=>"Slaptažodžiai nesutampa");
+					}
+				break;
+				case "groups":
+				if (isset($_POST['group'])) {
+					$this->updateUserGroups($u->user_id,$_POST['group']);
+					}else{
+					$this->updateUserGroups($u->user_id,array());
+					}
+				break;
+				case "attributes":
+					$location = $_POST['user_location'];
+					if ($_POST['use_other_location']=='1') {
+						$location = $_POST['user_other_location'];
+					}
+					if ($this->updateAttributes($u->user_id,array('user_location'=>$location,'user_about'=>$_POST['user_about']))) {
+					}else{
+            $this->view->errors[] =  array("type"=>"system","message"=>"Išsaugoti informacijos nepavyko");
+					}	
+				break;
+			}
+			}else{
+          $err_codes=new Entities_FormErrors();
 		      foreach ($form->getErrors() as $key => $error) {
 		          if (count($error) > 0) {
 		          	  $this->view->errors[] =  array("type"=>"form","message"=>$form->getElement($key)->getLabel() ." - ". $err_codes->getError($error[0]));
@@ -104,8 +145,69 @@ class BrewerController extends Zend_Controller_Action {
 		}
 		
 	 }
+	$this->view->user_attributes=$this->getUserAttributes($u->user_id);
+	$this->view->user_groups=$this->getUserAviableGroups($u->user_id);
     }
-   
+	private function updateUserGroups($user_id,$groups) {
+		$db = Zend_Registry::get('db');
+          	$where = array();
+         	$where[] = $db->quoteInto('user_id = ?', $user_id);
+		$db->delete("users_groups", $where);
+		
+		for ($i=0; $i<count($groups);$i++) {
+		 $db->insert("users_groups",array("user_id"=>$user_id,"group_id"=>$groups[$i]));
+		}
+		return true;
+	}	
+	private function getUserAviableGroups($user_id) {
+		$db = Zend_Registry::get('db');
+		$select=$db->select()
+		->from("users_groups",array("user_id"=>"concat('0')"))
+		->joinRight("groups", "groups.group_id=users_groups.group_id")
+		->where("groups.group_public = ?","1")
+		->where("groups.group_registration = ?","public")
+		->orWhere("users_groups.user_id = ?",$user_id)
+		->group("groups.group_id");
+		$aviable_gr=$db->fetchAll($select);
+		$select=$db->select()
+			->from("users_groups")
+			->where("user_id = ?",$user_id);
+			$subscribed_gr=$db->fetchAll($select);
+    for ($i=0;$i<count($aviable_gr);$i++) {
+         for ($ii=0;$ii<count($subscribed_gr);$ii++) {
+           if ($aviable_gr[$i]["group_id"]==$subscribed_gr[$ii]["group_id"]) {
+            $aviable_gr[$i]["user_id"]=$user_id;
+           
+           }
+         }
+    }
+		
+		return $aviable_gr;
+	
+	}
+   	private function getUserAttributes($user_id) {	
+		$db = Zend_Registry::get('db');
+		$select=$db->select()
+		->from("users_attributes")
+		->where("user_id = ?",$user_id);
+		if ($row=$db->fetchRow($select)) {
+			
+		}else{
+			$row= array("user_id"=>$user_id,"user_location"=>"","user_about"=>"");
+		}
+		$row["user_about"]=preg_replace('/((?:[^"\'])(?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i','<a href="$1" rel="nofollow" target="blank">$1</a>',nl2br($row["user_about"]));
+		return $row;
+	}
+	private function updateAttributes($user_id,$att) {
+		$db = Zend_Registry::get('db');
+          	$where = array();
+         	$where[] = $db->quoteInto('user_id = ?', $user_id);
+		$db->delete("users_attributes", $where);
+		$stripTags = new Zend_Filter_StripTags( array('p','b','br','strong'),array()); 
+		$user_about = $stripTags->filter($att["user_about"]);
+		
+		return $db->insert("users_attributes",array("user_id"=>$user_id,"user_location"=>$att["user_location"],"user_about"=>$user_about));
+	}
      private function updatePassword($user_id, $old_password, $new_password) {
      	  
           $db = Zend_Registry::get('db');

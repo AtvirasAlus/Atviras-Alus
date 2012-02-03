@@ -108,13 +108,7 @@ for ($i=0;$i<count($body_arr);$i++) {
 	$body.=$this->mail['mail_from']." rašė: \n------------------------\n".$body_arr[$i]."\n------------------------";
 }
 
-	if (count($this->acc)>0) {
-	$tmp_acc=array($this->mail['mail_from']);
-		for ($i=0;$i<count($this->acc);$i++) {
-			$tmp_acc[]=$this->acc[$i]["user_name"];	
-		}
-		$this->mail['mail_from']=implode(", ",array_unique($tmp_acc));
-	} 
+	
 	
 ?>
 
@@ -122,7 +116,7 @@ for ($i=0;$i<count($body_arr);$i++) {
 <form action="/mail/send" method="post" id="sendMailForm">
 <table width="95%"><tr><td>Adresatas:<div class="ui-widget"> 
 	
-	<input id="mail_to" name="mail_to" style="width:100%" value="<?=$this->mail['mail_from'];?>"/> 
+	<input id="mail_to" name="mail_to" style="width:100%" value="<?=$this->acc;?>"/> 
 </div> </td></tr>
 <tr><td>Tema:</td></tr><tr><td>
 <input type="text" name="mail_subject" id="mail_subject"  style="width:100%" value="Ats:<?=$this->mail['mail_subject'];?>"/>

@@ -9,6 +9,7 @@
 }
 thead td {
 	padding:3px;
+
 	font-style:italic;
 	color:#555555;
 	font-weight:bold;
@@ -38,7 +39,9 @@ h2 {
 	-moz-border-radius:8px;
 }
 
-
+.td-number{
+  padding-left:7:center;
+}
 
 
 	
@@ -172,7 +175,7 @@ function i_bu($ibu,$og) {
     ?>
     <table width="100%">
     <tr><td valign="top" align="left"><table width="100%" cellpadding="0" cellspacing="0">
-    <thead><td>Pavadinimas</td><td>Spalva (EBC)</td><td>Kiekis (kg)</td> <td>Kiekis (%)</td></thead>
+    <thead><td >Pavadinimas</td><td>Spalva (EBC)</td><td width="150">Kiekis (kg)</td> <td>Kiekis (%)</td></thead>
       <? 
       for ($i=0;$i<count($this->data['malt']);$i++) {
       ?>
@@ -180,6 +183,9 @@ function i_bu($ibu,$og) {
       <?
       }
       ?>
+     <tr><td></td><td></td><td align="left"><hr style="background:#dedede" width="80" align="left"/></td> <td></td></tr>
+     <tr ><td ></td><td></td><td style="padding-top:5"><?=$total;?></td> <td></td></tr>
+     
     </table>
     </td>
     <td valign="top" align="right">
@@ -193,9 +199,16 @@ function i_bu($ibu,$og) {
 
 
   <p><h2 align="left">apyniai</h2>
-  <hr/><table width="100%"><tr><td valign="top" align="left">
+  <hr/>
+  <?
+    $total=0;
+    for ($i=0;$i<count($this->data['hops']);$i++) {
+      $total+=floatval($this->data['hops'][$i]['hop_weight']);
+    }
+    ?>
+  <table width="100%"><tr><td valign="top" align="left">
   <table width="100%"  cellpadding="0" cellspacing="0">
-  <thead><td>Pavadinimas</td><td>Kartumas (AA%)</td><td>Kiekis (g)</td><td>Laikas</td></thead>
+  <thead><td>Pavadinimas</td><td>Kartumas (AA%)</td><td width="150">Kiekis (g)</td><td>Laikas</td></thead>
     <? 
     for ($i=0;$i<count($this->data['hops']);$i++) {
     ?>
@@ -203,6 +216,8 @@ function i_bu($ibu,$og) {
     <?
     }
     ?>
+     <tr><td></td><td></td><td align="left"><hr style="background:#dedede" width="80" align="left"/></td> <td></td></tr>
+     <tr ><td ></td><td></td><td style="padding-top:5"><?=$total;?></td> <td></td></tr>
   </table>
   </td><td valign="top" align="right"><? if (count($this->data['hops'])>0) {?><span class="nom">IBU:</span> <?=$this->data['recipe']['recipe_ibu'];?></br>
     <span class="nom">IBU/OG:</span> <?=round($this->data['recipe']['recipe_ibu']/(($this->data['recipe']['recipe_sg']*1000)-1000),2);?></br>

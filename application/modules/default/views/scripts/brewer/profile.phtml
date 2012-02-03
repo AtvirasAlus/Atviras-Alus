@@ -2,7 +2,10 @@
 <div align="center" >
 
 <h1> Profilis </span></h1>
-<div class="ui-corner-all" style="background:#FFF;padding:20;">
+
+
+<div class="ui-corner-all" style="background:#FFF;padding:20;" align="left">
+
  <table><tr><td>
 <img src="http://www.gravatar.com/avatar/<?=md5($this->user_info->user_email);?>?rating=G&size=50&default=mm" border="0"/></td><td style="padding:10" valign="top">
 Avataras registruotas e-paštu: <?=$this->user_info->user_email;?> svetainėje <a href="http://www.gravatar.com">gravatar.com</a></td></tr></table></br>
@@ -25,7 +28,71 @@ Avataras registruotas e-paštu: <?=$this->user_info->user_email;?> svetainėje <
 if ($this->success) {
 print $this->success;
 }
-print $this->changePasswordForm;
+?>
+<div id="tabs" style="width:725px">
+<ul>
+				<li><a href="#tabs-1">Info</a></li>
+				<li><a href="#tabs-2">Slaptažodis</a></li>
+				
+			</ul>
+<div id="tabs-1" align="center">
+<div align="left">Mano info:</div>
+<hr border="0" style="background:#666666;border:0"/>
+<?
+
+if (strlen($this->user_attributes['user_location'])>0) {
+ 		$this->userAttributesForm->getElement('user_location')->setValue($this->user_attributes['user_location']);
+		$this->userAttributesForm->getElement('use_other_location')->setValue('0');
+		$this->userAttributesForm->getElement('user_other_location')->setValue("");
+		$this->userAttributesForm->getElement('user_about')->setValue($this->user_attributes['user_about']);
+	if ( $this->userAttributesForm->getElement('user_location')->getValue()!=$this->user_attributes['user_location']) {
+		$this->userAttributesForm->getElement('use_other_location')->setValue('1');
+		$this->userAttributesForm->getElement('user_other_location')->setValue($this->user_attributes['user_location']);
+	}
+}
+print  $this->userAttributesForm;
+
+?>
+<br/>
+
+<?if (count($this->user_groups) >0) {?>
+
+<div align="left">Mano grupės:</div>
+<hr border="0" style="background:#666666;border:0"/>
+<form action="/brewer/profile" method="post" target="_self"><table align="center" width="70%" >
+<?
+for ($i=0;$i<count($this->user_groups);$i++) {
+$selected = $this->user_groups[$i]['user_id'] >0 ? "checked" : "";
 ?>
 
+<tr>
+<td>
+<label style="float:left;padding-right:10px;display:block" for="gr-<?=$this->user_groups[$i]['group_id'];?>"><input  style="vertical-align: middle" type="checkbox" value="<?=$this->user_groups[$i]['group_id'];?>" id="gr-<?=$this->user_groups[$i]['group_id'];?>" name="group[]" <?=$selected;?> ><?=$this->user_groups[$i]['group_name']; ?> (<?=$this->user_groups[$i]['group_description']; ?>)</label></td></tr>
+<?
+}
+?>
+<tr><td style="color:#666666"><i>Prisijungę prie grupės  galėsite dalyvauti grupės narių susirašinėjimuose </i>
+</td>
+</tr>
+<tr><td align="right">
+<input type="hidden" name="action" value="groups"/><button type="submit" value="">Saugoti</button>
+</td>
+</tr>
+
+</form>
+</table>
+<?}?>
 </div>
+
+<div id="tabs-2" align="center">
+<?
+print $this->changePasswordForm;
+?>
+</div>
+
+</div>
+</div>
+</div><script>
+$('#tabs').tabs();
+
+</script>

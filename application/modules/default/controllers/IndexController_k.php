@@ -119,8 +119,9 @@ class IndexController extends Zend_Controller_Action {
     public function sitemapAction() {
     	     $this->_helper->layout->setLayout('empty');
 	        $this->_helper->viewRenderer->setNoRender(true);
-          $sitemap=$this->view->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigation.xml","nav")));
-          $sitemap->sitemap()
+$sitemap=$this->view->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigation.xml","nav")));
+
+      $sitemap->sitemap()
 
      // ->setFormatOutput(true); 
  ->setUseXmlDeclaration(true) // default is true
@@ -149,7 +150,6 @@ echo $sitemap->sitemap();
 		));
 		$feed->setId('http://www.atvirasalus.lt/index/rss');
 		$feed->setDateModified(time());
-		if (!isset($_GET['blogs_only'])) {
 		 $select=$db->select() 
 			 ->from("beer_articles")
 			 ->where("article_publish = 1")
@@ -167,8 +167,7 @@ echo $sitemap->sitemap();
 				 $entry->setContent($articles[$i]['article_text']);
 				 $feed->addEntry($entry);
 			 }
-			 }
-if (!isset($_GET['articles_only'])) {
+			 
 		   $select=$db->select() 
 			 ->from("VIEW_blog_latest")
 			 ->join("users","users.user_id=VIEW_blog_latest.post_author",array("user_name"))
@@ -189,7 +188,6 @@ if (!isset($_GET['articles_only'])) {
 				 $entry->setContent($blogs[$i]['post_content']);
 				 $feed->addEntry($entry);
 			 }
-}
 			 header ("content-type: text/xml");
 		print  trim($feed->export('rss',true));
 		
@@ -229,5 +227,7 @@ if (!isset($_GET['articles_only'])) {
     }
     public function stylesAction() { 
     }
+  
+
 }
 ?>
