@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="alexaVerifyID" content="flj8CxyyfEenq5UbyH5vpBlz7DA" />
@@ -85,26 +85,6 @@ function showLogin() {
 	$("#login-dialog").displayError([]);
 }
 $(document).ready(function () {
-  	
-$("ul#topnav li").hover(function() { //Hover over event on list item
-	$(this).css({ 'background' : '#DEDEDE'}); //Add background color + image on hovered list item
-	if ($(this).find("span").length>0) {
-    $(this).addClass('ui-corner-tl ui-corner-tr');
-    $(this).find("span").show();
-	}else{
-    $(this).addClass('ui-corner-all');
-	}
-	
-	 //Show the subnav
-} , function() { //on hover out...
-	$(this).css({ 'background' : 'none'}); //Ditch the background
-	if ($(this).find("span").length>0) {
-    $(this).removeClass('ui-corner-tl ui-corner-tr');
-    $(this).find("span").hide();
-	}else{
-    $(this).removeClass('ui-corner-all');
-	}
-});
 	$("#login-button").button();
 	$("#login-button").bind('click', function (e) {
 		login();
@@ -120,34 +100,31 @@ $("ul#topnav li").hover(function() { //Hover over event on list item
   <body>
     <div id="vc-main" style="padding-left:30">
     <table cellpadding="0" cellspacing="0" border="0"><tr><td width="180" valign="top">
-            <a href="/"><img src="/public/images/logo.png" style="position:relative;top:5px;left:20px;" width="120" border="0"></a> 
+            <a href="/"><img src="/public/images/logo.png" style="position:relative;top:15px;left:20px;" width="120" border="0"></a> 
              <div align="center" style="position:relative;top:45px;width:160;" > 
-              <br/>Mūsų draugai:
-                  <div class="ui-corner-all" style="background:#ffffff">
+             
+                  <div class="ui-corner-all" style="background:#ffffff;position:relative;top:11px;">
                     <p><a href="http://tikrasalus.lt" target="_blank"><img src="/public/images/TAD.png" width="120" border="0"/></a></p>
                   </div>
-                  <div class="ui-corner-all" style="background:#ffffff">
+                  <div class="ui-corner-all" style="background:#ffffff;position:relative;top:10px;">
                     <p style="padding-top:10;padding-bottom:10"><a href="http://savasalus.lt" target="_blank"><img src="/public/images/savasalus.jpg" width="120" border="0"/></a></p>
                   </div> 
-                  <div align="center" style="position:relative;top:20px;width:160;" >v1.0 'Target'<?//$this->projectProgress();?> </div>
-         
-          <div align="center" style="position:relative;top:40px;">
-            <a href="http://www.facebook.com/pages/atvirasaluslt/#!/pages/atvirasaluslt/182104888497349"><img src="/public/images/ico_facebook.gif" border="0"/></a>
-            <a href="/index/rss"><img src="/public/images/ico_feed.gif" border="0"/></a>
-            <a href="http://twitter.com/#!/AtvirasAlus"><img src="/public/images/ico_twitter.gif" border="0"/></a>
-          </div>
-          </div>
+                  
+		
+	
+
+          
          
          <!-- end sidebar -->
          </td>
          <td valign="top">  
-       
+          <div id="top-header" style="height:50;" >
           <table width="100%"><tr><td>
            <p class="pullquote" style="float:left"><?=$this->fortune();?></p>
             <span style="float:right"><?=$this->loginScreen();?></span>
           </td>
-           <tr style="height:20"><td valign="top">
-                <ul id="topnav">
+           <tr><td>
+                <ul id="menu-top" style="display:inline-block;">
                   <? 
                   $this->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigation.xml","nav")));
 
@@ -158,19 +135,19 @@ $("ul#topnav li").hover(function() { //Hover over event on list item
                       $mark="";
                     }
                     ?>
-                 <li> &nbsp;<a href="<?= $page->getHref();?>" style="<?=$mark?>"><? print  trim($page->label);?></a>&nbsp; </li>
+                 <li> &nbsp;<a href="<?= $page->getHref();?>" style="<?=$mark?>">
+
+                  <? print  $page->label;?></a>&nbsp; </li>
                   <?
                   }
                   ?>
               </ul>
-          
-        
-     </td></tr>
-     <tr><td>
+          </div>
+        </td></tr></table>
            <div id="content" style="padding-left:20;align:right;display:inline-block;">
             <? echo $this->layout()->content;?>
             </div> 
-               </td></tr></table>
+            
          </td>
         <td>&nbsp;</td>
          </tr>
@@ -184,7 +161,7 @@ $("ul#topnav li").hover(function() { //Hover over event on list item
                   <tr><td></td><td><button id="login-button">Jungtis</button></td></tr>
                 </table>
             </form>
-          </div>
+         
         <script type="text/javascript">
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-21270974-1']);
@@ -210,7 +187,7 @@ $("ul#topnav li").hover(function() { //Hover over event on list item
               </div>
              -->
    
-    
+     </div>
       
   </body>
 </html>

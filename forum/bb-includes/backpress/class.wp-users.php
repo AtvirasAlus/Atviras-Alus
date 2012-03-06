@@ -561,7 +561,7 @@ class WP_Users {
 	}
 
 	function sanitize_user( $user_login, $strict = false ) {
-		return sanitize_user( $user_login, $strict );
+		return sanitize_user( $user_login, false );
 	}
 
 	function sanitize_nicename( $slug ) {

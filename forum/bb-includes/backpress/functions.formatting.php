@@ -585,8 +585,8 @@ function sanitize_user( $username, $strict = false ) {
 	$username = preg_replace('/&.+?;/', '', $username); // Kill entities
 
 	// If strict, reduce to ASCII for max portability.
-	if ( $strict )
-		$username = preg_replace('|[^a-z0-9 _.\-@]|i', '', $username);
+	//if ( $strict )
+	//	$username = preg_replace('|[^a-z0-9 _.\-@]|i', '', $username);
 
 	// Consolidate contiguous whitespace
 	$username = preg_replace('|\s+|', ' ', $username);

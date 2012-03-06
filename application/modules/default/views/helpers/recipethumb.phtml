@@ -3,7 +3,9 @@
 <td>
 <a href="/alus/receptas/<?=$this->item['recipe_id'];?>-<?=$this->escapeParam($this->item['recipe_name']);?>"><b><? print $this->item['recipe_name'];?></b></a> (<a href="/stilius/<? print $this->item['recipe_style'];?>"><? print $this->item['style_name'];?></a>)
 </td>
+<?php if(!isset($this->options['without_brewer'])){ ?>
 <td> - <a href="/brewers/<? print $this->item['brewer_id'];?>"><b><? print $this->item['user_name'];?></b></a></td>
+<?php } ?>
 </td>
 
 

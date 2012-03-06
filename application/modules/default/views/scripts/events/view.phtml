@@ -1,8 +1,77 @@
 <? $this->headTitle()->append(" - Įvykis - ".$this->event['event_name']);?>
 <? $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,degustacija,receptas,alus');?>
 
+<style>
+
+#entries .col{
+	float:left;
+	width:50%;
+}
+#entries p{
+  clear:left;
+  min-height:60px;
+  width:350px;
+  margin:5px 0;
+}
+#entries p.selected{
+  background:#f6f6f6 !important;
+}
+
+#entries label{
+	font-size:14px;
+	line-height:18px;
+	float:left;
+	margin-left:15px;
+	display:block;
+	width:300px;
+	
+}
+#entries input[type=checkbox]{
+	float:left;
+	margin:25px 0 0 5px;
+}
+#entries small{
+	display:block;
+	
+}
+.spinner{
+  position:absolute;
+  margin:5px 0 0 -9px;
+}
+</style>
+
 <script>
 $(function(){
+  
+  //registruojame alu
+  $('#entries input[type=checkbox]').live('click',function(){
+    var data = jQuery.parseJSON($(this).val());
+    
+    if($(this).is(':checked')){
+      $(this).parents('p').addClass('selected');
+      data['action'] = 'add';
+    }else{
+      $(this).parents('p').removeClass('selected');
+      data['action'] = 'remove';
+    }
+    $(this).parents('p').append("<img src='/public/images/spinner.gif'/ class='spinner'>");
+    var entry =  $(this).parents('p');
+
+    $.ajax({
+      type: "POST",
+			data: data,
+			url: "/events/entry-registration",
+			success: function(){
+			  //Pavelinam loaderio panaikinima, taip vartotojas supras, kad veiksmas atliktas
+			  window.setTimeout(function(){
+			    entry.fadeOut();
+			  }, 1500);
+			  
+			}
+    });
+    
+  });
+  
 	$("#register_to_event").click(function(){
 	//get the id
 	
@@ -30,7 +99,8 @@ $(function(){
 				$("#register_to_event").css("display","none");
 				$("#registered").html('')
 				if (data.data.length>0) {
-					$("#registered").html(data.data)
+					$("#registered").html(data.data);
+					$('#competition_entries').fadeIn();
 				}
 			}
 		});
@@ -59,7 +129,8 @@ $(function(){
 				$("#register_out_event").css("display","none");
 				$("#registered").html('')
 				if (data.data.length>0) {
-					$("#registered").html(data.data)
+					$("#registered").html(data.data);
+					$('#competition_entries').fadeOut();
 				}
 				
 				
@@ -67,10 +138,12 @@ $(function(){
 			}
 		});
 	});
+
+	$('#competition_entries').tabs();
 });
 </script>
 <div style="width:800;background:#ffffff;padding:10" class="ui-corner-all"><h1><?=$this->event['event_name'];?></h1>
-<div class="ui-corner-all" style="background:#eeeeee;height:300;border:1px solid #dedede">
+<div class="ui-corner-all" style="background:#eeeeee;min-height:300;border:1px solid #dedede">
 
 <div style="padding:15">
 
@@ -81,6 +154,7 @@ $(function(){
 
 <div style="display:inline;float:left;position:relative;padding-top:10">
 <?
+
 switch ($this->registration_status) {
 case 0:
 	?>
@@ -93,7 +167,7 @@ case 1:
 	<span id="preloader_place"></span>
 	
 	<a href='javascript:;'  id='register_to_event' style="display:block;font-weight:bold">Dalyvausiu</a>
-	<a href='javascript:;'  id='register_out_event' style="display:none;font-weight:bold">Nedalyvausiu</a>
+	<a href='javascript:;'  id='register_out_event' style="display:none;font-we		t:bold">Nedalyvausiu</a>
 	
 	<?
 	break;
@@ -120,6 +194,21 @@ if (strlen($this->registered_users['user_name'])) {
 ?>
 </div>
 </div>
+
+
+
+  
+<br>
+<?php if($this->event['event_type'] == 'competition' && count($this->beer_recipes) > 1){ ?>
+<div id="competition_entries" <?php if($this->registration_status != 2) echo 'style="display:none;"'; ?>>
+<ul>
+	<li><a href="/events/my-entries?event_id=<?=$this->event['event_id'];?>">Mano pateikti receptai</a></li>
+	<li><a href="/events/my-all-recipes?event_id=<?=$this->event['event_id'];?>">Mano visi receptai</a></li>
+</ul>
+<div id="ui-tabs-1" class="ui-corner-all" style="background:#ffffff;padding:15"></div>
+<div id="ui-tabs-2" class="ui-corner-all" style="background:#ffffff;padding:15"></div>
+
 </div>
+<?php } ?>
 </div>
 </div>

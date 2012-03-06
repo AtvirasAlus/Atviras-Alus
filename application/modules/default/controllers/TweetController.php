@@ -52,7 +52,7 @@ public function removetweetAction() {
 		$storage_data=$storage->read();
 		if (isset($storage_data->user_type)) {
 			$db = Zend_Registry::get('db');
-			if ($db->delete("beer_tweets","tweet_id = ".$_POST['id'])) { @$this->removeCache('tweet_latest');print 1;}else{print 0;}
+			if ($db->delete("beer_tweets","tweet_id = ".$_POST['id'] . ' and ("admin"="'.$storage_data->user_type.'" || tweet_owner='.$storage_data->user_id.' )')) { @$this->removeCache('tweet_latest');print 1;}else{print 0;}
 		}
 }
   	  public function addtweetAction() {

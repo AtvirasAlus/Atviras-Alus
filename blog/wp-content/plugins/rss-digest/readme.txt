@@ -2,8 +2,8 @@
 Contributors: samcharrington
 Tags: rss, digest, feed, post, posts, delicious, daily, weekly
 Requires at least: 2.8
-Tested up to: 3.0
-Stable tag: 1.03
+Tested up to: 3.2
+Stable tag: 1.5
 
 RSS Digest is a plugin that creates daily digests from an RSS or Atom feed that you specify.
 
@@ -69,6 +69,11 @@ Possibly. Leave a comment on the plugin's homepage with your feature request and
 2. The configuration settings page.
 
 == Changelog ==
+
+= 1.5 =
+
+* ADDED: Extensive debugging features on Debug tab
+* ADDED: Ability to specify digest header and footer
 
 = 1.03 =
 
