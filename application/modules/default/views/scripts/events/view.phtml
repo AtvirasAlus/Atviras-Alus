@@ -151,6 +151,17 @@ $(function(){
 
 <div style="padding-bottom:12"><span style="color:#666666">Data: </span><?=$this->event['event_start'];?></div>
 <div><?=$this->event['event_description'];?></div>
+<?php if($this->event['event_type'] == 'competition') { ?>
+<div align="center" style="padding:10px">
+<div style="width:400;background:#ffffff;padding:10px" class="ui-corner-all">
+
+<? 
+$evInfo=$this->eventInfo();
+print $evInfo->showCompetitionDetails($this->event['event_id'],"Ketegorijoms registruoti alūs");
+?>
+</div>
+</div>
+<?}?>
 
 <div style="display:inline;float:left;position:relative;padding-top:10">
 <?
