@@ -97,7 +97,8 @@ class IndexController extends Zend_Controller_Action {
 			->limit(5);
 			 $this->view->articles=$db->fetchAll($select);
 			   $select=$db->select() 
-			 ->from("VIEW_bblast_posts");
+			 ->from("VIEW_bblast_posts")
+			 	 ->limit(7);;
 			 $this->view->posts=$db->fetchAll($select);
 		if ($this->view->blogs= $cache->load('blog_latest')) {
 		}else{
@@ -105,7 +106,7 @@ class IndexController extends Zend_Controller_Action {
 			 ->from("VIEW_blog_latest")
 			 ->join("users","users.user_id=VIEW_blog_latest.post_author",array("user_name"))
 			 ->order("post_date DESC")
-			 ->limit(20);
+			 ->limit(7);
 			 $this->view->blogs=$db->fetchAll($select);
 			 $cache->save($this->view->blogs, 'blog_latest');
 			 }

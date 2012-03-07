@@ -75,7 +75,24 @@ h1 {
 <table>
 <? for ($i=0;$i<count($this->posts);$i++) {?>
 <tr>
-<td><a href="/forum/topic.php?id=<?=$this->posts[$i]['topic_id'];?>&page=<?=(ceil($this->posts[$i]['post_position']/25));?>#post-<?=$this->posts[$i]['post_id'];?>"><?=$this->posts[$i]["topic_title"]?></a> pasisakė <a  href="/brewers/<?=$this->posts[$i]['poster_id'];?>"><?=$this->posts[$i]["user_name"]?></a></td>
+<td><? 
+if ($i % 2 ==1) {
+$c ="class='ui-corner-all' style='text-indent:20px;background:#EEEEEE;color:#666666;padding:5'"; 
+}else{ 
+$c = " style='text-indent:20px;padding:5'";
+}
+?><div <?=$c;?>> <a href="/forum/topic.php?id=<?=$this->posts[$i]['topic_id'];?>&page=<?=(ceil($this->posts[$i]['post_position']/30));?>#post-<?=$this->posts[$i]['post_id'];?>"><?=$this->posts[$i]["topic_title"]?></a> pasisakė <a  href="/brewers/<?=$this->posts[$i]['poster_id'];?>"><?=$this->posts[$i]["user_name"]?>:</a>
+
+<div style="text-indent:20px;">
+<? $fhtml= new Zend_Filter_StripTags();
+$f=new Entities_Filter_Excerpt();
+?>
+<span style="font-size:17px;font-weight:bold">“</span><a style="color:#666;font-size:12px;" href="/forum/topic.php?id=<?=$this->posts[$i]['topic_id'];?>&page=<?=(ceil($this->posts[$i]['post_position']/30));?>#post-<?=$this->posts[$i]['post_id'];?>">
+<?
+print $f->filter($fhtml->filter($this->posts[$i]['post_text']),30) ;?>
+
+</a><span style="font-size:17px;font-weight:bold">”</span>
+</div></div></td>
 </tr>
 <?}?>
 </table>
@@ -187,9 +204,16 @@ $z++;
 <div class="ui-corner-all" style="background:#ffffff;padding:10;width:360;"><h1 style="text-decoration:italic;font-size:12px">Iš aludarių dienoraščio:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
 <table>
 <? for ($i=0;$i<count($this->blogs);$i++) {?>
-<tr>
-<td>
-<div><a href="/brewers/<?=$this->blogs[$i]['post_author'];?>"><?=$this->blogs[$i]['user_name'];?></a> - <a  style="font-size:13;" href="<?=$this->blogs[$i]['guid'];?>"><?=$this->blogs[$i]['post_title'];?></a> (<?=intval($this->blogs[$i]['comment_count']);?>)<img src="/public/images/comments_icon.png" border=0/> </div>
+<tr >
+<td style="border-bottom:1px dotted #EEE;padding-top:5">
+<div><a href="/brewers/<?=$this->blogs[$i]['post_author'];?>"><?=$this->blogs[$i]['user_name'];?></a> - <a  style="font-size:13;" href="<?=$this->blogs[$i]['guid'];?>"><?=$this->blogs[$i]['post_title'];?></a> (<?=intval($this->blogs[$i]['comment_count']);?>)<img src="/public/images/comments_icon.png" border=0/> <br/>
+<div style="text-indent:20px;"> <a style="font-size:12px;color:#666666;" href="/brewers/<?=$this->blogs[$i]['post_author'];?>">
+<? $fhtml= new Zend_Filter_StripTags();
+$f=new Entities_Filter_Excerpt();
+print $f->filter($fhtml->filter($this->blogs[$i]['post_content']),30);?>
+</a>
+</div>
+</div>
 
 </td>
 </tr>
