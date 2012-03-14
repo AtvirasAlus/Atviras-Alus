@@ -75,15 +75,18 @@ h1 {
 <table>
 <? for ($i=0;$i<count($this->posts);$i++) {?>
 <tr>
-<td><? 
+<td valign="top" style="border-bottom:1px dotted #DEDEDE"><? 
 if ($i % 2 ==1) {
-$c ="class='ui-corner-all' style='text-indent:20px;background:#EEEEEE;color:#666666;padding:5'"; 
+$c ="style='text-indent:20px;color:#666666;padding:5;clear:right;text-indent:20px;'"; 
 }else{ 
-$c = " style='text-indent:20px;padding:5'";
+$c = " color:#666666;style='text-indent:20px;padding:5;clear:right;text-indent:20px;'";
 }
-?><div <?=$c;?>> <a href="/forum/topic.php?id=<?=$this->posts[$i]['topic_id'];?>&page=<?=(ceil($this->posts[$i]['post_position']/30));?>#post-<?=$this->posts[$i]['post_id'];?>"><?=$this->posts[$i]["topic_title"]?></a> pasisakė <a  href="/brewers/<?=$this->posts[$i]['poster_id'];?>"><?=$this->posts[$i]["user_name"]?>:</a>
+?><div style="float:left;padding:5;display:inline-box"><img  src="http://www.gravatar.com/avatar/<?=$this->posts[$i]['email_hash'];?>?rating=G&size=50&default=mm" border="0"/><div align="center"><a  href="/brewers/<?=$this->posts[$i]['poster_id'];?>"><?=$this->posts[$i]["user_name"]?></a></div></div>
+<div ><div align="right" style="padding:5;"> <a href="/forum/topic.php?id=<?=$this->posts[$i]['topic_id'];?>&page=<?=(ceil($this->posts[$i]['post_position']/30));?>#post-<?=$this->posts[$i]['post_id'];?>"><?=$this->posts[$i]["topic_title"]?></a></div>
 
-<div style="text-indent:20px;">
+<div <?=$c;?>>
+
+
 <? $fhtml= new Zend_Filter_StripTags();
 $f=new Entities_Filter_Excerpt();
 ?>
@@ -92,7 +95,8 @@ $f=new Entities_Filter_Excerpt();
 print $f->filter($fhtml->filter($this->posts[$i]['post_text']),30) ;?>
 
 </a><span style="font-size:17px;font-weight:bold">”</span>
-</div></div></td>
+</div></div>
+</td>
 </tr>
 <?}?>
 </table>
@@ -207,7 +211,7 @@ $z++;
 <tr >
 <td style="border-bottom:1px dotted #EEE;padding-top:5">
 <div><a href="/brewers/<?=$this->blogs[$i]['post_author'];?>"><?=$this->blogs[$i]['user_name'];?></a> - <a  style="font-size:13;" href="<?=$this->blogs[$i]['guid'];?>"><?=$this->blogs[$i]['post_title'];?></a> (<?=intval($this->blogs[$i]['comment_count']);?>)<img src="/public/images/comments_icon.png" border=0/> <br/>
-<div style="text-indent:20px;"> <a style="font-size:12px;color:#666666;" href="/brewers/<?=$this->blogs[$i]['post_author'];?>">
+<div style="text-indent:20px;"> <a style="font-size:12px;color:#666666;" href="<?=$this->blogs[$i]['guid'];?>">
 <? $fhtml= new Zend_Filter_StripTags();
 $f=new Entities_Filter_Excerpt();
 print $f->filter($fhtml->filter($this->blogs[$i]['post_content']),30);?>
