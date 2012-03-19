@@ -37,9 +37,16 @@
 	$this->view->event=$db->fetchRow($select);
 	$select=$db->select();
 	$select->from("beer_events_users",array())
-	->join("users","beer_events_users.user_id=users.user_id",array("user_name"=>"group_concat(user_name)"))
+	->join("users","beer_events_users.user_id=users.user_id",array("user_id"=>"group_concat(users.user_id)"))
 	->where("event_id=?",$event_id);
-	$this->view->registered_users=$db->fetchRow($select);
+	 $this->view->registered_users=array();
+	 $r_users=$db->fetchRow($select);
+      if (isset($r_users["user_id"])) {
+        $select=$db->select();
+        $select->from("users")
+          ->where ("user_id in (". $r_users["user_id"].")");
+        $this->view->registered_users=$db->fetchAll($select);
+       }
 	 }
 	 if (isset($this->user->user_id)) {
 	 	
@@ -74,31 +81,37 @@
 	 }
 	
 	 function registerAction() {
-	 	 $db = Zend_Registry::get('db');
-		$this->_helper->layout->setLayout('empty');
-		$this->_helper->viewRenderer->setNoRender(true);
-		$storage = new Zend_Auth_Storage_Session(); 
-		$u=$storage->read();
+        $db = Zend_Registry::get('db');
+        $storage = new Zend_Auth_Storage_Session(); 
+          $this->_helper->layout->setLayout('empty');
+        $u=$storage->read();
 		  if (isset($u->user_name)) {
-			if (isset($_POST)) {
-				$db->delete("beer_events_users","event_id = ".$_POST['id'].' and user_id = '.$u->user_id); 
-				switch($_POST['action']) {
-				
-				case "in":
-					$db->insert("beer_events_users",array("event_id"=>$_POST['id'],"user_id"=>$u->user_id)); 
-					
-					break;
-				}
-				$select=$db->select();
-				$select->from("beer_events_users",array())
-				->join("users","beer_events_users.user_id=users.user_id",array("user_name"=>"group_concat(user_name)"))
-				->where("event_id=?",$_POST['id']);
-				$u=$db->fetchRow($select);
-				 print Zend_Json::encode(array("status"=>0,"data"=>$u['user_name']));
-			}
-		  }else{
-		  	    print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Neregistruotas vartotojas","type"=>"authentication"))));
-		  }
+          if (isset($_POST)) {
+            $db->delete("beer_events_users","event_id = ".$_POST['id'].' and user_id = '.$u->user_id); 
+            switch($_POST['action']) {
+            case "in":
+              $db->insert("beer_events_users",array("event_id"=>$_POST['id'],"user_id"=>$u->user_id)); 
+              break;
+            }
+              $select=$db->select();
+              $select->from("beer_events_users",array())
+              ->join("users","beer_events_users.user_id=users.user_id",array("user_id"=>"group_concat(users.user_id)"))
+              ->where("event_id=?",$_POST['id']);
+              $this->view->registered_users=array();
+              $r_users=$db->fetchRow($select);
+                if (isset($r_users["user_id"])) {
+                  $select=$db->select();
+                  $select->from("users")
+                    ->where ("user_id in (". $r_users["user_id"].")");
+                  $this->view->registered_users=$db->fetchAll($select);
+                 }
+           
+              }
+          }else{	
+            
+              $this->_helper->viewRenderer->setNoRender(true);
+              print "Neregistruotas vartotojas";
+          }
 	 }
 	
 
@@ -177,7 +190,7 @@
   				break;
   				
   				case "remove":
-  					$db->delete("beer_competition_entries", array("event_id"=>$_POST['event_id'],  "event_user_id"=>$_POST['event_user_id'], "recipe_id" => $_POST['recipe_id'], "style_id" => $_POST['style_id'])); 
+					$db->delete("beer_competition_entries", 'event_id = '.(int)$_POST['event_id'].' AND event_user_id = '.(int)$_POST['event_user_id'].' AND recipe_id = '.(int)$_POST['recipe_id']); 
   				break;
   					
   				}
