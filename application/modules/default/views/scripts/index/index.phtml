@@ -90,9 +90,9 @@ $c = " color:#666666;style='text-indent:20px;padding:5;clear:right;text-indent:2
 <? $fhtml= new Zend_Filter_StripTags();
 $f=new Entities_Filter_Excerpt();
 ?>
-<span style="font-size:17px;font-weight:bold">“</span><a style="color:#666;font-size:12px;" href="/forum/topic.php?id=<?=$this->posts[$i]['topic_id'];?>&page=<?=(ceil($this->posts[$i]['post_position']/30));?>#post-<?=$this->posts[$i]['post_id'];?>">
+<span style="font-size:17px;font-weight:bold;text-align:right">“</span><a style="color:#666;font-size:12px;word-wrap" href="/forum/topic.php?id=<?=$this->posts[$i]['topic_id'];?>&page=<?=(ceil($this->posts[$i]['post_position']/30));?>#post-<?=$this->posts[$i]['post_id'];?>">
 <?
-print $f->filter($fhtml->filter($this->posts[$i]['post_text']),30) ;?>
+print wordwrap($f->filter($fhtml->filter($this->posts[$i]['post_text']),30),62,'</br>',true) ;?>
 
 </a><span style="font-size:17px;font-weight:bold">”</span>
 </div></div>
