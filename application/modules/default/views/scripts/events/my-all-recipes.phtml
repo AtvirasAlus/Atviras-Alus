@@ -1,0 +1,21 @@
+<h3 style="margin:0 0 5px 0;">Mano visi receptai</h3>
+Pažymėkite varnele receptus kuriuos norite pateikti į konkursą:<br>
+<div id="entries">
+	<div class="col">
+	<?php foreach(array_slice($this->beer_recipes, 0, (count($this->beer_recipes)  / 2)) as $key => $value){ ?>
+		<p class="ui-corner-all">
+			<input type="checkbox" name="recipe_ids[]" value='{"recipe_id":<?php echo $value['recipe_id'] ?>, "style_id":<?php echo $value['style_id'] ?>, "event_user_id":<?=$this->user_id;?>, "event_id":<?=$this->event_id;?>}' id="recipe_<?php echo $value['recipe_id'] ?>" />
+			<label for="recipe_<?php echo $value['recipe_id'] ?>"><?php echo $this->recipeItem($value,"thumb", array('without_brewer' => true)); ?></label>
+		</p>
+	<?php } ?>
+	</div>
+	<div class="col">
+	<?php foreach(array_slice($this->beer_recipes, (count($this->beer_recipes)  / 2), count($this->beer_recipes)) as $key => $value){ ?>
+		<p class="ui-corner-all">
+			<input type="checkbox" name="recipe_ids[]" value='{"recipe_id":<?php echo $value['recipe_id'] ?>, "style_id":<?php echo $value['style_id'] ?>, "event_user_id":<?=$this->user_id;?>, "event_id":<?=$this->event_id;?>}' id="recipe_<?php echo $value['recipe_id'] ?>"/>
+			<label for="recipe_<?php echo $value['recipe_id'] ?>"><?php echo $this->recipeItem($value,"thumb", array('without_brewer' => true)); ?></label>
+		</p>
+	<?php } ?>
+	</div>
+	<br style="clear:left;">
+</div>

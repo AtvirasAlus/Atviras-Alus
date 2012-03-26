@@ -89,17 +89,17 @@ $(function(){
 			type: "POST",
 			data: "action=in&id=<?=$this->event['event_id'];?>",
 			url: "/events/register",
-			success: function(msg)
+			success: function(html)
 			{
 				$("#preloader_place").html('');
-				 var data = jQuery.parseJSON(msg);
+				
 				
 				
 				$("#register_out_event").css("display","inline");
 				$("#register_to_event").css("display","none");
 				$("#registered").html('')
-				if (data.data.length>0) {
-					$("#registered").html(data.data);
+				if (html.length>0) {
+					$("#registered").html(html);
 					$('#competition_entries').fadeIn();
 				}
 			}
@@ -120,16 +120,16 @@ $(function(){
 			type: "POST",
 			data: "action=out&id=<?=$this->event['event_id'];?>",
 			url: "/events/register",
-			success: function(msg)
+			success: function(html)
 			{
-				 var data = jQuery.parseJSON(msg);
+				
 				 $("#preloader_place").html('');
 				
 				$("#register_to_event").css("display","inline");
 				$("#register_out_event").css("display","none");
 				$("#registered").html('')
-				if (data.data.length>0) {
-					$("#registered").html(data.data);
+				if (html.length>0) {
+					$("#registered").html(html);
 					$('#competition_entries').fadeOut();
 				}
 				
@@ -199,10 +199,16 @@ case 2:
 Dalyviai:<br/>
 <div id="registered" class="ui-corner-all" style="background:#ffffff;padding:15">
 <?
-if (strlen($this->registered_users['user_name'])) {
-	print  $this->registered_users['user_name'];
-}
+for ($ii=0;$ii<count($this->registered_users);$ii++) {
+	
+
 ?>
+<div style="display:inline-block;padding:3;" align="center">
+<div style="float:left;padding:5;background:#FFFFFF;"><a href="/brewers/<?=$this->registered_users[$ii]['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->registered_users[$ii]['user_email']);?>?rating=G&size=50&default=mm" border="0"/></a><br/>
+<a href="/brewers/<?=$this->registered_users[$ii]['user_id'];?>"><?=$this->registered_users[$ii]['user_name'];?> </a></div>
+</div>
+
+<?}?>
 </div>
 </div>
 
@@ -210,7 +216,7 @@ if (strlen($this->registered_users['user_name'])) {
 
   
 <br>
-<?php if($this->event['event_type'] == 'competition' && count($this->beer_recipes) > 1){ ?>
+<?php if($this->event['event_type'] == 'competition' && count($this->beer_recipes)){ ?>
 <div id="competition_entries" <?php if($this->registration_status != 2) echo 'style="display:none;"'; ?>>
 <ul>
 	<li><a href="/events/my-entries?event_id=<?=$this->event['event_id'];?>">Mano pateikti receptai</a></li>
