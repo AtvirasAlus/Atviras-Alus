@@ -61,8 +61,10 @@ case "users":
 	?>
 	var a=<?=$this->user_count;?>;
 	  var d = [];
+	  var sum=0;
     for (var i=0;i<a.length;i++) {
-    	    d.push([new Date(a[i].day).getTime(),a[i].total])
+    sum+=a[i].total
+    	    d.push([new Date(a[i].day).getTime(),sum])
     }
     d=[d]
 	<?

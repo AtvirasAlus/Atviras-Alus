@@ -22,6 +22,8 @@ background-color: #9E9E9E;
 }
 h2 {
 	margin-bottom:-5px;
+	color: #666666;
+	font-weight:normal;
 }
 .recipe_title{
 	font-weight:bold;
@@ -243,16 +245,89 @@ function i_bu($ibu,$og) {
   <p>
     <h2 align="left">pastabos</h2>
     <hr/>
+    <div style="padding-bottom:20;padding-top:10">
     <?=nl2br($this->data['recipe']['recipe_comments']);?>
-    </br>
-
-    </p>
+    </div>
+    
+  </p>
    </div>
+   <!--žymos -->
+   <div>
+   <script>
+   <? $this->headLink()->appendStylesheet("/public/ui/external/jquery.tagsinput.css"); ?>
+   <? $this->headScript()->appendFile("/public/ui/external/jquery.tagsinput.min.js");  ?>
+   
+  $(function() {
+
+			
+			$('#tags_input_field').tagsInput({
+				width: 'auto',defaultText:'Nauja žyma',
+
+				//autocomplete_url:'test/fake_plaintext_endpoint.html' //jquery.autocomplete (not jquery ui)
+				autocomplete_url:'/recipes/find?tags' // jquery ui autocomplete requires a json endpoint
+			})
+			});
+   function showInput() {
+     $("#tag_cloud").hide();
+     $("#tag_input").show();
+   }
+   function hideInput() {
+    $("#tag_cloud").show();
+     $("#tag_input").hide();
+   }
+   function saveTags() {
+	$("#tag_cloud").show();
+	$("#tag_input").hide();
+	$.ajax({type:"POST", data:"tags=" + $('#tags_input_field').val() + "&recipe_id=<?=$this->data['recipe']['recipe_id'];?>", url:"/recipes/mod-tags", success:function (msg) {
+		var data = jQuery.parseJSON(msg);
+		if (data) {
+			var tags = data.tags.split(",");
+			$("#tag_cloud").html('');
+			$("#tags_input_field").val(data.tags);
+			for (var i = 0; i < tags.length; i++) {
+				$("#tag_cloud").append('<a href="/search/tags:' + tags[i] + '"><span style="font-weight:normal;padding:5;color:#7B4A12">' + tags[i] + '</span></a>');
+			}
+		}
+	}});
+}
+
+   </script>
+   <? 
+    $is_owner = false;
+   if (isset($this->user_info)) {
+    $is_owner = $this->user_info->user_id == $this->data['recipe']['brewer_id'];
+   }
+   
+    if ($is_owner) {
+   ?>
+   
+  <h2 align="left"> žymos <a href="javascript:showInput()" style="font-size:11px"> redaguoti </a></h2>
+    
+   <?
+   }else{
+   ?>
+     <h2 align="left"> žymos</h2>
+   <?
+   }
+   ?>
+   <hr/>
+   <div id="tag_cloud" style="padding:10">
+   <?
+   
+   
+   $tags=explode(",",$this->tags);
+   foreach ($tags as $value) {
+      echo "<a href='/search/tags:".$value."'><span style='font-weight:normal;padding:5;color:#7B4A12'>".$value."</span></a>";
+   }
+   ?>
+   </div><div id="tag_input" style="display:none">
+			<input id="tags_input_field" type="text" class="tags" value="<?=$this->tags;?>" /><div align="right"><button onClick="saveTags()" class="ui-corner-all">saugoti</button><button onClick="hideInput()"class="ui-corner-all">atšaukti</button></div></div></div>
    <?
 
 
 		print $this->recipeComments($this->data['recipe']['recipe_id']);
 	
 ?>
+
 </div>
 
