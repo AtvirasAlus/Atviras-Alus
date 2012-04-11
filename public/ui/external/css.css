@@ -1,0 +1,34 @@
+.close{ float:left; width:230px;  height:21px;}
+
+.closes:hover{ background:url(closeh.png) center right no-repeat; height:21px;}
+
+.closes{ background:url(close.png) top right no-repeat; width:24px; height:21px; cursor:pointer;}
+
+
+#attach{
+	font-size:11px;
+	font-weight:bold;
+	border:solid #339999 1px;
+	height:24px;
+	margin-left:0px;
+	
+	cursor:pointer;
+	padding-bottom:2px;
+}
+#images{width:100px; height:100px;}
+#imagesContainer {width:100px; height:100px;}
+#info {float:right;width:320}
+#loader{ margin:7px 7px 7px 7px}
+
+.title{ font-size:11px; font-weight:bold; cursor:pointer; }
+.desc{ font-size:11px; margin-top:5px; cursor:pointer; }
+.title:hover{ background-color:#FFFF99}
+
+.desc:hover{ background-color:#FFFF99}
+
+#prev{cursor:pointer;}
+#next{cursor:pointer;}
+
+.totalimg{ font-size:10px; color:#333333;float:left; margin:5px;}
+
+

@@ -42,7 +42,7 @@ class RecipesController extends Zend_Controller_Action {
     public function searchAction() {
     	    $db = Zend_Registry::get("db");
 		$params=explode("|",$this->getRequest()->getParam("params"));
-		$mask=array("type"=>"recipe_type","style"=>"recipe_style","name"=>"recipe_name","hops"=>"hop_name","malts"=>"malt_name","yeasts"=>"yeast_name","brewer"=>"user_name");
+		$mask=array("type"=>"recipe_type","style"=>"recipe_style","name"=>"recipe_name","hops"=>"hop_name","malts"=>"malt_name","yeasts"=>"yeast_name","brewer"=>"user_name","tags"=>"tag_text");
 		$select=$db->select()
 			->from("beer_styles" ,array("style_name","style_id","style_cat"))
 			->joinLeft("VIEW_public_recipes","VIEW_public_recipes.recipe_style=beer_styles.style_id",array("count"=>"count(VIEW_public_recipes.recipe_id)"))
@@ -68,6 +68,11 @@ class RecipesController extends Zend_Controller_Action {
 				$select->joinLeft("beer_recipes_hops","beer_recipes_hops.recipe_id=beer_recipes.recipe_id");
 			}
 		}
+		if (!empty($filter)) {
+			if (isset($filter["tag_text"])) {
+				$select->joinLeft("beer_recipes_tags","beer_recipes_tags.tag_recipe_id=beer_recipes.recipe_id");
+			}
+			}
 		if (!empty($filter)) {
 			if (isset($filter["malt_name"])) {
 				$select->joinLeft("beer_recipes_malt","beer_recipes_malt.recipe_id=beer_recipes.recipe_id");
@@ -107,6 +112,17 @@ class RecipesController extends Zend_Controller_Action {
 				
 			}else{
 				$filter["hop_name"]="";
+			}
+			if (isset($filter["tag_text"])) {
+				$tags=explode(",",$filter["tag_text"]);
+				for ($i=0;$i<count($tags);$i++) {
+					if (strlen(trim($tags[$i]))>0) {
+					$select->where("tag_text LIKE '%".trim($tags[$i])."%'");
+					}
+				}
+				
+			}else{
+				$filter["tag_text"]="";
 			}
 			if (isset($filter["malt_name"])) {
 				$malt=explode(",",$filter["malt_name"]);
@@ -154,6 +170,27 @@ class RecipesController extends Zend_Controller_Action {
 		$this->view->filter_values=$filter;
 			
 		
+    }
+   
+    public function modTagsAction() {
+      $this->_helper->layout->setLayout('empty');
+      $this->_helper->viewRenderer->setNoRender(true);
+      $storage = new Zend_Auth_Storage_Session(); 
+      $u=$storage->read(); 
+      $tags = isset($_POST['tags']) ? $_POST['tags'] : '';
+      $db = Zend_Registry::get("db");
+      if ($u->user_id) {
+      $tags = isset($_POST['tags']) ? $_POST['tags'] : '';
+     	$db->delete("beer_recipes_tags","tag_recipe_id = ".$_POST['recipe_id'].' and tag_owner = '.$u->user_id); 
+     	$tags_array=explode(",",$tags);
+     	foreach ($tags_array as  $tag) {
+        $db->insert("beer_recipes_tags",array("tag_recipe_id" => $_POST['recipe_id'], "tag_owner"=> $u->user_id, "tag_text"=>$tag));
+     	}
+       print Zend_Json::encode(array("tags"=>$tags));
+       }else{
+       print Zend_Json::encode(array("result"=>1));
+       }
+       
     }
     public function cloudAction() {
     	   //  $this->_helper->layout->setLayout('empty');
@@ -203,6 +240,15 @@ class RecipesController extends Zend_Controller_Action {
 	$select->from("beer_brew_sessions",array("count"=>"count(*)"))
 	->where("session_recipe =?",$recipe_id);
 	$this->view->data["brew_session"]=$db->fetchRow($select);
+	$this->view->tags="";
+	$select=$db->select();
+	$select->from("beer_recipes_tags",array("tags"=>"group_concat(tag_text)"))
+	->where("tag_recipe_id =?",$recipe_id);
+	
+	if ($tags=$db->fetchRow($select)) {
+	$this->view->tags=$tags['tags'];
+	}
+	
 	$user_id=0;
 	if ($this->view->user_info) {
 		$user_id=$this->view->user_info->user_id;
@@ -451,6 +497,15 @@ class RecipesController extends Zend_Controller_Action {
 	 	$this->_helper->layout->setLayout('empty');
 		$this->_helper->viewRenderer->setNoRender();
 		$db = Zend_Registry::get('db');
+		if (isset($_GET['tags'])) {
+      	$select=$db->select()
+			->from("beer_recipes_tags",array("tag_text"=>"distinct(tag_text)"))
+			->where("tag_text like '%".$_GET["term"]."%'");
+			$u=$db->fetchAll($select);
+		for ($i=0;$i<count($u);$i++) {
+			$u[$i]=$u[$i]["tag_text"];
+		}
+		}
 		if (isset($_GET['hops'])) {
 		$select=$db->select()
 			->from("beer_recipes_hops",array("hop_name"=>"distinct(hop_name)"))
