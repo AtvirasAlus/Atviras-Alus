@@ -52,6 +52,17 @@ class BrewerController extends Zend_Controller_Action {
           if ($rows=$db->fetchAll($select)) {
             $this->view->user_info["recipes_comments"]=$rows;	
           }
+          	$select=$db->select()
+          	->from("beer_recipes_tags",array("weight"=>"count(tag_text)","tag_text"=>"tag_text"))
+          	->where("tag_owner = ?",$brewer )
+          	->group("tag_text")
+          	->order("weight DESC")
+          	->limit(100);
+          
+          	$this->view->user_info["tags"]=array();
+          	  if ($rows=$db->fetchAll($select)) {
+            $this->view->user_info["tags"]=$rows;	
+          }
 			 }
 	    }
     	   

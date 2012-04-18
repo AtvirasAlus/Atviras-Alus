@@ -11,13 +11,25 @@ class RecipesController extends Zend_Controller_Action {
 		->joinLeft("beer_styles","beer_recipes.recipe_style = beer_styles.style_id",array("style_name"))
 		->where("beer_recipes.recipe_publish = ?", '1')
 		->order("beer_recipes.recipe_created DESC");
-		
+			
+    
 		//$this->view->recipes=$db->fetchAll($select);
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
+		
+		
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($this->_getParam('page'));
 
 		$this->view->content->setItemCountPerPage(21);
+		$select=$db->select()
+          	->from("beer_recipes_tags",array("weight"=>"count(tag_text)","tag_text"=>"tag_text"))
+          	->group("tag_text")
+          	->order("weight DESC")
+          	->limit(100);
+            $this->view->tags=array();
+            if ($rows=$db->fetchAll($select)) {
+              $this->view->tags=$rows;	
+            }
     	   
     }
     public function stylesAction() {
@@ -165,7 +177,7 @@ class RecipesController extends Zend_Controller_Action {
 			//print $select->__toString();
 			
 		}else{
-			$filter=array("recipe_style"=>0,"recipe_type"=>0,"recipe_name"=>"","hop_name"=>"","yeast_name"=>"","malt_name"=>"","user_name"=>"");
+			$filter=array("recipe_style"=>0,"recipe_type"=>0,"recipe_name"=>"","hop_name"=>"","yeast_name"=>"","malt_name"=>"","user_name"=>"","tag_text"=>"");
 		}
 		$this->view->filter_values=$filter;
 			
@@ -192,6 +204,19 @@ class RecipesController extends Zend_Controller_Action {
        }
        
     }
+    public function printLabelAction() {
+	$this->_helper->layout->setLayout('empty');
+	$recipe_id=isset($_GET['recipe_id']) ? $_GET['recipe_id'] : 0;
+	$db = Zend_Registry::get("db");
+	$select=$db->select();
+	$select->from("beer_recipes")
+	->join("users","users.user_id=beer_recipes.brewer_id",array("user_name"))
+	->joinLeft("beer_styles","beer_styles.style_id=beer_recipes.recipe_style",array("style_name"))
+	->where("recipe_id = ?",$recipe_id);
+	if (!$this->view->recipe=$db->fetchRow($select)) {
+		$this->view->recipe=array("recipe_id"=>0,"style_name"=>"","recipe_name"=>"","recipe_ibu"=>"","recipe_ebc"=>"","recipe_abv"=>"");
+	};
+	}
     public function cloudAction() {
     	   //  $this->_helper->layout->setLayout('empty');
     	    	    $db = Zend_Registry::get("db");

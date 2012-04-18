@@ -92,6 +92,45 @@ $(function() {
 				this.value = terms.join(", ");
 				return false;
 			}});
+			//
+			$("#tags").bind("keydown", function (event) {
+				if (event.keyCode === 9 && $(this).data("autocomplete").menu.active) {
+					event.preventDefault();
+				}
+			});
+
+			$("#tags").autocomplete({source:function (request, response) {
+				$.getJSON("/recipes/find?tags", {term:extractLast(request.term)}, response);
+			}, search:function () {
+				// custom minLength
+				var term = extractLast(this.value);
+				if (term.length < 2) {
+					return false;
+				}
+			}, focus:function () {
+				// prevent value inserted on focus
+				return false;
+			}, select:function (event, ui) {
+				var terms = split(this.value);
+				// remove the current input
+				terms.pop();
+				// add the selected item
+				terms.push(ui.item.value);
+				// add placeholder to get the comma-and-space at the end
+				var lastOne = $.trim(terms[terms.length - 1]);
+				var i = 0;
+				while (i < terms.length - 1) {
+					if ($.trim(terms[i]) == lastOne) {
+						terms.splice(i, 1);
+					} else {
+						i++;
+					}
+				}
+				terms.push("");
+				this.value = terms.join(", ");
+				return false;
+			}});
+			//
 			$("#yeasts").bind("keydown", function (event) {
 				if (event.keyCode === 9 && $(this).data("autocomplete").menu.active) {
 					event.preventDefault();
@@ -158,6 +197,10 @@ function submitForm() {
 	if (hp.length) {
 		filter.push("yeasts:"+encodeURIComponent(hp))
 	}
+	var hp=$('#tags').val()
+	if (hp.length) {
+		filter.push("tags:"+encodeURIComponent(hp))
+	}
 	var hp=$('#brewer').val()
 	if (hp.length) {
 		filter.push("brewer:"+encodeURIComponent(hp))
@@ -202,6 +245,7 @@ for ($i=0;$i<count($this->beer_types);$i++) {
 <tr><td>Apyniai:</td><td><input id="hops"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['hop_name'];?>"/> </td></tr>
 <tr><td>Salyklas:</td><td><input id="malts"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['malt_name'];?>"/> </td></tr>
 <tr><td>Mielės:</td><td><input id="yeasts"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['yeast_name'];?>"/> </td></tr>
+<tr><td>Žymos:</td><td><input id="tags"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['tag_text'];?>"/> </td></tr>
 <tr><td></td><td align="right"><input type="submit" value="Ieškot" style="border:1px solid #dedede"  class="ui-corner-all"/></td>
 </tr>
 </table>

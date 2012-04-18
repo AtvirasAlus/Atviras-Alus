@@ -139,7 +139,7 @@ function i_bu($ibu,$og) {
     <div style="width:100%;height:30;background-color: #DFDFDF;" class="ui-corner-all">
       <div class="recipe_title"><?=$this->data['recipe']['recipe_name'];?></div></div>
       <div style="width:100%;height:30;padding-top:8;padding-right:15;line-height:20px" align="right">
-         <div style="display:inline;" valign="bottom"><a href="/brew-session/recipe/<?=$this->data['recipe']['recipe_id'];?>">Virimai (<?=$this->data['brew_session']['count'];?>)</a> | <a href="/index/calculus/<?=$this->data['recipe']['recipe_id'];?>">Į skaičiuoklę</a></div>
+         <div style="display:inline;" valign="bottom"><a href="/recipes/print-label/?recipe_id=<?=$this->data['recipe']['recipe_id'];?>" target="_blank">Spausdinti etiketę</a> | <a href="/brew-session/recipe/<?=$this->data['recipe']['recipe_id'];?>">Virimai (<?=$this->data['brew_session']['count'];?>)</a> | <a href="/index/calculus/<?=$this->data['recipe']['recipe_id'];?>">Į skaičiuoklę</a></div>
          <div style="display:inline;float:right;padding-left:5;position:relative;top:-1">| <? if (isset($this->user_info)) {
             if ($this->recipe_votes["user_vote"]) {?>
             <a href='javascript:;'  id='vote_up_button'  style="display:none">Patinka</a><a href='javascript:;'  id='vote_down_button'>Nebepatinka</a>

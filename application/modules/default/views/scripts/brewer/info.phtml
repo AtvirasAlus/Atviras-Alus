@@ -87,7 +87,7 @@ h1 {
           <div ><div class="ui-corner-all" style="background:#DDDDDD;padding:2;float:right"><img src="http://www.gravatar.com/avatar/<?=md5($this->user_info['user_email']);?>?rating=G&size=80&default=mm" border="0"/></div></div>
           <div>Narys nuo: <span><?=$this->user_info['user_created'];?></span></div>
           <div>Paskutinį kartą lankėsi: <span><?=$this->user_info['user_lastlogin'];?></span></div>
-	  <div>Vietovė: <span><?=$this->user_info['user_location'];?></span></div>
+          <div>Vietovė: <span><?=$this->user_info['user_location'];?></span></div>
           <div>Išvirė alaus:  <span><?=$this->user_info['total_brewed'];?> l.</span></div><br/>
 	  <div style="padding-left:5"><i><?=$this->user_info['user_about'];?></i></div>
         </div>
@@ -105,6 +105,21 @@ h1 {
                     ?>
                     </ul>
                   </div>
+              </div>
+               <div class="ui-corner-all" style="background:#F1F0ED;padding:20;margin-top:20;">
+               <div align="left" style="margin-bottom:10"><span id="rl"> Žymos </span></div>
+                  <div id="tags">
+                    <ul>
+                    <?
+                    for ($i=0;$i<count($this->user_info['tags']);$i++) {
+                      ?>
+                      <li  style="padding:2;margin:5;font-size:<?=(80+min($this->user_info['tags'][$i]['weight']*20,200));?>%"><a  href="/search/brewer:<?=$this->user_info['user_name'];?>|tags:<?=$this->user_info['tags'][$i]['tag_text'];?>" style="color:#333"><?=$this->user_info['tags'][$i]['tag_text'];?></a></li>
+                      <?
+                    }
+                    ?>
+                    </ul>
+                  </div>
+              </div>
               </div>
       
           <div class="ui-corner-all" style="background:#F1F0ED;padding:20;margin-top:20;">
