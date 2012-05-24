@@ -1,15 +1,14 @@
 <?php 
 
 
-define( "WP_ADMIN", true );
+//define constants
+define( 'DOING_AJAX', true );
+define( 'WP_ADMIN', true );
+$_SERVER['PHP_SELF'] = "/wp-admin/sales-csv.php";
 
 //load wp
-require_once "../../../../wp-load.php";
+require_once '../../../../wp-admin/admin.php';
 
-//make sure that the request came from the same domain	
-if ( stripos( $_SERVER["HTTP_REFERER"], get_bloginfo("siteurl")) === false ) 
-	die();
-	
 //check that a user is logged in
 if ( !is_user_logged_in() )
 	die();
@@ -17,22 +16,26 @@ if ( !is_user_logged_in() )
 //check that a user is logged in
 if ( !current_user_can( 'ims_read_sales' ) )
 	die( );
-	
 
-header( 'Expires: 0' );
-header( 'Pragma: no-cache' );
-header( 'Cache-control: private' );
-header( 'Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . ' GMT' );
-header( 'Cache-Control: no-cache, must-revalidate, max-age=0' );
-header( 'Content-Description: File Transfer' );
-header( 'Content-type: application/csv');
-header( 'Content-Disposition: attachment; filename=image-store-sales.csv' );
+
+//dont cache file
+$enco = get_bloginfo( 'charset' );
+
+header( 'Expires:0' );
+header( 'Pragma:no-cache' );
+header( 'Cache-control:private' );
+header( 'Last-Modified:'.gmdate( 'D,d M Y H:i:s').' GMT' );
+header( 'Cache-Control:no-cache,must-revalidate,max-age=0' );
+
+header( 'Content-Description:File Transfer' );
+header( 'Content-Transfer-Encoding: binary' ); 
+header( 'Content-type: application/csv;  charset=' . "$enco; encoding=$enco" );
+header( 'Content-Disposition:attachment; filename=image-store-sales.csv' );
 
 set_time_limit( 5000 );
 ini_set( 'memory_limit', '215M' );
 
-
-$results = $wpdb->get_results(
+$query = apply_filters( 'ims_sales_csv_query', 
 	"SELECT ID, post_title, 
 	post_status, post_date, meta_value
 	FROM $wpdb->posts p 
@@ -46,37 +49,40 @@ $results = $wpdb->get_results(
 	ORDER BY post_date DESC"
 );
 
+$results = $wpdb->get_results( $query );
 
 if( empty( $results ) )
 	die( );
 
-$object = 'post_date|post_status';
-$colums = array(
-	'txn_id'		=> __( 'Order number', ImStore::domain ), 
-	'post_date'		=> __( 'Date', ImStore::domain ), 
-	'payment_gross' => __( 'Amount', ImStore::domain ), 
-	'tax' 			=> __( 'Tax', ImStore::domain ), 
-	'first_name' 	=> __( 'Firstname', ImStore::domain ),
-	'last_name' 	=> __( 'Lastname', ImStore::domain ), 
-	'num_cart_items'=> __( 'Images', ImStore::domain ), 
-	'payment_status'=> __( 'Payment status', ImStore::domain),
-	'post_status' 	=> __( 'Order Status', ImStore::domain),
-	'address_street'=> __( 'Address', ImStore::domain ),
-	'address_city'	=> __( 'City', ImStore::domain ),
-	'address_state'	=> __( 'State', ImStore::domain ),
-	'address_zip'	=> __( 'Zip', ImStore::domain ),
-	'address_country'=> __( 'Country', ImStore::domain ), 
-);
+$columns = apply_filters( 'ims_sales_csv_columns', array(
+	'txn_id'		=> __( 'Order number', $ImStore->domain ), 
+	'post_date'		=> __( 'Date', $ImStore->domain ), 
+	'payment_gross' => __( 'Amount', $ImStore->domain ), 
+	'tax' 			=> __( 'Tax', $ImStore->domain ), 
+	'first_name' 	=> __( 'Firstname', $ImStore->domain ),
+	'last_name' 	=> __( 'Lastname', $ImStore->domain ), 
+	'num_cart_items'=> __( 'Images', $ImStore->domain ), 
+	'payment_status'=> __( 'Payment status', $ImStore->domain),
+	'post_status' 	=> __( 'Order Status', $ImStore->domain),
+	'address_street'=> __( 'Address', $ImStore->domain ),
+	'address_city'	=> __( 'City', $ImStore->domain ),
+	'address_state'	=> __( 'State', $ImStore->domain ),
+	'address_zip'	=> __( 'Zip', $ImStore->domain ),
+	'address_country'=> __( 'Country', $ImStore->domain ), 
+));
 
-foreach( $colums as $colum ) echo $colum . ","; echo "\n";
+$str = '';
+foreach( $columns as $column ) $str .= $column ."\t"; $str .= "\n";
 foreach( $results as $result ){
 	$data = unserialize( $result->meta_value );
- 	foreach( $colums as $key => $colum ){
-		if( preg_match( "/($object)/i", $key ) ) echo str_replace( ',', '', $result->$key ) . ",";
-		else echo str_replace( ',', '', $data[$key] ) . ",";
+ 	foreach( $columns as $key => $column ){
+		if( preg_match( "/(post_date|post_status)/i", $key ) ) {
+			$str .= isset( $result->$key ) ? str_replace( ',', '', $result->$key ) . "\t" : "\t";
+		}else{
+			$str .= isset( $data[$key] ) ? str_replace( ',', '', $data[$key] ) . "\t" : "\t";
+		}
 	}
-	echo "\n";
+	echo  chr(255) . chr(254) . mb_convert_encoding( $str . "\n",  'UTF-16LE', $enco ) ;
 }	
 
 die( );
-?>

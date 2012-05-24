@@ -13,13 +13,13 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for bbPress */
-define( 'BBDB_NAME', 'db' );
+define( 'BBDB_NAME', 'atvirasalus' );
 
 /** MySQL database username */
-define( 'BBDB_USER', 'user' );
+define( 'BBDB_USER', 'atvirasalus' );
 
 /** MySQL database password */
-define( 'BBDB_PASSWORD', 'psw' );
+define( 'BBDB_PASSWORD', 'sxFU9S5atLC4FrXx' );
 
 /** MySQL hostname */
 define( 'BBDB_HOST', 'localhost' );

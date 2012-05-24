@@ -36,8 +36,8 @@ foreach ($this->content as $item) {?>
 <a href="/index/calculus/<?=$item['recipe_id'];?>" alt="Redaguoti" title="Redaguoti"><span class="ui-icon ui-icon-wrench">Redaguoti</span></a></li>
 <?$ico_name=($item["recipe_publish"]==1) ? 'unlocked' : 'locked';?>
 <?$recipe_status=($item["recipe_publish"]==1) ? '0' : '1';?>
-<li class="ui-state-default ui-corner-all"><a href="javascript:setRecipeStatus(<?=$item['recipe_id'];?>,'<?=$recipe_status;?>','<?=addslashes($item['recipe_name']);?>')" alt="Viešumas" title="Viešumas"><span class="ui-icon ui-icon-<?=$ico_name?>">Viešas</span></a></li>
-<li class="ui-state-default ui-corner-all"><a href="javascript:deleteRecipe(<?=$item['recipe_id'];?>,'<?=addslashes($item['recipe_name']);?>')" alt="Trinti" title="Trinti"><span class="ui-icon ui-icon-trash">Trinti</span></a></li>
+<li class="ui-state-default ui-corner-all"><a href='javascript:setRecipeStatus(<?=$item['recipe_id'];?>,"<?=$recipe_status;?>",unescape("<?=urlencode($item['recipe_name']);?>"))' alt="Viešumas" title="Viešumas"><span class="ui-icon ui-icon-<?=$ico_name?>">Viešas</span></a></li>
+<li class="ui-state-default ui-corner-all"><a href='javascript:deleteRecipe(<?=$item['recipe_id'];?>,unescape("<?=urlencode($item['recipe_name']);?>"))' alt="Trinti" title="Trinti"><span class="ui-icon ui-icon-trash">Trinti</span></a></li>
 </ul>
 
 </td><td><?=$this->recipeItem($item);?>

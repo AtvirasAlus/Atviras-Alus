@@ -165,12 +165,13 @@ function initCanvas() {
 COLOR_SCHEME_ID=0
 COLOR_SCHEME = [];
 //rusva
-COLOR_SCHEME.push({label:"Šviesiai ruda", colors:[ "#A67A00"]});
+
 COLOR_SCHEME.push({label:"Juoda", colors:["#000000"]});
+COLOR_SCHEME.push({label:"Šviesiai ruda", colors:[ "#A67A00"]});
 COLOR_SCHEME.push({label:"Žalia", colors:["#7F9F00"]});
 COLOR_SCHEME.push({label:"Melsva", colors:["#008787"]});
 
-var recipe_data = {recipe_date:getCurrentDate(),recipe_ibu:"<?=$this->recipe["recipe_ibu"];?>", recipe_abv:"<?=$this->recipe["recipe_abv"];?>", recipe_ebc:"<?=$this->recipe["recipe_ebc"];?>", recipe_name:"<?=$this->recipe["recipe_name"];?>", recipe_style:"<?=$this->recipe["style_name"];?>"};
+var recipe_data = {recipe_date:getCurrentDate(),recipe_ibu:"<?=$this->recipe["recipe_ibu"];?>", recipe_abv:"<?=$this->recipe["recipe_abv"];?>", recipe_ebc:"<?=$this->recipe["recipe_ebc"];?>", recipe_name:"<?=addslashes($this->recipe["recipe_name"]);?>", recipe_style:"<?=addslashes($this->recipe["style_name"]);?>"};
 $(initCanvas);
 function refreshCanvas() {
 	for (var z in recipe_data) {

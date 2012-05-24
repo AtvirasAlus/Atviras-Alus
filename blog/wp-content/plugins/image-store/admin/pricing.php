@@ -5,810 +5,598 @@
  *
  *@package Image Store
  *@author Hafid Trujillo
- *@copyright 20010-2011
+ *@copyright 20010-2012
  *@since 0.5.0
 */
 
-if(!current_user_can('ims_change_pricing')) 
-	die();
-
-//clear cancel post data
-if(isset($_POST['cancel']))
-	wp_redirect($pagenowurl);
+if( !current_user_can( 'ims_change_pricing')) 
+	die( );
 	
-//create new list	
-if(isset($_POST['newpricelist'])){
-	check_admin_referer('ims_newpricelist');
-	$errors = create_ims_list();
-}
-
-//create new package
-if(isset($_POST['newpackage'])){
-	check_admin_referer('ims_newpackage');
-	$errors = create_ims_package();
-}
-
-//new/update promotion
-if(isset($_POST['newpromotion']) || isset($_POST['updatepromotion'])){
-	check_admin_referer('ims_promotion');
-	$errors = add_ims_promotion();
+//clear cancel post data
+if( isset($_POST['cancel']))
+	wp_redirect($this->pageurl);
+	
+//create new pricelist
+if( isset($_POST['newpricelist'])){
+	check_admin_referer( 'ims_new_pricelist' );
+	$errors = $this->create_pricelist( );
 }
 
 //update list
-if(isset($_POST['updatelist'])){
-	check_admin_referer('ims_pricelist');
-	$errors = update_ims_list();
+if( isset($_POST['updatelist'])){
+	check_admin_referer( 'ims_pricelist' );
+	$errors = $this->update_pricelist( );
+}
+
+//create new package
+if( isset($_POST['newpackage'])){
+	check_admin_referer( 'ims_new_packages' );
+	$errors = $this->create_package( );
 }
 
 //update packages
-if(isset($_POST['updatepackage'])){
-	check_admin_referer('ims_newpackages');
-	$errors = update_ims_package();
+if( isset($_POST['updatepackage'])){
+	check_admin_referer( 'ims_update_packages' );
+	$errors = $this->update_package( );
 }
 
-//update images
-if(isset($_POST['updateimglist'])){
-	check_admin_referer('ims_imagesizes');
-	$_POST = array_diff_key($_POST,array('_wpnonce'=>'','_wp_http_referer'=>'','updateimglist'=>''));
-	$sizes = $this->array_filter_recursive($_POST['sizes']); 
-	update_option('ims_sizes',$sizes);
-	wp_redirect($pagenowurl."&ms=37");
+//new/update promotion
+if( isset($_POST['promotion'])){
+	check_admin_referer( 'ims_promotion' );
+	$errors = $this->add_promotion( );
 }
 
-//bulk action
-if(isset($_POST['doaction'])){
-	check_admin_referer('ims_promotions');
-	switch($_POST['action']){
-		case 'delete':
-			$errors = delete_ims_promotions();
-			break;
-		default:
-	}
+//delete promotion
+if( isset( $_GET['delete'] ) && is_numeric($_GET['delete']) ){
+	check_admin_referer( 'ims_link_promo' );
+	$errors = $this->delete_promotions( );
 }
 
-$x 			= 0; 
-$nonce 		= '_wpnonce='.wp_create_nonce('ims_link_promo');
-$columns 	= (array)get_column_headers('ims_gallery_page_ims-pricing');
-$hidden 	= implode('|',(array)get_hidden_columns('ims_gallery_page_ims-pricing'));
-$format 	= array('',"$this->sym%s","$this->sym %s","%s$this->sym","%s $this->sym"); 
+//update images sizes
+if( isset($_POST['updateimglist'])){
+	check_admin_referer( 'ims_imagesizes' );
+	$sizes = (array)$_POST['sizes'];
+	update_option( 'ims_sizes',$sizes);
+	wp_redirect($this->pageurl."&ms=37");
+}
 
-$promos 	= get_ims_promos();
-$packages 	= get_ims_packages();
-$dlist 		= get_option('ims_pricelist');
+$tabs = apply_filters( 'ims_pricing_tabs', array(
+	'price-list' => __( 'Price lists', $this->domain ),
+	'packages' => __( 'Packages', $this->domain ),
+	'promotions' => __( 'Promotions', $this->domain ),
+));
 
-$type[1]	= __('Percent',ImStore::domain); 
-$type[2] 	= __('Amount',ImStore::domain); 
-$type[3] 	= __('Free Shipping',ImStore::domain);
+//display error message
+if( isset($errors) && is_wp_error( $errors ) )
+	$this->error_message( $errors );
+
+add_action( 'ims_pricing_price-list_tab', 'ims_pricelist_tab',1, 2);
+add_action( 'ims_pricing_packages_tab', 'ims_packages_tab',1, 2);
+add_action( 'ims_pricing_promotions_tab', 'ims_promotions_tab',1, 2);
+
+$moresizes = '<a href="#" class="add-image-size">'. __( 'Add image size', $this->domain ) .'</a>';
+add_meta_box( 'image_sizes', __( 'Image sizes', $this->domain ) . $moresizes, 'ims_image_sizes', 'ims_pricelists', 'side' );
+add_meta_box( 'image_sizes', __( 'Image sizes', $this->domain ) . $moresizes, 'ims_image_sizes', 'ims_packages', 'side' );
+
+add_meta_box( 'price-list-new', __( 'New pricelist', $this->domain ), 'ims_new_pricelist', 'ims_pricelists', 'normal' );
+add_meta_box( 'price-list-box', __( 'Price lists', $this->domain ), 'ims_price_lists', 'ims_pricelists', 'normal' );
+add_meta_box( 'price-list-package', __( 'Packages', $this->domain ), 'ims_price_lists_packages', 'ims_pricelists', 'normal' );
+
+add_meta_box( 'new_package', __( 'New Package', $this->domain ), 'ims_new_package', 'ims_packages', 'normal' );
+add_meta_box( 'packages', __( 'Packages', $this->domain ), 'ims_package_list', 'ims_packages', 'normal' );
+add_meta_box( 'new_promo', __( 'Promotion', $this->domain ), 'ims_new_promotion', 'ims_promotions', 'normal' );
 ?>
 
 <ul class="ims-tabs add-menu-item-tabs">
-	<li class="tabs"><a href="#price-list"><?php _e('Price lists',ImStore::domain)?></a></li>
-	<li class="tabs"><a href="#packages"><?php _e('Packages',ImStore::domain)?></a></li>
-	<li class="tabs"><a href="#promotions"><?php _e('Promotions',ImStore::domain)?></a></li>
+<?php foreach( $tabs as $tabid => $tab ){
+	echo '<li class="tabs"><a href="#' . $tabid . '">' . $tab . '</a></li>';
+} ?>
 </ul>
 
-<div id="price-list" class="ims-box" >
-	<div class="inside-col2">
-		<div class="postbox">
-			<div class="handlediv" ><br /></div>
-			<h3 class='hndle'><span><?php _e('New Price List',ImStore::domain)?></span></h3> 
-			<div class="inside">
-				<form method="post" action="<?php echo $pagenowurl?>" >
-					<p><label><?php _e('Name',ImStore::domain)?> <input name="list_name" type="text" class="inputlg" /></label> 
-					<input type="submit" name="newpricelist" value="<?php _e('Add List',ImStore::domain)?>" class="button" /></p>
-					<?php wp_nonce_field('ims_newpricelist')?>
-			 </form>
-			</div>
-		</div>
-		<p><small><?php _e('Add options by dragging image sizes or packages into the desired list.',ImStore::domain)?></small></p>
-		<div class="postbox price-list-box">
-			<div class="handlediv" ><br /></div>
-			<h3 class='hndle'><span><?php _e('Price Lists',ImStore::domain)?></span></h3>
-			<div class="inside">
-			<?php 
-			foreach((array)get_ims_pricelists() as $list):
-			$meta = get_post_meta($list->ID,'_ims_list_opts',true)
-			?>
-			<form method="post" id="ims-list-<?php echo $list->ID?>" action="<?php echo $pagenowurl.'#price-list'?>" >
-			<table class="ims-table price-list"> 
-				<thead>
-					<tr class="bar">
-						<?php if($list->ID == $dlist){?>
-						<th class="default"><input name="listid" type="hidden" class="listid" value="<?php echo $list->ID?>" /></th> 
-						<?php }else{?>
-						<th class="trash"><a href="#">x</a><input type="hidden" name="listid" class="listid" value="<?php echo $list->ID?>" /></th>
-						<?php }?>
-						<th colspan="5" class="itemtop inactive"><?php echo $list->post_title?><a href="#">[+]</a></th>
-					</tr>
-				</thead>
-				<tbody class="content">
+<?php 
+foreach( $tabs as $tabid => $tabname ){
+	echo '<div id="'.$tabid.'" class="ims-box" >';
+		do_action( "ims_pricing_{$tabid}_tab", &$this );
+	echo '</div>';
+}
+
+function ims_pricelist_tab( $ims ){
+	echo '<div class="inside-col2">';
+		do_meta_boxes( 'ims_pricelists', 'normal', $ims );
+	echo '</div><div class="inside-col1">';
+		do_meta_boxes( 'ims_pricelists', 'side', $ims );
+	echo '</div><div class="clear"></div>';
+}
+
+
+function ims_packages_tab( $ims ){
+	echo '<div class="inside-col2">';
+		do_meta_boxes( 'ims_packages', 'normal', $ims );
+	echo '</div><div class="inside-col1">';
+		do_meta_boxes( 'ims_packages', 'side', $ims );
+	echo '</div><div class="clear"></div>';
+}
+
+function ims_new_pricelist( $ims ){
+	echo '<form method="post" action="#price-list" >
+		<p><label>'. __( 'Name', $ims->domain ) .' <input type="text" name="pricelist_name" class="regular-text" /></label>
+		<input type="submit" name="newpricelist" value="' . esc_attr__( 'Add List', $ims->domain ) . '" class="button" /></p>';
+		wp_nonce_field( 'ims_new_pricelist' );	
+	echo '</form>';
+}
+
+function ims_new_package( $ims ){
+	echo '<form method="post" action="#packages" >
+		<p><label>'. __( 'Name', $ims->domain ) .' <input type="text" name="package_name" class="regular-text" /></label>
+		<input type="submit" name="newpackage" value="' . esc_attr__( 'Add Package', $ims->domain ) . '" class="button" /></p>';
+		wp_nonce_field( 'ims_new_packages' );	
+	echo '</form>';
+}
+
+function ims_price_lists( $ims ){
+	$x = 0;
+	$dlist = get_option( 'ims_pricelist' );
+	?>
+	<p><small><?php _e( 'Add options by dragging image sizes or packages into the desired list.', $ims->domain )?>
+	<?php _e( 'Check the box next to the price to make size downloadable, or image will have to be shipped.', $ims->domain )?></small></p>
+	<?php
+	foreach( $ims->get_pricelists( ) as $list ){
+		$meta = get_post_meta( $list->ID, '_ims_list_opts', true );
+		?>
+		<form method="post" id="ims-list-<?php echo $list->ID?>" action="<?php echo $ims->pageurl . '#price-list'?>" >
+			<table class="ims-table price-list">
+			<thead>
+				<tr class="bar">
+					<?php if( $list->ID == $dlist ){
+						echo '<th class="default"><input name="listid" type="hidden" class="listid" value="' . esc_attr( $list->ID ). '" /></th>';
+					}else{
+						echo '<th class="trash"><a href="#">x</a><input type="hidden" name="listid" class="listid" value="' . esc_attr( $list->ID ). '" /></th>';
+					}?>
+					<th colspan="5" class="itemtop inactive"><?php echo $list->post_title?><a href="#">[+]</a></th>
+				</tr>
+			</thead>
+			<tbody class="content">
 				<?php 
-				if($sizes = get_post_meta($list->ID,'_ims_sizes',true)){
-					 unset($sizes['random']); foreach($sizes as $size){ 
+				if( $sizes = get_post_meta( $list->ID, '_ims_sizes', true) ){
+					unset($sizes['random']); 
+					foreach( $sizes as $size ){
+						if( empty( $size['name'] ) ) continue;
 				?>
-					<tr class="alternate size">
-						<td class="x" scope="row" title="<?php _e('Delete',ImStore::domain)?>">x</td>
-						<td>
+				<tr class="alternate size">
+					<td class="move" title="<?php _e( 'Move to list', $ims->domain )?>">&nbsp;</td>
+					<td>
 						<?php
-							if($size['ID']){
-								echo $size['name'].':'; $package_sizes = '';
-								foreach((array)get_post_meta($size['ID'],'_ims_sizes',true) as $package_size => $count){
-									if(is_array($count)) $package_sizes .= $package_size.' '.$count['unit'].'('.$count['count'].'),';
-									else $package_sizes .= $package_size.'('.$count.'),'; 
+							if( isset($size['ID']) ){
+								echo $size['name'].': '; $package_sizes = '';
+								foreach( (array)get_post_meta($size['ID'], '_ims_sizes', true ) as $package_size => $count){
+									if( is_array($count) ) $package_sizes .= $package_size.' '.$count['unit'].'( '.$count['count'].' ), ';
+									else $package_sizes .= $package_size.'( '.$count.' ), '; 
 								}
-								echo rtrim($package_sizes,',');
-							}else echo $size['name'];	
-						?>
-						</td>
-						<td width="15%" align="right">
-						<?php 
-							if($size['ID']){
-								printf($format[$this->loc],get_post_meta($size['ID'],'_ims_price',true));
-							?><input type="hidden" name="sizes[<?php echo $x?>][ID]" value="<?php echo $size['ID']?>"/>
-							<input type="hidden" name="sizes[<?php echo $x?>][name]" value="<?php echo $size['name']?>"/> <?php
-							}else{
-								printf($format[$this->loc],$size['price']);
-							?><input type="hidden" name="sizes[<?php echo $x?>][name]" value="<?php echo $size['name']?>"/>
-							<input type="hidden" name="sizes[<?php echo $x?>][price]" value="<?php echo $size['price']?>"/><?php
+								echo rtrim( $package_sizes, ', ' );
+							}else {
+								echo $size['name'];	
+								if( isset( $size['download']) ) 
+									echo " <em>".__( 'downloadable.', $ims->domain )."</em>";
 							}
 						?>
-						</td>
-						<td> 
-							<?php echo $this->units[$size['unit']]?>
-							<input type="hidden" name="sizes[<?php echo $x?>][unit]" value="<?php echo $this->units[$size['unit']]?>" />
-						</td>
-						<td>
-							<input type="checkbox" name="sizes[<?php echo $x?>][download]" value="1" <?php checked('1',$size['download'])?> title="<?php _e('downloadable',ImStore::domain)?>" />
-						</td>
-						<td class="move" title="<?php _e('Sort',ImStore::domain)?>">&nbsp;</td>
-					</tr>
-				<?php $x++; }}?>
-					<tr class="filler"><td scope="row" colspan="6"><?php _e('Add options by dragging image sizes here',ImStore::domain)?></td></tr>
-				</tbody>
-				<tfoot class="content">
+					</td>
+					<td align="right">
+						<?php 
+							if( isset($size['ID']) ){
+								printf( $ims->cformat[$ims->loc], get_post_meta( $size['ID'], '_ims_price', true) );
+							?><input type="hidden" name="sizes[<?php echo $x?>][ID]" class="id" value="<?php echo esc_attr( $size['ID'] )?>"/>
+							<input type="hidden" name="sizes[<?php echo $x?>][name]" class="name"value="<?php echo esc_attr( $size['name'] )?>"/> <?php
+							}else{
+								printf( $ims->cformat[$ims->loc], $size['price'] );
+							?><input type="hidden" name="sizes[<?php echo $x?>][name]" class="name"value="<?php echo esc_attr( $size['name'] )?>"/>
+							<input type="hidden" name="sizes[<?php echo $x?>][price]" class="price" value="<?php echo esc_attr( $size['price'] )?>"/><?php
+							}
+						?>
+					</td>
+					<td> 
+						<?php 
+							if( isset( $size['unit'] ) && isset( $ims->units[$size['unit']]) ) {
+								echo $ims->units[$size['unit']] , '<input type="hidden" class="unit" name="sizes[',$x, '][unit]" value="', $size['unit'] , '" />';
+							}
+						?>
+					</td>
+					<td title="<?php _e( 'Check to make size downloadable', $ims->domain ) ?>" class="download">
+					<?php 
+						echo '<input type="checkbox" name="sizes[',$x, '][download]" ' . checked( true , isset( $size['download'] ), false ) . ' class="downloadable" value="1" title="', __( 'Check to make size downloadable', $ims->domain ) , '" />'?></td>
+					<td class="x" title="<?php _e( 'Delete', $ims->domain )?>">x</td>
+				</tr>
+				<?php $x++; 
+					}
+				}?>
+				<tr class="filler"><td scope="row" colspan="6"><?php _e( 'Add options by dragging image sizes here', $ims->domain )?></td></tr>
+			</tbody>
+			<tfoot class="content">
 					<tr>
-						<td scope="row" colspan="6"><label><?php _e('Name',ImStore::domain)?>
-							<input type="text" name="list_name" value="<?php echo $list->post_title?>" class="inputmd" /></label>
+						<td colspan="6"><label><?php _e( 'Name', $ims->domain )?>
+							<input type="text" name="list_name" value="<?php echo esc_attr( $list->post_title )?>" class="regular-text" /></label>
 						</td>
 					</tr>
 					<tr class="label">
-						<td colspan="6" scope="row"><label><?php _e('BW',ImStore::domain)?>
-							<input type="text" name="_ims_bw" value="<?php echo $meta['ims_bw']?>"/></label>							
-							<label><?php _e('Sepia',ImStore::domain)?>
-								<input type="text" name="_ims_sepia" value="<?php echo $meta['ims_sepia']?>" /></label>						
-							<label><?php _e('Local Shipping',ImStore::domain)?>
-								<input type="text" name="_ims_ship_local" value="<?php echo $meta['ims_ship_local']?>" /></label>					
-							<label><?php _e('Internacional Shipping',ImStore::domain)?>
-								<input type="text" name="_ims_ship_inter" value="<?php echo $meta['ims_ship_inter']?>" /></label>
+						<td colspan="6"><label><?php _e( 'BW', $ims->domain )?>
+							<input type="text" name="_ims_bw" value="<?php echo $ims->format_price( $meta['ims_bw'] )  ?>"/></label>							
+							<label><?php _e( 'Sepia', $ims->domain )?>
+								<input type="text" name="_ims_sepia" value="<?php echo $ims->format_price( $meta['ims_sepia'] ) ?>" /></label>						
+							<label><?php _e( 'Local Shipping', $ims->domain )?>
+								<input type="text" name="_ims_ship_local" value="<?php echo $ims->format_price($meta['ims_ship_local'] )  ?>" /></label>					
+							<label><?php _e( 'International Shipping', $ims->domain )?>
+								<input type="text" name="_ims_ship_inter" value="<?php echo $ims->format_price( $meta['ims_ship_inter'] ) ?>" /></label>
 						</td>
 					</tr>
-					<tr class="submit">
-						<td scope="row" colspan="5" align="right">
+					<?php do_action( 'ims_pricelist_options', $list->ID, &$this )?>
+					<tr>
+						<td colspan="6" align="right">
 							<input type="hidden" name="sizes[random]" value="<?php echo rand(0,3000)?>"/>
-							<input type="submit" name="updatelist" value="<?php _e('Update',ImStore::domain)?>" class="button-primary" />
+							<input type="submit" name="updatelist" value="<?php esc_attr_e( 'Update', $ims->domain )?>" class="button-primary" />
 						</td>
-						<td>&nbsp;</td>
 					</tr>
 				</tfoot>
 			</table>
-			<?php wp_nonce_field('ims_pricelist')?>
-			</form>
-			<?php endforeach?>
-			</div>
-		</div>
-		<div class="postbox">
-			<div class="handlediv"><br /></div>
-			<h3 class='hndle'><span><?php _e('Packages',ImStore::domain)?></span></h3> 
-			<div class="inside">
-				<form method="post" action="<?php echo $pagenowurl.'#price-list'?>" >
-					<table class="ims-table package-list"> 
-						<tbody>
-						<?php foreach((array)$packages as $package):?>
-						<tr class="package size alternate">
-							<td class="x" scope="row" title="<?php _e('Delete',ImStore::domain)?>">x</td>
-							<td><?php echo $package->post_title?>:
-							<?php $sizes = ''; 
-								foreach((array)get_post_meta($package->ID,'_ims_sizes',true) as $size => $count){
-									if(is_array($count)) $sizes .= $size.' '.$count['unit'].'('.$count['count'].'),';
-									else $sizes .= $size.'('.$count.'),'; 
-								} echo rtrim($sizes,',');
-							?>
-							</td>
-							<td align="right">
-								<?php printf($format[$this->loc],get_post_meta($package->ID,'_ims_price',true))?>
-								<input type="hidden" name="sizes[<?php echo $x?>][ID]" value="<?php echo $package->ID?>"/>
-								<input type="hidden" name="sizes[<?php echo $x?>][name]" value="<?php echo $package->post_title?>"/>
-							</td>
-							<td class="hidden">&nbsp;</td>
-							<td class="hidden">
-								<input type="checkbox" name="sizes[<?php echo $x?>][download]" value="1" title="<?php _e('downloadable',ImStore::domain)?>" />
-							</td>
-							<td class="move" title="<?php _e('Move to list',ImStore::domain)?>">&nbsp;</td>
-						</tr>
-						<?php $x++; endforeach?>
-						</tbody>
-					</table>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div class="inside-col1">
-		<div class="postbox">
-			<div class="handlediv" title="Click to toggle"><br /></div>
-			<h3 class='hndle'>
-				<span><?php _e('Image Sizes',ImStore::domain)?></span>
-				<a href="#" class="add-image-size"><?php _e('Add image size',ImStore::domain)?></a>
-			</h3>
-			<div class="inside">
-				<form method="post" action="<?php echo $pagenowurl.'#price-list'?>" >
-				<table class="ims-table sizes-list"> 
-					<thead>
-						<tr class="alternate">
-							<td scope="row">&nbsp;</td>
-							<td><?php _e('Name',ImStore::domain)?></td>
-							<td><?php _e('Price',ImStore::domain)?></td>
-							<td><?php _e('Unit',ImStore::domain)?></td>
-							<td class="col-hide">&nbsp;</td>
-							<td>&nbsp;</td>
-						</tr>
-					</thead>
-					<tbody>
-					<?php foreach((array)get_option('ims_sizes') as $size):$price = $size['price']?>
-						<tr class="imgsize size alternate">
-							<td scope="row" class="x" title="<?php _e('Delete',ImStore::domain)?>">x</td>
-							<td><span class="hidden"><?php echo $size['name']?></span>
-								<input type="text" name="sizes[<?php echo $x?>][name]" value="<?php echo $size['name']?>" />
-							</td>
-							<td align="right">
-								<span class="hidden"><?php printf($format[$this->loc],$size['price'])?></span>
-								<input type="text" name="sizes[<?php echo $x?>][price]" value="<?php echo $size['price']?>" />
-							</td>
-							<td><?php $this->dropdown_units("sizes[$x][unit]",$size['unit'])?><span class="hidden"><?php echo $this->units[$size['unit']]?></span></td>
-							<td class="col-hide"><input type="checkbox" name="sizes[<?php echo $x?>][download]" value="1" title="<?php _e('downloadable',ImStore::domain)?>" /></td>
-							<td class="move" title="<?php _e('Move to list',ImStore::domain)?>">&nbsp;</td>
-						</tr>
-					<?php $x++; endforeach?>
-					</tbody>
-					<tfoot>
-						<tr class="copyrow">
-							<td scope="row">&nbsp;</td>
-							<td><input type="text" value="<?php echo $x?>" class="name"/></td>
-							<td><input type="text" class="price" /></td>
-							<td><?php $this->dropdown_units('','')?></td>
-							<td class="col-hide">&nbsp;</td>
-							<td>&nbsp;</td>
-						</tr>
-						<tr>
-							<td colspan="6"><small><?php _e('in:inches &bull; cm:centimeters &bull; px:pixels',ImStore::domain)?></small></td>
-						</tr>
-						<tr class="addrow">
-							<td scope="row" colspan="4" align="right">
-								<input type="submit" name="updateimglist" value="<?php _e('Update sizes',ImStore::domain)?>" class="button-primary" />
-							</td>
-							<td colspan="2">&nbsp;</td>
-						</tr>
-					</tfoot>
-				</table>
-				<?php wp_nonce_field('ims_imagesizes')?>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div class="clear"></div>
-</div>
+			<?php wp_nonce_field( 'ims_pricelist' )?>
+		</form>
+		<?php
+	}
+}
 
-<!-- Packages -->
-<div id="packages" class="ims-box" >
-	<div class="inside-col2">
-		<div class="postbox">
-			<div class="handlediv"><br /></div>
-			<h3 class='hndle'><span><?php _e('New Package',ImStore::domain)?></span></h3> 
-			<div class="inside">
-				<form method="post" action="<?php echo $pagenowurl.'#packages'?>" >
-					<p><label><?php _e('Name',ImStore::domain)?> <input name="package_name" type="text" class="inputlg" /></label> 
-					<input type="submit" name="newpackage" value="<?php _e('Add Package',ImStore::domain)?>" class="button" /></p>
-					<?php wp_nonce_field('ims_newpackage')?>
-				 </form>
-			</div>
-		</div>
-		<p><small><?php _e('Add options by dragging image sizes into the desired package.',ImStore::domain)?></small></p>
-		<div class="postbox">
-			<div class="handlediv" title="Click to toggle"><br /></div>
-			<h3 class='hndle'><span><?php _e('Packages',ImStore::domain)?></span></h3>
-			<div class="inside">
-			<?php foreach((array)$packages as $package){ $price = get_post_meta($package->ID,'_ims_price',true);?>
-			<form method="post" id="package-list-<?php echo $package->ID?>" action="<?php echo $pagenowurl.'#packages'?>" >
-				<table class="ims-table package-list"> 
-					<thead>
-						<tr class="bar">
-							<th class="trash">
-								<a href="#">x</a><input type="hidden" name="packageid" class="packageid" value="<?php echo $package->ID?>" />								</th>
-							<th colspan="4" class="itemtop inactive"><?php echo $package->post_title?><a href="#">[+]</a></th>
-						</tr>
-					</thead>
-					<tbody class="content">
-					<?php $sizes = get_post_meta($package->ID,'_ims_sizes',true); if($sizes):; 
-						foreach($sizes as $size => $count):if(is_numeric($size)) continue;?>
-						<tr class="package size alternate">
-							<td scope="row" class="x">x</td>
-							<td><?php echo $size?></td>
-							<td>
-								<input type="hidden" name="sizes[<?php echo $x?>][name]" value="<?php echo $size?>" class="inputsm" />
-								<?php if(is_array($count)){?>
-								<input type="text" name="sizes[<?php echo $x?>][count]" value="<?php echo $count['count']?>" class="inputsm" title="<?php _e('Quantity',ImStore::domain)?>" />
-								<?php }else{?>
-								<input type="text" name="sizes[<?php echo $x?>][count]" value="<?php echo $count?>" class="inputsm" title="<?php _e('Quantity',ImStore::domain)?>" />
-								<?php }?>
-							</td>
-							<td>
-								<?php echo $count['unit']?>
-								<input type="hidden" name="sizes[<?php echo $x?>][unit]" value="<?php echo $count['unit']?>" />
-							</td>
-							<td class="move" title="<?php _e('Sort',ImStore::domain)?>">&nbsp;</td>
-						</tr>
-					<?php $x++; endforeach; endif?>
-						<tr class="filler">
-							<td scope="row" colspan="5"><?php _e('Add options by dragging image sizes here',ImStore::domain)?></td>
-						</tr>
-					</tbody>
-					<tfoot class="content">
-						<tr class="inforow">
-							<td scope="row">&nbsp;</td>
-							<td>
-								<label><?php _e('Name',ImStore::domain)?>
-								<input type="text" name="packagename" value="<?php echo $package->post_title?>" class="inputmd" /></label>
-							</td>
-							<td colspan="3">
-								<label><?php _e('Price',$ImStore->domain)?>
-								<input type="text" name="packageprice" value="<?php echo $price?>" class="inputsm" /></label>
-							</td>
-						</tr>
-						<tr class="inforow submit">
-							<td scope="row" colspan="4" align="right">
-								<input type="hidden" vname="sizes[random]" alue="<?php echo rand(0,3000)?>"/>
-								<input type="submit" name="updatepackage" value="<?php _e('Update',ImStore::domain)?>" class="button-primary" />
-							</td>
-							<td>&nbsp;</td>
-						</tr>
-					</tfoot>
-				</table>
-			<?php wp_nonce_field('ims_newpackages')?>
-			</form>
-			<?php }?>
-			</div>
-		</div>
-	</div>
-	<div class="inside-col1">
-		<div class="postbox">
-			<div class="handlediv" title="Click to toggle"><br /></div>
-			<h3 class='hndle'>
-				<span><?php _e('Image Sizes',ImStore::domain)?></span>
-				<a href="#" class="add-image-size"><?php _e('Add image size',ImStore::domain)?></a>
-			</h3>
-			<div class="inside">
-				<form method="post" action="<?php echo $pagenowurl.'#packages'?>" >
-				<?php wp_nonce_field('ims_imagesizes')?>
-				<table class="ims-table sizes-list"> 
-					<tbody>
-						<tr class="alternate">
-							<td scope="row">&nbsp;</td>
-							<td><?php _e('Name',ImStore::domain)?></td>
-							<td><?php _e('Price',ImStore::domain)?></td>
-							<td><?php _e('Unit',ImStore::domain)?></td>
-							<td>&nbsp;</td>
-						</tr>
-					<?php foreach((array)get_option('ims_sizes') as $size):$price = $size['price']?>
-						<tr class="imgsize size alternate">
-							<td scope="row" class="x">x</td>
-							<td><span class="hidden"><?php echo $size['name']?></span>
-								<input type="text" name="sizes[<?php echo $x?>][name]" value="<?php echo $size['name']?>" class="input" />
-							</td>
-							<td>
-								<input type="text" name="sizes[<?php echo $x?>][count]" class="inputsm hidden" />
-								<input type="text" name="sizes[<?php echo $x?>][price]" value="<?php echo $size['price']?>" class="price" />
-							</td>
-							<td><?php $this->dropdown_units("sizes[$x][unit]",$size['unit'])?><span class="hidden"><?php echo $this->units[$size['unit']]?></span></td>
-							<td class="move" title="<?php _e('Move to list',ImStore::domain)?>">&nbsp;</td>
-						</tr>
-					<?php $x++; endforeach?>
-					</tbody>
-					<tfoot>
-						<tr class="copyrow">
-							<td scope="row">&nbsp;</td>
-							<td><input type="text" value="<?php echo $x?>" class="name" /></td>
-							<td><input type="text" class="price" /></td>
-							<td><?php $this->dropdown_units('','')?></td>
-							<td colspan="2">&nbsp;</td>
-						</tr>
-						<tr>
-							<td colspan="6"><small><?php _e('in:inches &bull; cm:centimeters &bull; px:pixels',ImStore::domain)?></small></td>
-						</tr>
-						<tr class="addrow">
-							<td scope="row" colspan="4" align="right">
-								<input type="submit" name="updateimglist" value="<?php _e('Update sizes',ImStore::domain)?>" class="button-primary" />
-							</td>
-							<td colspan="2">&nbsp;</td>
-						</tr>
-					</tfoot>
-				</table>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div class="clear"></div>
-</div>
-
-<!-- Promotions -->
-<div id="promotions" class="ims-box" >
-<?php if(isset($_GET['newpromo']) || isset($_GET['edit']) || isset($_POST['newpromotion'])){?>
-	<div class="postbox">
-		<div class="handlediv"><br /></div>
-		<h3 class='hndle'><span><?php 
-			if($_GET['edit']) _e('Promotion Information',ImStore::domain); 
-			else _e('New Promotion',ImStore::domain);?>
-		</span></h3> 
-		<div class="inside<?php echo $css?>">
-			<form method="post" class="new-promo" action="<?php echo $pagenowurl.'#promotions'?>" >
-			<?php wp_nonce_field('ims_promotion')?>
-			<?php if(isset($_GET['edit'])){
-				foreach($promos as $promo){
-					if($promo->ID == $_GET['edit']){
-						$_POST = (array)$promo;
-						$_POST['start_date'] = date_i18n('Y-m-d',$promo->starts);
-						$_POST['starts'] = date_i18n($this->dformat,$promo->starts);
-						$_POST['expires'] = date_i18n($this->dformat,$promo->expires);
-						$_POST['expiration_date'] = date_i18n('Y-m-d',$promo->expires);
-					}
-				}
-			}?>
-				<table class="ims-table"> 
-					<tbody>
-						<tr>
-							<td colspan="7">
-								<label><?php _e('Type',ImStore::domain)?>
-								<select name="promo_type" id="promo_type">
-									<?php foreach($type as $key => $label){?>
-									<option value="<?php echo $key?>"<?php selected($_POST['promo_type'],$key)?>><?php echo $label?></option>
-									<?php }?>
-								</select>
-								</label>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label><?php _e('Name',ImStore::domain)?>
-									<input name="promo_name" type="text" class="inputxl" value="<?php echo $_POST['promo_name']?>"/>
-								</label>
-							</td>
-							<td>
-								<label> <?php _e('Code',ImStore::domain)?>
-									<input name="promo_code" type="text" class="inputxl" value="<?php echo $_POST['promo_code']?>" />
-								</label>
-							</td>
-							<td>
-								<label><?php _e('starts',ImStore::domain)?> 
-									<input type="text" name="starts" id="starts" class="inputxl" value="<?php echo $_POST['starts']?>" />
-								</label>
-								<input type="hidden" name="start_date" id="start_date" value="<?php echo $_POST['start_date']?>" />
-							</td>
-							<td>
-								<label><?php _e('Expire',ImStore::domain)?> 
-									<input type="text" name="expires" id="expires" class="inputxl" value="<?php echo $_POST['expires']?>" />
-								</label>
-								<input type="hidden" name="expiration_date" id="expiration_date" value="<?php echo $_POST['expiration_date']?>" />
-							</td>
-							<td>
-								<label class="hide-free"> <?php _e('Discount',ImStore::domain)?>
-									<input type="text" name="discount" class="inputxl" value="<?php echo $_POST['discount']?>" <?php echo($_POST['promo_type'] == 3) ?'disabled="disabled"':''?> /> 
-								</label>
-
-							</td>
-						</tr>
-						<tr>
-							<td colspan="4">
-								<?php _e('Conditions',ImStore::domain)?> 
-								<select name="rules[property]">
-									<option value="items"<?php selected($_POST['rules']['property'],'items')?>><?php _e('Item quantity',ImStore::domain)?></option>
-									<option value="total"<?php selected($_POST['rules']['property'],'total')?>><?php _e('Total amount',ImStore::domain)?></option>
-									<option value="subtotal"<?php selected($_POST['rules']['property'],'subtotal')?>><?php _e('Subtotal amount',ImStore::domain)?></option>
-									</select>
-								<select name="rules[logic]">
-									<option value="equal"<?php selected($_POST['rules']['logic'],'equal')?>><?php _e('Is equal to',ImStore::domain)?></option>
-									<option value="more"<?php selected($_POST['rules']['logic'],'more')?>><?php _e('Is greater than',ImStore::domain)?></option>
-									<option value="less"<?php selected($_POST['rules']['logic'],'less')?>><?php _e('Is less than',ImStore::domain)?></option>
-									</select>
-								<input name="rules[value]" type="text" class="inpsm" value="<?php echo $_POST['rules']['value']?>"/>
-							</td>
-							<td colspan="3" align="right">
-								<input type="submit" name="cancel" value="<?php _e('Cancel',$ImStore->domain)?>" class="button" />
-								<?php if(isset($_GET['edit'])):?>
-								<input type="hidden" name="promotion_id" value="<?php echo $_GET['edit']?>"/>
-								<input type="submit" name="updatepromotion" value="<?php _e('Update',$ImStore->domain)?>" class="button-primary" />
-								<?php else:?>
-								<input type="submit" name="newpromotion" value="<?php _e('Add promotion',$ImStore->domain)?>" class="button-primary" />
-								<?php endif;?>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</form>
-		</div>
-	</div>
-<?php }?>
-<form method="post" action="<?php echo $pagenowurl.'#promotions'?>" >
-	<div class="tablenav">
-		<div class="alignleft actions">
-		<select name="action">
-			<option value="" selected="selected"><?php _e('Bulk Actions',ImStore::domain)?></option>
-			<option value="delete"><?php _e('Delete',ImStore::domain)?></option>
-		</select>
-		<input type="submit" value="<?php _e('Apply');?>" name="doaction" class="button-secondary" /> |
-		<a href="<?php echo $pagenowurl ."&amp;$nonce&amp;newpromo=1#promotions"?>" class="button"><?php _e('New Promotion');?></a>
-		</div>
-	</div>
-	<table class="widefat post fixed imstore-table">
-		<thead><tr><?php print_column_headers('ims_gallery_page_ims-pricing')?></tr></thead>
-		<tbody>
-			<?php $counter = 0; foreach($promos as $promo){?>
-			<tr id="item-<?php echo $id?>" class="iedit<?php if(!$counter%2){?> alternate<?php }?>">
-			<?php foreach($columns as $key => $column){?> 
-			<?php if($hidden) $class = (preg_match("/($hidden)/i",$key))?' hidden':'';?>
-			<?php switch($key){
-					case 'cb':?>
-					<th scope="row" class="column-<?php echo $key.$class?> check-column">
-					<input type="checkbox" name="promo[]" value="<?php echo $promo->ID?>" /> </th>
-					<?php break;
-					case 'name':?>
-					<td class="column-<?php echo $key?>" > 
-						<?php echo $promo->promo_name?>
-						<div class="row-actions">
-							<span><a href="<?php echo $pagenowurl ."&amp;$nonce&amp;edit=$promo->ID#promotions"?>"><?php _e("Edit",ImStore::domain)?></a></span> |
-							<span class="delete"><a href="<?php echo $pagenowurl ."&amp;$nonce&amp;delete=$promo->ID#promotions"?>"><?php _e("Delete",ImStore::domain)?></a></span>
-						</div>
-					</td>
-					<?php break;
-					case 'code':?>
-					<td class="column-<?php echo $key?>" > <?php echo $promo->promo_code?></td>
-					<?php break;
-					case 'starts':?>
-					<td class="column-<?php echo $key?>" > <?php echo date_i18n($this->dformat,$promo->starts)?></td>
-					<?php break;
-					case 'expires':?>
-					<td class="column-<?php echo $key?>" > <?php echo date_i18n($this->dformat,$promo->expires)?></td>
-					<?php break;
-					case 'type':?>
-					<td class="column-<?php echo $key?>" > <?php echo $type[$promo->promo_type]?></td>
-					<?php break;
-					case 'discount':?>
-					<td class="column-<?php echo $key?>" > <?php echo $promo->discount.$promo->items?></td>
-					<?php break;
-					default:?>
-<td class="column-<?php echo $key?>" >&nbsp;</td>
-				<?php }?>
-			<?php }?>
+function ims_price_lists_packages( $ims ){
+	$x = 0;
+	?>
+	<form method="post" action="<?php echo $ims->pageurl.'#price-list'?>" >
+		<table class="ims-table package-list"> 
+			<tbody>
+			<?php foreach( $ims->get_packages( ) as $package ):?>
+			<tr class="package size alternate">
+				<td class="move" title="<?php _e( 'Move to list', $ims->domain )?>">&nbsp;</td>
+				<td><?php echo $package->post_title?>: 
+				<?php $sizes = ''; 
+					foreach((array) get_post_meta( $package->ID, '_ims_sizes', true) as $size => $count){
+						if( is_array($count)) $sizes .= $size.' '.$count['unit'].'( '.$count['count'].' ), ';
+						else $sizes .= $size.'( '.$count.' ), '; 
+					} echo rtrim($sizes, ', ' );
+				?>
+				</td>
+				<td align="right">
+					<?php printf($ims->cformat[$ims->loc], get_post_meta($package->ID, '_ims_price', true) )?>
+					<input type="hidden" name="sizes[<?php echo $x?>][ID]" class="id" value="<?php echo esc_attr( $package->ID )?>"/>
+					<input type="hidden" name="sizes[<?php echo $x?>][name]" class="name" value="<?php echo esc_attr( $package->post_title )?>"/>
+				</td>
+				<td class="hidden">&nbsp;</td>
+				<td class="hidden">
+					<input type="checkbox" name="sizes[<?php echo $x?>][download]" value="1" title="<?php _e( 'downloadable', $ims->domain )?>" class="downloadable"/>
+				</td>
+				<td class="x" title="<?php _e( 'Delete', $ims->domain )?>">x</td>
 			</tr>
-			<?php }?>
-		</tbody>
-	</table>
-	<?php wp_nonce_field('ims_promotions')?>
+			<?php $x++; endforeach?>
+			</tbody>
+		</table>
 	</form>
-</div>
-<?php 
+	<?php
 
-/**
-*Get all packages
-*
-*@return array
-*@since 0.5.0
-*/
-function get_ims_packages(){
-	global $wpdb;
-	return $wpdb->get_results("SELECT DISTINCT ID,post_title FROM $wpdb->posts WHERE post_type = 'ims_package'");
 }
 
-/**
-*Get all price list
-*
-*@return array
-*@since 0.5.0
-*/
-function get_ims_pricelists(){
-	global $wpdb;
-	return $wpdb->get_results("SELECT DISTINCT ID,post_title FROM $wpdb->posts WHERE post_type = 'ims_pricelist'");
+function ims_package_list( $ims ){
+	$x=0;
+	?>
+	<p><small><?php _e( 'Add options by dragging image sizes into the desired package.', $ims->domain )?></small></p>
+	<?php
+	foreach( $ims->get_packages( ) as $package ){ 
+		$price = get_post_meta( $package->ID, '_ims_price', true );
+		?>
+		<form method="post" id="package-list-<?php echo $package->ID?>" action="<?php echo $ims->pageurl.'#packages'?>" >
+		<table class="ims-table package-list"> 
+			<thead>
+				<tr class="bar">
+					<th class="trash"><a href="#">x</a><input type="hidden" name="packageid" class="packageid" value="<?php echo esc_attr( $package->ID )?>" /></th>
+					<th colspan="4" class="itemtop inactive"><?php echo $package->post_title?><a href="#">[+]</a></th>
+				</tr>
+			</thead>
+			<tbody class="content">
+			<?php 
+			if( $sizes = get_post_meta( $package->ID, '_ims_sizes', true ) ) :
+				foreach( $sizes as $size => $count ) :
+					if( is_numeric($size) ) continue; 
+			?>
+				<tr class="package size alternate">
+					<td class="move">&nbsp;</td>
+					<td class="packagename"><?php echo $size?></td>
+					<td class="count">
+						<input type="hidden" name="sizes[<?php echo $x?>][name]" class="name" value="<?php echo esc_attr( $size )?>" />
+						<?php if( is_array( $count) ){?>
+						<input type="text" name="sizes[<?php echo $x?>][count]" value="<?php echo esc_attr( $count['count'] )?>" title="<?php _e( 'Quantity', $ims->domain )?>" />
+						<?php }else{?>
+						<input type="text" name="sizes[<?php echo $x?>][count]" value="<?php echo esc_attr( $count )?>" title="<?php _e( 'Quantity', $ims->domain )?>" />
+						<?php }?>
+					</td>
+					<td> <?php echo $count['unit']?>
+						<input type="hidden" name="sizes[<?php echo $x?>][unit]" value="<?php echo esc_attr( $count['unit'] )?>" />
+					</td>
+					<td class="x">x</td>
+				</tr>
+			<?php $x++;
+				endforeach;
+			endif;?>
+			<tr class="filler"><td colspan="5"><?php _e( 'Add options by dragging image sizes here', $ims->domain )?></td></tr>
+			</tbody>
+			<tfoot class="content">
+				<tr class="inforow">
+					<td>&nbsp;</td>
+					<td>
+						<label><?php _e( 'Name', $ims->domain )?>
+						<input type="text" name="packagename" value="<?php echo esc_attr( $package->post_title )?>" class="inputmd" /></label>
+					</td>
+					<td colspan="3">
+						<label><?php _e( 'Price', $ims->domain )?>
+						<input type="text" name="packageprice" value="<?php echo esc_attr( $price )?>" class="inputsm" /></label>
+					</td>
+				</tr>
+				<tr class="inforow">
+					<td>&nbsp;</td>
+					<td colspan="4" align="right">
+						<input type="hidden" vname="sizes[random]" alue="<?php echo rand(0,3000)?>"/>
+						<input type="submit" name="updatepackage" value="<?php esc_attr_e( 'Update', $ims->domain )?>" class="button-primary" />
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		<?php wp_nonce_field( 'ims_update_packages' )?>
+		</form>
+		<?php
+	}
 }
 
-/**
-*Get promotions
-*
-*@return array
-*@since 0.5.0
-*/
-function get_ims_promos(){
-	global $wpdb;
-	$r = $wpdb->get_results(
-		"SELECT ID,post_title AS promo_name,UNIX_TIMESTAMP(post_expire) AS expires,
-		UNIX_TIMESTAMP(post_date) AS starts FROM $wpdb->posts WHERE post_type = 'ims_promo' " 
-	);
-	if(empty($r)) return $r;
-	foreach($r as $promo){
-		foreach(get_post_meta($promo->ID,'_ims_promo_data',true) as $akey => $aval)
-			$promo->{$akey} = $aval;
-		$promos[] = $promo;
-	}
-	return $promos;
+function ims_image_sizes( $ims ){
+	$x = 0;
+	?>
+	<form method="post" action="<?php echo $ims->pageurl.'#price-list'?>" >
+		<table class="ims-table sizes-list"> 
+			<thead>
+				<tr class="alternate">
+					<td>&nbsp;</td>
+					<td class="name"><?php _e( 'Name', $ims->domain )?></td>
+					<td class="price"><?php _e( 'Price', $ims->domain )?></td>
+					<td><?php _e( 'Width', $ims->domain )?></td>
+					<td><?php _e( 'Height', $ims->domain )?></td>
+					<td><?php _e( 'Unit', $ims->domain )?></td>
+					<td class="col-hide">&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+			</thead>
+			<tbody>
+			<?php 
+			foreach((array)get_option( 'ims_sizes') as $size ): 
+				$sizedata = array( );
+				$price = isset( $size['price'] ) ? $size['price'] : false;
+				$sizedata = isset( $size['w'] ) ? array( $size['w'], $size['h'] ) : explode("x",strtolower($size['name']));
+			?>
+				<tr class="imgsize size alternate">
+					<td class="move" title="<?php _e( 'Move to list', $ims->domain )?>">&nbsp;</td>
+					<td><span class="hidden"><?php echo $size['name']?></span>
+					<input type="text" name="sizes[<?php echo $x ?>][name]" class="name" value="<?php echo esc_attr( $size['name'] )?>" />
+					</td>
+					<td align="right" class="count">
+						<span class="hidden price"><?php printf( $ims->cformat[$ims->loc], $price ) ?></span>
+						<input type="text" name="sizes[<?php echo $x?>][count]" value="<?php echo $size['name']?>" class="hidden" />
+						<input type="text" name="sizes[<?php echo $x ?>][price]" value="<?php echo esc_attr( $price )?>" class="price" />
+					</td>
+					<td class="d"><input type="text" name="sizes[<?php echo $x ?>][w]" value="<?php echo esc_attr( $sizedata[0] )?>" /></td>
+					<td class="d"><input type="text" name="sizes[<?php echo $x ?>][h]" value="<?php echo esc_attr( $sizedata[1] )?>" /></td>
+					<td><?php $ims->dropdown_units( "sizes[$x][unit]", $size['unit'] )?><span class="hidden"><?php echo $ims->units[$size['unit']]?></span></td>
+					<td class="col-hide"><input type="checkbox" name="sizes[<?php echo $x?>][download]" value="1" title="<?php _e( 'downloadable', $ims->domain )?>" class="downloadable" /></td>
+					<td class="x" title="<?php _e( 'Delete', $ims->domain )?>">x</td>
+				</tr>
+			<?php $x++; endforeach?>
+			</tbody>
+			<tfoot>
+				<tr class="copyrow">
+					<td>&nbsp;</td>
+					<td><input type="text" value="" class="name"/></td>
+					<td><input type="text" class="price" /></td>
+					<td><input type="text" class="width" /></td>
+					<td><input type="text" class="height" /></td>
+					<td><?php $ims->dropdown_units( '', '')?></td>
+					<td class="col-hide"></td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan="8"><small><?php _e( 'in:inches &bull; cm:centimeters &bull; px:pixels', $ims->domain )?></small></td>
+				</tr>
+				<tr class="addrow">
+					<td scope="row" colspan="8" align="center">
+						<input type="submit" name="updateimglist" value="<?php esc_attr_e( 'Update sizes', $ims->domain )?>" class="button-primary" />
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		<?php wp_nonce_field( 'ims_imagesizes' )?>
+	</form>
+	<?php
 }
 
-/**
-*Create package
-*
-*@return array on error
-*@since 0.5.0
-*/
-function create_ims_package(){
-	global $wpdb,$pagenowurl;
-	
-	$errors = new WP_Error();
-	if(empty($_POST['package_name'])){
-		$errors->add('empty_name',__('A name is required.',ImStore::domain));
-		return $errors;
-	}
-	$price_list = array(
-			'post_status'	=> 'publish',
-			'post_type' 	=> 'ims_package',
-			'post_title' 	=> $_POST['package_name'],
-	);
-	$list_id = wp_insert_post($price_list);
-	if(empty($list_id)){
-		$errors->add('list_error',__('There was a problem creating the package.',ImStore::domain));
-		return $errors;
-	}
-	wp_redirect($pagenowurl."&ms=35#packages");
-}
-
-
-/**
-*Create new list
-*
-*@return array on error
-*@since 0.5.0
-*/
-function create_ims_list(){
-	global $wpdb,$pagenowurl;
-	$errors = new WP_Error();
-	if(empty($_POST['list_name'])){
-		$errors->add('empty_name',__('A name is required.',ImStore::domain));
-		return $errors;
-	}
-	$price_list = array(
-			'post_status'	=> 'publish',
-			'post_type' 	=> 'ims_pricelist',
-			'post_title' 	=> $_POST['list_name'],
-	);
-	$list_id = wp_insert_post($price_list);
-	
-	if(empty($list_id)){
-		$errors->add('list_error',__('There was a problem creating the list.',ImStore::domain));
-		return $errors;
-	}
-	wp_redirect($pagenowurl."&ms=38");
-}
-
-/**
-*Update list
-*
-*@return array on error
-*@since 0.5.0
-*/
-function update_ims_list(){
-	global $wpdb,$pagenowurl;
-	$errors = new WP_Error();
-	if(empty($_POST['list_name'])){
-		$errors->add('empty_name',__('A name is required.',ImStore::domain));
-		return $errors;
-	}
-	// price list
-	$options = array(
-		'ims_bw' 		=> $_POST['_ims_bw'],
-		'ims_sepia' 	=> $_POST['_ims_sepia'],
-		'ims_ship_local' => $_POST['_ims_ship_local'],
-		'ims_ship_inter' => $_POST['_ims_ship_inter']
-	);
-	update_post_meta($_POST['listid'],'_ims_list_opts',$options);
-	update_post_meta($_POST['listid'],'_ims_sizes',$_POST['sizes']);
-	wp_update_post(array('ID' => $_POST['listid'],'post_title' => $_POST['list_name']));
-	wp_redirect($pagenowurl."&ms=34");
-}
-
-/**
-*Update package
-*
-*@return array on error
-*@since 0.5.0
-*/
-function update_ims_package(){
-	global $wpdb,$pagenowurl;
-	$errors = new WP_Error();
-	if(empty($_POST['packagename'])){
-		$errors->add('empty_name',__('A name is required.',ImStore::domain));
-		return $errors;
-	}
-	foreach($_POST['sizes'] as $size){
-		$sizes[$size['name']]['unit'] = $size['unit'];
-		$sizes[$size['name']]['count'] = $size['count'];
-	}
-	$id = intval($_POST['packageid']);
-	update_post_meta($id,'_ims_sizes',$sizes);
-	update_post_meta($id,'_ims_price',$_POST['packageprice']);
-	wp_update_post(array('ID' => $id,'post_title' => $_POST['packagename']));
-	wp_redirect($pagenowurl."&ms=33#packages");
-}
-
-/**
-*Add/update promotions
-*
-*@return void
-*@since 0.5.0
-*/
-function add_ims_promotion(){
-	global $wpdb,$pagenowurl;
-	
-	$errors = new WP_Error();
-	if(empty($_POST['promo_name']))
-		$errors->add('empty_name',__('A promotion name is required.',ImStore::domain));
+function ims_new_promotion( $ims ){
+	 
+	 if( $_GET['action'] != 'new' ) {
+		$promo = get_post( $_GET['action'] );
+		$meta 	= get_post_meta( $_GET['action'] , '_ims_promo_data' , true );
+		$date 	= strtotime( $promo->post_date );
+		$expire	= strtotime( $promo->post_expire );
 		
-	if(empty($_POST['discount']) && $_POST['promo_type'] != 3)
-		$errors->add('discount',__('A discount is required',ImStore::domain));	
-		
-	if(!empty($errors->errors)) return $errors;
-		
-	$promotion = array(
-			'post_status'	=> 'publish',
-			'post_type' 	=> 'ims_promo',
-			'post_title' 	=> $_POST['promo_name'],
-			'post_date'		=> $_POST['start_date'],	 
-			'post_expire'	=> $_POST['expiration_date'],
-	);
+		$_POST['promo_name'] = $promo->post_title;
+		$_POST['startdate'] = date_i18n( 'Y-m-d', $date );
+		$_POST['starts'] = date_i18n( $ims->dformat, $date );
+		$_POST['expires'] = date_i18n( $ims->dformat, $expire );
+		$_POST['expiration_date'] = date_i18n( 'Y-m-d', $expire );
+		foreach( (array)$meta as $key => $val ) 	$_POST[$key] = $val; 
+	 }
 	
-	if(isset($_POST['updatepromotion']))
-		$promotion['ID'] = intval($_POST['promotion_id']);
-	$promo_id = wp_update_post($promotion);
-	if(empty($promo_id)){
-		$errors->add('promo_error',__('There was a problem creating the promotion.',ImStore::domain));
-		return $errors;
-	}
-
-	$data = array(
-		'promo_code' => $_POST['promo_code'],
-		'promo_type' => $_POST['promo_type'],
-		'free-type'	 => $_POST['free-type'],
-		'discount' 	 => intval($_POST['discount']),
-		'items' 	 => $_POST['items'],
-		'rules' 	 => $_POST['rules'],
-	);
-	update_post_meta($promo_id,'_ims_promo_data',$data);
-	update_post_meta($promo_id,'_ims_promo_code',$_POST['promo_code']);
-	$a = ($_POST['updatepromotion'])?30:32;
-	wp_redirect($pagenowurl."&ms=$a#promotions");
+        $data = array();
+	foreach( array( 'promo_name', 'promo_code', 'starts', 'startdate', 'expires', 'expiration_date', 'promo_type', 'discount') as $key )
+		$data[$key] = ( isset($_POST[$key]) ) ? esc_attr($_POST[$key] ) : false;
+	extract( $data );
+	?>
+	<form method="post" class="new-promo" action="#promotions" >
+		<?php if( $_GET['action'] != 'new' ) ;?>
+		<table class="ims-table">
+			<tbody><tr>
+				<td colspan="5">
+					<label><?php _e( 'Type', $ims->domain )?>
+						<select name="promo_type" id="promo_type">
+							<?php foreach( $ims->promo_types as $key => $label ){?>
+							<option value="<?php echo esc_attr( $key ) ?>"<?php selected( $promo_type, $key )?>><?php echo $label?></option>
+							<?php }?>
+						</select>
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label><?php _e( 'Name',$ims->domain )?> <input name="promo_name" type="text" class="regular-text" value="<?php echo esc_attr( $promo_name ) ?>"/></label>
+				</td>
+				<td>
+					<label> <?php _e( 'Code',$ims->domain )?>	 <input name="promo_code" type="text" class="regular-text" value="<?php echo esc_attr( $promo_code ) ?>" /></label>
+				</td>
+				<td>
+					<label><?php _e( 'Starts',$ims->domain )?> <input type="text" name="starts" id="starts" class="regular-text" value="<?php echo esc_attr( $starts )?>" /></label>
+					<input type="hidden" name="start_date" id="start_date" value="<?php echo $startdate?>" />
+				</td>
+				<td>
+					<label><?php _e( 'Expire',$ims->domain )?> <input type="text" name="expires" id="expires" class="regular-text" value="<?php echo esc_attr( $expires )?>" /></label>
+					<input type="hidden" name="expiration_date" id="expiration_date" value="<?php echo esc_attr( $expiration_date ) ?>" />
+				</td>
+				<td>
+					<label class="hide-free"> <?php _e( 'Discount', $ims->domain )?>
+						<input type="text" name="discount" class="regular-text" value="<?php echo esc_attr( $discount ) ?>" <?php if( $promo_type == 3) echo ' disabled="disabled"' ?> /> 
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<?php 
+					$logic = ( isset( $_POST['rules']['logic'] ) ) ? $_POST['rules']['logic'] : false ;
+					$property = ( isset( $_POST['rules']['property'] ) ) ? $_POST['rules']['property'] : false;
+					?>
+					<?php _e( 'Conditions', $ims->domain )?> 
+					<select name="rules[property]">
+						<?php foreach( $ims->rules_property as $val => $label ) 
+							echo '<option value="', esc_attr( $val ), '"', selected( $property, $val, false ), '>',$label, '</option>';
+						?>
+					</select>
+					<select name="rules[logic]">
+							<?php foreach( $ims->rules_logic as $val => $label ) 
+							echo '<option value="', esc_attr( $val ), '"', selected( $logic, $val, false ), '>',$label, '</option>';
+						?>
+					</select>
+					<input name="rules[value]" type="text" class="inpsm" value="<?php if( isset($_POST['rules']['value']) ) echo esc_attr( $_POST['rules']['value'] ) ?>"/>
+				</td>
+				<td width="25%" align="right">
+					<?php $action = ( $_GET['action'] == 'new' ) ? __( 'Add promotion', $ims->domain ) : __( 'Update', $ims->domain ) ?>
+					<input type="submit" name="cancel" value="<?php esc_attr_e( 'Cancel', $ims->domain )?>" class="button" />
+					<input type="hidden" name="promotion_id" value="<?php if( $_GET['action'] != 'new' ) echo esc_attr($_GET['action'])?>"/>
+					<input type="submit" name="promotion" value="<?php echo esc_attr( $action )?>" class="button-primary" />
+				</td>
+			</tr></tbody>
+		</table>
+		<?php wp_nonce_field( 'ims_promotion' )?>
+	</form>
+	<?php
 }
 
-/**
-*delete promotions
-*
-*@return void
-*@since 0.5.0
-*/
-function delete_ims_promotions(){
-	global $wpdb,$pagenowurl;
-	$errors = new WP_Error();
-	if(empty($_POST['promo'])){
-		$errors->add('nothing_checked',__('Please select a promo to be deleted.',ImStore::domain));
-		return $errors;
-	}
-	$ids = $wpdb->escape(implode(',',$wpdb->escape($_POST['promo'])));
-	$count = $wpdb->query("DELETE FROM $wpdb->posts WHERE ID IN($ids)");
-	if(!empty($deleted))
-		$wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id IN($ids)");
-	$a = ($count< 2)?31:39;
-	wp_redirect($pagenowurl."&ms=$a&c=$count#promotions");
+function ims_promotions_tab( $ims ){
+	$nonce 		= '_wpnonce='.wp_create_nonce( 'ims_link_promo' );
+	if( isset($_GET['action']) ) do_meta_boxes( 'ims_promotions', 'normal', $ims );
+	
+	$css			= ' alternate';
+	$page		= ( isset($_GET['p'] ) ) ? $_GET['p'] : 1;
+	$columns 	= (array)get_column_headers( 'ims_gallery_page_ims-pricing' );
+	$hidden 	= (array)get_hidden_columns( 'ims_gallery_page_ims-pricing' );
+	$promos 	= new WP_Query( array( 'post_type' => 'ims_promo', 'paged' => $page, 'posts_per_page' => $ims->per_page ) );
+	
+	$start = ($page - 1) * $ims->per_page;
+	$page_links = paginate_links( array(
+		'base' => $ims->pageurl . '%_%#promotions',
+		'format' => '&p=%#%',
+		'prev_text' => __( '&laquo;' ),
+		'next_text' => __( '&raquo;' ),
+		'total' => $promos->max_num_pages,
+		'current' => $page,
+	));
+	
+	?>
+	<form method="post" action="#promotions" >
+		<div class="tablenav">
+			<div class="alignleft actions">
+			<select name="action">
+				<option value="" selected="selected"><?php _e( 'Bulk Actions', $ims->domain )?></option>
+				<option value="delete"><?php _e( 'Delete', $ims->domain )?></option>
+			</select>
+			<input type="submit" value="<?php esc_attr_e( 'Apply', $ims->domain );?>" name="doaction" class="button-secondary" /> |
+			<a href="<?php echo $ims->pageurl ."&amp;$nonce&amp;action=new#promotions"?>" class="button"><?php _e( 'New Promotion', $ims->domain )?></a>
+			</div>
+		</div>
+		
+		<table class="widefat post fixed imstore-table">
+			<thead><tr><?php print_column_headers( 'ims_gallery_page_ims-pricing' )?></tr></thead>
+			<tbody>
+			<?php foreach( $promos->posts as $promo){
+				$css = ( $css == ' alternate') ? '' : ' alternate';
+				$r = '<tr id="item-' . $promo->ID . '" class="iedit' . $css . '">';
+				foreach( $columns as $column_id => $column_name ){
+					$hide = ( $ims->in_array( $column_id, $hidden ) ) ? ' hidden':'' ;
+					$meta = get_post_meta( $promo->ID , '_ims_promo_data', true );
+					switch( $column_id ){
+						case 'cb':
+							$r .= '<th scope="row" class="column-' . $column_id . ' check-column">';
+							$r .= '<input type="checkbox" name="promo[]" value="' . esc_attr( $promo->ID ) . '" /> </th>';
+							break;
+						case 'name':
+							$r .= '<td class="column-' . $column_id . '" > ' . $promo->post_title . '<div class="row-actions">' ;
+							$r .= '<span><a href="' . $ims->pageurl . "&amp;$nonce&amp;action=$promo->ID#promotions" . '">' . __( "Edit", $ims->domain ) . '</a></span> |';
+							$r .= '<span class="delete"><a href="' . $ims->pageurl . "&amp;$nonce&amp;delete=$promo->ID#promotions" . '"> ' . __( "Delete", $ims->domain ) . '</a></span>';
+							$r .= '</div></td>';
+							break;
+						case 'code':
+							$r .= '<td class="column-' . $column_id . $hide . '" > ' ;
+							if( isset( $meta['promo_code'] ) ) $r .= $meta['promo_code'];
+							$r .= '</td>' ;
+							break;
+						case 'starts':
+							$r .= '<td class="column-' . $column_id . $hide .'" > ' . date_i18n( $ims->dformat, strtotime( $promo->post_date ) ) . '</td>' ;
+							break;
+						case 'expires':
+							$r .= '<td class="column-' . $column_id . $hide . '" > ';
+							if( isset( $promo->post_expire ) ) $r .= date_i18n( $ims->dformat, strtotime( $promo->post_expire ) );
+							$r .= '</td>' ;
+							break;
+						case 'type':
+							$r .= '<td class="column-' . $column_id . $hide . '" > ' ;
+							if( isset( $meta['promo_type'] ) ) $r .= $ims->promo_types[$meta['promo_type'] ] ;
+							$r .= '</td>' ;
+							break;
+						case 'discount':
+							$r .= '<td class="column-' . $column_id . $hide . '" > ' ;
+							if( isset( $meta['discount'] ) ) $r .= $meta['discount'];
+							if( isset( $meta['items'] ) ) $r .= $meta['items'];
+							$r .= '</td>' ;
+							break;
+						}
+				}
+				echo $r .= '</tr>';
+			}?>
+			</tbody>
+		</table>
+	</form>
+	<div class="tablenav">
+		<?php if ( $page_links ) : ?>
+		<div class="tablenav-pages"><?php $page_links_text = sprintf( '<span class="displaying-num">' . __( 'Displaying %s&#8211;%s of %s' ) . '</span>%s',
+			number_format_i18n( $start + 1 ),
+			number_format_i18n( min( $page * $ims->per_page, $promos->found_posts ) ),
+			'<span class="total-type-count">' . number_format_i18n( $promos->found_posts ) . '</span>',
+			$page_links
+		); echo $page_links_text; ?></div>
+		<?php endif ?>
+	</div>
+	<?php 
 }
-?>

@@ -154,7 +154,7 @@ function i_bu($ibu,$og) {
 </p>
 <table width="100%">
 <tr><td valign="top" align="left">
-  Alaus kiekis: <?=round($this->data['recipe']['recipe_batch']);?></br>
+  Alaus kiekis: <?=round($this->data['recipe']['recipe_batch'],1);?></br>
   Efektyvumas: <?=round($this->data['recipe']['recipe_efficiency'],2);?></br>
   Virimo laikas: <?=$this->data['recipe']['recipe_boiltime'];?> min.</br>
   Atenuacija: <?=round($this->data['recipe']['recipe_attenuation'],2);?></br>

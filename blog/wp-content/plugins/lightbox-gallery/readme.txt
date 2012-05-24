@@ -1,14 +1,17 @@
 === Lightbox Gallery ===
 Contributors: Hiroaki Miyashita
 Donate link: http://wpgogo.com/development/lightbox-gallery.html
-Tags: lightbox, gallery, image, images, album, photo, photos, picture, pictures, jQuery, Highslide
+Tags: lightbox, gallery, galleries, image, images, album, photo, photos, picture, pictures, jQuery, Highslide, Colorbox
 Requires at least: 2.5
-Tested up to: 3.1
-Stable tag: 0.6.5
+Tested up to: 3.4
+Stable tag: 0.7.2
 
-This plugin changes the view of galleries to the lightbox.
+The Lightbox Gallery plugin changes the view of galleries to the lightbox.
 
 == Description ==
+
+**Importance:**
+From 0.7.1, the default view changed to Colorbox due to the license regulation by the plugin directory. If you would prefer the prior Lightbox to Colorbox, you need to get the script from the setting page.
 
 The Lightbox Gallery plugin changes the view of galleries to the lightbox.
 
@@ -30,15 +33,20 @@ Localization
 * Spanish (es_ES) - [Daniel Tarrero](http://www.bluebrain.es/)
 * German (de_DE) - Michael Wruck and Tacitus Media
 * French (fr_FR) - [BenLeTibetain](http://www.benletibetain.net/)
+* Hindi (hi_IN) - [Outshine Solutions](http://outshinesolutions.com/web-hosting/web-hosting-india.html)
+* Croatian (hr) - [Tomislav Konestabo](http://aciddot.com/)
 * Hungarian (hu_HU) - [Zsolt Vereb](http://www.google.com/profiles/zsolt.vereb) and [Feriman](http://feriman.com/)
 * Italian (it_IT) - [Gianni Diurno](http://gidibao.net/)
-* Japanese (ja) - [Hiroaki Miyashita](http://wordpressgogo.com/)
+* Japanese (ja) - [Hiroaki Miyashita](http://wpgogo.com/)
 * Dutch (nl_NL) - [Peter Arends](http://www.peterarends.net/)
 * Polish (pl_PL) - Otmar
 * Romanian (ro_RO) - [Anunturi Jibo](http://www.jibo.ro/)
 * Russian (ru_RU) - [Fat Cow](http://www.fatcow.com/)
+* Slovak (sk_SK) - [Viliam Brozman](http://www.brozman.sk/blog/)
+* Swedish (sv_SE) - [Anders Martensson](http://nemrod.se/)
 * Turkish (tr_TR) - [Hakan Demiray](http://www.dmry.net/)
 * Ukrainian (uk_UA) - [Vitalij Lew](http://wpp.pp.ua/)
+* Simplified Chinese (zh_CN) - [leonanu](http://www.inanu.net/)
 
 If you have translated into your language, please let me know.
 
@@ -121,6 +129,29 @@ If you would like not to show the navigation, set `0`. The default is `1`.
 [gallery num="10" pagenavi="0"]
 
 == Changelog ==
+
+= 0.7.2 =
+* Bugfix: lightbox image path.
+
+= 0.7.1 =
+* The default view changed to Colorbox.
+* Slovak (sk_SK) - Viliam Brozman
+
+= 0.6.8 =
+* Due to the license restriction, the highslide script has been removed.
+* Bugfix: key transition.
+
+= 0.6.7 =
+* Swedish (sv_SE) - Anders Martensson
+* Bugfix: button images of sub directory WordPress.
+
+= 0.6.6 =
+* Option to add rel=&quot;lightbox&quot; automatically in the post insert.
+* Code cleaning.
+* Bugfix: addition of esc_attr().
+* Croatian (hr) - Tomislav Konestabo
+* Hindi (hi_IN) - Outshine Solutions
+* Simplified Chinese (zh_CN) - leonanu
 
 = 0.6.5 =
 * Lightbox and Highslide path.

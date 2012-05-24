@@ -5,7 +5,7 @@
 	<table width="60%">
 	<? for ($i=0;$i<count($this->comments);$i++) { $bg=$i%2==0 ? "#eeeeee" : "#ffffff" ?>
 		<tr>
-		<td valign="middle" align="center" style="font-size:11"><a href="/brewers/<?=$this->users[$z]['user_id'];?>"><div><a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->comments[$i]['user_email']);?>?rating=G&size=40&default=mm" border="0"/></a></div>
+		<td valign="middle" align="center" style="font-size:11"><a href="/brewers/<?=$this->users[$i]['user_id'];?>"><div><a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->comments[$i]['user_email']);?>?rating=G&size=40&default=mm" border="0"/></a></div>
 <a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><?=$this->comments[$i]['user_name'];?> </a></td>
 <td>
 <div class="ui-corner-all"  style="padding:10;margin-left:20;padding-top:0;border:1px solid #eeeeee;background:<?=$bg;?>" >

@@ -454,7 +454,7 @@ $('#efficiency').bind('spinchange', function (event, ui) {
 	calc();
 });
 $("#boil_time").spinner({min:0});
-$("#bash_size").spinner({min:0});
+$("#bash_size").spinner({min:0,stepping:0.5});
 $('#bash_size').bind('spinchange', function (event, ui) {
 	calc();
 });

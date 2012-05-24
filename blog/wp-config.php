@@ -15,23 +15,17 @@
  */
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'v2340_mono');
-
+define('DB_NAME', 'atvirasalus');
 /** MySQL database username */
-define('DB_USER', 'v2340_mono');
-
+define('DB_USER', 'atvirasalus');
 /** MySQL database password */
-define('DB_PASSWORD', 'mono');
-
+define('DB_PASSWORD', 'sxFU9S5atLC4FrXx');
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
-
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
-
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
-
 /**#@+
  * Authentication Unique Keys and Salts.
  *
@@ -49,9 +43,7 @@ define('AUTH_SALT',        '|1:,d&jd+~N,qrl5A)N] [Nh`}f1{+zA^xVGJ5W[50?`UwAkc0(+
 define('SECURE_AUTH_SALT', '-)/|n(P>+(CXXoE5UD4UL=.YHrgjj{|ME9ViF975g!H.t8Su]2or<*ge,]GWrjJ|');
 define('LOGGED_IN_SALT',   'IPBT3DHg5cK?04u(lpI)+)nH65Bhl;ER78PQum[1V8oaugqX+RPwEo(`y!T|)e/n');
 define('NONCE_SALT',       'z[j4k~674l<u5 =[v]C,q!&KngnNnL})n)SxsQ*?|pZ`K~:lS*:aMQ_j0[^s3V&l');
-
 /**#@-*/
-
 /**
  * WordPress Database Table prefix.
  *
@@ -76,7 +68,6 @@ define ('WPLANG', 'lt_LT');
  * in their development environments.
  */
 define('WP_DEBUG', false);
-
 /* That's all, stop editing! Happy blogging. */
 /** multisite */
 define('WP_ALLOW_MULTISITE', true);
@@ -90,6 +81,5 @@ define( 'BLOG_ID_CURRENT_SITE', 1 );
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');
-
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');

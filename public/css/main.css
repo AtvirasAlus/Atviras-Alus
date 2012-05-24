@@ -147,3 +147,41 @@ ul#topnav li span a:hover {font-weight:bold;}
     font-weight: bold;
 }
 
+ul#menu-top {
+  font-family:Georgia;
+  font-weight:bold;
+	margin: 0; padding: 0;
+	float: left;
+	list-style: none;
+	font-size: 16px;
+	margin-left: 35px;
+}
+ul#menu-top li {
+	float: left;
+	margin: 0; padding: 0;
+	
+}
+ul#menu-top li a {
+	padding: 5px 10px;
+	display: block;
+	color: #777777;
+	text-decoration: none;
+}
+ul#menu-top li span {
+	float: left;
+	padding: 10px 0;
+	position: absolute;
+	left: 0; top:25px;
+	display: none;
+	background: #DEDEDE;
+	color: #fff;
+	-moz-border-radius-bottomright: 5px;
+	-khtml-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-khtml-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+}
+ul#menu-top li:hover span { display: block; }
+ul#menu-top li span a { display: inline; font-size:12px;font-weight:normal;}
+ul#menu-top li span a:hover {font-weight:bold;}
