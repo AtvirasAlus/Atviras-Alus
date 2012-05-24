@@ -1,0 +1,7 @@
+<div style="padding-bottom:20;padding-top:10" align="center"><i><?=$this->title;?></i></div>
+<?$max=round($this->statistics[0]["data"]);?>
+
+<?for ($i=0;$i<count($this->statistics);$i++) {?>
+<div style="font-size:10;padding-bottom:5;padding-top:5" align="left;"><?=($i+1).". ".$this->statistics[$i]["label"] ." (".$this->statistics[$i]["data"] .")" ;?></div>
+<div style="width:<?=round($this->statistics[$i]["data"]/$max*80);?>%;height:12;border:0px #755531 solid;background:#9B7142"></div>
+<?}?>
