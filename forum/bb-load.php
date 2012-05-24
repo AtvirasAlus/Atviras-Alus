@@ -22,7 +22,7 @@ if ( version_compare( PHP_VERSION, '4.3', '<' ) ) {
 
 
 // Modify error reporting levels to exclude PHP notices
-error_reporting( E_ALL ^ E_NOTICE );
+error_reporting( E_ALL ^ E_NOTICE ^ E_DEPRECATED );
 
 
 

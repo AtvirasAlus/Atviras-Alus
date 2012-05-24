@@ -2213,7 +2213,8 @@ function get_user_profile_link( $id = 0, $page = 1, $context = BB_URI_CONTEXT_A_
 			'id' => $user->ID,
 			'page' => (1 < $page) ? $page : false
 		);
-		$r = bb_get_uri('profile.php', $query, $context);
+		//$r = bb_get_uri('profile.php', $query, $context);
+		$r = "/brewers/".$user->ID;
 	}
 	return apply_filters( 'get_user_profile_link', $r, $user->ID, $context );
 }
