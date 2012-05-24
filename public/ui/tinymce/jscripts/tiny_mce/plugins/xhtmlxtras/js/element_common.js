@@ -229,9 +229,3 @@ function insertInlineElement(en) {
 			dom.replace(dom.create(en, {_mce_new : 1}), n, 1);
 	});
 }
-execCommand('FontName', false, 'mceinline');
-	tinymce.each(dom.select('span,font'), function(n) {
-		if (n.style.fontFamily == 'mceinline' || n.face == 'mceinline')
-			dom.replace(dom.create(en, {_mce_new : 1}), n, 1);
-	});
-}

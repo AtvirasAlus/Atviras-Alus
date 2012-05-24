@@ -140,11 +140,4 @@
 		}
 	});
 
-})(jQuery);troy: function() {
-		    $.Widget.prototype.destroy.apply(this);
-			this.tagDiv.remove();
-			this.element.show();
-		}
-	});
-
 })(jQuery);

@@ -41,4 +41,3 @@ var AdvHRDialog = {
 
 tinyMCEPopup.requireLangPack();
 tinyMCEPopup.onInit.add(AdvHRDialog.init, AdvHRDialog);
-nInit.add(AdvHRDialog.init, AdvHRDialog);

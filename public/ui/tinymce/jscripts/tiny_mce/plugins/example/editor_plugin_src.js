@@ -81,6 +81,4 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('example', tinymce.plugins.ExamplePlugin);
-})();lugin
-	tinymce.PluginManager.add('example', tinymce.plugins.ExamplePlugin);
 })();

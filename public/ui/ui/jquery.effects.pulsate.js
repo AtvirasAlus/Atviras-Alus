@@ -49,9 +49,3 @@ $.effects.pulsate = function(o) {
 };
 
 })(jQuery);
-ue(); })
-			.dequeue();
-	});
-};
-
-})(jQuery);

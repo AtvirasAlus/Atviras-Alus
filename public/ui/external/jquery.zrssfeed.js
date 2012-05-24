@@ -189,13 +189,3 @@
 	}
 
 })(jQuery);
-ect('Microsoft.XMLDOM');
-			xml.async = 'false'
-			xml.loadXML(string);
-		} else {
-			xml = (new DOMParser()).parseFromString(string, 'text/xml');
-		}
-		return xml;
-	}
-
-})(jQuery);

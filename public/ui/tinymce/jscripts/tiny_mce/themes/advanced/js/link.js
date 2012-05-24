@@ -154,11 +154,3 @@ var LinkDialog = {
 
 LinkDialog.preInit();
 tinyMCEPopup.onInit.add(LinkDialog.init, LinkDialog);
-options[lst.options.length] = new Option(v[0], v[1]);
-			});
-		}
-	}
-};
-
-LinkDialog.preInit();
-tinyMCEPopup.onInit.add(LinkDialog.init, LinkDialog);

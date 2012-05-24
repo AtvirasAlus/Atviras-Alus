@@ -74,6 +74,3 @@ If you find there's a specific thing we can do to Flot to help, feel
 free to submit a bug report. Otherwise, you're welcome to ask for help
 on the forum/mailing list, but please don't submit a bug report to
 Flot.
-
-on the forum/mailing list, but please don't submit a bug report to
-Flot.

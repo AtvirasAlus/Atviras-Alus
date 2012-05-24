@@ -283,17 +283,3 @@ $.ui.ddmanager = {
 };
 
 })(jQuery);
-over" : "_out"].call(this, event);
-
-			// we just moved out of a greedy child
-			if (parentInstance && c == 'isout') {
-				parentInstance['isout'] = 0;
-				parentInstance['isover'] = 1;
-				parentInstance._over.call(parentInstance, event);
-			}
-		});
-
-	}
-};
-
-})(jQuery);

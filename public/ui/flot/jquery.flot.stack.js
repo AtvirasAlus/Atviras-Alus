@@ -182,13 +182,3 @@ adjusted (e.g for bar charts or filled areas).
         version: '1.2'
     });
 })(jQuery);
-apoints.push(stackData);
-    }
-    
-    $.plot.plugins.push({
-        init: init,
-        options: options,
-        name: 'stack',
-        version: '1.2'
-    });
-})(jQuery);

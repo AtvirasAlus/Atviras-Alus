@@ -855,34 +855,3 @@ $.extend($.ui.dialog.overlay.prototype, {
 });
 
 }(jQuery));
-function() {
-		/* If the dialog is draggable and the user drags it past the
-		 * right edge of the window, the document becomes wider so we
-		 * need to stretch the overlay. If the user then drags the
-		 * dialog back to the left, the document will become narrower,
-		 * so we need to shrink the overlay to the appropriate size.
-		 * This is handled by shrinking the overlay before setting it
-		 * to the full document size.
-		 */
-		var $overlays = $([]);
-		$.each($.ui.dialog.overlay.instances, function() {
-			$overlays = $overlays.add(this);
-		});
-
-		$overlays.css({
-			width: 0,
-			height: 0
-		}).css({
-			width: $.ui.dialog.overlay.width(),
-			height: $.ui.dialog.overlay.height()
-		});
-	}
-});
-
-$.extend($.ui.dialog.overlay.prototype, {
-	destroy: function() {
-		$.ui.dialog.overlay.destroy(this.$el);
-	}
-});
-
-}(jQuery));

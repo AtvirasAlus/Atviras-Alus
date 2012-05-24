@@ -148,11 +148,4 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('fullscreen', tinymce.plugins.FullScreenPlugin);
-})();." + tinymce.minorVersion
-			};
-		}
-	});
-
-	// Register plugin
-	tinymce.PluginManager.add('fullscreen', tinymce.plugins.FullScreenPlugin);
 })();

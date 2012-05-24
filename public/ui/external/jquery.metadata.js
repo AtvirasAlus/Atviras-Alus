@@ -119,10 +119,4 @@ $.fn.metadata = function( opts ){
 	return $.metadata.get( this[0], opts );
 };
 
-})(jQuery);cat Plugins/Metadata
- */
-$.fn.metadata = function( opts ){
-	return $.metadata.get( this[0], opts );
-};
-
 })(jQuery);

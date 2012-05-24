@@ -99,9 +99,3 @@
 	// Register plugin
 	tinymce.PluginManager.add('save', tinymce.plugins.Save);
 })();
-		}
-	});
-
-	// Register plugin
-	tinymce.PluginManager.add('save', tinymce.plugins.Save);
-})();

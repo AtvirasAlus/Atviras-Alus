@@ -20,5 +20,4 @@ jQuery(function($){
 		showMonthAfterYear: true,
 		yearSuffix: '年'};
 	$.datepicker.setDefaults($.datepicker.regional['ja']);
-});.regional['ja']);
 });

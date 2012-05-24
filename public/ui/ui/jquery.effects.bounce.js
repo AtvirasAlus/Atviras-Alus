@@ -76,10 +76,3 @@ $.effects.bounce = function(o) {
 };
 
 })(jQuery);
-, function() { el.dequeue(); });
-		el.dequeue();
-	});
-
-};
-
-})(jQuery);

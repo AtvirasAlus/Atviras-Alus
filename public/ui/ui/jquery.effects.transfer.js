@@ -43,9 +43,3 @@ $.effects.transfer = function(o) {
 };
 
 })(jQuery);
-equeue();
-				});
-	});
-};
-
-})(jQuery);

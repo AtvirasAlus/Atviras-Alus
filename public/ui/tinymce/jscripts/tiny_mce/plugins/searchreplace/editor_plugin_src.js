@@ -54,5 +54,4 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('searchreplace', tinymce.plugins.SearchReplacePlugin);
-})();chreplace', tinymce.plugins.SearchReplacePlugin);
 })();

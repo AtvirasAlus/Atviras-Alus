@@ -342,20 +342,3 @@ The plugin allso adds the following methods to the plot object:
         version: '1.1'
     });
 })(jQuery);
-"mouseup", mouseUpHandler);
-        });
-
-    }
-
-    $.plot.plugins.push({
-        init: init,
-        options: {
-            selection: {
-                mode: null, // one of null, "x", "y" or "xy"
-                color: "#e8cfac"
-            }
-        },
-        name: 'selection',
-        version: '1.1'
-    });
-})(jQuery);

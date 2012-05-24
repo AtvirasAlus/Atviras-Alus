@@ -17,4 +17,3 @@ var ExampleDialog = {
 };
 
 tinyMCEPopup.onInit.add(ExampleDialog.init, ExampleDialog);
-, ExampleDialog);

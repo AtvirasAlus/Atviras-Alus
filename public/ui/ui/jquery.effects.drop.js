@@ -48,11 +48,3 @@ $.effects.drop = function(o) {
 };
 
 })(jQuery);
-.dequeue();
-		}});
-
-	});
-
-};
-
-})(jQuery);

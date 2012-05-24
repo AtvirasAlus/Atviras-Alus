@@ -29,5 +29,4 @@ insert_date:"Insert current date/time",
 option_ltr:"Left to right",
 option_rtl:"Right to left",
 attribs_title:"Insert/Edit Attributes"
-});e:"Insert/Edit Attributes"
 });

@@ -57,7 +57,3 @@ div.jqcloud span.w1 {
   font-size: 10px;
   color: #aab5f0;
 }
-cloud span.w1 {
-  font-size: 10px;
-  color: #aab5f0;
-}

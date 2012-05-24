@@ -184,8 +184,4 @@ ul#menu-top li span {
 }
 ul#menu-top li:hover span { display: block; }
 ul#menu-top li span a { display: inline; font-size:12px;font-weight:normal;}
-ul#menu-top li span a:hover {font-weight:bold;}ius: 5px;
-}
-ul#menu-top li:hover span { display: block; }
-ul#menu-top li span a { display: inline; font-size:12px;font-weight:normal;}
 ul#menu-top li span a:hover {font-weight:bold;}

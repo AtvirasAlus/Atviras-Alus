@@ -176,13 +176,3 @@ $.effects.size = function(o) {
 };
 
 })(jQuery);
-rops : props1); $.effects.removeWrapper(el); // Restore
-			if(o.callback) o.callback.apply(this, arguments); // Callback
-			el.dequeue();
-		}});
-
-	});
-
-};
-
-})(jQuery);

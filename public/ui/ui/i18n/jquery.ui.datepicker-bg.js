@@ -22,5 +22,3 @@ jQuery(function($){
 		yearSuffix: ''};
     $.datepicker.setDefaults($.datepicker.regional['bg']);
 });
-.regional['bg']);
-});

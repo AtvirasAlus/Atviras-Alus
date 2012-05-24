@@ -13,5 +13,4 @@ mcase:"Match case",
 findnext:"Find next",
 replace:"Replace",
 replaceall:"Replace all"
-});place all"
 });

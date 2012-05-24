@@ -104,9 +104,3 @@ var TemplateDialog = {
 
 TemplateDialog.preInit();
 tinyMCEPopup.onInit.add(TemplateDialog.init, TemplateDialog);
-ext;
-	}
-};
-
-TemplateDialog.preInit();
-tinyMCEPopup.onInit.add(TemplateDialog.init, TemplateDialog);

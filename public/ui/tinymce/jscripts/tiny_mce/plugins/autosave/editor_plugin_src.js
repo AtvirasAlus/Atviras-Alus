@@ -420,21 +420,3 @@
 
 	tinymce.PluginManager.add('autosave', tinymce.plugins.AutoSave);
 })(tinymce);
-raft();
-
-					// Never ask in fullscreen mode
-					if (ed.getParam("fullscreen_is_enabled"))
-						return;
-
-					// Setup a return message if the editor is dirty
-					if (!msg && ed.isDirty() && ed.getParam("autosave_ask_before_unload"))
-						msg = ed.getLang("autosave.unload_msg");
-				});
-
-				return msg;
-			}
-		}
-	});
-
-	tinymce.PluginManager.add('autosave', tinymce.plugins.AutoSave);
-})(tinymce);

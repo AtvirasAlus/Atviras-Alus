@@ -950,35 +950,3 @@
 	// Register plugin
 	tinymce.PluginManager.add("paste", tinymce.plugins.PastePlugin);
 })();
-nction() {
-			var t = this, ed = t.editor;
-
-			// Register command(s) for backwards compatibility
-			ed.addCommand("mcePasteWord", function() {
-				ed.windowManager.open({
-					file: t.url + "/pasteword.htm",
-					width: parseInt(getParam(ed, "paste_dialog_width")),
-					height: parseInt(getParam(ed, "paste_dialog_height")),
-					inline: 1
-				});
-			});
-
-			if (getParam(ed, "paste_text_use_dialog")) {
-				ed.addCommand("mcePasteText", function() {
-					ed.windowManager.open({
-						file : t.url + "/pastetext.htm",
-						width: parseInt(getParam(ed, "paste_dialog_width")),
-						height: parseInt(getParam(ed, "paste_dialog_height")),
-						inline : 1
-					});
-				});
-			}
-
-			// Register button for backwards compatibility
-			ed.addButton("pasteword", {title : "paste.paste_word_desc", cmd : "mcePasteWord"});
-		}
-	});
-
-	// Register plugin
-	tinymce.PluginManager.add("paste", tinymce.plugins.PastePlugin);
-})();

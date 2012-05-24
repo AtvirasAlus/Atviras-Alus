@@ -218,15 +218,3 @@ var AutoValidator = {
 		return null;
 	}
 };
-n, ic) {
-		var nl, i;
-
-		nl = this.tags(f, "label");
-		for (i=0; i<nl.length; i++) {
-			if (nl[i].getAttribute("for") == n.id || nl[i].htmlFor == n.id)
-				this.addClass(nl[i], ic);
-		}
-
-		return null;
-	}
-};

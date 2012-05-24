@@ -20,4 +20,3 @@ var EmotionsDialog = {
 };
 
 tinyMCEPopup.onInit.add(EmotionsDialog.init, EmotionsDialog);
-it, EmotionsDialog);

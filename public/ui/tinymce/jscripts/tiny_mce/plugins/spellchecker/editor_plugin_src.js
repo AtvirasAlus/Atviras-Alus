@@ -415,22 +415,3 @@
 	// Register plugin
 	tinymce.PluginManager.add('spellchecker', tinymce.plugins.SpellcheckerPlugin);
 })();
-cb) {
-			var t = this;
-
-			JSONRequest.sendRPC({
-				url : t.rpcUrl,
-				method : m,
-				params : p,
-				success : cb,
-				error : function(e, x) {
-					t.editor.setProgressState(0);
-					t.editor.windowManager.alert(e.errstr || ('Error response: ' + x.responseText));
-				}
-			});
-		}
-	});
-
-	// Register plugin
-	tinymce.PluginManager.add('spellchecker', tinymce.plugins.SpellcheckerPlugin);
-})();

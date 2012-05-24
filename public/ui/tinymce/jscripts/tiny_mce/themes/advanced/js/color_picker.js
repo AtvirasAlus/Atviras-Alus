@@ -251,16 +251,3 @@ function setCol(e, c) {
 }
 
 tinyMCEPopup.onInit.add(init);
-etCol('preview', color);
-	document.getElementById('color').value = color;
-}
-
-function setCol(e, c) {
-	try {
-		document.getElementById(e).style.backgroundColor = c;
-	} catch (ex) {
-		// Ignore IE warning
-	}
-}
-
-tinyMCEPopup.onInit.add(init);

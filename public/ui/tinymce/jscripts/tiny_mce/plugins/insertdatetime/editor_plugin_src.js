@@ -80,5 +80,4 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('insertdatetime', tinymce.plugins.InsertDateTime);
-})();inymce.PluginManager.add('insertdatetime', tinymce.plugins.InsertDateTime);
 })();

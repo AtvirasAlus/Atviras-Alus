@@ -371,23 +371,3 @@ $.widget( "ui.buttonset", {
 });
 
 }( jQuery ) );
-rner-right" )
-				.end()
-			.end();
-	},
-
-	destroy: function() {
-		this.element.removeClass( "ui-buttonset" );
-		this.buttons
-			.map(function() {
-				return $( this ).button( "widget" )[ 0 ];
-			})
-				.removeClass( "ui-corner-left ui-corner-right" )
-			.end()
-			.button( "destroy" );
-
-		$.Widget.prototype.destroy.call( this );
-	}
-});
-
-}( jQuery ) );

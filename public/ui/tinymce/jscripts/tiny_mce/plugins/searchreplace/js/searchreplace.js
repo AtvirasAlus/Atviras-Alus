@@ -136,11 +136,3 @@ var SearchReplaceDialog = {
 };
 
 tinyMCEPopup.onInit.add(SearchReplaceDialog.init, SearchReplaceDialog);
-rchreplace_dlg.notfound'));
-			else
-				fix();
-		}
-	}
-};
-
-tinyMCEPopup.onInit.add(SearchReplaceDialog.init, SearchReplaceDialog);

@@ -52,11 +52,3 @@ $.effects.clip = function(o) {
 };
 
 })(jQuery);
-		el.dequeue();
-		}});
-
-	});
-
-};
-
-})(jQuery);

@@ -235,12 +235,3 @@ function changedColor() {
 }
 
 tinyMCEPopup.onInit.add(init);
-ocument.forms[0], dom = tinyMCEPopup.editor.dom;
-	var st = dom.parseStyle(formObj.style.value);
-
-	st['background-color'] = formObj.bgcolor.value;
-
-	formObj.style.value = dom.serializeStyle(st);
-}
-
-tinyMCEPopup.onInit.add(init);

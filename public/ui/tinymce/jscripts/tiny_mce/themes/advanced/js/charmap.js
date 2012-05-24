@@ -333,17 +333,3 @@ function previewChar(codeA, codeB, codeN) {
 	elmA.innerHTML = '&amp;' + codeB;
 	elmN.innerHTML = codeN;
 }
- = document.getElementById('codeB');
-	var elmV = document.getElementById('codeV');
-	var elmN = document.getElementById('codeN');
-
-	if (codeA=='#160;') {
-		elmV.innerHTML = '__';
-	} else {
-		elmV.innerHTML = '&' + codeA;
-	}
-
-	elmB.innerHTML = '&amp;' + codeA;
-	elmA.innerHTML = '&amp;' + codeB;
-	elmN.innerHTML = codeN;
-}

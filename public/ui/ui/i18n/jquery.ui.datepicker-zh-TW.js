@@ -21,5 +21,3 @@ jQuery(function($){
 		yearSuffix: '年'};
 	$.datepicker.setDefaults($.datepicker.regional['zh-TW']);
 });
-ional['zh-TW']);
-});

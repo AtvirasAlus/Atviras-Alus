@@ -597,30 +597,3 @@ $.extend( $.ui.accordion, {
 });
 
 })( jQuery );
-owProps[ settings.prop ].value )
-						+ showProps[ settings.prop ].unit;
-				},
-				duration: options.duration,
-				easing: options.easing,
-				complete: function() {
-					if ( !options.autoHeight ) {
-						options.toShow.css( "height", "" );
-					}
-					options.toShow.css({
-						width: originalWidth,
-						overflow: overflow
-					});
-					options.complete();
-				}
-			});
-		},
-		bounceslide: function( options ) {
-			this.slide( options, {
-				easing: options.down ? "easeOutBounce" : "swing",
-				duration: options.down ? 1000 : 200
-			});
-		}
-	}
-});
-
-})( jQuery );

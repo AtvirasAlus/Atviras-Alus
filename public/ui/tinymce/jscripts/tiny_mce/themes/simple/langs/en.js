@@ -8,5 +8,4 @@ numlist_desc:"Ordered list",
 undo_desc:"Undo (Ctrl+Z)",
 redo_desc:"Redo (Ctrl+Y)",
 cleanup_desc:"Cleanup messy code"
-});code"
 });

@@ -21,5 +21,3 @@ jQuery(function($){
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['sq']);
 });
-regional['sq']);
-});

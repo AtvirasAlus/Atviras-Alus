@@ -80,6 +80,4 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('visualchars', tinymce.plugins.VisualChars);
-})();in
-	tinymce.PluginManager.add('visualchars', tinymce.plugins.VisualChars);
 })();

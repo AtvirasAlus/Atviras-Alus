@@ -151,11 +151,4 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('advlist', tinymce.plugins.AdvListPlugin);
-})();rsion + "." + tinymce.minorVersion
-			};
-		}
-	});
-
-	// Register plugin
-	tinymce.PluginManager.add('advlist', tinymce.plugins.AdvListPlugin);
 })();

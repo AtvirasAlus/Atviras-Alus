@@ -250,16 +250,3 @@ if ( !$.offset.setOffset ) {
 }
 
 }( jQuery ));
- {
-		var elem = this[ 0 ];
-		if ( !elem || !elem.ownerDocument ) { return null; }
-		if ( options ) { 
-			return this.each(function() {
-				$.offset.setOffset( this, options );
-			});
-		}
-		return _offset.call( this );
-	};
-}
-
-}( jQuery ));

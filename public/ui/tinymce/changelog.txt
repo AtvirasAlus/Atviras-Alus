@@ -1114,16 +1114,3 @@ Version 3.0a1 (2007-11-01)
 	Fixed various memory leaks in IE and reduced the unload cleanups needed.
 	Fixed so the preformatted option adds an invisible container pre tag inside the editor.
 	Renamed the _template plugin to example and updated it to use the new 3.x API.
-	Fixed so underline and strikethrough uses spans instread of deprecated U and STRIKE elements.
-	Fixed so indent/outdent adds/removed margin-left instead of blockquotes.
-	Fixed so alignment of paragraphs results in a text-align style value instead of the deprecated align attribute.
-	Fixed so alignment of images uses float or vertical-align style values instead of the deprecated align attribute.
-	Fixed so all classes from @import stylesheets gets imported into the editor.
-	Fixed so the directionality can toggle the dir attribute on and off.
-	Fixed so the fullscreen_settings can be used for all types of fullscreen modes.
-	Fixed so the advanced HR dialog gets displayed when inserting a HR not only on edit.
-	Fixed bug where word wrap didn't work in the source editor on Safari.
-	Fixed so non HTML elements can be used within the editor such as <myns:tag>
-	Fixed various memory leaks in IE and reduced the unload cleanups needed.
-	Fixed so the preformatted option adds an invisible container pre tag inside the editor.
-	Renamed the _template plugin to example and updated it to use the new 3.x API.

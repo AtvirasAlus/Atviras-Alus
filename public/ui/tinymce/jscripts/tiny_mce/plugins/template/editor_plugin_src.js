@@ -156,12 +156,4 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('template', tinymce.plugins.TemplatePlugin);
-})();= fmt.replace("%%", "%");
-
-				return fmt;
-		}
-	});
-
-	// Register plugin
-	tinymce.PluginManager.add('template', tinymce.plugins.TemplatePlugin);
 })();

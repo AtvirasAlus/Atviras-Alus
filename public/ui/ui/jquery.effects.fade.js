@@ -30,8 +30,3 @@ $.effects.fade = function(o) {
 };
 
 })(jQuery);
-		});
-	});
-};
-
-})(jQuery);

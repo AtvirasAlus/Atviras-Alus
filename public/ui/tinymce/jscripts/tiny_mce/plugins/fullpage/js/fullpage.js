@@ -469,35 +469,3 @@ function serializeStyleElement(d) {
 }
 
 tinyMCEPopup.onInit.add(init);
-le : tinymce.trim(p[i]), data : tinyMCEPopup.dom.parseStyle(p[i+1])};
-	}
-
-	return r;
-}
-
-function serializeStyleElement(d) {
-	var i, s, st;
-
-	s = '<!--\n';
-
-	for (i=0; i<d.length; i++) {
-		s += d[i].rule + ' {\n';
-
-		st = tinyMCE.serializeStyle(d[i].data);
-
-		if (st != '')
-			st += ';';
-
-		s += st.replace(/;/g, ';\n');
-		s += '}\n';
-
-		if (i != d.length - 1)
-			s += '\n';
-	}
-
-	s += '\n-->';
-
-	return s;
-}
-
-tinyMCEPopup.onInit.add(init);

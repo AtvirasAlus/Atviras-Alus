@@ -47,11 +47,3 @@ $.effects.blind = function(o) {
 };
 
 })(jQuery);
-.dequeue();
-		});
-
-	});
-
-};
-
-})(jQuery);

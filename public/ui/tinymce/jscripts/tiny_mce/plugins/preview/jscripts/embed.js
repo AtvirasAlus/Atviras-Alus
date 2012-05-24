@@ -71,9 +71,3 @@ function writeEmbed(cls, cb, mt, p) {
 
 	document.write(h);
 }
-+ p[n] + '" ';
-
-	h += '></embed></object>';
-
-	document.write(h);
-}

@@ -236,14 +236,3 @@ images (like Google Maps).
         version: '1.1'
     });
 })(jQuery);
-RawData.push(processRawData);
-        plot.hooks.drawSeries.push(drawSeries);
-    }
-    
-    $.plot.plugins.push({
-        init: init,
-        options: options,
-        name: 'image',
-        version: '1.1'
-    });
-})(jQuery);

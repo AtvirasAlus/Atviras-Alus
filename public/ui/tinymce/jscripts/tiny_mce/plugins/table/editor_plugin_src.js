@@ -1136,45 +1136,4 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('table', tinymce.plugins.TablePlugin);
-})(tinymce);rl : url + '/table.htm',
-						width : 400 + parseInt(ed.getLang('table.table_delta_width', 0)),
-						height : 320 + parseInt(ed.getLang('table.table_delta_height', 0)),
-						inline : 1
-					}, {
-						plugin_url : url,
-						action : val ? val.action : 0
-					});
-				},
-
-				mceTableRowProps : function() {
-					winMan.open({
-						url : url + '/row.htm',
-						width : 400 + parseInt(ed.getLang('table.rowprops_delta_width', 0)),
-						height : 295 + parseInt(ed.getLang('table.rowprops_delta_height', 0)),
-						inline : 1
-					}, {
-						plugin_url : url
-					});
-				},
-
-				mceTableCellProps : function() {
-					winMan.open({
-						url : url + '/cell.htm',
-						width : 400 + parseInt(ed.getLang('table.cellprops_delta_width', 0)),
-						height : 295 + parseInt(ed.getLang('table.cellprops_delta_height', 0)),
-						inline : 1
-					}, {
-						plugin_url : url
-					});
-				}
-			}, function(func, name) {
-				ed.addCommand(name, function(ui, val) {
-					func(val);
-				});
-			});
-		}
-	});
-
-	// Register plugin
-	tinymce.PluginManager.add('table', tinymce.plugins.TablePlugin);
 })(tinymce);

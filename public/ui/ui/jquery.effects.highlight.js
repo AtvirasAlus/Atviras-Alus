@@ -48,10 +48,3 @@ $.effects.highlight = function(o) {
 };
 
 })(jQuery);
-queue();
-				}
-			});
-	});
-};
-
-})(jQuery);

@@ -70,8 +70,3 @@ function insertHelpIFrame() {
 }
 
 tinyMCEPopup.onInit.add(init);
-ab').style.display = 'block';
-	}
-}
-
-tinyMCEPopup.onInit.add(init);

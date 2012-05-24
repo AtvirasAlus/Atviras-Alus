@@ -68,7 +68,3 @@ var TinyMCE_EditableSelects = {
 			TinyMCE_EditableSelects.onBlurEditableSelectInput();
 	}
 };
-13)
-			TinyMCE_EditableSelects.onBlurEditableSelectInput();
-	}
-};
