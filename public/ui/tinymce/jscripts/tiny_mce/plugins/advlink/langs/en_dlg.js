@@ -49,4 +49,7 @@ accesskey:"Accesskey",
 ltr:"Left to right",
 rtl:"Right to left",
 link_list:"Link list"
+});,
+rtl:"Right to left",
+link_list:"Link list"
 });

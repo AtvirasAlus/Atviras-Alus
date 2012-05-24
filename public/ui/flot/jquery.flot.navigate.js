@@ -334,3 +334,18 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
         version: '1.3'
     });
 })(jQuery);
+if (panTimeout)
+                clearTimeout(panTimeout);
+        }
+        
+        plot.hooks.bindEvents.push(bindEvents);
+        plot.hooks.shutdown.push(shutdown);
+    }
+    
+    $.plot.plugins.push({
+        init: init,
+        options: options,
+        name: 'navigate',
+        version: '1.3'
+    });
+})(jQuery);

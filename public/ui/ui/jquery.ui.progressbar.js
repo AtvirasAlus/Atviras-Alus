@@ -106,3 +106,12 @@ $.extend( $.ui.progressbar, {
 });
 
 })( jQuery );
+ria-valuenow", value );
+	}
+});
+
+$.extend( $.ui.progressbar, {
+	version: "1.8.7"
+});
+
+})( jQuery );

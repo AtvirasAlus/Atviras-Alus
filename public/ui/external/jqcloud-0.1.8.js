@@ -101,4 +101,8 @@
     setTimeout(function(){drawWordCloud();}, 100);
     return this;
   };
+})(jQuery); cloud drawing
+    setTimeout(function(){drawWordCloud();}, 100);
+    return this;
+  };
 })(jQuery);

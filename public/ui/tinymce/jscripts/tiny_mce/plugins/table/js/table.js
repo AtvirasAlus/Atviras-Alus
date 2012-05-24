@@ -452,3 +452,23 @@ function changedStyle() {
 }
 
 tinyMCEPopup.onInit.add(init);
+ue = '';
+
+	if (st['width'])
+		formObj.width.value = trimSize(st['width']);
+
+	if (st['height'])
+		formObj.height.value = trimSize(st['height']);
+
+	if (st['background-color']) {
+		formObj.bgcolor.value = st['background-color'];
+		updateColor('bgcolor_pick','bgcolor');
+	}
+
+	if (st['border-color']) {
+		formObj.bordercolor.value = st['border-color'];
+		updateColor('bordercolor_pick','bordercolor');
+	}
+}
+
+tinyMCEPopup.onInit.add(init);

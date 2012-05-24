@@ -411,4 +411,27 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('media', tinymce.plugins.MediaPlugin);
+})(); v;
+				});
+			}
+
+			delete pa.width;
+			delete pa.height;
+
+			im.title = this._serialize(pa);
+
+			return im;
+		},
+
+		_parse : function(s) {
+			return tinymce.util.JSON.parse('{' + s + '}');
+		},
+
+		_serialize : function(o) {
+			return tinymce.util.JSON.serialize(o).replace(/[{}]/g, '');
+		}
+	});
+
+	// Register plugin
+	tinymce.PluginManager.add('media', tinymce.plugins.MediaPlugin);
 })();

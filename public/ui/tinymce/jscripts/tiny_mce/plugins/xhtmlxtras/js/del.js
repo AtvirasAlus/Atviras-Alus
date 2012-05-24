@@ -51,3 +51,7 @@ function removeDel() {
 }
 
 tinyMCEPopup.onInit.add(init);
+Popup.close();
+}
+
+tinyMCEPopup.onInit.add(init);

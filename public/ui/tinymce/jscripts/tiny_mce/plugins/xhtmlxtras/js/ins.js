@@ -50,3 +50,7 @@ function removeIns() {
 }
 
 tinyMCEPopup.onInit.add(init);
+opup.close();
+}
+
+tinyMCEPopup.onInit.add(init);

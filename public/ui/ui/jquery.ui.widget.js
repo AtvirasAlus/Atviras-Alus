@@ -260,3 +260,16 @@ $.Widget.prototype = {
 };
 
 })( jQuery );
+event[ prop ] = event.originalEvent[ prop ];
+			}
+		}
+
+		this.element.trigger( event, data );
+
+		return !( $.isFunction(callback) &&
+			callback.call( this.element[0], event, data ) === false ||
+			event.isDefaultPrevented() );
+	}
+};
+
+})( jQuery );

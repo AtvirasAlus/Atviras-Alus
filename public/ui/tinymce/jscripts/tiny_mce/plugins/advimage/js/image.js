@@ -441,3 +441,14 @@ var ImageDialog = {
 
 ImageDialog.preInit();
 tinyMCEPopup.onInit.add(ImageDialog.init, ImageDialog);
+oAbsolute(u);
+
+		if (!st)
+			tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="ImageDialog.updateImageData(this);" onerror="ImageDialog.resetImageData();" />');
+		else
+			tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="ImageDialog.updateImageData(this, 1);" />');
+	}
+};
+
+ImageDialog.preInit();
+tinyMCEPopup.onInit.add(ImageDialog.init, ImageDialog);

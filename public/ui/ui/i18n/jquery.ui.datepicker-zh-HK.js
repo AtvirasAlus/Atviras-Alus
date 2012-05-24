@@ -21,3 +21,5 @@ jQuery(function($){
 		yearSuffix: '年'};
 	$.datepicker.setDefaults($.datepicker.regional['zh-HK']);
 });
+ional['zh-HK']);
+});

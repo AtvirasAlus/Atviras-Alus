@@ -52,4 +52,5 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('style', tinymce.plugins.StylePlugin);
+})();ager.add('style', tinymce.plugins.StylePlugin);
 })();

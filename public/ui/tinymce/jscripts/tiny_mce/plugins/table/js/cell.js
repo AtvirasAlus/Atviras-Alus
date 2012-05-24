@@ -284,3 +284,15 @@ function changedStyle() {
 }
 
 tinyMCEPopup.onInit.add(init);
+ound-color']) {
+		formObj.bgcolor.value = st['background-color'];
+		updateColor('bgcolor_pick','bgcolor');
+	}
+
+	if (st['border-color']) {
+		formObj.bordercolor.value = st['border-color'];
+		updateColor('bordercolor_pick','bordercolor');
+	}
+}
+
+tinyMCEPopup.onInit.add(init);

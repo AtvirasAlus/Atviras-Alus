@@ -26,3 +26,4 @@ function removeCite() {
 }
 
 tinyMCEPopup.onInit.add(init);
+MCEPopup.onInit.add(init);

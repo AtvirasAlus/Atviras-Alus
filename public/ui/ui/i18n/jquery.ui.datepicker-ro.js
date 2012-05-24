@@ -24,3 +24,5 @@ jQuery(function($){
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['ro']);
 });
+er.regional['ro']);
+});

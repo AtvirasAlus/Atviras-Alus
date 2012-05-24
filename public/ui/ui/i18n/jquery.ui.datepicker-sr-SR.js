@@ -21,3 +21,5 @@ jQuery(function($){
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['sr-SR']);
 });
+ional['sr-SR']);
+});

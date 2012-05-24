@@ -100,4 +100,7 @@ flv_loop:"Loop",
 flv_showscalemodes:"Show scale modes",
 flv_smoothvideo:"Smooth video",
 flv_jscallback:"JS Callback"
+});showscalemodes:"Show scale modes",
+flv_smoothvideo:"Smooth video",
+flv_jscallback:"JS Callback"
 });

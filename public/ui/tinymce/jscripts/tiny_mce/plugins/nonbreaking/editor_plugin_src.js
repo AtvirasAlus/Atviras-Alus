@@ -50,4 +50,5 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('nonbreaking', tinymce.plugins.Nonbreaking);
+})();('nonbreaking', tinymce.plugins.Nonbreaking);
 })();

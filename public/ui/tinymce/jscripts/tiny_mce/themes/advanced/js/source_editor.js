@@ -54,3 +54,7 @@ function resizeInputs() {
 		el.style.height = (vp.h - 65) + 'px';
 	}
 }
+ 'px';
+		el.style.height = (vp.h - 65) + 'px';
+	}
+}

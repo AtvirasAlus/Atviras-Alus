@@ -133,4 +133,11 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('legacyoutput', tinymce.plugins.LegacyOutput);
+})(tinymce);rsion
+			};
+		}
+	});
+
+	// Register plugin
+	tinymce.PluginManager.add('legacyoutput', tinymce.plugins.LegacyOutput);
 })(tinymce);

@@ -25,3 +25,4 @@ var MergeCellsDialog = {
 };
 
 tinyMCEPopup.onInit.add(MergeCellsDialog.init, MergeCellsDialog);
+.init, MergeCellsDialog);

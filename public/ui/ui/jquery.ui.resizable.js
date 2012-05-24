@@ -810,3 +810,38 @@ var isNumber = function(value) {
 };
 
 })(jQuery);
+d((cs.height - os.height) / (o.grid[1]||1)) * (o.grid[1]||1);
+
+		if (/^(se|s|e)$/.test(a)) {
+			self.size.width = os.width + ox;
+			self.size.height = os.height + oy;
+		}
+		else if (/^(ne)$/.test(a)) {
+			self.size.width = os.width + ox;
+			self.size.height = os.height + oy;
+			self.position.top = op.top - oy;
+		}
+		else if (/^(sw)$/.test(a)) {
+			self.size.width = os.width + ox;
+			self.size.height = os.height + oy;
+			self.position.left = op.left - ox;
+		}
+		else {
+			self.size.width = os.width + ox;
+			self.size.height = os.height + oy;
+			self.position.top = op.top - oy;
+			self.position.left = op.left - ox;
+		}
+	}
+
+});
+
+var num = function(v) {
+	return parseInt(v, 10) || 0;
+};
+
+var isNumber = function(value) {
+	return !isNaN(parseInt(value, 10));
+};
+
+})(jQuery);

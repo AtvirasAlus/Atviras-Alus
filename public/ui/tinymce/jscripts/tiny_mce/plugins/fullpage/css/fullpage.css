@@ -179,4 +179,13 @@ textarea {
 	height: 55px;
 }
 
+.panel_wrapper div.current {height:420px;}* html .removebutton, * html .moveupbutton, * html .movedownbutton {
+	width: 22px;
+	height: 22px;
+}
+
+textarea {
+	height: 55px;
+}
+
 .panel_wrapper div.current {height:420px;}

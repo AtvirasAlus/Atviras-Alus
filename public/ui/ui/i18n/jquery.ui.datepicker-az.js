@@ -20,4 +20,5 @@ jQuery(function($) {
 		showMonthAfterYear: false,
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['az']);
+});.regional['az']);
 });

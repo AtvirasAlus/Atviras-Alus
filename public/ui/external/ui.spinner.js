@@ -336,3 +336,17 @@ $.extend($.ui.spinner, {
 });
 
 })(jQuery);
+c) {
+			var s = Math.round(parseFloat(num)*Math.pow(10, dec)) / Math.pow(10, dec); // round off weird decimals
+			if (dec > 0) {
+				s = s + ((s.toString().indexOf('.') == -1) ? '.' : '') + '0000000001';
+				s = s.substr(0, s.indexOf('.')+1+dec);
+			} else {
+				s = Math.round(s);
+			}
+			return s;
+		}
+	}
+});
+
+})(jQuery);

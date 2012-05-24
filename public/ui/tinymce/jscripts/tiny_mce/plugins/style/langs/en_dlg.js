@@ -60,4 +60,7 @@ zindex:"Z-index",
 overflow:"Overflow",
 placement:"Placement",
 clip:"Clip"
+});overflow:"Overflow",
+placement:"Placement",
+clip:"Clip"
 });

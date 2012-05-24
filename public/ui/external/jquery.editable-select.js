@@ -454,3 +454,15 @@ EditableSelect.prototype = {
   };
   
 })(jQuery);
+   },
+    createBackgroundIframe: function() {
+      var bg_iframe = $('<iframe frameborder="0" class="editable-select-iframe" src="about:blank;"></iframe>');
+      $(document.body).append(bg_iframe);
+      bg_iframe.width(this.select_mc.width() + 2);
+      bg_iframe.height(this.wrapper.height());
+      bg_iframe.css({top: this.wrapper.css('top'), left: this.wrapper.css('left')});
+      this.bg_iframe = bg_iframe;
+    }
+  };
+  
+})(jQuery);

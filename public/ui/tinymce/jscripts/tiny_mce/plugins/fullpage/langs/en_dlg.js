@@ -82,4 +82,8 @@ rev:"Rev",
 hreflang:"Href lang",
 general_props:"General",
 advanced_props:"Advanced"
+});v",
+hreflang:"Href lang",
+general_props:"General",
+advanced_props:"Advanced"
 });

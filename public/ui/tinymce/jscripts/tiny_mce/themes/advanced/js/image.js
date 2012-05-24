@@ -243,3 +243,11 @@ var ImageDialog = {
 
 ImageDialog.preInit();
 tinyMCEPopup.onInit.add(ImageDialog.init, ImageDialog);
+updateImageData;
+		this.preloadImg.onerror = this.resetImageData;
+		this.preloadImg.src = tinyMCEPopup.editor.documentBaseURI.toAbsolute(f.src.value);
+	}
+};
+
+ImageDialog.preInit();
+tinyMCEPopup.onInit.add(ImageDialog.init, ImageDialog);

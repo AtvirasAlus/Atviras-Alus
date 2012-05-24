@@ -198,3 +198,13 @@ function getStyle(elm, attrib, style) {
 
 	return tinyMCEPopup.dom.getStyle(elm, style);
 }
+ar val = tinyMCEPopup.dom.getAttrib(elm, attrib);
+
+	if (val != '')
+		return '' + val;
+
+	if (typeof(style) == 'undefined')
+		style = attrib;
+
+	return tinyMCEPopup.dom.getStyle(elm, style);
+}

@@ -1199,3 +1199,36 @@ Version number
 --------------
 
 The version number of Flot is available in $.plot.version.
+
+   add a callback to clean up after you. Take a look at the section in
+   PLUGINS.txt for more info.
+
+   
+Plugins
+-------
+
+Plugins extend the functionality of Flot. To use a plugin, simply
+include its Javascript file after Flot in the HTML page.
+
+If you're worried about download size/latency, you can concatenate all
+the plugins you use, and Flot itself for that matter, into one big file
+(make sure you get the order right), then optionally run it through a
+Javascript minifier such as YUI Compressor.
+
+Here's a brief explanation of how the plugin plumbings work:
+
+Each plugin registers itself in the global array $.plot.plugins. When
+you make a new plot object with $.plot, Flot goes through this array
+calling the "init" function of each plugin and merging default options
+from the "option" attribute of the plugin. The init function gets a
+reference to the plot object created and uses this to register hooks
+and add new public methods if needed.
+
+See the PLUGINS.txt file for details on how to write a plugin. As the
+above description hints, it's actually pretty easy.
+
+
+Version number
+--------------
+
+The version number of Flot is available in $.plot.version.

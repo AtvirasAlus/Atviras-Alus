@@ -40,4 +40,6 @@ align_textbottom:"Text bottom",
 align_left:"Left",
 align_right:"Right",
 image_list:"Image list"
+});ght:"Right",
+image_list:"Image list"
 });

@@ -48,3 +48,11 @@ $.effects.slide = function(o) {
 };
 
 })(jQuery);
+.dequeue();
+		}});
+
+	});
+
+};
+
+})(jQuery);

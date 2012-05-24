@@ -117,4 +117,10 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('bbcode', tinymce.plugins.BBCodePlugin);
+})();eturn s; 
+		}
+	});
+
+	// Register plugin
+	tinymce.PluginManager.add('bbcode', tinymce.plugins.BBCodePlugin);
 })();

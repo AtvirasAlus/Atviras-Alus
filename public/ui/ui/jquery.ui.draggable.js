@@ -795,3 +795,33 @@ $.ui.plugin.add("draggable", "zIndex", {
 });
 
 })(jQuery);
+(this).data("draggable").options;
+
+		var group = $.makeArray($(o.stack)).sort(function(a,b) {
+			return (parseInt($(a).css("zIndex"),10) || 0) - (parseInt($(b).css("zIndex"),10) || 0);
+		});
+		if (!group.length) { return; }
+		
+		var min = parseInt(group[0].style.zIndex) || 0;
+		$(group).each(function(i) {
+			this.style.zIndex = min + i;
+		});
+
+		this[0].style.zIndex = min + group.length;
+
+	}
+});
+
+$.ui.plugin.add("draggable", "zIndex", {
+	start: function(event, ui) {
+		var t = $(ui.helper), o = $(this).data("draggable").options;
+		if(t.css("zIndex")) o._zIndex = t.css("zIndex");
+		t.css('zIndex', o.zIndex);
+	},
+	stop: function(event, ui) {
+		var o = $(this).data("draggable").options;
+		if(o._zIndex) $(ui.helper).css('zIndex', o._zIndex);
+	}
+});
+
+})(jQuery);

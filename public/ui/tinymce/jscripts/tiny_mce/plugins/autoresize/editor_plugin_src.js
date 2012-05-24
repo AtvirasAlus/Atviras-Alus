@@ -117,3 +117,9 @@
 	// Register plugin
 	tinymce.PluginManager.add('autoresize', tinymce.plugins.AutoResizePlugin);
 })();
+		}
+	});
+
+	// Register plugin
+	tinymce.PluginManager.add('autoresize', tinymce.plugins.AutoResizePlugin);
+})();

@@ -1425,3 +1425,59 @@ if (!document.createElement('canvas').getContext) {
 })();
 
 } // if
+ = repetition;
+        break;
+      default:
+        throwException('SYNTAX_ERR');
+    }
+
+    this.src_ = image.src;
+    this.width_ = image.width;
+    this.height_ = image.height;
+  }
+
+  function throwException(s) {
+    throw new DOMException_(s);
+  }
+
+  function assertImageIsValid(img) {
+    if (!img || img.nodeType != 1 || img.tagName != 'IMG') {
+      throwException('TYPE_MISMATCH_ERR');
+    }
+    if (img.readyState != 'complete') {
+      throwException('INVALID_STATE_ERR');
+    }
+  }
+
+  function DOMException_(s) {
+    this.code = this[s];
+    this.message = s +': DOM Exception ' + this.code;
+  }
+  var p = DOMException_.prototype = new Error;
+  p.INDEX_SIZE_ERR = 1;
+  p.DOMSTRING_SIZE_ERR = 2;
+  p.HIERARCHY_REQUEST_ERR = 3;
+  p.WRONG_DOCUMENT_ERR = 4;
+  p.INVALID_CHARACTER_ERR = 5;
+  p.NO_DATA_ALLOWED_ERR = 6;
+  p.NO_MODIFICATION_ALLOWED_ERR = 7;
+  p.NOT_FOUND_ERR = 8;
+  p.NOT_SUPPORTED_ERR = 9;
+  p.INUSE_ATTRIBUTE_ERR = 10;
+  p.INVALID_STATE_ERR = 11;
+  p.SYNTAX_ERR = 12;
+  p.INVALID_MODIFICATION_ERR = 13;
+  p.NAMESPACE_ERR = 14;
+  p.INVALID_ACCESS_ERR = 15;
+  p.VALIDATION_ERR = 16;
+  p.TYPE_MISMATCH_ERR = 17;
+
+  // set up externs
+  G_vmlCanvasManager = G_vmlCanvasManager_;
+  CanvasRenderingContext2D = CanvasRenderingContext2D_;
+  CanvasGradient = CanvasGradient_;
+  CanvasPattern = CanvasPattern_;
+  DOMException = DOMException_;
+})();
+
+} // if

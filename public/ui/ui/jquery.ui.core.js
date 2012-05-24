@@ -306,3 +306,13 @@ $.extend( $.ui, {
 });
 
 })( jQuery );
+er "b" element axis
+		return ( x > reference ) && ( x < ( reference + size ) );
+	},
+	isOver: function( y, x, top, left, height, width ) {
+		//Determines when x, y coordinates is over "b" element
+		return $.ui.isOverAxis( y, top, height ) && $.ui.isOverAxis( x, left, width );
+	}
+});
+
+})( jQuery );

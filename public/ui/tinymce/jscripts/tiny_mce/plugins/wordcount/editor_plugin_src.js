@@ -96,3 +96,8 @@
 
     tinymce.PluginManager.add('wordcount', tinymce.plugins.WordCount);
 })();
+     }
+    });
+
+    tinymce.PluginManager.add('wordcount', tinymce.plugins.WordCount);
+})();

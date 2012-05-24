@@ -54,3 +54,12 @@ $.effects.fold = function(o) {
 };
 
 })(jQuery);
+
+			el.dequeue();
+		});
+
+	});
+
+};
+
+})(jQuery);

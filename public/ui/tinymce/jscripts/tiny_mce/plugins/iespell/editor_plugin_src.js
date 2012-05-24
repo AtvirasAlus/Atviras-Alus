@@ -51,4 +51,5 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('iespell', tinymce.plugins.IESpell);
+})();nager.add('iespell', tinymce.plugins.IESpell);
 })();

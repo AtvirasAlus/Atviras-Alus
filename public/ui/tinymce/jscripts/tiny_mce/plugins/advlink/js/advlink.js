@@ -526,3 +526,26 @@ function getTargetListHTML(elm_id, target_form_element) {
 // While loading
 preinit();
 tinyMCEPopup.onInit.add(init);
+vlink_dlg.target_parent') + ' (_parent)</option>';
+	html += '<option value="_top">' + tinyMCEPopup.getLang('advlink_dlg.target_top') + ' (_top)</option>';
+
+	for (var i=0; i<targets.length; i++) {
+		var key, value;
+
+		if (targets[i] == "")
+			continue;
+
+		key = targets[i].split('=')[0];
+		value = targets[i].split('=')[1];
+
+		html += '<option value="' + key + '">' + value + ' (' + key + ')</option>';
+	}
+
+	html += '</select>';
+
+	return html;
+}
+
+// While loading
+preinit();
+tinyMCEPopup.onInit.add(init);

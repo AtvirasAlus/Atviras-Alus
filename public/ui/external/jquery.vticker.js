@@ -74,4 +74,10 @@ $.fn.vTicker = function(options) {
 		}
 	});
 };
+})(jQuery);ve",function() {
+				itempause = false;
+			});
+		}
+	});
+};
 })(jQuery);

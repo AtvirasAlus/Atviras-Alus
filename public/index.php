@@ -137,4 +137,15 @@ endif;
 
 
 </body>
+</html>' class='vote_down' id='<?php echo $row['id']; ?>'>Vote Down!</a>
+	</span>
+	
+</div>
+<?php
+	endwhile;
+endif;
+?>
+
+
+</body>
 </html>

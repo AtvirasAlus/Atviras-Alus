@@ -50,4 +50,5 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('preview', tinymce.plugins.Preview);
+})();ager.add('preview', tinymce.plugins.Preview);
 })();

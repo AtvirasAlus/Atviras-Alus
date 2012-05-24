@@ -1755,3 +1755,50 @@ $.datepicker.version = "1.8.7";
 window['DP_jQuery_' + dpuuid] = $;
 
 })(jQuery);
+rget;
+};
+
+/* Determine whether an object is an array. */
+function isArray(a) {
+	return (a && (($.browser.safari && typeof a == 'object' && a.length) ||
+		(a.constructor && a.constructor.toString().match(/\Array\(\)/))));
+};
+
+/* Invoke the datepicker functionality.
+   @param  options  string - a command, optionally followed by additional parameters or
+                    Object - settings for attaching new datepicker functionality
+   @return  jQuery object */
+$.fn.datepicker = function(options){
+
+	/* Initialise the date picker. */
+	if (!$.datepicker.initialized) {
+		$(document).mousedown($.datepicker._checkExternalClick).
+			find('body').append($.datepicker.dpDiv);
+		$.datepicker.initialized = true;
+	}
+
+	var otherArgs = Array.prototype.slice.call(arguments, 1);
+	if (typeof options == 'string' && (options == 'isDisabled' || options == 'getDate' || options == 'widget'))
+		return $.datepicker['_' + options + 'Datepicker'].
+			apply($.datepicker, [this[0]].concat(otherArgs));
+	if (options == 'option' && arguments.length == 2 && typeof arguments[1] == 'string')
+		return $.datepicker['_' + options + 'Datepicker'].
+			apply($.datepicker, [this[0]].concat(otherArgs));
+	return this.each(function() {
+		typeof options == 'string' ?
+			$.datepicker['_' + options + 'Datepicker'].
+				apply($.datepicker, [this].concat(otherArgs)) :
+			$.datepicker._attachDatepicker(this, options);
+	});
+};
+
+$.datepicker = new Datepicker(); // singleton instance
+$.datepicker.initialized = false;
+$.datepicker.uuid = new Date().getTime();
+$.datepicker.version = "1.8.7";
+
+// Workaround for #4055
+// Add another global to avoid noConflict issues with inline event handlers
+window['DP_jQuery_' + dpuuid] = $;
+
+})(jQuery);

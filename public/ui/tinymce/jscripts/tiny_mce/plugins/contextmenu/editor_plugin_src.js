@@ -144,4 +144,12 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('contextmenu', tinymce.plugins.ContextMenu);
+})();(t, m, el, col);
+
+			return m;
+		}
+	});
+
+	// Register plugin
+	tinymce.PluginManager.add('contextmenu', tinymce.plugins.ContextMenu);
 })();

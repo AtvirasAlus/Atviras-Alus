@@ -20,4 +20,5 @@ jQuery(function($){
 		showMonthAfterYear: false,
 		yearSuffix: '년'};
 	$.datepicker.setDefaults($.datepicker.regional['ko']);
+});.regional['ko']);
 });

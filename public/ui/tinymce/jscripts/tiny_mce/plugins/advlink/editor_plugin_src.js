@@ -58,4 +58,5 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('advlink', tinymce.plugins.AdvancedLinkPlugin);
+})();r.add('advlink', tinymce.plugins.AdvancedLinkPlugin);
 })();

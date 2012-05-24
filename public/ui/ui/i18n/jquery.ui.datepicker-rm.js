@@ -19,3 +19,5 @@ jQuery(function($){
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['rm']);
 });
+gional['rm']);
+});

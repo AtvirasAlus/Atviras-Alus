@@ -63,3 +63,6 @@
 	if ($.browser.msie) try { document.execCommand("BackgroundImageCache", false, true)} catch(e) { }
 
 })(jQuery)
+BackgroundImageCache", false, true)} catch(e) { }
+
+})(jQuery)

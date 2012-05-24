@@ -433,3 +433,26 @@ $.ui.mouse.defaults = {
 };
 
 })(jQuery);
+.pageY - e.pageY)
+			) >= this.options.distance
+		);
+	},
+	
+	_mouseDelayMet: function(e) {
+		return this.mouseDelayMet;
+	},
+	
+	// These are placeholder methods, to be overriden by extending plugin
+	_mouseStart: function(e) {},
+	_mouseDrag: function(e) {},
+	_mouseStop: function(e) {},
+	_mouseCapture: function(e) { return true; }
+};
+
+$.ui.mouse.defaults = {
+	cancel: null,
+	distance: 1,
+	delay: 0
+};
+
+})(jQuery);

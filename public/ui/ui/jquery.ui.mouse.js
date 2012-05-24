@@ -149,3 +149,10 @@ $.widget("ui.mouse", {
 });
 
 })(jQuery);
+(event) {},
+	_mouseDrag: function(event) {},
+	_mouseStop: function(event) {},
+	_mouseCapture: function(event) { return true; }
+});
+
+})(jQuery);

@@ -1430,4 +1430,53 @@ jCanvas.prefs = prefs;
 jCanvas.extend = extend;
 $.jCanvas = jCanvas;
 
+}(jQuery, window, document, Math, Image, parseFloat, parseInt, true, false, null)); layers that are functions
+			if (layer && layer.method !== 'draw') {
+	
+				// Allow jQuery to animate jCanvas CSS-named properties (width, opacity, etc.)
+				hideProps(cssProps, layer);
+				hideProps(cssProps, params[1]);
+				// Animate layer
+				$(layer).animate(params[1], {
+					duration: params[2],
+					easing: ($.easing[params[3]] ? params[3] : NULL),
+					// When animation completes
+					complete: complete($elem, layer),
+					// Redraw canvas for every animation frame
+					step: step($elem, layer)
+				});
+				
+			}
+		}
+	}
+	return $elems;
+};
+
+// Normalize offsetX and offsetY for all browsers
+$.event.fix = function(event) {
+	var offset;
+	event = eventFix.call($.event, event);
+	// If offsetX and offsetY are not supported
+	if (event.pageX !== UNDEFINED && event.offsetX === UNDEFINED) {
+		offset = $(event.target).offset();
+		if (offset) {
+			event.offsetX = event.pageX - offset.left;
+			event.offsetY = event.pageY - offset.top;
+		}
+	}
+	return event;
+};
+
+// Enable animation for color properties
+supportColorProps(colorProps);
+
+// Enable canvas feature detection with $.support
+$.support.canvas = (document.createElement('canvas').getContext !== UNDEFINED);
+
+// Export jCanvas functions
+jCanvas.defaults = defaults;
+jCanvas.prefs = prefs;
+jCanvas.extend = extend;
+$.jCanvas = jCanvas;
+
 }(jQuery, window, document, Math, Image, parseFloat, parseInt, true, false, null));

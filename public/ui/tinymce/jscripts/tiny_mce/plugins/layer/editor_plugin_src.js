@@ -209,4 +209,16 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('layer', tinymce.plugins.Layer);
+})();";
+					ed.addVisual(ed.getBody());
+				}
+
+				ed.execCommand('mceRepaint');
+				ed.nodeChanged();
+			}
+		}
+	});
+
+	// Register plugin
+	tinymce.PluginManager.add('layer', tinymce.plugins.Layer);
 })();

@@ -17,4 +17,6 @@ tongue_out:"Tongue out",
 undecided:"Undecided",
 wink:"Wink",
 yell:"Yell"
+});,
+yell:"Yell"
 });

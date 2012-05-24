@@ -88,3 +88,6 @@ And if you look up "flot" in a Danish-to-English dictionary, some up
 the words that come up are "good-looking", "attractive", "stylish",
 "smart", "impressive", "extravagant". One of the main goals with Flot
 is pretty looks.
+
+"smart", "impressive", "extravagant". One of the main goals with Flot
+is pretty looks.

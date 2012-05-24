@@ -82,4 +82,8 @@
 	});
 
 	tinymce.ThemeManager.add('simple', tinymce.themes.SimpleTheme);
+})();		}
+	});
+
+	tinymce.ThemeManager.add('simple', tinymce.themes.SimpleTheme);
 })();

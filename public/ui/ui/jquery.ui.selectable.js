@@ -264,3 +264,22 @@ $.extend($.ui.selectable, {
 });
 
 })(jQuery);
+rtselected = true;
+			self._trigger("selected", event, {
+				selected: selectee.element
+			});
+		});
+		this._trigger("stop", event);
+
+		this.helper.remove();
+
+		return false;
+	}
+
+});
+
+$.extend($.ui.selectable, {
+	version: "1.8.7"
+});
+
+})(jQuery);

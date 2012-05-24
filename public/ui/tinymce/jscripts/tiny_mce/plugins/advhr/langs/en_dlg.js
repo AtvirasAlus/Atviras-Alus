@@ -3,3 +3,4 @@ width:"Width",
 size:"Height",
 noshade:"No shadow"
 });
+});

@@ -151,3 +151,14 @@ strong b.fail                               { color: #710909; }
 	top: -10000px;
 	left: -10000px;
 }
+ 15px;
+	-webkit-border-bottom-left-radius: 15px;	
+}
+
+/** Fixture */
+
+#qunit-fixture {
+	position: absolute;
+	top: -10000px;
+	left: -10000px;
+}

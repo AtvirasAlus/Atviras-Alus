@@ -593,3 +593,27 @@ $.widget("ui.menu", {
 });
 
 }(jQuery));
+0;
+				});
+
+			// TODO try to catch this earlier when scrollTop indicates the last page anyway
+			if (!result.length) {
+				result = this.element.children(".ui-menu-item:first");
+			}
+			this.activate(event, result);
+		} else {
+			this.activate(event, this.element.children(".ui-menu-item")
+				.filter(!this.active || this.first() ? ":last" : ":first"));
+		}
+	},
+
+	hasScroll: function() {
+		return this.element.height() < this.element.attr("scrollHeight");
+	},
+
+	select: function( event ) {
+		this._trigger("selected", event, { item: this.active });
+	}
+});
+
+}(jQuery));

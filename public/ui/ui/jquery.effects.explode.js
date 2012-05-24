@@ -77,3 +77,13 @@ $.effects.explode = function(o) {
 };
 
 })(jQuery);
+explode').remove();
+
+	}, o.duration || 500);
+
+
+	});
+
+};
+
+})(jQuery);

@@ -150,4 +150,10 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('fullpage', tinymce.plugins.FullPagePlugin);
+})();ontent) + '\n' + tinymce.trim(t.foot);
+		}
+	});
+
+	// Register plugin
+	tinymce.PluginManager.add('fullpage', tinymce.plugins.FullPagePlugin);
 })();

@@ -101,3 +101,9 @@ events.
         version: '1.0'
     });
 })(jQuery);
+
+        options: options,
+        name: 'threshold',
+        version: '1.0'
+    });
+})(jQuery);

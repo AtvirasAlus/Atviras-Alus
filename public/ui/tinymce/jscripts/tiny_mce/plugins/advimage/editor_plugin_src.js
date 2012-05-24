@@ -47,4 +47,5 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('advimage', tinymce.plugins.AdvancedImagePlugin);
+})();ge', tinymce.plugins.AdvancedImagePlugin);
 })();

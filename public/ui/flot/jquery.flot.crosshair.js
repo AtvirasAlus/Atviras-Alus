@@ -165,3 +165,13 @@ The plugin also adds four public methods:
         version: '1.0'
     });
 })(jQuery);
+});
+    }
+    
+    $.plot.plugins.push({
+        init: init,
+        options: options,
+        name: 'crosshair',
+        version: '1.0'
+    });
+})(jQuery);

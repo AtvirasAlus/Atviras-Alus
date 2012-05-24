@@ -628,3 +628,29 @@ function generatePreview(c) {
 }
 
 tinyMCEPopup.onInit.add(init);
+ '" name="' + pl.name + '" align="' + pl.align + '">';
+
+		for (n in pl) {
+			h += '<param name="' + n + '" value="' + pl[n] + '">';
+
+			// Add extra url parameter if it's an absolute URL
+			if (n == 'src' && pl[n].indexOf('://') != -1)
+				h += '<param name="url" value="' + pl[n] + '" />';
+		}
+	}
+
+	h += '<embed type="' + type + '" ';
+
+	for (n in pl)
+		h += n + '="' + pl[n] + '" ';
+
+	h += '></embed>';
+
+	// Avoid annoying warning about insecure items
+	if (!tinymce.isIE || document.location.protocol != 'https:')
+		h += '</object>';
+
+	p.innerHTML = "<!-- x --->" + h;
+}
+
+tinyMCEPopup.onInit.add(init);

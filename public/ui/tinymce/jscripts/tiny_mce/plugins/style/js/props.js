@@ -639,3 +639,28 @@ function synch(fr, to) {
 }
 
 tinyMCEPopup.onInit.add(init);
+se;
+		el[pre + "_bottom"].disabled = false;
+		el[pre + "_left"].disabled = false;
+
+		if (el[pre + "_top_measurement"]) {
+			el[pre + "_top_measurement"].disabled = false;
+			el[pre + "_right_measurement"].disabled = false;
+			el[pre + "_bottom_measurement"].disabled = false;
+			el[pre + "_left_measurement"].disabled = false;
+		}
+	}
+
+	showDisabledControls();
+}
+
+function synch(fr, to) {
+	var f = document.forms[0];
+
+	f.elements[to].value = f.elements[fr].value;
+
+	if (f.elements[fr + "_measurement"])
+		selectByValue(f, to + "_measurement", f.elements[fr + "_measurement"].value);
+}
+
+tinyMCEPopup.onInit.add(init);

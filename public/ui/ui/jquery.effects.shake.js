@@ -55,3 +55,10 @@ $.effects.shake = function(o) {
 };
 
 })(jQuery);
+ueue(); });
+		el.dequeue();
+	});
+
+};
+
+})(jQuery);

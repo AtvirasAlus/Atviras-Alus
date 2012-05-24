@@ -1226,4 +1226,60 @@
 	});
 
 	tinymce.ThemeManager.add('advanced', tinymce.themes.AdvancedTheme);
+}(tinymce));me_url : this.url
+			});
+		},
+
+		_mceLink : function(ui, val) {
+			var ed = this.editor;
+
+			ed.windowManager.open({
+				url : this.url + '/link.htm',
+				width : 310 + parseInt(ed.getLang('advanced.link_delta_width', 0)),
+				height : 200 + parseInt(ed.getLang('advanced.link_delta_height', 0)),
+				inline : true
+			}, {
+				theme_url : this.url
+			});
+		},
+
+		_mceNewDocument : function() {
+			var ed = this.editor;
+
+			ed.windowManager.confirm('advanced.newdocument', function(s) {
+				if (s)
+					ed.execCommand('mceSetContent', false, '');
+			});
+		},
+
+		_mceForeColor : function() {
+			var t = this;
+
+			this._mceColorPicker(0, {
+				color: t.fgColor,
+				func : function(co) {
+					t.fgColor = co;
+					t.editor.execCommand('ForeColor', false, co);
+				}
+			});
+		},
+
+		_mceBackColor : function() {
+			var t = this;
+
+			this._mceColorPicker(0, {
+				color: t.bgColor,
+				func : function(co) {
+					t.bgColor = co;
+					t.editor.execCommand('HiliteColor', false, co);
+				}
+			});
+		},
+
+		_ufirst : function(s) {
+			return s.substring(0, 1).toUpperCase() + s.substring(1);
+		}
+	});
+
+	tinymce.ThemeManager.add('advanced', tinymce.themes.AdvancedTheme);
 }(tinymce));

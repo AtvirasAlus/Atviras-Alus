@@ -20,4 +20,5 @@ jQuery(function($){
 		showMonthAfterYear: false,
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['hy']);
+});.regional['hy']);
 });
