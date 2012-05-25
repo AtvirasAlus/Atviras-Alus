@@ -18,7 +18,7 @@
 		</td>
 		</tr>
 		<tr>
-      <td align="left" valign="top" style="padding-top:10;"><?= preg_replace('/((?:[^"\'])(?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i','<a href="$1" rel="nofollow" target="blank">$1</a>',nl2br($this->comments[$i]["comment_text"]));?></td>
+      <td align="left" valign="top" style="padding-top:10;"><?= nl2br(preg_replace('/((?:[^"\'])(?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i','<a href="$1" rel="nofollow" target="blank">$1</a>',$this->comments[$i]["comment_text"]));?></td>
 		</tr>
 		</table>
 		</div>
