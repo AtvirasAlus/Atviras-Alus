@@ -169,7 +169,7 @@ $z++;
 <table>
 <? for ($i=0;$i<count($this->comments);$i++) {?>
 <tr>
-<td><a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><?=$this->comments[$i]["user_name"]?></a> komentavo <a style="font-size:15" href="/alus/receptas/<?=$this->comments[$i]['recipe_id'];?>-<?=$this->escapeParam($this->comments[$i]['recipe_name']);?>"><?=$this->comments[$i]["recipe_name"]?></a></td>
+<td><a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><?=$this->comments[$i]["user_name"]?></a> komentavo <a style="font-size:15" href="/alus/receptas/<?=$this->comments[$i]['recipe_id'];?>-<?=$this->escapeParam($this->comments[$i]['recipe_name']);?>#comment-<?=$this->comments[$i]['comment_id'];?>"><?=$this->comments[$i]["recipe_name"]?></a></td>
 </tr>
 <?}?>
 </table>
