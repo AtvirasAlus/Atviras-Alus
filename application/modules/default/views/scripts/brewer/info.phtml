@@ -89,7 +89,7 @@ h1 {
           <div>Paskutinį kartą lankėsi: <span><?=$this->user_info['user_lastlogin'];?></span></div>
           <div>Vietovė: <span><?=$this->user_info['user_location'];?></span></div>
           <div>Išvirė alaus:  <span><?=$this->user_info['total_brewed'];?> l.</span></div><br/>
-	  <div style="padding-left:5"><i><?=$this->user_info['user_about'];?></i></div>
+	  <div style="padding-left:5"><i><?= preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-]*(\?\S+)?)?)?)@','<a href="$1" rel="nofollow" target="blank">$1</a>',nl2br($this->user_info['user_about']));?></i></div>
         </div>
 
         <div class="ui-corner-all" style="background:#F1F0ED;padding:20;margin-top:20;">
