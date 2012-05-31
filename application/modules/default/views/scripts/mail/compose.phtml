@@ -3,28 +3,40 @@ $this->headScript()->appendFile("/public/ui/ui/jquery.ui.core.js");
 $this->headScript()->appendFile("/public/ui/ui/jquery.ui.autocomplete.js");
 $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.autocomplete.css");
 ?>
-<style>
-#mail-menu {
-	display:inline;
-	list-style:none;
-}
-#mail-menu li {
-	display:inline;
-	padding-right:10;
-	padding-left:10
-}
-#mail-table {
-}
-#mail-table td{
-	padding-top:3;
-	padding-right:10;
-	padding-left:10
-}
-</style>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Naujas laiškas</div>
+	<div class="mail_tools">
+		<a href="/mail/inbox">Gautieji</a>
+		<a href="/mail/compose"><b>Rašyti laišką</b></a>
+		<a href="/mail/outbox">Išsiųsti laiškai</a>
+	</div>
+	<form action="/mail/send" method="post" id="sendMailForm">
+		<dl>
+			<dt>Adresatas:</dt>
+			<dd>
+					<? $mail_to = isset($_GET["token"]) ? trim($_GET["token"]) : ""; ?>
+					<input type="text" id="mail_to" name="mail_to" value="<?= base64_decode($mail_to); ?>"/> 
+			</dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Tema:</dt>
+			<dd><input type="text" name="mail_subject" id="mail_subject"  /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<textArea  id="mail_body"  name="mail_body"></textArea>
+		</dl>
+		<dl>
+			<input type="button" id="sendButton" value="Siųsti" class="ui-button" />
+		</dl>
+	</form>
+</div>
+
 <style> 
 	.ui-autocomplete-loading { background: white url('/public/images/spinner.gif') right center no-repeat; }
-	</style> 
-	<script> 
+</style> 
+<script> 
 	$(function() {
 		function split( val ) {
 			return val.split( /,\s*/ );
@@ -35,94 +47,59 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 		}
  
 		$( "#mail_to" )
-			// don't navigate away from the field on tab when selecting an item
-			.bind( "keydown", function( event ) {
+		// don't navigate away from the field on tab when selecting an item
+		.bind( "keydown", function( event ) {
 			
-				if ( event.keyCode === 9 && $( this ).data( "autocomplete" ).menu.active ) {
-					event.preventDefault();
-				}
-			})
-			.autocomplete({
-				source: function( request, response ) {
+			if ( event.keyCode === 9 && $( this ).data( "autocomplete" ).menu.active ) {
+				event.preventDefault();
+			}
+		})
+		.autocomplete({
+			source: function( request, response ) {
 				
-					$.getJSON( "/mail/contacts", {
-						term: extractLast( request.term )
-					}, response )
-				},
-				search: function() {
-					// custom minLength
+				$.getJSON( "/mail/contacts", {
+					term: extractLast( request.term )
+				}, response )
+			},
+			search: function() {
+				// custom minLength
 					
-					var term = extractLast( this.value );
+				var term = extractLast( this.value );
 					
-					if ( term.length < 2 ) {
-						return false;
-					}
-				},
-				focus: function() {
-					// prevent value inserted on focus
-					return false;
-				},
-				select: function( event, ui ) {
-					var terms = split( this.value );
-					// remove the current input
-					terms.pop();
-					// add the selected item
-					terms.push( ui.item.value );
-					// add placeholder to get the comma-and-space at the end
-					
-					var lastOne=$.trim(terms[terms.length-1])
-					var i=0;
-					while (i<terms.length-1) {
-						if ($.trim(terms[i])==lastOne) {
-							terms.splice(i,1)
-						}else{
-							i++
-						}
-					}terms.push( "" );
-					this.value = terms.join( ", " );
+				if ( term.length < 2 ) {
 					return false;
 				}
-			});$('#sendButton').button();
-			$('#sendButton').click(function() {;
+			},
+			focus: function() {
+				// prevent value inserted on focus
+				return false;
+			},
+			select: function( event, ui ) {
+				var terms = split( this.value );
+				// remove the current input
+				terms.pop();
+				// add the selected item
+				terms.push( ui.item.value );
+				// add placeholder to get the comma-and-space at the end
+					
+				var lastOne=$.trim(terms[terms.length-1])
+				var i=0;
+				while (i<terms.length-1) {
+					if ($.trim(terms[i])==lastOne) {
+						terms.splice(i,1)
+					}else{
+						i++
+					}
+				}terms.push( "" );
+				this.value = terms.join( ", " );
+				return false;
+			}
+		});
+		$('#sendButton').click(function() {;
 			if ($("#mail_to").val().length>0) {
-			$("#sendMailForm")[0].submit();
+				$("#sendMailForm")[0].submit();
 			}});
 	});
 	
 	
-	</script> 
-	<div class="ui-corner-all" style="background-color:#eeeeee;width:820;padding:10">
-<div style="padding-bottom:10" align="right">
-<ul id="mail-menu" >
-	<li><a href="/mail/inbox">Gautieji</a></li>|
-	<li><a href="/mail/compose">Rašyti laišką</a></li>|
-	<li><a href="/mail/outbox">Išsiųsti laiškai</a></li>
-	
-	
-</ul>
-</div>
-<div class="ui-corner-all" style="background:#ffffff;width:800;padding:10">
-<form action="/mail/send" method="post" id="sendMailForm">
-<table width="95%"><tr><td>Adresatas:<div class="ui-widget"> 
-	<? $mail_to= isset($_GET["token"]) ? trim($_GET["token"]) : "";?>
-	<input id="mail_to" name="mail_to" style="width:100%" value="<?=base64_decode($mail_to);?>"/> 
-</div> </td></tr>
-<tr><td>Tema:</td></tr><tr><td>
-<input type="text" name="mail_subject" id="mail_subject"  style="width:100%"/>
-</td>
-</tr>
-
-<tr>
-<td valign="top"><textArea  id="mail_body"  name="mail_body" style="width:100%;min-height:250px;"></textArea></td>
-</tr>
-<tr>
-<td valign="top" align="right">
-<button  type="button" id="sendButton">Siųsti</button>
-
-</td>
-</tr>
-</table>
-</form>
-</div>
-</div>
-
+</script> 

@@ -307,8 +307,11 @@ ul#topmenu li a:hover {
 }
 .index_forum_block {
 	padding-bottom: 10px;
-	margin-bottom: 10px;
+	padding-top: 10px;
 	border-bottom: 1px solid #eee;
+}
+.index_forum_block:hover {
+	background-color: #f5f5f5;
 }
 .index_forum_block .avatar span {
 	display: block;
@@ -1135,6 +1138,7 @@ div.as-row:hover {
 	float: left;
 	text-align: center;
 	overflow: hidden;
+	margin-bottom: 10px;
 }
 .participants_list a span {
 	display: block;
@@ -1171,4 +1175,91 @@ div.as-row:hover {
 }
 .selectable_recipes .style_recipe {
 	cursor: pointer;
+}
+.randomstat_title {
+	font-weight: bold;
+	text-align: center;
+}
+.randomstat_data {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.mail_tools {
+	text-align: right;
+	margin-bottom: 10px;
+}
+.mail_tools a {
+	display: inline-block;
+	margin-left: 15px;
+	font-size: 14px;
+	line-height: 32px;
+}
+.mail_success {
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	padding: 10px;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.mail_row {
+	cursor: pointer;
+}
+.mail_info_block {
+	margin-bottom: 5px;
+}
+.mail_info_label {
+	float: left;
+	width: 50px;
+	font-weight: bold;
+	text-align: right;
+}
+.mail_info_text {
+	float: left;
+	margin-left: 10px;
+	width: 700px;
+}
+.mail_contents {
+	margin-top: 20px;
+	border-top: 1px solid #ccc;
+	padding-top: 20px;
+}
+#sendMailForm dl {
+	margin-bottom: 5x;
+}
+#sendMailForm dt {
+	float: left;
+	width: 70px;
+	font-size: 14px;
+	line-height: 26px;
+	text-align: right;
+}
+#sendMailForm dd {
+	float: left;
+	width: 750px;
+	margin-left: 10px;
+}
+#sendMailForm dd input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 750px;
+	padding: 2px;
+}
+#sendMailForm textarea {
+	height: 250px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 830px;
+	padding: 2px;
+}
+.t-unread {
+	font-weight: bold;
 }

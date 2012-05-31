@@ -1,85 +1,80 @@
-<style>
-#mail-menu {
-	display:inline;
-	list-style:none;
-}
-#mail-menu li {
-	display:inline;
-	padding-right:10;
-	padding-left:10
-}
-#mail-table {
-}
-#mail-table td{
-	padding-top:3;
-	padding-right:10;
-	padding-left:10
-}
-</style>
-<script>
-$(function() {
-$('#deleteButton').button();
-$('#deleteButton').click(function() {
-		if (($('input[name="mail_id[]"]:checked').length>0)) {
-			if (confirm("Pasirinkti laiškai bus ištrinti!")) {
-				$("#inboxForm")[0].submit();
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Išsiųsti laiškai</div>
+	<div class="mail_tools">
+		<a href="/mail/inbox">Gautieji</a>
+		<a href="/mail/compose">Rašyti laišką</a>
+		<a href="/mail/outbox"><b>Išsiųsti laiškai</b></a>
+	</div>
+	<? if (isset($_GET["succes"])) { ?>
+		<div class="mail_success">
+			Laiškas sėkmingai išsiųstas
+		</div>
+	<? } ?>
+	<form action="/mail/delete" method="POST" id="inboxForm">
+		<input type="hidden" name="type" value="outbox">
+		<input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI']; ?>">
+		<div class="as-table">
+			<?php
+			$total = 0;
+			foreach ($this->content as $item) {
+				if ($item["group_id"]>0) {
+					$to = $item["mail_to_group"];
+				} else {
+					$to = $item["mail_to"];
+				}
+				$toArr = explode(",",$to); 
+				if (count($toArr)>5) {
+					array_splice($toArr,4);
+					$to = implode(", ",$toArr) ."...";
+				} else {
+					$to=implode(", ",$toArr);
+				}
+				$total++;
+				?>
+				<div class="as-row mail_row">
+					<div class="as-cell" style="width: 23px;">
+						<input type="checkbox" style="border:1 solid #333333" name="mail_id[]" id="chMail" value="<?= $item["mail_id"]; ?>"/>
+					</div>
+					<div class="as-cell" style="width: 150px;" onclick="window.location.href='/mail/readoutbox?id=<?= $item["mail_id"]; ?>'">
+						<?= $to; ?>
+					</div>
+					<div class="as-cell" onclick="window.location.href='/mail/readoutbox?id=<?= $item["mail_id"]; ?>'">
+						<?= $item["mail_subject"]; ?>
+					</div>
+					<div class="as-cell" style="width: 120px;" onclick="window.location.href='/mail/readoutbox?id=<?= $item["mail_id"]; ?>'">
+						<?= $item["mail_date"]; ?>
+					</div>
+				</div>
+				<?
 			}
-		}
-});
-})
-</script>
+			?>  
+		</div>
+	</form>	
+	<? if ($total == 0) { ?>
+		<div style="margin: 20px; font-size: 14px;">Žinučių nėra</div>
+	<? } ?>
+	<div style="margin-top: 10px; text-align: right">
+		<input type="button" id="deleteButton" value="Trinti pažymėtas žinutes" class="ui-button" />
+	</div>
+	<div>
+		<?php
+		echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');
+		?>
+	</div>
+</div>
+
 <div class="ui-corner-all" style="background-color:#eeeeee;width:820;padding:10">
-<div style="padding-bottom:10" align="right">
-<ul id="mail-menu" >
-	<li><a href="/mail/inbox">Gautieji</a></li>|
-	<li><a href="/mail/compose">Rašyti laišką</a></li>|
-	<li><a href="/mail/outbox"><b>Išsiųsti laiškai</b></a></li>
-	
-	
-</ul>
+</div>
 </div>
 
-<div class="ui-corner-all" style="background:#ffffff;width:800;padding:10">
-<form action="/mail/delete" method="POST" id="inboxForm">
-<input type="hidden" name="redirect" value="<?=$_SERVER['REQUEST_URI'];?>">
-<input type="hidden" name="type" value="outbox">
-<table id="mail-table" cellppading=0 cellspacing=0>
-<?
-
-foreach ($this->content as $item) {?>
-
-	
-	<tr onmouseover="$(this).css('background','#eeeeee')" onmouseout="$(this).css('background','')">
-<?
-if ($item["group_id"]>0) {
-  $to=$item["mail_to_group"];
-}else{
- $to=$item["mail_to"];
-}
- $toArr = explode(",",$to); 
-if (count($toArr)>5) {
-array_splice($toArr,4);
-$to=implode(", ",$toArr) ."...";
-}else{
-$to=implode(", ",$toArr);
-}
-?>
-	<td width="20"><input type="checkbox" style="border:1 solid #333333" name="mail_id[]" id="chMail" value="<?=$item["mail_id"];?>"/></td><td align="left"  width="200" onclick="window.location='/mail/readoutbox?id=<?=$item["mail_id"];?>'" style="overflow:hidden"><?=$to;?></td><td width="450" align="left" onclick="window.location='/mail/readoutbox?id=<?=$item["mail_id"];?>'"><a href="/mail/readoutbox?id=<?=$item["mail_id"];?>"><?=$item["mail_subject"];?></a></td><td  width="150" onclick="window.location='/mail/readoutbox?id=<?=$item["mail_id"];?>'"><?=$item["mail_date"];?></td>
-</tr>
-<?
-}   
-?>  
-   
-</table>
-</div>
-<div align="right" style="padding-top:10"><button  type="button" id="deleteButton">Trinti</button></div>
-<?php echo $this->paginationControl($this->content,
-                                    'Sliding',
-                                    'paginator/item.phtml'); ?>
-</div>
-
-</div>
-
-			
-
-
+<script>
+	$(function() {
+		$('#deleteButton').click(function() {
+			if (($('input[name="mail_id[]"]:checked').length>0)) {
+				if (confirm("Pasirinkti laiškai bus ištrinti!")) {
+					$("#inboxForm")[0].submit();
+				}
+			}
+		});
+	})
+</script>

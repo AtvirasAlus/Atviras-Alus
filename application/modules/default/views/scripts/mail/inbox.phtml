@@ -1,89 +1,69 @@
-<style>
-#mail-menu {
-	display:inline;
-	list-style:none;
-}
-#mail-menu li {
-	display:inline;
-	padding-right:10;
-	padding-left:10
-}
-#mail-table {
-}
-#mail-table td{
-	padding-top:3;
-	padding-right:10;
-	padding-left:10
-}
-.t-unread{}
-.t-unread td {
-font-weight:bold;
-
-}
-</style>
-<script>
-$(function() {
-$('#deleteButton').button();
-$('#deleteButton').click(function() {
-		if (($('input[name="mail_id[]"]:checked').length>0)) {
-			if (confirm("Pasirinkti laiškai bus ištrinti!")) {
-				$("#inboxForm")[0].submit();
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Gautieji laiškai</div>
+	<div class="mail_tools">
+		<a href="/mail/inbox"><b>Gautieji</b></a>
+		<a href="/mail/compose">Rašyti laišką</a>
+		<a href="/mail/outbox">Išsiųsti laiškai</a>
+	</div>
+	<? if (isset($_GET["succes"])) { ?>
+		<div class="mail_success">
+			Laiškas sėkmingai išsiųstas
+		</div>
+	<? } ?>
+	<form action="/mail/delete" method="POST" id="inboxForm">
+		<input type="hidden" name="type" value="inbox">
+		<input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI']; ?>">
+		<div class="as-table">
+			<?php
+			$total = 0;
+			foreach ($this->content as $item) {
+				$total++;
+				$class = $item["mail_read"] == '0' ? "t-unread" : "";
+				?>
+				<div class="as-row mail_row <?= $class; ?>">
+					<div class="as-cell" style="width: 23px;">
+						<input type="checkbox" style="border:1 solid #333333" name="mail_id[]" id="chMail" value="<?= $item["mail_id"]; ?>"/>
+					</div>
+					<div class="as-cell" style="width: 150px;" onclick="window.location.href='/mail/read?id=<?= $item["mail_id"]; ?>'">
+						<?= $item["user_name"]; ?>
+					</div>
+					<div class="as-cell" onclick="window.location.href='/mail/read?id=<?= $item["mail_id"]; ?>'">
+						<?= $item["mail_subject"]; ?>
+					</div>
+					<div class="as-cell" style="width: 120px;" onclick="window.location.href='/mail/read?id=<?= $item["mail_id"]; ?>'">
+						<?= $item["mail_date"]; ?>
+					</div>
+				</div>
+				<?
 			}
-		}
-});
-})
-</script>
+			?>  
+		</div>
+	</form>	
+	<? if ($total == 0) { ?>
+		<div style="margin: 20px; font-size: 14px;">Žinučių nėra</div>
+	<? } ?>
+	<div style="margin-top: 10px; text-align: right">
+		<input type="button" id="deleteButton" value="Trinti pažymėtas žinutes" class="ui-button" />
+	</div>
+	<div>
+		<?php
+		echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');
+		?>
+	</div>
+</div>
 
 <div class="ui-corner-all" style="background-color:#eeeeee;width:820;padding:10">
-<div style="padding-bottom:10" align="right">
-<ul id="mail-menu" >
-	<li><a href="/mail/inbox"><b>Gautieji</b></a></li>|
-	<li><a href="/mail/compose">Rašyti laišką</a></li>|
-	<li><a href="/mail/outbox">Išsiųsti laiškai</a></li>
-	
-	
-</ul>
-</div>
-<? if (isset($_GET["succes"])) {?>
-<div align="center">
-<div class="ui-corner-all" style="background:#fffff;width:300;padding:10">Laiškas sėkmingai išsiųstas</div>
-</div>
-<?}?>
-<div class="ui-corner-all" style="background:#ffffff;width:800;padding:10">
-
-<form action="/mail/delete" method="POST" id="inboxForm">
-<input type="hidden" name="type" value="inbox">
-<input type="hidden" name="redirect" value="<?=$_SERVER['REQUEST_URI'];?>">
-<table id="mail-table" cellppading=0 cellspacing=0>
-<?
-$total=0;
-foreach ($this->content as $item) {
-$total++;
-$class=$item["mail_read"] == '0' ?  "class='t-unread'" : "";
-?>
-
-	
-	<tr onmouseover="$(this).css('background','#eeeeee')" onmouseout="$(this).css('background','')" <?=$class;?>>
-
-	<td width="20"><input type="checkbox" style="border:1 solid #333333" name="mail_id[]" id="chMail" value="<?=$item["mail_id"];?>"/></td><td align="left" width="150" onclick="window.location='/mail/read?id=<?=$item["mail_id"];?>'"><?=$item["user_name"];?></td><td width="500" align="left" onclick="window.location='/mail/read?id=<?=$item["mail_id"];?>'"><a href="/mail/read?id=<?=$item["mail_id"];?>"><?=$item["mail_subject"];?></a></td><td  width="150" onclick="window.location='/mail/read?id=<?=$item["mail_id"];?>'"><?=$item["mail_date"];?></td>
-</tr>
-<?
-}   
-?>  
-   
-</table>
-</form>
-<? if ($total==0) {?>
-<div align="center">Žinučių nėra</div>
-<?}?>
-</div>
-<div align="right" style="padding-top:10"><button  type="button" id="deleteButton">Trinti</button></div>
-<?php echo $this->paginationControl($this->content,
-                                    'Sliding',
-                                    'paginator/item.phtml'); ?>
 </div>
 </div>
 
-			
-
-
+<script>
+	$(function() {
+		$('#deleteButton').click(function() {
+			if (($('input[name="mail_id[]"]:checked').length>0)) {
+				if (confirm("Pasirinkti laiškai bus ištrinti!")) {
+					$("#inboxForm")[0].submit();
+				}
+			}
+		});
+	})
+</script>
