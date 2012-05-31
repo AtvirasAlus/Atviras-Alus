@@ -140,7 +140,8 @@ class BrewerController extends Zend_Controller_Action {
 						if ($_POST['use_other_location'] == '1') {
 							$location = $_POST['user_other_location'];
 						}
-						if ($this->updateAttributes($u->user_id, array('user_location' => $location, 'user_about' => $_POST['user_about']))) {
+            $user_mail_comments=isset($_POST['user_mail_comments']) ? '1' : '0';
+						if ($this->updateAttributes($u->user_id, array('user_location' => $location, 'user_about' => $_POST['user_about'],'user_mail_comments'=>$user_mail_comments))) {
 							
 						} else {
 							$this->view->errors[] = array("type" => "system", "message" => "Išsaugoti informacijos nepavyko");
@@ -205,7 +206,7 @@ class BrewerController extends Zend_Controller_Action {
 		if ($row = $db->fetchRow($select)) {
 			
 		} else {
-			$row = array("user_id" => $user_id, "user_location" => "", "user_about" => "");
+			$row = array("user_id" => $user_id, "user_location" => "", "user_about" => "","user_mail_comments"=>'0');
 		}
 		$row["user_about"] = preg_replace('/((?:[^"\'])(?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i', '<a href="$1" rel="nofollow" target="blank">$1</a>', nl2br($row["user_about"]));
 		return $row;
@@ -219,7 +220,7 @@ class BrewerController extends Zend_Controller_Action {
 		$stripTags = new Zend_Filter_StripTags(array('p', 'b', 'br', 'strong'), array());
 		$user_about = $stripTags->filter($att["user_about"]);
 
-		return $db->insert("users_attributes", array("user_id" => $user_id, "user_location" => $att["user_location"], "user_about" => $user_about));
+		return $db->insert("users_attributes", array("user_id" => $user_id, "user_location" => $att["user_location"], "user_about" => $user_about,'user_mail_comments'=>$att["user_mail_comments"]));
 	}
 
 	private function updatePassword($user_id, $old_password, $new_password) {

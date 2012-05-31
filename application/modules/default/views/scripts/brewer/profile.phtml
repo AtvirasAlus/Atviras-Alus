@@ -26,11 +26,13 @@
 		<div style="margin-bottom: 20px; font-weight: bold;"><?=$this->success;?></div>
 		<?php
 	}
+	$this->userAttributesForm->getElement('user_mail_comments')->setValue($this->user_attributes['user_mail_comments']);
+	$this->userAttributesForm->getElement('user_about')->setValue($this->user_attributes['user_about']);
 	if (strlen($this->user_attributes['user_location']) > 0) {
 		$this->userAttributesForm->getElement('user_location')->setValue($this->user_attributes['user_location']);
 		$this->userAttributesForm->getElement('use_other_location')->setValue('0');
 		$this->userAttributesForm->getElement('user_other_location')->setValue("");
-		$this->userAttributesForm->getElement('user_about')->setValue($this->user_attributes['user_about']);
+		
 		if ($this->userAttributesForm->getElement('user_location')->getValue() != $this->user_attributes['user_location']) {
 			$this->userAttributesForm->getElement('use_other_location')->setValue('1');
 			$this->userAttributesForm->getElement('user_other_location')->setValue($this->user_attributes['user_location']);

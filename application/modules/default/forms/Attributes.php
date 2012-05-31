@@ -30,6 +30,9 @@ $this->getElement('user_location')->addMultiOption("","");
 		 ->setAttrib('COLS', '80')
     		->setAttrib('ROWS', '4')
 			->setLabel('Apie mane:');
+		$this->addElement('checkbox', 'user_mail_comments');
+				$this->getElement('user_mail_comments')
+->setLabel('Siųsti pranešimą elektroniniu paštu, kai komentuojamas mano receptas');
 		$this->addElement('submit', 'attributes_action',array('type'=>'submit', 'class' => 'ui-button'));
 		$this->getElement('attributes_action')
 			->setLabel('Saugoti')

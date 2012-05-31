@@ -25,12 +25,13 @@ class CommentsController extends Zend_Controller_Action {
 				  $db = Zend_Registry::get('db');
 				  if (isset($_POST['recipe_id'])) {
 				  $db->insert("beer_recipes_comments",array("comment_recipe"=>$_POST['recipe_id'],"comment_brewer"=>$_POST['brewer_id'],"comment_text"=>strip_tags($_POST['comment'],'<a>')));
+             Entities_Events::trigger("new_recipe_comment",array("comment_recipe"=>$_POST['recipe_id'],"comment_brewer"=>$_POST['brewer_id'],"comment_text"=>strip_tags($_POST['comment'],'<a>')));
 				   $this->_redirect("/recipes/view/".$_POST['recipe_id']);
 				  }else{
 				    $db->insert("beer_articles_comments",array("comment_article"=>$_POST['article_id'],"comment_brewer"=>$_POST['brewer_id'],"comment_text"=>strip_tags($_POST['comment'],'<a>')));
 				     $this->_redirect("/content/read/1/".$_POST['article_id']);
 				  }
-				 
+				
 			}else{
 				$this->_redirect("/");
 			}
