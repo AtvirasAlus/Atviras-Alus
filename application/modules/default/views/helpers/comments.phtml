@@ -1,82 +1,91 @@
-
-<?$user_id= isset($this->user_info->user_id)  ? $this->user_info->user_id : 0;?>
-	<div align="right" style="padding-top:30;width:100%"><h2 style="color:#666666">komentarai:</h2><hr/>
-	<? if ($this->comments) { ?>
-	<table width="60%">
-	<? for ($i=0;$i<count($this->comments);$i++) { $bg=$i%2==0 ? "#eeeeee" : "#ffffff" ?>
-		<tr id="comment-<?=$this->comments[$i]['comment_id']?>">
-		<td valign="middle" align="center" style="font-size:11"><a href="/brewers/<?=$this->users[$i]['user_id'];?>"><div><a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->comments[$i]['user_email']);?>?rating=G&size=40&default=mm" border="0"/></a></div>
-<a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><?=$this->comments[$i]['user_name'];?> </a></td>
-<td>
-<div class="ui-corner-all"  style="padding:10;margin-left:20;padding-top:0;border:1px solid #eeeeee;background:<?=$bg;?>" >
-		<table width="100%">
-		<tr>
-		<td align="right" valign="bottom" style="font-size:10"><?=$this->comments[$i]["comment_date"];?>
-		<? if($user_id==$this->comments[$i]['user_id']) {?>
-			<a href='javascript:deleteComment(<?=$this->comments[$i]['comment_id'];?>)' alt="Trinti" title="Trinti"><span class="ui-icon ui-icon-trash"></span></a>
-		<?}?>
-		</td>
-		</tr>
-		<tr>
-      <td align="left" valign="top" style="padding-top:10;"><?= preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-]*(\?\S+)?)?)?)@','<a href="$1" rel="nofollow" target="blank">$1</a>',nl2br($this->comments[$i]["comment_text"]));?></td>
-		</tr>
-		</table>
+<?php
+$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+if ($this->comments) {
+	for ($i=0;$i<count($this->comments);$i++) {
+		?>
+		<div class="recipe_comment" id="comment-<?=$this->comments[$i]['comment_id']?>">
+			<div class="recipe_comment_avatar">
+				<a href="/brewers/<?=$this->comments[$i]['user_id'];?>">
+					<img src="http://www.gravatar.com/avatar/<?=md5($this->comments[$i]['user_email']);?>?rating=G&size=40&default=mm" border="0"/>
+					<span><?=$this->comments[$i]['user_name'];?></span>
+				</a>
+			</div>
+			<div class="recipe_comment_content">
+				<div style="min-height: 40px;">
+					<?= preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-]*(\?\S+)?)?)?)@','<a href="$1" rel="nofollow" target="blank">$1</a>',nl2br($this->comments[$i]["comment_text"]));?>
+				</div>
+				<div class="recipe_comment_date">
+					<?=$this->comments[$i]["comment_date"];?>
+					<?php
+					if ($user_id == $this->comments[$i]['user_id']) {
+						?>
+						<a href='javascript:deleteComment(<?=$this->comments[$i]['comment_id'];?>)' alt="Trinti" title="Trinti">
+							<span class="ui-icon ui-icon-trash"></span>
+						</a>
+						<?
+					}
+					?>
+				</div>
+			</div>
+			<div class="clear"></div>
 		</div>
-		</td></tr>
-	<?}?>
-	</table>
-	<?}else{?>
-		
-	<?}?>	
-		<?if ($user_id) {?>
-		
-			<table width="70%">
-		<tr>
-		<td align="center" valign="middle" style="padding:5;font-size:11">
-      <a href="/brewers/<?=$user_id;?>"><div><a href="/brewers/<?=$user_id;?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->user_info->user_email);?>?rating=G&size=40&default=mm" border="0"/></a></div>
-      <a href="/brewers/<?=$user_id;?>"><?=$this->user_info->user_name;?> </a>
-    </td>
-    <td align="left" valign="top" style="padding-top:15"><form action="/comments/submit" method="POST">
-        <table width="100%"><tr><td><input type="hidden" name="recipe_id" value="<?=$this->recipe_id;?>"/>
-        <input type="hidden" name="brewer_id" value="<?=$user_id;?>"/><textarea style="width:100%;height:100px;border:1px #666666 solid" class="ui-corner-all" name="comment"></textarea></td></tr><tr><td align="right"><input type="submit" value="Komentuoti"/></td></tr></table></form>
-    </td>
-</tr>
-		
-		</table>
-			
-			
-		<?}else{?>
-		<div  style="width:70%">
-      <div class="ui-corner-all"  style="padding:10;text-align:center"><span><i>Norėdami komentuoti receptą turite <a href="javascript:showLogin()">prisijungti</a>.</i></span></div>
-		</div>
-		<?}?>
-	</div>
-	<script>
-function deleteComment(id) {
-    if (confirm("Ar norite ištrinti savo komentarą ?")) {
-    var surl="/comments/delete/";
-        $.ajax({
-            type: 'POST',
-            url: surl,
-            data: "comment_id=" + id,
-            success: function (d) {
-
-                var data = jQuery.parseJSON(d);
-                if (data) {
-                    if (data.status == "1") {
-
-                        if (data.errors[0].type == "authentication") {
-                            showLogin();
-                            return
-                        }
-                    } else {
-                        location.reload()
-                    }
-                } else {
-                    alert("Klaida")
-                }
-            }
-        })
-    }
+		<?php
+	}
 }
+if ($user_id) {
+	?>
+	<div class="recipe_comment_form">
+		<div class="recipe_comment_form_avatar">
+			<a href="/brewers/<?=$user_id;?>">
+				<img src="http://www.gravatar.com/avatar/<?=md5($this->user_info->user_email);?>?rating=G&size=40&default=mm" border="0"/>
+				<span><?=$this->user_info->user_name;?></span>
+			</a>
+		</div>
+		<div class="recipe_comment_form_content">
+			<form action="/comments/submit" method="POST">
+				<div>
+					<input type="hidden" name="recipe_id" value="<?=$this->recipe_id;?>" />
+					<input type="hidden" name="brewer_id" value="<?=$user_id;?>" />
+					<textarea name="comment"></textarea>
+				</div>
+				<div style="text-align: right;">
+					<input type="submit" value="Komentuoti" class="ui-button" />
+				</div>
+			</form>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<?php
+} else {
+	?>
+	<div>Norėdami komentuoti receptą turite <a href="javascript:showLogin()">prisijungti</a></div>
+	<?php
+}
+?>
+<script>
+	function deleteComment(id) {
+		if (confirm("Ar norite ištrinti savo komentarą ?")) {
+			var surl="/comments/delete/";
+			$.ajax({
+				type: 'POST',
+				url: surl,
+				data: "comment_id=" + id,
+				success: function (d) {
+					var data = jQuery.parseJSON(d);
+					if (data) {
+						if (data.status == "1") {
+							if (data.errors[0].type == "authentication") {
+								showLogin();
+								return
+							}
+						} else {
+							location.reload()
+						}
+					} else {
+						alert("Klaida")
+					}
+				}
+			})
+		}
+	}
 </script>

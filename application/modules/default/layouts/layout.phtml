@@ -1,198 +1,99 @@
-
-
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="lt" lang="lt">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="description" content="Atviras alus - naminio alaus aludarių bendruomenė. Alaus receptai. Stiliaus aprašymai. Alaus skaičiuoklė" />
 		<meta name="alexaVerifyID" content="flj8CxyyfEenq5UbyH5vpBlz7DA" />
-		<META name="y_key" content="9421766f5e8b266a" />
+		<meta name="y_key" content="9421766f5e8b266a" />
 		<meta name="google-site-verification" content="Q15UyxPCIq_du9gHO4mr1INQh_KzSx8YaB6XytiaO4M" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery-ui-1.8.7.custom.js"></script>
-			<?=$this->headTitle()->prepend('Atviras alus ');?>
-			<?= $this->headTitle()?>
-			<meta name="description" content="Atviras alus - naminio alaus aludarių bendruomenė. Alaus receptai. Stiliaus aprašymai. Alaus skaičiuoklė" />
-			<?= $this->headMeta() ?>
-			<?= $this->headLink() ?>
-			<?= $this->headStyle() ?>
+		<?=$this->headTitle()->prepend('Atviras alus ');?>
+		<?=$this->headTitle();?>
+		<?=$this->headMeta();?>
+		<?=$this->headLink();?>
+		<?=$this->headStyle();?>
 		<link type="text/css" href="/public/css/pepper-grinder/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
-		
-		<link type="text/css" href="/public/css/main.css" rel="stylesheet" />
+		<link type="text/css" href="/public/css/main_changeme.css" rel="stylesheet" />
+		<link type="text/css" href="/public/css/style.css" rel="stylesheet" />
 		<link href="/public/css/userScreen.css" media="screen, projection" rel="stylesheet" type="text/css">
-    
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.widget.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.dialog.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.position.js"></script>
-		
+		<script type="text/javascript" src="/public/js/website.js"></script>
 		<?= $this->headScript() ?>
 		<?  $front = Zend_Controller_Front::getInstance();?>
-<script>
-$.fn.displayError = function(errors) {
-	var e_div = this.find('#error-content');
-	if (e_div) {
-		e_div.remove();
-	}
-	if (errors.length > 0) {
-		var error = '<div class="ui-widget" id="error-content"><div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p >';
-		for (var i = 0; i < errors.length; i++) {
-			error += '<div>' + errors + '</div>';
-		}
-		error += '</p></div></div>';
-		this.append(error);
-	}
-};
-$.fn.serializeObject = function() {
-	var o = {};
-	var a = this.serializeArray();
-	$.each(a, function () {
-		if (o[this.name]) {
-			if (!o[this.name].push) {
-				o[this.name] = [o[this.name]];
-			}
-			o[this.name].push(this.value || '');
-		} else {
-			o[this.name] = this.value || '';
-		}
-	});
-	return o;
-};
-function login() {
-	var formvals = $('#login-form').serializeObject();
-	$.ajax({type:'POST', url:"/auth/login/", data:formvals, success:function (d) {
-		var data = jQuery.parseJSON(d);
-		if (data) {
-			if (data.status == 1) {
-				var _e = [];
-				for (var i = 0; i < data.errors.length; i++) {
-					_e.push(data.errors[i].message);
-				}
-				$('#login-form').displayError(_e);
-			} else {
-				//formvals.user_name= data.data.user_name
-				if (window.location.href.indexOf("/calculus") > -1) {
-					$("#login-dialog").dialog("destroy");
-					$("#login-a").remove();
-					$("#userScreen-u")[0].innerHTML = '<span>' + data.data.user_name + '</span>';
-					$("#userScreen").css("display", "block");
-				} else {
-					location.reload();
-				}
-			}
-		}
-	}, dataType:""});
-}
-function showLogin() {
-	$("#login-dialog").dialog({disabled:false, modal:true, autoOpen:true});
-	$("#login-dialog").css('visibility', 'visible');
-	$('#login-form')[0].reset();
-	$("#login-dialog").displayError([]);
-}
-$(document).ready(function () {
-	$("#login-button").button();
-	$("#login-button").bind('click', function (e) {
-		login();
-	});
-	createUserMenu();
-});
-
-  </script>
-  <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
-  {lang: 'lt'}
-</script>
-  </head>
-  <body>
-    <div id="vc-main" style="padding-left:30">
-    <table cellpadding="0" cellspacing="0" border="0"><tr><td width="180" valign="top">
-            <a href="/"><img src="http://atvirasalus.lt/public/images/logo.png" style="position:relative;top:15px;left:20px;" width="120" border="0"></a> 
-             <div align="center" style="position:relative;top:45px;width:160;" > 
-             
-                  <div class="ui-corner-all" style="background:#ffffff;position:relative;top:11px;">
-                    <p><a href="http://tikrasalus.lt" target="_blank"><img src="http://atvirasalus.lt/public/images/TAD.png" width="120" border="0"/></a></p>
-                  </div>
-                  <div class="ui-corner-all" style="background:#ffffff;position:relative;top:10px;">
-                    <p style="padding-top:10;padding-bottom:10"><a href="http://savasalus.lt" target="_blank"><img src="http://atvirasalus.lt/public/images/savasalus.jpg" width="120" border="0"/></a></p>
-                  </div> 
-                  <div class="ui-corner-all" style="background:#ffffff;position:relative;top:10px;">
-                    <p style="padding-top:10;padding-bottom:10"><a href="http://www.akl.lt" target="_blank" style="padding: 18px 0px 19px 0px; display: inline-block;"><img src="http://atvirasalus.lt/public/images/akl.jpg" width="120" border="0"/></a></p>
-                  </div> 
-                  
-		
-	
-
-          
-         
-         <!-- end sidebar -->
-         </td>
-         <td valign="top">  
-          <div id="top-header" style="height:50;" >
-          <table width="100%"><tr><td>
-           <p class="pullquote" style="float:left"><?=$this->fortune();?></p>
-            <span style="float:right"><?=$this->loginScreen();?></span>
-          </td>
-           <tr><td>
-                <ul id="menu-top" style="display:inline-block;">
-                  <? 
-                  $this->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigation.xml","nav")));
-
-                  $pages=$this->navigation()->getPages();
-                  foreach ($pages as $page) {
-                      $mark="font-weight:bold;";
-                    if ($page->isActive()) {
-                      $mark="";
-                    }
-                    ?>
-                 <li> &nbsp;<a href="<?= $page->getHref();?>" style="<?=$mark?>">
-
-                  <? print  $page->label;?></a>&nbsp; </li>
-                  <?
-                  }
-                  ?>
-              </ul>
-          </div>
-        </td></tr></table>
-           <div id="content" style="padding-left:20;align:right;display:inline-block;">
-            <? echo $this->layout()->content;?>
-            </div> 
-            
-         </td>
-        <td>&nbsp;</td>
-         </tr>
-         </table>
-          <div id="login-dialog"  title="Prisijungti" style="display:none">
-            <form id="login-form" onsubmit="return false">
-                <table width="96%">
-                  <tr><td align="right">El. paštas:</td><td><input type="text" name="user_email" style="width:100%"/></td></tr>
-                  <tr><td align="right">Slaptažodis:</td><td><input type="password" name="user_password" style="width:100%"/></td></tr>
-                  <tr><td align="right"></td><td><input type="checkbox" name="remember" id="remember"/><LABEL for="remember"> prisiminti mane: </LABEL></td></tr>
-                  <tr><td></td><td><button id="login-button">Jungtis</button></td></tr>
-                </table>
-            </form>
-         
-        <script type="text/javascript">
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-21270974-1']);
-          _gaq.push(['_trackPageview']);
-
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        </script> 
-        <!--
-        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-            <div id="vc-footer" valign="bottom">
-            <div style="bottom:0;height:40;border-top:1px #DEDEDE solid;background:#eeeeee;">
-               <table width="99%"><tr><td align="left" style="padding-left:10" ><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a></td>
-               <td align="right">
-                  <div style="display:inline;"><div id="fb-root"></div><script src="http://connect.facebook.net/lt_LT/all.js#appId=259321277854&amp;xfbml=1"></script><fb:like href="http://atvirasalus.lt/<?=$front->getRequest()->getRequestUri() ;?>" send="false" layout="button_count"  show_faces="true" font="tahoma"></fb:like></div>
-                  <div style="display:inline;"><a href="http://twitter.com/share" class="twitter-share-button"  data-url="http://atvirasalus.lt/<?=$front->getRequest()->getRequestUri() ;?>" data-count="horizontal" data-via="AtvirasAlus">Tweet</a></div>
-                    <div style="display:inline;"><g:plusone size="small" style="display:inline;"></g:plusone></div>
-                  </td></tr></table>
-              </div>
-              </div>
-             -->
-   
-     </div>
-      
-  </body>
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+			{lang: 'lt'}
+		</script>
+	</head>
+	<body>
+		<div id="header_container">
+			<a href="/" id="logo" title="Atviras alus"></a>
+			<div id="top_container">
+				<div id="top">
+					<div id="proverb"><?=$this->fortune();?></div>
+					<div id="userinfo"><?=$this->loginScreen();?></div>
+					<div class="clear"></div>
+				</div>
+				<div id="menu">
+					<ul id="topmenu">
+					<?php
+					$this->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigation.xml","nav")));
+					$pages = $this->navigation()->getPages();
+					foreach ($pages as $page):
+						if ($page->isActive()) {
+							$class = "active";
+						} else {
+							$class = "";
+						}
+						?>
+						<li>
+							<a href="<?=$page->getHref();?>" class="<?=$class?>">
+								<?=$page->label;?>
+							</a>
+						</li>
+						<?php
+					endforeach;
+					?>
+					</ul>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div id="main_container">
+			<div id="left">
+				<div class="banner">
+					<a href="http://tikrasalus.lt" target="_blank">
+						<img src="/public/images/TAD.png" width="120" border="0"/>
+					</a>
+				</div>
+				<div class="banner">
+					<a href="http://savasalus.lt" target="_blank">
+						<img src="/public/images/savasalus.jpg" width="120" border="0"/>
+					</a>
+				</div>
+				<div class="banner">
+					<a href="http://www.akl.lt" target="_blank">
+						<img src="/public/images/akl.jpg" width="120" border="0"/>
+					</a>
+				</div>
+			</div>
+			<div id="main_content">
+				<?=$this->layout()->content;?>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div id="bugreport_link"><input type="button" id="bugreport_button" class="ui-button" value="Praneškite apie svetainėje pastebėtas klaidas" /></div>
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-21270974-1']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+	</body>
 </html>

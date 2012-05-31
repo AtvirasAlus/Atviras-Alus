@@ -1,77 +1,46 @@
-<? $this->headTitle()->append(" - Receptai ");?>
-<? $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,receptai,receptas,alus');?>
-<style>
-#tags ul{
-		margin:1em 0;
-		padding:.5em 10px;
-		text-align:center;
-			
-		}
-	#tags li{
-		margin:0;
-		padding:0;
-		list-style:none;
-		display:inline;
-		}
-	#tags li a{
-		text-decoration:none;
-		
-		padding:0 2px;	
-		}
-	#tags li a:hover{	
-		
-		}		
-</style>
-<?
-if (isset($this->content)) {?>
-<div style="padding:10;width:800" >
-<? if (isset($this->beer_style)) {?>
-<h1 style="border-bottom:1px #DDDDDD solid;color:#666666">Alaus receptai <a href="/stilius/<?=$this->beer_style['style_id'];?>">(<?=$this->beer_style['style_name'];?>)</a>: </h1>
-<?}else{?>
-<h1 style="border-bottom:1px #DDDDDD solid;color:#666666">Alaus receptai:</h1>
-<div class="ui-corner-all" style="background:#FFFFFF;padding:15;margin-bottom:10">
-               
-                  <div id="tags">
-                    <ul>
-                    <?
-                    for ($i=0;$i<count($this->tags);$i++) {
-                      ?>
-                      <li  style="padding:2;margin:5;font-size:<?=(80+min($this->tags[$i]['weight']*20,200));?>%"><a  href="/search/tags:<?=$this->tags[$i]['tag_text'];?>" ><?=$this->tags[$i]['tag_text'];?></a></li>
-                      <?
-                    }
-                    ?>
-                    </ul>
-                  </div>
-              </div>
-
-<?}?>
-<div class="ui-corner-all" style="background:#ffffff;padding:10">
-
-<table>
-<?
-$z=0;
-
-foreach ($this->content as $item) {
-$z++;?>
-<tr>
-<td style="padding:1;border-bottom:1px #DDDDDD solid;">
-
-<?=$this->recipeItem($item,"thumb");?>
-
-</td>
-</tr>
-
-   <?}?>
-</table>
-<? if ($z==0) {
+<?php
+$this->headTitle()->append(" - Receptai ");
+$this->headMeta()->setName('keywords', 'alaus gamyba,naminis,receptai,receptas,alus');
+if (isset($this->content)) {
 	?>
-	<p>Nieko nerasta</p>
-	<?
+	<div class="inner_container" id="favorites_container">
+		<?php
+		if (isset($this->beer_style)) {
+			?>
+			<div class="inner_header">Kategorijos <a href="/stilius/<?=$this->beer_style['style_id'];?>">"<?=$this->beer_style['style_name'];?>"</a> receptai</div>
+			<?
+		} else {
+			?>
+			<div class="inner_header">Alaus receptai</div>
+			<div class="recipe_list_tags">
+				<ul>
+					<?
+					for ($i=0;$i<count($this->tags);$i++) {
+						?>
+						<li style="font-size:<?=(80+min($this->tags[$i]['weight']*20,200));?>%">
+							<a href="/search/tags:<?=$this->tags[$i]['tag_text'];?>">
+								<?=$this->tags[$i]['tag_text'];?>
+							</a>
+						</li>
+						<?
+					}
+					?>
+				</ul>
+			</div>
+			<?
+		}
+		$z=0;
+		foreach ($this->content as $item) {
+			$z++;
+			?>
+			<div class="favorites_list_item">
+					<?=$this->recipeItem($item,"thumb");?>
+			</div>
+		<?
+		}
+		?>
+		<?php echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml'); ?>
+	</div>
+<?
 }
 ?>
-<?php echo $this->paginationControl($this->content,
-                                    'Sliding',
-                                    'paginator/item.phtml'); ?>
-</div>
-</div>
-<?}?>

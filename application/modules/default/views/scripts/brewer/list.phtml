@@ -1,41 +1,32 @@
-<div style="width:800">
-  <div class="ui-corner-all" style="background:#ffffff;padding:20">
-<table>
-<?
-$z=0;
-$r=0;
-$u_per_row=8;
-foreach ($this->content as $item) {?>
-<? if ($r==0){?>
-	
-	<tr>
-	<?}?>
-	<?
-	$r++;
-	?>
-<td width="100" align="center" height="80">
-<a href="/brewers/<?=$item['user_id'];?>"><div><a href="/brewers/<?=$item['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($item['user_email']);?>?rating=G&size=50&default=mm" border="0"/></a></div>
-<a href="/brewers/<?=$item['user_id'];?>"><?=$item['user_name'];?> </a> (<?=$item['count'];?>)</td>
-<?
-		
-$z++;
-
-if ($r==$u_per_row) {?>
-</tr>
-<?
-$r=0;
-}
-}
-if ($r>0) {
-?>
-</tr>
-<?
-}   
-?>  
-   
-</table>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Aludariai</div>
+	<div class="users_avatars">
+		<?
+		$z = 0;
+		foreach ($this->content as $item) {
+			$z++;
+			?>
+			<div class="userlist_block">
+				<a href="/brewers/<?= $item['user_id']; ?>">
+					<img src="http://www.gravatar.com/avatar/<?= md5($item['user_email']); ?>?rating=G&size=50&default=mm" border="0" />
+				</a>
+				<span>
+					<a href="/brewers/<?= $item['user_id']; ?>">
+						<?= $item['user_name']; ?>
+					</a>
+					(<?= $item['count']; ?>)
+				</span>
+			</div>
+			<?php
+			if ($z == 8){
+				$z = 0;
+				?>
+				<div class="clear"></div>
+				<?php
+			}
+		}
+		?>
+		<div class="clear"></div>
+	</div>
+	<div><?=$this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');?></div>
 </div>
-<?php echo $this->paginationControl($this->content,
-                                    'Sliding',
-                                    'paginator/item.phtml'); ?>
-                                    </div>

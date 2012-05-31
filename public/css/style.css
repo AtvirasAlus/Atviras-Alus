@@ -1,0 +1,1016 @@
+root { 
+    display: block;
+}
+body {
+	padding: 0px;
+	margin: 0px;
+	font-family: arial;
+	font-size: 12px;
+	color: #333;
+}
+.clear {
+	clear: both;
+}
+a, a:visited {
+	color: #755531;
+	text-decoration: none;
+	font-family: Georgia;
+}
+a:hover {
+	color: #F8966E;
+}
+h1 {
+	font-family: Georgia;
+	font-weight: bold;
+	color: #666666;
+}
+
+/* */
+
+body {
+	background-color: #F1F0ED;
+}
+#header_container {
+	width: 1101px;
+	overflow: hidden;
+	margin-top: 12px;
+}
+#main_container {
+	width: 1101px;
+	overflow: hidden;
+	margin-top: 30px;
+	margin-bottom: 60px;
+}
+#logo {
+	display: block;
+	float: left;
+	width: 120px;
+	height: 112px;
+	background-image: url("/public/images/new/logo.png");
+	background-repeat: no-repeat;
+	margin-left: 50px;
+}
+#top_container {
+	width: 868px;
+	margin-left: 63px;
+	float: left;
+}
+#proverb {
+	margin-top: 12px;
+	float: left;
+	color: #777;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	font-style: italic;
+}
+#proverb:before {
+	content: "“ ";
+	font-size: 17px;
+	font-weight: bold;
+}
+#proverb:after {
+	content: " ”";
+	font-size: 17px;
+	font-weight: bold;
+}
+#userinfo {
+	float: right;
+}
+#userScreen-menu li a {
+	padding: 4px 10px 4px 10px;
+	display: block;
+}
+#mail_counter {
+	background-color: #F1F0ED;
+	padding: 2px 5px 2px 5px;
+	color:#b62925;
+	border-radius:3px;
+	font-size: 10px;	
+}
+ul#topmenu {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+	margin-top: 20px;
+}
+ul#topmenu li {
+	display: inline;
+	margin-right: 20px;
+}
+ul#topmenu li a, ul#topmenu li a:visited {
+	font-size: 16px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: bold;
+}
+ul#topmenu li a:hover {
+	color: #000;
+}
+#left {
+	width: 160px;
+	overflow: hidden;
+	margin-left: 30px;
+	float: left;
+}
+.banner {
+	background-color: #fff;
+	text-align: center;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	height: 140px;
+	display: table;
+	width: 160px;
+}
+.banner a {
+	display: table-cell;
+	vertical-align: middle;
+}
+#main_content {
+	float: left;
+	width: 868px;
+	margin-left: 43px;
+	overflow: hidden;
+}
+#user-login-links {
+	background-color: #fff;
+	margin-top: 12px;
+	padding: 7px 10px 7px 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+#login-form dl {
+	clear: left;
+	margin-bottom: 5px;
+}
+#login-form dt {
+	width: 60px;
+	float: left;
+	text-align: right;
+	margin-left: 10px;
+	margin-right: 20px;
+	line-height: 26px;
+}
+#login-form dd {
+	float: left;
+	padding: 0px;
+	margin: 0px;
+}
+#login-form dd input[type=text],
+#login-form dd input[type=password] {
+	width: 150px;
+}
+#user_info_label {
+	float: left;
+	line-height: 26px;
+	margin-right: 10px;
+}
+#user_info_name {
+	float: right;
+	background-color: #755531;
+	color: #fff;
+	padding: 4px 6px 6px 4px;
+	font-weight: bold;
+	cursor: pointer;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+#user_info_name:hover {
+	background-color: #C7A27C;
+}
+#user_info_submenu {
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	background-color: #C7A27C;
+	z-index: 100;
+	color: #fff;
+	font-size: 12px;
+	float: right;
+	padding: 0px;
+	margin: 0px;
+	padding: 2px 7px 2px 7px;
+	display: none;
+}
+#user_info_submenu li {
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 2px;
+}
+#user_info_submenu a {
+	display: block;
+	color: #FFF;
+	padding: 3px 6px 3px 6px;
+}
+#user_info_submenu a:hover {
+	background: #755531;
+}
+.menu-open {
+	background: #C7A27C !important;
+	color: #FFF !important;
+	outline: none;	
+}
+#user_info {
+	margin-top: 12px;
+}
+#index_left {
+	width: 470px;
+	overflow: hidden;
+	float: left;
+}
+#index_right {
+	width: 380px;
+	overflow: hidden;
+	float: left;
+	margin-left: 18px;
+}
+.index_block {
+	background-color: #fff;
+	margin-bottom: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 10px;
+	padding-right: 20px;
+}
+.block_header {
+	font-size: 12px;
+	font-family: Georgia;
+	font-weight: bold;
+	color: #666;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #EEEEEE;
+	margin-bottom: 10px;
+}
+.block_footer {
+	text-align: right;
+	padding-top: 10px;
+}
+.block_footer a {
+	display: inline-block;
+	margin-left: 14px;
+}
+.index_recipes .block_content a {
+	font-size: 15px;
+}
+.index_recipes .block_content div {
+	padding-bottom: 5px;
+}
+.index-user {
+	float: left;
+	width: 100px;
+	text-align: center;
+	margin-bottom: 10px;
+}
+.index-user span {
+	display: block;
+}
+.index_comments .recipe_name {
+	font-size: 15px;
+}
+.index_comments .block_content div {
+	margin-bottom: 5px;
+}
+.index_sessions .session_name {
+	font-size: 15px;
+}
+.index_sessions .block_content div {
+	margin-bottom: 5px;
+}
+.index_favorites .recipe_name {
+	font-size: 15px;
+}
+.index_favorites .block_content div {
+	margin-bottom: 5px;
+}
+.index_articles a {
+	font-size: 15px;
+}
+.index_articles .block_content div {
+	margin-bottom: 5px;
+}
+.index_blogs .article_name {
+	font-size: 15px;
+}
+.index_blogs .article_summary {
+	margin-bottom: 5px;
+	text-indent: 20px;
+}
+.index_blogs .article_summary a {
+	text-decoration: none;
+	color: #666;
+}
+.index_forum_block {
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+.index_forum_block .avatar span {
+	display: block;
+}
+.index_forum_block .avatar {
+	float: left;
+	text-align: center;
+	width: 70px;
+	overflow: hidden;
+}
+.index_forum_block .post .post_link {
+	text-decoration: none;
+	color: #666;
+}
+.index_forum_block .post .post_title {
+	display: block;
+	margin-bottom: 5px;
+	font-size: 14px;
+}
+.index_forum_block .post {
+	float: left;
+	margin-left: 20px;
+	width: 350px;
+}
+.inner_container {
+	background-color: #fff;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 10px;
+	padding-right: 20px;
+	margin-bottom: 10px;
+}
+#beer_styles_container .style_category {
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 20px;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+}
+#beer_styles_container .style_name {
+	font-weight: bold;
+	color: #666;
+	padding-left: 10px;
+	padding: 5px;
+}
+#beer_styles_container .style_subs {
+	background-color: #f1f0ed;
+	border: 1px solid #dedede;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+#beer_styles_container .subcat_name {
+	display: inline-block;
+	margin-right: 10px;
+	line-height: 22px;
+}
+#style_info_container {
+	
+}
+.inner_header {
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 20px;
+}
+#style_description .description_block {
+	margin-bottom: 10px;
+}
+#style_description .description_content {
+	float: left;
+	width: 630px;
+	margin-left: 20px;
+}
+#style_description .description_title {
+	font-weight: bold;
+	font-size: 14px;
+	margin-bottom: 5px;
+	float: left;
+	width: 180px;
+	text-align: right;
+}
+#style_params {
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+#style_params .params_block {
+	margin-bottom: 10px;
+	padding-left: 200px;
+}
+#style_params .params_block .params_title {
+	float: left;
+	width: 100px;
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 20px;
+}
+#style_params .params_block .params_content {
+	float: left;
+	line-height: 20px;
+}
+.color_palette {
+	width: 10px;
+	height: 20px;
+	float: left;
+}
+#style_params .params_block .styles_color {
+	float: left;
+	margin-left: 10px;
+}
+.style_recipe {
+	float: left;
+	width: 265px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+}
+.style_recipes_footer {
+	text-align: right;
+	padding-right: 7px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.favorites_list_item {
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	margin-bottom: 10px;
+}
+.recipe_list_tags {
+	margin-bottom: 30px;
+}
+.recipe_list_tags ul {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+	text-align: center;
+	padding-left: 40px;
+	padding-right: 40px;
+}
+.recipe_list_tags ul li {
+	display: inline;
+	padding-left: 20px;
+}
+#search_form dl {
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 5px;
+}
+#search_form dd {
+	padding: 0px;
+	margin: 0px;
+	display: inline-block;
+	width: 620px;
+	margin-left: 20px;
+}
+#search_form dt {
+	padding: 0px;
+	margin: 0px;
+	display: inline-block;
+	width: 150px;
+	font-size: 14px;
+	margin-left: 20px;
+}
+#search_form dd input[type=text]{
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 617px;
+	padding: 2px;
+}
+#search_form dd select{
+	height: 28px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 623px;
+	padding: 2px;
+}
+.recipe_info {
+	float: left;
+	width: 600px;
+}
+.recipe_info_container {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;	
+}
+.recipe_image {
+	float: right;
+	width: 140px;
+	text-align: center;
+	height: 140px;
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+.recipe_image div {
+	width: 73px;
+	height: 138px;
+	overflow: hidden;
+	margin: auto;
+}
+.recipe_info_label {
+	float: left;
+	width: 150px;
+	text-align: right;
+}
+.recipe_info_text {
+	float: left;
+	margin-left: 10px;
+}
+.recipe_info_block {
+	margin-bottom: 3px;
+}
+.recipe_tools_container {
+	margin-bottom: 20px;
+}
+.recipe_awards {
+	float: left;
+}
+.recipe_tools {
+	float: right;
+}
+.recipe_tools a {
+	display: inline-block;
+	margin-left: 15px;
+	font-size: 14px;
+	line-height: 32px;
+}
+.recipe_tools #vote_icon {
+	display: inline-block;
+}
+.ingridient_category {
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom: 10px;
+	margin-top: 20px;
+}
+.comments_title,
+.ingridient_category2 {
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom: 10px;
+	border-top: 1px solid #ddd;
+	margin-top: 10px;
+	padding-top: 20px;
+}
+.recipe_ingridients_container {
+	width: 600px;
+	float: left;
+	margin-left: 20px;
+}
+.malt_item,
+.yeast_item,
+.hop_item {
+	margin-bottom: 5px;
+}
+.malt_item .title,
+.yeast_item .title,
+.hop_item .title {
+	float: left;
+	width: 310px;
+}
+.malt_item .color,
+.yeast_item .amount,
+.hop_item .alpha {
+	float: left;
+	width: 100px;
+	margin-left: 10px;
+}
+.malt_item .amount_w,
+.hop_item .amount_w {
+	float: left;
+	width: 80px;
+	margin-left: 10px;
+}
+.malt_item .amount_p,
+.hop_item .time {
+	float: left;
+	width: 80px;
+	margin-left: 10px;
+}
+.recipe_tags div a {
+	display: inline-block;
+	margin-right: 10px;
+}
+.recipe_result {
+	float: right;
+	width: 140px;
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.recipe_result_block {
+	margin-bottom: 7px;
+}
+.recipe_result_label {
+	float: left;
+	width: 70px;
+	text-align: right;
+	font-size: 14px;
+	font-weight: bold;
+}
+.recipe_result_text {
+	float: left;
+	width: 60px;
+	margin-left: 10px;
+}
+.recipe_i_bu {
+	border-top: 1px solid #ccc;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 10px;
+	text-align: center;
+}
+.recipe_comment {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.recipe_comment_avatar {
+	float: left;
+	text-align: center;
+	width: 50px;
+	overflow: hidden;
+}
+.recipe_comment_avatar span {
+	display: block;
+}
+.recipe_comment_content {
+	float: left;
+	width: 500px;
+	margin-left: 20px;
+}
+.recipe_comment_date {
+	text-align: right;
+	margin-top: 5px;
+	font-style: italic;
+}
+.recipe_comment_date a {
+	display: inline-block;
+}
+
+.recipe_comment_form {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 10px;
+	background-color: #f5f5f5;
+}
+.recipe_comment_form_avatar {
+	float: left;
+	text-align: center;
+	width: 50px;
+	overflow: hidden;
+}
+.recipe_comment_form_avatar span {
+	display: block;
+}
+.recipe_comment_form_content {
+	float: left;
+	width: 500px;
+	margin-left: 20px;
+}
+.recipe_comment_form_content textarea {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	width: 480px;
+	height: 60px;
+}
+.article_title_url {
+	font-size: 14px;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+.article_content {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 10px;
+}
+.formError {
+	list-style: none;
+	padding: 10px;
+	margin: 0px;
+}
+.password_form dl {
+	margin-bottom: 5px;
+}
+.password_form dt {
+	float: left;
+	width: 100px;
+	font-size: 14px;
+	line-height: 26px;
+	text-align: right;
+}
+.password_form dd {
+	float: left;
+	margin-left: 10px;
+	width: 680px;
+}
+.password_form dd input[type=text] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 617px;
+	padding: 2px;
+}
+.register_form dl {
+	margin-bottom: 5px;
+}
+.register_form dt {
+	float: left;
+	width: 150px;
+	font-size: 14px;
+	line-height: 26px;
+	text-align: right;
+}
+.register_form dd {
+	float: left;
+	margin-left: 10px;
+	width: 630px;
+}
+.register_form dd input[type=text] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 617px;
+	padding: 2px;
+}
+div.as-table {
+	display: table;
+	border-collapse:collapse;
+	width: 100%;
+}
+div.as-row {
+	display: table-row;
+}
+div.as-cell {
+	display: table-cell;
+	padding: 4px;
+	border: 1px solid #ccc;
+}
+.list_icon {
+	display: inline-block;
+}
+.boldify {
+	font-weight: bold;
+}
+div.as-row:hover {
+	background-color: #f9f9f9;
+}
+.my_session_actions {
+	margin-top: 10px;
+}
+.inner_footer {
+	margin-top: 10px;
+}
+.inner_footer a{
+	display: inline-block;
+	margin-right: 10px;
+}
+.session_block {
+	margin-bottom: 5px;
+}
+.session_label {
+	float: left;
+	width: 150px;
+	font-weight: bold;
+	text-align: right;
+}
+.session_data {
+	float: left;
+	width: 670px;
+	margin-left: 10px;
+}
+#bugreport_link {
+	position: fixed;
+	bottom: 5px;
+	right: 5px;
+}
+#bugreport_button {
+	width: 200px;
+	white-space: normal;
+}
+.usergroup_title {
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+.usergroup_actions {
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+	margin-top: 10px;
+}
+.usergroup_avatars a span{
+	display: block;
+	text-align: center;
+}
+.usergroup_avatars a {
+	display: block;
+	width: 100px;
+	overflow: hidden;
+	float: left;
+	text-align: center;
+	margin-bottom: 10px;
+}
+.userlist_block {
+	width: 100px;
+	overflow: hidden;
+	float: left;
+	margin-bottom: 10px;
+	text-align: center;
+}
+.userlist_block span {
+	display: block;
+	text-align: center;
+}
+.users_avatars {
+	margin-bottom: 10px;
+}
+.comment_list_date {
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	margin-top: 15px;
+}
+.comment_list_block {
+	margin-bottom: 5px;
+}
+.comment_recipe {
+	font-size: 15px;
+}
+.brewsession_edit dl {
+	margin-bottom: 5px;
+	clear: left;
+}
+.brewsession_edit dd {
+	float: left;
+	margin-left: 10px;
+}
+.brewsession_edit dt {
+	float: left;
+	width: 150px;
+	font-size: 14px;
+	line-height: 26px;
+	text-align: right;
+}
+.brewsession_edit dd {
+	line-height: 26px;
+	font-size: 14px;
+}
+.brewsession_edit dd input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 617px;
+	padding: 2px;
+}
+.brewsession_edit dd textarea {
+	height: 100px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 617px;
+	padding: 2px;
+}
+#tags ul {
+	text-align: center;
+	list-style: none;
+}
+#tags li {
+	margin: 2px;
+	padding: 2px 5px 2px 5px;
+	display: inline-block;
+}
+#tags li a {
+	text-decoration:none;
+	color:#fff;
+}
+.tag1 {
+	font-size:110%;
+}
+.tag2 {
+	font-size:120%;
+}
+.tag3 {
+	font-size:140%;
+}
+.tag4 {
+	font-size:160%;
+}
+.tag5 {
+	font-size:180%;
+}
+#tags .alt {
+	text-align:left;
+	padding:0;
+	background:none;
+}
+#tags .alt li {
+	padding:2px 10px;
+	background:#efefef;
+	display:block;
+}
+#tags .alt .tag1, 
+#tags .alt .tag2, 
+#tags .alt .tag3, 
+#tags .alt .tag4, 
+#tags .alt .tag5{
+	font-size:100%;
+}
+.brewer_info_avatar {
+	float: right;
+	width: 80px;
+	overflow: hidden;
+}
+.brewer_info_left {
+	float: left;
+	width: 740px;
+}
+.brewer_info_actions {
+	margin-top: 15px;
+}
+.brewer_info_actions a {
+	font-size: 14px;
+}
+.brewer_info_block {
+	margin-bottom: 5px;
+}
+.brewer_info_label {
+	float: left;
+	width: 170px;
+	text-align: right;
+}
+.brewer_info_text {
+	float: left;
+	margin-left: 10px;
+	width: 550px;
+}
+.info_comment {
+	margin-bottom: 10px;
+	background-color: #f5f5f5;
+	padding: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+.info_comment a {
+	font-weight: bold;
+	display: inline-block;
+	margin-bottom: 3px;
+}
+.profile_avatar img {
+	float: left;
+}
+.profile_avatar span {
+	float: left;
+	margin-left: 10px;
+	padding-top: 17px;
+}
+.profile_avatar {
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+}

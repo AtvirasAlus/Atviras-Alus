@@ -1,50 +1,60 @@
-
-<? 
-$isloged=isset($this->user_data->user_id);
-$mail_count="?";
+<?php
+	$isloged = isset($this->user_data->user_id);
+	$mail_count = "?";
 ?>
-<div id="userScreen" style="visibility:<?=$isloged ? 'visible' : 'hidden';?>;">
-
-  <div id="userScreen-nav" class="userScreen-nav"> Prisijungęs:<span class="userScreen-u"><span><? if ($isloged) {
-$mail=new Entities_Mail($this->user_data);
-$mail_count=$mail->getUnreadCount();
- print $this->user_data->user_name; }?> </span><a rel="nofollow" href="/mail/inbox" style="background:#F1F0ED;padding:2 5 2 5;position:relative;top:1px;left:3px;width:10px;color:#b62925;border-radius:3px;font-size:10"><?=$mail_count;?></a></span> </div>
-        <ul style="list-style-type:none;" id="userScreen-menu"> 
-          <li><a href="/brewer/recipes" rel="nofollow">Mano receptai</a></li> 
-          <li><a href="/mail/inbox" rel="nofollow">Mano paštas</a></li> 
-          <li><a href="/brew-session/brewer" rel="nofollow">Mano virimų istorija</a></li>
-          <li><a href="/brewer/profile" rel="nofollow">Mano profilis</a></li>
-          <li><a href="/auth/logout" rel="nofollow">Atsijungti</a></li> 
-        </ul> 
+<div id="user_info" style="display:<?= $isloged ? 'block' : 'none'; ?>;">
+	<div id="user_info_label">Prisijungęs:</div>
+	<div id="user_info_name">
+		<span>
+			<?php
+			if ($isloged) {
+				$mail = new Entities_Mail($this->user_data);
+				$mail_count = $mail->getUnreadCount();
+				echo $this->user_data->user_name;
+			}
+			?>
+		</span>
+		<a rel="nofollow" href="/mail/inbox" id="mail_counter"><?= $mail_count; ?></a>
+	</div>
+	<div class="clear"></div>
+	<ul style="list-style-type:none;" id="user_info_submenu"> 
+		<li><a href="/brewer/recipes" rel="nofollow">Mano receptai</a></li> 
+		<li><a href="/mail/inbox" rel="nofollow">Mano paštas</a></li> 
+		<li><a href="/brew-session/brewer" rel="nofollow">Mano virimų istorija</a></li>
+		<li><a href="/brewer/profile" rel="nofollow">Mano paskyra</a></li>
+		<li><a href="/auth/logout" rel="nofollow">Atsijungti</a></li> 
+	</ul> 
 </div>
-<? if (!$isloged) {?> 
-<div id="login-a" class="ui-corner-all">
-  <a  href="#"  onclick="showLogin()">prisijungti </a> / <a href="/auth/register" style="font-weight:bold">registruotis</a>
+<?php
+	if (!$isloged) :
+?> 
+	<div id="user-login-links">
+		<a href="#"  onclick="showLogin()">prisijungti </a> / <a href="/auth/register" style="font-weight:bold">registruotis</a>
+	</div>
+<?php
+	endif;
+?>
+<div id="login-dialog"  title="Prisijungti" style="display:none">
+	<form id="login-form" onsubmit="return false">
+		<dl>
+			<dt>El. paštas:</dt>
+			<dd><input type="text" name="user_email" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Slaptažodis:</dt>
+			<dd><input type="password" name="user_password" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>&nbsp;</dt>
+			<dd><input type="checkbox" name="remember" id="remember"/><label for="remember">prisiminti mane:</label></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>&nbsp;</dt>
+			<dd><button id="login-button">Jungtis</button></dd>
+			<div class="clear"></div>
+		</dl>
+	</form>
 </div>
-<?}?>
-<script type="text/javascript">
-function createUserMenu() {
-	$(".userScreen-u").click(function (e) {
-	 
-		e.preventDefault();
-		$("#userScreen-menu").css("position","absolute");
-	$("#userScreen-menu").css("left",($(".userScreen-u").offset().left+($(".userScreen-u").width()-$("#userScreen-menu").width())));
-		
-		
-		$("#userScreen-menu").fadeToggle("slow", "linear");
-		$(".userScreen-u").toggleClass("menu-open");
-	});
-	$("#userScreen-menu").mouseup(function () {
-		return false;
-	});
-	$(document).mouseup(function (e) {
-		if ($(e.target).parent("a.userScreen-u").length == 0) {
-		$("#userScreen-menu").css("position","");
-			$(".userScreen-u").removeClass("menu-open");
-			$("#userScreen-menu").hide();
-		}
-	});
-}
-
-</script>
-

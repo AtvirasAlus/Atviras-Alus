@@ -1,32 +1,18 @@
-<style>
-#user_email {
-width:250;
-}
-#user_name {
-width:250;
-}
-</style>
-<form action="<?=$this->element->getAction();?>" method="<?= $this->element->getmethod();?>">
-<table width="100%">
-<tr>
-<td align="right"><?=$this->element->user_name->getLabel();?></td>
-<td><?=$this->element->user_name;?></td>
-</tr>
-<tr>
-<td align="right"><? echo $this->element->user_email->getLabel();?></td>
-<td><?=$this->element->user_email;?></td>
-</tr>
-<tr><td>&nbsp;</td><td></td>
-</tr>
-<tr>
-<td colspan="2" align="center" valign="bottom"><?=$this->element->register_action;?></td>
-</tr>
-</table>
+<? $this->element->user_email->setAttribs(array("style"=>'width:200'));?>
+<form action="<?=$this->element->getAction();?>" method="<?= $this->element->getmethod();?>" class="register_form">
+	<dl>
+		<dt><?=$this->element->user_name->getLabel();?></dt>
+		<dd><?=$this->element->user_name;?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt><?=$this->element->user_email->getLabel();?></dt>
+		<dd><?=$this->element->user_email;?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><?=$this->element->register_action;?></dd>
+		<div class="clear"></div>
+	</dl>
 </form>
-<script>
- 
-   	$("#register_action").button();
- 
-</script>
-
-

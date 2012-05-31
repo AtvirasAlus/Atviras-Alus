@@ -32,7 +32,7 @@
 			</pages>
 		</practises>
 		<profile>
-			<label>Profilis</label>
+			<label>Paskyra</label>
 			<module>account</module>
 			<controller>profile</controller>
 			<action>index</action>
@@ -79,7 +79,7 @@
 					<resource>admin</resource>
 				</tests>
 				<users>
-					<label>Vartotojai</label>
+					<label>Nautotojai</label>
 					<module>account</module>
 					<controller>users</controller>
 					<action>index</action>

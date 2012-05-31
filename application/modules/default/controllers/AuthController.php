@@ -27,7 +27,7 @@
                   if ($user_data=Entities_AUTH::dologin($data['user_email'],md5($data['user_password']),isset($_POST['remember']))) {  
                   	  
                   }else{
-                  	  $this->errors[] = array("type"=>"system","message"=>"Neteisingas slaptažodis ar vartotojo vardas");
+                  	  $this->errors[] = array("type"=>"system","message"=>"Neteisingas slaptažodis ar nautotojo vardas");
                   }
               }else{
               	 $err_codes=new Entities_FormErrors();
@@ -39,7 +39,7 @@
            
               }
           }else{
-          	$this->errors[] = array("type"=>"system","message"=>"Neteisingas slaptažodis ar vartotojo vardas");
+          	$this->errors[] = array("type"=>"system","message"=>"Neteisingas slaptažodis ar nautotojo vardas");
           }
         $this->_helper->layout->setLayout('empty');
 	$this->_helper->viewRenderer->setNoRender(true);
@@ -74,14 +74,14 @@
                       	      //bb
                       	   $db->insert('bb_usermeta',array('user_id'=>$result['user_id'],'meta_key'=>'bb_capabilities','meta_value'=>'a:1:{s:6:"member";b:1;}'));
                            if ($this->sendPasswordEmail($result, $new_pass)) {
-                           	   print "Profilis aktyvuotas. Jūsų e. pašto adresu nusiųsti prisijungimo duomenys.";
+                           	   print "Paskyra aktyvuota. Jūsų e. pašto adresu nusiųsti prisijungimo duomenys.";
                            };
                           $this->_helper->viewRenderer->setNoRender();
                       }else{  
-                      	      print "Profilis  aktyvus, <a href='#' href='#' onclick='showLogin()'> prisijunkite</a>";
+                      	      print "Paskyra aktyvi, <a href='#' href='#' onclick='showLogin()'> prisijunkite</a>";
                       }
           } else {
-             print "Profilis nerastas";
+             print "Paskyra nerastas";
           }
           $this->_helper->viewRenderer->setNoRender();
       }
@@ -106,7 +106,7 @@
                           $this->_helper->viewRenderer->setNoRender();
                       }
                   } else {
-                      $this->view->errors[] =  array("type"=>"form","message"=>"Nurodytu e. pašto adresu registruoto vartotojo sistemoje nėra"); 
+                      $this->view->errors[] =  array("type"=>"form","message"=>"Nurodytu e. pašto adresu registruoto nautotojo sistemoje nėra"); 
                   }
               }
           }
@@ -132,7 +132,7 @@
               if (count($result) > 0) {
                   //exit 
                   //throw error email allready registered
-                  $this->view->errors[] = array("type"=>"system","message"=>'Vartotojas tokiu vardu arba tokiu e. pašto adresu jau egzistuoja');
+                  $this->view->errors[] = array("type"=>"system","message"=>'Nautotojas tokiu vardu arba tokiu e. pašto adresu jau egzistuoja');
               } else {
                   $user_data = array( 'user_name' => $_rq->getPost('user_name'), 'user_email' => strtolower($_rq->getPost('user_email')));
                  

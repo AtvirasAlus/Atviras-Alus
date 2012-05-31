@@ -1,249 +1,317 @@
-﻿<? $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,receptai,receptas,alus,skaičiuoklė,ibu,ebc,abv');?>
-<? $this->headTitle()->append(" - atvira namų aludarių bendruomenė ");?>
-
-<? $this->headLink()->appendStylesheet("/public/ui/external/jquery.zrssfeed.css"); ?>
-<? $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");?>
-<style>
-.left_col {
-	padding-top:10px
-}
-.right_col {
-	padding-top:10px}
-h1 {
-	font-family:Georgia;
-	font-weight:bold;
-	color:#666666;
-}
-
-</style>
-<div>
-
-<table>
-<tr><td valign="top">
-<!--COLUMN 1-->
-<!--RECEPTAI-->
-<div class="left_col">
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:450;">
-<h1 style="text-decoration:italic;font-size:12px">Naujausi alaus receptai:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<table width="306">
-<? for ($i=0;$i<count($this->recipes);$i++) {?>
-	<tr><td><a style="font-size:15" href="/alus/receptas/<?=$this->recipes[$i]['recipe_id'];?>-<?=$this->escapeParam($this->recipes[$i]['recipe_name']);?>"><?=$this->recipes[$i]['recipe_name'];?></a> <span style="font-size:11"><?=$this->recipes[$i]['style_name'];?></span></td></tr>	
-<?}?>
-</table>
-<div style="padding-top:10"> <a href="/recipes">Peržiūrėti visus</a> (<?=$this->total_recipes["count"]?>) <a href="/recipes/random" style="padding-left:10">Atsitiktinis receptas</a></div>
-</div>
-<? if (count($this->events)>0) {?>
-<div class="left_col">
-<!--IVYKIAI-->
-
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:450"><h1 style="text-decoration:italic;font-size:12px">Įvykiai:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<? if (count($this->events)>0 ) {?> 
-<table>
-<? for ($i=0;$i<count($this->events);$i++) {?>
-<tr>
-<td><a href="/ivykis/<?=$this->events[$i]['event_id'];?>-<?=$this->escapeParam($this->events[$i]['event_name']);?>"><?=$this->events[$i]['event_name'];?></a> - <i><?=$this->events[$i]['event_start'];?></i></td>
-</tr>
-<?}?>
-
-
-</table>
-<?}else{?>
-<div align="center">Nieko nevyksta</div>
-<?}?>
-</div>
-</div>
-<?}?>
-<!--NAUJIENOS-->
-<div class="left_col">
-<div>
-
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:450"><h1 style="text-decoration:italic;font-size:12px">Burbuliatorius:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<?$tweet=$this->twitter(); print $tweet->tweetList(5,0);?>
-</div>
-<!--NAUJIENOS-->
-<div class="left_col">
-<div>
-
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:450"><h1 style="text-decoration:italic;font-size:12px">Atviro alaus naujienos:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<p>Per mėnėsį <b><?=$this->total_brewed['brewers_total'];?></b> aludariai išvirė <b><a href="http://www.atvirasalus.lt/stats?id=sessions"><?=$this->total_brewed['beer_total'];?></b></a> litrus alaus</p>
-<p>Sveikiname mūsų naująjį aludarį, <a href="/brewers/<?=$this->welcome['user_id'];?>"><?=$this->welcome['user_name'];?></a></p>
-
-</div>
-</div><!--FORUMAS-->
-<div class="left_col">
-<div class="ui-corner-all" style="background:#ffffff;width:450;padding:10"><h1 style="text-decoration:italic;font-size:12px">Forumas:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<table>
-<? for ($i=0;$i<count($this->posts);$i++) {?>
-<tr>
-<td valign="top" style="border-bottom:1px dotted #DEDEDE"><? 
-if ($i % 2 ==1) {
-$c ="style='text-indent:20px;color:#666666;padding:5;clear:right;text-indent:20px;'"; 
-}else{ 
-$c = " color:#666666;style='text-indent:20px;padding:5;clear:right;text-indent:20px;'";
-}
-?><div style="float:left;padding:5;display:inline-box"><img  src="http://www.gravatar.com/avatar/<?=$this->posts[$i]['email_hash'];?>?rating=G&size=50&default=mm" border="0"/><div align="center"><a  href="/brewers/<?=$this->posts[$i]['poster_id'];?>"><?=$this->posts[$i]["user_name"]?></a></div></div>
-<div ><div align="right" style="padding:5;"> <a href="/forum/topic.php?id=<?=$this->posts[$i]['topic_id'];?>&page=<?=(ceil($this->posts[$i]['post_position']/30));?>#post-<?=$this->posts[$i]['post_id'];?>"><?=$this->posts[$i]["topic_title"]?></a></div>
-
-<div <?=$c;?>>
-
-
-<? $fhtml= new Zend_Filter_StripTags();
-$f=new Entities_Filter_Excerpt();
+<?php
+$this->headMeta()->setName('keywords', 'alaus gamyba,naminis,receptai,receptas,alus,skaičiuoklė,ibu,ebc,abv');
+$this->headTitle()->append(" - atvira namų aludarių bendruomenė ");
+$this->headLink()->appendStylesheet("/public/ui/external/jquery.zrssfeed_changeme.css");
+$this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 ?>
-<span style="font-size:17px;font-weight:bold;text-align:right">“</span><a style="color:#666;font-size:12px;word-wrap" href="/forum/topic.php?id=<?=$this->posts[$i]['topic_id'];?>&page=<?=(ceil($this->posts[$i]['post_position']/30));?>#post-<?=$this->posts[$i]['post_id'];?>">
-<?
-print wordwrap($f->filter($fhtml->filter($this->posts[$i]['post_text']),30),62,'</br>',true) ;?>
 
-</a><span style="font-size:17px;font-weight:bold">”</span>
-</div></div>
-</td>
-</tr>
-<?}?>
-</table>
-</div>
-</div>
-<!--FAVORITAI-->
-<div class="left_col">
-<div class="ui-corner-all" style="background:#ffffff;width:450;padding:10">
-
-<h1 style="text-decoration:italic;font-size:12px">Įdomiausi:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<table>
-<? for ($i=0;$i<count($this->fav_recipes);$i++) {?>
-<tr>
-<td><a href="/brewers/<?=$this->fav_recipes[$i]['brewer_id'];?>"><?=$this->fav_recipes[$i]["user_name"]?></a> receptas <a style="font-size:15" href="/alus/receptas/<?=$this->fav_recipes[$i]['recipe_id'];?>-<?=$this->escapeParam($this->fav_recipes[$i]['recipe_name']);?>"><?=$this->fav_recipes[$i]["recipe_name"]?></a></td>
-</tr>
-<?}?>
-</table>
-<div style="padding-top:5;text-align:right"><a href="/recipes/favorites">Peržiūrėt visus</a></div>
-</div>
-</div>
-<!-- STATISTIKA-->
-<div class="left_col">
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:450;"><h1 style="text-decoration:italic;font-size:12px">Statistika:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<div>
-<?print $this->randomStatistics();?>
-</div>
-<div style="margin-top:5" align="right"><a href="/stats" >Daugiau statistikos</a></div>
-</div>
-</div>
-<!--END COLUMN 1-->
-</td>
-<td align="left" valign="top" style="padding-left:15">
-<div class="right_col">
-<!--COLUMN 2-->
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:360">
-<h1 style="text-decoration:italic;font-size:12px">Aludariai:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<table width="346">
-
-<?
-$z=0;
-for ($i=0;$i<count($this->users)/3;$i++) {
-	?>
-	<tr>
-	<?
-	for ($ii=0;$ii<3;$ii++) {
+<div class="index_container">
+	<div id="index_left">
+		<!-- RECEPTAI -->
+		<div class="index_block index_recipes">
+			<div class="block_header">Naujausi alaus receptai:</div>
+			<div class="block_content">
+				<?php
+				foreach ($this->recipes as $recipe):
+				?>
+					<div>
+						<a href="/alus/receptas/<?= $recipe['recipe_id']; ?>-<?= $this->escapeParam($recipe['recipe_name']); ?>">
+							<?=$recipe['recipe_name']; ?>
+						</a>
+						<span><?=$recipe['style_name']; ?></span>	
+					</div>
+				<?php
+				endforeach;
+				?>
+			</div>
+			<div class="block_footer">
+				<a href="/recipes">Peržiūrėti visus</a> (<?=$this->total_recipes["count"] ?>) 
+				<a href="/recipes/random">Atsitiktinis receptas</a>
+			</div>
+		</div>
 		
-		if (isset($this->users[$z])) {
-?>
-<td width="100" align="center" height="75">
-<a href="/brewers/<?=$this->users[$z]['user_id'];?>"><div><a href="/brewers/<?=$this->users[$z]['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->users[$z]['user_email']);?>?rating=G&size=50&default=mm" border="0"/></a></div>
-<a href="/brewers/<?=$this->users[$z]['user_id'];?>"><?=$this->users[$z]['user_name'];?> </a> (<?=$this->users[$z]['count'];?>)</td>
-<?
-		}
-$z++;
-}
-?>
-</tr>
-<?
-}
-?>        
-</table>
-<div style="padding-top:5"><a href="/brewer/list">Peržiūrėt visus</a> (<?=$this->users_total["count"];?>)  &nbsp;| &nbsp;<a href="/groups" >Grupės</a></div>
-</div>
-</div>
-</div>
-<div class="right_col">
-<!--KOMENTARAI-->
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:360;">
-<h1 style="text-decoration:italic;font-size:12px">Komentarai:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<table>
-<? for ($i=0;$i<count($this->comments);$i++) {?>
-<tr>
-<td><a href="/brewers/<?=$this->comments[$i]['user_id'];?>"><?=$this->comments[$i]["user_name"]?></a> komentavo <a style="font-size:15" href="/alus/receptas/<?=$this->comments[$i]['recipe_id'];?>-<?=$this->escapeParam($this->comments[$i]['recipe_name']);?>#comment-<?=$this->comments[$i]['comment_id'];?>"><?=$this->comments[$i]["recipe_name"]?></a></td>
-</tr>
-<?}?>
-</table>
-<div style="margin-top:5" align="right"><a href="/comments" >Visi komentarai</a></div>
-</div>
-</div>
-<!-- VIRIMAI -->
-<div class="right_col">
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:360;">
-<h1 style="text-decoration:italic;font-size:12px">Kubiluose gyvena:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<table>
-<? for ($i=0;$i<count($this->brew_session);$i++) {?>
-<tr>
-<td><a href="/brewers/<?=$this->brew_session[$i]['user_id'];?>"><?=$this->brew_session[$i]["user_name"]?></a> bravoryja <a style="font-size:15" href="/alus/receptas/<?=$this->brew_session[$i]['recipe_id'];?>-<?=$this->escapeParam($this->brew_session[$i]['recipe_name']);?>"><?=$this->brew_session[$i]["recipe_name"]?></a></td>
-</tr>
-<?}?>
-</table>
-<div style="margin-top:5" align="right"><a href="/brew-session/history" >Visi virimai</a></div>
-</div>
-</div>
-<!-- STRAIPSNIAI-->
-<div class="right_col">
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:360">
-<h1 style="text-decoration:italic;font-size:12px">Straipsniai:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<table>
-<? for ($i=0;$i<count($this->articles);$i++) {?>
-<tr>
-<td>
-<div><a  style="font-size:13;" href="/content/read/<?=$this->articles[$i]['article_cat'];?>/<?=$this->articles[$i]['article_id'];?>-<?=$this->articles[$i]['article_title'];?>"><?=$this->articles[$i]['article_title'];?></a> (<?=intval($this->articles[$i]['total']);?>)<img src="/public/images/comments_icon.png" border=0/> </div>
+		<!-- ĮVYKIAI -->
+		<?php
+		if (count($this->events) > 0): 
+		?>
+			<div class="index_block index_events">
+				<div class="block_header">Įvykiai:</div>
+				<div class="block_content">
+					<?php
+					foreach ($this->events as $event):
+					?>
+						<div>
+							<a href="/ivykis/<?=$event['event_id']; ?>-<?=$this->escapeParam($event['event_name']); ?>">
+								<?=$event['event_name']; ?>
+							</a> - <i><?=$event['event_start']; ?></i>
+						</div>
+					<?php
+					endforeach;
+					?>
+				</div>
+			</div>
+		<?php
+		endif;
+		?>
+		
+		<!-- BURBULIATORIUS -->
+		<div class="index_block index_tweet">
+			<div class="block_header">Burbuliatorius:</div>
+			<div class="block_content">
+				<?php
+				$tweet = $this->twitter();
+				echo $tweet->tweetList(5, 0);
+				?>
+			</div>
+		</div>
 
-</td>
-</tr>
-<?}?>
-</table>
-</div>
-</div>
-<!--DIENORAŠTIS-->
-<div class="right_col">
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:360;"><h1 style="text-decoration:italic;font-size:12px">Iš aludarių dienoraščio:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<table>
-<? for ($i=0;$i<count($this->blogs);$i++) {?>
-<tr >
-<td style="border-bottom:1px dotted #EEE;padding-top:5">
-<div><a href="/brewers/<?=$this->blogs[$i]['post_author'];?>"><?=$this->blogs[$i]['user_name'];?></a> - <a  style="font-size:13;" href="<?=$this->blogs[$i]['guid'];?>"><?=$this->blogs[$i]['post_title'];?></a> (<?=intval($this->blogs[$i]['comment_count']);?>)<img src="/public/images/comments_icon.png" border=0/> <br/>
-<div style="text-indent:20px;"> <a style="font-size:12px;color:#666666;" href="<?=$this->blogs[$i]['guid'];?>">
-<? $fhtml= new Zend_Filter_StripTags();
-$f=new Entities_Filter_Excerpt();
-print $f->filter($fhtml->filter($this->blogs[$i]['post_content']),30);?>
-</a>
-</div>
-</div>
+		<!-- ATVIRO ALAUS NAUJIENOS -->
+		<div class="index_block index_sitenews">
+			<div class="block_header">Atviro alaus naujienos:</div>
+			<div class="block_content">
+				<div style="margin-bottom: 10px;">
+					Per mėnėsį 
+					<b><?= $this->total_brewed['brewers_total']; ?></b>
+					aludariai išvirė 
+					<b><a href="http://www.atvirasalus.lt/stats?id=sessions"><?= $this->total_brewed['beer_total']; ?></b></a> 
+					litrus alaus
+				</div>
+				<div>
+					Sveikiname mūsų naująjį aludarį,
+					<a href="/brewers/<?= $this->welcome['user_id']; ?>"><?= $this->welcome['user_name']; ?></a>
+				</div>
+			</div>
+		</div>
 
-</td>
-</tr>
-<?}?>
-</table>
-<div style="margin-top:5" align="right"><a href="/blog" >Visi dienoraščiai</a></div>
-</div>
-</div>
-<div class="right_col">
-<div class="ui-corner-all" style="background:#ffffff;padding:10;width:360"><h1 style="text-decoration:italic;font-size:12px">Alaus naujienos:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-    <div id="tad_feed"></div>
+		<!-- FORUMAS -->
+		<div class="index_block index_forum">
+			<div class="block_header">Forumas:</div>
+			<div class="block_content">
+				<?php
+				for ($i = 0; $i < count($this->posts); $i++) {
+				?>
+					<div class="index_forum_block">
+						<div class="avatar">
+							<a href="/brewers/<?= $this->posts[$i]['poster_id']; ?>">
+								<img  src="http://www.gravatar.com/avatar/<?= $this->posts[$i]['email_hash']; ?>?rating=G&size=50&default=mm" border="0"/>
+								<span><?= $this->posts[$i]["user_name"] ?></span>
+							</a>
+						</div>
+						<div class="post">
+							<a class="post_title" href="/forum/topic.php?id=<?= $this->posts[$i]['topic_id']; ?>&page=<?= (ceil($this->posts[$i]['post_position'] / 30)); ?>#post-<?= $this->posts[$i]['post_id']; ?>">
+								<?= $this->posts[$i]["topic_title"] ?>
+							</a>
+							<?php
+							$fhtml = new Zend_Filter_StripTags();
+							$f = new Entities_Filter_Excerpt();
+							?>
+							<span class="quotes">“</span>
+							<a class="post_link" href="/forum/topic.php?id=<?= $this->posts[$i]['topic_id']; ?>&page=<?= (ceil($this->posts[$i]['post_position'] / 30)); ?>#post-<?= $this->posts[$i]['post_id']; ?>">
+								<?=wordwrap($f->filter($fhtml->filter($this->posts[$i]['post_text']), 30), 62, '</br>', true); ?>
+							</a>
+							<span class="quotes">”</span>
+						</div>
+						<div class="clear"></div>
+					</div>
+				<?php
+				}
+				?>
+			</div>
+		</div>
+
+		<!-- ĮDOMIAUSI -->
+		<div class="index_block index_favorites">
+			<div class="block_header">Įdomiausi receptai:</div>
+			<div class="block_content">
+				<?php
+				foreach ($this->fav_recipes as $favorite): 
+				?>
+					<div>
+						<a href="/brewers/<?= $favorite['brewer_id']; ?>">
+							<?= $favorite["user_name"] ?>
+						</a>
+						receptas
+						<a class="recipe_name" href="/alus/receptas/<?= $favorite['recipe_id']; ?>-<?= $this->escapeParam($favorite['recipe_name']); ?>">
+							<?=$favorite["recipe_name"];?>
+						</a>
+					</div>
+				<?php
+				endforeach;
+				?>
+			</div>
+			<div class="block_footer">
+				<a href="/recipes/favorites">Peržiūrėt visus</a>
+			</div>
+		</div>
+
+		<!-- STATISTIKA -->
+		<div class="index_block index_stats">
+			<div class="block_header">Statistika:</div>
+			<div class="block_content">
+				<?=$this->randomStatistics();?>
+			</div>
+			<div class="block_footer">
+				<a href="/stats" >Daugiau statistikos</a>
+			</div>
+		</div>
+
 	</div>
-</div>
-</div>
-
-<!--END COLUMN 2-->
-
-</td></tr>
-</table>
+	<div id="index_right">
+		
+		<!-- ALUDARIAI -->
+		<div class="index_block index_stats">
+			<div class="block_header">Aludariai:</div>
+			<div class="block_content">
+				<?php
+				$i = 0;
+				foreach ($this->users as $user):
+					$i++;
+				?>
+					<div class="index-user" <?=($i!=3) ? 'style="margin-right: 25px;"' : ""; ?>>
+						<a href="/brewers/<?=$user['user_id'];?>">
+							<img src="http://www.gravatar.com/avatar/<?=md5($user['user_email']); ?>?rating=G&size=50&default=mm" border="0"/>
+						</a>
+						<span>
+							<a href="/brewers/<?=$user['user_id'];?>">
+								<?= $user['user_name'];?>
+							</a>
+							(<?=$user['count'];?>)
+						</span>
+					</div>
+				<?php
+					if ($i == 3){
+						?>
+						<div class="clear"></div>
+						<?php
+						$i = 0;
+					}
+				endforeach;
+				?>
+			</div>
+			<div class="block_footer">
+				<a href="/brewer/list">Peržiūrėt visus</a> (<?= $this->users_total["count"]; ?>)
+				<a href="/groups" >Grupės</a>
+			</div>
+		</div>
+		
+		<!-- KOMENTARAI -->
+		<div class="index_block index_comments">
+			<div class="block_header">Komentarai:</div>
+			<div class="block_content">
+				<?php
+				foreach ($this->comments as $comment):
+				?>
+					<div>
+						<a href="/brewers/<?= $comment['user_id'];?>">
+							<?=$comment["user_name"];?>
+						</a>
+						komentavo
+						<a class="recipe_name" href="/alus/receptas/<?=$comment['recipe_id']; ?>-<?= $this->escapeParam($comment['recipe_name']); ?>#comment-<?=$comment['comment_id']; ?>">
+							<?=$comment["recipe_name"];?>
+						</a>
+					</div>
+				<?php
+				endforeach;
+				?>
+			</div>
+			<div class="block_footer">
+				<a href="/comments" >Visi komentarai</a>
+			</div>
+		</div>
+		
+		<!-- KUBILUOSE GYVENA -->
+		<div class="index_block index_sessions">
+			<div class="block_header">Kubiluose gyvena:</div>
+			<div class="block_content">
+				<?php
+				foreach ($this->brew_session as $session):
+				?>
+					<div>
+						<a href="/brewers/<?=$session['user_id']; ?>">
+							<?=$session["user_name"] ?>
+						</a>
+						bravoryja
+						<a class="session_name" href="/alus/receptas/<?=$session['recipe_id']; ?>-<?= $this->escapeParam($session['recipe_name']); ?>">
+							<?=$session["recipe_name"];?>
+						</a>
+					</div>
+				<?php
+				endforeach;
+				?>
+			</div>
+			<div class="block_footer">
+				<a href="/brew-session/history" >Visi virimai</a>
+			</div>
+		</div>
+		
+		<!-- STRAIPSNIAI -->
+		<div class="index_block index_articles">
+			<div class="block_header">Straipsniai:</div>
+			<div class="block_content">
+				<?php
+				foreach ($this->articles as $article):
+				?>
+					<div>
+						<a href="/content/read/<?= $article['article_cat']; ?>/<?= $article['article_id']; ?>-<?= $article['article_title']; ?>">
+							<?=$article['article_title']; ?>
+						</a>
+						(<?=intval($article['total']); ?>)
+						<img src="/public/images/comments_icon.png" />
+					</div>
+				<?php
+				endforeach;
+				?>
+			</div>
+		</div>
+		
+		<!-- DIENORAŠČIAI -->
+		<div class="index_block index_blogs">
+			<div class="block_header">Iš aludarių dienoraščio:</div>
+			<div class="block_content">
+				<?php
+				foreach ($this->blogs as $blog):
+				?>
+					<div>
+						<a href="/brewers/<?= $blog['post_author'];?>">
+							<?= $blog['user_name'];?>
+						</a>
+						-
+						<a class="article_name" href="<?=$blog['guid'];?>">
+							<?=$blog['post_title'];?>
+						</a>
+						(<?=intval($blog['comment_count']);?>)
+						<img src="/public/images/comments_icon.png" border=0/>
+					</div>
+					<div class="article_summary">
+						<a href="<?=$blog['guid'];?>">
+							<?
+							$fhtml = new Zend_Filter_StripTags();
+							$f = new Entities_Filter_Excerpt();
+							echo $f->filter($fhtml->filter($blog['post_content']), 30);
+							?>
+						</a>
+					</div>
+				<?php
+				endforeach;
+				?>
+			</div>
+			<div class="block_footer">
+				<a href="/blog" >Visi dienoraščiai</a>
+			</div>
+		</div>
+		
+		<!-- ALAUS NAUJIENOS -->
+		<div class="index_block index_news">
+			<div class="block_header">Alaus naujienos:</div>
+			<div class="block_content">
+				<div id="tad_feed"></div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
 </div>
 <script>
-$('#tad_feed').rssfeed('http://pipes.yahoo.com/pipes/pipe.run?_id=210aea0f65d951e98dc682a8136c4ee9&_render=rss', {
+	$('#tad_feed').rssfeed('http://pipes.yahoo.com/pipes/pipe.run?_id=210aea0f65d951e98dc682a8136c4ee9&_render=rss', {
 		limit: 15,header:false,date:false
 	});
 </script>
-

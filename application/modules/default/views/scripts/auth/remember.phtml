@@ -1,33 +1,28 @@
-
-<div align="center" style="width:800">
-<div style="width:400px"><div class="ui-widget">
-<div class="ui-widget ui-state-highlight ui-corner-all" > 
-<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-login-dialog">
-<span style="font-size:20"> Slaptažodžio priminimas </span></span></div>
-<div style="padding: 15px">
-
-<? if($this->errors) {
-?>
-	<div class="ui-state-error ui-corner-all" style="margin-bottom:20px"><ul class="formError">
-<?
-	for ($i=0;$i<count($this->errors);$i++) {
-?>
-		<li><?=$this->errors[$i]["message"];?></li>
-<?
+<div id="auth_info_container" class="inner_container">
+	<div class="inner_header">Slaptažodžio priminimas</div>
+	<?php
+	if($this->errors) {
+		?>
+		<div class="ui-state-error ui-corner-all" style="margin-bottom: 20px;">
+			<ul class="formError">
+			<?
+			for ($i=0;$i<count($this->errors);$i++) {
+				?>
+				<li><?=$this->errors[$i]["message"];?></li>
+				<?
+			}
+			?>
+			</ul>
+		</div>
+		<?
+	} else {
+		if ($this->success) {
+			?>
+			<div>Registracijos patvirtinimui Jums  išsiųstas laiškas nurodytu el. pašto adresu</div>
+			<?
+		}
 	}
-?>
-</ul></div></div>
-<?
-}else{
-if ($this->success) {
-?>
-Registracijos patvirtinimui Jums  išsiųstas laiškas nurodytu el. pašto adresu
-<?
-}
-}
-?> 
-Įveskite savo el.pašto adresą, kuriuo jungiatės prie sistemos
-<?=$this->form;?>
-</div>
-</div>
+	?>
+	<div>Įveskite savo el.pašto adresą, kuriuo jungiatės prie sistemos</div>
+	<div><?=$this->form;?></div>
 </div>

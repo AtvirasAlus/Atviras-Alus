@@ -1,38 +1,40 @@
-<? $this->headTitle()->append(" - Vartotojų grupės");?>
-<div style="width:800;padding:10;">
-<h1 style="color:#666666;font-weight:bold;font-size:15" align="center">Vartotojų grupės</h1>
-<div style="background:#FFFFFF;padding:10;" class="ui-corner-all">
-<?
-
-$z=0;
-for ($i=0;$i<count($this->groups);$i++) {
-	
-
-
-?>
-<div align="center" style="padding:20;color:#666666;"><span><?=$this->groups[$i]["group_name"];?> </span></div>
-<div align="center">
-<div class="ui-corner-all" style="background:#FFFFFF;padding:3;border:1px solid #dedede"  align="left">
- 
-<?
-for ($ii=0;$ii<count($this->groups[$i]["users"]);$ii++) {
-	
-
-?>
-<div style="display:inline-block;padding:3;" align="center">
-<div style="float:left;padding:5;background:#FFFFFF;"><a href="/brewers/<?=$this->groups[$i]['users'][$ii]['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->groups[$i]['users'][$ii]['user_email']);?>?rating=G&size=50&default=mm" border="0"/></a><br/>
-<a href="/brewers/<?=$this->groups[$i]['users'][$ii]['user_id'];?>"><?=$this->groups[$i]['users'][$ii]['user_name'];?> </a></div>
+<? $this->headTitle()->append(" - Aludarių grupės"); ?>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Aludarių grupės</div>
+	<div>
+		<?
+		for ($i = 0; $i < count($this->groups); $i++) {
+			?>
+			<div class="usergroup_title"><?= $this->groups[$i]["group_name"]; ?></div>
+			<div class="usergroup_avatars">
+				<?
+				$z = 0;
+				for ($ii = 0; $ii < count($this->groups[$i]["users"]); $ii++) {
+					$z++;
+					?>
+					<a href="/brewers/<?= $this->groups[$i]['users'][$ii]['user_id']; ?>">
+						<img src="http://www.gravatar.com/avatar/<?= md5($this->groups[$i]['users'][$ii]['user_email']); ?>?rating=G&size=50&default=mm" border="0"/>
+						<span><?= $this->groups[$i]['users'][$ii]['user_name']; ?>
+					</a>
+					<?
+					if ($z == 8) {
+						$z = 0;
+						?>
+						<div class="clear"></div>
+						<?php
+					}
+				}
+				?>
+				<div class="clear"></div>
+			</div>
+			<div class="usergroup_actions">
+				<a href="/mail/compose?token=<? print base64_encode($this->groups[$i]['group_name']); ?>" rel="nofollow">
+					Rašyti grupei žinutę
+				</a>
+			</div>
+			<?
+		}
+		?>
+	</div>
+	<div class="inner_footer">* prie grupės prisijungti galite, savo paskyros nustatymuose</div>
 </div>
-
-<?}?>
-
-<div style="padding:10;" align="center"><a href="/mail/compose?token=<? print base64_encode($this->groups[$i]['group_name']);?>" rel="nofollow">Rašyti grupei žinutę </a></div>
-</div>
-</div>
-<?
-}
-?>
-<div style="padding:20;color:#666666;padding-top:50" align="center"><i>* prie grupės prisijungti galite, savo profilio nustatymuose</i></div>
-</div>  
- 
-</div>  

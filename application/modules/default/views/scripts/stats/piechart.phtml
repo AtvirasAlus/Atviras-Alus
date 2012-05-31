@@ -1,139 +1,133 @@
 <?
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.js");
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");
-$this->headScript()->appendFile("/public/ui/flot/jquery.flot.pie.js");?>
-
-<?
-$id= isset($_GET['id']) ? $_GET['id'] : "";
-$_options=array("recipes"=>"Sukurtų receptų skaičius (mėnesiais)","users"=>"Prisiregistravusių naujų vartotojų skaičius (mėnesiais)","sessions"=>"Virimų statistika","styles"=>"Sukurtų receptų skaičius pagal stilių","cats"=>"Sukurtų receptų skaičius pagal kategorijas","abv"=>"Išvirto alaus stiprumas","locations"=>"Vartotojų geografija");
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.pie.js");
+$id = isset($_GET['id']) ? $_GET['id'] : "";
+$_options = array("recipes" => "Sukurtų receptų skaičius (mėnesiais)", "users" => "Prisiregistravusių naujų nautotojų skaičius (mėnesiais)", "sessions" => "Virimų statistika", "styles" => "Sukurtų receptų skaičius pagal stilių", "cats" => "Sukurtų receptų skaičius pagal kategorijas", "abv" => "Išvirto alaus stiprumas", "locations" => "Nautotojų geografija");
 ?>
-<div>Statistikos tipas:<select onchange="window.location=this.value">
-<?
-foreach ($_options as $key => $value) {
-	$selected = ($id==$key) ? "selected" : "";
-	?>
-    <option value="?id=<?=$key;?>" <?=$selected;?>><?=$value?></option>
-    <?
-}
-?>
-
-</select></div> 
- <div class="ui-corner-all" style="background:#fff;">
-    <div id="placeholder" style="width:800px;height:600px;"></div>
-    <div id="hover" style="margin-left:50px;margin-top:10px;width:300px"></div> 
- 
-    
-    
- 
-  
- 
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Statistika</div>
+	<div style="margin-bottom: 5px;">
+		Statistikos tipas:
+		<select onchange="window.location=this.value">
+			<?
+			foreach ($_options as $key => $value) {
+				$selected = ($id == $key) ? "selected" : "";
+				?>
+				<option value="?id=<?= $key; ?>" <?= $selected; ?>><?= $value ?></option>
+				<?
+			}
+			?>
+		</select>
+	</div> 
+	<div id="placeholder" style="width:800px;height:600px;"></div> 
+	<div id="hover" style="margin-left:50px;margin-top:20px;width:700px;"></div> 
+</div> 
 <script id="source"> 
- var stack = 1, bars = true, lines = false, steps = false;
-<?
+var stack = 1, bars = true, lines = false, steps = false;
+	<?
+	switch ($id) {
 
-switch($id) {
-	
-case "styles":
-?>
-var a=<?=$this->styles;?>;
-	  var d = [];
+		case "styles":
+			?>
+		var a=<?= $this->styles; ?>;
+		var d = [];
 		var total=0
-	    for (var i=0;i<a.length;i++) {
-	    	  
-	
-	total+=a[i].total;
-	    }
-	for (var i=0;i<a.length;i++) {
-	    	  
-		    d[i]={label:a[i].style_name.substring(0,40)+" " +a[i].total+" ("+Math.round((a[i].total/total*100)*100)/100+" %)",data:a[i].total/total*100};
-	    }
-	   
-<?
-break;
-case "cats":
-?>
-var a=<?=$this->cats;?>;
-	  var d = [];
+		for (var i=0;i<a.length;i++) {
+
+
+			total+=a[i].total;
+		}
+		for (var i=0;i<a.length;i++) {
+
+			d[i]={label:a[i].style_name.substring(0,40)+" " +a[i].total+" ("+Math.round((a[i].total/total*100)*100)/100+" %)",data:a[i].total/total*100};
+		}
+
+			<?
+			break;
+		case "cats":
+			?>
+		var a=<?= $this->cats; ?>;
+		var d = [];
 		var total=0
-	    for (var i=0;i<a.length;i++) {
-	    	  
-	
-	total+=a[i].total;
-	    }
-	for (var i=0;i<a.length;i++) {
-	    	 if ( a[i].cat_name==null) {
-	    	 a[i].cat_name ="be kategorijos" }else{
-	    	 a[i].cat_name=  a[i].cat_name.substring(0,40).toLowerCase();
-	    	 }
-		    d[i]={label:a[i].cat_name+" " +a[i].total+" ("+Math.round((a[i].total/total*100)*100)/100+" %)",data:a[i].total/total*100};
-	    }
-	   
-<?
-break;
-case "abv":
-?>
-var a=<?=$this->abv;?>;
-	  var d = [];
+		for (var i=0;i<a.length;i++) {
+
+
+			total+=a[i].total;
+		}
+		for (var i=0;i<a.length;i++) {
+			if ( a[i].cat_name==null) {
+				a[i].cat_name ="be kategorijos" }else{
+				a[i].cat_name=  a[i].cat_name.substring(0,40).toLowerCase();
+			}
+			d[i]={label:a[i].cat_name+" " +a[i].total+" ("+Math.round((a[i].total/total*100)*100)/100+" %)",data:a[i].total/total*100};
+		}
+
+			<?
+			break;
+		case "abv":
+			?>
+		var a=<?= $this->abv; ?>;
+		var d = [];
 		var total=0
-	    for (var i=0;i<a.length;i++) {
-	    	  
-	
-	total+=a[i].total;
-	    }
-	for (var i=0;i<a.length;i++) {
-	    	  
-		    d[i]={label:a[i].label+" (" +a[i].count+")",data:a[i].count};
-	    }
-	   
-<?
-break;
-}
-?>
+		for (var i=0;i<a.length;i++) {
 
-<?switch ($id){
 
-case "styles":
-case "abv":
-case "cats":
-?>
-function pieHover(event, pos, obj) 
+			total+=a[i].total;
+		}
+		for (var i=0;i<a.length;i++) {
 
-{
+			d[i]={label:a[i].label+" (" +a[i].count+")",data:a[i].count};
+		}
 
-	if (!obj)
+			<?
+			break;
+	}
+	?>
 
-                return;
+	<?
+	switch ($id) {
 
-	percent = parseFloat(obj.series.percent).toFixed(2);
+		case "styles":
+		case "abv":
+		case "cats":
+			?>
+		function pieHover(event, pos, obj) 
 
-	$("#hover").html('<span>'+obj.series.label+' ('+percent+'%)</span>');
+		{
 
-}
+			if (!obj)
 
-$.plot($("#placeholder"), d,
-{
+			return;
 
-        series: {
-          
-            pie: {
-               
-                show: true,
-                radius:150,
-                innerRadius: 0.15,
-               
-            }
-        },
-        
-        grid: {
-            hoverable: true,
-            clickable: true
-        },
-        
-});
-$("#placeholder").bind("plothover", pieHover);
+		percent = parseFloat(obj.series.percent).toFixed(2);
 
-<?break;}?>
+		$("#hover").html('<span>'+obj.series.label+' ('+percent+'%)</span>');
+
+	}
+
+	$.plot($("#placeholder"), d,
+	{
+
+		series: {
+
+			pie: {
+
+				show: true,
+				radius:150,
+				innerRadius: 0.15,
+
+			}
+		},
+
+		grid: {
+			hoverable: true,
+			clickable: true
+		},
+
+	});
+	$("#placeholder").bind("plothover", pieHover);
+
+	<? break;
+} ?>
 </script> 
- </div>
- </body> 
-</html> 

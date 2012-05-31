@@ -1,28 +1,39 @@
-<div style="margin-top:10;width:800px;;background-color: #FFFFFF;padding:10" align="left" class="ui-corner-all">
-<?
-$curdate="";
-?>
-<?  if (count($this->content)): ?>
-<table>
-<? foreach ($this->content as $item) :?>
-<tr>
-<?
-
-if (substr($item['comment_date'],0,10)!=$curdate) {
-	$curdate=substr($item['comment_date'],0,10);
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Komentarai</div>
+	<?
+	$curdate = "";
+	if (count($this->content)): 
+		foreach ($this->content as $item) : 
+			if (substr($item['comment_date'], 0, 10) != $curdate) {
+				$curdate = substr($item['comment_date'], 0, 10);
+				if ($curdate == date("Y-m-d")){
+					?>
+					<div class="comment_list_date">Šiandien</div>
+					<?php
+				} else {
+					?>
+					<div class="comment_list_date"><?= $curdate; ?></div>
+					<?php
+				}
+			}
+			?>
+			<div class="comment_list_block">
+				<a href="/brewers/<?= $item['user_id']; ?>">
+					<?= $item["user_name"] ?>
+				</a>
+				komentavo
+				<a class="comment_recipe" href="/recipes/view/<?= $item['recipe_id']; ?>#comment-<?= $item['comment_id']; ?>">
+					<?= $item["recipe_name"] ?>
+				</a>
+				<span>
+					<?= substr($item['comment_date'], 10); ?>
+				</span>
+			</div>
+		<?php 
+		endforeach; 
+	endif;
 	?>
-	<td align="center" style="padding-top:20"><span style="font-size:14;font-weight:bold"><?=$curdate;?></span></td></tr><tr>
-<?}?>
-<td><a href="/brewers/<?=$item['user_id'];?>"><?=$item["user_name"]?></a> komentavo <a style="font-size:15" href="/recipes/view/<?=$item['recipe_id'];?>#comment-<?=$item['comment_id'];?>"><?=$item["recipe_name"]?></a> <span style="padding-left:10;font-size:9"><?=$item['comment_date'];?></span></td>
-</tr>
-<?  endforeach; ?>
-</table>
-
-<?  endif; ?>
-
-
-
-<?php echo $this->paginationControl($this->content,
-                                    'Sliding',
-                                    'paginator/item.phtml'); ?>
-                                    </div>
+	<div style="margin-top: 10px;">
+		<?=$this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');?>
+	</div>
+</div>

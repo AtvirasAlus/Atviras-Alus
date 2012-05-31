@@ -1,130 +1,110 @@
-<head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="lt" lang="lt">
+    <head>
+        <title>Alaus receptas</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Alaus skaičiuoklė</title>
-</head>
-<style type="text/css">
-/* UI Spinner */
-body
-{
-	background: #ffffff;
-	font-family: Arial;
-	font-size:14px;
-	height: 100%;
-	margin: 0;
-	margin-left: 50;
-	padding: 0;
-}
-table {
-	border-left:1px solid #333333;
-	border-bottom:1px solid #333333;
-}
-td {
-	font-size:14px;
-	padding-left:10px;
-	border-right:1px solid #333333;
-}
-.td-number {
-	font-size:14px;
-	text-align:right;
-	padding-right:10px;
-}
-thead {
-	
-	padding-top:20px;
-	
-}
-thead  td{
-	border:1px solid #333333;
-	border-left:0px solid #333333;
-	text-align:center;
-	padding:4;
-	
-}
-</style>
-<div style="margin-top:40;width:800px">
-
-<div>
-
-Alaus kiekis: <?=$_POST['bash_size'];?></br>
-Efektyvumas: <?=$_POST['efficiency'];?></br>
-Atenuacija: <?=$_POST['attenuation'];?></br>
-Stilius: <?=$_POST['beer_style'];?></br>
-Pavadinimas: <?=$_POST['beer_name'];?></br>
----------------------------------------------</br>
-SG:<?=$_POST['recipe_sg'];?></br>
-FG:<?=$_POST['recipe_fg'];?></br>
-ABV:<?=$_POST['recipe_abv'];?></br>
-IBU:<?=$_POST['recipe_ibu'];?></br>
-EBC:<?=$_POST['recipe_ebc'];?></br>
----------------------------------------------</br>
-<div>
-<div align="center">
-<?
-if (isset($_POST['malt_list'])) {
-	
-$total=0;
-for ($i=0;$i<count($_POST['malt_weight']);$i++) {
-	$total+=floatval($_POST['malt_weight'][$i]);
-}
-
-?>
-<p ></br><b>Salyklas</b></br></br>
-<table width="800" cellpadding="0" cellspacing="0">
-<thead><td>Salyklas</td><td>Spalva (EBC)</td><td>Kiekis (kg)</td><td>Kiekis (%)</td></thead>
-	<? 
-	for ($i=0;$i<count($_POST['malt_list']);$i++) {
-	?>
-	<tr><td><?=$_POST['malt_list'][$i];?></td><td class="td-number"><?=$_POST['malt_color'][$i];?></td><td class="td-number"><?=$_POST['malt_weight'][$i];?></td><td class="td-number"><?=round($_POST['malt_weight'][$i]/$total*100,1);?></td></tr>
-	<?
-	}
-	?>
-</table>
-</p>
-<?
-}
-?>
-<?
-if (isset($_POST['hop_list'])) {
-?>
-<p>
-</br><b>Apyniai</b></br></br>
-<table width="800"  cellpadding="0" cellspacing="0">
-<thead><td>Apynys</td><td>Kartumas (AA%)</td><td>Kiekis (g)</td><td>Laikas</td></thead>
-	<? 
-	for ($i=0;$i<count($_POST['hop_list']);$i++) {
-	?>
-	<tr><td><?=$_POST['hop_list'][$i];?></td><td class="td-number"><?=$_POST['hop_alpha'][$i];?></td><td class="td-number"><?=$_POST['hop_weight'][$i];?></td><td class="td-number"><?=$_POST['hop_time'][$i];?></td></tr>
-	<?
-	}
-	?>
-</table>
-</p>
-<?
-}
-?>
-<?
-if (isset($_POST['yeast_list'])) {
-?>
-<p>
-</br><b>Mielės</b></br></br>
-<table width="800"  cellpadding="0" cellspacing="0">
-<thead><td>Mielės</td><td>Kiekis (g)</td></thead>
-	<? 
-	for ($i=0;$i<count($_POST['yeast_list']);$i++) {
-	?>
-	<tr><td><?=$_POST['yeast_list'][$i];?></td><td class="td-number"><?=$_POST['yeast_weight'][$i];?></td></tr>
-	<?
-	}
-	?>
-</table>
-
-</p>
-<?
-}
-?>
-</br><b>Pastabos</b><p align="left">
-<?=nl2br($_POST['comments']);?></br>
-
-</p>
-</div>
-
+		<style>
+			body {
+				background-color: #fff;
+				margin-left: 50px;
+				font-family: Courier, "Courier New", monospace;
+				font-size: 14px;
+			}
+		</style>
+	</head>
+	<body>
+		<div style="margin-top: 40px; width: 800px;">
+			<div style="font-weight: bold; text-align: center; font-size: 16px; margin-bottom: 10px;"><?= $_POST['beer_name']; ?></div>
+			<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
+				Alaus kiekis: <?= $_POST['bash_size']; ?><br />
+				Efektyvumas: <?= $_POST['efficiency']; ?><br />
+				Atenuacija: <?= $_POST['attenuation']; ?><br />
+				Stilius: <?= $_POST['beer_style']; ?>
+			</div>
+			<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
+				SG: <?= $_POST['recipe_sg']; ?><br />
+				FG: <?= $_POST['recipe_fg']; ?><br />
+				ABV: <?= $_POST['recipe_abv']; ?><br />
+				IBU: <?= $_POST['recipe_ibu']; ?><br />
+				EBC: <?= $_POST['recipe_ebc']; ?>
+			</div>
+			<?php
+			if (isset($_POST['malt_list'])) {
+				$total = 0;
+				for ($i = 0; $i < count($_POST['malt_weight']); $i++) {
+					$total+=floatval($_POST['malt_weight'][$i]);
+				}
+				?>
+				<div style="margin-bottom: 10px; margin-top: 14px;"><b>Salyklas</b></div>
+				<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
+					<div style="float: left; width: 360px;">Salyklas</div>
+					<div style="float: left; width: 160px;">Spalva (EBC)</div>
+					<div style="float: left; width: 145px;">Kiekis (kg)</div>
+					<div style="float: left; width: 115px;">Kiekis (%)</div>
+					<div style="clear: both;"></div>
+				</div>
+				<?
+				for ($i = 0; $i < count($_POST['malt_list']); $i++) {
+					?>
+					<div>
+						<div style="float: left; width: 360px;"><?= $_POST['malt_list'][$i]; ?></div>
+						<div style="float: left; width: 160px;"><?= $_POST['malt_color'][$i]; ?></div>
+						<div style="float: left; width: 145px;"><?= $_POST['malt_weight'][$i]; ?></div>
+						<div style="float: left; width: 115px;"><?= round($_POST['malt_weight'][$i] / $total * 100, 1); ?></div>
+						<div style="clear: both;"></div>
+					</div>
+					<?
+				}
+			}
+			if (isset($_POST['hop_list'])) {
+				?>
+				<div style="margin-bottom: 10px; margin-top: 14px;"><b>Apyniai</b></div>
+				<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
+					<div style="float: left; width: 360px;">Apynys</div>
+					<div style="float: left; width: 160px;">Kartumas (AA%)</div>
+					<div style="float: left; width: 145px;">Kiekis (g)</div>
+					<div style="float: left; width: 115px;">Laikas</div>
+					<div style="clear: both;"></div>
+				</div>
+				<?
+				for ($i = 0; $i < count($_POST['hop_list']); $i++) {
+					?>
+					<div>
+						<div style="float: left; width: 360px;"><?= $_POST['hop_list'][$i]; ?></div>
+						<div style="float: left; width: 160px;"><?= $_POST['hop_alpha'][$i]; ?></div>
+						<div style="float: left; width: 145px;"><?= $_POST['hop_weight'][$i]; ?></div>
+						<div style="float: left; width: 115px;"><?= $_POST['hop_time'][$i]; ?></div>
+						<div style="clear: both;"></div>
+					</div>
+					<?
+				}
+			}
+			if (isset($_POST['yeast_list'])) {
+				?>
+				<div style="margin-bottom: 10px; margin-top: 14px;"><b>Mielės</b></div>
+				<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
+					<div style="float: left; width: 520px;">Mielės</div>
+					<div style="float: left; width: 260px;">Kiekis (g)</div>
+					<div style="clear: both;"></div>
+				</div>
+				<?
+				for ($i = 0; $i < count($_POST['yeast_list']); $i++) {
+					?>
+					<div>
+						<div style="float: left; width: 520px;"><?= $_POST['yeast_list'][$i]; ?></div>
+						<div style="float: left; width: 260px;"><?= $_POST['yeast_weight'][$i]; ?></div>
+						<div style="clear: both;"></div>
+					</div>
+					<?
+				}
+			}
+			if (isset($_POST['comments'])) {
+				?>
+				<div style="margin-bottom: 10px; margin-top: 14px;"><b>Pastabos</b></div>
+				<div><?= nl2br($_POST['comments']); ?></div>
+				<?
+			}
+			?>
+		</div>
+	</body>
+</html>

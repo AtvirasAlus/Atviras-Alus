@@ -1,88 +1,69 @@
-<div style="padding:10;background:#FFFFFF;width:800" class="ui-corner-all">
-<?
-if (isset($this->brew_sessions['session_id'])) {
-$this->headLink()->appendStylesheet("/public/css/bs.css");
-if($this->user_id) {
- $this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
-?>
-<script>
-$(function() {
-		$( "#session_secondarydate" ).datepicker({dateFormat:"yy-mm-dd"});
-		
-		$( "#session_caskingdate" ).datepicker({dateFormat:"yy-mm-dd"});
-
-		$( "#session_primarydate" ).datepicker({dateFormat:"yy-mm-dd"});
-
-	});
-</script>
-<?
-
-}?>
-<div><h2>Virimo istorijos receptui "<?=$this->brew_sessions['recipe_name'];?>" redagavimas</h2></div>
-
-<table width="100%" cellpading="0" cellspacing="0" class="ui-corner-all" style="background:#F1F0ED;display:inline-block;padding:3;border:1px solid #dedede">
-
-<?
-
-$skip_add=false;
-
-	
-	if ($this->user_id == $this->brew_sessions['user_id']) {
-		$this->brew_sessions["redirect"]=$this->backLink("/brew-session/brewer");
-		print $this->brewSession()->editableRow($this->brew_sessions,false);
-		$skip_add=true;
-	}else{
-	?>
-	<td align="center" colspan="2">Virimo sesija nerasta </td>
-	<?	
-	}
-
-	
-
-	
-
-?>
-
-</table>
-
-<div>
-<a href="<?=$this->backLink("/brew-session/recipe/".$this->brew_sessions['session_recipe']);?>">Atgal</a>
-</div>
-<script>
-function deleteSession(id) {
-    if (confirm("Ar norite ištrinti virimo sesiją?")) {
-    	    
-        $.ajax({
-            type: 'POST',
-            url: "/brew-session/delete/",
-            data: "session_id=" + id,
-            success: function (d) {
-
-                var data = jQuery.parseJSON(d);
-                if (data) {
-                    if (data.status == "1") {
-
-                        if (data.errors[0].type == "authentication") {
-                            showLogin();
-                            return
-                        }
-                    } else {
-                        location.href="<?=$this->backLink("/brew-session/brewer");?>"
-                    }
-                } else {
-                    alert("Klaida")
-                }
-            }
-        })
-    }
-}
-                                    </script>
-<?}else{?>
-	
-	<div><h2>Virimo istorija nerasta</h2></div>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Virimo istorijos receptui "<?= $this->brew_sessions['recipe_name']; ?>" redagavimas</div>
 	<?
-}
-?>
+	if (isset($this->brew_sessions['session_id'])) {
+		$this->headLink()->appendStylesheet("/public/css/bs.css");
+		if ($this->user_id) {
+			$this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
+			?>
+			<script>
+				$(function() {
+					$( "#session_secondarydate" ).datepicker({dateFormat:"yy-mm-dd"});
+					$( "#session_caskingdate" ).datepicker({dateFormat:"yy-mm-dd"});
+					$( "#session_primarydate" ).datepicker({dateFormat:"yy-mm-dd"});
+				});
+			</script>
+			<? 
+		}
+		$skip_add = false;
+		if ($this->user_id == $this->brew_sessions['user_id']) {
+			$this->brew_sessions["redirect"] = $this->backLink("/brew-session/brewer");
+			echo $this->brewSession()->editableRow($this->brew_sessions, false);
+			$skip_add = true;
+		} else {
+			?>
+			<div>Virimo sesija nerasta</div>
+			<?
+		}
+		?>
+
+		<div class="inner_footer">
+			<a href="<?= $this->backLink("/brew-session/recipe/" . $this->brew_sessions['session_recipe']); ?>">Atgal</a>
+		</div>
+		<script>
+			function deleteSession(id) {
+				if (confirm("Ar norite ištrinti virimo sesiją?")) {
+	    	    
+					$.ajax({
+						type: 'POST',
+						url: "/brew-session/delete/",
+						data: "session_id=" + id,
+						success: function (d) {
+
+							var data = jQuery.parseJSON(d);
+							if (data) {
+								if (data.status == "1") {
+
+									if (data.errors[0].type == "authentication") {
+										showLogin();
+										return
+									}
+								} else {
+									location.href="<?= $this->backLink("/brew-session/brewer"); ?>"
+								}
+							} else {
+								alert("Klaida")
+							}
+						}
+					})
+				}
+			}
+		</script>
+	<? 
+	} else {
+		?>
+		<div>Virimo istorija nerasta</div>
+		<?
+	}
+	?>
 </div>
-
-

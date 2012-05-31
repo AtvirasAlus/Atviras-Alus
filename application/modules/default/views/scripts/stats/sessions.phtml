@@ -1,78 +1,69 @@
 <?
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.js");
-$this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");?>
-
-<?
-$id="sessions";
-
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");
+$id = "sessions";
 ?>
-<div>Alaus virimo statistika:</div> 
- 
-    <div id="placeholder" style="width:600px;height:300px;"></div> 
-    <div id="overview" style="margin-left:50px;margin-top:20px;width:400px;height:50px"></div> 
- 
-    
-    
- 
-  
- 
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Alaus virimo statistika</div>
+	<div id="placeholder" style="width:800px;height:300px;"></div> 
+	<div id="overview" style="margin-left:50px;margin-top:20px;width:700px;height:50px"></div> 
+</div> 
 <script id="source"> 
- var stack = 1, bars = true, lines = false, steps = false;
-<?
-
-switch($id) {
-	case "sessions":
-	?>
-	 var stack = 0, bars = true, lines = false, steps = true;
-	var a=<?=$this->sessions_count;?>;
-	var d = [{label:"Išvirta litrų - viso",data:[],color:1},{label:"Išvirta litrų - vidurkis",data:[],color:5},{label:"Virusių aludarių skaičius",data:[],color:3,lines: { show: true },yaxis: 2}];
-    for (var i=0;i<a.length;i++) {
-    	    d[0].data.push([new Date(a[i].day).getTime(),a[i].total])
-    	    d[1].data.push([new Date(a[i].day).getTime(),a[i].avg])
-    	    d[2].data.push([new Date(a[i].day).getTime(),a[i].count])
-    }
-	
-	
+	var stack = 1, bars = true, lines = false, steps = false;
 	<?
-	break;
-	
-	case "recipes":
-		?>
-		var a=<?=$this->recipes_count;?>;
-		  var d = [];
-	    for (var i=0;i<a.length;i++) {
-	    	    d.push([new Date(a[i].day).getTime(),a[i].total])
-	    	    
-	    }
-	    d=[d]
-		<?
-	break;
-case "users":
+	switch ($id) {
+		case "sessions":
+			?>
+				var stack = 0, bars = true, lines = false, steps = true;
+				var a=<?= $this->sessions_count; ?>;
+				var d = [{label:"Išvirta litrų - viso",data:[],color:1},{label:"Išvirta litrų - vidurkis",data:[],color:5},{label:"Virusių aludarių skaičius",data:[],color:3,lines: { show: true },yaxis: 2}];
+				for (var i=0;i<a.length;i++) {
+		    	    d[0].data.push([new Date(a[i].day).getTime(),a[i].total])
+		    	    d[1].data.push([new Date(a[i].day).getTime(),a[i].avg])
+		    	    d[2].data.push([new Date(a[i].day).getTime(),a[i].count])
+				}
+			
+			
+			<?
+			break;
+
+		case "recipes":
+			?>
+					var a=<?= $this->recipes_count; ?>;
+					var d = [];
+					for (var i=0;i<a.length;i++) {
+			    	    d.push([new Date(a[i].day).getTime(),a[i].total])
+			    	    
+					}
+					d=[d]
+			<?
+			break;
+		case "users":
+			?>
+				var a=<?= $this->user_count; ?>;
+				var d = [];
+				for (var i=0;i<a.length;i++) {
+		    	    d.push([new Date(a[i].day).getTime(),a[i].total])
+				}
+				d=[d]
+			<?
+			break;
+		default:
+			?>
+				var a=<?= $this->recipes_count; ?>;
+				var d = [];
+			    for (var i=0;i<a.length;i++) {
+			    	  
+				    d.push([new Date(a[i].day).getTime(),a[i].total])
+			    }
+			    d=[d]
+			<?
+			break;
+	}
 	?>
-	var a=<?=$this->user_count;?>;
-	  var d = [];
-    for (var i=0;i<a.length;i++) {
-    	    d.push([new Date(a[i].day).getTime(),a[i].total])
-    }
-    d=[d]
-	<?
-break;
-default: 
-	?>
-	var a=<?=$this->recipes_count;?>;
-	  var d = [];
-	    for (var i=0;i<a.length;i++) {
-	    	  
-		    d.push([new Date(a[i].day).getTime(),a[i].total])
-	    }
-	    d=[d]
-	<?
-	break;
-}
-?>
 
 
- function showTooltip(x, y, contents) {
+	function showTooltip(x, y, contents) {
         $('<div id="tooltip">' + contents + '</div>').css( {
             position: 'absolute',
             display: 'none',
@@ -85,15 +76,15 @@ default:
         }).appendTo("body").fadeIn(200);
     }
     function addNull(str) {
-    	    if (String(str).length>1) {
-    	    	    return str
-    	    }else{
-    	    	  return "0"+String(str)  
-    	    }
+		if (String(str).length>1) {
+			return str
+		}else{
+			return "0"+String(str)  
+		}
     }
     function toDate(timeStamp) {
-    	    var dt=new Date(Number(timeStamp))
-    	    return dt.getFullYear()+"."+addNull(dt.getMonth()+1)+"."+addNull(dt.getDate())
+		var dt=new Date(Number(timeStamp))
+		return dt.getFullYear()+"."+addNull(dt.getMonth()+1)+"."+addNull(dt.getDate())
     }
     var previousPoint = null;
     $("#placeholder").bind("plothover", function (event, pos, item) {
@@ -101,24 +92,24 @@ default:
         $("#y").text(pos.y.toFixed(2));
  
         
-            if (item) {
-                if (previousPoint != item.datapoint) {
-                    previousPoint = item.datapoint;
+		if (item) {
+			if (previousPoint != item.datapoint) {
+				previousPoint = item.datapoint;
                     
-                    $("#tooltip").remove();
-                    var x = item.datapoint[0].toFixed(2),
-                        y = item.datapoint[1].toFixed(2);
+				$("#tooltip").remove();
+				var x = item.datapoint[0].toFixed(2),
+				y = item.datapoint[1].toFixed(2);
                     
-                        showTooltip(item.pageX+10, item.pageY-5,toDate(x)+" - "+Number(y));
-                }
-            }
-            else {
-                $("#tooltip").remove();
-                previousPoint = null;            
-            }
+				showTooltip(item.pageX+10, item.pageY-5,toDate(x)+" - "+Number(y));
+			}
+		}
+		else {
+			$("#tooltip").remove();
+			previousPoint = null;            
+		}
         
     });
- function weekendAreas(axes) {
+	function weekendAreas(axes) {
         var markings = [];
         var d = new Date(axes.xaxis.min);
         // go to the first Saturday
@@ -137,56 +128,53 @@ default:
         return markings;
     }
    
-$(function () {
+	$(function () {
   
     
    
     
    
-   var options = {
-        xaxis: { mode: "time", minTickSize: [1, "day"]},
-        selection: { mode: "x" },
-        grid: { markings: weekendAreas, hoverable: true, clickable: true },
-         legend: { position: 'nw' },
-         timeformat: "%y.%m.%d",
-        monthNames: ["saus", "vas", "kov", "bal", "geg", "bir", "liep", "rūgp", "rugs", "spal", "lapkr", "gruod"],
-          stack:stack
+		var options = {
+			xaxis: { mode: "time", minTickSize: [1, "day"]},
+			selection: { mode: "x" },
+			grid: { markings: weekendAreas, hoverable: true, clickable: true },
+			legend: { position: 'nw' },
+			timeformat: "%y.%m.%d",
+			monthNames: ["saus", "vas", "kov", "bal", "geg", "bir", "liep", "rūgp", "rugs", "spal", "lapkr", "gruod"],
+			stack:stack
          
               
         
-    };
+		};
     
-    var plot = $.plot($("#placeholder"), d, options);
+		var plot = $.plot($("#placeholder"), d, options);
     
-    var overview = $.plot($("#overview"), d, {
-        series: {
-        	lines: { show: true, lineWidth: 1 },
-        	shadowSize: 0
-        },
-        legend:{show:false},
-        xaxis: { ticks: [], mode: "time" },
-        yaxis: { ticks: [], min: 0, autoscaleMargin: 0.1 },
-        selection: { mode: "x" }
-    });
+		var overview = $.plot($("#overview"), d, {
+			series: {
+				lines: { show: true, lineWidth: 1 },
+				shadowSize: 0
+			},
+			legend:{show:false},
+			xaxis: { ticks: [], mode: "time" },
+			yaxis: { ticks: [], min: 0, autoscaleMargin: 0.1 },
+			selection: { mode: "x" }
+		});
  
-    // now connect the two
+		// now connect the two
     
-    $("#placeholder").bind("plotselected", function (event, ranges) {
-        // do the zooming
-        plot = $.plot($("#placeholder"), d,
-                      $.extend(true, {}, options, {
-                          xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to }
-                      }));
+		$("#placeholder").bind("plotselected", function (event, ranges) {
+			// do the zooming
+			plot = $.plot($("#placeholder"), d,
+			$.extend(true, {}, options, {
+				xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to }
+			}));
  
-        // don't fire event on the overview to prevent eternal loop
-        overview.setSelection(ranges, true);
-    });
+			// don't fire event on the overview to prevent eternal loop
+			overview.setSelection(ranges, true);
+		});
     
-    $("#overview").bind("plotselected", function (event, ranges) {
-        plot.setSelection(ranges);
-    });
-});
-</script> 
- 
- </body> 
-</html> 
+		$("#overview").bind("plotselected", function (event, ranges) {
+			plot.setSelection(ranges);
+		});
+	});
+</script>

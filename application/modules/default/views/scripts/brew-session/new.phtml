@@ -1,48 +1,38 @@
-<div style="padding:10;background:#FFFFFF;width:800" class="ui-corner-all">
-<?
-if (isset($this->recipe['recipe_name'])) {
-$this->headLink()->appendStylesheet("/public/css/bs.css");
-if($this->user_id) {
- $this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
-?>
-<script>
-$(function() {
-		$( "#session_secondarydate" ).datepicker();
-		$( "#session_secondarydate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-		$( "#session_caskingdate" ).datepicker();
-		$( "#session_caskingdate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-		$( "#session_primarydate" ).datepicker();
-		$( "#session_primarydate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-	});
-</script>
-<?
-
-}?>
-<div> <h2>Pridėti receptui <a href="/recipes/view/<?=$this->recipe["recipe_id"];?>"><?=$this->recipe["recipe_name"]?>"</a> virimą</h2></div>
-
-<table width="100%" cellpading="0" cellspacing="0" class="ui-corner-all" style="background:#F1F0ED;display:inline-block;padding:3;border:1px solid #dedede">
-
-<? if($this->user_id) {
-	
-	
-	print $this->brewSession()->editableRow(array('user_id'=>$this->user_id,'user_name'=>$this->user_name,'recipe_name'=>$this->recipe["recipe_name"],"recipe_id"=>$this->recipe["recipe_id"],"redirect"=>$this->backLink("/brew-session/brewer")));
-
-} 
-?>
-</table>
-
-<? if(!$this->user_id) {
-?>
-Norėdami pridėti alaus virimą <a href="javascript:showLogin()">prisijunkite</a>
-<?
-}
-}else{
-	?>
-	<div><h2>Virimo istorija nerasta</h2></div>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Sukurti virimą receptui <a href="/recipes/view/<?=$this->recipe["recipe_id"];?>">"<?=$this->recipe["recipe_name"]?>"</a></div>
 	<?
-}
-?>
-<div style="padding-top:20">
-<a href="<?=$this->backLink("/brew-session/recipe/".$this->recipe['recipe_id']);?>">Atgal</a>
-</div>
+	if (isset($this->recipe['recipe_name'])) {
+		$this->headLink()->appendStylesheet("/public/css/bs.css");
+		if($this->user_id) {
+			$this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
+			?>
+			<script>
+				$(function() {
+					$( "#session_secondarydate" ).datepicker();
+					$( "#session_secondarydate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+					$( "#session_caskingdate" ).datepicker();
+					$( "#session_caskingdate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+					$( "#session_primarydate" ).datepicker();
+					$( "#session_primarydate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+				});
+			</script>
+			<?
+		}
+		if($this->user_id) {
+			echo $this->brewSession()->editableRow(array('user_id'=>$this->user_id,'user_name'=>$this->user_name,'recipe_name'=>$this->recipe["recipe_name"],"recipe_id"=>$this->recipe["recipe_id"],"redirect"=>$this->backLink("/brew-session/brewer")));
+		} 
+		if(!$this->user_id) {
+			?>
+			<div>Norėdami pridėti alaus virimą <a href="javascript:showLogin()">prisijunkite</a></div>
+			<?
+		}
+	} else {
+		?>
+		<div>Virimo sesija nerasta</div>
+		<?
+	}
+	?>
+	<div class="inner_footer">
+		<a href="<?=$this->backLink("/brew-session/recipe/".$this->recipe['recipe_id']);?>">Atgal</a>
+	</div>
 </div>

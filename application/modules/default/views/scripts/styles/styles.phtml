@@ -1,139 +1,152 @@
-<? $this->headTitle()->append(" Stilius: ".$this->current_style['style_name']);?>
--<? $this->headMeta()->setName('keywords', 'alaus stilius, skonis, apyniai, mielės, salyklas,alaus gamyba,naminis,receptai,receptas,alus,skaičiuoklė,ibu,ebc,abv,'.$this->current_style['style_name']);?>
-<style>
-.st_title {
-	padding-right:30;
-	
-	width:100;
-	font-weight:bold;
-}
-</style>
-<?
-$dfields=array("style_aroma","style_appearance","style_flavor","style_mouthfeel","style_ingredients");
-$description=false;
-for ($i=0;$i<count($dfields);$i++) {
-	if (strlen($this->current_style[$dfields[$i]])>0) {
-		$description=true;
+<?php
+$this->headTitle()->append(" Stilius: " . $this->current_style['style_name']);
+$this->headMeta()->setName('keywords', 'alaus stilius, skonis, apyniai, mielės, salyklas,alaus gamyba,naminis,receptai,receptas,alus,skaičiuoklė,ibu,ebc,abv,' . $this->current_style['style_name']);
+$dfields = array(
+	"style_aroma",
+	"style_appearance",
+	"style_flavor",
+	"style_mouthfeel",
+	"style_ingredients",
+);
+$description = false;
+foreach ($dfields as $dfield) {
+	if (strlen($this->current_style[$dfield]) > 0) {
+		$description = true;
 		break;
 	}
 }
 ?>
-<style>
-h1.title{
-	font-size:16;
-	font-weight:bold;
-	padding-bottom:20px;
-	text-align:center;
-}
-</style>
-
-<div style="width:800">
-<h1 class="title"><?=$this->current_style['style_name'];?></h1>
-
-<div class="ui-corner-all" style="background:#ffffff;padding-top:30;padding-bottom:30" align="center">
-
-<? if ($description){ ?>
-<table width="500">
-<tr>
-<td valign="top" class="st_title">Aromatas</td><td><?=$this->current_style["style_aroma"];?></td>
-</tr>
-<tr>
-<td valign="top" class="st_title">Išvaizda</td><td><?=$this->current_style["style_appearance"];?></td>
-</tr>
-<tr>
-<td valign="top" class="st_title">Skonis</td><td><?=$this->current_style["style_flavor"];?></td>
-</tr>
-<tr>
-<td valign="top" class="st_title">Burnos pojūtis</td><td><?=$this->current_style["style_mouthfeel"];?></td>
-</tr>
-<tr>
-<td valign="top" class="st_title">Sudedamosios dalys</td><td><?=$this->current_style["style_ingredients"];?></td>
-</tr>
-<tr>
-<td valign="top" class="st_title">Istorija</td><td><?=$this->current_style["style_history"];?></td>
-</tr>
-</table>
-<?}else{?>
-	<div align="center">Aprašymo nėra</div>
-<?}?>
-<table width="500" style="padding-top:30">
-<tr>
-<td valign="top" class="st_title">OG:</td>
-<td><?=$this->current_style["style_oglow"];?> - <?=$this->current_style["style_oghigh"];?></td>
-</tr>
-<tr>
-<td valign="top" class="st_title">FG:</td>
-<td><?=$this->current_style["style_fglow"];?> - <?=$this->current_style["style_fghigh"];?></td>
-</tr>
-<tr>
-<td valign="top" class="st_title">ABV (%):</td>
-
-<td><?=round(Entities_BrewCalc::abv($this->current_style["style_oglow"]*100,$this->current_style["style_fglow"]*100),1);?> - <?=round(Entities_BrewCalc::abv($this->current_style["style_oghigh"]*100,$this->current_style["style_fglow"]*100),1);?></td>
-</tr>
-<tr>
-<td valign="top" class="st_title">IBU:</td>
-<td><?=$this->current_style["style_ibulow"];?> - <?=$this->current_style["style_ibuhigh"];?></td>
-</tr>
-<tr>
-<td valign="top" class="st_title">Spalva:</td>
-<td>
-<?
-$step=$this->current_style["style_srmhigh"]/$this->current_style["style_srmlow"]/10;
-$color=$this->current_style["style_srmlow"];
-for ($i=0;$i<10;$i++) {
-	?><div style="display:inline;width:20px;padding:3px;height:20;background-color:<?=$this->colorHex($color,false);?>">&nbsp;</div><?
-	$color+=$step;
-}
-
-?>
-<div style="display:inline;padding-left:10"> <?=round($this->current_style["style_srmlow"]*1.97);?> - <?=round($this->current_style["style_srmhigh"]*1.97);?> EBC <div>
-</td>
-</tr>
-</table>
-
-</div>
-<div style="font-size:14;font-weight:bold;padding-top:30" align="center">Receptai:</div>
-<table>
-<?
-$z=0;
-$r=0;
-$u_per_row=3;
-$total=0;
-foreach ($this->content as $item) {
-	$total++;
+<div id="style_info_container" class="inner_container">
+	<div class="inner_header"><?= $this->current_style['style_name']; ?></div>
+	<?php
+	if ($description):
 	?>
-	
-<? if ($r==0){?>
-	
-	<tr valign="top">
-	<?}?>
-	<?
-	$r++;
+		<div id="style_description">
+			<?php
+			if (!empty($this->current_style["style_aroma"])):
+			?>
+				<div class="description_block">
+					<div class="description_title">Aromatas</div>
+					<div class="description_content"><?= $this->current_style["style_aroma"]; ?></div>
+					<div class="clear"></div>
+				</div>
+			<?php
+			endif;
+			if (!empty($this->current_style["style_appearance"])):
+			?>
+				<div class="description_block">
+					<div class="description_title">Išvaizda</div>
+					<div class="description_content"><?= $this->current_style["style_appearance"]; ?></div>
+					<div class="clear"></div>
+				</div>
+			<?php
+			endif;
+			if (!empty($this->current_style["style_flavor"])):
+			?>
+				<div class="description_block">
+					<div class="description_title">Skonis</div>
+					<div class="description_content"><?= $this->current_style["style_flavor"]; ?></div>
+					<div class="clear"></div>
+				</div>
+			<?php
+			endif;
+			if (!empty($this->current_style["style_mouthfeel"])):
+			?>
+				<div class="description_block">
+					<div class="description_title">Burnos pojūtis</div>
+					<div class="description_content"><?= $this->current_style["style_mouthfeel"]; ?></div>
+					<div class="clear"></div>
+				</div>
+			<?php
+			endif;
+			if (!empty($this->current_style["style_ingredients"])):
+			?>
+				<div class="description_block">
+					<div class="description_title">Sudedamosios dalys</div>
+					<div class="description_content"><?= $this->current_style["style_ingredients"]; ?></div>
+					<div class="clear"></div>
+				</div>
+			<?php
+			endif;
+			if (!empty($this->current_style["style_history"])):
+			?>
+				<div class="description_block">
+					<div class="description_title">Istorija</div>
+					<div class="description_content"><?= $this->current_style["style_history"]; ?></div>
+					<div class="clear"></div>
+				</div>
+			<?php
+			endif;
+			?>
+		</div>
+	<?php
+	endif;
 	?>
-<td width="280" align="left" style="padding:3">
-<div class="ui-corner-all" style="background:#ffffff">
-<?=$this->recipeItem($item);?>
+	<div id="style_params">
+		<div class="params_block">
+			<div class="params_title">OG:</div>
+			<div class="params_content"><?= $this->current_style["style_oglow"]; ?> - <?= $this->current_style["style_oghigh"]; ?></div>
+			<div class="clear"></div>
+		</div>
+		<div class="params_block">
+			<div class="params_title">FG:</div>
+			<div class="params_content"><?= $this->current_style["style_fglow"]; ?> - <?= $this->current_style["style_fghigh"]; ?></div>
+			<div class="clear"></div>
+		</div>
+		<div class="params_block">
+			<div class="params_title">ABV (%):</div>
+			<div class="params_content"><?= round(Entities_BrewCalc::abv($this->current_style["style_oglow"] * 100, $this->current_style["style_fglow"] * 100), 1); ?> - <?= round(Entities_BrewCalc::abv($this->current_style["style_oghigh"] * 100, $this->current_style["style_fglow"] * 100), 1); ?></div>
+			<div class="clear"></div>
+		</div>
+		<div class="params_block">
+			<div class="params_title">Kartumas:</div>
+			<div class="params_content"><?= $this->current_style["style_ibulow"]; ?> - <?= $this->current_style["style_ibuhigh"]; ?> IBU</div>
+			<div class="clear"></div>
+		</div>
+		<div class="params_block">
+			<div class="params_title">Spalva:</div>
+			<div class="params_content">
+				<?php
+				$step = $this->current_style["style_srmhigh"] / $this->current_style["style_srmlow"] / 10;
+				$color = $this->current_style["style_srmlow"];
+				for ($i = 0; $i < 10; $i++) {
+					?>
+					<div class="color_palette" style="background-color:<?= $this->colorHex($color, false);?>"></div>
+					<?
+					$color+=$step;
+				}
+				?>
+				<div class="styles_color"><?= round($this->current_style["style_srmlow"] * 1.97); ?> - <?= round($this->current_style["style_srmhigh"] * 1.97); ?> EBC </div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
 </div>
-</td>
-<?
-		
-$z++;
-
-if ($r==$u_per_row) {?>
-</tr>
-<?
-$r=0;
-}
-}
-if ($r>0) {
-?>
-</tr>
-<?
-}   
-?>  
-   
-</table>
-<? if ($total>=1) {?>
-<div align="right"><a href="/style/<?=$this->current_style['style_id'];?>">Visi stiliaus <?=$this->current_style['style_name'];?> receptai &gt;&gt;</div>
-<?}?>
+<div id="style_recipes_container" class="inner_container">
+	<div class="inner_header">Stiliaus receptai</div>
+	<div class="style_recipes">
+		<?php
+		$i = 0;
+		foreach ($this->content as $item):
+			$i++;
+		?>
+			<div class="style_recipe">
+				<?= $this->recipeItem($item); ?>
+			</div>
+		<?php
+			if ($i == 3){
+				$i = 0;
+				?>
+				<div class="clear"></div>
+				<?php
+			}
+		endforeach;
+		?>
+		<div class="clear"></div>
+	</div>
+	<div class="style_recipes_footer">
+		<a href="/style/<?= $this->current_style['style_id']; ?>">
+			Visi stiliaus "<?= $this->current_style['style_name']; ?>" receptai
+		</a>
+	</div>
 </div>

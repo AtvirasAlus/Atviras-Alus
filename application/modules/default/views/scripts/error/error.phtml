@@ -1,7 +1,19 @@
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header"><?=$this->title;?></div>
+	<div style="font-size: 14px;"><?=$this->message?></div>
+	<div>
+		<ul>
+			<li>
+				<a href="/">Grįžti į titulinį puslapį</a>
+			</li>
+			<li>
+				<a href="h/tracker/bug_report_page.php">Pranešti apie klaidą</a>
+			</li>
+		</ul>
+	</div>
+	<div style="text-align: center"><img src="/public/images/new/404.jpg" /></div>
+</div>
 <?php
-printf('<h1>%s</h1>', $this->title);
-printf('<p>%s</p>', $this->message);
- 
 if (APPLICATION_ENV == 'development')
 {
   echo '<h2>Exception information:</h2>';

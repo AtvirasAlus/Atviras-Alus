@@ -1,35 +1,23 @@
-<? $this->headTitle()->append(" - Geriausi receptai ");?>
-<? $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,receptai,receptas,alus');?>
-<?
-if (isset($this->content)) {?>
-<div style="padding:10;width:800" >
-<h1 style="border-bottom:1px #DDDDDD solid;color:#666666">Įdomiausi alaus receptai:</h1>
-<div class="ui-corner-all" style="background:#ffffff">
-<table>
-<?
-$z=0;
-
-foreach ($this->content as $item) {
-$z++;?>
-<tr>
-<td style="padding:1;border-bottom:1px #DDDDDD solid;">
-
-<?=$this->recipeItem($item,"thumb");?>
-
-</td>
-</tr>
-
-   <?}?>
-</table>
-<? if ($z==0) {
+<?php
+$this->headTitle()->append(" - Geriausi receptai ");
+$this->headMeta()->setName('keywords', 'alaus gamyba,naminis,receptai,receptas,alus');
+if (isset($this->content)) {
 	?>
-	<p>Nieko nerasta</p>
-	<?
+	<div class="inner_container" id="favorites_container">
+		<div class="inner_header">Įdomiausi alaus receptai</div>
+		<?
+		$z=0;
+		foreach ($this->content as $item) {
+			$z++;
+			?>
+			<div class="favorites_list_item">
+					<?=$this->recipeItem($item,"thumb");?>
+			</div>
+		<?
+		}
+		?>
+		<?php echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml'); ?>
+	</div>
+<?
 }
 ?>
-<?php echo $this->paginationControl($this->content,
-                                    'Sliding',
-                                    'paginator/item.phtml'); ?>
-</div>
-</div>
-<?}?>

@@ -110,7 +110,7 @@
           }else{	
             
               $this->_helper->viewRenderer->setNoRender(true);
-              print "Neregistruotas vartotojas";
+              print "Neregistruotas nautotojas";
           }
 	 }
 	
@@ -197,7 +197,7 @@
   				
   			}
   		  }else{
-  		  	    print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Neregistruotas vartotojas","type"=>"authentication"))));
+  		  	    print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Neregistruotas nautotojas","type"=>"authentication"))));
   		  }
   	 }
 	

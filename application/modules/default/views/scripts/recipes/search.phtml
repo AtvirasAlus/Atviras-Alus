@@ -7,24 +7,24 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 ?>
 <style> 
 	.ui-autocomplete-loading { background: white url('/public/images/spinner.gif') right center no-repeat; }
-	</style> 
+</style> 
 <script>
-function split( val ) {
-			return val.split( /,\s*/ );
-		}
-		function extractLast( term ) {
+	function split( val ) {
+		return val.split( /,\s*/ );
+	}
+	function extractLast( term ) {
 			
-			return split( term ).pop();
-		}
-$(function() {
-			// don't navigate away from the field on tab when selecting an item
-			$("#hops").bind("keydown", function (event) {
-				if (event.keyCode === 9 && $(this).data("autocomplete").menu.active) {
-					event.preventDefault();
-				}
-			});
+		return split( term ).pop();
+	}
+	$(function() {
+		// don't navigate away from the field on tab when selecting an item
+		$("#hops").bind("keydown", function (event) {
+			if (event.keyCode === 9 && $(this).data("autocomplete").menu.active) {
+				event.preventDefault();
+			}
+		});
 
-			$("#hops").autocomplete({source:function (request, response) {
+		$("#hops").autocomplete({source:function (request, response) {
 				$.getJSON("/recipes/find?hops", {term:extractLast(request.term)}, response);
 			}, search:function () {
 				// custom minLength
@@ -55,13 +55,13 @@ $(function() {
 				this.value = terms.join(", ");
 				return false;
 			}});
-			$("#malts").bind("keydown", function (event) {
-				if (event.keyCode === 9 && $(this).data("autocomplete").menu.active) {
-					event.preventDefault();
-				}
-			});
+		$("#malts").bind("keydown", function (event) {
+			if (event.keyCode === 9 && $(this).data("autocomplete").menu.active) {
+				event.preventDefault();
+			}
+		});
 
-			$("#malts").autocomplete({source:function (request, response) {
+		$("#malts").autocomplete({source:function (request, response) {
 				$.getJSON("/recipes/find?malts", {term:extractLast(request.term)}, response);
 			}, search:function () {
 				// custom minLength
@@ -92,14 +92,14 @@ $(function() {
 				this.value = terms.join(", ");
 				return false;
 			}});
-			//
-			$("#tags").bind("keydown", function (event) {
-				if (event.keyCode === 9 && $(this).data("autocomplete").menu.active) {
-					event.preventDefault();
-				}
-			});
+		//
+		$("#tags").bind("keydown", function (event) {
+			if (event.keyCode === 9 && $(this).data("autocomplete").menu.active) {
+				event.preventDefault();
+			}
+		});
 
-			$("#tags").autocomplete({source:function (request, response) {
+		$("#tags").autocomplete({source:function (request, response) {
 				$.getJSON("/recipes/find?tags", {term:extractLast(request.term)}, response);
 			}, search:function () {
 				// custom minLength
@@ -130,14 +130,14 @@ $(function() {
 				this.value = terms.join(", ");
 				return false;
 			}});
-			//
-			$("#yeasts").bind("keydown", function (event) {
-				if (event.keyCode === 9 && $(this).data("autocomplete").menu.active) {
-					event.preventDefault();
-				}
-			});
+		//
+		$("#yeasts").bind("keydown", function (event) {
+			if (event.keyCode === 9 && $(this).data("autocomplete").menu.active) {
+				event.preventDefault();
+			}
+		});
 
-			$("#yeasts").autocomplete({source:function (request, response) {
+		$("#yeasts").autocomplete({source:function (request, response) {
 				$.getJSON("/recipes/find?yeasts", {term:extractLast(request.term)}, response);
 			}, search:function () {
 				// custom minLength
@@ -168,139 +168,169 @@ $(function() {
 				this.value = terms.join(", ");
 				return false;
 			}});
-})
+	})
 
-function submitForm() {
-	var rn=$('#recipe_name').val()
-	var filter=[]
-	if (rn.length>0) {
+	function submitForm() {
+		var filter = [];
 		
-		filter.push("name:"+encodeURIComponent(rn))
+		var rn = $('#recipe_name').val();
+		if (rn.length > 0){
+			filter.push("name:"+encodeURIComponent(rn));
+		}
+		
+		var rs = $('#recipe_style').val();
+		if (rs != 0){
+			filter.push("style:"+rs);
+		}
+		
+		var rt = $('#recipe_type').val();
+		if (rt != 0) {
+			filter.push("type:"+rt);
+		}
+		
+		var hp = $('#hops').val();
+		if (hp.length) {
+			filter.push("hops:"+encodeURIComponent(hp));
+		}
+		
+		var hp = $('#malts').val();
+		if (hp.length) {
+			filter.push("malts:"+encodeURIComponent(hp));
+		}
+		
+		var hp = $('#yeasts').val();
+		if (hp.length) {
+			filter.push("yeasts:"+encodeURIComponent(hp));
+		}
+		
+		var hp = $('#tags').val();
+		if (hp.length) {
+			filter.push("tags:"+encodeURIComponent(hp));
+		}
+		
+		var hp = $('#brewer').val();
+		if (hp.length) {
+			filter.push("brewer:"+encodeURIComponent(hp));
+		}
+		
+		if (filter.length) {
+			$('#search_form')[0].action="/search/"+filter.join("|");
+			$('#search_form')[0].submit()
+		} else {
+			alert("Nepasirinkote paieškos filtro");
+		}
 	}
-	var rs=$('#recipe_style').val();
-	if (rs!=0) {
-		filter.push("style:"+rs)
-	}
-	var rt=$('#recipe_type').val();
-	if (rt!=0) {
-		filter.push("type:"+rt)
-	}
-	var hp=$('#hops').val()
-	if (hp.length) {
-		filter.push("hops:"+encodeURIComponent(hp))
-	}
-	var hp=$('#malts').val()
-	if (hp.length) {
-		filter.push("malts:"+encodeURIComponent(hp))
-	}
-	var hp=$('#yeasts').val()
-	if (hp.length) {
-		filter.push("yeasts:"+encodeURIComponent(hp))
-	}
-	var hp=$('#tags').val()
-	if (hp.length) {
-		filter.push("tags:"+encodeURIComponent(hp))
-	}
-	var hp=$('#brewer').val()
-	if (hp.length) {
-		filter.push("brewer:"+encodeURIComponent(hp))
-	}
-	if (filter.length) {
-		$('#search_form')[0].action="/search/"+filter.join("|");
-		$('#search_form')[0].submit()
-	}else{
-		alert("Nepasirinkote paieškos filtro");
-	}
-	
-}
 </script>
-<div class="ui-corner-all" style="background:#FFFFFF;width:800;padding:10;">
-<h1>Paieška:</h1>
-<div class="ui-corner-all" style="background:#F1F0ED;width:95%;padding:10;border:1px solid #dedede">
-<form onSubmit="submitForm();return false;" id="search_form">
-<table width="100%">
-<tr><td>Recepto pavadinimas:</td><td><input type="text"  style="width:100%;border:1px solid #dedede" id="recipe_name" class="ui-corner-all" value="<?=$this->filter_values['recipe_name'];?>"/></td>
-</tr>
-<tr><td>Recepto stilius:</td><td><select id="recipe_style"  style="width:100%;border:1px solid #dedede"><option value="0">Nefiltruot</option>
-<? for ($i=0;$i<count($this->beer_styles);$i++) {
-	$selected=($this->filter_values['recipe_style']==$this->beer_styles[$i]["style_id"]) ? "selected" : "";?>
-	<option value="<?=$this->beer_styles[$i]["style_id"];?>" <?=$selected;?>><?=$this->beer_styles[$i]["style_name"];?> (<?=$this->beer_styles[$i]["count"];?>)</option>
-<?}?>
-</select></td>
-</tr>
-<tr><td>Recepto tipas:</td><td><select id="recipe_type"  style="width:100%;border:1px solid #dedede">
-<option value="0">Nefiltruot</option>
-<?
-$this->beer_types=array();
-$this->beer_types[]=array('beer_type'=>"grain","beer_type_name"=>"Iš salyklo");
-$this->beer_types[]=array('beer_type'=>"partial","beer_type_name"=>"Iš ekstrakto");
-for ($i=0;$i<count($this->beer_types);$i++) {
-	$selected=($this->beer_types[$i]['beer_type']==strval($this->filter_values['recipe_type'])) ? "selected" : "";?>
-	<option value="<?=$this->beer_types[$i]["beer_type"];?>" <?=$selected;?>><?=$this->beer_types[$i]["beer_type_name"];?></option>
-<?}?>
 
-</select></td>
-</tr>
-<tr><td>Aludaris:</td><td><input id="brewer"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['user_name'];?>"/> </td></tr>
-<tr><td>Apyniai:</td><td><input id="hops"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['hop_name'];?>"/> </td></tr>
-<tr><td>Salyklas:</td><td><input id="malts"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['malt_name'];?>"/> </td></tr>
-<tr><td>Mielės:</td><td><input id="yeasts"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['yeast_name'];?>"/> </td></tr>
-<tr><td>Žymos:</td><td><input id="tags"  style="width:100%;border:1px solid #dedede" class="ui-corner-all" value="<?=$this->filter_values['tag_text'];?>"/> </td></tr>
-<tr><td></td><td align="right"><input type="submit" value="Ieškot" style="border:1px solid #dedede"  class="ui-corner-all"/></td>
-</tr>
-</table>
-</form>
+<div class="inner_container" id="search_container">
+	<div class="inner_header">Paieška</div>
+	<form onSubmit="submitForm();return false;" id="search_form">
+		<dl>
+			<dt>Recepto pavadinimas:</dt>
+			<dd><input type="text" id="recipe_name" value="<?= $this->filter_values['recipe_name']; ?>"/></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Recepto stilius:</dt>
+			<dd>
+				<select id="recipe_style">
+					<option value="0">Nefiltruot</option>
+					<?php
+					foreach ($this->beer_styles as $style):
+						$selected = ($this->filter_values['recipe_style'] == $style["style_id"]) ? "selected" : "";
+						?>
+						<option value="<?= $style["style_id"]; ?>" <?= $selected; ?>>
+							<?= $style["style_name"]; ?> (<?= $style["count"]; ?>)
+						</option>
+					<?php
+					endforeach;
+					?>
+				</select>
+			</dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Recepto tipas:</dt>
+			<dd>
+				<select id="recipe_type" >
+					<option value="0">Nefiltruot</option>
+					<?
+					$this->beer_types = array();
+					$this->beer_types[] = array('beer_type' => "grain", "beer_type_name" => "Iš salyklo");
+					$this->beer_types[] = array('beer_type' => "partial", "beer_type_name" => "Iš ekstrakto");
+					foreach ($this->beer_types as $type):
+						$selected = ($type['beer_type'] == strval($this->filter_values['recipe_type'])) ? "selected" : "";
+						?>
+						<option value="<?= $type["beer_type"]; ?>" <?= $selected; ?>><?= $type["beer_type_name"]; ?></option>
+					<?
+					endforeach;
+					?>
+				</select>
+			</dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Aludaris:</dt>
+			<dd><input type="text" id="brewer" value="<?= $this->filter_values['user_name']; ?>" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Apyniai:</dt>
+			<dd><input type="text" id="hops" value="<?= $this->filter_values['hop_name']; ?>" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Salyklas:</dt>
+			<dd><input type="text" id="malts" value="<?= $this->filter_values['malt_name']; ?>" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Mielės:</dt>
+			<dd><input type="text" id="yeasts" value="<?= $this->filter_values['yeast_name']; ?>" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Žymos:</dt>
+			<dd><input type="text" id="tags" value="<?= $this->filter_values['tag_text']; ?>" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>&nbsp;</dt>
+			<dd style="text-align: right;"><input type="submit" value="Ieškot" class="ui-button" /></dd>
+			<div class="clear"></div>
+		</dl>
+	</form>
 </div>
-<?
-if (isset($this->content)) {?>
-<div style="padding:10">
-Paieškos rezultatai:
 
-<table>
-<?
-$z=0;
-$r=0;
-$u_per_row=3;
-foreach ($this->content as $item) {?>
-<? if ($r==0){?>
-	
-	<tr>
-	<?}?>
-	<?
-	$r++;
+<?php
+if (isset($this->content)) {
 	?>
-<td width="280" align="left" style="padding:3">
-<div class="ui-corner-all" style="background:#ffffff">
-<?=$this->recipeItem($item);?>
-</div>
-</td>
-<?
-		
-$z++;
-
-if ($r==$u_per_row) {?>
-</tr>
-<?
-$r=0;
+	<div class="inner_container" id="search_result_container">
+		<div class="inner_header">Paieškos rezultatai</div>
+		<div class="style_recipes">
+			<?php
+			$i = 0;
+			foreach ($this->content as $item):
+				$i++;
+			?>
+				<div class="style_recipe">
+					<?= $this->recipeItem($item); ?>
+				</div>
+			<?php
+				if ($i == 3){
+					$i = 0;
+					?>
+					<div class="clear"></div>
+					<?php
+				}
+			endforeach;
+			?>
+			<div class="clear"></div>
+		</div>		
+		<?php
+		echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');
+		?>
+	</div>
+	<?php
 }
-}
-if ($r>0) {
 ?>
-</tr>
-<?
-}   
-?>  
-   
-</table>
-<? if ($z==0) {
-	?>
-	<p>Nieko nerasta</p>
-	<?
-}
-?>
-<?php echo $this->paginationControl($this->content,
-                                    'Sliding',
-                                    'paginator/item.phtml'); ?>
-</div>
-<?}?>
-</div>

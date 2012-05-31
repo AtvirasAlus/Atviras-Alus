@@ -1,98 +1,85 @@
-
-<div align="center" >
-
-<h1> Profilis </span></h1>
-
-
-<div class="ui-corner-all" style="background:#FFF;padding:20;" align="left">
-
- <table><tr><td>
-<img src="http://www.gravatar.com/avatar/<?=md5($this->user_info->user_email);?>?rating=G&size=50&default=mm" border="0"/></td><td style="padding:10" valign="top">
-Avataras registruotas e-paštu: <?=$this->user_info->user_email;?> svetainėje <a href="http://www.gravatar.com">gravatar.com</a></td></tr></table></br>
-
-<? if($this->errors) {
-?>
-	<div class="ui-state-error ui-corner-all" style="margin-bottom:20px"><ul class="formError">
-<?
-	for ($i=0;$i<count($this->errors);$i++) {
-?>
-		<li><?=$this->errors[$i]["message"];?></li>
-<?
-	}
-?>
-</ul></div></div>
-<?
-}
-?> 
-<?
-if ($this->success) {
-print $this->success;
-}
-?>
-<div id="tabs" style="width:725px">
-<ul>
-				<li><a href="#tabs-1">Info</a></li>
-				<li><a href="#tabs-2">Slaptažodis</a></li>
-				
+<div id="brewer_info_container" class="inner_container">
+	<div class="inner_header">Naudotojo paskyra</div>
+	<div class="profile_avatar">
+		<img src="http://www.gravatar.com/avatar/<?= md5($this->user_info->user_email); ?>?rating=G&size=50&default=mm" border="0"/>
+		<span>Pseudoportretas registruotas e-paštu: <?= $this->user_info->user_email; ?> svetainėje <a href="http://www.gravatar.com">gravatar.com</a></span>
+		<div class="clear"></div>
+	</div>
+	<?
+	if ($this->errors) {
+		?>
+		<div class="ui-state-error ui-corner-all" style="margin-bottom: 20px;">
+			<ul class="formError">
+				<?
+				for ($i = 0; $i < count($this->errors); $i++) {
+					?>
+						<li><?= $this->errors[$i]["message"]; ?></li>
+					<?
+				}
+				?>
 			</ul>
-<div id="tabs-1" align="center">
-<div align="left">Mano info:</div>
-<hr border="0" style="background:#666666;border:0"/>
-<?
-
-if (strlen($this->user_attributes['user_location'])>0) {
- 		$this->userAttributesForm->getElement('user_location')->setValue($this->user_attributes['user_location']);
+		</div>
+		<?
+	}
+	if ($this->success) {
+		?>
+		<div><?=$this->success;?></div>
+		<?php
+	}
+	if (strlen($this->user_attributes['user_location']) > 0) {
+		$this->userAttributesForm->getElement('user_location')->setValue($this->user_attributes['user_location']);
 		$this->userAttributesForm->getElement('use_other_location')->setValue('0');
 		$this->userAttributesForm->getElement('user_other_location')->setValue("");
 		$this->userAttributesForm->getElement('user_about')->setValue($this->user_attributes['user_about']);
-	if ( $this->userAttributesForm->getElement('user_location')->getValue()!=$this->user_attributes['user_location']) {
-		$this->userAttributesForm->getElement('use_other_location')->setValue('1');
-		$this->userAttributesForm->getElement('user_other_location')->setValue($this->user_attributes['user_location']);
+		if ($this->userAttributesForm->getElement('user_location')->getValue() != $this->user_attributes['user_location']) {
+			$this->userAttributesForm->getElement('use_other_location')->setValue('1');
+			$this->userAttributesForm->getElement('user_other_location')->setValue($this->user_attributes['user_location']);
+		}
 	}
-}
-print  $this->userAttributesForm;
-
-?>
-<br/>
-
-<?if (count($this->user_groups) >0) {?>
-
-<div align="left">Mano grupės:</div>
-<hr border="0" style="background:#666666;border:0"/>
-<form action="/brewer/profile" method="post" target="_self"><table align="center" width="70%" >
-<?
-for ($i=0;$i<count($this->user_groups);$i++) {
-$selected = $this->user_groups[$i]['user_id'] >0 ? "checked" : "";
-?>
-
-<tr>
-<td>
-<label style="float:left;padding-right:10px;display:block" for="gr-<?=$this->user_groups[$i]['group_id'];?>"><input  style="vertical-align: middle" type="checkbox" value="<?=$this->user_groups[$i]['group_id'];?>" id="gr-<?=$this->user_groups[$i]['group_id'];?>" name="group[]" <?=$selected;?> ><?=$this->user_groups[$i]['group_name']; ?> (<?=$this->user_groups[$i]['group_description']; ?>)</label></td></tr>
-<?
-}
-?>
-<tr><td style="color:#666666"><i>Prisijungę prie grupės  galėsite dalyvauti grupės narių susirašinėjimuose </i>
-</td>
-</tr>
-<tr><td align="right">
-<input type="hidden" name="action" value="groups"/><button type="submit" value="">Saugoti</button>
-</td>
-</tr>
-
-</form>
-</table>
-<?}?>
+	?>
+	<div>
+		<?=$this->userAttributesForm;?>
+	</div>
 </div>
 
-<div id="tabs-2" align="center">
-<?
-print $this->changePasswordForm;
+<? 
+if (count($this->user_groups) > 0):
+	?>
+	<div id="brewer_info_container" class="inner_container">
+		<div class="inner_header">Mano grupės</div>
+		<div class="inner_footer">Prisijungę prie grupės  galėsite dalyvauti grupės narių susirašinėjimuose</div>
+		<div>
+			<form action="/brewer/profile" method="post" target="_self" id="groups_form">
+				<?
+				for ($i = 0; $i < count($this->user_groups); $i++) {
+					$selected = $this->user_groups[$i]['user_id'] > 0 ? "checked" : "";
+					?>
+					<dl>
+						<dd>
+							<label for="gr-<?= $this->user_groups[$i]['group_id']; ?>">
+								<input type="checkbox" value="<?= $this->user_groups[$i]['group_id']; ?>" id="gr-<?= $this->user_groups[$i]['group_id']; ?>" name="group[]" <?= $selected; ?> />
+								<?= $this->user_groups[$i]['group_name']; ?> (<?= $this->user_groups[$i]['group_description']; ?>)
+							</label>
+						</dd>
+					</dl>
+					<?
+				}
+				?>
+				<dl>
+					<dd>
+						<input type="hidden" name="action" value="groups"/>
+						<input type="submit" value="Saugoti" class="ui-button" />
+					</dd>
+				</dl>
+			</form>
+		</div>
+	</div>
+	<?php	
+endif;
 ?>
+<div id="brewer_info_container" class="inner_container">
+	<div class="inner_header">Slaptažodžio keitimas</div>
+	<div>
+		<?=$this->changePasswordForm;?>
+	</div>
 </div>
-
-</div>
-</div>
-</div><script>
-$('#tabs').tabs();
-
-</script>

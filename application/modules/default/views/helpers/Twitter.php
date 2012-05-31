@@ -48,8 +48,8 @@ class Zend_View_Helper_Twitter extends Zend_View_Helper_Abstract{
       $cache->save($rendered, 'tweet_latest');
        
 		}
-		$this->view->headLink()->appendStylesheet("/public/css/twitter.css");
-    $this->view->headLink()->appendStylesheet("/public/ui/external/jquery.qtip.min.css");
+		$this->view->headLink()->appendStylesheet("/public/css/twitter_changeme.css");
+    $this->view->headLink()->appendStylesheet("/public/ui/external/jquery.qtip.min_changeme.css");
     $this->view->headScript()->appendFile("/public/ui/external/jquery.qtip.min.js");
       return $rendered;
 		

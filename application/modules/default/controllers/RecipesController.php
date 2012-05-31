@@ -333,7 +333,7 @@ class RecipesController extends Zend_Controller_Action {
 				 print Zend_Json::encode(array("status"=>0,"data"=>array("votes"=>$this->getVotes($_POST['id']))));
 			}
 		  }else{
-		  	    print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Neregistruotas vartotojas","type"=>"authentication"))));
+		  	    print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Neregistruotas nautotojas","type"=>"authentication"))));
 		  }
     }
       public function publishAction() {
@@ -360,7 +360,7 @@ class RecipesController extends Zend_Controller_Action {
 		  	  	   }
 		  	  	   }print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Receptas nerastas","type"=>"system"))));
 		  	  }else{
-		  	  print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Neregistruotas vartotojas","type"=>"authentication"))));
+		  	  print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Neregistruotas nautotojas","type"=>"authentication"))));
 		  	  }
 	}
     }
@@ -392,7 +392,7 @@ class RecipesController extends Zend_Controller_Action {
 		  	  	   }
 		  	  	   }print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Receptas nerastas","type"=>"system"))));
 		  	  }else{
-		  	  print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Neregistruotas vartotojas","type"=>"authentication"))));
+		  	  print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Neregistruotas nautotojas","type"=>"authentication"))));
 		  	  }
 	}
     }
@@ -500,7 +500,7 @@ class RecipesController extends Zend_Controller_Action {
 		  	  	   
 		  	  	//  print $db->lastInsertId().$_POST['recipe_sg'];
 		  	  }else{
-		  	  	print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Neregistruotas vartotojas","type"=>"authentication"))));
+		  	  	print Zend_Json::encode(array("status"=>1,"errors"=>array(array("message"=>"Neregistruotas nautotojas","type"=>"authentication"))));
 		  	  }
 	 	}
  	}

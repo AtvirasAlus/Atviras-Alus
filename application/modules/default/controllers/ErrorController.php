@@ -12,9 +12,8 @@ class ErrorController extends Zend_Controller_Action
                      	 if ($isAjaxRequest){
 		   	   $errorMessage = 'ERROR,404';
 			}else {
-			  $this->view->title = '~~~~~~~~~~~~~~~ 404 ~~~~~~~~~~~~~~~~~~~';
-			  $this->view->message = 
-			  '<div  style="width:400"><h2 style="color:red">Čia alaus nėra!</h2></div>';
+			  $this->view->title = 'Klaida 404 - Puslapis nerastas';
+			  $this->view->message = 'Jūsų ieškomas puslapis sistemoje nerastas.';
 			}
 		    break;
 		  default:  $this->getResponse()
@@ -22,9 +21,9 @@ class ErrorController extends Zend_Controller_Action
 		   if ($isAjaxRequest){
 		   	   $errorMessage = 'ERROR,500';
 			}else {
-			  $this->view->title = 'Oj, oj įvyko klaida...';
+			  $this->view->title = 'Klaida';
 			  $this->view->message = 
-			    'Puslapis kurį bandote žiūrėti  dar nesukurtas arba sukurtas su klaidom!';
+			    'Sistema bandydama apdoroti jūsų ieškomą puslapį gražino klaidą.';
 			}
 		   break;
 	  }
