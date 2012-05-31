@@ -1,135 +1,116 @@
-<style>
-.tools {
-list-style:none;
-display:inline;
-margin-right:-20px;
-
-}
-.tools li {
-width:20px;
-
-}
-</style>
-<div style="width:800">
-<div class="ui-corner-all" style="background:#ffffff;padding:5">
-<a href="/index/calculus"/> + Sukurti naują </a> | <a href="/brew-session/brewer"> ~ Mano virimai </a>
-</div>
-<table>
-<?
-$z=0;
-$r=0;
-$u_per_row=3;
-foreach ($this->content as $item) {?>
-<? if ($r==0){?>
-	
-	<tr>
-	<?}?>
-	<?
-	$r++;
+<div id="style_recipes_container" class="inner_container">
+	<div class="inner_header">Stiliaus receptai</div>
+	<div style="margin: 0px 0px 20px 8px;">
+		<input type="button" onclick="window.location.href='/index/calculus'" value="Sukurti naują receptą" class="ui-button" />
+		<input type="button" onclick="window.location.href='/brew-session/brewer'" value="Mano virimai" class="ui-button" />
+	</div>
+	<? 
+	if (!count($this->content)) { 
+		?>
+		<div>Jūs nesate sukūrę receptų. <a href="/index/calculus">Kurti naują receptą</a></div>
+		<?
+	} else {
+		?>
+		<div class="style_recipes">
+			<?php
+			$i = 0;
+			foreach ($this->content as $item):
+				$i++;
+			?>
+				<div class="style_recipe">
+					<?= $this->recipeItem($item); ?>
+					<div class="recipe_edit_tools">
+						<a href="/index/calculus/<?= $item['recipe_id']; ?>" alt="Redaguoti" title="Redaguoti">
+							<span class="ui-icon ui-icon-wrench">Redaguoti</span>
+						</a>
+						<? $ico_name = ($item["recipe_publish"] == 1) ? 'unlocked' : 'locked'; ?>
+						<? $recipe_status = ($item["recipe_publish"] == 1) ? '0' : '1'; ?>
+						<a href='javascript:setRecipeStatus(<?= $item['recipe_id']; ?>,"<?= $recipe_status; ?>",unescape("<?= urlencode($item['recipe_name']); ?>"))' alt="Viešumas" title="Viešumas">
+							<span class="ui-icon ui-icon-<?= $ico_name ?>">Viešas</span>
+						</a>
+						<a href='javascript:deleteRecipe(<?= $item['recipe_id']; ?>,unescape("<?= urlencode($item['recipe_name']); ?>"))' alt="Trinti" title="Trinti">
+							<span class="ui-icon ui-icon-trash">Trinti</span>
+						</a>
+					</div>
+				</div>
+			<?php
+				if ($i == 3){
+					$i = 0;
+					?>
+					<div class="clear"></div>
+					<?php
+				}
+			endforeach;
+			?>
+			<div class="clear"></div>
+		</div>
+		<div>
+			<?=$this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');?>
+		</div>
+		<?
+	}
 	?>
-<td width="280" align="left" style="padding:3">
-<div class="ui-corner-all" style="background:#ffffff">
-<table width="100%">
-<tr><td width="20" valign="top">&nbsp;
-<ul class="tools"> 
-<li class="ui-state-default ui-corner-all">
-<a href="/index/calculus/<?=$item['recipe_id'];?>" alt="Redaguoti" title="Redaguoti"><span class="ui-icon ui-icon-wrench">Redaguoti</span></a></li>
-<?$ico_name=($item["recipe_publish"]==1) ? 'unlocked' : 'locked';?>
-<?$recipe_status=($item["recipe_publish"]==1) ? '0' : '1';?>
-<li class="ui-state-default ui-corner-all"><a href='javascript:setRecipeStatus(<?=$item['recipe_id'];?>,"<?=$recipe_status;?>",unescape("<?=urlencode($item['recipe_name']);?>"))' alt="Viešumas" title="Viešumas"><span class="ui-icon ui-icon-<?=$ico_name?>">Viešas</span></a></li>
-<li class="ui-state-default ui-corner-all"><a href='javascript:deleteRecipe(<?=$item['recipe_id'];?>,unescape("<?=urlencode($item['recipe_name']);?>"))' alt="Trinti" title="Trinti"><span class="ui-icon ui-icon-trash">Trinti</span></a></li>
-</ul>
-
-</td><td><?=$this->recipeItem($item);?>
-</td></tr></table>
 </div>
-</td>
-<?
-		
-$z++;
 
-if ($r==$u_per_row) {?>
-</tr>
-<?
-$r=0;
-}
-}
-if ($r>0) {
-?>
-</tr>
-<?
-}   
-?>  
-   
-</table>
-</div>
-<?php echo $this->paginationControl($this->content,
-                                    'Sliding',
-                                    'paginator/item.phtml'); ?>
+<script>
+	function setRecipeStatus(id, status, recipe_name) {
+		var w = "";
+		if (status == 0) {
+			w = 'paslėpti'
+		} else {
+			w = 'paviešinti'
+		}
+		if (confirm("Ar norite " + w + " '" + recipe_name + "' ?")) {
+			$.ajax({
+				type: 'POST',
+				url: "/recipes/publish",
+				data: "recipe_id=" + id+"&publish="+status,
+				success: function (d) {
 
-<?  if (!count($this->content)) { ?>
- Jūs nesate sukūrę receptų. <a href="/index/calculus">Kurti naują receptą</a>
-<?}?>
+					var data = jQuery.parseJSON(d);
+					if (data) {
+						if (data.status == "1") {
 
-                                    <script>
-function setRecipeStatus(id, status, recipe_name) {
-    var w = "";
-    if (status == 0) {
-        w = 'paslėpti'
-    } else {
-        w = 'paviešinti'
-    }
-    if (confirm("Ar norite " + w + " '" + recipe_name + "' ?")) {
-    	  $.ajax({
-            type: 'POST',
-            url: "/recipes/publish",
-            data: "recipe_id=" + id+"&publish="+status,
-            success: function (d) {
+							if (data.errors[0].type == "authentication") {
+								showLogin();
+								return
+							}
+						} else {
+							location.reload()
+						}
+					} else {
+						alert("Klaida")
+					}
+				}
+			})
+		}
+	}
 
-                var data = jQuery.parseJSON(d);
-                if (data) {
-                    if (data.status == "1") {
+	function deleteRecipe(id, recipe_name) {
+		if (confirm("Ar norite ištrinti '" + recipe_name + "' ?")) {
+			$.ajax({
+				type: 'POST',
+				url: "/recipes/delete/",
+				data: "recipe_id=" + id,
+				success: function (d) {
 
-                        if (data.errors[0].type == "authentication") {
-                            showLogin();
-                            return
-                        }
-                    } else {
-                        location.reload()
-                    }
-                } else {
-                    alert("Klaida")
-                }
-            }
-        })
-    }
-}
+					var data = jQuery.parseJSON(d);
+					if (data) {
+						if (data.status == "1") {
 
-function deleteRecipe(id, recipe_name) {
-    if (confirm("Ar norite ištrinti '" + recipe_name + "' ?")) {
-        $.ajax({
-            type: 'POST',
-            url: "/recipes/delete/",
-            data: "recipe_id=" + id,
-            success: function (d) {
+							if (data.errors[0].type == "authentication") {
+								showLogin();
+								return
+							}
+						} else {
+							location.reload()
+						}
+					} else {
+						alert("Klaida")
+					}
+				}
+			})
+		}
+	}
+</script>
 
-                var data = jQuery.parseJSON(d);
-                if (data) {
-                    if (data.status == "1") {
-
-                        if (data.errors[0].type == "authentication") {
-                            showLogin();
-                            return
-                        }
-                    } else {
-                        location.reload()
-                    }
-                } else {
-                    alert("Klaida")
-                }
-            }
-        })
-    }
-}
-                                    </script>
-                                    

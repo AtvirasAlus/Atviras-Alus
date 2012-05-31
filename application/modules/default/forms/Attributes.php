@@ -30,7 +30,7 @@ $this->getElement('user_location')->addMultiOption("","");
 		 ->setAttrib('COLS', '80')
     		->setAttrib('ROWS', '4')
 			->setLabel('Apie mane:');
-		$this->addElement('button', 'attributes_action',array('type'=>'submit'));
+		$this->addElement('submit', 'attributes_action',array('type'=>'submit', 'class' => 'ui-button'));
 		$this->getElement('attributes_action')
 			->setLabel('Saugoti')
 			->setIgnore(true);

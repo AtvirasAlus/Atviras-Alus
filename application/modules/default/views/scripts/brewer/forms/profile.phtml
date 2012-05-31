@@ -1,21 +1,22 @@
-<form action="<?=$this->element->getAction();?>" method="<?= $this->element->getmethod();?>" target="_self" name="__profileForm" id="__profileForm">
-<table cellpading="0" cellspacing="0">
-<tr>
-<td><? echo $this->element->user_password_old->getLabel();?></td>
-<td><?=$this->element->user_password_old;?></td>
-</tr>
-<tr>
-<td><? echo $this->element->user_password->getLabel();?></td>
-<td><?=$this->element->user_password;?></td>
-</tr>
-<tr>
-<td><? echo $this->element->user_password_repeat->getLabel();?></td>
-<td><?=$this->element->user_password_repeat;?></td>
-</tr>
-<tr>
-<td></td>
-<td colspan="2" align="right"><?=$this->element->profile_action;?></td>
-</tr>
-</table>
+<form action="<?= $this->element->getAction(); ?>" method="<?= $this->element->getmethod(); ?>" target="_self" name="__profileForm" id="__profileForm">
+	<dl>
+		<dt><? echo $this->element->user_password_old->getLabel(); ?></dt>
+		<dd><?= $this->element->user_password_old; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt><? echo $this->element->user_password->getLabel(); ?></dt>
+		<dd><?= $this->element->user_password; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt><? echo $this->element->user_password_repeat->getLabel(); ?></dt>
+		<dd><?= $this->element->user_password_repeat; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><?= $this->element->profile_action; ?></dd>
+		<div class="clear"></div>
+	</dl>
 </form>
-

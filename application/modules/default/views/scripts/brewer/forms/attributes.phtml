@@ -1,29 +1,33 @@
-<form action="<?=$this->element->getAction();?>" method="<?= $this->element->getmethod();?>" target="_self" name="__attributesForm" id="__attributesForm">
-<table cellpading="3" cellspacing="0">
-<tr>
-<td><? echo $this->element->user_location->getLabel();?></td>
-<td><?=$this->element->user_location;?></td>
-</tr>
-<tr>
-<td><? echo $this->element->use_other_location->getLabel();?></td>
-<td><?=$this->element->use_other_location;?></td>
-</tr>
-<tr>
-<td><? echo $this->element->user_other_location->getLabel();?></td>
-<td><?=$this->element->user_other_location;?></td>
-</tr>
-<tr>
-<td valign="top"><? echo $this->element->user_about->getLabel();?></td>
-<td valign="top"><?=$this->element->user_about;?></td>
-</tr>
-<tr>
-<td/>
-<td align="letf" style="color:#666666">Galimi html tagai: <i>'p','b','br','strong'</i></td>
-</tr>
-<tr>
-
-<td colspan="2" align="right"><?=$this->element->attributes_action;?><?=$this->element->action;?></td>
-</tr>
-</table>
+<form action="<?= $this->element->getAction(); ?>" method="<?= $this->element->getmethod(); ?>" target="_self" name="__attributesForm" id="__attributesForm">
+	<dl>
+		<dt><? echo $this->element->user_location->getLabel(); ?></dt>
+		<dd><?= $this->element->user_location; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt><? echo $this->element->use_other_location->getLabel(); ?></dt>
+		<dd><?= $this->element->use_other_location; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt><? echo $this->element->user_other_location->getLabel(); ?>&nbsp;</dt>
+		<dd><?= $this->element->user_other_location; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt><? echo $this->element->user_about->getLabel(); ?></dt>
+		<dd><?= $this->element->user_about; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd>Galimos HTML žymės: &lt;p&gt;, &lt;b&gt;, &lt;br&gt;, &lt;strong&gt;</dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><?= $this->element->attributes_action; ?><?= $this->element->action; ?></dd>
+		<div class="clear"></div>
+	</dl>
 </form>
 

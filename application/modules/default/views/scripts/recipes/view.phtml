@@ -71,7 +71,7 @@ function i_bu($ibu,$og) {
 		<? if (!empty($this->data['recipe']['recipe_awards'])) :?>
 			<div class="recipe_awards">
 				<?
-				$awards = explode("\n", $this->data['recipe']['recipe_awards']);
+				$awards = explode("\n", trim($this->data['recipe']['recipe_awards']));
 				foreach ($awards as $award_string):
 					$award = explode("#", $award_string);
 					?>

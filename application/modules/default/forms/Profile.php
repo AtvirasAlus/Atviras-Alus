@@ -20,7 +20,7 @@ class Form_Profile extends Zend_Form {
 			->addValidator(new Zend_Validate_Alnum())
 			->setLabel('Naujas slaptažodis (pakartoti):')
 			->setRequired(true);
-		$this->addElement('Button', 'profile_action',array('type'=>'submit'));
+		$this->addElement('submit', 'profile_action',array('type'=>'submit', 'class'=>'ui-button'));
 		$this->getElement('profile_action')
 			->setLabel('Keisti')
 			->setIgnore(true);

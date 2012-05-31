@@ -9,7 +9,7 @@
 <? if (!empty($this->item['recipe_awards'])) :?>
 	<div style="padding-top: 5px;">
 		<?
-		$awards = explode("\n", $this->item['recipe_awards']);
+		$awards = explode("\n", trim($this->item['recipe_awards']));
 		foreach ($awards as $award_string):
 			$award = explode("#", $award_string);
 			?>

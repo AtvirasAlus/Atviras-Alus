@@ -1,43 +1,26 @@
-<div align="center" style="width:800;padding-bottom:25"><div style="font-weight:bold;font-size:16">Aludaris: <?=$this->brewer["user_name"];?> <span style="font-weight:normal;font-size:12">(<?=$this->brewer["total"];?>)</span></div></div>
-
-
-<table>
-<?
-$z=0;
-$r=0;
-$u_per_row=3;
-foreach ($this->content as $item) {?>
-<? if ($r==0){?>
-	
-	<tr>
-	<?}?>
-	<?
-	$r++;
-	?>
-<td width="280" align="left" style="padding:3">
-<div class="ui-corner-all" style="background:#ffffff">
-<?=$this->recipeItem($item);?>
+<div id="style_recipes_container" class="inner_container">
+	<div class="inner_header">Aludario <?= $this->brewer["user_name"]; ?> receptai</div>
+	<div class="style_recipes">
+		<?php
+		$i = 0;
+		foreach ($this->content as $item):
+			$i++;
+		?>
+			<div class="style_recipe">
+				<?= $this->recipeItem($item); ?>
+			</div>
+		<?php
+			if ($i == 3){
+				$i = 0;
+				?>
+				<div class="clear"></div>
+				<?php
+			}
+		endforeach;
+		?>
+		<div class="clear"></div>
+	</div>
+	<div>
+		<?=$this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');?>
+	</div>
 </div>
-</td>
-<?
-		
-$z++;
-
-if ($r==$u_per_row) {?>
-</tr>
-<?
-$r=0;
-}
-}
-if ($r>0) {
-?>
-</tr>
-<?
-}   
-?>  
-   
-</table>
-
-<?php echo $this->paginationControl($this->content,
-                                    'Sliding',
-                                    'paginator/item.phtml'); ?>
