@@ -1,14 +1,16 @@
-<div style="padding-bottom:20;padding-top:10" align="center"><i><?=$this->title;?></i></div>
-<div align="left">
-<?
-if (count($this->categories)>0) {
-$i=0;
-$max=round($this->categories[0]["count"]);?>
-
-<? foreach ($this->categories as $cat) { $i++;?>
-
-<div style="font-size:10;padding-bottom:5;padding-top:5" align="left;"><?=($i).". ".$cat["name"] ." (".$cat["count"] .")" ;?></div>
-<div style="width:<?=round($cat["count"]/$max*80);?>%;height:12;border:0px #755531 solid;background:#9B7142"></div>
-
-<?}}?>
+<div class="competition_stat">
+	<div class="competition_title"><?=$this->title;?></div>
+	<?
+	if (count($this->categories)>0) {
+		$i = 0;
+		$max = round($this->categories[0]["count"]);
+		foreach ($this->categories as $cat) {
+			$i++;
+			?>
+			<div><?=($i).". ".$cat["name"] ." (".$cat["count"] .")" ;?></div>
+			<div style="width:<?=round($cat["count"]/$max*80);?>%;" class="progressbar padifyb"></div>
+			<?
+		}
+	}
+	?>
 </div>

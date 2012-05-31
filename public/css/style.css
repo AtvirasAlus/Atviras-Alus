@@ -437,6 +437,11 @@ ul#topmenu li a:hover {
 	border-radius: 5px;
 	border: 1px solid #ddd;
 }
+.recipe_selected {
+	background-image: url('/public/images/new/check.png');
+	background-repeat: no-repeat;
+	background-position: top right;
+}
 .style_recipes_footer {
 	text-align: right;
 	padding-right: 7px;
@@ -1092,4 +1097,78 @@ div.as-row:hover {
 	border: 1px solid #ccc;
 	width: 690px;
 	padding: 2px;
+}
+.event_block {
+	float: left;
+	width: 265px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	min-height: 170px;
+	cursor: pointer;
+}
+.event_block:hover {
+	background-color: #fafafa;
+}
+.event_title {
+	margin: 10px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #755531;
+}
+.event_resume {
+	margin: 10px;
+}
+.event_date {
+	margin: 10px;
+}
+.event_date span {
+	font-weight: bold;
+}
+.participants_list a {
+	display: block;
+	width: 100px;
+	float: left;
+	text-align: center;
+	overflow: hidden;
+}
+.participants_list a span {
+	display: block;
+}
+.progressbar {
+	height: 12px;
+	border: 0px #755531 solid;
+	background: #9B7142;
+}
+.competition_stat {
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	padding: 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.competition_title {
+	text-align: center;
+	font-weight: bold;
+	font-size: 14px;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+.padifyb {
+	margin-bottom: 5px;
+}
+.event_i_date {
+	margin-bottom: 10px;
+	font-size: 14px;
+}
+.selectable_recipes .style_recipe {
+	cursor: pointer;
 }

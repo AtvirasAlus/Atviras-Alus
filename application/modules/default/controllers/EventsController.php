@@ -67,6 +67,7 @@
 		$select=$db->select();
 		$select->from("beer_recipes")
 		->join("beer_styles","beer_recipes.recipe_style=beer_styles.style_id")
+		->joinLeft("beer_competition_entries","beer_recipes.recipe_id=beer_competition_entries.recipe_id AND beer_competition_entries.event_id='".$event_id."'", "event_id")
 		->where("brewer_id = ?",$this->user->user_id)
 		->order('beer_recipes.recipe_name');
 		$beer_recipes=$db->fetchAll($select);
@@ -179,7 +180,6 @@
   		$u=$storage->read();
   		  if (isset($u->user_name)) {
   			if (isset($_POST)) {
-  				
   				switch($_POST['action']) {
             
   				case "add":

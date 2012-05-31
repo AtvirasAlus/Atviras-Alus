@@ -1,231 +1,190 @@
-<? $this->headTitle()->append(" - Įvykis - ".$this->event['event_name']);?>
-<? $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,degustacija,receptas,alus');?>
-
-<style>
-
-#entries .col{
-	float:left;
-	width:50%;
+<?php
+$this->headTitle()->append(" - Įvykis - " . $this->event['event_name']);
+$this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,degustacija,receptas,alus');
+?>
+<div id="events_container" class="inner_container">
+	<div class="inner_header"><?= $this->event['event_name']; ?></div>
+	<div>
+		<div class="event_i_date">
+			Data: <span><?= $this->event['event_start']; ?></span>
+		</div>
+		<div>
+			<?= $this->event['event_description']; ?>
+		</div>
+		<?php 
+		if ($this->event['event_type'] == 'competition') { 
+			$evInfo = $this->eventInfo();
+			echo $evInfo->showCompetitionDetails($this->event['event_id'], "Ketegorijoms registruoti alūs");
+		}
+		switch ($this->registration_status) {
+			case 0:
+				?>
+				Norint prisiregistruoti reikia prisijungti prie sistemos
+				<?
+			break;
+			case 1:
+				?>
+				<span id="preloader_place"></span>
+				<input type="button" id='register_to_event' style="display:block;" value="Dalyvausiu" class="ui-button" />
+				<input type="button" id='register_out_event' style="display:none;" value="Nedalyvausiu" class="ui-button" />
+				<?
+			break;
+			case 2:
+				?>
+				<span id="preloader_place"></span>
+				<input type="button" id='register_to_event' style="display:none;" value="Dalyvausiu" class="ui-button" />
+				<input type="button" id='register_out_event' style="display:block;" value="Nedalyvausiu" class="ui-button" />
+				<?
+			break;
+		}
+		?>
+	</div>
+</div>
+<?
+if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
+	?>
+	<div id="entries_container" class="inner_container" style="<?=($this->registration_status != 2) ? "display: none;" : "";?>">
+		<div class="inner_header">Mano receptai</div>
+		<div style="margin-bottom: 20px; margin-left: 10px;">
+			Pažymėkite receptus kuriuos norite pateikti konkursui
+		</div>
+		<div class="selectable_recipes">
+			<?php
+			$z = 0;
+			foreach($this->beer_recipes as $key => $value){
+				$z++;
+				?>
+				<div class="style_recipe <?=(!empty($value['event_id'])) ? "recipe_selected" : "" ;?>" data-recipe="<?=$value['recipe_id']?>" data-style="<?=$value['style_id']?>" data-eventuser="<?=$this->user_id;?>" data-event="<?=$this->event['event_id'];?>">
+					<?php echo $this->recipeItem($value,"large", array('without_brewer' => true, 'without_awards' => true, 'plain' => true)); ?>
+				</div>
+				<?php
+				if ($z == 3){
+					$z = 0;
+					?>
+					<div class="clear"></div>
+					<?php
+				}
+			}
+			?>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<?php
 }
-#entries p{
-  clear:left;
-  min-height:60px;
-  width:350px;
-  margin:5px 0;
-}
-#entries p.selected{
-  background:#f6f6f6 !important;
-}
-
-#entries label{
-	font-size:14px;
-	line-height:18px;
-	float:left;
-	margin-left:15px;
-	display:block;
-	width:300px;
-	
-}
-#entries input[type=checkbox]{
-	float:left;
-	margin:25px 0 0 5px;
-}
-#entries small{
-	display:block;
-	
-}
-.spinner{
-  position:absolute;
-  margin:5px 0 0 -9px;
-}
-</style>
+?>
+<div id="events_participants_container" class="inner_container">
+	<div class="inner_header">Dalyviai</div>
+	<div class="participants_list">
+		<?
+		$z = 0;
+		for ($ii = 0; $ii < count($this->registered_users); $ii++) {
+			$z++;
+			?>
+			<a href="/brewers/<?= $this->registered_users[$ii]['user_id']; ?>">
+				<img src="http://www.gravatar.com/avatar/<?= md5($this->registered_users[$ii]['user_email']); ?>?rating=G&size=50&default=mm" border="0"/>
+				<span><?= $this->registered_users[$ii]['user_name']; ?></span>
+			</a>
+			<?
+			if ($z == 8){
+				$z = 0;
+				?>
+				<div class="clear"></div>
+				<?php
+			}
+		}
+		?>		
+		<div class="clear"></div>
+	</div>
+</div>
 
 <script>
-$(function(){
-  
-  //registruojame alu
-  $('#entries input[type=checkbox]').live('click',function(){
-    var data = jQuery.parseJSON($(this).val());
-    
-    if($(this).is(':checked')){
-      $(this).parents('p').addClass('selected');
-      data['action'] = 'add';
-    }else{
-      $(this).parents('p').removeClass('selected');
-      data['action'] = 'remove';
-    }
-    $(this).parents('p').append("<img src='/public/images/spinner.gif'/ class='spinner'>");
-    var entry =  $(this).parents('p');
+	$(function(){
 
-    $.ajax({
-      type: "POST",
-			data: data,
-			url: "/events/entry-registration",
-			success: function(){
-			  //Pavelinam loaderio panaikinima, taip nautotojas supras, kad veiksmas atliktas
-			  window.setTimeout(function(){
-			    entry.fadeOut();
-			  }, 1500);
-			  
+		//registruojame alu
+		$('.selectable_recipes .style_recipe').live('click',function(){
+			var event_id = $(this).attr("data-event");
+			var recipe_id = $(this).attr("data-recipe");
+			var event_user_id = $(this).attr("data-eventuser");
+			var style_id = $(this).attr("data-style");
+			if ($(this).hasClass("recipe_selected")){
+				$(this).removeClass("recipe_selected");
+				var actionas = 'remove';
+			} else {
+				$(this).addClass("recipe_selected");
+				var actionas = 'add';
 			}
-    });
-    
-  });
-  
-	$("#register_to_event").click(function(){
-	//get the id
-	
-	
-	// show the spinner
-	$("#preloader_place").html("<img src='/public/images/spinner.gif'/>");
-	
-	//fadeout the vote-count 
-	
-	
-	//the main ajax request
-	$("#register_to_event").css("display","none");
-	
-		$.ajax({
-			type: "POST",
-			data: "action=in&id=<?=$this->event['event_id'];?>",
-			url: "/events/register",
-			success: function(html)
-			{
-				$("#preloader_place").html('');
-				
-				
-				
-				$("#register_out_event").css("display","inline");
-				$("#register_to_event").css("display","none");
-				$("#registered").html('')
-				if (html.length>0) {
-					$("#registered").html(html);
-					$('#competition_entries').fadeIn();
-				}
-			}
-		});
-	});
-	
-	$("#register_out_event").click(function(){
-	//get the id
-	
-	
-	// show the spinner
-	$("#preloader_place").html("<img src='/public/images/spinner.gif'/>");
-	
-	//the main ajax request
-	$("#register_out_event").css("display","none");
-	
-		$.ajax({
-			type: "POST",
-			data: "action=out&id=<?=$this->event['event_id'];?>",
-			url: "/events/register",
-			success: function(html)
-			{
-				
-				 $("#preloader_place").html('');
-				
-				$("#register_to_event").css("display","inline");
-				$("#register_out_event").css("display","none");
-				$("#registered").html('')
-				if (html.length>0) {
-					$("#registered").html(html);
-					$('#competition_entries').fadeOut();
-				}
-				
-				
-				
-			}
-		});
-	});
 
-	$('#competition_entries').tabs();
-});
+			$.ajax({
+				type: "POST",
+				data: {
+					'event_id': event_id,
+					'recipe_id': recipe_id,
+					'event_user_id': event_user_id,
+					'style_id': style_id,
+					'action': actionas
+				},
+				url: "/events/entry-registration",
+				success: function(resp){
+					//alert(resp);
+				}
+			});
+
+		});
+
+		$("#register_to_event").click(function(){
+			$("#preloader_place").html("<img src='/public/images/spinner.gif'/>");
+			$("#register_to_event").css("display","none");
+
+			$.ajax({
+				type: "POST",
+				data: "action=in&id=<?= $this->event['event_id']; ?>",
+				url: "/events/register",
+				success: function(html)
+				{
+					$("#preloader_place").html('');
+					$("#register_out_event").css("display","inline");
+					$("#register_to_event").css("display","none");
+					$("#registered").html('')
+					if (html.length>0) {
+						$("#registered").html(html);
+						$('#entries_container').fadeIn();
+					}
+				}
+			});
+		});
+
+		$("#register_out_event").click(function(){
+			//get the id
+
+
+			// show the spinner
+			$("#preloader_place").html("<img src='/public/images/spinner.gif'/>");
+
+			//the main ajax request
+			$("#register_out_event").css("display","none");
+
+			$.ajax({
+				type: "POST",
+				data: "action=out&id=<?= $this->event['event_id']; ?>",
+				url: "/events/register",
+				success: function(html)
+				{
+
+					$("#preloader_place").html('');
+
+					$("#register_to_event").css("display","inline");
+					$("#register_out_event").css("display","none");
+					$("#registered").html('')
+					if (html.length>0) {
+						$("#registered").html(html);
+						$('#entries_container').fadeOut();
+					}
+
+
+
+				}
+			});
+		});
+		$("#competition_entries").tabs();
+	});
 </script>
-<div style="width:800;background:#ffffff;padding:10" class="ui-corner-all"><h1><?=$this->event['event_name'];?></h1>
-<div class="ui-corner-all" style="background:#eeeeee;min-height:300;border:1px solid #dedede">
-
-<div style="padding:15">
-
-
-
-<div style="padding-bottom:12"><span style="color:#666666">Data: </span><?=$this->event['event_start'];?></div>
-<div><?=$this->event['event_description'];?></div>
-<?php if($this->event['event_type'] == 'competition') { ?>
-<div align="center" style="padding:10px">
-<div style="width:400;background:#ffffff;padding:10px" class="ui-corner-all">
-
-<? 
-$evInfo=$this->eventInfo();
-print $evInfo->showCompetitionDetails($this->event['event_id'],"Ketegorijoms registruoti alūs");
-?>
-</div>
-</div>
-<?}?>
-
-<div style="display:inline;float:left;position:relative;padding-top:10">
-<?
-
-switch ($this->registration_status) {
-case 0:
-	?>
-	<span style="color:#666666">Norint prisiregistruoti reikia prisijungti prie sistemos
-	<?
-	break;
-case 1:
-	?>
-	
-	<span id="preloader_place"></span>
-	
-	<a href='javascript:;'  id='register_to_event' style="display:block;font-weight:bold">Dalyvausiu</a>
-	<a href='javascript:;'  id='register_out_event' style="display:none;font-we		t:bold">Nedalyvausiu</a>
-	
-	<?
-	break;
-case 2:
-	?>
-	
-	<span id="preloader_place"></span>
-	
-	<a href='javascript:;'  id='register_to_event' style="display:none;font-weight:bold">Dalyvausiu</a>
-	<a href='javascript:;'  id='register_out_event' style="display:block;font-weight:bold">Nedalyvausiu</a>
-
-	<?
-	break;
-	
-}
-?></div>
-<div style="padding-top:50;padding-bottom:5">
-Dalyviai:<br/>
-<div id="registered" class="ui-corner-all" style="background:#ffffff;padding:15">
-<?
-for ($ii=0;$ii<count($this->registered_users);$ii++) {
-	
-
-?>
-<div style="display:inline-block;padding:3;" align="center">
-<div style="float:left;padding:5;background:#FFFFFF;"><a href="/brewers/<?=$this->registered_users[$ii]['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->registered_users[$ii]['user_email']);?>?rating=G&size=50&default=mm" border="0"/></a><br/>
-<a href="/brewers/<?=$this->registered_users[$ii]['user_id'];?>"><?=$this->registered_users[$ii]['user_name'];?> </a></div>
-</div>
-
-<?}?>
-</div>
-</div>
-
-
-
-  
-<br>
-<?php if($this->event['event_type'] == 'competition' && count($this->beer_recipes)){ ?>
-<div id="competition_entries" <?php if($this->registration_status != 2) echo 'style="display:none;"'; ?>>
-<ul>
-	<li><a href="/events/my-entries?event_id=<?=$this->event['event_id'];?>">Mano pateikti receptai</a></li>
-	<li><a href="/events/my-all-recipes?event_id=<?=$this->event['event_id'];?>">Mano visi receptai</a></li>
-</ul>
-<div id="ui-tabs-1" class="ui-corner-all" style="background:#ffffff;padding:15"></div>
-<div id="ui-tabs-2" class="ui-corner-all" style="background:#ffffff;padding:15"></div>
-
-</div>
-<?php } ?>
-</div>
-</div>
