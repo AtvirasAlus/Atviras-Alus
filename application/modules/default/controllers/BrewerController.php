@@ -129,10 +129,11 @@ class BrewerController extends Zend_Controller_Action {
 						}
 						break;
 					case "groups":
+            $user=new Entities_User($u->user_id);
 						if (isset($_POST['group'])) {
-							$this->updateUserGroups($u->user_id, $_POST['group']);
+							$user->updateGroups($_POST['group']);
 						} else {
-							$this->updateUserGroups($u->user_id, array());
+							$user->updateGroups($u->user_id, array());
 						}
 						break;
 					case "attributes":
@@ -140,8 +141,9 @@ class BrewerController extends Zend_Controller_Action {
 						if ($_POST['use_other_location'] == '1') {
 							$location = $_POST['user_other_location'];
 						}
-            $user_mail_comments=isset($_POST['user_mail_comments']) ? '1' : '0';
-						if ($this->updateAttributes($u->user_id, array('user_location' => $location, 'user_about' => $_POST['user_about'],'user_mail_comments'=>$user_mail_comments))) {
+				
+            $user=new Entities_User($u->user_id);
+						if ($user->updateAttributes(array('user_location' => $location, 'user_about' => $_POST['user_about'],'user_mail_comments'=>$_POST['user_mail_comments']))) {
 							
 						} else {
 							$this->view->errors[] = array("type" => "system", "message" => "Išsaugoti informacijos nepavyko");
@@ -157,71 +159,15 @@ class BrewerController extends Zend_Controller_Action {
 				}
 			}
 		}
-		$this->view->user_attributes = $this->getUserAttributes($u->user_id);
-		$this->view->user_groups = $this->getUserAviableGroups($u->user_id);
+		$user=new Entities_User($u->user_id);
+		
+		$this->view->user_attributes = $user->getAttributes();
+		$this->view->user_groups = $user->getGroups();
 	}
 
-	private function updateUserGroups($user_id, $groups) {
-		$db = Zend_Registry::get('db');
-		$where = array();
-		$where[] = $db->quoteInto('user_id = ?', $user_id);
-		$db->delete("users_groups", $where);
 
-		for ($i = 0; $i < count($groups); $i++) {
-			$db->insert("users_groups", array("user_id" => $user_id, "group_id" => $groups[$i]));
-		}
-		return true;
-	}
 
-	private function getUserAviableGroups($user_id) {
-		$db = Zend_Registry::get('db');
-		$select = $db->select()
-				->from("users_groups", array("user_id" => "concat('0')"))
-				->joinRight("groups", "groups.group_id=users_groups.group_id")
-				->where("groups.group_public = ?", "1")
-				->where("groups.group_registration = ?", "public")
-				->orWhere("users_groups.user_id = ?", $user_id)
-				->group("groups.group_id");
-		$aviable_gr = $db->fetchAll($select);
-		$select = $db->select()
-				->from("users_groups")
-				->where("user_id = ?", $user_id);
-		$subscribed_gr = $db->fetchAll($select);
-		for ($i = 0; $i < count($aviable_gr); $i++) {
-			for ($ii = 0; $ii < count($subscribed_gr); $ii++) {
-				if ($aviable_gr[$i]["group_id"] == $subscribed_gr[$ii]["group_id"]) {
-					$aviable_gr[$i]["user_id"] = $user_id;
-				}
-			}
-		}
-
-		return $aviable_gr;
-	}
-
-	private function getUserAttributes($user_id) {
-		$db = Zend_Registry::get('db');
-		$select = $db->select()
-				->from("users_attributes")
-				->where("user_id = ?", $user_id);
-		if ($row = $db->fetchRow($select)) {
-			
-		} else {
-			$row = array("user_id" => $user_id, "user_location" => "", "user_about" => "","user_mail_comments"=>'0');
-		}
-		$row["user_about"] = preg_replace('/((?:[^"\'])(?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i', '<a href="$1" rel="nofollow" target="blank">$1</a>', nl2br($row["user_about"]));
-		return $row;
-	}
-
-	private function updateAttributes($user_id, $att) {
-		$db = Zend_Registry::get('db');
-		$where = array();
-		$where[] = $db->quoteInto('user_id = ?', $user_id);
-		$db->delete("users_attributes", $where);
-		$stripTags = new Zend_Filter_StripTags(array('p', 'b', 'br', 'strong'), array());
-		$user_about = $stripTags->filter($att["user_about"]);
-
-		return $db->insert("users_attributes", array("user_id" => $user_id, "user_location" => $att["user_location"], "user_about" => $user_about,'user_mail_comments'=>$att["user_mail_comments"]));
-	}
+	
 
 	private function updatePassword($user_id, $old_password, $new_password) {
 
