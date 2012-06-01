@@ -1,6 +1,9 @@
 root { 
     display: block;
 }
+img {
+	border: 0px;
+}
 body {
 	padding: 0px;
 	margin: 0px;
@@ -511,6 +514,7 @@ ul#topmenu li a:hover {
 	border: 1px solid #ccc;
 	width: 623px;
 	padding: 2px;
+	background-color: #fff;
 }
 .recipe_info {
 	float: left;
@@ -666,7 +670,7 @@ ul#topmenu li a:hover {
 .recipe_comment_avatar {
 	float: left;
 	text-align: center;
-	width: 50px;
+	width: 80px;
 	overflow: hidden;
 }
 .recipe_comment_avatar span {
@@ -674,7 +678,7 @@ ul#topmenu li a:hover {
 }
 .recipe_comment_content {
 	float: left;
-	width: 500px;
+	width: 470px;
 	margin-left: 20px;
 }
 .recipe_comment_date {
@@ -1262,4 +1266,233 @@ div.as-row:hover {
 }
 .t-unread {
 	font-weight: bold;
+}
+.ui-button, .ui-spinner-up, .ui-spinner-down {
+	background: #ffffff;
+	background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5));
+	background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 );
+	border: 1px solid #999;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding: 8px 15px 8px 15px !important;
+}
+.ui-button:hover, .ui-spinner-up:hover, .ui-spinner-down:hover {
+	border-color: #000;
+}
+.ui-button-smaller {
+	padding: 4px 8px 4px 8px !important;
+}
+.ui-spinner-up, .ui-spinner-down {
+	padding: 4px 8px 4px 8px !important;
+	cursor: pointer;
+}
+label, input[type="checkbox"], input[type="radio"] {
+	cursor: pointer;
+}
+.calc_info_block {
+	margin-bottom: 5px;
+}
+.calc_info_label {
+	float: left;
+	width: 150px;
+	line-height: 26px;
+	font-size: 14px;
+	text-align: right;
+}
+.smaller_block .calc_info_label {
+	width: 150px;
+}
+.smaller_block .calc_info_data {
+	width: 150px;
+}
+.calc_info_data {
+	margin-left: 10px;
+	float: left;
+	width: 460px;
+}
+.calc_info_data select {
+	height: 28px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 456px;
+	padding: 2px;
+}
+.calc_info_data input[type="text"]{
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 450px;
+	padding-left: 4px;
+}
+.smaller_block input[type="text"]{
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 50px;
+}
+.calc_info_data label {
+	font-size: 14px;
+	margin-right: 10px;
+	line-height: 26px;
+}
+.style_recom {
+	line-height: 26px;
+	margin-left: 10px;
+	color: #999;
+}
+.style_res {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 26px;
+}
+.beer_color_container {
+	width: 140px;
+	text-align: center;
+	height: 270px;
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	float: right;
+}
+#beer_color {
+	width: 121px;
+	height: 230px;
+	overflow: hidden;
+	margin: auto;
+	margin-top: 18px;
+}
+.coli_cont {
+	float: left;
+}
+.col_cont {
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+.calc_actions {
+	text-align: right;
+	float: right;
+	width: 280px;
+}
+#status_div {
+	text-align: center;
+	background: #ffffcc;
+	padding: 8px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	font-weight: bold;
+	float: left;
+	width: 530px;
+	margin-top: 2px;
+	min-height: 17px;
+}
+.ing_title {
+	font-weight: bold;
+	font-size: 14px;
+	margin-bottom: 20px;
+}
+#malt-table input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 40px;
+	padding-left: 4px;
+	font-size: 11px;
+}
+#malt-table select {
+	height: 26px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	font-size: 11px;
+}
+.ing_actions {
+	text-align: right;
+	margin-top: 10px;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+}
+.ing_actions input {
+	padding: 3px 10px 3px 10px !important;
+}
+
+
+#hop-table input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 40px;
+	padding-left: 4px;
+	font-size: 11px;
+}
+#hop-table select {
+	height: 26px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	font-size: 11px;
+}
+
+
+#yeast-table input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 40px;
+	padding-left: 4px;
+	font-size: 11px;
+}
+#yeast-table select {
+	height: 26px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	font-size: 11px;
+}
+.calc_notes textarea {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	width: 700px;
+	height: 100px;
+}
+select.malt_list {
+	width: 280px;
+}
+select.hop_list {
+	width: 430px;
+}
+select.yeast_list {
+	width: 690px;
 }

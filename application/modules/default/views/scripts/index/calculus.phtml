@@ -2,6 +2,9 @@
 $this->headTitle()->append(" - Skaičiuoklė ");
 $this->headMeta()->setName('keywords', 'apyniai, mielės, salyklas,alaus gamyba,naminis,receptai,receptas,alus,skaičiuoklė,ibu,ebc,abv');
 ?>
-<div class="inner_container">
-	<?=$this->beerCalculus($this->data);?>
+<div id="calculus_container" class="inner_container">
+	<div class="inner_header">Skaičiuoklė</div>
+	<div>
+		<?=$this->beerCalculus($this->data);?>
+	</div>
 </div>
