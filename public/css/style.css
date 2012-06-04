@@ -979,9 +979,11 @@ div.as-row:hover {
 }
 .brewer_info_actions {
 	margin-top: 15px;
+	text-align: center;
 }
 .brewer_info_actions a {
-	font-size: 14px;
+	font-size: 13px;
+	text-align: center;
 }
 .brewer_info_block {
 	margin-bottom: 5px;
