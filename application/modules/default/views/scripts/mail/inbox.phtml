@@ -14,6 +14,14 @@
 		<input type="hidden" name="type" value="inbox">
 		<input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI']; ?>">
 		<div class="as-table">
+			<div class="as-row">
+				<div class="as-cell">
+					<input type="checkbox" style="border:1 solid #333333" onclick="checkAll($(this)[0].checked)"/>
+				</div>
+				<div class="as-cell"><b>Siuntėjas</b></div>
+				<div class="as-cell"><b>Tema</b></div>
+				<div class="as-cell"><b>Data</b></div>
+			</div>
 			<?php
 			$total = 0;
 			foreach ($this->content as $item) {
@@ -43,8 +51,7 @@
 		<div style="margin: 20px; font-size: 14px;">Žinučių nėra</div>
 	<? } ?>
 	<div style="margin-top: 10px; text-align: right">
-            <span style="float:left"><input type="checkbox" style="border:1 solid #333333" onclick="checkAll($(this)[0].checked)"/>Pažymėti visus</span><input type="button" id="deleteButton" value="Trinti pažymėtas žinutes" class="ui-button" />
-	
+		<input type="button" id="deleteButton" value="Trinti pažymėtas žinutes" class="ui-button" />
 	<div>
 		<?php
 		echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');

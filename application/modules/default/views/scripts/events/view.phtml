@@ -74,7 +74,7 @@ if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
 ?>
 <div id="events_participants_container" class="inner_container">
 	<div class="inner_header">Dalyviai</div>
-	<div class="participants_list">
+	<div class="participants_list" id="registered">
 		<?
 		$z = 0;
 		for ($ii = 0; $ii < count($this->registered_users); $ii++) {

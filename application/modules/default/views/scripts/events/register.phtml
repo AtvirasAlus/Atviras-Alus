@@ -1,11 +1,11 @@
 <?
-for ($ii=0;$ii<count($this->registered_users);$ii++) {
-	
-
+for ($ii = 0; $ii < count($this->registered_users); $ii++) {
+	?>
+	<a href="/brewers/<?= $this->registered_users[$ii]['user_id']; ?>">
+		<img src="http://www.gravatar.com/avatar/<?= md5($this->registered_users[$ii]['user_email']); ?>?rating=G&size=50&default=mm" border="0"/>
+		<span><?= $this->registered_users[$ii]['user_name']; ?></span>
+	</a>
+	<?
+}
 ?>
-<div style="display:inline-block;padding:3;" align="center">
-<div style="float:left;padding:5;background:#FFFFFF;"><a href="/brewers/<?=$this->registered_users[$ii]['user_id'];?>"><img src="http://www.gravatar.com/avatar/<?=md5($this->registered_users[$ii]['user_email']);?>?rating=G&size=50&default=mm" border="0"/></a><br/>
-<a href="/brewers/<?=$this->registered_users[$ii]['user_id'];?>"><?=$this->registered_users[$ii]['user_name'];?> </a></div>
-</div>
-
-<?}?>
+<div class="clear"></div>

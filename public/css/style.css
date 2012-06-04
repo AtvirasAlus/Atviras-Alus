@@ -296,7 +296,9 @@ ul#topmenu li a:hover {
 	font-size: 15px;
 }
 .index_blogs .article_summary {
-	margin-bottom: 5px;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;
 	text-indent: 20px;
 }
 .index_blogs .article_summary a {
@@ -1607,4 +1609,138 @@ ul.ui-autocomplete li a {
 	width: 520px;
 	padding-left: 4px;
 	font-size: 11px;
+}
+.rc_image {
+	height: 138px;
+	width: 73px;
+	float: left;
+	margin-bottom: 10px;
+}
+.rc_info {
+	float: left;
+	width: 180px;
+	overflow: hidden;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	margin-top: 7px;
+}
+.rc_info div {
+	margin-bottom: 5px;
+}
+.rc_title {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 10px;
+	text-align: center;
+}
+.rct_image {
+	height: 50px;
+	width: 26px;
+	float: left;
+	margin: 10px;
+}
+.rct_info {
+	float: left;
+	margin: 10px;
+	margin-left: 0px;
+	width: 770px;
+}
+#tad_feed ul {
+	list-style: none;
+	padding: 0px;
+}
+#tad_feed h4 {
+	font-weight: normal;
+	font-size: 14px;
+	margin: 0px;
+	padding: 0px;
+}
+#tad_feed p {
+	margin: 0px;
+	padding: 0px;
+}
+#tad_feed li {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+.tw_avatar {
+	float: left;
+	text-align: center;
+	width: 90px;
+	overflow: hidden;
+}
+.tw_avatar span {
+	display: block;
+}
+.tw_data {
+	float: left;
+	width: 330px;
+	overflow: hidden; 
+}
+#bubl_container .tw_data {
+	width: 720px;
+}
+.tweet-remove {
+	display: none;
+	float: right;
+	width: 14px;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid #000;
+}
+.tweet-remove:hover {
+	background-color: #999;
+}
+.tw_item {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;
+}
+.tw_item:hover {
+	background-color: #f5f5f5;
+}
+.tw_text {
+	margin-bottom: 10px;
+}
+.tw_link_image {
+	float: left;
+	width: 70px;
+	overflow: hidden;
+	margin-left: 10px;
+}
+.tw_link_text {
+	float: left;
+	margin-left: 10px;
+}
+.tw_link_text span {
+	font-weight: bold;
+	display: block;
+	margin-bottom: 10px;
+}
+ul.statuses {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+ul.statuses li {
+	padding: 0px;
+	margin: 0px;
+}
+.tweet-msg {
+	display: block;
+	margin-bottom: 10px;
+}
+.wi-320 {
+	width: 320px;
+}
+.wi-240 {
+	width: 240px;
+}
+#bubl_container .wi-320 {
+	width: 700px;
+}
+#bubl_container .wi-240 {
+	width: 620px;
 }

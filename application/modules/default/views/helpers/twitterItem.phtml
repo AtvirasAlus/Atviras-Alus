@@ -1,52 +1,88 @@
 <?
 if (isset($this->tweet['tweet_id'])) {
-$can_delete=false;
- if ($this->twitter->viewer !=0) {
-$can_delete=($this->tweet['tweet_owner']==$this->twitter->viewer) || $this->twitter->viewer==-999;
-}
-if ($can_delete) {
-?>
-<li id="tw-<?=$this->tweet['tweet_id'];?>" onMouseOver="$('#tw-<?=$this->tweet['tweet_id'];?>-close').css('display','inline')" onMouseOut="$('#tw-<?=$this->tweet['tweet_id'];?>-close').css('display','none')">
-<span id="tw-<?=$this->tweet['tweet_id'];?>-close" class="tweet-remove ui-corner-all" onClick="if (confirm('trinti?')) {removeTweet(<?=$this->tweet['tweet_id'];?>)}">x</span>
-<? }else{ ?>
-<li id="tw-<?=$this->tweet['tweet_id'];?>">
-<?}?>
-	<table cellpading="0" cellspacing="0"><tr><td valign="top"><div class="tweet-avatar"><a href="/brewers/<?=$this->tweet['user_id'];?>"><img  src="http://www.gravatar.com/avatar/<?=md5($this->tweet['user_email']);?>?rating=G&amp;size=48&amp;default=mm" border="0"/></a></div></td><td valign="top">
-<div><a href="/brewers/<?=$this->tweet['user_id'];?>" style="font-size:12"><?=$this->tweet['user_name'];?></a>:</div>
-   <? if (strlen($this->tweet['tweet_message'])>0) {?>
-	
- <div class="tweet-body">
-
-      <span class="tweet-msg"><?= preg_replace('/((?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i','<a href="$1" rel="nofollow" target="blank">$1</a>',$this->tweet['tweet_message']);?></span>
-
-<?}?>
-<?if (strlen($this->tweet['tweet_link_url'])>0) {?>
-<a href="<?=$this->tweet['tweet_link_url'];?>" target="_blank"><div class="tweet-attachment"><table><tr>
-	<? if (isset($this->tweet['tweet_link_image'])){ 
-		if (list($width, $height, $type, $attr) =@getimagesize($this->tweet['tweet_link_image'])) {
-			if ($width>$height) {
-			      $i_width=70;
-			      $i_height=ceil($height/$width*$i_width);
-			    }else{
-			      $i_height=70;
-			      $i_width=ceil($width/$height*$i_height);
-			    }
-      			echo "<td valign='top'><img src='".$this->tweet['tweet_link_image']."' width='".$i_width."' height='".$i_height."' /></td>";
-      		 }
-	}?>
-<td>
-
-      <h4><?=trim($this->tweet['tweet_link_title']);?></h4>
-      <div class="tweet-attachment-desc"><?if (isset($this->tweet['tweet_link_description'])) { print $this->tweet['tweet_link_description'];}?></div>
-</td>
-</tr>
-</table>
-</div></a>
-      <?}?>
-
+	$can_delete = false;
+	if ($this->twitter->viewer != 0) {
+		$can_delete = ($this->tweet['tweet_owner'] == $this->twitter->viewer) || $this->twitter->viewer == -999;
+	}
+	if ($can_delete) {
+		?>
+		<li id="tw-<?= $this->tweet['tweet_id']; ?>" onMouseOver="$('#tw-<?= $this->tweet['tweet_id']; ?>-close').css('display','inline')" onMouseOut="$('#tw-<?= $this->tweet['tweet_id']; ?>-close').css('display','none')">
+			<span id="tw-<?= $this->tweet['tweet_id']; ?>-close" class="tweet-remove ui-corner-all" onClick="if (confirm('trinti?')) {removeTweet(<?= $this->tweet['tweet_id']; ?>)}">x</span>
+		<? 
+	} else { 
+		?>
+		<li id="tw-<?= $this->tweet['tweet_id']; ?>">
+		<? 
+	} 
+	?>
+	<div class="tw_item">
+		<div class="tw_avatar">
+			<a href="/brewers/<?= $this->tweet['user_id']; ?>">
+				<img  src="http://www.gravatar.com/avatar/<?= md5($this->tweet['user_email']); ?>?rating=G&amp;size=48&amp;default=mm" border="0"/>
+				<span><?= $this->tweet['user_name']; ?></span>				
+			</a>
+		</div>
+		<div class="tw_data">
+			<div class="tweet-body">
+				<? 
+				if (strlen($this->tweet['tweet_message']) > 0) { 
+					?>
+						<span class="tweet-msg">
+							<?= preg_replace('/((?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i', '<a href="$1" rel="nofollow" target="blank">$1</a>', $this->tweet['tweet_message']); ?>
+						</span>
+					<? 
+				} 
+				if (strlen($this->tweet['tweet_link_url']) > 0) { 
+					?>
+					<a href="<?= $this->tweet['tweet_link_url']; ?>" target="_blank">
+						<div class="tweet-attachment">
+							<div class="tw_link_image">
+								<?
+								$img_width = 320;
+								if (isset($this->tweet['tweet_link_image']) && !empty($this->tweet['tweet_link_image'])) {
+									$img_width = 240;
+									if (list($width, $height, $type, $attr) = @getimagesize($this->tweet['tweet_link_image'])) {
+										if ($width > $height) {
+											$i_width = 70;
+											$i_height = ceil($height / $width * $i_width);
+										} else {
+											$i_height = 70;
+											$i_width = ceil($width / $height * $i_height);
+										}
+										?>
+										<img src='<?=$this->tweet['tweet_link_image']?>' width='<?=$i_width?>' height='<?=$i_height?>' />
+										<?php
+									}
+								}
+								?>
+							</div>
+							<div class="tw_link_text wi-<?=$img_width;?>">
+								<span>
+									<?= trim($this->tweet['tweet_link_title']); ?>
+								</span>
+								<div class="tweet-attachment-desc">
+									<? 
+									if (isset($this->tweet['tweet_link_description'])) {
+										print $this->tweet['tweet_link_description'];
+									}
+									?>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</a>
+					<? 
+				}
+				?>
+			</div>
+		</div>
+		<div class="clear"></div>
 	</div>
-	</td></tr></table>
 	</li>
-<?}else{?>
-0
-<?}?>
+	<? 
+} else { 
+	?>
+	0
+	<?
+}
+?>

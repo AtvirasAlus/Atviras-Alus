@@ -1,4 +1,3 @@
-<? $this->headLink()->appendStylesheet("/public/css/twitter.css"); ?>
 <script type="text/javascript">
 ROWS_COUNT=15;
 REM_TWEET_URL = "/tweet/removetweet/";
@@ -17,28 +16,27 @@ $.post(REM_TWEET_URL,{id:id}, function(msg){
 	});
 }
 </script>
-<div style="margin-top:10;width:800px;;background-color: #FFFFFF;padding:10" align="left" class="ui-corner-all">
-<h1 style="text-decoration:italic;font-size:12px">Burbuliatorius:</h1><hr style="background-color: #EEEEEE;height:1px;border:0"/>
-<div id="twitter-container">
-
-<div id="tweet-timeline"><ul class="statuses">
-<?
-$curdate="";
-?>
-<?  if (count($this->content)): ?>
-
-<? foreach ($this->content as $item) :
-print $this->twitter()->tweetItem($item);
-  endforeach; ?>
-</ul>
+<div class="inner_container" id="bubl_container">
+	<div class="inner_header">Burbuliatorius</div>
+	<?php
+	if (count($this->content)): 
+		?>
+		<div id="twitter-container">
+			<div id="tweet-timeline">
+				<ul class="statuses">
+					<?
+					$curdate="";
+					foreach ($this->content as $item) :
+						print $this->twitter()->tweetItem($item);
+					endforeach;
+					?>
+				</ul>
+			</div>
+		</div>
+		<?
+	endif;
+	?>
+	<div>
+	<?php echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml'); ?>	
+	</div>
 </div>
-</div>
-
-<?  endif; ?>
-
-
-
-<?php echo $this->paginationControl($this->content,
-                                    'Sliding',
-                                    'paginator/item.phtml'); ?>
-                                    </div>
