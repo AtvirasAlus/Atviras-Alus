@@ -54,7 +54,7 @@
 		<div style="margin: 20px; font-size: 14px;">Žinučių nėra</div>
 	<? } ?>
 	<div style="margin-top: 10px; text-align: right">
-		<input type="button" id="deleteButton" value="Trinti pažymėtas žinutes" class="ui-button" />
+		<span style="float:left"><input type="checkbox" style="border:1 solid #333333" onclick="checkAll($(this)[0].checked)"/>Pažymėti visus</span><input type="button" id="deleteButton" value="Trinti pažymėtas žinutes" class="ui-button" />
 	</div>
 	<div>
 		<?php
@@ -77,4 +77,8 @@
 			}
 		});
 	})
+        function checkAll(val) {
+                 $('input[name="mail_id[]"]').attr('checked', val);
+        
+        }
 </script>
