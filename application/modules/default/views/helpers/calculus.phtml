@@ -230,14 +230,19 @@
 
 		if ($("input[name='extract_m']:checked").val()=="plato") {
 			$('#recipe_sg_span')[0].innerHTML = plato_sg(sgf,"sg").toFixed(1)
+			$('.og_ph').html(plato_sg(sgf,"sg").toFixed(1));
 			$('#recipe_fg_span')[0].innerHTML = plato_sg(fgf,"sg").toFixed(1)
+			$('.fg_ph').html(plato_sg(fgf,"sg").toFixed(1));
 		}else{
 			$('#recipe_sg_span')[0].innerHTML = sgf.toFixed(3)
+			$('.og_ph').html(sgf.toFixed(3));
 			$('#recipe_fg_span')[0].innerHTML = fgf.toFixed(3)
+			$('.fg_ph').html(fgf.toFixed(3));
 		}
 		//cia
 
 		$('#recipe_abv_span')[0].innerHTML = (Math.round(calc_ABV(sgf * 1000, fgf * 1000) * 10) / 10).toFixed(1) + "%";
+		$('.abv_ph').html((Math.round(calc_ABV(sgf * 1000, fgf * 1000) * 10) / 10).toFixed(1) + "%");
 		$('#beer_color').css('backgroundColor', colorHex(srm));
 		var hops = $('#hops_form').serializeArray();
 		var o = {hop_alpha:[], hop_weight:[], hop_time:[]};
@@ -248,7 +253,9 @@
 		}
 		var ibu = calc_IBU(o, bs, sgf);
 		$('#recipe_ebc_span')[0].innerHTML = Math.round(srm_to_ecb(srm));
+		$('.ebc_ph').html(Math.round(srm_to_ecb(srm)));
 		$('#recipe_ibu_span')[0].innerHTML = Math.round(ibu);
+		$('.ibu_ph').html(Math.round(ibu));
 		$('#recipe_ebc').val(Math.round(srm_to_ecb(srm)))
 		$('#recipe_ibu').val(Math.round(ibu))
 		kgToPercent();
@@ -744,7 +751,17 @@
 		</div>
 		<div class="clear"></div>
 	</div>
-	<div class="ing_title">Salyklas</div>
+	<div class="ing_block">
+		<div class="ing_title">Salyklas</div>
+		<div class="ing_dub">
+			OG: <span class="og_ph">?</span> 
+			FG: <span class="fg_ph">?</span> 
+			ABV: <span class="abv_ph">?</span>
+			EBC: <span class="ebc_ph">?</span>
+			IBU: <span class="ibu_ph">?</span>
+		</div>
+		<div class="clear"></div>
+	</div>
 	<div class="calc_malts">
 		<form id="malt_form" name="malt_form">
 			<div id="malt-table" class="as-table">
@@ -763,7 +780,17 @@
 			<input type="button" class="ui-button" id="rem-malt-btn" value="Pašalinti pažymėtą" />
 		</div>
 	</div>
-	<div class="ing_title">Apyniai</div>
+	<div class="ing_block">
+		<div class="ing_title">Apyniai</div>
+		<div class="ing_dub">
+			OG: <span class="og_ph">?</span> 
+			FG: <span class="fg_ph">?</span> 
+			ABV: <span class="abv_ph">?</span>
+			EBC: <span class="ebc_ph">?</span>
+			IBU: <span class="ibu_ph">?</span>
+		</div>
+		<div class="clear"></div>
+	</div>
 	<div class="calc_hops">
 		<form id="hops_form" name="hops_form">
 			<div id="hop-table" class="as-table">
@@ -780,7 +807,17 @@
 			<input type="button" class="ui-button" id="rem-hop-btn" value="Pašalinti pažymėtą" />
 		</div>
 	</div>
-	<div class="ing_title">Mielės</div>
+	<div class="ing_block">
+		<div class="ing_title">Mielės</div>
+		<div class="ing_dub">
+			OG: <span class="og_ph">?</span> 
+			FG: <span class="fg_ph">?</span> 
+			ABV: <span class="abv_ph">?</span>
+			EBC: <span class="ebc_ph">?</span>
+			IBU: <span class="ibu_ph">?</span>
+		</div>
+		<div class="clear"></div>
+	</div>
 	<div class="calc_yeasts">
 		<form id="yeast_form" name="yeast_form">
 			<div id="yeast-table" class="as-table">
@@ -795,11 +832,13 @@
 			<input type="button" class="ui-button" id="rem-yeast-btn" value="Pašalinti pažymėtą" />
 		</div>
 	</div>
-	<div class="ing_title">Pastabos</div>
+	<div class="ing_block">
+		<div class="ing_title">Pastabos</div>
+		<div class="clear"></div>
+	</div>
 	<div class="calc_notes">
 		<textarea id="comments"></textarea>
 	</div>
-	<div class="inner_footer">Dėkojame Marijui iš <a href="http://savasalus.lt" target="_blank" style="margin: 0px;">"Savas Alus"</a> už suteiktą informaciją</div>
 </div>
 
 

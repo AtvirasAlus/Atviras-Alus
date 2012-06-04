@@ -7,7 +7,7 @@ img {
 body {
 	padding: 0px;
 	margin: 0px;
-	font-family: arial;
+	font-family: arial, verdana, sans-serif;
 	font-size: 12px;
 	color: #333;
 }
@@ -17,13 +17,11 @@ body {
 a, a:visited {
 	color: #755531;
 	text-decoration: none;
-	font-family: Georgia;
 }
 a:hover {
 	color: #F8966E;
 }
 h1 {
-	font-family: Georgia;
 	font-weight: bold;
 	color: #666666;
 }
@@ -62,7 +60,6 @@ body {
 	margin-top: 12px;
 	float: left;
 	color: #777;
-	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size: 12px;
 	font-style: italic;
 }
@@ -102,7 +99,6 @@ ul#topmenu li {
 }
 ul#topmenu li a, ul#topmenu li a:visited {
 	font-size: 16px;
-	font-family: Georgia, "Times New Roman", Times, serif;
 	font-weight: bold;
 }
 ul#topmenu li a:hover {
@@ -243,7 +239,6 @@ ul#topmenu li a:hover {
 }
 .block_header {
 	font-size: 12px;
-	font-family: Georgia;
 	font-weight: bold;
 	color: #666;
 	padding-bottom: 8px;
@@ -1268,6 +1263,8 @@ div.as-row:hover {
 	font-weight: bold;
 }
 .ui-button, .ui-spinner-up, .ui-spinner-down {
+	font-family: arial, verdana, sans-serif;
+	font-size: 12px;
 	background: #ffffff;
 	background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5));
@@ -1289,7 +1286,10 @@ div.as-row:hover {
 	padding: 4px 8px 4px 8px !important;
 }
 .ui-spinner-up, .ui-spinner-down {
-	padding: 4px 8px 4px 8px !important;
+	height: 26px;
+	width: 28px;
+	padding: 5px 7px 5px 7px !important;
+	margin: 2px;
 	cursor: pointer;
 }
 label, input[type="checkbox"], input[type="radio"] {
@@ -1405,7 +1405,18 @@ label, input[type="checkbox"], input[type="radio"] {
 .ing_title {
 	font-weight: bold;
 	font-size: 14px;
-	margin-bottom: 20px;
+	float: left;
+}
+.ing_dub {
+	color: #999;
+	float: right;
+}
+.ing_dub span {
+	padding-right: 10px;
+	font-weight: bold;
+}
+.ing_block {
+	margin-bottom: 20px;	
 }
 #malt-table input[type="text"] {
 	height: 24px;
@@ -1495,4 +1506,105 @@ select.hop_list {
 }
 select.yeast_list {
 	width: 690px;
+}
+ul.ui-autocomplete {
+	padding: 5px !important;
+	background: none !important;
+	background-color: #eee !important;
+}
+ul.ui-autocomplete li a {
+	padding: 5px !important;
+	-webkit-border-radius: 5px !important;
+	-moz-border-radius: 5px !important;
+	border-radius: 5px !important;
+	background: none !important;
+	border: none !important;
+	color: #333 !important;
+	margin: 0px !important;
+}
+#abv,
+#bw_result,
+#strike_temp {
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+#calc1_container dl {
+	margin-bottom: 5px;
+}
+#calc1_container dt {
+	float: left;
+	width: 270px;
+	font-size: 14px;
+	line-height: 26px;
+	text-align: right;
+}
+#calc1_container dd {
+	float: left;
+	margin: 0px;
+	margin-left: 20px;
+	width: 530px;
+}
+#calc1_container dd input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 520px;
+	padding-left: 4px;
+	font-size: 11px;
+}
+#calc2_container dl {
+	margin-bottom: 5px;
+}
+#calc2_container dt {
+	float: left;
+	width: 270px;
+	font-size: 14px;
+	line-height: 26px;
+	text-align: right;
+}
+#calc2_container dd {
+	float: left;
+	margin: 0px;
+	margin-left: 20px;
+	width: 530px;
+}
+#calc2_container dd input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 520px;
+	padding-left: 4px;
+	font-size: 11px;
+}
+#calc3_container dl {
+	margin-bottom: 5px;
+}
+#calc3_container dt {
+	float: left;
+	width: 270px;
+	font-size: 14px;
+	line-height: 26px;
+	text-align: right;
+}
+#calc3_container dd {
+	float: left;
+	margin: 0px;
+	margin-left: 20px;
+	width: 530px;
+}
+#calc3_container dd input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 520px;
+	padding-left: 4px;
+	font-size: 11px;
 }
