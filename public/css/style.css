@@ -1092,6 +1092,7 @@ div.as-row:hover {
 	border: 1px solid #ccc;
 	width: 698px;
 	padding: 2px;
+	background-color: #ffffff;
 }
 #__attributesForm dd textarea {
 	height: 100px;
