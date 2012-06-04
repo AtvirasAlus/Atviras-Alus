@@ -1,0 +1,84 @@
+body {
+	background-color: #ffffff;
+	padding: 0px;
+	margin: 0px;
+}
+#header_container {
+	display: none;
+}
+#bugreport_link {
+	display: none;
+}
+#left {
+	display: none;
+}
+#main_container {
+	padding: 0px;
+	margin: 0px;
+}
+#main_content {
+	padding: 0px;
+	margin: 0px;
+	width: 870px;
+}
+.recipe_tools_container {
+	display: none;
+}
+.recipe_image {
+	display: none;
+}
+.recipe_result {
+	background-color: #fff;
+}
+.recipe_tags {
+	display: none;
+}
+.recipe_comments {
+	display: none;
+}
+#status_div {
+	display: none;
+}
+.calc_actions {
+	display: none;
+}
+.ing_actions {
+	display: none;
+}
+.calc_malts {
+	margin-bottom: 20px;
+}
+.calc_hops {
+	margin-bottom: 20px;
+}
+.calc_yeasts {
+	margin-bottom: 20px;
+}
+.ing_dub {
+	display: none;
+}
+.col_cont input {
+	border: none !important;
+}
+.col_cont select {
+	border: 0px;
+	background-color: #fff;
+}
+.col_cont input[type="button"] {
+	display: none;
+}
+.ui-spinner-up {
+	display: none;
+}
+.ui-spinner-down {
+	display: none;
+}
+.recipe_list_tags {
+	display: none;
+}
+.comments_title {
+	display: none;
+}
+.recipe_comment {
+	display: none;
+}
