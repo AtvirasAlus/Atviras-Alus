@@ -11,6 +11,7 @@ class BrewerController extends Zend_Controller_Action {
 	}
 
 	public function infoAction() {
+		
 		$db = Zend_Registry::get('db');
 		$this->view->user_info = array("total_sessions" => 0, "total_brewed" => 0, "total_recipes" => 0, "user_lastlogin" => 0, "user_created" => 0, "user_name" => '');
 		if ($this->_getParam('brewer') > 0) {
@@ -64,6 +65,16 @@ class BrewerController extends Zend_Controller_Action {
 				$this->view->user_info["tags"] = array();
 				if ($rows = $db->fetchAll($select)) {
 					$this->view->user_info["tags"] = $rows;
+				}
+				$select = $db->select()
+					->from("beer_brew_sessions", array("session_caskingdate", "session_secondarydate", "session_primarydate", "session_recipe", "session_fg", "session_og", "session_size", "session_brewer", "session_name", "session_id", 'session_comments' => 'LEFT( session_comments, LOCATE( " ", session_comments, 30 ) )'))
+					->join("users", "beer_brew_sessions.session_brewer = users.user_id")
+					->joinLeft("beer_recipes", "beer_brew_sessions.session_recipe=beer_recipes.recipe_id", array("recipe_id", "recipe_name", "recipe_publish"))
+					->where("beer_brew_sessions.session_brewer =?", $brewer)
+					->order("session_primarydate DESC");
+				$this->view->user_info['sessions'] = array();
+				if ($rows = $db->fetchAll($select)) {
+					$this->view->user_info["sessions"] = $rows;
 				}
 			}
 		}

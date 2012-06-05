@@ -39,52 +39,112 @@
 		<div class="clear"></div>
 	</div>
 </div>
-
-<div id="brewer_info_recipe_container" class="inner_container">
-	<div class="inner_header">Alaus receptai (<?=$this->user_info['total_recipes'];?>) <a style="font-size: 12px" href="/brewer/recipes/<?=$this->user_info['user_id'];?>"> peržiūrėti</a></div>
-	<div id="tags">
-		<ul>
-			<?
-			for ($i=0;$i<count($this->user_info['recipes']);$i++) {
-				?>
-				<li class="tag<?=rand(1,10);?>" style="background-color:<?=$this->colorHex($this->user_info['recipes'][$i]['recipe_ebc']);?>"><a href="/alus/receptas/<?=$this->user_info['recipes'][$i]['recipe_id'];?>-<?=$this->urlMaker($this->user_info['recipes'][$i]['recipe_name']);?>"><?=trim($this->user_info['recipes'][$i]['recipe_name']);?></a></li>
+<?php
+if (sizeof($this->user_info['recipes']) > 0){
+	?>
+	<div id="brewer_info_recipe_container" class="inner_container">
+		<div class="inner_header">Alaus receptai (<?=$this->user_info['total_recipes'];?>) <a style="font-size: 12px" href="/brewer/recipes/<?=$this->user_info['user_id'];?>"> peržiūrėti</a></div>
+		<div id="tags">
+			<ul>
 				<?
-			}
-			?>
-		</ul>
-	</div>
-</div>
-
-<div id="brewer_info_tag_container" class="inner_container">
-	<div class="inner_header">Žymos</div>
-	<div id="tags">
-		<ul>
-			<?
-			for ($i=0;$i<count($this->user_info['tags']);$i++) {
+				for ($i=0;$i<count($this->user_info['recipes']);$i++) {
+					?>
+					<li class="tag<?=rand(1,10);?>" style="background-color:<?=$this->colorHex($this->user_info['recipes'][$i]['recipe_ebc']);?>"><a href="/alus/receptas/<?=$this->user_info['recipes'][$i]['recipe_id'];?>-<?=$this->urlMaker($this->user_info['recipes'][$i]['recipe_name']);?>"><?=trim($this->user_info['recipes'][$i]['recipe_name']);?></a></li>
+					<?
+				}
 				?>
-				<li style="font-size:<?=(80+min($this->user_info['tags'][$i]['weight']*20,200));?>%"><a href="/search/brewer:<?=$this->user_info['user_name'];?>|tags:<?=$this->user_info['tags'][$i]['tag_text'];?>" style="color:#333"><?=$this->user_info['tags'][$i]['tag_text'];?></a></li>
-				<?
-			}
-			?>
-		</ul>
+			</ul>
+		</div>
 	</div>
-</div>
-
-<div id="brewer_info_comments_container" class="inner_container">
-	<div class="inner_header">Receptų komentarai</div>
-	<div id="info_comments">
-		<?
-		for ($i=0;$i<count($this->user_info['recipes_comments']);$i++) {
-			?>
-			<div class="info_comment">
-				<a href="/alus/receptas/<?=$this->user_info['recipes_comments'][$i]['recipe_id'];?>-<?=$this->urlMaker($this->user_info['recipes_comments'][$i]['recipe_name']);?>">
-					<?=$this->user_info['recipes_comments'][$i]['recipe_name'];?>
-				</a>
-				<span><?=$this->user_info['recipes_comments'][$i]['comment_date'];?></span>
-				<div><?=$this->user_info['recipes_comments'][$i]['comment_text'];?></div>
+	<?php
+}
+if (sizeof($this->user_info['sessions']) > 0){
+	?>
+	<div id="brewer_info_sessions_container" class="inner_container">
+		<div class="inner_header">Aludario virimai</div>
+		<div class="as-table">
+			<div class="as-row">
+				<div class="as-cell"><b>Pavadinimas</b></div>
+				<div class="as-cell"><b>Receptas</b></div>
+				<div class="as-cell"><b>Kiekis</b></div>
+				<div class="as-cell"><b>OG</b></div>
+				<div class="as-cell"><b>FG</b></div>
+				<div class="as-cell"><b>Pirminė fermentacija</b></div>
+				<div class="as-cell"><b>Antrinė fermentacija</b></div>
+				<div class="as-cell"><b>Išpilstyta</b></div>
 			</div>
 			<?
-		}
-		?>
+			foreach ($this->user_info['sessions'] as $session){
+				?>
+				<div class="as-row">
+					<div class="as-cell"><?=$session['session_name']?></div>
+					<?php
+					if ($session['recipe_publish'] == "1"){
+						?>
+						<div class="as-cell">
+							<a href="/alus/receptas/<?=$session['recipe_id']?>-<?=$this->urlMaker($session['recipe_name'])?>">
+								<?=$session['recipe_name']?>
+							</a>
+						</div>
+						<?
+					} else {
+						?>
+						<div class="as-cell">Receptas nėra viešas</div>
+						<?php
+					}
+					?>
+					<div class="as-cell"><?=$session['session_size']?></div>
+					<div class="as-cell"><?=$session['session_og']?></div>
+					<div class="as-cell"><?=$session['session_fg']?></div>
+					<div class="as-cell"><?=($session['session_primarydate'] == "0000-00-00") ? "-" : $session['session_primarydate']; ?></div>
+					<div class="as-cell"><?=($session['session_secondarydate'] == "0000-00-00") ? "-" : $session['session_secondarydate']; ?></div>
+					<div class="as-cell"><?=($session['session_caskingdate'] == "0000-00-00") ? "-" : $session['session_caskingdate']; ?></div>
+				</div>
+				<?php
+			}
+			?>
+		</div>
 	</div>
-</div>
+	<?
+}
+if (sizeof($this->user_info['tags']) > 0) {
+	?>
+	<div id="brewer_info_tag_container" class="inner_container">
+		<div class="inner_header">Žymos</div>
+		<div id="tags">
+			<ul>
+				<?
+				for ($i=0;$i<count($this->user_info['tags']);$i++) {
+					?>
+					<li style="font-size:<?=(80+min($this->user_info['tags'][$i]['weight']*20,200));?>%"><a href="/search/brewer:<?=$this->user_info['user_name'];?>|tags:<?=$this->user_info['tags'][$i]['tag_text'];?>" style="color:#333"><?=$this->user_info['tags'][$i]['tag_text'];?></a></li>
+					<?
+				}
+				?>
+			</ul>
+		</div>
+	</div>
+	<?
+}
+if (sizeof($this->user_info['recipes_comments']) > 0){
+	?>
+	<div id="brewer_info_comments_container" class="inner_container">
+		<div class="inner_header">Receptų komentarai</div>
+		<div id="info_comments">
+			<?
+			for ($i=0;$i<count($this->user_info['recipes_comments']);$i++) {
+				?>
+				<div class="info_comment">
+					<a href="/alus/receptas/<?=$this->user_info['recipes_comments'][$i]['recipe_id'];?>-<?=$this->urlMaker($this->user_info['recipes_comments'][$i]['recipe_name']);?>">
+						<?=$this->user_info['recipes_comments'][$i]['recipe_name'];?>
+					</a>
+					<span><?=$this->user_info['recipes_comments'][$i]['comment_date'];?></span>
+					<div><?=$this->user_info['recipes_comments'][$i]['comment_text'];?></div>
+				</div>
+				<?
+			}
+			?>
+		</div>
+	</div>
+	<?
+}
+?>
