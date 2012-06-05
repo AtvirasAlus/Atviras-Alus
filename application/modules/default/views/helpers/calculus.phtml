@@ -487,7 +487,13 @@
 			calc();
 		});
                 $("#beer_name").bind('change', function (event, ui) {
-                    $("#save").attr("disabled",($("#beer_name").val().length>0 ? '' : 'disabled'));
+                    var dis =($("#beer_name").val().length>0) ? '' : 'disabled';
+                    $("#save").attr("disabled",dis);
+                    if (dis.length>0) {
+                     $("#beer_name").css('background','#FF9175');
+                    }else{
+                     $("#beer_name").css('background','');
+                    }
 		});
                 $("#beer_name").bind('keyup', function (event, ui) {
                     $("#beer_name").trigger('change');
@@ -604,6 +610,7 @@
 		<? } ?>
 		setTimeout(calc,500)
 		setTimeout(beer_style_change,500)
+                $("#beer_name").trigger('change');
 	});
 
 	function calc_out(url) {
