@@ -178,7 +178,7 @@
 			var o = $(tot_wdt[i]);
 			_total += parseFloat(o.val());
 		}
-		for (var i = 0; i < tot_wdt.length; i++) {
+		for (var i = 0; i < tot_wdt.length-1; i++) {
 			var o = $(tot_wdt[i]);
 			var id = o.attr("id").split("_");
 			$("#malt_perc_" + id[2]).html("<b>" + (Math.round((o.val() / _total * 100) * 10) / 10) + " %</b>");
