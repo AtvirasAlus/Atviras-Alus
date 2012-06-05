@@ -306,7 +306,18 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 if (isset($this->content)) {
 	?>
 	<div class="inner_container" id="search_result_container">
-		<div class="inner_header">Paieškos rezultatai</div>
+		<div class="inner_header">
+			Paieškos rezultatai
+		</div>
+		<?php
+		if (isset($this->filter_values['tag_text']) && !empty($this->filter_values['tag_text'])){
+			?>
+			<div style="height: 0px; overflow: hidden;">
+				<h1><?=$this->filter_values['tag_text'];?></h1>
+			</div>
+			<?
+		}
+		?>
 		<div class="style_recipes">
 			<?php
 			$i = 0;

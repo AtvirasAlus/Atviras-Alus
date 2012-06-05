@@ -47,7 +47,7 @@
 			<?
 			for ($i=0;$i<count($this->user_info['recipes']);$i++) {
 				?>
-				<li class="tag<?=rand(1,10);?>" style="background-color:<?=$this->colorHex($this->user_info['recipes'][$i]['recipe_ebc']);?>"><a href="/alus/receptas/<?=$this->user_info['recipes'][$i]['recipe_id'];?>-<?=$this->escapeParam($this->user_info['recipes'][$i]['recipe_name']);?>"><?=trim($this->user_info['recipes'][$i]['recipe_name']);?></a></li>
+				<li class="tag<?=rand(1,10);?>" style="background-color:<?=$this->colorHex($this->user_info['recipes'][$i]['recipe_ebc']);?>"><a href="/alus/receptas/<?=$this->user_info['recipes'][$i]['recipe_id'];?>-<?=$this->urlMaker($this->user_info['recipes'][$i]['recipe_name']);?>"><?=trim($this->user_info['recipes'][$i]['recipe_name']);?></a></li>
 				<?
 			}
 			?>
@@ -77,7 +77,7 @@
 		for ($i=0;$i<count($this->user_info['recipes_comments']);$i++) {
 			?>
 			<div class="info_comment">
-				<a href="/alus/receptas/<?=$this->user_info['recipes_comments'][$i]['recipe_id'];?>-<?=$this->escapeParam($this->user_info['recipes_comments'][$i]['recipe_name']);?>">
+				<a href="/alus/receptas/<?=$this->user_info['recipes_comments'][$i]['recipe_id'];?>-<?=$this->urlMaker($this->user_info['recipes_comments'][$i]['recipe_name']);?>">
 					<?=$this->user_info['recipes_comments'][$i]['recipe_name'];?>
 				</a>
 				<span><?=$this->user_info['recipes_comments'][$i]['comment_date'];?></span>

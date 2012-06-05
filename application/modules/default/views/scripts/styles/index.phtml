@@ -2,29 +2,43 @@
 $this->headTitle()->append(" - Alaus stiliai");
 ?>
 <div class="inner_container" id="beer_styles_container">
-	<div class="inner_header">Alaus stiliai</div>
+	<div class="inner_header">
+		<h1>
+			Alaus stiliai
+		</h1>
+	</div>
 	<?php
 	$style_cat = -1;
 	$yeasts_cat = -1;
 	for ($i = 0; $i < count($this->beer_styles); $i++) {
 		if ($yeasts_cat != $this->beer_styles[$i]["yeast_cat"] && $yeasts_cat != -1) {
 			?>
-			<div class="style_category"><?= $this->beer_styles[$i]["yeast_cat_name"]; ?></div>
+			<div class="style_category">
+				<h1>
+					<?= $this->beer_styles[$i]["yeast_cat_name"]; ?>
+				</h1>
+			</div>
 			<?php
 		}
 		$yeasts_cat = $this->beer_styles[$i]["yeast_cat"];
 		if ($style_cat != $this->beer_styles[$i]["style_cat"]) {
 			?>
-			<div class="style_name"><?= $this->beer_styles[$i]["cat_name"]; ?></div>
+			<div class="style_name">
+				<h2>
+					<?= $this->beer_styles[$i]["cat_name"]; ?>
+				</h2>
+			</div>
 			<div class="style_subs">
 		<?php
 		}
 		$style_cat = $this->beer_styles[$i]["style_cat"];
 		?>
 		<div class="subcat_name">
-			<a href="/stilius/<?= $this->beer_styles[$i]['style_id']; ?>-<?= urlencode(implode("_", explode("/", $this->beer_styles[$i]['style_name']))); ?>">
+			<h3>
+				<a href="/stilius/<?= $this->beer_styles[$i]['style_id']; ?>-<?= urlencode(implode("_", explode("/", $this->beer_styles[$i]['style_name']))); ?>">
 				<?= $this->beer_styles[$i]['style_name']; ?> 
-			</a> 
+				</a>
+			</h3> 
 			(<?= $this->beer_styles[$i]['count']; ?>)
 		</div>
 		<?

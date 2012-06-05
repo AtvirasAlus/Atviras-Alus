@@ -2,21 +2,25 @@
 if (!isset($this->options['plain'])) { 
 	?>
 	<div class="rc_title">
-		<a href="/alus/receptas/<?= $this->item['recipe_id']; ?>-<?= $this->escapeParam($this->item['recipe_name']); ?>">
-			<? print $this->item['recipe_name']; ?>
-		</a>
+		<h2>
+			<a href="/alus/receptas/<?= $this->item['recipe_id']; ?>-<?= $this->urlMaker($this->item['recipe_name']); ?>">
+				<? print $this->item['recipe_name']; ?>
+			</a>
+		</h2>
 	</div>
 	<?php 
 } else { 
 	?>
 	<div class="rc_title">
-		<? print $this->item['recipe_name']; ?>
+		<h2>
+			<? print $this->item['recipe_name']; ?>
+		</h2>
 	</div>
 	<?php 
 } ?>
 <div class="rc_item">
 	<div style="background-color:<?= $this->hex; ?>" class="rc_image">
-		<img src="/public/images/glass_s.png" />
+		<img src="/public/images/glass_s.png" alt="<? print $this->item['recipe_name']; ?>" />
 	</div>
 	<div class="rc_info">
 		<div>

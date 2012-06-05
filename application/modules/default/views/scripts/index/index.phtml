@@ -14,7 +14,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 				foreach ($this->recipes as $recipe):
 				?>
 					<div>
-						<a href="/alus/receptas/<?= $recipe['recipe_id']; ?>-<?= $this->escapeParam($recipe['recipe_name']); ?>">
+						<a href="/alus/receptas/<?= $recipe['recipe_id']; ?>-<?= $this->urlMaker($recipe['recipe_name']); ?>">
 							<?=$recipe['recipe_name']; ?>
 						</a>
 						<span><?=$recipe['style_name']; ?></span>	
@@ -40,7 +40,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 					foreach ($this->events as $event):
 					?>
 						<div>
-							<a href="/ivykis/<?=$event['event_id']; ?>-<?=$this->escapeParam($event['event_name']); ?>">
+							<a href="/ivykis/<?=$event['event_id']; ?>-<?=$this->urlMaker($event['event_name']); ?>">
 								<?=$event['event_name']; ?>
 							</a> - <i><?=$event['event_start']; ?></i>
 						</div>
@@ -130,7 +130,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 							<?= $favorite["user_name"] ?>
 						</a>
 						receptas
-						<a class="recipe_name" href="/alus/receptas/<?= $favorite['recipe_id']; ?>-<?= $this->escapeParam($favorite['recipe_name']); ?>">
+						<a class="recipe_name" href="/alus/receptas/<?= $favorite['recipe_id']; ?>-<?= $this->urlMaker($favorite['recipe_name']); ?>">
 							<?=$favorite["recipe_name"];?>
 						</a>
 					</div>
@@ -205,7 +205,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 							<?=$comment["user_name"];?>
 						</a>
 						komentavo
-						<a class="recipe_name" href="/alus/receptas/<?=$comment['recipe_id']; ?>-<?= $this->escapeParam($comment['recipe_name']); ?>#comment-<?=$comment['comment_id']; ?>">
+						<a class="recipe_name" href="/alus/receptas/<?=$comment['recipe_id']; ?>-<?= $this->urlMaker($comment['recipe_name']); ?>#comment-<?=$comment['comment_id']; ?>">
 							<?=$comment["recipe_name"];?>
 						</a>
 					</div>
@@ -230,7 +230,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 							<?=$session["user_name"] ?>
 						</a>
 						bravoryja
-						<a class="session_name" href="/alus/receptas/<?=$session['recipe_id']; ?>-<?= $this->escapeParam($session['recipe_name']); ?>">
+						<a class="session_name" href="/alus/receptas/<?=$session['recipe_id']; ?>-<?= $this->urlMaker($session['recipe_name']); ?>">
 							<?=$session["recipe_name"];?>
 						</a>
 					</div>

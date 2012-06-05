@@ -1,14 +1,16 @@
 <div class="rct_block">
 	<div style="background-color:<?=$this->hex;?>" class="rct_image">
-		<img src="/public/images/glass_thumb.png" />
+		<img src="/public/images/glass_thumb.png" alt="<? print $this->item['recipe_name'];?>" />
 	</div>
 	<div class="rct_info">
 		<div style="margin-top: 5px;">
-			<a href="/alus/receptas/<?=$this->item['recipe_id'];?>-<?=$this->escapeParam($this->item['recipe_name']);?>" style="font-size: 14px;">
-				<b>
-					<? print $this->item['recipe_name'];?>
-				</b>
-			</a> 
+			<h2>
+				<a href="/alus/receptas/<?=$this->item['recipe_id'];?>-<?=$this->urlMaker($this->item['recipe_name']);?>" style="font-size: 14px;">
+					<b>
+						<? print $this->item['recipe_name'];?>
+					</b>
+				</a> 
+			</h2>
 			(<a href="/stilius/<? print $this->item['recipe_style'];?>"><? print $this->item['style_name'];?></a>)
 			<?php 
 			if(!isset($this->options['without_brewer'])){ 

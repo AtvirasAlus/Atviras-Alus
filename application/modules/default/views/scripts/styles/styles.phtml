@@ -17,7 +17,11 @@ foreach ($dfields as $dfield) {
 }
 ?>
 <div id="style_info_container" class="inner_container">
-	<div class="inner_header"><?= $this->current_style['style_name']; ?></div>
+	<div class="inner_header">
+		<h1>
+			<?= $this->current_style['style_name']; ?>
+		</h1>
+	</div>
 	<?php
 	if ($description):
 	?>

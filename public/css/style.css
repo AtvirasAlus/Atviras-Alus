@@ -21,9 +21,13 @@ a, a:visited {
 a:hover {
 	color: #F8966E;
 }
-h1 {
-	font-weight: bold;
-	color: #666666;
+h1, h2, h3 {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	font-size: 100%;
+	font: inherit;
+	display: inline;
 }
 
 /* */
