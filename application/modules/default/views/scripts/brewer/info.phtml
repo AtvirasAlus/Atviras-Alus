@@ -74,10 +74,10 @@ if (sizeof($this->user_info['sessions']) > 0){
 			foreach ($this->user_info['sessions'] as $session){
 				?>
 				<div class="as-row" style="<?=($session['recipe_publish'] == "1") ? "" : "color: #999999;"; ?>">
-					<div class="as-cell"><?=$session['session_name']?></div>
 					<?php
 					if ($session['recipe_publish'] == "1"){
 						?>
+						<div class="as-cell"><?=$session['session_name']?></div>
 						<div class="as-cell">
 							<a href="/alus/receptas/<?=$session['recipe_id']?>-<?=$this->urlMaker($session['recipe_name'])?>">
 								<?=$session['recipe_name']?>
@@ -101,6 +101,7 @@ if (sizeof($this->user_info['sessions']) > 0){
 						}
 					} else {
 						?>
+						<div class="as-cell">-</div>
 						<div class="as-cell">Receptas nėra viešas</div>
 						<div class="as-cell">-</div>
 						<?php
