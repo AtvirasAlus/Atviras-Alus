@@ -238,28 +238,11 @@ class RecipesController extends Zend_Controller_Action {
 		$this->view->data = array();
 		if ($recipe_id > 0) {
 			$db = Zend_Registry::get("db");
-			$select = $db->select();
-			$select->from("beer_recipes")
-					->join("users", "users.user_id=beer_recipes.brewer_id", array("user_name"))
-					->joinLeft("beer_styles", "beer_styles.style_id=beer_recipes.recipe_style", array("style_name"))
-					->where("recipe_id = ?", $recipe_id);
-			$this->view->data["recipe"] = $db->fetchRow($select);
-			$select = $db->select();
-			$select->from("beer_recipes_malt")
-					->where("recipe_id = ?", $recipe_id)
-					->order("malt_weight DESC");
-
-			$this->view->data["malt"] = $db->fetchAll($select);
-			$select = $db->select();
-			$select->from("beer_recipes_hops")
-					->where("recipe_id = ?", $recipe_id)
-					->order("hop_time DESC");
-			$this->view->data["hops"] = $db->fetchAll($select);
-			$select = $db->select();
-			$select->from("beer_recipes_yeast")
-					->where("recipe_id = ?", $recipe_id);
-			$this->view->data["yeast"] = $db->fetchAll($select);
-
+                        $recipe= new Entities_Recipe($recipe_id);
+			$this->view->data["recipe"] = $recipe->getProperties();
+			$this->view->data["malt"] = $recipe->getMalts();
+			$this->view->data["hops"] = $recipe->getHops();
+			$this->view->data["yeast"] = $recipe->getYeasts();
 			$this->view->user_info = $storage->read();
 			$select = $db->select();
 			$select->from("beer_brew_sessions", array("count" => "count(*)"))

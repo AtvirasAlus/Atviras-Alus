@@ -203,7 +203,59 @@ if (!isset($_GET['articles_only'])) {
     	  
     }
     public function printRecipeAction() {
-    $this->_helper->layout->setLayout('empty');
+        $this->_helper->layout->setLayout('empty');
+       
+        if (isset($_GET['recipe_id'])) {
+                $recipe= new Entities_Recipe(intval($_GET['recipe_id']));
+                $this->view->print_data=array();
+                if ($recipe_data=$recipe->getProperties()) {
+                    $data_mask =array('recipe_boiltime'=>'boil_time','recipe_comments'=>'comments','recipe_name'=>'beer_name','recipe_batch'=>'bash_size','recipe_efficiency'=>'efficiency','recipe_attenuation'=>'attenuation','style_name'=>'beer_style');
+                    foreach ($recipe_data as $key => $data)  {
+                        if (isset($data_mask[$key])) {
+                        $this->view->print_data[$data_mask[$key]]=$data;
+                        }else{
+                        $this->view->print_data[$key]=$data;
+                        }
+                    }
+
+                    $malt_list = $recipe->getMalts();
+                    if (count($malt_list)>0) {
+                        $this->view->print_data['malt_list']=array();
+                        $this->view->print_data['malt_color']=array();
+                        $this->view->print_data['malt_weight']=array();
+                        foreach ($malt_list as $malt)  {
+                            $this->view->print_data['malt_list'][]=$malt['malt_name'];
+                            $this->view->print_data['malt_color'][]=$malt['malt_ebc'];
+                            $this->view->print_data['malt_weight'][]=$malt['malt_weight'];
+                        }
+                    }
+                    $hop_list = $recipe->getHops();
+                    if (count($hop_list)>0) {
+                        $this->view->print_data['hop_list']=array();
+                        $this->view->print_data['hop_alpha']=array();
+                        $this->view->print_data['hop_weight']=array();
+                        $this->view->print_data['hop_time']=array();
+                        foreach ($hop_list as $hop)  {
+                            $this->view->print_data['hop_list'][]=$hop['hop_name'];
+                            $this->view->print_data['hop_alpha'][]=$hop['hop_alpha'];
+                            $this->view->print_data['hop_weight'][]=$hop['hop_weight'];
+                            $this->view->print_data['hop_time'][]=$hop['hop_time'];
+                        }
+                    }
+                $yeast_list=$recipe->getYeasts();
+                if (count($yeast_list)>0) {
+                        $this->view->print_data['yeast_list']=array();
+                        $this->view->print_data['yeast_weight']=array();
+
+                        foreach ($yeast_list as $yeast)  {
+                            $this->view->print_data['yeast_list'][]=$yeast['yeast_name'];
+                            $this->view->print_data['yeast_weight'][]=$yeast['yeast_weight'];
+                        }
+                    }
+               }
+        }else{
+             $this->view->print_data=$_POST;
+        }
     }
     public function calculusAction() { 
     $recipe_id=$this->getRequest()->getParam("recipe");

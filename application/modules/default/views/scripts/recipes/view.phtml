@@ -85,6 +85,7 @@ function i_bu($ibu,$og) {
 			<a href="/recipes/print-label/?recipe_id=<?=$this->data['recipe']['recipe_id'];?>" target="_blank">Spausdinti etiketę</a>
 			<a href="/brew-session/recipe/<?=$this->data['recipe']['recipe_id'];?>">Virimai (<?=$this->data['brew_session']['count'];?>)</a>
 			<a href="/index/calculus/<?=$this->data['recipe']['recipe_id'];?>">Į skaičiuoklę</a>
+                        <a href="/index/print-recipe/?recipe_id=<?=$this->data['recipe']['recipe_id'];?>" target="_blank">Spausdinti receptą</a>
 			<?php
 			if (isset($this->user_info)) {
 				if ($this->recipe_votes["user_vote"]) {
