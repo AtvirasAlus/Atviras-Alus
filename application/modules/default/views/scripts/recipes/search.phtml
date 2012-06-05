@@ -213,6 +213,10 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 			filter.push("brewer:"+encodeURIComponent(hp));
 		}
 		
+		if ($("#medals").attr("checked")) {
+			filter.push("medals:1");
+		}
+
 		if (filter.length) {
 			$('#search_form')[0].action="/search/"+filter.join("|");
 			$('#search_form')[0].submit()
@@ -292,6 +296,11 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 		<dl>
 			<dt>Žymos:</dt>
 			<dd><input type="text" id="tags" value="<?= $this->filter_values['tag_text']; ?>" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>&nbsp;</dt>
+			<dd><input type="checkbox" id="medals" value="1" <?=($this->filter_values['medals'] == "1") ? "checked='checked'" : ""; ?> /> <label for="medals">Rodyti tik receptus su apdovanojimais</label></dd>
 			<div class="clear"></div>
 		</dl>
 		<dl>
