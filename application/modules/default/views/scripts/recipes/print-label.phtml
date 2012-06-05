@@ -4,6 +4,11 @@
         <title>Alaus receptas</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<style>
+                      @page 
+        {
+            size: auto;   /* auto is the initial value */
+            margin: 0mm;  /* this affects the margin in the printer settings */
+        }
 			@media print {
 body { background:white; margin:0px }
 }
@@ -15,10 +20,15 @@ body { background:white; margin:0px }
 <link type="text/css" href="/public/css/main.css" rel="stylesheet" />
 <link type="text/css" href="/public/css/pepper-grinder/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
 <script src="/public/jcanvas/qr.js"></script>
-
-</head><body style="background:#fff ">
 <style>
-.ptr td{ border:1px dotted #666666;
+.ptr td{ border-bottom:1px dotted #666666;
+         border-left:1px dotted #666666;
+        vertical-align: top;
+        
+}
+#printTable {
+    border-top:1px dotted #666666;
+    border-right:1px dotted #666666;
 }
 
 input {border:1px solid #ededed; font-size:11px}
@@ -112,9 +122,9 @@ function drawTitle() {
 	  x: cW/2, y: cH/2
 	})
 	textSize=8;
-	tx = cH*0.65
+	tx = cH*0.6
       
-	ty =cW - 90
+	ty =cW - 83
 	$("canvas").drawText({fillStyle:cstroke, strokeWidth:0, x:tx, y:ty, text:recipe_data.recipe_date, align:"start", baseline:"middle", font:textSize + "pt Calibri, monospace"}).restoreCanvas();
        
 	var cx = cmargin*4+cheight*3
@@ -194,7 +204,7 @@ function getCanvasURL() {
 }
 function generatePrint() {
 	img = getCanvasURL();
-	$("#canvasTable").hide();
+	$("#canvasTable").remove();
 	t = $("body").append("<table id='printTable' celppading='0' cellspacing='0'>");
 	for (var i = 0; i < 4; i++) {
 		$('#printTable').append("<tr  class='ptr' id='ptr" + i + "' height='"+$("canvas").height()+"'>");
@@ -203,10 +213,11 @@ function generatePrint() {
 		}
 	}
 }
-
 </script>
+</head>
+<body style="background:#fff;margin: 0px;vertical-align:top;">
 <div id="canvasTable" style="padding:50px" align="center">
-<table  class="ui-corner-all" style="background:#F1F0ED;border:1px solid #666" ><tr><td  width="400" align="center"> <canvas width="380" height="220" id="canvas"></canvas></td>
+<table  class="ui-corner-all" style="background:#F1F0ED;border:1px solid #666" ><tr><td  width="400" align="center"> <canvas width="380" height="230" id="canvas"></canvas></td>
 <td align="right">
 <table width="200" id="canvasControlsTable" class="ui-corner-all">
 <tr>
