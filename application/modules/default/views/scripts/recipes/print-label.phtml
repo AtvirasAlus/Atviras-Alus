@@ -1,6 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="lt" lang="lt">
+    <head>
+        <title>Alaus receptas</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<style>
+			@media print {
+body { background:white; margin:0px }
+}
+		</style>
+
 <meta name="description" content="Atviras alus - Atsispausk savo alaus etiketę" />
 <script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
 <script src="/public/jcanvas/jcanvas.js"></script>
@@ -8,7 +16,7 @@
 <link type="text/css" href="/public/css/pepper-grinder/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
 <script src="/public/jcanvas/qr.js"></script>
 
-</head><body style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;background:#fff ">
+</head><body style="background:#fff ">
 <style>
 .ptr td{ border:1px dotted #666666;
 }
@@ -94,7 +102,7 @@ function drawTitle() {
 	$("canvas").drawText({fillStyle:cstroke, strokeWidth:1, x:cx+cheight/2, y:cy+cheight/2, text:recipe_data.recipe_abv + "%", align:"center", baseline:"middle", font:"15pt Courier New, Courier, monospace"});
 	var cx = cmargin*2+cheight
 	drawPattern(cstroke,cstroke, cx, cy, cheight, cheight);
-	$("canvas").drawText({fillStyle:"#fff", strokeWidth:1, x:cx+cheight/2, y:cy+cheight/2, text:recipe_data.recipe_ibu + "ibu", align:"center", baseline:"middle", font:"15pt Courier New, Courier, monospace"});
+        $("canvas").drawText({fillStyle:"#fff", strokeWidth:1, x:cx+cheight/2, y:cy+cheight/2, text:recipe_data.recipe_ibu + "ibu", align:"center", baseline:"middle", font:"15pt Courier New, Courier, monospace"});
 	var cx = cmargin*3+cheight*2
 	drawPattern("#fff", cstroke,cx, cy, cheight, cheight);
 	$("canvas").drawText({fillStyle:cstroke, strokeWidth:1, x:cx+cheight/2, y:cy+cheight/2, text:recipe_data.recipe_ebc + "ebc", align:"center", baseline:"middle", font:"15pt Courier New, Courier, monospace"});
@@ -104,9 +112,11 @@ function drawTitle() {
 	  x: cW/2, y: cH/2
 	})
 	textSize=8;
-	tx = cH/2-cmargin
-	ty = cheight*4-cmargin*2
+	tx = cH*0.65
+      
+	ty =cW - 90
 	$("canvas").drawText({fillStyle:cstroke, strokeWidth:0, x:tx, y:ty, text:recipe_data.recipe_date, align:"start", baseline:"middle", font:textSize + "pt Calibri, monospace"}).restoreCanvas();
+       
 	var cx = cmargin*4+cheight*3
 	_blackBit=cstroke;
 	
@@ -124,7 +134,7 @@ function drawTitle() {
 	var lineHeight=textSize*105/100
 	$("canvas").wrapText({fillStyle:cstroke,lineHeight:lineHeight+5,maxWidth:$("canvas").width()*80/100, strokeWidth:0, x:tx, y:ty, text:recipe_data.recipe_name, align:"center", baseline:"middle", font:textSize + "pt Calibri, monospace"});
 	
-	ty = cH - cmargin*4
+	ty = cH - cmargin*3
 	tx = cmargin*2;
 	textSize=8;
 	$("canvas").wrapText({fillStyle:cstroke, strokeWidth:0, x:tx, y:ty, text:recipe_data.recipe_style, align:"start", baseline:"middle", font:textSize + "pt Calibri, monospace"});
@@ -185,18 +195,18 @@ function getCanvasURL() {
 function generatePrint() {
 	img = getCanvasURL();
 	$("#canvasTable").hide();
-	t = $("body").append("<table id='printTable' celppading='4' cellspacing='4'>");
-	for (var i = 0; i < 3; i++) {
-		$('#printTable').append("<tr class='ptr' id='ptr" + i + "'>");
+	t = $("body").append("<table id='printTable' celppading='0' cellspacing='0'>");
+	for (var i = 0; i < 4; i++) {
+		$('#printTable').append("<tr  class='ptr' id='ptr" + i + "' height='"+$("canvas").height()+"'>");
 		for (var ii = 0; ii < 2; ii++) {
-			$('#ptr' + i).append("<td><img src='" + img + "'></td>");
+			$('#ptr' + i).append("<td valign='top'><img src='" + img + "'></td>");
 		}
 	}
 }
 
 </script>
 <div id="canvasTable" style="padding:50px" align="center">
-<table  class="ui-corner-all" style="background:#F1F0ED;border:1px solid #666" ><tr><td  width="400" align="center"> <canvas width="380" height="260" id="canvas"></canvas></td>
+<table  class="ui-corner-all" style="background:#F1F0ED;border:1px solid #666" ><tr><td  width="400" align="center"> <canvas width="380" height="220" id="canvas"></canvas></td>
 <td align="right">
 <table width="200" id="canvasControlsTable" class="ui-corner-all">
 <tr>
@@ -250,7 +260,5 @@ function generatePrint() {
 </td>
 </tr></table>
 </div>
-
-
 </body>
 </html> 
