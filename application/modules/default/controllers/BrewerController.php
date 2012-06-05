@@ -129,7 +129,7 @@ class BrewerController extends Zend_Controller_Action {
 						}
 						break;
 					case "groups":
-            $user=new Entities_User($u->user_id);
+						$user = new Entities_User($u->user_id);
 						if (isset($_POST['group'])) {
 							$user->updateGroups($_POST['group']);
 						} else {
@@ -141,9 +141,9 @@ class BrewerController extends Zend_Controller_Action {
 						if ($_POST['use_other_location'] == '1') {
 							$location = $_POST['user_other_location'];
 						}
-				
-            $user=new Entities_User($u->user_id);
-						if ($user->updateAttributes(array('user_location' => $location, 'user_about' => $_POST['user_about'],'user_mail_comments'=>$_POST['user_mail_comments']))) {
+
+						$user = new Entities_User($u->user_id);
+						if ($user->updateAttributes(array('user_location' => $location, 'user_about' => $_POST['user_about'], 'user_mail_comments' => $_POST['user_mail_comments']))) {
 							
 						} else {
 							$this->view->errors[] = array("type" => "system", "message" => "Išsaugoti informacijos nepavyko");
@@ -159,15 +159,11 @@ class BrewerController extends Zend_Controller_Action {
 				}
 			}
 		}
-		$user=new Entities_User($u->user_id);
-		
+		$user = new Entities_User($u->user_id);
+
 		$this->view->user_attributes = $user->getAttributes();
 		$this->view->user_groups = $user->getGroups();
 	}
-
-
-
-	
 
 	private function updatePassword($user_id, $old_password, $new_password) {
 
