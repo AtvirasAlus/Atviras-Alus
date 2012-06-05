@@ -486,7 +486,12 @@
 			$('#' + selItem).remove();
 			calc();
 		});
-		$('#tabs').tabs();
+                $("#beer_name").bind('change', function (event, ui) {
+                    $("#save").attr("disabled",($("#beer_name").val().length>0 ? '' : 'disabled'));
+		});
+                $("#beer_name").bind('keyup', function (event, ui) {
+                    $("#beer_name").trigger('change');
+                });
 		$('#duplicate').click(function () {
 			if ($("#duplicate").attr("disabled")) {
 				return false;
@@ -548,6 +553,7 @@
 			fitTo($('#recalc').val())
 		})
 		$("#beer_style").trigger('change');
+                $("#beer_name").trigger('change');
 		//fill form
 		$("#duplicate").attr("disabled", "disabled");
 		<?
