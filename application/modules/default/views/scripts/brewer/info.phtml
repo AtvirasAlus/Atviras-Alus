@@ -61,18 +61,19 @@ if (sizeof($this->user_info['recipes']) > 0){
 if (sizeof($this->user_info['sessions']) > 0){
 	?>
 	<div id="brewer_info_sessions_container" class="inner_container">
-		<div class="inner_header">Aludario virimai</div>
+		<div class="inner_header">Paskutiniai aludario virimai</div>
 		<div class="as-table">
 			<div class="as-row">
 				<div class="as-cell"><b>Pavadinimas</b></div>
 				<div class="as-cell"><b>Receptas</b></div>
+				<div class="as-cell"><b>Recepto autorius</b></div>
 				<div class="as-cell"><b>Kiekis</b></div>
 				<div class="as-cell"><b>Virimo data</b></div>
 			</div>
 			<?
 			foreach ($this->user_info['sessions'] as $session){
 				?>
-				<div class="as-row" style="<?=($session['recipe_publish'] == "0") ? "color: #999;" : ""; ?>">
+				<div class="as-row" style="<?=($session['recipe_publish'] == "1") ? "" : "color: #999999;"; ?>">
 					<div class="as-cell"><?=$session['session_name']?></div>
 					<?php
 					if ($session['recipe_publish'] == "1"){
@@ -82,10 +83,26 @@ if (sizeof($this->user_info['sessions']) > 0){
 								<?=$session['recipe_name']?>
 							</a>
 						</div>
-						<?
+						<?php
+						if ($session['recu_id'] == $session['user_id']){
+							?>
+							<div class="as-cell">
+								<?=$session['recu_name']?>
+							</div>
+							<?
+						} else {
+							?>
+							<div class="as-cell">
+								<a href="/brewers/<?=$session['recu_id']?>">
+									<?=$session['recu_name']?>
+								</a>
+							</div>
+							<?
+						}
 					} else {
 						?>
 						<div class="as-cell">Receptas nėra viešas</div>
+						<div class="as-cell">-</div>
 						<?php
 					}
 					?>
@@ -96,6 +113,15 @@ if (sizeof($this->user_info['sessions']) > 0){
 			}
 			?>
 		</div>
+		<?php
+		if ($this->user_info['sessions_size'] > 10){
+			?>
+			<div class="inner_footer" style="text-align: right;">
+				<a href="/brewer/sessions/<?=$this->user_info['user_id']?>">Peržiūrėti visus aludario virimus</a>
+			</div>
+			<?
+		}
+		?>
 	</div>
 	<?
 }

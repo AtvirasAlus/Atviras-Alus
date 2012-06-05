@@ -1,0 +1,64 @@
+<div id="brewer_info_sessions_container" class="inner_container">
+	<div class="inner_header">Aludario <a href="/brewers/<?=$this->user_info['user_id']?>"><?=$this->user_info['user_name']?></a> virimai</div>
+		<?php
+		if (sizeof($this->user_info['sessions']) > 0){
+			?>
+			<div class="as-table">
+				<div class="as-row">
+					<div class="as-cell"><b>Pavadinimas</b></div>
+					<div class="as-cell"><b>Receptas</b></div>
+					<div class="as-cell"><b>Recepto autorius</b></div>
+					<div class="as-cell"><b>Kiekis</b></div>
+					<div class="as-cell"><b>Virimo data</b></div>
+				</div>
+				<?
+				foreach ($this->user_info['sessions'] as $session){
+					?>
+					<div class="as-row" style="<?=($session['recipe_publish'] == "1") ? "" : "color: #999999;"; ?>">
+						<div class="as-cell"><?=$session['session_name']?></div>
+						<?php
+						if ($session['recipe_publish'] == "1"){
+							?>
+							<div class="as-cell">
+								<a href="/alus/receptas/<?=$session['recipe_id']?>-<?=$this->urlMaker($session['recipe_name'])?>">
+									<?=$session['recipe_name']?>
+								</a>
+							</div>
+							<?php
+							if ($session['recu_id'] == $session['user_id']){
+								?>
+								<div class="as-cell">
+									<?=$session['recu_name']?>
+								</div>
+								<?
+							} else {
+								?>
+								<div class="as-cell">
+									<a href="/brewers/<?=$session['recu_id']?>">
+										<?=$session['recu_name']?>
+									</a>
+								</div>
+								<?
+							}
+						} else {
+							?>
+							<div class="as-cell">Receptas nėra viešas</div>
+							<div class="as-cell">-</div>
+							<?php
+						}
+						?>
+						<div class="as-cell"><?=$session['session_size']?></div>
+						<div class="as-cell" style="white-space:nowrap;"><?=($session['session_primarydate'] == "0000-00-00") ? "-" : $session['session_primarydate']; ?></div>
+					</div>
+					<?php
+				}
+				?>
+			</div>
+			<?
+		} else {
+			?>
+			<div>Aludaris nėra užregistravęs nei vieno virimo</div>
+			<?php
+		}
+		?>
+</div>
