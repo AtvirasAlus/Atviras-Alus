@@ -94,11 +94,47 @@ if (sizeof($this->user_info['sessions']) > 0){
 					}
 					?>
 					<div class="as-cell"><?=$session['session_size']?></div>
-					<div class="as-cell"><?=$session['session_og']?></div>
-					<div class="as-cell"><?=$session['session_fg']?></div>
+					<?php
+					if ($session['recipe_publish'] == "1"){
+						?>
+						<div class="as-cell"><?=$session['session_og']?></div>
+						<?
+					} else {
+						?>
+						<div class="as-cell">-</div>
+						<?						
+					}
+					if ($session['recipe_publish'] == "1"){
+						?>
+						<div class="as-cell"><?=$session['session_fg']?></div>
+						<?
+					} else {
+						?>
+						<div class="as-cell">-</div>
+						<?						
+					}
+					?>
 					<div class="as-cell"><?=($session['session_primarydate'] == "0000-00-00") ? "-" : $session['session_primarydate']; ?></div>
-					<div class="as-cell"><?=($session['session_secondarydate'] == "0000-00-00") ? "-" : $session['session_secondarydate']; ?></div>
-					<div class="as-cell"><?=($session['session_caskingdate'] == "0000-00-00") ? "-" : $session['session_caskingdate']; ?></div>
+					<?php
+					if ($session['recipe_publish'] == "1"){
+						?>
+						<div class="as-cell"><?=($session['session_secondarydate'] == "0000-00-00") ? "-" : $session['session_secondarydate']; ?></div>
+						<?
+					} else {
+						?>
+						<div class="as-cell">-</div>
+						<?						
+					}
+					if ($session['recipe_publish'] == "1"){
+						?>
+						<div class="as-cell"><?=($session['session_caskingdate'] == "0000-00-00") ? "-" : $session['session_caskingdate']; ?></div>
+						<?
+					} else {
+						?>
+						<div class="as-cell">-</div>
+						<?						
+					}
+					?>
 				</div>
 				<?php
 			}
