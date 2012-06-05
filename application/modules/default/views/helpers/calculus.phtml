@@ -174,7 +174,7 @@
 	function kgToPercent() {
 		var _total = 0;
 		var tot_wdt = $('input[name=malt_weight]');
-		for (var i = 0; i < tot_wdt.length; i++) {
+		for (var i = 0; i < tot_wdt.length-1; i++) {
 			var o = $(tot_wdt[i]);
 			_total += parseFloat(o.val());
 		}
