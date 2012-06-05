@@ -61,6 +61,11 @@ function _initAutoLoad() {
 		$router->addRoute("calculus_recipe",new Zend_Controller_Router_Route("index/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
 		//$router->addRoute("calculus",new Zend_Controller_Router_Route("/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
 		
+		$router->addRoute("idejos",new Zend_Controller_Router_Route("/idejos",array("module"=>"default","controller" => "idea","action" => "list")));
+		$router->addRoute("idejos_new",new Zend_Controller_Router_Route("/idejos/naujausios",array("module"=>"default","controller" => "idea","action" => "list_new")));
+		$router->addRoute("idejos_top",new Zend_Controller_Router_Route("/idejos/populiariausios",array("module"=>"default","controller" => "idea","action" => "list_top")));
+		$router->addRoute("idejos_finished",new Zend_Controller_Router_Route("/idejos/igyvendintos",array("module"=>"default","controller" => "idea","action" => "list_finished")));
+		$router->addRoute("idejos_view",new Zend_Controller_Router_Route("/ideja/:idea",array("module"=>"default","controller" => "idea","action" => "view", "idea" => 0)));
 		$router->addRoute("brewer",new Zend_Controller_Router_Route("/brewers/:brewer",array("module"=>"default","controller" => "brewer","action" => "info","brewer"=>0)));
 		$router->addRoute("brewer_recipes",new Zend_Controller_Router_Route("/brewer/recipes/:brewer/:page",array("module"=>"default","controller" => "brewer","action" => "recipes","brewer"=>0,"page"=>0)));
 		$router->addRoute("brewer_sessions",new Zend_Controller_Router_Route("/brewer/sessions/:brewer",array("module"=>"default","controller" => "brewer","action" => "sessions","brewer"=>0)));
