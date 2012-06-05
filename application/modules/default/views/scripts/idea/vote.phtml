@@ -1,0 +1,24 @@
+<div class="idea_votes_title">Įvertinimas</div>
+<span><?=$this->idea['idea_vote_sum']?></span>
+<div class="vote_scale">
+	<div class="scale_positive" style="width: <?=$this->idea['up_size']?>px;"></div>
+	<div class="scale_neutral" style="width: <?=$this->idea['neutral_size']?>px;"></div>
+	<div class="scale_negative" style="width: <?=$this->idea['down_size']?>px;"></div>
+	<div class="clear"></div>
+</div>
+<?php
+if ($user_id && $this->idea['idea_status']!='1'){
+	?>
+	<div class="vote_links">
+		<a href="#" class="<?=($this->idea['vote_value'] == "1") ? "activevote" : ""; ?> vote_1p" title="Patinka"></a>
+		<a href="#" class="<?=($this->idea['vote_value'] == "0") ? "activevote" : ""; ?> vote_0" title="Neturiu nuomonės"></a>
+		<a href="#" class="<?=($this->idea['vote_value'] == "-1") ? "activevote" : ""; ?> vote_1m" title="Nepatinka"></a>
+		<div class="clear"></div>
+	</div>
+	<?php
+}
+?>
+<div class="total_votes">
+	Viso balsavo: 
+	<span><?=$this->idea['total_votes']?></span>
+</div>

@@ -1,0 +1,73 @@
+<?php
+$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+?>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Idėjos</div>
+	<div class="ideas_actions">
+		<a href="/idejos/naujausios" <?=($this->type == "new") ? 'style="font-weight: bold;"' : ""?>>Naujausios idėjos</a>
+		<a href="/idejos/populiariausios" <?=($this->type == "top") ? 'style="font-weight: bold;"' : ""?>>Populiariausios idėjos</a>
+		<a href="/idejos/igyvendintos" <?=($this->type == "finished") ? 'style="font-weight: bold;"' : ""?>>Įgyvendintos idėjos</a>
+		<a href="/idejos/nauja">Sukurti idėją</a>
+	</div>
+	<?php
+	foreach ($this->ideas as $idea){
+		?>
+		<div class="idea_item">
+			<div class="idea_user">
+				<a href="/brewers/<?=$idea['user_id']?>">
+					<img src="http://www.gravatar.com/avatar/<?= md5($idea['user_email']); ?>?rating=G&size=50&default=mm" border="0" />
+					<span><?=$idea['user_name']?></span>
+				</a>
+				<div class="idea_posted">
+					<?=str_replace(" ", "<br />", $idea['idea_posted'])?>
+				</div>				
+			</div>
+			<div class="idea_info">
+				<div class="idea_title">
+					<h2>
+						<a href="/ideja/<?=$idea['idea_id'];?>">
+							Idėja #<?=$idea['idea_id']?>: <?=$idea['idea_title']?>
+						</a>
+					</h2>
+				</div>
+				<div class="idea_description">
+					<?=nl2br($idea['idea_description']);?>
+				</div>
+			</div>
+			<div class="idea_votes">
+				<div class="idea_votes_title">Įvertinimas</div>
+				<span><?=$idea['idea_vote_sum']?></span>
+				<div class="vote_scale">
+					<div class="scale_positive" style="width: <?=$idea['up_size']?>px;"></div>
+					<div class="scale_neutral" style="width: <?=$idea['neutral_size']?>px;"></div>
+					<div class="scale_negative" style="width: <?=$idea['down_size']?>px;"></div>
+					<div class="clear"></div>
+				</div>
+				<?php
+				if ($user_id && $idea['idea_status']!='1'){
+					?>
+					<div class="vote_links">
+						<a href="#" class="<?=($idea['vote_value'] == "1") ? "activevote" : ""; ?> vote_1p" title="Patinka"></a>
+						<a href="#" class="<?=($idea['vote_value'] == "0") ? "activevote" : ""; ?> vote_0" title="Neturiu nuomonės"></a>
+						<a href="#" class="<?=($idea['vote_value'] == "-1") ? "activevote" : ""; ?> vote_1m" title="Nepatinka"></a>
+						<div class="clear"></div>
+					</div>
+					<?php
+				}
+				?>
+				<div class="total_votes">
+					Viso balsavo: 
+					<span><?=$idea['total_votes']?></span>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<?php
+	}
+	if (sizeof($this->ideas) == 0){
+		?>
+		<div>Šiame sąraše idėjų nėra</div>
+		<?
+	}
+	?>
+</div>
