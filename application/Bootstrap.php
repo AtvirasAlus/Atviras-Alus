@@ -60,7 +60,7 @@ function _initAutoLoad() {
 	
 		$router->addRoute("calculus_recipe",new Zend_Controller_Router_Route("index/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
 		//$router->addRoute("calculus",new Zend_Controller_Router_Route("/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
-		
+		$router->addRoute("group",new Zend_Controller_Router_Route("/groups/view/:group_id",array("module"=>"default","controller" => "groups","action" => "view","group_id"=>0)));
 		$router->addRoute("idejos",new Zend_Controller_Router_Route("/idejos/:page",array("module"=>"default","controller" => "idea","action" => "list","page"=>0)));
 		$router->addRoute("idejos_new",new Zend_Controller_Router_Route("/idejos/naujausios/:page",array("module"=>"default","controller" => "idea","action" => "list_new","page"=>0)));
 		$router->addRoute("idejos_top",new Zend_Controller_Router_Route("/idejos/populiariausios/:page",array("module"=>"default","controller" => "idea","action" => "list_top","page"=>0)));
@@ -88,7 +88,7 @@ function _initAutoLoad() {
 		$router->addRoute("events",new Zend_Controller_Router_Route("/ivykiai/:page",array("module"=>"default","controller" => "events","action" => "index","page"=>0)));
 		$router->addRoute("event",new Zend_Controller_Router_Route("/ivykis/:event",array("module"=>"default","controller" => "events","action" => "view","event"=>0)));
 		$router->addRoute("sitemap",new Zend_Controller_Router_Route("/sitemap",array("module"=>"default","controller" => "index","action" => "sitemap")));
-    $router->addRoute("brewer_twitter",new Zend_Controller_Router_Route("/tweet/all/:page",array("module"=>"default","controller" => "tweet","action" => "all","page"=>0)));
+                $router->addRoute("brewer_twitter",new Zend_Controller_Router_Route("/tweet/all/:page",array("module"=>"default","controller" => "tweet","action" => "all","page"=>0)));
     }
 }
 ?>
