@@ -1,0 +1,38 @@
+<form action="<?= $this->element->getAction(); ?>" method="<?= $this->element->getmethod(); ?>" target="_self" name="__ideaForm" id="__ideaForm">
+	<dl>
+		<dt><?= $this->element->title->getLabel(); ?></dt>
+		<dd><?= $this->element->title; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt><?= $this->element->description->getLabel(); ?></dt>
+		<dd><?= $this->element->description; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt><?= $this->element->full_text->getLabel(); ?></dt>
+		<dd><?= $this->element->full_text; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt><?= $this->element->files1->getLabel(); ?></dt>
+		<dd><?= $this->element->files1; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt><?= $this->element->files2->getLabel(); ?></dt>
+		<dd><?= $this->element->files2; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt><?= $this->element->files3->getLabel(); ?></dt>
+		<dd><?= $this->element->files3; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><?= $this->element->attributes_action; ?></dd>
+		<div class="clear"></div>
+	</dl>
+</form>
+

@@ -294,5 +294,14 @@ class IdeaController extends Zend_Controller_Action {
 		}
 		$this->view->idea = $result;
 	}
+	
+	public function createAction(){
+		$storage = new Zend_Auth_Storage_Session();
+		$this->view->user_info = $storage->read();
+		$u = $this->view->user_info;
+		$this->view->createForm = new Form_Idea();
+		
+		
+	}
 
 }
