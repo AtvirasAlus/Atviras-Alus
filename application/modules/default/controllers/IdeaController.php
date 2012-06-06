@@ -223,8 +223,11 @@ class IdeaController extends Zend_Controller_Action {
 				}
 			}
 		}
-		//@todo: reikia paginatoriaus idėjų sąrašui
-		$this->view->ideas = $result;
+                $adapter = new Zend_Paginator_Adapter_Array($result);
+                $page=$this->_getParam('page');
+		$this->view->content = new Zend_Paginator($adapter);
+		$this->view->content->setCurrentPageNumber($page);
+		$this->view->content->setItemCountPerPage(10);
 	}
 
 	public function listnewAction() {

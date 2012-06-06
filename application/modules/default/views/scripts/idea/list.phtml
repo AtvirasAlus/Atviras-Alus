@@ -37,7 +37,7 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 		<a href="/idejos/nauja">Sukurti idėją</a>
 	</div>
 	<?php
-	foreach ($this->ideas as $idea){
+	foreach ($this->content as $idea){
 		?>
 		<div class="idea_item">
 			<div class="idea_user">
@@ -91,10 +91,14 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 		</div>
 		<?php
 	}
-	if (sizeof($this->ideas) == 0){
+	if (sizeof($this->content) == 0){
 		?>
 		<div>Šiame sąraše idėjų nėra</div>
 		<?
-	}
+	}else{
+            ?>
+                <?php echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml'); ?>
+            <?
+        }
 	?>
 </div>
