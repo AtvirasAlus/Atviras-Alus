@@ -21,7 +21,18 @@ class IndexController extends Zend_Controller_Action {
 
 		// getting a Zend_Cache_Core object
 		$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
-
+		
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$select = $db->select()
+					->from("idea_items", array("COUNT(0) as kiekis"));
+			$this->view->total_ideas = $db->fetchRow($select);
+			$select = $db->select()
+					->from("VIEW_idea_voteded", array("total"))
+					->where("VIEW_idea_voteded.user_id = ?", $user_info->user_id);
+			$this->view->total_ideas_voted = $db->fetchRow($select);
+		}
 		$select = $db->select()
 				->from("users", array("user_name", "user_id", "user_email"))
 				->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.brewer_id=users.user_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
