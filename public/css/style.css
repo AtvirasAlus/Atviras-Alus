@@ -1751,3 +1751,122 @@ ul.statuses li {
 #bubl_container .wi-240 {
 	width: 620px;
 }
+.idea_item {
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.idea_user {
+	float: left;
+	width: 100px;
+	overflow: hidden;
+	text-align: center;
+}
+.idea_user span {
+	display: block;
+	text-align: center;
+}
+.idea_info {
+	float: left;
+	width: 570px;
+	margin-left: 10px;
+}
+.idea_title {
+	margin-bottom: 10px;
+}
+.idea_title a {
+	font-size: 14px;
+	font-weight: bold;
+}
+.idea_votes {
+	float: right;
+	width: 100px;
+	background-color: #ffffff;
+	padding: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	margin-left: 10px;
+}
+.idea_votes_title {
+	text-align: center;
+	margin-bottom: 5px;
+}
+.idea_votes span {
+	font-size: 26px;
+	display: block;
+	text-align: center;
+}
+.vote_scale {
+	width: 100px;
+	height: 5px;
+	background-color: #eee;
+	overflow: hidden;
+	margin-top: 5px;
+}
+.scale_negative {
+	float: left;
+	height: 5px;
+	background-color: #f00900;
+}
+.scale_positive {
+	float: left;
+	height: 5px;
+	background-color: #11f605;
+}
+.scale_neutral {
+	float: left;
+	height: 5px;
+	background-color: #ffa327;
+}
+.vote_1m, .vote_1p, .vote_0 {
+	float: left;
+	width: 21px;
+	height: 20px;
+	background-position: 0px 20px;
+	margin: 0px 3px;
+}
+.vote_1m {
+	background-image: url("/public/images/new/vote_down.png");
+}
+.vote_1p {
+	background-image: url("/public/images/new/vote_up.png");
+}
+.vote_0 {
+	background-image: url("/public/images/new/vote_neutral.png");
+}
+.vote_1m:hover, .vote_1p:hover, .vote_0:hover {
+	background-position: 0px 0px;
+}
+.vote_links {
+	margin-top: 10px;
+	padding-left: 10px;
+}
+.total_votes {
+	text-align: center;
+	margin-top: 10px;
+}
+.total_votes span {
+	display: inline;
+	font-size: 12px;
+}
+.activevote {
+	background-position: 0px 0px;
+}
+.ideas_actions {
+	text-align: right;
+	margin-bottom: 20px;
+}
+.ideas_actions a {
+	font-size: 14px;
+	margin-left: 10px;
+}
+.idea_user a {
+	display: block;
+	margin-bottom: 20px;
+}
