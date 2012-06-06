@@ -8,7 +8,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 	<?php
 	if (isset($this->total_ideas['kiekis']) && ($this->total_ideas['kiekis'] - $this->total_ideas_voted['total']) != 0){
 		?>
-		<div class="inner_container" style="text-align: center; font-weight: bold;">
+		<div class="inner_container" style="text-align: center;">
 			Idėjų banke užregistruota <?=($this->total_ideas['kiekis'] - $this->total_ideas_voted['total'])?> idėjų, už kurias dar nebalsavote. 
 			<a href="/idejos/balsavimas">Peržiūrėti idėjų sąrašą</a>
 		</div>
