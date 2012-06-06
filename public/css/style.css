@@ -1885,3 +1885,43 @@ ul.statuses li {
 	font-weight: bold;
 	margin-bottom: 10px;
 }
+#__ideaForm dl {
+	margin-bottom: 5px;
+}
+#__ideaForm dt {
+	float: left;
+	font-size: 14px;
+	text-align: right;
+	width: 150px;
+	line-height: 26px;
+}
+#__ideaForm dt span {
+	color: red;
+	font-weight: bold;
+}
+#__ideaForm dd {
+	margin-left: 10px;
+	float: left;
+	width: 670px;
+}
+#__ideaForm dd input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 660px;
+	padding-left: 4px;
+}
+#__ideaForm dd textarea {
+	height: 100px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 660px;
+	padding-left: 4px;
+}
+#__ideaForm dd.large textarea {
+	height: 200px;
+}
