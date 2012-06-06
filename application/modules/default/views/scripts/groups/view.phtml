@@ -1,0 +1,32 @@
+<div id="brewer_session_container" class="inner_container">
+    <div class="usergroup_title"><?= $this->group["group_name"]; ?></div>
+        <div class="usergroup_avatars">
+                    <?
+                    $z = 0;
+                    for ($ii = 0; $ii < count($this->group_users); $ii++) {
+                            $z++;
+                            ?>
+                            <a href="/brewers/<?= $this->group_users[$ii]['user_id']; ?>">
+                                    <img src="http://www.gravatar.com/avatar/<?= md5($this->group_users[$ii]['user_email']); ?>?rating=G&size=50&default=mm" border="0"/>
+                                    <span><?= $this->group_users[$ii]['user_name']; ?>
+                            </a>
+                            <?
+                            if ($z == 8) {
+                                    $z = 0;
+                                    ?>
+                                    <div class="clear"></div>
+                                    <?php
+                            }
+                    }
+                    ?>
+                    <div class="clear"></div>
+            </div>
+            <div class="usergroup_actions">
+                    <a href="/mail/compose?token=<? print base64_encode($this->group['group_name']); ?>" rel="nofollow">
+                            Rašyti grupei žinutę
+                    </a>
+                 <a href="/groups/create-event?group_id=<?=$this->group["group_id"];?>" rel="nofollow">
+                            Sukurti grupės įvykį
+                    </a>
+          </div>
+</div>
