@@ -1,0 +1,93 @@
+<div style="width: 600px;">
+	<?php
+	$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+	if ($this->comments) {
+		for ($i=0;$i<count($this->comments);$i++) {
+			?>
+			<div class="recipe_comment" id="comment-<?=$this->comments[$i]['comment_id']?>">
+				<div class="recipe_comment_avatar">
+					<a href="/brewers/<?=$this->comments[$i]['user_id'];?>">
+						<img src="http://www.gravatar.com/avatar/<?=md5($this->comments[$i]['user_email']);?>?rating=G&size=40&default=mm" border="0"/>
+						<span><?=$this->comments[$i]['user_name'];?></span>
+					</a>
+				</div>
+				<div class="recipe_comment_content">
+					<div style="min-height: 40px;">
+						<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $this->comments[$i]["comment_text"]));?>
+					</div>
+					<div class="recipe_comment_date">
+						<?=$this->comments[$i]["comment_date"];?>
+						<?php
+						if ($user_id == $this->comments[$i]['user_id']) {
+							?>
+							<a href='javascript:deleteComment(<?=$this->comments[$i]['comment_id'];?>)' alt="Trinti" title="Trinti">
+								<span class="ui-icon ui-icon-trash"></span>
+							</a>
+							<?
+						}
+						?>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<?php
+		}
+	}
+	if ($user_id) {
+		?>
+		<div class="recipe_comment_form">
+			<div class="recipe_comment_form_avatar">
+				<a href="/brewers/<?=$user_id;?>">
+					<img src="http://www.gravatar.com/avatar/<?=md5($this->user_info->user_email);?>?rating=G&size=40&default=mm" border="0"/>
+					<span><?=$this->user_info->user_name;?></span>
+				</a>
+			</div>
+			<div class="recipe_comment_form_content">
+				<form action="/comments/submit" method="POST">
+					<div>
+						<input type="hidden" name="idea_id" value="<?=$this->idea_id;?>"/>
+						<input type="hidden" name="brewer_id" value="<?=$user_id;?>"/>
+						<textarea name="comment"></textarea>
+					</div>
+					<div style="text-align: right;">
+						<input type="submit" value="Komentuoti" class="ui-button" />
+					</div>
+				</form>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<?php
+	} else {
+		?>
+		<div>Norėdami komentuoti idėją turite <a href="javascript:showLogin()">prisijungti</a></div>
+		<?php
+	}
+	?>
+</div>
+<script>
+	function deleteComment(id) {
+		if (confirm("Ar norite ištrinti savo komentarą ?")) {
+			var surl="/comments/delete/";
+			$.ajax({
+				type: 'POST',
+				url: surl,
+				data: "comment_id=" + id+"&idea=1",
+				success: function (d) {
+					var data = jQuery.parseJSON(d);
+					if (data) {
+						if (data.status == "1") {
+							if (data.errors[0].type == "authentication") {
+								showLogin();
+								return
+							}
+						} else {
+							location.reload()
+						}
+					} else {
+						alert("Klaida")
+					}
+				}
+			})
+		}
+	}
+</script>

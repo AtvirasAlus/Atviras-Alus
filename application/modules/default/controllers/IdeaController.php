@@ -310,11 +310,11 @@ class IdeaController extends Zend_Controller_Action {
 			if ($this->_request->isPost()) {
 				$formData = $this->_request->getPost();
 				$db->insert("idea_items", array(
-						"idea_title" => $formData['title'],
-						"idea_description" => $formData['description'],
+						"idea_title" =>  trim(strip_tags($formData['title'])),
+						"idea_description" => strip_tags($formData['description'], "<a><b><i>"),
 						"user_id" => $user_id,
 						"idea_posted" => date("Y-m-d H:i:s"),
-						"idea_full_text" => $formData['full_text'],
+						"idea_full_text" => strip_tags($formData['full_text'], "<a><b><i>"),
 					));
 				$last_id = $db->lastInsertId();
 				$uploadedData = $form->getValues();

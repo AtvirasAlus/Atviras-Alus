@@ -58,7 +58,7 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 					</h2>
 				</div>
 				<div class="idea_description">
-					<?=nl2br($idea['idea_description']);?>
+					<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $idea['idea_description']));?>
 				</div>
 			</div>
 			<div class="idea_votes" id="idea_block_<?=$idea['idea_id']?>">

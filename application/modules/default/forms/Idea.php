@@ -22,17 +22,17 @@ class Form_Idea extends Zend_Form {
 		
 		$element = new Zend_Form_Element_File('files1');
 		$element->setLabel('Priedas #1');
-		$element->addValidator('Extension', false, 'jpg,png,gif');
+		$element->addValidator('Extension', false, 'jpg,png,gif,pdf,jpeg');
 		$this->addElement($element, 'files1');
 		
 		$element = new Zend_Form_Element_File('files2');
 		$element->setLabel('Priedas #2');
-		$element->addValidator('Extension', false, 'jpg,png,gif');
+		$element->addValidator('Extension', false, 'jpg,png,gif,pdf,jpeg');
 		$this->addElement($element, 'files2');
 
 		$element = new Zend_Form_Element_File('files3');
 		$element->setLabel('Priedas #3');
-		$element->addValidator('Extension', false, 'jpg,png,gif');
+		$element->addValidator('Extension', false, 'jpg,png,gif,pdf,jpeg');
 		$this->addElement($element, 'files3');
 
 		$this->addElement('submit', 'attributes_action', array('type' => 'submit', 'class' => 'ui-button'));

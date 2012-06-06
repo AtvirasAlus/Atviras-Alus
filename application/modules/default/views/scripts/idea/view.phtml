@@ -58,10 +58,10 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 				</h2>
 			</div>
 			<div class="idea_description" style="color: #666;">
-				<i><?=nl2br($idea['idea_description']);?></i>
+				<i><?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $idea['idea_description']));?></i>
 			</div>
 			<div class="idea_full_text">
-				<?=nl2br($idea['idea_full_text']);?>
+				<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $idea['idea_full_text']));?>
 			</div>
 			<?php
 			if (!empty($idea['idea_file_1']) || !empty($idea['idea_file_2']) || !empty($idea['idea_file_3'])){
@@ -129,5 +129,12 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 			</div>
 		</div>
 		<div class="clear"></div>
+	</div>
+</div>
+
+<div id="idea_comments_container" class="inner_container">
+	<div class="inner_header">Komentarai</div>
+	<div>
+		<?=$this->ideaComments($idea['idea_id']);?>
 	</div>
 </div>
