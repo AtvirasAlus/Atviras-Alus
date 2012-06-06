@@ -223,8 +223,8 @@ class IdeaController extends Zend_Controller_Action {
 				}
 			}
 		}
-                $adapter = new Zend_Paginator_Adapter_Array($result);
-                $page=$this->_getParam('page');
+		$adapter = new Zend_Paginator_Adapter_Array($result);
+		$page=$this->_getParam('page');
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($page);
 		$this->view->content->setItemCountPerPage(10);
@@ -296,6 +296,67 @@ class IdeaController extends Zend_Controller_Action {
 			}
 		}
 		$this->view->idea = $result;
+	}
+	
+	public function createAction(){
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$this->view->please_login = false;
+			$user_id = $user_info->user_id;
+			$form = new Form_Idea();
+			$this->view->createForm = $form;
+			$db = Zend_Registry::get('db');
+			if ($this->_request->isPost()) {
+				$formData = $this->_request->getPost();
+				$db->insert("idea_items", array(
+						"idea_title" =>  trim(strip_tags($formData['title'])),
+						"idea_description" => strip_tags($formData['description'], "<a><b><i>"),
+						"user_id" => $user_id,
+						"idea_posted" => date("Y-m-d H:i:s"),
+						"idea_full_text" => strip_tags($formData['full_text'], "<a><b><i>"),
+					));
+				$last_id = $db->lastInsertId();
+				$uploadedData = $form->getValues();
+				$files_to_upload = array();
+				if (!empty($uploadedData['files1'])) $files_to_upload[] = "file1";
+				if (!empty($uploadedData['files2'])) $files_to_upload[] = "file2";
+				if (!empty($uploadedData['files3'])) $files_to_upload[] = "file3";
+				$upload = new Zend_File_Transfer_Adapter_Http();
+				try {
+					$upload->receive($files_to_upload);
+				} catch (Zend_File_Transfer_Exception $e) {
+					$e->getMessage();
+				}
+				$name = $upload->getFileName('files1');
+				if (!empty($name)){
+					$name_s = str_replace(" ", "-", $upload->getFileName('files1', false));
+					@mkdir($_SERVER['DOCUMENT_ROOT'] . "/ideas/" . $last_id);
+					$fullFilePath = $_SERVER['DOCUMENT_ROOT'] . "/ideas/" . $last_id . "/1_".$name_s;
+					copy($name, $fullFilePath);
+					$db->update("idea_items", array("idea_file_1" => $name_s), array("idea_id = '" . $last_id . "'"));
+				}
+				$name = $upload->getFileName('files2');
+				if (!empty($name)){
+					$name_s = str_replace(" ", "-", $upload->getFileName('files2', false));
+					@mkdir($_SERVER['DOCUMENT_ROOT'] . "/ideas/" . $last_id);
+					$fullFilePath = $_SERVER['DOCUMENT_ROOT'] . "/ideas/" . $last_id . "/2_".$name_s;
+					copy($name, $fullFilePath);
+					$db->update("idea_items", array("idea_file_2" => $name_s), array("idea_id = '" . $last_id . "'"));
+				}
+				$name = $upload->getFileName('files3');
+				if (!empty($name)){
+					$name_s = str_replace(" ", "-", $upload->getFileName('files3', false));
+					@mkdir($_SERVER['DOCUMENT_ROOT'] . "/ideas/" . $last_id);
+					$fullFilePath = $_SERVER['DOCUMENT_ROOT'] . "/ideas/" . $last_id . "/3_".$name_s;
+					copy($name, $fullFilePath);
+					$db->update("idea_items", array("idea_file_3" => $name_s), array("idea_id = '" . $last_id . "'"));
+				}
+				$this->_redirect('/idejos/naujausios');
+			}
+		} else {
+			$this->view->please_login = true;
+		}
 	}
 
 }

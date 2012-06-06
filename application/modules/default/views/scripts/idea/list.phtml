@@ -58,7 +58,7 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 					</h2>
 				</div>
 				<div class="idea_description">
-					<?=nl2br($idea['idea_description']);?>
+					<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $idea['idea_description']));?>
 				</div>
 			</div>
 			<div class="idea_votes" id="idea_block_<?=$idea['idea_id']?>">
@@ -74,9 +74,9 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 				if ($user_id && $idea['idea_status']!='1'){
 					?>
 					<div class="vote_links">
-						<a href="#" class="votelink <?=($idea['vote_value'] == "1") ? "activevote" : ""; ?> vote_1p" title="Patinka" data-idea="<?=$idea['idea_id']?>" data-value="p"></a>
-						<a href="#" class="votelink <?=($idea['vote_value'] == "0") ? "activevote" : ""; ?> vote_0" title="Neturiu nuomonės" data-idea="<?=$idea['idea_id']?>" data-value="n"></a>
-						<a href="#" class="votelink <?=($idea['vote_value'] == "-1") ? "activevote" : ""; ?> vote_1m" title="Nepatinka" data-idea="<?=$idea['idea_id']?>" data-value="m"></a>
+						<a href="javascript:void(0);" class="votelink <?=($idea['vote_value'] == "1") ? "activevote" : ""; ?> vote_1p" title="Patinka" data-idea="<?=$idea['idea_id']?>" data-value="p"></a>
+						<a href="javascript:void(0);" class="votelink <?=($idea['vote_value'] == "0") ? "activevote" : ""; ?> vote_0" title="Neturiu nuomonės" data-idea="<?=$idea['idea_id']?>" data-value="n"></a>
+						<a href="javascript:void(0);" class="votelink <?=($idea['vote_value'] == "-1") ? "activevote" : ""; ?> vote_1m" title="Nepatinka" data-idea="<?=$idea['idea_id']?>" data-value="m"></a>
 						<div class="clear"></div>
 					</div>
 					<?php

@@ -73,6 +73,13 @@
 			<action>index</action>
 			<route>events</route>
 		</events>
+		<idea>
+			<label>Idėjos</label>
+			<module>default</module>
+			<controller>idea</controller>
+			<action>default</action>
+			<route>idejos</route>
+		</idea>
 		<help>
 			<label>Pagalba</label>
 			<module>default</module>

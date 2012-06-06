@@ -1,0 +1,24 @@
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Idėjos</div>
+	<div class="ideas_actions">
+		<a href="/idejos/naujausios">Naujausios idėjos</a>
+		<a href="/idejos/populiariausios">Populiariausios idėjos</a>
+		<a href="/idejos/igyvendintos">Įgyvendintos idėjos</a>
+		<a href="/idejos/nauja" style="font-weight: bold;">Sukurti idėją</a>
+	</div>
+	<?php
+	if ($this->please_login === true){
+		?>
+		<div>
+			Norėdami sukurti naują idėja, privalote prisijungti.
+		</div>
+		<?
+	} else {
+		?>
+		<div>
+			<?=$this->createForm;?>
+		</div>
+		<?
+	}
+	?>
+</div>

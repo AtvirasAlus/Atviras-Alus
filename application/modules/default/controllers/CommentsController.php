@@ -31,8 +31,13 @@ class CommentsController extends Zend_Controller_Action {
 				Entities_Events::trigger("new_recipe_comment", array("comment_recipe" => $_POST['recipe_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
 				$this->_redirect("/recipes/view/" . $_POST['recipe_id']);
 			} else {
+				if (isset($_POST['idea_id'])) {
+					$db->insert("idea_comments", array("idea_id" => $_POST['idea_id'], "user_id" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
+					$this->_redirect("/ideja/" . $_POST['idea_id']);
+				} else {
 				$db->insert("beer_articles_comments", array("comment_article" => $_POST['article_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
-				$this->_redirect("/content/read/1/" . $_POST['article_id']);
+					$this->_redirect("/content/read/1/" . $_POST['article_id']);
+				}
 			}
 		} else {
 			$this->_redirect("/");
@@ -47,7 +52,11 @@ class CommentsController extends Zend_Controller_Action {
 			if (isset($_POST["article"])) {
 				$db->delete("beer_articles_comments", array("comment_id = " . $_POST['comment_id']));
 			} else {
-				$db->delete("beer_recipes_comments", array("comment_id = " . $_POST['comment_id']));
+				if (isset($_POST["idea"])) {
+					$db->delete("idea_comments", array("comment_id = " . $_POST['comment_id']));
+				} else {
+					$db->delete("beer_recipes_comments", array("comment_id = " . $_POST['comment_id']));
+				}
 			}
 		} else {
 			
