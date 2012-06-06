@@ -11,8 +11,6 @@ class IdeaController extends Zend_Controller_Action {
 	}
 
 	public function getfileAction() {
-		echo "!";
-		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$idea_id = $this->getRequest()->getParam('idea');

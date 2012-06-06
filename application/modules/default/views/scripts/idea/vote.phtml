@@ -1,5 +1,8 @@
+<?php
+$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+?>
 <div class="idea_votes_title">Įvertinimas</div>
-<span><?=$this->idea['idea_vote_sum']?></span>
+<span class="vote_val"><?=$this->idea['idea_vote_sum']?></span>
 <div class="vote_scale">
 	<div class="scale_positive" style="width: <?=$this->idea['up_size']?>px;"></div>
 	<div class="scale_neutral" style="width: <?=$this->idea['neutral_size']?>px;"></div>
@@ -10,9 +13,9 @@
 if ($user_id && $this->idea['idea_status']!='1'){
 	?>
 	<div class="vote_links">
-		<a href="#" class="<?=($this->idea['vote_value'] == "1") ? "activevote" : ""; ?> vote_1p" title="Patinka"></a>
-		<a href="#" class="<?=($this->idea['vote_value'] == "0") ? "activevote" : ""; ?> vote_0" title="Neturiu nuomonės"></a>
-		<a href="#" class="<?=($this->idea['vote_value'] == "-1") ? "activevote" : ""; ?> vote_1m" title="Nepatinka"></a>
+		<a href="#" class="votelink <?=($this->idea['vote_value'] == "1") ? "activevote" : ""; ?> vote_1p" title="Patinka" data-idea="<?=$this->idea['idea_id']?>" data-value="p"></a>
+		<a href="#" class="votelink <?=($this->idea['vote_value'] == "0") ? "activevote" : ""; ?> vote_0" title="Neturiu nuomonės" data-idea="<?=$this->idea['idea_id']?>" data-value="n"></a>
+		<a href="#" class="votelink <?=($this->idea['vote_value'] == "-1") ? "activevote" : ""; ?> vote_1m" title="Nepatinka" data-idea="<?=$this->idea['idea_id']?>" data-value="m"></a>
 		<div class="clear"></div>
 	</div>
 	<?php

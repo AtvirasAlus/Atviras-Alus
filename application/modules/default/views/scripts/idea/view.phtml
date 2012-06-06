@@ -1,0 +1,133 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".votelink").live('click', function(){
+			if ($(this).hasClass("activevote")){
+				return false;
+			}
+			v_idea_id = $(this).attr("data-idea");
+			v_vote_value = $(this).attr("data-value");
+			$("#idea_block_"+v_idea_id+" span.vote_val").html($("#loader_ph").html());
+			
+			$.post("/idea/vote", 
+				{
+					idea_id: v_idea_id, 
+					vote_value: v_vote_value 
+				},
+				function(data) {
+					if (data != "error"){
+						$("#idea_block_"+v_idea_id).html(data);
+					}
+				}
+			);
+		});
+	});
+</script>
+<?php
+$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+?>
+<div id="loader_ph" style="display: none;">
+	<img src="/public/images/new/ajax-loader.gif" alt="" />
+</div>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Idėjos</div>
+	<div class="ideas_actions">
+		<a href="/idejos/naujausios">Naujausios idėjos</a>
+		<a href="/idejos/populiariausios">Populiariausios idėjos</a>
+		<a href="/idejos/igyvendintos">Įgyvendintos idėjos</a>
+		<a href="/idejos/nauja">Sukurti idėją</a>
+	</div>
+	<?php
+	$idea = $this->idea;
+	?>
+	<div class="idea_item">
+		<div class="idea_user">
+			<a href="/brewers/<?=$idea['user_id']?>">
+				<img src="http://www.gravatar.com/avatar/<?= md5($idea['user_email']); ?>?rating=G&size=50&default=mm" border="0" />
+				<span><?=$idea['user_name']?></span>
+			</a>
+			<div class="idea_posted">
+				<?=str_replace(" ", "<br />", $idea['idea_posted'])?>
+			</div>				
+		</div>
+		<div class="idea_info">
+			<div class="idea_title">
+				<h2>
+					<a href="/ideja/<?=$idea['idea_id'];?>">
+						Idėja #<?=$idea['idea_id']?>: <?=$idea['idea_title']?>
+					</a>
+				</h2>
+			</div>
+			<div class="idea_description" style="color: #666;">
+				<i><?=nl2br($idea['idea_description']);?></i>
+			</div>
+			<div class="idea_full_text">
+				<?=nl2br($idea['idea_full_text']);?>
+			</div>
+			<?php
+			if (!empty($idea['idea_file_1']) || !empty($idea['idea_file_2']) || !empty($idea['idea_file_3'])){
+				?>
+				<div class="idea_files">
+					<span>Priedai</span>
+					<ul>
+						<?php
+						if (!empty($idea['idea_file_1'])){
+							?>
+							<li>
+								<a href="/idea/getfile/idea/<?=$idea['idea_id']?>/file/1"><?=$idea['idea_file_1'];?></a>
+							</li>
+							<?php
+						}
+						?>
+						<?php
+						if (!empty($idea['idea_file_2'])){
+							?>
+							<li>
+								<a href="/idea/getfile/idea/<?=$idea['idea_id']?>/file/2"><?=$idea['idea_file_2'];?></a>
+							</li>
+							<?php
+						}
+						?>
+						<?php
+						if (!empty($idea['idea_file_3'])){
+							?>
+							<li>
+								<a href="/idea/getfile/idea/<?=$idea['idea_id']?>/file/3"><?=$idea['idea_file_3'];?></a>
+							</li>
+							<?php
+						}
+						?>
+					</ul>
+				</div>
+				<?php
+			}
+			?>
+		</div>
+		<div class="idea_votes" id="idea_block_<?=$idea['idea_id']?>">
+			<div class="idea_votes_title">Įvertinimas</div>
+			<span class="vote_val"><?=$idea['idea_vote_sum']?></span>
+			<div class="vote_scale">
+				<div class="scale_positive" style="width: <?=$idea['up_size']?>px;"></div>
+				<div class="scale_neutral" style="width: <?=$idea['neutral_size']?>px;"></div>
+				<div class="scale_negative" style="width: <?=$idea['down_size']?>px;"></div>
+				<div class="clear"></div>
+			</div>
+			<?php
+			if ($user_id && $idea['idea_status']!='1'){
+				?>
+				<div class="vote_links">
+					<a href="#" class="votelink <?=($idea['vote_value'] == "1") ? "activevote" : ""; ?> vote_1p" title="Patinka" data-idea="<?=$idea['idea_id']?>" data-value="p"></a>
+					<a href="#" class="votelink <?=($idea['vote_value'] == "0") ? "activevote" : ""; ?> vote_0" title="Neturiu nuomonės" data-idea="<?=$idea['idea_id']?>" data-value="n"></a>
+					<a href="#" class="votelink <?=($idea['vote_value'] == "-1") ? "activevote" : ""; ?> vote_1m" title="Nepatinka" data-idea="<?=$idea['idea_id']?>" data-value="m"></a>
+					<div class="clear"></div>
+				</div>
+				<?php
+			}
+			?>
+			<div class="total_votes">
+				Viso balsavo: 
+				<span><?=$idea['total_votes']?></span>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
