@@ -61,10 +61,10 @@ function _initAutoLoad() {
 		$router->addRoute("calculus_recipe",new Zend_Controller_Router_Route("index/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
 		//$router->addRoute("calculus",new Zend_Controller_Router_Route("/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
 		
-		$router->addRoute("idejos",new Zend_Controller_Router_Route("/idejos",array("module"=>"default","controller" => "idea","action" => "list")));
-		$router->addRoute("idejos_new",new Zend_Controller_Router_Route("/idejos/naujausios",array("module"=>"default","controller" => "idea","action" => "list_new")));
-		$router->addRoute("idejos_top",new Zend_Controller_Router_Route("/idejos/populiariausios",array("module"=>"default","controller" => "idea","action" => "list_top")));
-		$router->addRoute("idejos_finished",new Zend_Controller_Router_Route("/idejos/igyvendintos",array("module"=>"default","controller" => "idea","action" => "list_finished")));
+		$router->addRoute("idejos",new Zend_Controller_Router_Route("/idejos/:page",array("module"=>"default","controller" => "idea","action" => "list","page"=>0)));
+		$router->addRoute("idejos_new",new Zend_Controller_Router_Route("/idejos/naujausios/:page",array("module"=>"default","controller" => "idea","action" => "list_new","page"=>0)));
+		$router->addRoute("idejos_top",new Zend_Controller_Router_Route("/idejos/populiariausios/:page",array("module"=>"default","controller" => "idea","action" => "list_top","page"=>0)));
+		$router->addRoute("idejos_finished",new Zend_Controller_Router_Route("/idejos/igyvendintos/:page",array("module"=>"default","controller" => "idea","action" => "list_finished","page"=>0)));
 		$router->addRoute("idejos_view",new Zend_Controller_Router_Route("/ideja/:idea",array("module"=>"default","controller" => "idea","action" => "view", "idea" => 0)));
 		$router->addRoute("idejos_create",new Zend_Controller_Router_Route("/idejos/nauja",array("module"=>"default","controller" => "idea","action" => "create")));
 		$router->addRoute("brewer",new Zend_Controller_Router_Route("/brewers/:brewer",array("module"=>"default","controller" => "brewer","action" => "info","brewer"=>0)));
