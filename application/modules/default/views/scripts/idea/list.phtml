@@ -70,6 +70,13 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 				<div class="idea_description">
 					<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $idea['idea_description']));?>
 				</div>
+				<?php
+				if (trim($idea['idea_full_text']) != ""){
+					?>
+					<div style="margin-top: 10px;"><a href="/ideja/<?=$idea['idea_id'];?>">skaityti plačiau...</a></div>
+					<?php
+				}
+				?>
 			</div>
 			<div class="idea_votes" id="idea_block_<?=$idea['idea_id']?>">
 				<div class="idea_votes_title">Įvertinimas</div>
