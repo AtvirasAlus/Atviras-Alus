@@ -180,5 +180,3 @@ class BrewsessionController extends Zend_Controller_Action {
 	}
 
 }
-
-?>

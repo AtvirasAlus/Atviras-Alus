@@ -193,5 +193,3 @@ class EventsController extends Zend_Controller_Action {
 	}
 
 }
-
-?>

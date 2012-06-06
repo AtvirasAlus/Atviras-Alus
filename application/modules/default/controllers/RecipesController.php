@@ -238,7 +238,7 @@ class RecipesController extends Zend_Controller_Action {
 		$this->view->data = array();
 		if ($recipe_id > 0) {
 			$db = Zend_Registry::get("db");
-                        $recipe= new Entities_Recipe($recipe_id);
+			$recipe = new Entities_Recipe($recipe_id);
 			$this->view->data["recipe"] = $recipe->getProperties();
 			$this->view->data["malt"] = $recipe->getMalts();
 			$this->view->data["hops"] = $recipe->getHops();
@@ -430,7 +430,7 @@ class RecipesController extends Zend_Controller_Action {
 				} else {
 					$ins["brewer_id"] = $u->user_id;
 					if ($db->insert("beer_recipes", $ins)) {
-;
+						;
 						$recipe_id = $db->lastInsertId();
 					}
 				}
@@ -549,6 +549,3 @@ class RecipesController extends Zend_Controller_Action {
 	}
 
 }
-?>
-
-
