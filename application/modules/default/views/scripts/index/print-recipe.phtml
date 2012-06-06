@@ -13,127 +13,127 @@
 		</style>
 	</head>
 	<body>
-            <? if (isset($this->print_data['beer_name'])) { ?>
-		<div style="margin-top: 40px; width: 800px;">
-			<div style="font-weight: bold; text-align: center; font-size: 16px; margin-bottom: 10px;"><?= $this->print_data['beer_name']; ?></div>
-			<div style="padding-bottom: 4px;">
-                                Alaus kiekis: <?= round($this->print_data['bash_size'],1); ?><br />
-				Virimo laikas: <?= round($this->print_data['boil_time'],1); ?><br />
-				Efektyvumas: <?= round($this->print_data['efficiency'],2); ?><br />
-				Atenuacija: <?= round($this->print_data['attenuation'],2); ?><br />
-				Stilius: <?= $this->print_data['beer_style']; ?>
+		<? if (isset($this->print_data['beer_name'])) { ?>
+			<div style="margin-top: 40px; width: 800px;">
+				<div style="font-weight: bold; text-align: center; font-size: 16px; margin-bottom: 10px;"><?= $this->print_data['beer_name']; ?></div>
+				<div style="padding-bottom: 4px;">
+					Alaus kiekis: <?= round($this->print_data['bash_size'], 1); ?><br />
+					Virimo laikas: <?= round($this->print_data['boil_time'], 1); ?><br />
+					Efektyvumas: <?= number_format(round($this->print_data['efficiency'], 2), 2, ".", ""); ?><br />
+					Atenuacija: <?= number_format(round($this->print_data['attenuation'], 2), 2, ".", ""); ?><br />
+					Stilius: <?= $this->print_data['beer_style']; ?>
+				</div>
+				<div style="margin-bottom: 20px; padding-bottom: 4px;">
+					SG: <?= number_format($this->print_data['recipe_sg'], 3, ".", ""); ?><br />
+					FG: <?= number_format($this->print_data['recipe_fg'], 3, ".", ""); ?><br />
+					ABV: <?= number_format($this->print_data['recipe_abv'], 1, ".", ""); ?><br />
+					IBU: <?= $this->print_data['recipe_ibu']; ?><br />
+					EBC: <?= $this->print_data['recipe_ebc']; ?>
+				</div>
+				<?php
+				if (isset($this->print_data['malt_list'])) {
+					$total = 0;
+					for ($i = 0; $i < count($this->print_data['malt_weight']); $i++) {
+						$total+=floatval($this->print_data['malt_weight'][$i]);
+					}
+					?>
+					<div style="margin-bottom: 10px; margin-top: 14px;"><b>Salyklas</b></div>
+					<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
+						<div style="float: left; width: 360px;">Salyklas</div>
+						<div style="float: left; width: 160px;">Spalva (EBC)</div>
+						<div style="float: left; width: 145px;">Kiekis (kg)</div>
+						<div style="float: left; width: 115px;">Kiekis (%)</div>
+						<div style="clear: both;"></div>
+					</div>
+					<?
+					for ($i = 0; $i < count($this->print_data['malt_list']); $i++) {
+						?>
+						<div>
+							<div style="float: left; width: 360px;"><?= $this->print_data['malt_list'][$i]; ?></div>
+							<div style="float: left; width: 160px;"><?= $this->print_data['malt_color'][$i]; ?></div>
+							<div style="float: left; width: 145px;"><?= $this->print_data['malt_weight'][$i]; ?></div>
+							<div style="float: left; width: 115px;"><?= round($this->print_data['malt_weight'][$i] / $total * 100, 1); ?></div>
+							<div style="clear: both;"></div>
+						</div>
+						<?
+					}
+					if (count($this->print_data['malt_list']) > 1) {
+						?>
+						<div>
+							<div style="float: left; width: 360px;">&nbsp;</div>
+							<div style="float: left; width: 160px;">&nbsp;</div>
+							<div style="float: left; width: 125px;border-top: 1px solid #999;"><?= number_format($total, 3, '.', ''); ?></div>
+							<div style="clear: both;"></div>
+						</div>
+						<?
+					}
+				}
+				if (isset($this->print_data['hop_list'])) {
+					$total = 0;
+					for ($i = 0; $i < count($this->print_data['hop_weight']); $i++) {
+						$total+=floatval($this->print_data['hop_weight'][$i]);
+					}
+					?>
+					<div style="margin-bottom: 10px; margin-top: 14px;"><b>Apyniai</b></div>
+					<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
+						<div style="float: left; width: 360px;">Apynys</div>
+						<div style="float: left; width: 160px;">Kartumas (AA%)</div>
+						<div style="float: left; width: 145px;">Kiekis (g)</div>
+						<div style="float: left; width: 115px;">Laikas</div>
+						<div style="clear: both;"></div>
+					</div>
+					<?
+					for ($i = 0; $i < count($this->print_data['hop_list']); $i++) {
+						?>
+						<div>
+							<div style="float: left; width: 360px;"><?= $this->print_data['hop_list'][$i]; ?></div>
+							<div style="float: left; width: 160px;"><?= $this->print_data['hop_alpha'][$i]; ?></div>
+							<div style="float: left; width: 145px;"><?= $this->print_data['hop_weight'][$i]; ?></div>
+							<div style="float: left; width: 115px;"><?= $this->print_data['hop_time'][$i]; ?></div>
+							<div style="clear: both;"></div>
+						</div>
+						<?
+					}
+					if (count($this->print_data['hop_list']) > 1) {
+						?>
+						<div>
+							<div style="float: left; width: 360px;">&nbsp;</div>
+							<div style="float: left; width: 160px;">&nbsp;</div>
+							<div style="float: left; width: 125px;border-top: 1px solid #999;"><?= $total; ?></div>
+							<div style="clear: both;"></div>
+						</div>
+						<?
+					}
+				}
+				if (isset($this->print_data['yeast_list'])) {
+					?>
+					<div style="margin-bottom: 10px; margin-top: 14px;"><b>Mielės</b></div>
+					<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
+						<div style="float: left; width: 520px;">Mielės</div>
+						<div style="float: left; width: 260px;">Kiekis (g)</div>
+						<div style="clear: both;"></div>
+					</div>
+					<?
+					for ($i = 0; $i < count($this->print_data['yeast_list']); $i++) {
+						?>
+						<div>
+							<div style="float: left; width: 520px;"><?= $this->print_data['yeast_list'][$i]; ?></div>
+							<div style="float: left; width: 260px;"><?= $this->print_data['yeast_weight'][$i]; ?></div>
+							<div style="clear: both;"></div>
+						</div>
+						<?
+					}
+				}
+				if (isset($this->print_data['comments']) && !empty($this->print_data['comments'])) {
+					?>
+					<div style="margin-bottom: 10px; margin-top: 14px;"><b>Pastabos</b></div>
+					<div><?= nl2br($this->print_data['comments']); ?></div>
+					<?
+				}
+				?>
 			</div>
-			<div style="margin-bottom: 20px; padding-bottom: 4px;">
-				SG: <?= $this->print_data['recipe_sg']; ?><br />
-				FG: <?= $this->print_data['recipe_fg']; ?><br />
-				ABV: <?= $this->print_data['recipe_abv']; ?><br />
-				IBU: <?= $this->print_data['recipe_ibu']; ?><br />
-				EBC: <?= $this->print_data['recipe_ebc']; ?>
-			</div>
-			<?php
-			if (isset($this->print_data['malt_list'])) {
-				$total = 0;
-				for ($i = 0; $i < count($this->print_data['malt_weight']); $i++) {
-					$total+=floatval($this->print_data['malt_weight'][$i]);
-				}
-				?>
-				<div style="margin-bottom: 10px; margin-top: 14px;"><b>Salyklas</b></div>
-				<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
-					<div style="float: left; width: 360px;">Salyklas</div>
-					<div style="float: left; width: 160px;">Spalva (EBC)</div>
-					<div style="float: left; width: 145px;">Kiekis (kg)</div>
-					<div style="float: left; width: 115px;">Kiekis (%)</div>
-					<div style="clear: both;"></div>
-				</div>
-				<?
-				for ($i = 0; $i < count($this->print_data['malt_list']); $i++) {
-					?>
-					<div>
-						<div style="float: left; width: 360px;"><?= $this->print_data['malt_list'][$i]; ?></div>
-						<div style="float: left; width: 160px;"><?= $this->print_data['malt_color'][$i]; ?></div>
-						<div style="float: left; width: 145px;"><?= $this->print_data['malt_weight'][$i]; ?></div>
-						<div style="float: left; width: 115px;"><?= round($this->print_data['malt_weight'][$i] / $total * 100, 1); ?></div>
-						<div style="clear: both;"></div>
-					</div>
-					<?
-				}
-			}
-                        if (count($this->print_data['malt_list'])>1) {
-                            ?>
-                                         <div>
-                                                <div style="float: left; width: 360px;">&nbsp;</div>
-						<div style="float: left; width: 160px;">&nbsp;</div>
-						<div style="float: left; width: 125px;border-top: 1px solid #999;"><?=number_format($total, 3, '.', '');?></div>
-						<div style="clear: both;"></div>
-					</div>
-                            <?
-                        }
-			if (isset($this->print_data['hop_list'])) {
-                                $total = 0;
-				for ($i = 0; $i < count($this->print_data['hop_weight']); $i++) {
-					$total+=floatval($this->print_data['hop_weight'][$i]);
-				}
-				?>
-				<div style="margin-bottom: 10px; margin-top: 14px;"><b>Apyniai</b></div>
-				<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
-					<div style="float: left; width: 360px;">Apynys</div>
-					<div style="float: left; width: 160px;">Kartumas (AA%)</div>
-					<div style="float: left; width: 145px;">Kiekis (g)</div>
-					<div style="float: left; width: 115px;">Laikas</div>
-					<div style="clear: both;"></div>
-				</div>
-				<?
-				for ($i = 0; $i < count($this->print_data['hop_list']); $i++) {
-					?>
-					<div>
-						<div style="float: left; width: 360px;"><?= $this->print_data['hop_list'][$i]; ?></div>
-						<div style="float: left; width: 160px;"><?= $this->print_data['hop_alpha'][$i]; ?></div>
-						<div style="float: left; width: 145px;"><?= $this->print_data['hop_weight'][$i]; ?></div>
-						<div style="float: left; width: 115px;"><?= $this->print_data['hop_time'][$i]; ?></div>
-						<div style="clear: both;"></div>
-					</div>
-					<?
-				}
-                                if (count($this->print_data['hop_list'])>1) {
-                            ?>
-                                         <div>
-                                                <div style="float: left; width: 360px;">&nbsp;</div>
-						<div style="float: left; width: 160px;">&nbsp;</div>
-						<div style="float: left; width: 125px;border-top: 1px solid #999;"><?=$total;?></div>
-						<div style="clear: both;"></div>
-					</div>
-                            <?
-                        }
-			}
-			if (isset($this->print_data['yeast_list'])) {
-				?>
-				<div style="margin-bottom: 10px; margin-top: 14px;"><b>Mielės</b></div>
-				<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
-					<div style="float: left; width: 520px;">Mielės</div>
-					<div style="float: left; width: 260px;">Kiekis (g)</div>
-					<div style="clear: both;"></div>
-				</div>
-				<?
-				for ($i = 0; $i < count($this->print_data['yeast_list']); $i++) {
-					?>
-					<div>
-						<div style="float: left; width: 520px;"><?= $this->print_data['yeast_list'][$i]; ?></div>
-						<div style="float: left; width: 260px;"><?= $this->print_data['yeast_weight'][$i]; ?></div>
-						<div style="clear: both;"></div>
-					</div>
-					<?
-				}
-			}
-			if (isset($this->print_data['comments'])) {
-				?>
-				<div style="margin-bottom: 10px; margin-top: 14px;"><b>Pastabos</b></div>
-				<div><?= nl2br($this->print_data['comments']); ?></div>
-				<?
-			}
-			?>
-		</div>
-            <?}else{?>
-                <div style="margin-top: 40px; width: 800px;">Receptas nerastas</div>
-            <?}?>
+		<? } else { ?>
+			<div style="margin-top: 40px; width: 800px;">Receptas nerastas</div>
+		<? } ?>
 	</body>
 </html>
