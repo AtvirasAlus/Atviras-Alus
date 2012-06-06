@@ -63,6 +63,8 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 						<a href="/ideja/<?=$idea['idea_id'];?>">
 							Idėja #<?=$idea['idea_id']?>: <?=$idea['idea_title']?>
 						</a>
+						(<?=(!empty($idea['comments'])) ? $idea['comments'] : "0" ;?>)
+						<img src="/public/images/new/comments_icon.png" />
 					</h2>
 				</div>
 				<div class="idea_description">
