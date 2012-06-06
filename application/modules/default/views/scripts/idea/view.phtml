@@ -34,7 +34,15 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 		<a href="/idejos/naujausios">Naujausios idėjos</a>
 		<a href="/idejos/populiariausios">Populiariausios idėjos</a>
 		<a href="/idejos/igyvendintos">Įgyvendintos idėjos</a>
-		<a href="/idejos/nauja">Sukurti idėją</a>
+		<?php
+		if ($user_id){
+			?>
+			<a href="/idejos/mano">Mano idėjos</a>
+			<a href="/idejos/balsavimas">Idėjos už kurias nebalsavau</a>
+			<a href="/idejos/nauja">Sukurti idėją</a>
+			<?
+		}
+		?>
 	</div>
 	<?php
 	$idea = $this->idea;

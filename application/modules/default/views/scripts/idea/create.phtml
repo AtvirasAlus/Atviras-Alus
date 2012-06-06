@@ -1,10 +1,21 @@
+<?php
+$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+?>
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Idėjos</div>
 	<div class="ideas_actions">
 		<a href="/idejos/naujausios">Naujausios idėjos</a>
 		<a href="/idejos/populiariausios">Populiariausios idėjos</a>
 		<a href="/idejos/igyvendintos">Įgyvendintos idėjos</a>
-		<a href="/idejos/nauja" style="font-weight: bold;">Sukurti idėją</a>
+		<?php
+		if ($user_id){
+			?>
+			<a href="/idejos/mano">Mano idėjos</a>
+			<a href="/idejos/balsavimas">Idėjos už kurias nebalsavau</a>
+			<a href="/idejos/nauja" style="font-weight: bold;">Sukurti idėją</a>
+			<?
+		}
+		?>
 	</div>
 	<?php
 	if ($this->please_login === true){

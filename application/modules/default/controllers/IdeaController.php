@@ -176,12 +176,20 @@ class IdeaController extends Zend_Controller_Action {
 		if ($type == "finished") {
 			$select->where("idea_items.idea_status = ?", "1");
 		} else {
-			$select->where("idea_items.idea_status = ?", "0");
+			if ($type != "my") {
+				$select->where("idea_items.idea_status = ?", "0");
+			}
 		}
 		if ($type == "top") {
 			$select->order("idea_vote_sum DESC");
 		} else {
 			$select->order("idea_posted DESC");
+		}
+		if ($type == "my") {
+			$select->where("idea_items.user_id = ?", $me);
+		}
+		if ($type == "unvoted") {
+			$select->where("idea_votes.vote_value is NULL");
 		}
 		$result = $db->fetchAll($select);
 		foreach ($result as $key => $row) {
@@ -232,6 +240,14 @@ class IdeaController extends Zend_Controller_Action {
 
 	public function listnewAction() {
 		$this->_forward("list", null, null, array("type" => "new"));
+	}
+
+	public function listmyAction() {
+		$this->_forward("list", null, null, array("type" => "my"));
+	}
+	
+	public function listunvotedAction() {
+		$this->_forward("list", null, null, array("type" => "unvoted"));
 	}
 
 	public function listtopAction() {
@@ -301,6 +317,7 @@ class IdeaController extends Zend_Controller_Action {
 	public function createAction(){
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
+		$this->view->user_info = $user_info;
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$this->view->please_login = false;
 			$user_id = $user_info->user_id;

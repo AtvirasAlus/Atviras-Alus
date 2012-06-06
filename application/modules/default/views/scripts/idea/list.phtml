@@ -34,7 +34,15 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 		<a href="/idejos/naujausios" <?=($this->type == "new") ? 'style="font-weight: bold;"' : ""?>>Naujausios idėjos</a>
 		<a href="/idejos/populiariausios" <?=($this->type == "top") ? 'style="font-weight: bold;"' : ""?>>Populiariausios idėjos</a>
 		<a href="/idejos/igyvendintos" <?=($this->type == "finished") ? 'style="font-weight: bold;"' : ""?>>Įgyvendintos idėjos</a>
-		<a href="/idejos/nauja">Sukurti idėją</a>
+		<?php
+		if ($user_id){
+			?>
+			<a href="/idejos/mano" <?=($this->type == "my") ? 'style="font-weight: bold;"' : ""?>>Mano idėjos</a>
+			<a href="/idejos/balsavimas" <?=($this->type == "unvoted") ? 'style="font-weight: bold;"' : ""?>>Idėjos už kurias nebalsavau</a>
+			<a href="/idejos/nauja">Sukurti idėją</a>
+			<?
+		}
+		?>
 	</div>
 	<?php
 	foreach ($this->content as $idea){
