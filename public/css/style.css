@@ -1803,7 +1803,7 @@ ul.statuses li {
 	text-align: center;
 }
 .vote_scale {
-	width: 100px;
+	width: 101px;
 	height: 5px;
 	background-color: #eee;
 	overflow: hidden;
