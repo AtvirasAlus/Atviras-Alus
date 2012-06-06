@@ -7,41 +7,31 @@ class Form_Idea extends Zend_Form {
 
 		$this->setAction('/idejos/nauja');
 		$this->setMethod('post');
-		$this->setAttrib('enctype', 'multipart/form-data');
 		
 		$this->addElement('text', 'title');
 		$this->getElement('title')
-				->setLabel("Antraštė");
+				->setLabel("Antraštė <span>*</span>");
 		
 		$this->addElement('textarea', 'description');
 		$this->getElement('description')
-				->setLabel('Santrauka:');
+				->setLabel('Santrauka <span>*</span>');
 
 		$this->addElement('textarea', 'full_text');
 		$this->getElement('full_text')
-				->setLabel('Detalus aprašymas:');
+				->setLabel('Detalus aprašymas');
 		
 		$element = new Zend_Form_Element_File('files1');
-		$element->setLabel('Priedas #1:')
-				->setDestination(sys_get_temp_dir());
-		$element->addValidator('Count', false, 1);
-		$element->addValidator('Size', false, 102400);
+		$element->setLabel('Priedas #1');
 		$element->addValidator('Extension', false, 'jpg,png,gif');
 		$this->addElement($element, 'files1');
 		
 		$element = new Zend_Form_Element_File('files2');
-		$element->setLabel('Priedas #2:')
-				->setDestination(sys_get_temp_dir());
-		$element->addValidator('Count', false, 1);
-		$element->addValidator('Size', false, 102400);
+		$element->setLabel('Priedas #2');
 		$element->addValidator('Extension', false, 'jpg,png,gif');
 		$this->addElement($element, 'files2');
 
 		$element = new Zend_Form_Element_File('files3');
-		$element->setLabel('Priedas #3:')
-				->setDestination(sys_get_temp_dir());
-		$element->addValidator('Count', false, 1);
-		$element->addValidator('Size', false, 102400);
+		$element->setLabel('Priedas #3');
 		$element->addValidator('Extension', false, 'jpg,png,gif');
 		$this->addElement($element, 'files3');
 

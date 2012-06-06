@@ -1,4 +1,46 @@
-<form action="<?= $this->element->getAction(); ?>" method="<?= $this->element->getmethod(); ?>" target="_self" name="__ideaForm" id="__ideaForm">
+<?php
+$max_upload = (int)(ini_get('upload_max_filesize'));
+$max_post = (int)(ini_get('post_max_size'));
+$memory_limit = (int)(ini_get('memory_limit'));
+$upload_mb = min($max_upload, $max_post, $memory_limit);
+?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#__ideaForm").submit(function(){
+			if ($("#files1").val() != ""){
+				var ext = $('#files1').val().split('.').pop().toLowerCase();
+				if($.inArray(ext, ['gif','png','jpg','jpeg', 'pdf']) == -1) {
+					alert('Draudžiama įkelti "'+ext+'" tipo failus');
+					return false;
+				}
+			}
+			if ($("#files2").val() != ""){
+				var ext = $('#files2').val().split('.').pop().toLowerCase();
+				if($.inArray(ext, ['gif','png','jpg','jpeg', 'pdf']) == -1) {
+					alert('Draudžiama įkelti "'+ext+'" tipo failus');
+					return false;
+				}
+			}
+			if ($("#files3").val() != ""){
+				var ext = $('#files3').val().split('.').pop().toLowerCase();
+				if($.inArray(ext, ['gif','png','jpg','jpeg', 'pdf']) == -1) {
+					alert('Draudžiama įkelti "'+ext+'" tipo failus');
+					return false;
+				}
+			}
+			if ($("#__ideaForm #title").val().trim() == ""){
+				alert("Įveskite idėjos antraštę");
+				return false;
+			}
+			if ($("#__ideaForm #description").val().trim() == ""){
+				alert("Įveskite idėjos santrauką");
+				return false;
+			}
+			return true;
+		});
+	});
+</script>
+<form action="<?= $this->element->getAction(); ?>" method="<?= $this->element->getmethod(); ?>" target="_self" name="__ideaForm" id="__ideaForm" enctype="multipart/form-data">
 	<dl>
 		<dt><?= $this->element->title->getLabel(); ?></dt>
 		<dd><?= $this->element->title; ?></dd>
@@ -11,7 +53,7 @@
 	</dl>
 	<dl>
 		<dt><?= $this->element->full_text->getLabel(); ?></dt>
-		<dd><?= $this->element->full_text; ?></dd>
+		<dd class="large"><?= $this->element->full_text; ?></dd>
 		<div class="clear"></div>
 	</dl>
 	<dl>
@@ -27,6 +69,11 @@
 	<dl>
 		<dt><?= $this->element->files3->getLabel(); ?></dt>
 		<dd><?= $this->element->files3; ?></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd>Leidžiama įkelti JPG, JPEG, GIF, PNG, PDF failus. Maksimalus leistinas failo dydis: <?=$upload_mb?> Mb</dd>
 		<div class="clear"></div>
 	</dl>
 	<dl>
