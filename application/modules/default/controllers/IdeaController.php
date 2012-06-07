@@ -323,8 +323,9 @@ class IdeaController extends Zend_Controller_Action {
 		$select = $db->select()
 				->from("idea_comments")
 				->join("users", "users.user_id=idea_comments.user_id", array("user_name", "user_email"))
-				->joinLeft("idea_items", "idea_items.idea_id=idea_comments.idea_id", array("idea_title"));
-		$select->order("idea_comments.comment_date DESC");
+				->joinLeft("idea_items", "idea_items.idea_id=idea_comments.idea_id", array("idea_title"))
+				->order("idea_comments.comment_date DESC")
+				->limit(20);
 		$result = $db->fetchAll($select);
 		$this->view->comments = $result;
 	}
