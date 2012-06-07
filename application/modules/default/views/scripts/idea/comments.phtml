@@ -47,7 +47,7 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 							</a>
 						</div>
 						<div style="min-height: 40px;">
-							<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $this->comments[$i]["comment_text"]));?>
+							<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", trim($this->comments[$i]["comment_text"])));?>
 						</div>
 						<div class="recipe_comment_date">
 							<?=$this->comments[$i]["comment_date"];?>
