@@ -31,10 +31,25 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Idėjos</div>
 	<div class="ideas_actions">
-		<a href="/idejos/naujausios" <?=($this->type == "new") ? 'style="font-weight: bold;"' : ""?>>Naujausios idėjos</a>
-		<a href="/idejos/populiariausios" <?=($this->type == "top") ? 'style="font-weight: bold;"' : ""?>>Populiariausios idėjos</a>
-		<a href="/idejos/igyvendintos" <?=($this->type == "finished") ? 'style="font-weight: bold;"' : ""?>>Įgyvendintos idėjos</a>
-		<a href="/idejos/nauja">Sukurti idėją</a>
+		<a href="/idejos/naujausios" <?=($this->type == "new") ? 'style="font-weight: bold;"' : ""?>>Naujausios</a>
+		<a href="/idejos/populiariausios" <?=($this->type == "top") ? 'style="font-weight: bold;"' : ""?>>Populiariausios</a>
+		<a href="/idejos/igyvendintos" <?=($this->type == "finished") ? 'style="font-weight: bold;"' : ""?>>Įgyvendintos</a>
+		<?php
+		if ($user_id){
+			?>
+			<a href="/idejos/mano" <?=($this->type == "my") ? 'style="font-weight: bold;"' : ""?>>Mano sukurtos</a>
+			<a href="/idejos/balsavimas" <?=($this->type == "unvoted") ? 'style="font-weight: bold;"' : ""?>>Neįvertintos</a>
+			<?
+		}
+		?>
+			<a href="/idejos/komentarai">Komentarai</a>
+		<?
+		if ($user_id){
+			?>
+			<a href="/idejos/nauja">Sukurti naują</a>
+			<?
+		}
+		?>
 	</div>
 	<?php
 	foreach ($this->content as $idea){
@@ -55,11 +70,20 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 						<a href="/ideja/<?=$idea['idea_id'];?>">
 							Idėja #<?=$idea['idea_id']?>: <?=$idea['idea_title']?>
 						</a>
+						(<?=(!empty($idea['comments'])) ? $idea['comments'] : "0" ;?>)
+						<img src="/public/images/new/comments_icon.png" />
 					</h2>
 				</div>
 				<div class="idea_description">
 					<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $idea['idea_description']));?>
 				</div>
+				<?php
+				if (trim($idea['idea_full_text']) != ""){
+					?>
+					<div style="margin-top: 10px;"><a href="/ideja/<?=$idea['idea_id'];?>">skaityti plačiau...</a></div>
+					<?php
+				}
+				?>
 			</div>
 			<div class="idea_votes" id="idea_block_<?=$idea['idea_id']?>">
 				<div class="idea_votes_title">Įvertinimas</div>

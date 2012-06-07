@@ -1,4 +1,10 @@
 /public/captcha/
 /cache/
 /ideas/
+<<<<<<< HEAD
 /nbproject
+=======
+/clickheat/logs/.debugclickheat/
+/clickheat/cache/
+/clickheat/logs/
+>>>>>>> 662bef1d34b805215d5ed641ca734b5ba5c25303

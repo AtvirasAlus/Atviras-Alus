@@ -9,6 +9,38 @@ class BrewerController extends Zend_Controller_Action {
 	public function indexAction() {
 		
 	}
+	public function favoritesAction(){
+		$db = Zend_Registry::get('db');
+		$storage = new Zend_Auth_Storage_Session();
+		$this->view->user_info = $storage->read();
+		$u = $this->view->user_info;
+		if (isset($u->user_id) && !empty($u->user_id)){
+			$this->view->pleaselogin = false;
+			$me = $u->user_id;
+			$select = $db->select()
+					->from("beer_recipes_favorites")
+					->join("beer_recipes", "beer_recipes_favorites.recipe_id=beer_recipes.recipe_id", array("recipe_name"))
+					->join("beer_styles", "beer_recipes.recipe_style=beer_styles.style_id", array("style_name", "style_id"))
+					->where("beer_recipes_favorites.user_id = ?", $me)
+					->where("beer_recipes.brewer_id = ?", $me)
+					->order("beer_recipes_favorites.favorite_date DESC");
+			$result = $db->fetchAll($select);
+			$this->view->myfavorites = $result;
+			$select = $db->select()
+					->from("beer_recipes_favorites")
+					->join("beer_recipes", "beer_recipes_favorites.recipe_id=beer_recipes.recipe_id", array("recipe_name"))
+					->join("beer_styles", "beer_recipes.recipe_style=beer_styles.style_id", array("style_name", "style_id"))
+					->join("users", "beer_recipes.brewer_id=users.user_id", array("user_name as brewer_name", "user_id as brewer_id"))
+					->where("beer_recipes_favorites.user_id = ?", $me)
+					->where("beer_recipes.brewer_id != ?", $me)
+					->order("beer_recipes_favorites.favorite_date DESC");
+			$result = $db->fetchAll($select);
+			$this->view->favorites = $result;
+		} else {
+			$this->view->pleaselogin = true;
+		}
+		
+	}
 
 	public function infoAction() {
 

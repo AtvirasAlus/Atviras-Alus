@@ -172,16 +172,26 @@ class IdeaController extends Zend_Controller_Action {
 		$select = $db->select()
 				->from("idea_items")
 				->join("users", "users.user_id=idea_items.user_id", array("user_name", "user_email"))
-				->joinLeft("idea_votes", "idea_votes.idea_id=idea_items.idea_id AND idea_votes.user_id='" . $me . "'", array("vote_value"));
+				->joinLeft("idea_votes", "idea_votes.idea_id=idea_items.idea_id AND idea_votes.user_id='" . $me . "'", array("vote_value"))
+				->joinLeft("VIEW_idea_comments_total", "VIEW_idea_comments_total.idea_id=idea_items.idea_id", array("total as comments"));
 		if ($type == "finished") {
 			$select->where("idea_items.idea_status = ?", "1");
 		} else {
-			$select->where("idea_items.idea_status = ?", "0");
+			if ($type != "my") {
+				$select->where("idea_items.idea_status = ?", "0");
+			}
 		}
 		if ($type == "top") {
 			$select->order("idea_vote_sum DESC");
+			$select->where("idea_items.idea_vote_sum > 0");
 		} else {
 			$select->order("idea_posted DESC");
+		}
+		if ($type == "my") {
+			$select->where("idea_items.user_id = ?", $me);
+		}
+		if ($type == "unvoted") {
+			$select->where("idea_votes.vote_value is NULL");
 		}
 		$result = $db->fetchAll($select);
 		foreach ($result as $key => $row) {
@@ -232,6 +242,14 @@ class IdeaController extends Zend_Controller_Action {
 
 	public function listnewAction() {
 		$this->_forward("list", null, null, array("type" => "new"));
+	}
+
+	public function listmyAction() {
+		$this->_forward("list", null, null, array("type" => "my"));
+	}
+	
+	public function listunvotedAction() {
+		$this->_forward("list", null, null, array("type" => "unvoted"));
 	}
 
 	public function listtopAction() {
@@ -298,9 +316,24 @@ class IdeaController extends Zend_Controller_Action {
 		$this->view->idea = $result;
 	}
 	
+	public function commentsAction(){
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		$this->view->user_info = $user_info;
+		$db = Zend_Registry::get('db');
+		$select = $db->select()
+				->from("idea_comments")
+				->join("users", "users.user_id=idea_comments.user_id", array("user_name", "user_email"))
+				->joinLeft("idea_items", "idea_items.idea_id=idea_comments.idea_id", array("idea_title"))
+				->order("idea_comments.comment_date DESC")
+				->limit(20);
+		$result = $db->fetchAll($select);
+		$this->view->comments = $result;
+	}
 	public function createAction(){
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
+		$this->view->user_info = $user_info;
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$this->view->please_login = false;
 			$user_id = $user_info->user_id;

@@ -1,0 +1,95 @@
+<?
+if ($this->pleaselogin === true){
+	?>
+	<div id="myfavorites_container" class="inner_container">
+		<div class="inner_header">Mėgstamiausi receptai</div>
+		<div>Šis puslapis skirtas tik prisijungusiems naudotojams</div>
+	</div>
+	<?
+} else {
+	if (sizeof($this->myfavorites) ==  0 && sizeof($this->favorites) == 0){
+		?>
+		<div id="myfavorites_container" class="inner_container">
+			<div class="inner_header">Mėgstamiausi receptai</div>
+			<div>Receptų kurie Jums patinka nėra. Norėdami į šį sąrašą įtraukti receptą, jo aprašyme spauskite "patinka".</div>
+		</div>
+		<?
+	}
+	if (sizeof($this->myfavorites) > 0){
+		?>
+		<div id="myfavorites_container" class="inner_container">
+			<div class="inner_header">Man patinkantys mano receptai</div>
+			<div class="as-table">
+				<div class="as-row">
+					<div class="as-cell" style="width: 300px;"><b>Receptas</b></div>
+					<div class="as-cell"><b>Stilius</b></div>
+					<div class="as-cell" style="width: 140px;"><b>Įtraukimo į sąrašą data</b></div>
+				</div>
+				<?
+				foreach ($this->myfavorites as $fav){
+					?>
+					<div class="as-row">
+						<div class="as-cell">
+							<a href="/alus/receptas/<?=$fav['recipe_id']?>-<?=$this->urlMaker($fav['recipe_name'])?>">
+								<?=$fav['recipe_name']?>
+							</a>
+						</div>
+						<div class="as-cell">
+							<a href="/stilius/<?=$fav['style_id']?>-<?=$this->urlMaker($fav['style_name'])?>">
+								<?=$fav['style_name']?>
+							</a>
+						</div>
+						<div class="as-cell" style="width: 140px;">
+							<?=$fav['favorite_date']?>
+						</div>
+					</div>
+					<?
+				}
+				?>
+			</div>
+		</div>
+		<?
+	}
+	if (sizeof($this->favorites) > 0){
+		?>
+		<div id="favorites_container" class="inner_container">
+			<div class="inner_header">Man patinkantys kitų aludarių receptai</div>
+			<div class="as-table">
+				<div class="as-row">
+					<div class="as-cell" style="width: 300px;"><b>Receptas</b></div>
+					<div class="as-cell"><b>Stilius</b></div>
+					<div class="as-cell" style="width: 100px;"><b>Aludaris</b></div>
+					<div class="as-cell" style="width: 140px;"><b>Įtraukimo į sąrašą data</b></div>
+				</div>
+				<?
+				foreach ($this->favorites as $fav){
+					?>
+					<div class="as-row">
+						<div class="as-cell">
+							<a href="/alus/receptas/<?=$fav['recipe_id']?>-<?=$this->urlMaker($fav['recipe_name'])?>">
+								<?=$fav['recipe_name']?>
+							</a>
+						</div>
+						<div class="as-cell">
+							<a href="/stilius/<?=$fav['style_id']?>-<?=$this->urlMaker($fav['style_name'])?>">
+								<?=$fav['style_name']?>
+							</a>
+						</div>
+						<div class="as-cell">
+							<a href="/brewers/<?=$fav['brewer_id']?>">
+								<?=$fav['brewer_name']?>
+							</a>
+						</div>
+						<div class="as-cell" style="width: 140px;">
+							<?=$fav['favorite_date']?>
+						</div>
+					</div>
+					<?
+				}
+				?>
+			</div>
+		</div>
+		<?
+	}
+}
+?>

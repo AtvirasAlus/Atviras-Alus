@@ -31,10 +31,25 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Idėjos</div>
 	<div class="ideas_actions">
-		<a href="/idejos/naujausios">Naujausios idėjos</a>
-		<a href="/idejos/populiariausios">Populiariausios idėjos</a>
-		<a href="/idejos/igyvendintos">Įgyvendintos idėjos</a>
-		<a href="/idejos/nauja">Sukurti idėją</a>
+		<a href="/idejos/naujausios">Naujausios</a>
+		<a href="/idejos/populiariausios">Populiariausios</a>
+		<a href="/idejos/igyvendintos">Įgyvendintos</a>
+		<?php
+		if ($user_id){
+			?>
+			<a href="/idejos/mano">Mano sukurtos</a>
+			<a href="/idejos/balsavimas">Neįvertintos</a>
+			<?
+		}
+		?>
+			<a href="/idejos/komentarai">Komentarai</a>
+		<?
+		if ($user_id){
+			?>
+			<a href="/idejos/nauja">Sukurti naują</a>
+			<?
+		}
+		?>
 	</div>
 	<?php
 	$idea = $this->idea;
@@ -57,13 +72,17 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 					</a>
 				</h2>
 			</div>
-			<div class="idea_description" style="color: #666;">
-				<i><?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $idea['idea_description']));?></i>
-			</div>
-			<div class="idea_full_text">
-				<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $idea['idea_full_text']));?>
+			<div class="idea_description" style="color: #666; <?=(trim($idea['idea_full_text']) != "") ? "font-style: italic" : "" ; ?>;">
+				<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $idea['idea_description']));?>
 			</div>
 			<?php
+			if (trim($idea['idea_full_text']) != ""){
+				?>
+				<div class="idea_full_text">
+					<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $idea['idea_full_text']));?>
+				</div>
+				<?php
+			}
 			if (!empty($idea['idea_file_1']) || !empty($idea['idea_file_2']) || !empty($idea['idea_file_3'])){
 				?>
 				<div class="idea_files">
