@@ -1,0 +1,63 @@
+<?php
+$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+?>
+<div id="loader_ph" style="display: none;">
+	<img src="/public/images/new/ajax-loader.gif" alt="" />
+</div>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Idėjos</div>
+	<div class="ideas_actions">
+		<a href="/idejos/naujausios">Naujausios</a>
+		<a href="/idejos/populiariausios">Populiariausios</a>
+		<a href="/idejos/igyvendintos">Įgyvendintos</a>
+		<?php
+		if ($user_id){
+			?>
+			<a href="/idejos/mano">Mano sukurtos</a>
+			<a href="/idejos/balsavimas">Neįvertintos</a>
+			<?
+		}
+		?>
+			<a href="/idejos/komentarai"><b>Komentarai</b></a>
+		<?
+		if ($user_id){
+			?>
+			<a href="/idejos/nauja">Sukurti naują</a>
+			<?
+		}
+		?>
+	</div>
+	<div style="margin-bottom: 20px; font-weight: bold;">Paskutinių 20-ies komentarų sąrašas:</div>
+	<div style="width: 600px;">
+		<?php
+		if ($this->comments) {
+			for ($i=0; $i<count($this->comments); $i++) {
+				?>
+				<div class="recipe_comment" id="comment-<?=$this->comments[$i]['comment_id']?>">
+					<div class="recipe_comment_avatar">
+						<a href="/brewers/<?=$this->comments[$i]['user_id'];?>">
+							<img src="http://www.gravatar.com/avatar/<?=md5($this->comments[$i]['user_email']);?>?rating=G&size=40&default=mm" border="0"/>
+							<span><?=$this->comments[$i]['user_name'];?></span>
+						</a>
+					</div>
+					<div class="recipe_comment_content">
+						<div class="idea_comments_link">
+							<a href="/ideja/<?=$this->comments[$i]['idea_id']?>">
+								Idėja #<?=$this->comments[$i]['idea_id']?>: <?=$this->comments[$i]['idea_title']?>
+							</a>
+						</div>
+						<div style="min-height: 40px;">
+							<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $this->comments[$i]["comment_text"]));?>
+						</div>
+						<div class="recipe_comment_date">
+							<?=$this->comments[$i]["comment_date"];?>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<?php
+			}
+		}
+		?>
+	</div>
+</div>

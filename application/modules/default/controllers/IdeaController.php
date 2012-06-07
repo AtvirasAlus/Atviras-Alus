@@ -315,6 +315,19 @@ class IdeaController extends Zend_Controller_Action {
 		$this->view->idea = $result;
 	}
 	
+	public function commentsAction(){
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		$this->view->user_info = $user_info;
+		$db = Zend_Registry::get('db');
+		$select = $db->select()
+				->from("idea_comments")
+				->join("users", "users.user_id=idea_comments.user_id", array("user_name", "user_email"))
+				->joinLeft("idea_items", "idea_items.idea_id=idea_comments.idea_id", array("idea_title"));
+		$select->order("idea_comments.comment_date DESC");
+		$result = $db->fetchAll($select);
+		$this->view->comments = $result;
+	}
 	public function createAction(){
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();

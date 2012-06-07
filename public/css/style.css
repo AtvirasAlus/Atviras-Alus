@@ -1925,3 +1925,8 @@ ul.statuses li {
 #__ideaForm dd.large textarea {
 	height: 200px;
 }
+.idea_comments_link {
+	margin-bottom: 10px;
+	font-size: 14px;
+	font-weight: bold;
+}
