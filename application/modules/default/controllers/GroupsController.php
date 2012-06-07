@@ -34,14 +34,16 @@ class GroupsController extends Zend_Controller_Action {
                             ->join("users", "users.user_id=users_groups.user_id", array("user_id", "user_name", "user_email"))
                             ->where("users_groups.group_id = ?", $this->getRequest()->getParam('group_id'))
                             ->order("users.user_name");
+            
                $this->view->group_users =  $this->db->fetchAll($select);
+               $select = $this->db->select()
+                            ->from("beer_events_groups", array())
+                            ->join("beer_events", "beer_events.event_id=beer_events_groups.event_id")
+                            ->where("beer_events_groups.group_id = ?", $this->getRequest()->getParam('group_id'))
+                            ->order("beer_events.event_start");
+                $this->view->group_events =  $this->db->fetchAll($select);
              
         }
-         public function createEventAction() {
-           if (isset($_POST)) {
-               
-           }
-           
-          }
+        
 
 }

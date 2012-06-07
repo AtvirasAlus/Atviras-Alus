@@ -3,7 +3,10 @@ $this->headTitle()->append(" - Įvykis - " . $this->event['event_name']);
 $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,degustacija,receptas,alus');
 ?>
 <div id="events_container" class="inner_container">
-	<div class="inner_header"><?= $this->event['event_name']; ?></div>
+	<div class="inner_header"><?= $this->event['event_name']; ?>
+          
+        
+        </div>
 	<div>
 		<div class="event_i_date">
 			Data: <span><?= $this->event['event_start']; ?></span>
@@ -11,6 +14,14 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 		<div style="margin-bottom: 20px;">
 			<?= $this->event['event_description']; ?>
 		</div>
+                  <? if ($this->editable) {?>
+                <div class="usergroup_actions">
+
+                        <a href="/events/mod-event/?event_id=<?= $this->event['event_id']; ?>" rel="nofollow">
+                                    Redaguoti įvykį
+                            </a>
+                </div>
+                <?}?>
 		<?php 
 		if ($this->event['event_type'] == 'competition') { 
 			$evInfo = $this->eventInfo();
@@ -39,6 +50,7 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 		}
 		?>
 	</div>
+        
 </div>
 <?
 if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
@@ -95,6 +107,8 @@ if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
 		?>		
 		<div class="clear"></div>
 	</div>
+        
+?>
 </div>
 
 <script>

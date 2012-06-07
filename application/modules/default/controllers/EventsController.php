@@ -6,6 +6,7 @@ class EventsController extends Zend_Controller_Action {
 
 	public function init() {
 		$storage = new Zend_Auth_Storage_Session();
+                $this->db = Zend_Registry::get('db');
 		$this->user = $storage->read();
 	}
 
@@ -21,7 +22,6 @@ class EventsController extends Zend_Controller_Action {
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($this->_getParam('page'));
-
 		$this->view->content->setItemCountPerPage(21);
 	}
 
@@ -30,7 +30,7 @@ class EventsController extends Zend_Controller_Action {
 
 		$euid = explode("-", $this->_getParam('event'));
 		$event_id = $euid[0];
-
+                
 		if ($event_id > 0) {
 			$db = Zend_Registry::get("db");
 			$select = $db->select();
@@ -77,6 +77,10 @@ class EventsController extends Zend_Controller_Action {
 		} else {
 			$this->view->registration_status = 0;
 		}
+                $this->view->editable = ($storage->read()->user_type == "admin") ? true : false;
+                if (!$this->view->editable) {
+                   // $select->from("beer_events_groups", array());
+                }
 	}
 
 	function registerAction() {
@@ -191,5 +195,40 @@ class EventsController extends Zend_Controller_Action {
 			print Zend_Json::encode(array("status" => 1, "errors" => array(array("message" => "Neregistruotas nautotojas", "type" => "authentication"))));
 		}
 	}
+        public function modEventAction() {
+            
+            if (isset($_GET['event_id'])) {
+                if (is_numeric($_GET['event_id'])) {
+                    $event_id = intval($_GET['event_id']);
+                    $select = $this->db->select();
+                                $select->from("beer_events")
+                                        ->where("event_id = ?", $event_id);
+                                $this->view->event = $this->db->fetchRow($select);
+                }
+            
+            }
+        }
+         public function createEventAction() {
+           if (isset($_POST['action'])) {
+               switch ($_POST['action']) {
+                   case 'ADD':
+                       $this->db->insert("beer_events", array(
+                                        "event_name" => strip_tags($_POST['event_name']),
+                                        "event_resume" =>  trim(strip_tags($_POST['event_resume'])),
+					"event_description" => strip_tags($_POST['event_description'], "<a><b><i>"),
+					"event_start" => $_POST['event_start'],	
+					"event_registration_end" => $_POST['event_registration_end']
+						
+				));
+                       if (is_numeric($_POST['group_id']) && $_POST['group_id']>0){
+                        $ev_id=$this->db->lastInsertId();
+                        $this->db->insert('beer_events_groups',array('group_id'=>$_POST['group_id'],'event_id'=>$this->db->lastInsertId()));
+                       }
+                       $this->_redirect('/events/mod-event/?event_id='. $ev_id);
+                       break;
+               }
+           }
+           
+          }
 
 }

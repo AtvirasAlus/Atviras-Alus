@@ -5,7 +5,7 @@
 		<?
 		for ($i = 0; $i < count($this->groups); $i++) {
 			?>
-			<div class="usergroup_title"><?= $this->groups[$i]["group_name"]; ?></div>
+			<div class="usergroup_title"><a href="/groups/view/<?=$this->groups[$i]["group_id"];?>"><?= $this->groups[$i]["group_name"]; ?></a></div>
 			<div class="usergroup_avatars">
 				<?
 				$z = 0;

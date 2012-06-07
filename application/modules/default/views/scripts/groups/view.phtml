@@ -21,11 +21,40 @@
                     ?>
                     <div class="clear"></div>
             </div>
+            <div class="event_list_container">
+		<?
+		$z = 0;
+		foreach ($this->group_events as $item) {
+			$z++;
+			?>
+			<div class="event_block" onclick="window.location.href='/ivykis/<?= $item["event_id"]; ?>-<?= urlencode($item["event_name"]); ?>'">
+				<div class="event_title">
+					<?= $item["event_name"]; ?>
+				</div>
+				<div class="event_resume">
+					<?= $item["event_resume"]; ?>
+				</div>
+				<div class="event_date">
+					Data: <span><?= $item["event_start"]; ?></span>
+				</div>
+			</div>
+			<?
+			if ($z == 3){
+				$z = 0;
+				?>
+				<div class="clear"></div>
+				<?php
+			}
+		}
+		?>
+		<div class="clear"></div>
+	</div>
             <div class="usergroup_actions">
                     <a href="/mail/compose?token=<? print base64_encode($this->group['group_name']); ?>" rel="nofollow">
                             Rašyti grupei žinutę
                     </a>
-                 <a href="/groups/create-event?group_id=<?=$this->group["group_id"];?>" rel="nofollow">
+                
+                 <a href="/events/create-event?group_id=<?=$this->group["group_id"];?>" rel="nofollow">
                             Sukurti grupės įvykį
                     </a>
           </div>
