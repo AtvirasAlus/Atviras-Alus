@@ -14,14 +14,7 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 		<div style="margin-bottom: 20px;">
 			<?= $this->event['event_description']; ?>
 		</div>
-                  <? if ($this->editable) {?>
-                <div class="usergroup_actions">
-
-                        <a href="/events/mod-event/?event_id=<?= $this->event['event_id']; ?>" rel="nofollow">
-                                    Redaguoti įvykį
-                            </a>
-                </div>
-                <?}?>
+                 
 		<?php 
 		if ($this->event['event_type'] == 'competition') { 
 			$evInfo = $this->eventInfo();
