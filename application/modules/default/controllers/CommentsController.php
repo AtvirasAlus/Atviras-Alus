@@ -20,7 +20,7 @@ class CommentsController extends Zend_Controller_Action {
 
 		$this->view->content->setItemCountPerPage(100);
 	}
-
+            
 	function submitAction() {
 		$this->_helper->layout->setLayout('empty');
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -43,7 +43,37 @@ class CommentsController extends Zend_Controller_Action {
 			$this->_redirect("/");
 		}
 	}
+        function textAction() {
+            $db = Zend_Registry::get('db');
+            $this->_helper->layout->setLayout('empty');
+            $this->_helper->viewRenderer->setNoRender(true);
+            if (isset($_GET['comment_id'])) {
+                $select = $db->select()
+				->from("beer_recipes_comments", array("comment_text"))
+                        ->where("comment_id=?",$_GET['comment_id']);
+                if ($result = $db->fetchRow($select)) {
+                    print $result['comment_text'];
+                }
+                       
+            }
+        }
+        function updateAction() {
+            $this->_helper->layout->setLayout('empty');
+            $this->_helper->viewRenderer->setNoRender(true);
+            if (isset($_POST)) {
+                    $db = Zend_Registry::get('db');
+                    if (isset($_POST['recipe'])) {
+                        if ($db->update("beer_recipes_comments", array("comment_moddate"=>date('Y-m-d H:i:s', time()),"comment_text" => strip_tags($_POST['comment_text'], '<a>')),"comment_id = " . $_POST['comment_id'])) {
+                            print Zend_Json::encode(array("status" => 0,"comment_moddate"=>date('Y-m-d H:i:s', time()), "comment_text" => nl2br(strip_tags($_POST['comment_text'], '<a>'))));  
+                        }else{
+                            print Zend_Json::encode(array("status" => 1, "old_comment"=>  nl2br($_POST['old_comment'])));
+                        }
+                       
+                    }
+            } else {
 
+            }
+        }
 	function deleteAction() {
 		$this->_helper->layout->setLayout('empty');
 		$this->_helper->viewRenderer->setNoRender(true);
