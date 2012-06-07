@@ -1,3 +1,6 @@
 /public/captcha/
 /cache/
 /ideas/
+/clickheat/logs/.debugclickheat/
+/clickheat/cache/
+/clickheat/logs/
