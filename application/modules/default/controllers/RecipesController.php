@@ -331,12 +331,18 @@ class RecipesController extends Zend_Controller_Action {
 				$db = Zend_Registry::get('db');
 				if (strlen($_POST["recipe_id"]) > 0) {
 					$select = $db->select();
-					$select->from("beer_recipes", array("recipe_id"))
+					$select->from("beer_recipes", array("recipe_id","recipe_published","recipe_publish"))
 							->where("brewer_id = ?", $u->user_id)
 							->where("recipe_id = ?", $_POST["recipe_id"]);
 					$r = $db->fetchRow($select);
+                                        
 					if (isset($r)) {
+                                            // patch sql update  `beer_recipes`  set recipe_published=recipe_created where recipe_publish ='1' and recipe_published ='0000-00-00 00:00:00'
+                                            if ($r["recipe_published"]=='0000-00-00 00:00:00' && $r["recipe_publish"]=='0') {
+                                                $db->update("beer_recipes", array("recipe_published"=>date('Y-m-d H:i:s', time()),"recipe_publish" => $_POST['publish']), "recipe_id = " . $r['recipe_id']);
+                                            }else{
 						$db->update("beer_recipes", array("recipe_publish" => $_POST['publish']), "recipe_id = " . $r['recipe_id']);
+                                            }
 
 						print Zend_Json::encode(array("status" => 0));
 						return;

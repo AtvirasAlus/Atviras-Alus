@@ -65,10 +65,10 @@ class IndexController extends Zend_Controller_Action {
 				->where("users.user_active = ?", '1');
 		$this->view->users_total = $db->fetchRow($select);
 		$select = $db->select()
-				->from("VIEW_public_recipes", array("recipe_id", "recipe_name", "recipe_created" => "MAX(recipe_created)"))
+				->from("VIEW_public_recipes", array("recipe_id", "recipe_name", "recipe_published" => "MAX(recipe_published)"))
 				->joinLeft("beer_styles", "VIEW_public_recipes.recipe_style=beer_styles.style_id", array("style_name"))
 				->group("VIEW_public_recipes.recipe_id")
-				->order("recipe_created DESC")
+				->order("recipe_published DESC")
 				->limit(12);
 		$this->view->recipes = $db->fetchAll($select);
 		$select = $db->select()
