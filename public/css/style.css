@@ -1935,3 +1935,39 @@ ul.statuses li {
 }
 #__eventForm dt {
 }
+.commentsEdit {
+    
+}
+.commentsEdit textarea {
+	height: 100px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 660px;
+	padding-left: 4px;
+        margin-bottom: 5px;
+}
+.commentsEdit button {
+     font-family: arial, verdana, sans-serif;
+	font-size: 11px;
+	background: #ffffff;
+	background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5));
+	background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	background: linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 );
+	border: 1px solid #999;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding: 5px 10px 5px 10px !important;
+         margin-right: 5px;
+    
+}
+.recipe_comment_moddate {
+    margin-top:2px;
+    color: #999;
+}

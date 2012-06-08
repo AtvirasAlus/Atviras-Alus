@@ -64,7 +64,8 @@ class CommentsController extends Zend_Controller_Action {
                     $db = Zend_Registry::get('db');
                     if (isset($_POST['recipe'])) {
                         if ($db->update("beer_recipes_comments", array("comment_moddate"=>date('Y-m-d H:i:s', time()),"comment_text" => strip_tags($_POST['comment_text'], '<a>')),"comment_id = " . $_POST['comment_id'])) {
-                            print Zend_Json::encode(array("status" => 0,"comment_moddate"=>date('Y-m-d H:i:s', time()), "comment_text" => nl2br(strip_tags($_POST['comment_text'], '<a>'))));  
+                            $comment_text= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", strip_tags($_POST['comment_text'], '<a>')));
+                            print Zend_Json::encode(array("status" => 0,"comment_moddate"=>date('Y-m-d H:i:s', time()), "comment_text" => $comment_text));  
                         }else{
                             print Zend_Json::encode(array("status" => 1, "old_comment"=>  nl2br($_POST['old_comment'])));
                         }

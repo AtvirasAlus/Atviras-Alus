@@ -16,9 +16,9 @@ if ($this->comments) {
 				<div class="recipe_comment_date">
 					<?=$this->comments[$i]["comment_date"];?>
                                    
-                                            <div  id="recipe_comment_moddate-<?=$this->comments[$i]['comment_id']?>">
+                                            <div  class="recipe_comment_moddate" id="recipe_comment_moddate-<?=$this->comments[$i]['comment_id']?>">
                                                  <? if ($this->comments[$i]["comment_moddate"]!="0000-00-00 00:00:00") {?>
-                                                Redaguotas:<?=$this->comments[$i]["comment_moddate"];?>
+                                                Redaguotas: <?=$this->comments[$i]["comment_moddate"];?>
                                                     <?}?>
                                             </div>
                                    
@@ -27,9 +27,9 @@ if ($this->comments) {
 						?>
 						<a href='javascript:deleteComment(<?=$this->comments[$i]['comment_id'];?>)' alt="Trinti" title="Trinti">
 							<span class="ui-icon ui-icon-trash"></span>
-						</a>
+                                                </a>&nbsp;
                                                 <a href='javascript:editComment(<?=$this->comments[$i]['comment_id'];?>)' alt="Redaguoti" title="Redaguoti">
-                                                    <span class="ui-icon ui-icon-wrench">Redaguoti</span>
+                                                    <span class="ui-icon ui-icon-pencil"></span>
                                                 </a>
 						<?
 					}
@@ -80,8 +80,11 @@ if ($user_id) {
          type      : 'textarea',
          ajaxoptions:{dataType:'json'},
          cancel    : 'Atšaukti',
+         onblur:function() {
+            return true; 
+         },
          rows:8,
-        
+        cssclass:'commentsEdit',
          submit    : 'Saugoti',
          indicator : '<img src="/public/images/spinner.gif">',
          name : 'comment_text',
