@@ -48,11 +48,25 @@ class CommentsController extends Zend_Controller_Action {
             $this->_helper->layout->setLayout('empty');
             $this->_helper->viewRenderer->setNoRender(true);
             if (isset($_GET['comment_id'])) {
-                $select = $db->select()
-				->from("beer_recipes_comments", array("comment_text"))
-                        ->where("comment_id=?",$_GET['comment_id']);
-                if ($result = $db->fetchRow($select)) {
-                    print $result['comment_text'];
+                switch($_GET['part']) {
+                    case 'recipe':
+                        $table = "beer_recipes_comments";
+                        break;
+                    case 'article':
+                         $table = "beer_articles_comments";
+                        break;
+                    case 'idea':
+                         $table = "idea_comments";
+                        break;
+                }
+                if (isset($table)) {
+                    $select = $db->select()
+                            ->from($table, array("comment_text"))
+                            ->where("comment_id=?",$_GET['comment_id']);
+                
+                    if ($result = $db->fetchRow($select)) {
+                        print $result['comment_text'];
+                    }
                 }
                        
             }
@@ -63,14 +77,22 @@ class CommentsController extends Zend_Controller_Action {
             if (isset($_POST)) {
                     $db = Zend_Registry::get('db');
                     if (isset($_POST['recipe'])) {
-                        if ($db->update("beer_recipes_comments", array("comment_moddate"=>date('Y-m-d H:i:s', time()),"comment_text" => strip_tags($_POST['comment_text'], '<a>')),"comment_id = " . $_POST['comment_id'])) {
+                        $table = "beer_recipes_comments";
+                        }else if (isset($_POST["idea"])) {
+                            $table = "idea_comments";
+                        }else if (isset($_POST["article"])) {
+                            $table = "beer_articles_comments";
+                        }
+                    
+                   if (isset($table)) {
+                        if ($db->update($table, array("comment_moddate"=>date('Y-m-d H:i:s', time()),"comment_text" => strip_tags($_POST['comment_text'], '<a>')),"comment_id = " . $_POST['comment_id'])) {
                             $comment_text= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", strip_tags($_POST['comment_text'], '<a>')));
                             print Zend_Json::encode(array("status" => 0,"comment_moddate"=>date('Y-m-d H:i:s', time()), "comment_text" => $comment_text));  
                         }else{
                             print Zend_Json::encode(array("status" => 1, "old_comment"=>  nl2br($_POST['old_comment'])));
                         }
                        
-                    }
+                   }
             } else {
 
             }

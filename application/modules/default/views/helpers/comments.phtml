@@ -76,7 +76,7 @@ if ($user_id) {
        
      $('#comment-content-'+id).editable('/comments/update', {
          submitdata : {comment_id: id,recipe:true,old_comment: $('#comment-content-'+id).text()},
-         loadurl  : '/comments/text/?comment_id='+id,
+         loadurl  : '/comments/text/?part=recipe&comment_id='+id,
          type      : 'textarea',
          ajaxoptions:{dataType:'json'},
          cancel    : 'Atšaukti',
