@@ -21,6 +21,21 @@ class IndexController extends Zend_Controller_Action {
 
 		// getting a Zend_Cache_Core object
 		$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+                
+                //
+                
+                $frontendOptions2 = array(
+			'lifetime' => (3600*24), // cache lifetime of 24 hours
+			'automatic_serialization' => true
+		);
+
+		$backendOptions2 = array(
+			'cache_dir' => './cache/' // Directory where to put the cache files
+		);
+
+
+		// getting a Zend_Cache_Core object
+		$cache2 = Zend_Cache::factory('Core', 'File', $frontendOptions2, $backendOptions2);
 		
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
@@ -92,7 +107,7 @@ class IndexController extends Zend_Controller_Action {
 				->from('VIEW_brew_total', array("beer_total" => "SUM(sum)", "brewers_total" => "COUNT(sum)"));
 		$this->view->total_brewed = $db->fetchRow($select);
 		//
-		if ($this->view->fav_recipes = $cache->load('fav_recipes')) {
+		if ($this->view->fav_recipes = $cache2->load('fav_recipes')) {
 			
 		} else {
 			$select = $db->select()
