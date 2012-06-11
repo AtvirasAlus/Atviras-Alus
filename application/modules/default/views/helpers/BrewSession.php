@@ -35,8 +35,8 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 						<input type="hidden" name="session_id" value="' . $session['session_id'] . '" />
 					</dt>
 					<dd>
-						<input class="ui-button" type="button" value="Trinti" onClick="deleteSession(' . $session["session_id"] . ')" />
 						<input class="ui-button" type="submit" value="Saugoti" />
+						<input class="ui-button" type="button" value="Trinti" onClick="deleteSession(' . $session["session_id"] . ')" />
 					</dd>
 					<div class="clear"></div>
 				</dl>';

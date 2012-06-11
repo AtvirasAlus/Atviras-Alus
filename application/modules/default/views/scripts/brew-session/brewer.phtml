@@ -5,15 +5,13 @@
 		$this->headLink()->appendStylesheet("/public/css/bs.css");
 		if($this->user_id) {
 			$this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
+			$this->headScript()->appendFile("/public/js/ui.datepicker-lt.js");
 			?>
 			<script>
 			$(function() {
 					$( "#session_secondarydate" ).datepicker();
-					$( "#session_secondarydate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
 					$( "#session_caskingdate" ).datepicker();
-					$( "#session_caskingdate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
 					$( "#session_primarydate" ).datepicker();
-					$( "#session_primarydate" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
 				});
 			</script>
 			<?
