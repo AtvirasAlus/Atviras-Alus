@@ -27,6 +27,7 @@ class CronController extends Zend_Controller_Action {
 				"brewer_id" => $val['brewer_id'],
 				"recipe_name" => $val['recipe_name'],
 				"total" => $val['total'],
+				"updated" => date("Y-m-d H:i:s"),
 			));
 		}
 		echo "Done.";
