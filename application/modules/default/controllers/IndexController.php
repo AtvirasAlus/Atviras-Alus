@@ -114,16 +114,12 @@ class IndexController extends Zend_Controller_Action {
 				->from('VIEW_brew_total', array("beer_total" => "SUM(sum)", "brewers_total" => "COUNT(sum)"));
 		$this->view->total_brewed = $db->fetchRow($select);
 		//
-		if ($this->view->fav_recipes = $cache2->load('fav_recipes')) {
-			
-		} else {
-			$select = $db->select()
-					->from('cache_fav_recipes')
-					->join("users", "users.user_id=cache_fav_recipes.brewer_id", array("user_name"))
-					->limit(5);
-			$this->view->fav_recipes = $db->fetchAll($select);
-			$cache->save($this->view->fav_recipes, 'fav_recipes');
-		}
+		$select = $db->select()
+				->from('cache_fav_recipes')
+				->join("users", "users.user_id=cache_fav_recipes.brewer_id", array("user_name"))
+				->limit(5)
+				->order("total DESC");
+		$this->view->fav_recipes = $db->fetchAll($select);
 		$select = $db->select()
 				->from("beer_articles")
 				->joinLeft("VIEW_article_comments_total", "VIEW_article_comments_total.article_id=beer_articles.article_id", array("total"))
