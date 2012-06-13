@@ -77,10 +77,10 @@ class EventsController extends Zend_Controller_Action {
 		} else {
 			$this->view->registration_status = 0;
 		}
-                $this->view->editable = ($storage->read()->user_type == "admin") ? true : false;
-                if (!$this->view->editable) {
+                //$this->view->editable = ($storage->read()->user_type == "admin") ? true : false;
+                //if (!$this->view->editable) {
                    // $select->from("beer_events_groups", array());
-                }
+                //}
 	}
 
 	function registerAction() {
