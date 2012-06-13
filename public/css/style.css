@@ -1973,7 +1973,7 @@ ul.statuses li {
 }
 .index_events {
 	background-color: #ffffdd;
-	border: 2px solid #ffcc99;
+	border: 1px solid #ffcc99;
 }
 .index_events .block_header {
 	border-bottom-color: #aaa;
