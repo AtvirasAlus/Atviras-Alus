@@ -76,11 +76,15 @@ class IdeaController extends Zend_Controller_Action {
 		$this->view->user_info = $user_info;
 		$this->_helper->layout->setLayout('empty');
 		if (isset($_POST['idea_id'])) {
+			$select = $db->select()
+					->from("idea_items")
+					->where("idea_id = ?", $_POST['idea_id']);
+			$idea = $db->fetchRow($select);
 			$me = -1;
 			if (isset($user_info->user_id) && !empty($user_info->user_id))
 				$me = $user_info->user_id;
 
-			if ($me != -1) {
+			if ($me != -1 && $me != $idea['user_id']) {
 				$db->delete("idea_votes", array("user_id = '" . $me . "'", "idea_id = '" . $_POST['idea_id'] . "'"));
 				switch ($_POST['vote_value']) {
 					case "m":
@@ -191,7 +195,7 @@ class IdeaController extends Zend_Controller_Action {
 			$select->where("idea_items.user_id = ?", $me);
 		}
 		if ($type == "unvoted") {
-			$select->where("idea_votes.vote_value is NULL");
+			$select->where("idea_votes.vote_value is NULL AND idea_items.user_id != ?", $me);
 		}
 		$result = $db->fetchAll($select);
 		foreach ($result as $key => $row) {

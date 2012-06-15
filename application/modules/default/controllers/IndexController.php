@@ -42,7 +42,7 @@ class IndexController extends Zend_Controller_Action {
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$select = $db->select()
 					->from("idea_items", array("idea_id"))
-					->where("idea_items.idea_status = 0");
+					->where("idea_items.idea_status = 0 AND idea_items.user_id != ?", $user_info->user_id);
 			$ideas = $db->fetchAll($select);
 			$ids = array();
 			foreach($ideas as $key=>$val){
@@ -51,7 +51,6 @@ class IndexController extends Zend_Controller_Action {
 			$select = $db->select()
 					->from("idea_votes", array("COUNT(idea_id) AS kiekis"))
 					->where("idea_votes.idea_id IN (".implode(",", $ids).") AND idea_votes.user_id = '".$user_info->user_id."'");
-			$select->__toString();;
 			$voted = $db->fetchRow($select);
 			$this->view->unvoted = sizeof($ids)-$voted['kiekis'];
 		}

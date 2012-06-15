@@ -33,5 +33,18 @@ class CronController extends Zend_Controller_Action {
 		echo "Done.";
 		
 	}
+	
+	public function fixideasAction() {
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("idea_items");
+		$result = $db->fetchAll($select);
+		foreach($result as $key=>$val){
+			$db->delete("idea_votes", array("user_id = '" . $val['user_id']. "'", "idea_id = '" . $val['idea_id'] . "'"));
+		}
+		echo "Done";
+	}
 
 }
