@@ -180,6 +180,7 @@ class IdeaController extends Zend_Controller_Action {
 				->joinLeft("VIEW_idea_comments_total", "VIEW_idea_comments_total.idea_id=idea_items.idea_id", array("total as comments"));
 		if ($type == "finished") {
 			$select->where("idea_items.idea_status = ?", "1");
+			$select->order("idea_items.idea_finishdate DESC");
 		} else {
 			if ($type != "my") {
 				$select->where("idea_items.idea_status = ?", "0");
