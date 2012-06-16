@@ -226,6 +226,14 @@ class MailController extends Zend_Controller_Action {
 		}
 	}
 
+	function markasreadAction() {
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender();
+		$db = Zend_Registry::get('db');
+		$db->update("mail_users", array("mail_read" => "1"), "mail_id IN ('" . implode("','", $_POST['mail_id']) . "') and mail_users.user_id=" . $this->user->user_id);
+		$this->_redirect($_POST['redirect']);
+	}
+
 	function sendAction() {
 		$this->_helper->layout->setLayout('empty');
 		$this->_helper->viewRenderer->setNoRender();
