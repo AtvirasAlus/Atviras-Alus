@@ -115,7 +115,15 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 							$f = new Entities_Filter_Excerpt();
 							?>
 							<span class="quotes">“</span>
-							<a class="post_link" href="/forum/topic.php?id=<?= $this->posts[$i]['topic_id']; ?>&page=<?= (ceil($this->posts[$i]['post_position'] / 30)); ?>#post-<?= $this->posts[$i]['post_id']; ?>">
+							<?php
+							$page_num = ceil($this->posts[$i]['post_position'] / 30);
+							if ($page_num < 2){
+								$page_num_str = "";
+							} else {
+								$page_num_str = "&page=".$page_num;
+							}
+							?>
+							<a class="post_link" href="/forum/topic.php?id=<?= $this->posts[$i]['topic_id']; ?><?= $page_num_str; ?>#post-<?= $this->posts[$i]['post_id']; ?>">
 								<?=wordwrap($f->filter($fhtml->filter($this->posts[$i]['post_text']), 30), 62, '</br>', true); ?>
 							</a>
 							<span class="quotes">”</span>
