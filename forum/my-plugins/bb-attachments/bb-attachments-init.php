@@ -125,7 +125,6 @@ if ($post_id && ($bb_attachments['role']['see']=="read" || bb_current_user_can($
 	if (!isset($bb_attachments_cache[$post_id])) {
 		$bb_attachments_cache[$post_id]=$bbdb->get_results("SELECT * FROM ".$bb_attachments['db']." WHERE post_id = $post_id ORDER BY time DESC LIMIT 999");
 	}			
-
 	if (count($bb_attachments_cache[$post_id])) {
 		foreach ($bb_attachments_cache[$post_id] as $attachment) { 
 			$showerror=($self && $attachment->time>$time) ? true : false;
@@ -150,11 +149,11 @@ if ($post_id && ($bb_attachments['role']['see']=="read" || bb_current_user_can($
 						."'>".$attachment->filename."</a> "." ";				
 				}						
 				
-				$output.=" <span class='num'>(".round($attachment->size/1024,1)." KB";				
-				if ($attachment->status<2) {$output.=", ".bb_number_format_i18n($attachment->downloads)." ".__('downloads');}
+				$output.=" <span class='num'>(".round($attachment->size/1024/1024,1)." MB";				
+				if ($attachment->status<2) {$output.=", atsisiųstas: ".bb_number_format_i18n($attachment->downloads);}
 				$output.=")</span> ";
 				
-				if ($attachment->time<$time) {$output.=" <small>".bb_since($attachment->time)." ".__('old')."</small> ";}
+				if ($attachment->time<$time) {$output.=" <small>Įkeltas prieš ".bb_since($attachment->time)."</small> ";}
 								
 				if ($admin) {				
 					$output.=' [<a href="'.attribute_escape(bb_get_option('uri').'bb-admin/view-ip.php?ip='.long2ip($attachment->user_ip)) . '">'.long2ip($attachment->user_ip).'</a>] ';
@@ -175,7 +174,7 @@ if ($post_id && ($bb_attachments['role']['see']=="read" || bb_current_user_can($
 			}
 		}
 	}
-if ($output) {$output="<h3>".__("Attachments")."</h3><ol>".$output."</ol>";}
+if ($output) {$output="<b>Failai:</b><ol>".$output."</ol>";}
 if ($location=="edit.php") {
 $output.='<scr'.'ipt type="text/javascript" defer="defer">
 	function bbat_inline_insert(post_id,id) {
@@ -322,9 +321,9 @@ while(list($key,$value) = each($_FILES['bb_attachments']['name'])) {
 		if ($status>0) {
 			if ($id>0) {$bbdb->query("UPDATE ".$bb_attachments['db']." SET 'status' = $status WHERE 'id' = $id");}
 			$error=""; if ($_FILES['bb_attachments']['error'][$key]>0) {$error=" (".$bb_attachments['errors'][$_FILES['bb_attachments']['error'][$key]].") ";}
-			$output.="<li><span style='color:red'><strong>$filename "." <span class='num'>(".round($size/1024,1)." KB)</span> ".__('error:')." ".$bb_attachments['status'][$status]."</strong>$error</span></li>";
+			$output.="<li><span style='color:red'><strong>$filename "." <span class='num'>(".round($size/1024/1024,1)." MB)</span> ".__('error:')." ".$bb_attachments['status'][$status]."</strong>$error</span></li>";
 		} else {			
-			$output.="<li><span style='color:green'><strong>$filename "." <span class='num'>(".round($size/1024,1)." KB)</span> ".__('successful')."</strong></span></li>";			 
+			$output.="<li><span style='color:green'><strong>$filename "." <span class='num'>(".round($size/1024/1024,1)." MB)</span> ".__('successful')."</strong></span></li>";			 
 			if ($bb_attachments['inline']['auto'] && list($width, $height, $type) = getimagesize($file)) {
 		 	if ($display) {
 		 		$location = bb_attachments_location();	 $can_inline=true;
@@ -353,20 +352,29 @@ if (!$post_id) {$post_id=intval($_GET['bb_attachments']);} 	// only can upload i
 $user_id=bb_get_current_user_info( 'id' );
 if (!$user_id || ($post_id && !bb_current_user_can('edit_post',$post_id)) || !bb_current_user_can($bb_attachments['role']['upload'])) {return;}	
 
-$count=0; $allowed=__('leidžiami bylų formatai:')." "; $exts=bb_attachments_lookup($bb_attachments['allowed']['extensions']);
+$count=0; $allowed=__('leidžiami failų formatai:')." "; $exts=bb_attachments_lookup($bb_attachments['allowed']['extensions']);
 $tcount=count($exts); foreach ($exts as $ext) {
-$allowed.=$ext.' <span class="num">('.round(bb_attachments_lookup($bb_attachments['max']['size'],$ext)/1024,1).' KB)</span>, ';
+$allowed.=$ext.' <span class="num">('.round(bb_attachments_lookup($bb_attachments['max']['size'],$ext)/1024/1024,1).' MB)</span>, ';
 $count++; if ($count==5 && $tcount>7) {$allowed.="<br />";}
 }
 $allowed=rtrim($allowed," ,");
 
 if ($post_id) {echo '<form class="bb_attachments_upload_form" enctype="multipart/form-data" method="post" action="'.attribute_escape(add_query_arg('bb_attachments',$post_id,remove_query_arg(array('bb_attachments','bbat','bbat_delete')))).'">';}
 else {echo '<input  type="hidden" name="bb_attachments" value="0" />';}
-echo	'<h3>'.__("Prikabinti bylą").'</h3>		
+echo	'
+	<div class="inner_header">'.__("Prikabinti failą").'</div>
 	<input  type="hidden" name="MAX_FILE_SIZE" value="'.$bb_attachments['max']['php_upload_limit'].'" />			
 	<span id="bb_attachments_file_sample">
-	<input type="file" name="bb_attachments[]" size="50" /><br />
-	<input type="file" name="bb_attachments[]" size="50" /><br />
+	<dl>
+		<dt>Failas:</dt>
+		<dd><input type="file" name="bb_attachments[]" size="50" /></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt>Failas:</dt>
+		<dd><input type="file" name="bb_attachments[]" size="50" /></dd>
+		<div class="clear"></div>
+	</dl>
 	</span>		
 	<div id="bb_attachments_file_input_4"></div>	
 	<script type="text/javascript" defer="defer">
@@ -377,13 +385,24 @@ echo	'<h3>'.__("Prikabinti bylą").'</h3>
 		}					
 	}
 	</script>
-	'.$allowed.'<br />                                       
-	<div style="margin:1em 0 0 0;">';		 
-if ($post_id) {echo '<a style="margin-right:12em;" href="'. get_post_link( $post_id ).'">'.__("&laquo; return to post").'</a>';}
-else {echo '<span style="margin-right:20em;">&nbsp;</span>';}
-echo	'<a href="javascript:void(0)" onClick="bb_attachment_inputs();">[+] '.__('more').'</a> &nbsp; 
-	<input style="font-weight:bold;" type="submit" class="submit" name="upload" value="'.__('Upload').'" />
-	</div>';
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd>'.$allowed.'</dd>
+		<div class="clear"></div>
+	</dl>';		 
+if ($post_id) {echo '<a style="margin-right:12em;" href="'. get_post_link( $post_id ).'">'.__("&laquo; grįžti atgal").'</a>';}
+else {echo '';}
+echo	'
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><a href="javascript:void(0)" onClick="bb_attachment_inputs();">[+] '.__('Prkabinti daugiau failų').'</a></dd>
+		<div class="clear"></div>
+	</dl>
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><input class="ui-button" type="submit" class="submit" name="upload" value="'.__('Įkelti').'" /></dd>
+		<div class="clear"></div>
+	</dl>';
 if ($post_id) {echo '</form>';}
 }
 

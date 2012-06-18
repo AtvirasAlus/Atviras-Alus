@@ -922,7 +922,6 @@ class BB_Query_Form extends BB_Query {
 
 		$r  = "<form action='$action' method='$method' id='$id' class='search-form'>\n";
 
-		$r .= "\t<fieldset>\n";
 
 		if ( $search ) {
 			if ( $_post ) {
@@ -933,92 +932,103 @@ class BB_Query_Form extends BB_Query {
 				$s_value = esc_attr( $q_search );
 				$s_name = $s_id = 'search';
 			}
-			$r .= "\t<div><label for=\"$s_id\">" . __('Search term') . "</label>\n";
-			$r .= "\t\t<div><input name='$s_name' id='$s_id' type='text' class='text-input' value='$s_value' /></div>\n";
-			$r .= "\t</div>\n\n";
+			$r .= "\t<dl>\n";
+			$r .= "\t<dt>" . __('Paieškos frazė') . "</dt>\n";
+			$r .= "\t\t<dd><input name='$s_name' id='$s_id' type='text' class='text-input' value='$s_value' /></dd>\n";
+			$r .= "\t\t<div class='clear'></div>\n";
+			$r .= "\t</dl>\n\n";
 		}
 
 		if ( $forum ) {
-			$r .= "\t<div><label for=\"forum-id\">" . __('Forum')  . "</label>\n";
-			$r .= "\t\t<div>" . bb_get_forum_dropdown( array( 'selected' => $q_forum_id, 'none' => __('Any'), 'id' => 'forum-id' ) ) . "</div>\n";
-			$r .= "\t</div>\n\n";
+			$r .= "\t<dl><dt>" . __('Forum')  . "</dt>\n";
+			$r .= "\t\t<dd>" . bb_get_forum_dropdown( array( 'selected' => $q_forum_id, 'none' => __('Visos'), 'id' => 'forum-id' ) ) . "</dd>\n";
+			$r .= "\t\t<div class='clear'></div>\n";
+			$r .= "\t</dl>\n\n";
 		}
 
 		if ( $tag ) {
 			$q_tag = esc_attr( $q_tag );
-			$r .= "\t<div><label for=\"topic-tag\">" .  __('Tag') . "</label>\n";
-			$r .= "\t\t<div><input name='tag' id='topic-tag' type='text' class='text-input' value='$q_tag' /></div>\n";
-			$r .= "\t</div>\n\n";
+			$r .= "\t<dl><dt>" .  __('Tag') . "</dt>\n";
+			$r .= "\t\t<dd><input name='tag' id='topic-tag' type='text' class='text-input' value='$q_tag' /></dd>\n";
+			$r .= "\t\t<div class='clear'></div>\n";
+			$r .= "\t</dl>\n\n";
 		}
 
 		if ( $topic_author ) {
 			$q_topic_author = esc_attr( $q_topic_author );
-			$r .= "\t<div><label for=\"topic-author\">" . __('Topic author') . "</label>\n";
-			$r .= "\t\t<div><input name='topic_author' id='topic-author' type='text' class='text-input' value='$q_topic_author' /></div>\n";
-			$r .= "\t</div>\n\n";
+			$r .= "\t<dl><dt>" . __('Topic author') . "</dt>\n";
+			$r .= "\t\t<dd><input name='topic_author' id='topic-author' type='text' class='text-input' value='$q_topic_author' /></dd>\n";
+			$r .= "\t\t<div class='clear'></div>\n";
+			$r .= "\t</dl>\n\n";
 		}
 
 		if ( $post_author ) {
 			$q_post_author = esc_attr( $q_post_author );
-			$r .= "\t<div><label for=\"post-author\">" . __('Post author') . "</label>\n";
-			$r .= "\t\t<div><input name='post_author' id='post-author' type='text' class='text-input' value='$q_post_author' /></div>\n";
-			$r .= "\t</div>\n\n";
+			$r .= "\t<dl><dt>" . __('Post author') . "</dt>\n";
+			$r .= "\t\t<dd><input name='post_author' id='post-author' type='text' class='text-input' value='$q_post_author' /></dd>\n";
+			$r .= "\t\t<div class='clear'></div>\n";
+			$r .= "\t</dl>\n\n";
 		}
 
-		$stati = apply_filters( 'bb_query_form_post_status', array( 'all' => __('All'), '0' => __('Normal'), '1' => __('Deleted') ), $this->type );
+		$stati = apply_filters( 'bb_query_form_post_status', array( 'all' => __('Visi'), '0' => __('Normal'), '1' => __('Deleted') ), $this->type );
 
 		if ( $topic_status ) {
-			$r .= "\t<div><label for=\"topic-status\">" . __('Topic status') . "</label>\n";
-			$r .= "\t\t<div><select name='topic_status' id='topic-status'>\n";
+			$r .= "\t<dl><dt>" . __('Topic status') . "</dt>\n";
+			$r .= "\t\t<dd><select name='topic_status' id='topic-status'>\n";
 			foreach ( $stati as $status => $label ) {
 				$selected = (string) $status == (string) $q_topic_status ? " selected='selected'" : '';
 				$r .= "\t\t\t<option value='$status'$selected>$label</option>\n";
 			}
-			$r .= "\t\t</select></div>\n";
-			$r .= "\t</div>\n\n";
+			$r .= "\t\t</select></dd>\n";
+			$r .= "\t\t<div class='clear'></div>\n";
+			$r .= "\t</dl>\n\n";
 		}
 
 		if ( $post_status ) {
-			$r .= "\t<div><label for=\"post-status\">" . __('Post status') . "</label>\n";
-			$r .= "\t\t<div><select name='post_status' id='post-status'>\n";
+			$r .= "\t<dl><dt>" . __('Post status') . "</dt>\n";
+			$r .= "\t\t<dd><select name='post_status' id='post-status'>\n";
 			foreach ( $stati as $status => $label ) {
 				$selected = (string) $status == (string) $q_post_status ? " selected='selected'" : '';
 				$r .= "\t\t\t<option value='$status'$selected>$label</option>\n";
 			}
-			$r .= "\t\t</select></div>\n";
-			$r .= "\t</div>\n\n";
+			$r .= "\t\t</select></dd>\n";
+			$r .= "\t\t<div class='clear'></div>\n";
+			$r .= "\t</dl>\n\n";
 		}
 
 		if ( $poster_ip ) {
-			$r .= "\t<div><label for=\"poster-ip\">" . __('Poster IP address') . "</label>\n";
-			$r .= "\t\t<div><input name='poster_ip' id='poster-ip' type='text' class='text-input' value='$q_poster_ip' /></div>\n";
-			$r .= "\t</div>\n\n";
+			$r .= "\t<dl><dt>" . __('Poster IP address') . "</dt>\n";
+			$r .= "\t\t<dd><input name='poster_ip' id='poster-ip' type='text' class='text-input' value='$q_poster_ip' /></dd>\n";
+			$r .= "\t\t<div class='clear'></div>\n";
+			$r .= "\t</dl>\n\n";
 		}
 
 		if ( $open ) {
-			$r .= "\t<div><label for=\"topic-open\">" . __('Open?') . "</label>\n";
-			$r .= "\t\t<div><select name='open' id='topic-open'>\n";
+			$r .= "\t<dl><dt>" . __('Open?') . "</dt>\n";
+			$r .= "\t\t<dd><select name='open' id='topic-open'>\n";
 			foreach ( array( 'all' => __('All'), '1' => _x( 'Open', 'posting status' ), '0' => __('Closed') ) as $status => $label ) {
 				$label = esc_html( $label );
 				$selected = (string) $status == (string) $q_open ? " selected='selected'" : '';
 				$r .= "\t\t\t<option value='$status'$selected>$label</option>\n";
 			}
-			$r .= "\t\t</select></div>\n";
-			$r .= "\t</div>\n\n";
+			$r .= "\t\t</select></dd>\n";
+			$r .= "\t\t<div class='clear'></div>\n";
+			$r .= "\t</dl>\n\n";
 		}
 
 		if ( $topic_title ) {
 			$q_topic_title = esc_attr( $q_topic_title );
-			$r .= "\t<div><label for=\"topic-title\">" . __('Title') . "</label>\n";
-			$r .= "\t\t<div><input name='topic_title' id='topic-title' type='text' class='text-input' value='$q_topic_title' /></div>\n";
-			$r .= "\t</div>\n\n";
+			$r .= "\t<dl><dt>" . __('Title') . "</dt>\n";
+			$r .= "\t\t<dd><input name='topic_title' id='topic-title' type='text' class='text-input' value='$q_topic_title' /></dd>\n";
+			$r .= "\t\t<div class='clear'></div>\n";
+			$r .= "\t</dl>\n\n";
 		}
 
-		$r .= "\t<div class=\"submit\"><label for=\"$id-submit\">" . __('Search') . "</label>\n";
-		$r .= "\t\t<div><input type='submit' class='button submit-input' value='$submit' id='$id-submit' /></div>\n";
-		$r .= "\t</div>\n";
+		$r .= "\t<dl><dt>&nbsp;</dt>\n";
+		$r .= "\t\t<dd><input type='submit' class='button submit-input ui-button' value='$submit' id='$id-submit' /></dd>\n";
+		$r .= "\t\t<div class='clear'></div>\n";
+		$r .= "\t</dl>\n";
 
-		$r .= "\t</fieldset>\n\n";
 
 		do_action( 'bb_query_form', $args, $query_vars );
 

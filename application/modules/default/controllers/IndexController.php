@@ -42,7 +42,7 @@ class IndexController extends Zend_Controller_Action {
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$select = $db->select()
 					->from("idea_items", array("idea_id"))
-					->where("idea_items.idea_status = 0");
+					->where("idea_items.idea_status != 1 AND idea_items.user_id != ?", $user_info->user_id);
 			$ideas = $db->fetchAll($select);
 			$ids = array();
 			foreach($ideas as $key=>$val){
@@ -51,7 +51,6 @@ class IndexController extends Zend_Controller_Action {
 			$select = $db->select()
 					->from("idea_votes", array("COUNT(idea_id) AS kiekis"))
 					->where("idea_votes.idea_id IN (".implode(",", $ids).") AND idea_votes.user_id = '".$user_info->user_id."'");
-			$select->__toString();;
 			$voted = $db->fetchRow($select);
 			$this->view->unvoted = sizeof($ids)-$voted['kiekis'];
 		}
@@ -145,7 +144,7 @@ class IndexController extends Zend_Controller_Action {
 			$cache->save($this->view->blogs, 'blog_latest');
 		}
 		$select = $db->select()
-				->from("beer_events")
+				->from("beer_events", array("*", "DATE_FORMAT(event_start, '%Y-%m-%d %H:%i') as event_start"))
 				->where("event_registration_end >= CURDATE( )")
 				->where("event_registration_end  != '0000-00-00'")
 				->order("event_start");
