@@ -283,10 +283,11 @@ function post_form( $args = array() ) {
 
 	if ( !empty( $h2 ) ) {
 		if ( bb_is_topic() && ( $page != $last_page && $last_page_only ) ) {
-			$h2 = '<a href="' . esc_attr( get_topic_link( 0, $last_page ) . '#postform' ) . '">' . $h2 . ' &raquo;</a>';
+			$h2 = '<a href="' . esc_attr( get_topic_link( 0, $last_page ) . '#postform' ) . '">' . $h2 . '</a>';
 		}
-		echo '<h2 class="post-form">' . $h2 . '</h2>' . "\n";
 	}
+	echo '<div id="discussions" class="inner_container">
+	<div class="inner_header">'.$h2.'</div>' . "\n";
 
 	do_action( 'pre_post_form' );
 
@@ -295,7 +296,6 @@ function post_form( $args = array() ) {
 		( !bb_is_topic() && bb_current_user_can( 'write_topic', isset( $forum->forum_id ) ? $forum->forum_id : 0 ) )
 	) {
 		echo '<form class="postform post-form" id="postform" method="post" action="' . bb_get_uri( 'bb-post.php', null, BB_URI_CONTEXT_FORM_ACTION ) . '">' . "\n";
-		echo '<fieldset>' . "\n";
 		bb_load_template( 'post-form.php', array('h2' => $h2) );
 		bb_nonce_field( bb_is_topic() ? 'create-post_' . $topic->topic_id : 'create-topic' );
 		if ( bb_is_forum() ) {
@@ -304,15 +304,16 @@ function post_form( $args = array() ) {
 			echo '<input type="hidden" name="topic_id" value="' . $topic->topic_id . '" />' . "\n";
 		}
 		do_action( 'post_form' );
-		echo "\n</fieldset>\n</form>\n";
+		echo "\n</form>\n";
 	} elseif ( !bb_is_user_logged_in() ) {
-		echo '<p>';
+		echo '<div>';
 		printf(
 			__('You must <a href="%s">log in</a> to post.'),
 			esc_attr( bb_get_uri( 'bb-login.php', null, BB_URI_CONTEXT_A_HREF + BB_URI_CONTEXT_BB_USER_FORMS ) )
 		);
-		echo '</p>';
+		echo '</div>';
 	}
+	echo "</div>";
 
 	do_action( 'post_post_form' );
 }
@@ -321,13 +322,12 @@ function edit_form() {
 	global $bb_post;
 	do_action('pre_edit_form');
 	echo '<form class="postform edit-form" method="post" action="' . bb_get_uri('bb-edit.php', null, BB_URI_CONTEXT_FORM_ACTION)  . '">' . "\n";
-	echo '<fieldset>' . "\n";
 	bb_load_template( 'edit-form.php', array('topic_title') );
 	bb_nonce_field( 'edit-post_' . $bb_post->post_id );
 	do_action('edit_form');
 	if ($_REQUEST['view'] === 'all')
 		echo "\n" . '<input type="hidden" name="view" value="all" />';
-	echo "\n" . '</fieldset>' . "\n" . '</form>' . "\n";
+	echo "\n" . "\n" . '</form>' . "\n";
 	do_action('post_edit_form');
 }
 
@@ -415,7 +415,7 @@ function bb_get_location() { // Not for display.  Do not internationalize.
 			$location = apply_filters( 'bb_get_location', '', $file );
 			break;
 	}
-
+	//echo $location." ";
 	return $location;
 }
 
@@ -1470,7 +1470,7 @@ function topic_posts_link( $id = 0 ) {
 function get_topic_posts_link( $id = 0 ) {
 	$topic = get_topic( get_topic_id( $id ) );
 	$post_num = get_topic_posts( $id );
-	$posts = sprintf(__ngettext( '%s post', '%s posts', $post_num ), $post_num);
+	$posts = sprintf("<span>Pasisakymų:</span> <p>%s</p>", $post_num);
 	$r = '';
 
 	if ( ( 'all' == @$_GET['view'] || bb_is_admin() ) && bb_current_user_can('browse_deleted') )
@@ -3044,11 +3044,9 @@ function bb_list_tags( $args = null )
 		case 'list' :
 		default :
 			$args['format'] = 'list';
-			$r .= '<ul id="' . $list_id . '" class="tags-list list:tag">' . "\n";
 			foreach ( $tags as $tag ) {
 				$r .= _bb_list_tag_item( $tag, $args );
 			}
-			$r .= '</ul>';
 			break;
 	}
 
@@ -3061,7 +3059,7 @@ function _bb_list_tag_item( $tag, $args )
 	$name = esc_html( bb_get_tag_name( $tag ) );
 	if ( 'list' == $args['format'] ) {
 		$id = 'tag-' . $tag->tag_id . '_' . $tag->user_id;
-		return "\t" . '<li id="' . $id . '"' . get_alt_class( 'topic-tags' ) . '><a href="' . $url . '" rel="tag">' . $name . '</a> ' . bb_get_tag_remove_link( array( 'tag' => $tag, 'list_id' => $args['list_id'] ) ) . '</li>' . "\n";
+		return "\t" . '<a href="' . $url . '" rel="tag">' . $name . '</a> ' . bb_get_tag_remove_link( array( 'tag' => $tag, 'list_id' => $args['list_id'] ) ) . '' . "\n";
 	}
 }
 	
@@ -3088,7 +3086,7 @@ function tag_form( $args = null )
 		<input type="hidden" name="id" value="<?php echo $topic->topic_id; ?>" />
 		<input type="hidden" name="page" value="<?php echo $page; ?>" />
 		<?php bb_nonce_field( 'add-tag_' . $topic->topic_id ); ?>
-		<input type="submit" name="submit" id="tagformsub" value="<?php echo esc_attr( $submit ); ?>" />
+		<input type="submit" name="submit" id="tagformsub" value="Pridėti" />
 	</p>
 </form>
 
@@ -3386,7 +3384,7 @@ function user_favorites_link($add = array(), $rem = array(), $user_id = 0) {
 	$url = esc_url(  bb_nonce_url( add_query_arg( $favs, get_favorites_link( $user_id ) ), 'toggle-favorite_' . $topic->topic_id ) );
 
 	if (  !is_null($is_fav) )
-		echo "<span id='favorite-$topic->topic_id'>$pre<a href='$url' class='dim:favorite-toggle:favorite-$topic->topic_id:is-favorite'>$mid</a>$post</span>";
+		echo "<p id='favorite-$topic->topic_id'>$pre<a href='$url' class='dim:favorite-toggle:favorite-$topic->topic_id:is-favorite'>$mid</a>$post</p>";
 }
 
 function favorites_rss_link( $id = 0, $context = 0 ) {
