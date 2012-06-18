@@ -44,6 +44,17 @@ class CronController extends Zend_Controller_Action {
 		foreach($result as $key=>$val){
 			$db->delete("idea_votes", array("user_id = '" . $val['user_id']. "'", "idea_id = '" . $val['idea_id'] . "'"));
 		}
+		
+		foreach ($result as $key=>$val){
+			$select2 = $db->select()
+					->from("idea_votes", "SUM(idea_votes.vote_value) as total")
+					->where("idea_votes.idea_id = ?", $val['idea_id']);
+			$result2 = $db->fetchRow($select2);
+			$db->update("idea_items", array(
+				"idea_vote_sum" => $result2['total']
+			), "idea_items.idea_id = '".$val['idea_id']."'");
+		}
+		
 		echo "Done";
 	}
 
