@@ -308,7 +308,7 @@ function post_form( $args = array() ) {
 	} elseif ( !bb_is_user_logged_in() ) {
 		echo '<div>';
 		printf(
-			__('You must <a href="%s">log in</a> to post.'),
+			__('Privalote prisijungti, kad galėtumėte čia rašyti.'),
 			esc_attr( bb_get_uri( 'bb-login.php', null, BB_URI_CONTEXT_A_HREF + BB_URI_CONTEXT_BB_USER_FORMS ) )
 		);
 		echo '</div>';
