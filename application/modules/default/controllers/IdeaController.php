@@ -184,7 +184,7 @@ class IdeaController extends Zend_Controller_Action {
 		} else {
 			if ($type == "rejected"){
 				$select->where("idea_items.idea_status = ? OR idea_items.idea_vote_sum <= 0", "2");
-				$select->order("idea_items.idea_finishdate DESC");
+				$select->order("idea_items.idea_posted DESC");
 			} else {
 				if ($type != "my") {
 					$select->where("idea_items.idea_status != ?", "1");
