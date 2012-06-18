@@ -144,7 +144,7 @@ class IndexController extends Zend_Controller_Action {
 			$cache->save($this->view->blogs, 'blog_latest');
 		}
 		$select = $db->select()
-				->from("beer_events")
+				->from("beer_events", array("*", "DATE_FORMAT(event_start, '%Y-%m-%d %H:%i') as event_start"))
 				->where("event_registration_end >= CURDATE( )")
 				->where("event_registration_end  != '0000-00-00'")
 				->order("event_start");

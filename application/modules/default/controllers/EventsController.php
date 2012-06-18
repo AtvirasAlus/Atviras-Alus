@@ -14,7 +14,7 @@ class EventsController extends Zend_Controller_Action {
 
 		$db = Zend_Registry::get('db');
 		$select = $db->select()
-				->from("beer_events")
+				->from("beer_events", array("*", "DATE_FORMAT(event_start, '%Y-%m-%d %H:%i') as event_start"))
 				->where("beer_events.event_published = ?", '1')
 				->order("beer_events.event_start DESC");
 
@@ -34,7 +34,7 @@ class EventsController extends Zend_Controller_Action {
 		if ($event_id > 0) {
 			$db = Zend_Registry::get("db");
 			$select = $db->select();
-			$select->from("beer_events")
+			$select->from("beer_events", array("*", "DATE_FORMAT(event_start, '%Y-%m-%d %H:%i') as event_start"))
 					->where("event_id = ?", $event_id);
 			$this->view->event = $db->fetchRow($select);
 			$select = $db->select();
@@ -178,14 +178,9 @@ class EventsController extends Zend_Controller_Action {
 		if (isset($u->user_name)) {
 			if (isset($_POST)) {
 				switch ($_POST['action']) {
-
 					case "add":
-
-
-
 						$db->insert("beer_competition_entries", array("event_id" => $_POST['event_id'], "event_user_id" => $_POST['event_user_id'], "recipe_id" => $_POST['recipe_id'], "style_id" => $_POST['style_id'], 'created_at' => date('Y:m:d H:i:s')));
 						break;
-
 					case "remove":
 						$db->delete("beer_competition_entries", 'event_id = ' . (int) $_POST['event_id'] . ' AND event_user_id = ' . (int) $_POST['event_user_id'] . ' AND recipe_id = ' . (int) $_POST['recipe_id']);
 						break;
