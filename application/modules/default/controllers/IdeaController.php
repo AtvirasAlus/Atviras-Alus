@@ -182,8 +182,13 @@ class IdeaController extends Zend_Controller_Action {
 			$select->where("idea_items.idea_status = ?", "1");
 			$select->order("idea_items.idea_finishdate DESC");
 		} else {
-			if ($type != "my") {
-				$select->where("idea_items.idea_status = ?", "0");
+			if ($type == "rejected"){
+				$select->where("idea_items.idea_status = ? OR idea_items.idea_vote_sum <= 0", "2");
+				$select->order("idea_items.idea_finishdate DESC");
+			} else {
+				if ($type != "my") {
+					$select->where("idea_items.idea_status != ?", "1");
+				}
 			}
 		}
 		if ($type == "top") {
@@ -263,6 +268,10 @@ class IdeaController extends Zend_Controller_Action {
 
 	public function listfinishedAction() {
 		$this->_forward("list", null, null, array("type" => "finished"));
+	}
+
+	public function listrejectedAction() {
+		$this->_forward("list", null, null, array("type" => "rejected"));
 	}
 
 	public function viewAction() {

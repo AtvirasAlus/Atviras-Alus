@@ -10,7 +10,7 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 	<div class="clear"></div>
 </div>
 <?php
-if ($user_id && $this->idea['idea_status']!='1' && $user_id != $this->idea['user_id']){
+if ($user_id && $this->idea['idea_status'] == '0' && $user_id != $this->idea['user_id']){
 	?>
 	<div class="vote_links">
 		<a href="javascript:void(0);" class="votelink <?=($this->idea['vote_value'] == "1") ? "activevote" : ""; ?> vote_1p" title="Patinka" data-idea="<?=$this->idea['idea_id']?>" data-value="p"></a>
