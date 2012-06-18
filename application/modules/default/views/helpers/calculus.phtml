@@ -261,15 +261,15 @@
 		$("#feel_container").html("-");
 		var bu = roundNumber(Math.round(ibu) / ((sgf * 1000) - 1000), 2);
 		if (bu >= 0 && bu <= 0.19) {
-			$("#feel_container").html("kartumo nėra, dominuoja salyklas ("+bu+" IBU/OG)");
+			$("#feel_container").html('<span style="font-weight: bold;">'+bu.toFixed(2)+"</span> <span class='style_recom'>kartumo nėra, dominuoja salyklas</span>");
 		} else if (bu >= 0.2 && bu <= 0.39) { 
-			$("#feel_container").html("jaučiami apyniai, dominuoja salyklas ("+bu+" IBU/OG)");
+			$("#feel_container").html('<span style="font-weight: bold;">'+bu.toFixed(2)+"</span> <span class='style_recom'>jaučiami apyniai, dominuoja salyklas</span>");
 		} else if (bu >= 0.4 && bu <= 0.59) { 
-			$("#feel_container").html("kartumas ir salyklo skonis subalansuotas ("+bu+" IBU/OG)");
+			$("#feel_container").html('<span style="font-weight: bold;">'+bu.toFixed(2)+"</span> <span class='style_recom'>kartumas ir salyklo skonis subalansuotas</span>");
 		} else if (bu >= 0.6 && bu <= 0.79) {
-			$("#feel_container").html("ryškus apynių skonis ("+bu+" IBU/OG)");
+			$("#feel_container").html('<span style="font-weight: bold;">'+bu.toFixed(2)+"</span> <span class='style_recom'>ryškus apynių skonis</span>");
 		} else if (bu >= 0.8 && bu <= 100) {
-			$("#feel_container").html("dominuoja apynių skonis ("+bu+" IBU/OG)");
+			$("#feel_container").html('<span style="font-weight: bold;">'+bu.toFixed(2)+"</span> <span class='style_recom'>dominuoja apynių skonis</span>");
 		}
 		kgToPercent();
 	}
@@ -779,8 +779,8 @@
 				<div class="clear"></div>
 			</div>
 			<div class="calc_info_block smaller_block">
-				<div class="calc_info_label">IBU balansas:</div>
-				<div class="calc_info_data" style="font-size: 14px; line-height: 26px; width: 400px; font-weight: bold;"><div id="feel_container">-</div></div>
+				<div class="calc_info_label">IBU/OG balansas:</div>
+				<div class="calc_info_data" style="font-size: 14px; line-height: 26px; width: 400px;"><div id="feel_container">-</div></div>
 				<div class="clear"></div>
 			</div>
 		</div>
