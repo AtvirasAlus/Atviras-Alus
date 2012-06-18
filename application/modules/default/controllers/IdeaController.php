@@ -193,7 +193,7 @@ class IdeaController extends Zend_Controller_Action {
 		}
 		if ($type == "top") {
 			$select->order("idea_vote_sum DESC");
-			$select->where("idea_items.idea_vote_sum > 0");
+			$select->where("idea_items.idea_vote_sum > 0 AND idea_items.idea_status = 0");
 		} else {
 			$select->order("idea_posted DESC");
 		}
