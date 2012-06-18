@@ -257,8 +257,25 @@
 		$('#recipe_ibu_span')[0].innerHTML = Math.round(ibu);
 		$('.ibu_ph').html(Math.round(ibu));
 		$('#recipe_ebc').val(Math.round(srm_to_ecb(srm)))
-		$('#recipe_ibu').val(Math.round(ibu))
+		$('#recipe_ibu').val(Math.round(ibu));
+		$("#feel_container").html("-");
+		var bu = roundNumber(Math.round(ibu) / ((sgf * 1000) - 1000), 2);
+		if (bu >= 0 && bu <= 0.19) {
+			$("#feel_container").html("kartumo nėra, dominuoja salyklas");
+		} else if (bu >= 0.2 && bu <= 0.39) { 
+			$("#feel_container").html("jaučiami apyniai, dominuoja salyklas");
+		} else if (bu >= 0.4 && bu <= 0.59) { 
+			$("#feel_container").html("kartumas ir salyklo skonis subalansuotas");
+		} else if (bu >= 0.6 && bu <= 0.79) {
+			$("#feel_container").html("ryškus apynių skonis");
+		} else if (bu >= 0.8 && bu <= 100) {
+			$("#feel_container").html("dominuoja apynių skonis");
+		}
 		kgToPercent();
+	}
+	function roundNumber(num, dec) {
+		var result = Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
+		return result;
 	}
 	function selectMalt(id) {
 		var sItem = $('#malt-list_' + id).editableSelect("getSelectedItem");
@@ -759,6 +776,11 @@
 					<input type="text" id="recalc" value="20" onChange="fitTo(this.value)" >
 					<input type="button" id="cnv_recipe_btn" value="Pritaikyti" class="ui-button ui-button-smaller" />
 				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="calc_info_block smaller_block">
+				<div class="calc_info_label">Skonis:</div>
+				<div class="calc_info_data" style="font-size: 14px; line-height: 26px; width: 400px;"><div id="feel_container">-</div></div>
 				<div class="clear"></div>
 			</div>
 		</div>
