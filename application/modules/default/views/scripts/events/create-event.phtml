@@ -13,9 +13,10 @@
 			</script>
  <div class="inner_container">		
     
-    <div id="brewer_session_container" class="brewsession_edit">
+    
         <? if ($this->editable) { ?>
     <form action="/events/create-event" method="post" target="_self" name="__eventForm" id="__eventForm" enctype="multipart/form-data">
+        <div id="brewer_session_container" class="brewsession_edit">
             <dl>
                     <dt>Antraštė <span>*</span></dt>
                     <dd>
@@ -35,25 +36,10 @@
                     <div class="clear"></div>
             </dl>
             <dl>
-                    <dt>Įvykio pradžia <span>*</span></dt>
-                    <dd>
-    <input type="text" name="event_start" id="event_start" value=""></dd>
-                    <div class="clear"></div>
+                <dt>Įvykį skelbti grupėje:</dt>
             </dl>
-            <dl>
-                    <dt>Skelbimą rodyti iki <span>*</span></dt>
-                    <dd>
-    <input type="text" name="event_registration_end" id="event_registration_end" value=""></dd>
-                    <div class="clear"></div>
-            </dl>
-            <dl>
-                    <dt>&nbsp;</dt>
-                    <dd>
-
-    <input type="submit" name="attributes_action" id="attributes_action" value="Saugoti" type="submit" class="ui-button"></dd>
-                    <div class="clear"></div>
-            </dl>
-        <? 
+            <dd>
+               <? 
         $group_id = 0;
         if (isset($_POST['group_id'])) {
         $group_id=$_GET['group_id'];
@@ -71,18 +57,47 @@
                     $select="selected";
                 }
              ?>
-            <option value="<?=$group["group_id"];?>" <?=$selected;?>><?=$group["group_name"];?></option>
+            <option value="<?=$group["group_id"];?>" <?=$selected;?>><?=$group["group_description"];?></option>
             <?
             }
             ?>
             
-        </select> 
-            <input type="hidden" name="group_id" value="<?= $group_id ;?>" id="group_id">
+        </select>  
+            </dd>
+            <dl>
+                    <dt>Įvykio pradžia <span>*</span></dt>
+                    <dd>
+    <input type="text" name="event_start" id="event_start" value=""></dd>
+                    <div class="clear"></div>
+            </dl>
+            <dl>
+                    <dt>Skelbimą rodyti iki <span>*</span></dt>
+                    <dd>
+    <input type="text" name="event_registration_end" id="event_registration_end" value=""></dd>
+                    <div class="clear"></div>
+            </dl>
+             <dl>
+                    <dt>Įvykis paskelbtas </dt>
+                    <dd>
+    <input type="checkbox" name="event_published" id="event_published" ></dd>
+                    <div class="clear"></div>
+            </dl>
+            
+            <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+
+    <input type="submit" name="attributes_action" id="attributes_action" value="Saugoti" type="submit" class="ui-button"></dd>
+                    <div class="clear"></div>
+            </dl>
+        
+            
 
             <input type="hidden" name="action" value="ADD" id="action">
+              </div>
     </form>
         <?}else{?>
         Neturite teisių sukurti įvykio.
         <?}?>
-    </div>
+  
 </div>
