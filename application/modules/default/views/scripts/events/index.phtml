@@ -3,7 +3,12 @@ $this->headTitle()->append(" - Įvykiai ");
 $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,degustacija,receptas,alus'); 
 ?>
 <div id="events_container" class="inner_container">
-	<div class="inner_header">Įvykiai</div>
+	<div class="inner_header">Įvykiai
+            <?if ($this->editable) {?>
+            <div class="recipe_tools"><a href="/events/create-event">Sukurti įvykį</a></div>
+            <?}?>
+            
+        </div>
 	<div class="event_list_container">
 		<?
 		$z = 0;
