@@ -3,22 +3,23 @@
 class EventsController extends Zend_Controller_Action {
 
 	private $userInfo;
+        
 
 	public function init() {
-		$storage = new Zend_Auth_Storage_Session();
+		$this->storage = new Zend_Auth_Storage_Session();
                 $this->db = Zend_Registry::get('db');
-		$this->user = $storage->read();
+		$this->user = $this->storage->read();
 	}
 
 	function indexAction() {
 
-		$db = Zend_Registry::get('db');
-		$select = $db->select()
+		
+		$select = $this->db->select()
 				->from("beer_events")
 				->where("beer_events.event_published = ?", '1')
 				->order("beer_events.event_start DESC");
 
-		//$this->view->recipes=$db->fetchAll($select);
+		//$this->view->recipes=$this->db->fetchAll($select);
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($this->_getParam('page'));
@@ -30,34 +31,34 @@ class EventsController extends Zend_Controller_Action {
 
 		$euid = explode("-", $this->_getParam('event'));
 		$event_id = $euid[0];
-                
+                $this->view->editable = false;
 		if ($event_id > 0) {
-			$db = Zend_Registry::get("db");
-			$select = $db->select();
+			$this->db = Zend_Registry::get("db");
+			$select = $this->db->select();
 			$select->from("beer_events")
 					->where("event_id = ?", $event_id);
-			$this->view->event = $db->fetchRow($select);
-			$select = $db->select();
+			$this->view->event = $this->db->fetchRow($select);
+			$select = $this->db->select();
 			$select->from("beer_events_users", array())
 					->join("users", "beer_events_users.user_id=users.user_id", array("user_id" => "group_concat(users.user_id)"))
 					->where("event_id=?", $event_id);
 			$this->view->registered_users = array();
-			$r_users = $db->fetchRow($select);
+			$r_users = $this->db->fetchRow($select);
 			if (isset($r_users["user_id"])) {
-				$select = $db->select();
+				$select = $this->db->select();
 				$select->from("users")
 						->where("user_id in (" . $r_users["user_id"] . ")");
-				$this->view->registered_users = $db->fetchAll($select);
+				$this->view->registered_users = $this->db->fetchAll($select);
 			}
 		}
 		if (isset($this->user->user_id)) {
 
-			$select = $db->select();
+			$select = $this->db->select();
 			$select->from("beer_events_users")
 					->where("event_id = ?", $event_id)
 					->where("user_id = ?", $this->user->user_id);
 
-			$t = $db->fetchAll($select);
+			$t = $this->db->fetchAll($select);
 			if (count($t) > 0) {
 				$this->view->registration_status = 2;
 			} else {
@@ -66,47 +67,47 @@ class EventsController extends Zend_Controller_Action {
 
 			$this->view->user_id = $this->user->user_id;
 			//visi aludariu receptai 
-			$select = $db->select();
+                        if ($this->view->event['event_type']=='competition'){
+			$select = $this->db->select();
 			$select->from("beer_recipes")
 					->join("beer_styles", "beer_recipes.recipe_style=beer_styles.style_id")
 					->joinLeft("beer_competition_entries", "beer_recipes.recipe_id=beer_competition_entries.recipe_id AND beer_competition_entries.event_id='" . $event_id . "'", "event_id")
 					->where("brewer_id = ?", $this->user->user_id)
 					->order('beer_recipes.recipe_name');
-			$beer_recipes = $db->fetchAll($select);
+			$beer_recipes = $this->db->fetchAll($select);
 			$this->view->beer_recipes = $beer_recipes;
+                        }
 		} else {
 			$this->view->registration_status = 0;
 		}
-                $this->view->editable = ($storage->read()->user_type == "admin") ? true : false;
-                if (!$this->view->editable) {
-                   // $select->from("beer_events_groups", array());
-                }
+                $this->view->editable = $this->canEdit($event_id);
+                
 	}
 
 	function registerAction() {
-		$db = Zend_Registry::get('db');
-		$storage = new Zend_Auth_Storage_Session();
+		
+		
 		$this->_helper->layout->setLayout('empty');
-		$u = $storage->read();
+		$u = $this->user;
 		if (isset($u->user_name)) {
 			if (isset($_POST)) {
-				$db->delete("beer_events_users", "event_id = " . $_POST['id'] . ' and user_id = ' . $u->user_id);
+				$this->db->delete("beer_events_users", "event_id = " . $_POST['id'] . ' and user_id = ' . $u->user_id);
 				switch ($_POST['action']) {
 					case "in":
-						$db->insert("beer_events_users", array("event_id" => $_POST['id'], "user_id" => $u->user_id));
+						$this->db->insert("beer_events_users", array("event_id" => $_POST['id'], "user_id" => $u->user_id));
 						break;
 				}
-				$select = $db->select();
+				$select = $this->db->select();
 				$select->from("beer_events_users", array())
 						->join("users", "beer_events_users.user_id=users.user_id", array("user_id" => "group_concat(users.user_id)"))
 						->where("event_id=?", $_POST['id']);
 				$this->view->registered_users = array();
-				$r_users = $db->fetchRow($select);
+				$r_users = $this->db->fetchRow($select);
 				if (isset($r_users["user_id"])) {
-					$select = $db->select();
+					$select = $this->db->select();
 					$select->from("users")
 							->where("user_id in (" . $r_users["user_id"] . ")");
-					$this->view->registered_users = $db->fetchAll($select);
+					$this->view->registered_users = $this->db->fetchAll($select);
 				}
 			}
 		} else {
@@ -115,79 +116,91 @@ class EventsController extends Zend_Controller_Action {
 			print "Neregistruotas nautotojas";
 		}
 	}
-
+        private function canEdit($event_id) {
+        $editable=false;
+        
+            if (isset($this->user->user_id)) {
+            $editable=($this->user->user_type == "admin") ? true : false;
+                if (!$editable) {
+                    $select = $this->db->select();
+                         $select->from("beer_events_groups", array("group_id"))
+                            ->joinLeft("users_groups", "users_groups.group_id=beer_events_groups.group_id")
+                            ->where("beer_events_groups.event_id = ?",$event_id)
+                            ->where("users_groups.user_id = ?",$this->user->user_id)
+                          ->where("users_groups.user_status= ?","admin");
+                        
+                    if ($row=$this->db->fetchRow($select)) {
+                         return  true;
+                    }
+                    
+                }
+            }
+        
+            return $editable;
+        }
 	function myEntriesAction() {
-
-		$db = Zend_Registry::get('db');
 		$this->_helper->layout->setLayout('empty');
-		$storage = new Zend_Auth_Storage_Session();
+		
 
 		$this->view->event_id = $this->_getParam("event_id");
 		$this->view->user_id = $this->user->user_id;
 
 		//Uzregistruoti receptai
-		$select = $db->select();
+		$select = $this->db->select();
 		$select->from("beer_competition_entries")
 				->where("event_id = ?", $this->view->event_id)
 				->where("event_user_id = ?", $this->user->user_id);
-		$beer_competition_entries = $db->fetchAll($select);
+		$beer_competition_entries = $this->db->fetchAll($select);
 		$this->view->beer_competition_entries = $beer_competition_entries;
 
 		$this->view->beer_competition_entries_recipes = array();
 		foreach ($beer_competition_entries as $entry) {
 			$this->view->beer_competition_entries_recipes[] = $entry['recipe_id'];
 		}
-
 		$beer_recipes = array();
 		if (!empty($this->view->beer_competition_entries_recipes)) {
-			$select = $db->select();
+			$select = $this->db->select();
 			$select->from("beer_recipes")
 					->join("beer_styles", "beer_recipes.recipe_style=beer_styles.style_id")
 					->where("brewer_id = ?", $this->user->user_id)
 					->where("recipe_id IN(?)", $this->view->beer_competition_entries_recipes)
 					->order('beer_recipes.recipe_name');
-			$beer_recipes = $db->fetchAll($select);
+			$beer_recipes = $this->db->fetchAll($select);
 		}
 
 		$this->view->beer_recipes = $beer_recipes;
 	}
 
 	function myAllRecipesAction() {
-		$db = Zend_Registry::get('db');
 		$this->_helper->layout->setLayout('empty');
-		$storage = new Zend_Auth_Storage_Session();
+		
 
 		$this->view->event_id = $this->_getParam("event_id");
 		$this->view->user_id = $this->user->user_id;
 
-		$select = $db->select();
+		$select = $this->db->select();
 		$select->from("beer_recipes")
 				->join("beer_styles", "beer_recipes.recipe_style=beer_styles.style_id")
 				->where("brewer_id = ?", $this->user->user_id)
 				->order('beer_recipes.recipe_name');
-		$beer_recipes = $db->fetchAll($select);
+		$beer_recipes = $this->db->fetchAll($select);
 		$this->view->beer_recipes = $beer_recipes;
 	}
 
 	function entryRegistrationAction() {
-		$db = Zend_Registry::get('db');
+	
 		$this->_helper->layout->setLayout('empty');
 		$this->_helper->viewRenderer->setNoRender(true);
-		$storage = new Zend_Auth_Storage_Session();
-		$u = $storage->read();
+		
+		$u = $this->user;
 		if (isset($u->user_name)) {
 			if (isset($_POST)) {
 				switch ($_POST['action']) {
-
 					case "add":
-
-
-
-						$db->insert("beer_competition_entries", array("event_id" => $_POST['event_id'], "event_user_id" => $_POST['event_user_id'], "recipe_id" => $_POST['recipe_id'], "style_id" => $_POST['style_id'], 'created_at' => date('Y:m:d H:i:s')));
+						$this->db->insert("beer_competition_entries", array("event_id" => $_POST['event_id'], "event_user_id" => $_POST['event_user_id'], "recipe_id" => $_POST['recipe_id'], "style_id" => $_POST['style_id'], 'created_at' => date('Y:m:d H:i:s')));
 						break;
-
 					case "remove":
-						$db->delete("beer_competition_entries", 'event_id = ' . (int) $_POST['event_id'] . ' AND event_user_id = ' . (int) $_POST['event_user_id'] . ' AND recipe_id = ' . (int) $_POST['recipe_id']);
+						$this->db->delete("beer_competition_entries", 'event_id = ' . (int) $_POST['event_id'] . ' AND event_user_id = ' . (int) $_POST['event_user_id'] . ' AND recipe_id = ' . (int) $_POST['recipe_id']);
 						break;
 				}
 			}
@@ -196,38 +209,72 @@ class EventsController extends Zend_Controller_Action {
 		}
 	}
         public function modEventAction() {
-            
+          
             if (isset($_GET['event_id'])) {
                 if (is_numeric($_GET['event_id'])) {
                     $event_id = intval($_GET['event_id']);
+                    if ($this->canEdit($event_id)) {
                     $select = $this->db->select();
-                                $select->from("beer_events")
-                                        ->where("event_id = ?", $event_id);
-                                $this->view->event = $this->db->fetchRow($select);
+                    $select->from("beer_events")
+                        ->where("event_id = ?", $event_id);
+                        if ($row = $this->db->fetchRow($select)) {
+                            $this->view->event=$row;
+                        };
+                    }
                 }
+                
             
             }
         }
          public function createEventAction() {
+              if (isset($this->user->user_id)) {
            if (isset($_POST['action'])) {
                switch ($_POST['action']) {
                    case 'ADD':
-                       $this->db->insert("beer_events", array(
-                                        "event_name" => strip_tags($_POST['event_name']),
-                                        "event_resume" =>  trim(strip_tags($_POST['event_resume'])),
-					"event_description" => strip_tags($_POST['event_description'], "<a><b><i>"),
-					"event_start" => $_POST['event_start'],	
-					"event_registration_end" => $_POST['event_registration_end']
-						
-				));
-                       if (is_numeric($_POST['group_id']) && $_POST['group_id']>0){
-                        $ev_id=$this->db->lastInsertId();
-                        $this->db->insert('beer_events_groups',array('group_id'=>$_POST['group_id'],'event_id'=>$this->db->lastInsertId()));
+                       if (isset($this->user->user_id)) {
+                        $group_id=$_POST['group_id'];
+                        if ($this->canEdit($group_id)) {
+                        $this->db->insert("beer_events", array(
+                                            "event_name" => strip_tags($_POST['event_name']),
+                                            "event_resume" =>  trim(strip_tags($_POST['event_resume'])),
+                                            "event_description" => $_POST['event_description'],
+                                            "event_start" => $_POST['event_start'],	
+                                            "event_registration_end" => $_POST['event_registration_end']
+
+                                    ));
+                            $ev_id=$this->db->lastInsertId();
+
+                        if (is_numeric($_POST['group_id']) && $group_id>0){
+
+                            $this->db->insert('beer_events_groups',array('group_id'=>$group_id,'event_id'=>$ev_id));
+                        }
+                        $this->_redirect('/events/mod-event/?event_id='. $ev_id);
                        }
-                       $this->_redirect('/events/mod-event/?event_id='. $ev_id);
+                       }
                        break;
                }
+           }else{
+                $groups=array();
+                 $select = $this->db->select();
+                 $select->from("groups");
+                  if ($this->user->user_type != "admin") {
+                        $select->joinLeft("users_groups", "users_groups.group_id=beer_events_groups.group_id",array())
+                          ->where("users_groups.user_id = ?",$this->user->user_id)
+                          ->where("users_groups.user_status= ?","admin");
+                  }else{
+                       $groups[]=array("group_name"=>"","group_id"=>0);
+                  }
+                       if ($rows=$this->db->fetchAll($select)) {
+                         $groups=  array_merge($groups,$rows);
+                       }
+                        $this->view->groups=$groups;
+                        $this->view->editable = count($groups) > 0;   
+                        
+                  
+               
+               
            }
+              }
            
           }
 

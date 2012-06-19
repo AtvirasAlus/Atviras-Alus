@@ -1971,3 +1971,13 @@ ul.statuses li {
     margin-top:2px;
     color: #999;
 }
+.commentsEdit textarea {
+	height: 100px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 660px;
+	padding-left: 4px;
+        margin-bottom: 5px;
+}

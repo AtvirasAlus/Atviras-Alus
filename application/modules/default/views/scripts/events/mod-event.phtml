@@ -12,10 +12,10 @@
                                         $( "#event_registration_end" ).datetimepicker( "option", "timeFormat: 'hh:mm'");
 				});
 			</script>
-			
-<div id="brewer_session_container" class="inner_container">
+                        <div class="inner_container">			
+<div id="brewer_session_container" class="brewsession_edit">
     <? if (isset($this->event)) { ?>
-<form action="/groups/create-event" method="post" target="_self" name="__eventForm" id="__eventForm" enctype="multipart/form-data">
+<form action="/events/mod-event" method="post" target="_self" name="__eventForm" id="__eventForm" enctype="multipart/form-data">
 	<dl>
 		<dt>Antraštė <span>*</span></dt>
 		<dd>
@@ -40,7 +40,7 @@
                     <?
                     $dateTime = new DateTime($this->event['event_start']);
                     $event_start= $dateTime->format('Y-m-d H:i');
-                     $dateTime = new DateTime($this->event['event_registration_end']);
+                    $dateTime = new DateTime($this->event['event_registration_end']);
                     $event_registration_end= $dateTime->format('Y-m-d H:i');
                    
                    
@@ -79,6 +79,7 @@
         <input type="hidden" name="action" value="MOD" id="action">
 </form>
     <?}else{?>
-    <div>Įvykis nerastas</div>
+    <div>Įvykis nerastas arba jūs neturite teisės redaguoti šio įvykio.</div>
     <?}?>
+</div>
 </div>
