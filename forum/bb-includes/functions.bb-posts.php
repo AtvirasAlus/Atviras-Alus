@@ -331,6 +331,27 @@ function bb_insert_post( $args = null ) {
 		$bbdb->insert( $bbdb->posts, compact( $fields ) );
 		$post_id = $topic_last_post_id = (int) $bbdb->insert_id;
 
+		//activity_log
+		$tdata = compact($fields);
+		$ac_log = array();
+		$ac_log['act_type'] = "forum_post";
+		$ac_log['act_user_id'] = $tdata['poster_id'];
+		$ac_log['act_item_id'] = $post_id;
+		$ac_log['act_posted'] = $tdata['post_time'];
+		$temp = array();
+		$temp['topic_id'] = $tdata['topic_id'];
+		$temp['page'] = ceil($tdata['post_position'] / 30);
+		$temp['text'] = trim(strip_tags($tdata['post_text']));
+		$sql = "SELECT * FROM bb_topics WHERE topic_id='".$tdata['topic_id']."'";
+		$result = mysql_query($sql) or die(mysql_error());
+		$temp['topic'] = "";
+		while ($row = mysql_fetch_assoc($result)){
+			$temp['topic'] = trim(strip_tags($row['topic_title']));
+		}
+		$ac_log['act_data'] = serialize($temp);
+		$bbdb->insert( "activity_log", $ac_log );
+
+		
 		if ( 0 == $post_status ) {
 			$topic_time = $post_time;
 			$topic_last_poster = $poster_id;
