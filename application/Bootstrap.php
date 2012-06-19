@@ -67,6 +67,7 @@ function _initAutoLoad() {
 		$router->addRoute("idejos_new",new Zend_Controller_Router_Route("/idejos/naujausios/:page",array("module"=>"default","controller" => "idea","action" => "list_new","page"=>0)));
 		$router->addRoute("idejos_top",new Zend_Controller_Router_Route("/idejos/populiariausios/:page",array("module"=>"default","controller" => "idea","action" => "list_top","page"=>0)));
 		$router->addRoute("idejos_finished",new Zend_Controller_Router_Route("/idejos/igyvendintos/:page",array("module"=>"default","controller" => "idea","action" => "list_finished","page"=>0)));
+		$router->addRoute("idejos_rejected",new Zend_Controller_Router_Route("/idejos/atmestos/:page",array("module"=>"default","controller" => "idea","action" => "list_rejected","page"=>0)));
 		$router->addRoute("idejos_view",new Zend_Controller_Router_Route("/ideja/:idea",array("module"=>"default","controller" => "idea","action" => "view", "idea" => 0)));
 		$router->addRoute("idejos_create",new Zend_Controller_Router_Route("/idejos/nauja",array("module"=>"default","controller" => "idea","action" => "create")));
 		$router->addRoute("idejos_comments",new Zend_Controller_Router_Route("/idejos/komentarai",array("module"=>"default","controller" => "idea","action" => "comments")));

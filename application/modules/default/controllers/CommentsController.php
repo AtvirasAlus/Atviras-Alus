@@ -108,7 +108,9 @@ class CommentsController extends Zend_Controller_Action {
 				if (isset($_POST["idea"])) {
 					$db->delete("idea_comments", array("comment_id = " . $_POST['comment_id']));
 				} else {
+                                        
 					$db->delete("beer_recipes_comments", array("comment_id = " . $_POST['comment_id']));
+                                        Entities_Events::trigger("delete_recipe_comment", array("comment_id" => $_POST['comment_id']));
 				}
 			}
 		} else {

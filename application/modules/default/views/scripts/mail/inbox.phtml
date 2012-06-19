@@ -50,17 +50,15 @@
 	<? if ($total == 0) { ?>
 		<div style="margin: 20px; font-size: 14px;">Žinučių nėra</div>
 	<? } ?>
-	<div style="margin-top: 10px; text-align: right">
+	<div style="margin-top: 10px; text-align: right;">
+		<input type="button" id="markAsReadButton" value="Pažymėti kaip skaitytus" class="ui-button" />
 		<input type="button" id="deleteButton" value="Trinti pažymėtas žinutes" class="ui-button" />
-	<div>
-		<?php
-		echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');
-		?>
+		<div style="margin-top: 10px;">
+			<?php
+			echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');
+			?>
+		</div>
 	</div>
-</div>
-
-<div class="ui-corner-all" style="background-color:#eeeeee;width:820;padding:10">
-</div>
 </div>
 
 <script>
@@ -68,13 +66,25 @@
 		$('#deleteButton').click(function() {
 			if (($('input[name="mail_id[]"]:checked').length>0)) {
 				if (confirm("Pasirinkti laiškai bus ištrinti!")) {
-					$("#inboxForm")[0].submit();
+					$("#inboxForm").submit();
 				}
+			} else {
+				alert("Nepažymėjote nei vienos žinutės");
+			}
+		});
+		$('#markAsReadButton').click(function() {
+			if (($('input[name="mail_id[]"]:checked').length>0)) {
+				if (confirm("Pasirinkti laiškai bus pažymėti kaip perskaityti!")) {
+					$("#inboxForm").attr("action", "/mail/markasread");
+					$("#inboxForm").submit();
+				}
+			} else {
+				alert("Nepažymėjote nei vienos žinutės");
 			}
 		});
 	})
-        function checkAll(val) {
-                 $('input[name="mail_id[]"]').attr('checked', val);
+	function checkAll(val) {
+		$('input[name="mail_id[]"]').attr('checked', val);
         
-        }
+	}
 </script>

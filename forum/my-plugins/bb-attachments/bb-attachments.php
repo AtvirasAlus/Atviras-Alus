@@ -27,11 +27,11 @@ $bb_attachments['allowed']['mime_types']['default']=array('text/plain', 'image/j
 $bb_attachments['allowed']['mime_types']['moderate']=array('text/plain', 'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'application/pdf', 'application/x-pdf', 'application/zip', 'application/x-zip' , 'application/x-gzip');
 $bb_attachments['allowed']['mime_types']['administrate']=array('application/octet-stream', 'text/plain', 'text/x-c', 'image/bmp', 'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'application/pdf', 'application/x-pdf', 'application/zip', 'application/x-zip' , 'application/x-gzip');
 
-$bb_attachments['max']['size']['default']=300*1024;	   // general max for all type/roles, in bytes (ie. 100k)
-$bb_attachments['max']['size']['jpg'] =150*1024;	   	   // size limit override by extension, bytes (ie. 200k)
-$bb_attachments['max']['size']['png']=150*1024;		   // size limit override by extension, bytes (ie. 200k)
-$bb_attachments['max']['size']['moderate']=200*1024;	   // size limit override by role, bytes (ie. 250k) - note this overrides ALL extension limits
-$bb_attachments['max']['size']['administrate']=500*1024; // size limit override by role, bytes (ie. 500k) - note this overrides ALL extension limits
+$bb_attachments['max']['size']['default']=2*1024*1024;	   // general max for all type/roles, in bytes (ie. 100k)
+$bb_attachments['max']['size']['jpg'] =2*1024*1024;	   	   // size limit override by extension, bytes (ie. 200k)
+$bb_attachments['max']['size']['png']=2*1024*1024;		   // size limit override by extension, bytes (ie. 200k)
+$bb_attachments['max']['size']['moderate']=2*1024*1024;	   // size limit override by role, bytes (ie. 250k) - note this overrides ALL extension limits
+$bb_attachments['max']['size']['administrate']=2*1024*1024; // size limit override by role, bytes (ie. 500k) - note this overrides ALL extension limits
 
 $bb_attachments['max']['per_post']['default']=6;		// how many files can be attached per post
 $bb_attachments['max']['per_post']['moderate']=10;	// override example$bb_attachments['max']['per_post']['administrate']=20;	// you don't even need to set for every role, this is just an example

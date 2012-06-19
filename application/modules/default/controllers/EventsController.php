@@ -135,7 +135,7 @@ class EventsController extends Zend_Controller_Action {
                     ->where("users_groups.user_id = ?", $this->user->user_id)
                     ->where("users_groups.user_status= ?", "admin");
         } else {
-            $groups[] = array("group_name" => "", "group_description" => "Renginys nepriskiriamas grupÄ—ms", "group_id" => 0);
+            $groups[] = array("group_name" => "", "group_description" => "Renginys nepriskiriamas grupëms", "group_id" => 0);
         }
         if ($rows = $this->db->fetchAll($select)) {
             $groups = array_merge($groups, $rows);

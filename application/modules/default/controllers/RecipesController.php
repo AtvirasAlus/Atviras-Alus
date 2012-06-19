@@ -314,6 +314,7 @@ class RecipesController extends Zend_Controller_Action {
 
 						break;
 				}
+                                Entities_Events::trigger("vote_recipe", array("recipe_id" => $_POST['id']));
 				print Zend_Json::encode(array("status" => 0, "data" => array("votes" => $this->getVotes($_POST['id']))));
 			}
 		} else {
