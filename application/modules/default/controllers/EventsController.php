@@ -135,7 +135,7 @@ class EventsController extends Zend_Controller_Action {
                     ->where("users_groups.user_id = ?", $this->user->user_id)
                     ->where("users_groups.user_status= ?", "admin");
         } else {
-            $groups[] = array("group_name" => "", "group_description" => "Renginys nepriskiriamas grupëms", "group_id" => 0);
+            $groups[] = array("group_name" => "", "group_description" => "Renginys nepriskiriamas grupÄ—ms", "group_id" => 0);
         }
         if ($rows = $this->db->fetchAll($select)) {
             $groups = array_merge($groups, $rows);
@@ -255,7 +255,8 @@ class EventsController extends Zend_Controller_Action {
                                         "event_description" => $_POST['event_description'],
                                         "event_start" => $_POST['event_start'],
                                         "event_published" => isset($_POST['event_published']) ? 1 : 0,
-                                        "event_registration_end" => $_POST['event_registration_end']
+                                        "event_registration_end" => $_POST['event_registration_end'],
+                                        "event_posted" => date("Y-m-d H:i:s")
                                             ), $where);
 
                                     $where = array();
@@ -309,7 +310,8 @@ class EventsController extends Zend_Controller_Action {
                                     "event_description" => $_POST['event_description'],
                                     "event_start" => $_POST['event_start'],
                                     "event_published" => isset($_POST['event_published']) ? 1 : 0,
-                                    "event_registration_end" => $_POST['event_registration_end']
+                                    "event_registration_end" => $_POST['event_registration_end'],
+                                    "event_posted" => date("Y-m-d H:i:s")
                                 ));
                                 $ev_id = $this->db->lastInsertId();
 
