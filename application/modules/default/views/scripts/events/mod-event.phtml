@@ -14,90 +14,89 @@
 </script>
 <div class="inner_container">			
 
-    <? if (isset($this->event)) { ?>
-        <form action="/events/mod-event/?event_id=<?=$this->event['event_id'];?>" method="post" target="_self" name="__eventForm" id="__eventForm" enctype="multipart/form-data">
-            <div id="brewer_session_container" class="brewsession_edit">
-                <dl>
-                    <dt>Antraštė <span>*</span></dt>
-                    <dd>
-                        <input type="text" name="event_name" id="event_name" value="<?= addslashes($this->event['event_name']); ?>"></dd>
-                    <div class="clear"></div>
-                </dl>
-                <dl>
-                    <dt>Santrauka <span>*</span></dt>
-                    <dd>
-                        <textarea name="event_resume" id="event_resume" rows="24" cols="80"><?= $this->event['event_resume']; ?></textarea></dd>
-                    <div class="clear"></div>
-                </dl>
-                <dl>
-                    <dt>Detalus aprašymas</dt>
-                    <dd class="large">
-                        <textarea name="event_description" id="event_description" rows="24" cols="80"><?= $this->event['event_description']; ?></textarea></dd>
-                    <div class="clear"></div>
-                </dl>
-                 <dl>
-                <dt>Įvykį skelbti grupėje:</dt>
-            </dl>
-            <dd>
-         
-        <select name="group_id" id="group_id" >
-            <?
-            foreach ($this->groups as $group) {
-                $selected="";
-                if ($this->event["group_id"]==$group["group_id"]) {
-                    $selected='selected=\'selected\'';
-                }
-             ?>
-            <option value="<?=$group["group_id"];?>" <?=$selected;?>><?=$group["group_description"];?></option>
-            <?
-            }
-            ?>
-            
-        </select>  
-            </dd>
-                <dl>
-                    <dt>Įvykio pradžia <span>*</span></dt>
-                    <dd>
-                        <?
-                        $dateTime = new DateTime($this->event['event_start']);
-                        $event_start = $dateTime->format('Y-m-d H:i');
-                        $dateTime = new DateTime($this->event['event_registration_end']);
-                        $event_registration_end = $dateTime->format('Y-m-d H:i');
-                        $event_published = $this->event["event_published"] == '1' ? 'checked' :  '';
-                        ?>
-                        <input type="text" name="event_start" id="event_start" value="<?= $event_start; ?>"></dd>
-                    <div class="clear"></div>
-                </dl>
-                <dl>
-                    <dt>Skelbimą rodyti iki <span>*</span></dt>
-                    <dd>
-                        <input type="text" name="event_registration_end" id="event_registration_end" value="<?= $event_registration_end; ?>"></dd>
-                    <div class="clear"></div>
-                </dl>
-              <dl>
-                    <dt>Įvykis paskelbtas </dt>
-                    <dd>
-    <input type="checkbox" name="event_published" id="event_published" <?=$event_published;?>></dd>
-                    <div class="clear"></div>
-            </dl>
-                <dl>
-                    <dt>&nbsp;</dt>
-                    <dd>
+	<? if (isset($this->event)) { ?>
+		<form action="/events/mod-event/?event_id=<?= $this->event['event_id']; ?>" method="post" target="_self" name="__eventForm" id="__eventForm" enctype="multipart/form-data">
+			<div id="brewer_session_container" class="brewsession_edit">
+				<dl>
+					<dt>Antraštė: <span>*</span></dt>
+					<dd>
+						<input type="text" name="event_name" id="event_name" value="<?= addslashes($this->event['event_name']); ?>"></dd>
+					<div class="clear"></div>
+				</dl>
+				<dl>
+					<dt>Santrauka: <span>*</span></dt>
+					<dd>
+						<textarea name="event_resume" id="event_resume" rows="24" cols="80"><?= $this->event['event_resume']; ?></textarea></dd>
+					<div class="clear"></div>
+				</dl>
+				<dl>
+					<dt>Detalus aprašymas:</dt>
+					<dd class="large">
+						<textarea name="event_description" id="event_description" rows="24" cols="80"><?= $this->event['event_description']; ?></textarea></dd>
+					<div class="clear"></div>
+				</dl>
+				<dl>
+	                <dt>Įvykį skelbti grupėje:</dt>
+					<dd>
 
-                        <input type="submit" name="attributes_action" id="attributes_action" value="Saugoti" type="submit" class="ui-button"></dd>
-                    <dd>
+						<select name="group_id" id="group_id" >
+							<?
+							foreach ($this->groups as $group) {
+								$selected = "";
+								if ($this->event["group_id"] == $group["group_id"]) {
+									$selected = 'selected=\'selected\'';
+								}
+								?>
+								<option value="<?= $group["group_id"]; ?>" <?= $selected; ?>><?= $group["group_description"]; ?></option>
+								<?
+							}
+							?>
 
-                        <input type="submit"  id="attributes_action" value="Trinti" type="submit" class="ui-button"></dd>
-                    <div class="clear"></div>
-                </dl>
-    
-            
+						</select>  
+					</dd>
+					<div class="clear"></div>
+	            </dl>
+				<dl>
+					<dt>Įvykio pradžia: <span>*</span></dt>
+					<dd>
+						<?
+						$dateTime = new DateTime($this->event['event_start']);
+						$event_start = $dateTime->format('Y-m-d H:i');
+						$dateTime = new DateTime($this->event['event_registration_end']);
+						$event_registration_end = $dateTime->format('Y-m-d H:i');
+						$event_published = $this->event["event_published"] == '1' ? 'checked' : '';
+						?>
+						<input type="text" name="event_start" id="event_start" value="<?= $event_start; ?>"></dd>
+					<div class="clear"></div>
+				</dl>
+				<dl>
+					<dt>Skelbimą rodyti iki: <span>*</span></dt>
+					<dd>
+						<input type="text" name="event_registration_end" id="event_registration_end" value="<?= $event_registration_end; ?>"></dd>
+					<div class="clear"></div>
+				</dl>
+				<dl>
+					<dt>Įvykis paskelbtas: </dt>
+					<dd>
+						<input type="checkbox" name="event_published" id="event_published" <?= $event_published; ?>></dd>
+					<div class="clear"></div>
+	            </dl>
+				<dl>
+					<dt>&nbsp;</dt>
+					<dd>
+						<input type="submit" name="attributes_action" id="attributes_action" value="Saugoti" type="submit" class="ui-button">
+						<input type="submit" id="attributes_action" value="Trinti" type="submit" class="ui-button">
+					</dd>
+					<div class="clear"></div>
+				</dl>
 
-                <input type="hidden" name="action" value="MOD" id="action">
-            </div>
-        </form>
-    <? } else { ?>
-        <div>Įvykis nerastas arba jūs neturite teisės redaguoti šio įvykio.</div>
-    <? } ?>
+
+
+				<input type="hidden" name="action" value="MOD" id="action">
+			</div>
+		</form>
+	<? } else { ?>
+		<div>Įvykis nerastas arba jūs neturite teisės redaguoti šio įvykio.</div>
+	<? } ?>
 
 </div>

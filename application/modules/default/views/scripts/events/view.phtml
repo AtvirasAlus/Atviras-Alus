@@ -4,30 +4,28 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 ?>
 <div id="events_container" class="inner_container">
 	<div class="inner_header"><?= $this->event['event_name']; ?>
-          
-        
-        </div>
+
+
+	</div>
 	<div>
 		<div class="event_i_date">
 			Data: <span><?= $this->event['event_start']; ?></span>
 		</div>
-                <?if (isset($this->event_group)) {?>
-            <div> Renginio grupė: <?=$this->event_group['group_description'];?></div>
-                <?}?>
+		<? if (isset($this->event_group)) { ?>
+			<div> Renginio grupė: <?= $this->event_group['group_description']; ?></div>
+		<? } ?>
 		<div style="margin-bottom: 20px;">
 			<?= $this->event['event_description']; ?>
 		</div>
-            <? if ($this->editable) {?>
-                  <div class="usergroup_actions">
-                 
-                
-                    <a href="/events/mod-event?event_id=<?=$this->event['event_id'];?>" rel="nofollow">
-                            Redaguoti įvykį
-                    </a>
-          </div>
-             <?}?>
-		<?php 
-		if ($this->event['event_type'] == 'competition') { 
+		<? if ($this->editable) { ?>
+			<div class="usergroup_actions">
+				<a href="/events/mod-event?event_id=<?= $this->event['event_id']; ?>" rel="nofollow">
+					Redaguoti įvykį
+				</a>
+			</div>
+		<? } ?>
+		<?php
+		if ($this->event['event_type'] == 'competition') {
 			$evInfo = $this->eventInfo();
 			echo $evInfo->showCompetitionDetails($this->event['event_id'], "Ketegorijoms registruoti alūs");
 		}
@@ -36,30 +34,30 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 				?>
 				Norint prisiregistruoti reikia prisijungti prie sistemos
 				<?
-			break;
+				break;
 			case 1:
 				?>
 				<span id="preloader_place"></span>
 				<input type="button" id='register_to_event' style="display:block;" value="Dalyvausiu" class="ui-button" />
 				<input type="button" id='register_out_event' style="display:none;" value="Nedalyvausiu" class="ui-button" />
 				<?
-			break;
+				break;
 			case 2:
 				?>
 				<span id="preloader_place"></span>
 				<input type="button" id='register_to_event' style="display:none;" value="Dalyvausiu" class="ui-button" />
 				<input type="button" id='register_out_event' style="display:block;" value="Nedalyvausiu" class="ui-button" />
 				<?
-			break;
+				break;
 		}
 		?>
 	</div>
-        
+
 </div>
 <?
 if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
 	?>
-	<div id="entries_container" class="inner_container" style="<?=($this->registration_status != 2) ? "display: none;" : "";?>">
+	<div id="entries_container" class="inner_container" style="<?= ($this->registration_status != 2) ? "display: none;" : ""; ?>">
 		<div class="inner_header">Mano receptai</div>
 		<div style="margin-bottom: 20px; margin-left: 10px;">
 			Pažymėkite receptus kuriuos norite pateikti konkursui
@@ -67,14 +65,14 @@ if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
 		<div class="selectable_recipes">
 			<?php
 			$z = 0;
-			foreach($this->beer_recipes as $key => $value){
+			foreach ($this->beer_recipes as $key => $value) {
 				$z++;
 				?>
-				<div class="style_recipe <?=(!empty($value['event_id'])) ? "recipe_selected" : "" ;?>" data-recipe="<?=$value['recipe_id']?>" data-style="<?=$value['style_id']?>" data-eventuser="<?=$this->user_id;?>" data-event="<?=$this->event['event_id'];?>">
-					<?php echo $this->recipeItem($value,"large", array('without_brewer' => true, 'without_awards' => true, 'plain' => true)); ?>
+				<div class="style_recipe <?= (!empty($value['event_id'])) ? "recipe_selected" : ""; ?>" data-recipe="<?= $value['recipe_id'] ?>" data-style="<?= $value['style_id'] ?>" data-eventuser="<?= $this->user_id; ?>" data-event="<?= $this->event['event_id']; ?>">
+					<?php echo $this->recipeItem($value, "large", array('without_brewer' => true, 'without_awards' => true, 'plain' => true)); ?>
 				</div>
 				<?php
-				if ($z == 3){
+				if ($z == 3) {
 					$z = 0;
 					?>
 					<div class="clear"></div>
@@ -83,7 +81,7 @@ if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
 			}
 			?>
 			<div class="clear"></div>
-                       
+
 		</div>
 	</div>
 	<?php
@@ -102,7 +100,7 @@ if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
 				<span><?= $this->registered_users[$ii]['user_name']; ?></span>
 			</a>
 			<?
-			if ($z == 8){
+			if ($z == 8) {
 				$z = 0;
 				?>
 				<div class="clear"></div>
@@ -112,7 +110,7 @@ if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
 		?>		
 		<div class="clear"></div>
 	</div>
-        
+
 
 </div>
 
