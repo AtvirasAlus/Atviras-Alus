@@ -177,7 +177,8 @@ class IdeaController extends Zend_Controller_Action {
 				->from("idea_items")
 				->join("users", "users.user_id=idea_items.user_id", array("user_name", "user_email"))
 				->joinLeft("idea_votes", "idea_votes.idea_id=idea_items.idea_id AND idea_votes.user_id='" . $me . "'", array("vote_value"))
-				->joinLeft("VIEW_idea_comments_total", "VIEW_idea_comments_total.idea_id=idea_items.idea_id", array("total as comments"));
+				->joinLeft("idea_comments", "idea_comments.idea_id=idea_items.idea_id", array("COUNT(idea_comments.idea_id) as comments"))
+				->group("idea_items.idea_id");
 		if ($type == "finished") {
 			$select->where("idea_items.idea_status = ?", "1");
 			$select->order("idea_items.idea_finishdate DESC");
