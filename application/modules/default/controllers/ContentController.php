@@ -29,7 +29,8 @@ class ContentController extends Zend_Controller_Action {
 			$db = Zend_Registry::get("db");
 			$select = $db->select()
 					->from("beer_articles")
-					->joinLeft("VIEW_article_comments_total", "VIEW_article_comments_total.article_id=beer_articles.article_id", array("total"))
+					->joinLeft("beer_articles_comments", "beer_articles_comments.comment_article=beer_articles.article_id", array("COUNT(comment_id) AS total"))
+					->group("beer_articles.article_id")
 					->where("article_cat =?", $cat_page[0])
 					->where("article_publish =?", '1')
 					->order("article_modified DESC");

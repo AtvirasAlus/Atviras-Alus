@@ -314,6 +314,7 @@ class RecipesController extends Zend_Controller_Action {
 
 						break;
 				}
+                                Entities_Events::trigger("vote_recipe", array("recipe_id" => $_POST['id']));
 				print Zend_Json::encode(array("status" => 0, "data" => array("votes" => $this->getVotes($_POST['id']))));
 			}
 		} else {
@@ -377,6 +378,7 @@ class RecipesController extends Zend_Controller_Action {
 						$db->delete("beer_recipes_yeast", "recipe_id = " . $r['recipe_id']);
 						$db->delete("beer_recipes_comments", "comment_recipe = " . $r['recipe_id']);
 						$db->delete("beer_recipes_favorites", "recipe_id = " . $r['recipe_id']);
+						$db->delete("cache_fav_recipes", "recipe_id = " . $r['recipe_id']);
 						print Zend_Json::encode(array("status" => 0));
 						return;
 					} else {

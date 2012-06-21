@@ -39,30 +39,6 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 			</div>
 		</div>
 		
-		<!-- ĮVYKIAI -->
-		<?php
-		if (count($this->events) > 0): 
-		?>
-			<div class="index_block index_events">
-				<div class="block_header">Įvykiai:</div>
-				<div class="block_content">
-					<?php
-					foreach ($this->events as $event):
-					?>
-						<div>
-							<a href="/ivykis/<?=$event['event_id']; ?>-<?=$this->urlMaker($event['event_name']); ?>">
-								<?=$event['event_name']; ?>
-							</a> - <i><?=$event['event_start']; ?></i>
-						</div>
-					<?php
-					endforeach;
-					?>
-				</div>
-			</div>
-		<?php
-		endif;
-		?>
-		
 		<!-- BURBULIATORIUS -->
 		<div class="index_block index_tweet">
 			<div class="block_header">Burbuliatorius:</div>
@@ -174,7 +150,38 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 
 	</div>
 	<div id="index_right">
+		<div class="index_block index_stats">
+			<div class="block_header">Guobalynas 2012</div>
+			<div class="block_content">
+				Šių metų <b>liepos 14-15</b> dienomis organizuojamas jau tradicija tapęs renginys - <b>Guobalynas 2012</b>. Renginys skirtas naminio alaus gamintojams ir jų draugams.<br /><br />
+				<a href="/ivykis/25-Guobalynas+2012">Skaityti plačiau...</a>
+			</div>
+		</div>
 		
+		<!-- ĮVYKIAI -->
+		<?php
+		if (count($this->events) > 0): 
+		?>
+			<div class="index_block index_events">
+				<div class="block_header">Įvykiai:</div>
+				<div class="block_content">
+					<?php
+					foreach ($this->events as $event):
+					?>
+						<div>
+							<a href="/ivykis/<?=$event['event_id']; ?>-<?=$this->urlMaker($event['event_name']); ?>">
+								<?=$event['event_name']; ?>
+							</a> - <i><?=$event['event_start']; ?></i>
+						</div>
+					<?php
+					endforeach;
+					?>
+				</div>
+			</div>
+		<?php
+		endif;
+		?>
+
 		<!-- ALUDARIAI -->
 		<div class="index_block index_stats">
 			<div class="block_header">Aludariai:</div>

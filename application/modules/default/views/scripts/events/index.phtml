@@ -4,6 +4,11 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 ?>
 <div id="events_container" class="inner_container">
 	<div class="inner_header">Įvykiai</div>
+	<?php if ($this->editable) : ?>
+		<div class="events_tools">
+			<a href="/events/create-event">Sukurti įvykį</a>
+		</div>
+	<?php endif;?>
 	<div class="event_list_container">
 		<?
 		$z = 0;

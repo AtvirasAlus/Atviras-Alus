@@ -108,38 +108,48 @@ class IndexController extends Zend_Controller_Action {
 		$this->view->brew_session = $db->fetchAll($select);
 
 
-		//
 		$select = $db->select()
-				->from('VIEW_brew_total', array("beer_total" => "SUM(sum)", "brewers_total" => "COUNT(sum)"));
+				->from("beer_brew_sessions", array("SUM(beer_brew_sessions.session_size) AS beer_total", "COUNT(DISTINCT(beer_brew_sessions.session_brewer)) AS brewers_total"))
+				->where("beer_brew_sessions.session_primarydate >= (curdate() - interval 30 day)");
 		$this->view->total_brewed = $db->fetchRow($select);
-		//
+
 		$select = $db->select()
 				->from('cache_fav_recipes')
 				->join("users", "users.user_id=cache_fav_recipes.brewer_id", array("user_name"))
 				->limit(5)
 				->order("total DESC");
 		$this->view->fav_recipes = $db->fetchAll($select);
+
 		$select = $db->select()
 				->from("beer_articles")
-				->joinLeft("VIEW_article_comments_total", "VIEW_article_comments_total.article_id=beer_articles.article_id", array("total"))
+				->joinLeft("beer_articles_comments", "beer_articles_comments.comment_article=beer_articles.article_id", array("COUNT(comment_id) as total"))
+				->group("beer_articles.article_id")
 				->where("article_cat =?", 1)
 				->where("article_publish =?", '1')
 				->order("article_modified DESC")
 				->limit(5);
 		$this->view->articles = $db->fetchAll($select);
+		
 		$select = $db->select()
-				->from("VIEW_bblast_posts")
+				->from("bb_posts", array("post_id", "forum_id", "topic_id", "poster_id", "post_text", "post_time", "poster_ip", "post_status", "post_position"))
+				->join("bb_topics", "bb_topics.topic_id = bb_posts.topic_id", array("topic_title"))
+				->join("users", "bb_posts.poster_id = users.user_id", array("user_name", "MD5(user_email) AS email_hash"))
+				->where("bb_posts.post_status = 0")
+				->order("bb_posts.post_time DESC")
 				->limit(7);
 		;
 		$this->view->posts = $db->fetchAll($select);
 		if ($this->view->blogs = $cache->load('blog_latest')) {
 			
 		} else {
-			$select = $db->select()
-					->from("VIEW_blog_latest")
-					->join("users", "users.user_id=VIEW_blog_latest.post_author", array("user_name"))
-					->order("post_date DESC")
-					->limit(7);
+			$blog_ids = array(20, 19, 16, 18, 17, 15, 7, 11, 10, 8, 9, 2, 3, 4, 5, 6);
+			foreach($blog_ids as $blog_id){
+				$select_ar[$blog_id] = $db->select()
+						->from("wp_".$blog_id."_posts", array("post_date", "post_modified", "ID", "post_author", "post_title", "comment_count", "guid", "post_content"))
+						->join("users", "users.user_id=wp_".$blog_id."_posts.post_author", array("user_name"))
+						->where("wp_".$blog_id."_posts.post_status = 'publish' AND wp_".$blog_id."_posts.post_type = 'post'");
+			}
+			$select = $db->select()->union($select_ar)->order("post_date DESC")->limit(5);
 			$this->view->blogs = $db->fetchAll($select);
 			$cache->save($this->view->blogs, 'blog_latest');
 		}
@@ -202,11 +212,14 @@ class IndexController extends Zend_Controller_Action {
 			}
 		}
 		if (!isset($_GET['articles_only'])) {
-			$select = $db->select()
-					->from("VIEW_blog_latest")
-					->join("users", "users.user_id=VIEW_blog_latest.post_author", array("user_name"))
-					->order("post_date DESC")
-					->limit(10);
+			$blog_ids = array(20, 19, 16, 18, 17, 15, 7, 11, 10, 8, 9, 2, 3, 4, 5, 6);
+			foreach($blog_ids as $blog_id){
+				$select_ar[$blog_id] = $db->select()
+						->from("wp_".$blog_id."_posts", array("post_date", "post_modified", "ID", "post_author", "post_title", "comment_count", "guid", "post_content"))
+						->join("users", "users.user_id=wp_".$blog_id."_posts.post_author", array("user_name"))
+						->where("wp_".$blog_id."_posts.post_status = 'publish' AND wp_".$blog_id."_posts.post_type = 'post'");
+			}
+			$select = $db->select()->union($select_ar)->order("post_date DESC")->limit(5);
 			$blogs = $db->fetchAll($select);
 			for ($i = 0; $i < count($blogs); $i++) {
 				$entry = $feed->createEntry();

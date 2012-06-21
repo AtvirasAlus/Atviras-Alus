@@ -1,68 +1,106 @@
-<? $this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");?>
-<? $this->headScript()->appendFile("/public/js/ui.datepicker-lt.js");?>
-<? $this->headScript()->appendFile("/public/ui/ui/jquery-ui-timepicker-addon.js");?>
+<? $this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js"); ?>
+<? $this->headScript()->appendFile("/public/js/ui.datepicker-lt.js"); ?>
+<? $this->headScript()->appendFile("/public/ui/ui/jquery-ui-timepicker-addon.js"); ?>
 <script>
-				$(function() {
-					$( "#event_start" ).datetimepicker();
-					$( "#event_start" ).datetimepicker( "option", "dateFormat", "yy-mm-dd");
-                                        $( "#event_start" ).datetimepicker( "option", "timeFormat: 'hh:mm:ss:l'");
-                                        $( "#event_registration_end" ).datetimepicker();
-					$( "#event_registration_end" ).datetimepicker( "option", "dateFormat", "yy-mm-dd");
-                                        $( "#event_registration_end" ).datetimepicker( "option", "timeFormat: 'hh:mm:ss:l'");
-				});
-			</script>
-			
-<div id="brewer_session_container" class="inner_container">
-<form action="/groups/create-event" method="post" target="_self" name="__eventForm" id="__eventForm" enctype="multipart/form-data">
-	<dl>
-		<dt>Antraštė <span>*</span></dt>
-		<dd>
-<input type="text" name="event_name" id="event_name" value=""></dd>
-		<div class="clear"></div>
-	</dl>
-	<dl>
-		<dt>Santrauka <span>*</span></dt>
-		<dd>
-<textarea name="event_resume" id="event_resume" rows="24" cols="80"></textarea></dd>
-		<div class="clear"></div>
-	</dl>
-	<dl>
-		<dt>Detalus aprašymas</dt>
-		<dd class="large">
-<textarea name="event_description" id="event_description" rows="24" cols="80"></textarea></dd>
-		<div class="clear"></div>
-	</dl>
-	<dl>
-		<dt>Įvykio pradžia <span>*</span></dt>
-		<dd>
-<input type="text" name="event_start" id="event_start" value=""></dd>
-		<div class="clear"></div>
-	</dl>
-         <dl>
-		<dt>Skelbimą rodyti iki <span>*</span></dt>
-		<dd>
-<input type="text" name="event_registration_end" id="event_registration_end" value=""></dd>
-		<div class="clear"></div>
-	</dl>
-	<dl>
-		<dt>&nbsp;</dt>
-		<dd>
-                
-<input type="submit" name="attributes_action" id="attributes_action" value="Saugoti" type="submit" class="ui-button"></dd>
-		<div class="clear"></div>
-	</dl>
-    <? 
-     $group_id = 0;
-    if (isset($_POST['group_id'])) {
-    $group_id=$_GET['group_id'];
-    if (is_numeric($group_id) && $group_id>0) {
-        $group_id = intval($group_id);
-    }else{
-        $group_id = 0;
-    }
-    }?>
-        <input type="hidden" name="group_id" value="<?= $group_id ;?>" id="group_id">
-    
-        <input type="hidden" name="action" value="ADD" id="action">
-</form>
+	$(function() {
+		$( "#event_start" ).datetimepicker();
+		$( "#event_start" ).datetimepicker( "option", "dateFormat", "yy-mm-dd");
+		$( "#event_start" ).datetimepicker( "option", "timeFormat: 'hh:mm:ss:l'");
+		$( "#event_registration_end" ).datetimepicker();
+		$( "#event_registration_end" ).datetimepicker( "option", "dateFormat", "yy-mm-dd");
+		$( "#event_registration_end" ).datetimepicker( "option", "timeFormat: 'hh:mm:ss:l'");
+	});
+</script>
+<div class="inner_container">		
+
+
+	<? if ($this->editable) { ?>
+	    <form action="/events/create-event" method="post" target="_self" name="__eventForm" id="__eventForm" enctype="multipart/form-data">
+	        <div id="brewer_session_container" class="brewsession_edit">
+	            <dl>
+					<dt>Antraštė: <span>*</span></dt>
+					<dd>
+						<input type="text" name="event_name" id="event_name" value="">
+					</dd>
+					<div class="clear"></div>
+	            </dl>
+	            <dl>
+					<dt>Santrauka: <span>*</span></dt>
+					<dd>
+						<textarea name="event_resume" id="event_resume" rows="24" cols="80"></textarea>
+					</dd>
+					<div class="clear"></div>
+	            </dl>
+	            <dl>
+					<dt>Detalus aprašymas:</dt>
+					<dd class="large">
+						<textarea name="event_description" id="event_description" rows="24" cols="80"></textarea>
+					</dd>
+					<div class="clear"></div>
+	            </dl>
+	            <dl>
+	                <dt>Įvykį skelbti grupėje:</dt>
+					<dd>
+						<?
+						$group_id = 0;
+						if (isset($_POST['group_id'])) {
+							$group_id = $_GET['group_id'];
+							if (is_numeric($group_id) && $group_id > 0) {
+								$group_id = intval($group_id);
+							} else {
+								$group_id = 0;
+							}
+						}
+						?>
+						<select name="group_id" id="group_id" >
+							<?
+							foreach ($this->groups as $group) {
+								$selected = "";
+								if ($group_id == $group["group_id"]) {
+									$select = "selected";
+								}
+								?>
+								<option value="<?= $group["group_id"]; ?>" <?= $selected; ?>><?= $group["group_description"]; ?></option>
+								<?
+							}
+							?>
+
+						</select>  
+					</dd>
+					<div class="clear"></div>
+	            </dl>
+	            <dl>
+					<dt>Įvykio pradžia: <span>*</span></dt>
+					<dd>
+						<input type="text" name="event_start" id="event_start" value="">
+					</dd>
+					<div class="clear"></div>
+	            </dl>
+	            <dl>
+					<dt>Skelbimą rodyti iki: <span>*</span></dt>
+					<dd>
+						<input type="text" name="event_registration_end" id="event_registration_end" value="">
+					</dd>
+					<div class="clear"></div>
+	            </dl>
+				<dl>
+					<dt>Įvykis paskelbtas: </dt>
+					<dd>
+						<input type="checkbox" name="event_published" id="event_published" >
+					</dd>
+					<div class="clear"></div>
+	            </dl>
+	            <dl>
+					<dt>&nbsp;</dt>
+					<dd>
+						<input type="submit" name="attributes_action" id="attributes_action" value="Saugoti" type="submit" class="ui-button">
+					</dd>
+					<div class="clear"></div>
+	            </dl>
+	            <input type="hidden" name="action" value="ADD" id="action">
+			</div>
+	    </form>
+	<? } else { ?>
+		Neturite teisių sukurti įvykio.
+	<? } ?>
 </div>
