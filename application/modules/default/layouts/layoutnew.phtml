@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="lt" lang="lt">
+	<head>
+		<meta name="description" content="Atviras alus - naminio alaus aludarių bendruomenė. Alaus receptai. Stiliaus aprašymai. Alaus skaičiuoklė" />
+		<meta name="alexaVerifyID" content="flj8CxyyfEenq5UbyH5vpBlz7DA" />
+		<meta name="y_key" content="9421766f5e8b266a" />
+		<meta name="google-site-verification" content="Q15UyxPCIq_du9gHO4mr1INQh_KzSx8YaB6XytiaO4M" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="/public/ui/ui/jquery-ui-1.8.7.custom.js"></script>
+		<?=$this->headTitle()->prepend('Atviras alus ');?>
+		<?=$this->headTitle();?>
+		<?=$this->headMeta();?>
+		<?=$this->headLink();?>
+		<?=$this->headStyle();?>
+		<link type="text/css" href="/public/css/pepper-grinder/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
+		<link type="text/css" href="/public/css/style.css" rel="stylesheet" media="all" />
+		<link type="text/css" href="/public/css/stylenew.css" rel="stylesheet" media="all" />
+		<link type="text/css" href="/public/css/print.css" rel="stylesheet" media="print" />
+		<link href="/public/css/userScreen.css" media="screen, projection" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="/public/ui/ui/jquery.ui.widget.js"></script>
+		<script type="text/javascript" src="/public/ui/ui/jquery.ui.dialog.js"></script>
+		<script type="text/javascript" src="/public/ui/ui/jquery.ui.position.js"></script>
+		<script type="text/javascript" src="/public/js/website.js"></script>
+		<?= $this->headScript() ?>
+		<?  $front = Zend_Controller_Front::getInstance();?>
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+			{lang: 'lt'}
+		</script>
+	</head>
+	<body>
+		<div class="new_header">
+			<div class="new_header_contrainer">
+				<a href="/" class="new_logo" title="Atviras alus"></a>
+				<div class="new_proverb"><?=$this->fortune();?></div>
+				<div class="new_userinfo"><?=$this->loginScreen();?></div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="body_center">
+			<div id="main_container">
+				<div id="left">
+					<?php
+					$storage = new Zend_Auth_Storage_Session();
+					$user_info = $storage->read();
+					$user_id = isset($user_info->user_id) ? $user_info->user_id : 0;
+					?>
+					<div id="new_menu">
+						<ul id="new_topmenu">
+						<?php
+						$this->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigationNew.xml","nav")));
+						$pages = $this->navigation()->getPages();
+						foreach ($pages as $page):
+							if ($page->restrict == 0 || $user_id != 0){
+								if ($page->isActive(true)) {
+									$class = "active";
+								} else {
+									$class = "";
+								}
+								?>
+								<li>
+									<a href="<?=$page->getHref();?>" class="<?=$class?>">
+										<?=$page->label;?>
+									</a>
+									<?php
+									if ($page->isActive(true)) {
+										$subpages = $page->getPages();
+										if (sizeof($subpages) > 0){
+											?>
+											<ul>
+												<?php
+												foreach ($subpages as $subpage){
+													if ($subpage->restrict == 0 || $user_id != 0){
+														if ($subpage->isActive()) {
+															$subclass = "active";
+														} else {
+															$subclass = "";
+														}
+														if ($subpage->isVisible()){
+															?>
+															<li>
+																<a href="<?=$subpage->getHref();?>" class="<?=$subclass?>">
+																	<?=$subpage->label;?>
+																</a>
+															</li>
+															<?php
+														}
+													}
+												}
+												?>
+											</ul>
+											<?php
+										}
+									}
+									?>
+								</li>
+								<?php
+							}
+						endforeach;
+						?>
+						</ul>
+					</div>
+					<div class="banner">
+						<a href="http://tikrasalus.lt" target="_blank">
+							<img src="/public/images/TAD.png" width="120" border="0"/>
+						</a>
+					</div>
+					<div class="banner">
+						<a href="http://savasalus.lt" target="_blank">
+							<img src="/public/images/savasalus.jpg" width="120" border="0"/>
+						</a>
+					</div>
+					<div class="banner">
+						<a href="http://www.akl.lt" target="_blank">
+							<img src="/public/images/akl.jpg" width="120" border="0"/>
+						</a>
+					</div>
+				</div>
+				<div id="main_content">
+					<?=$this->layout()->content;?>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div id="bugreport_link"><input type="button" id="bugreport_button" class="ui-button" value="Praneškite apie svetainėje pastebėtas klaidas" /></div>
+		</div>
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-21270974-1']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+	</body>
+</html>
