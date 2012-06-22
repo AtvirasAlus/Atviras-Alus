@@ -34,6 +34,7 @@ class CronController extends Zend_Controller_Action {
 		
 	}
 	public function populateAction(){
+		set_time_limit(0);
 		$tpl = array();
 		$tpl['user_id'] = NULL;
 		$tpl['item_id'] = NULL;
