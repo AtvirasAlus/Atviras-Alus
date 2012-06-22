@@ -1,0 +1,39 @@
+<?php
+$page_num = ceil($item['forum_post_post_position'] / 30);
+if ($page_num < 2){
+	$page_num_str = "";
+} else {
+	$page_num_str = "&page=".$page_num;
+}
+?>
+<div class="new_block block_forum_post">
+	<div class="avatar">
+		<a href="/brewers/<?= $item['user_id']; ?>">
+			<img  src="http://www.gravatar.com/avatar/<?= $item['email_hash']; ?>?rating=G&size=50&default=mm" border="0"/>
+		</a>
+	</div>
+	<div class="post">
+		<div class="post_action">
+			<a href="/brewers/<?= $item['user_id']; ?>">
+				<?= $item["user_name"] ?>
+			</a>
+			parašė naują žinutę forumo temoje 
+			<a href="/forum/topic.php?id=<?= $item['forum_post_topic_id']; ?><?= $page_num_str; ?>#post-<?= $item['item_id']; ?>">
+				<?= $item["forum_post_topic_title"] ?>
+			</a>
+		</div>
+		<div class="post_content">
+			<?php
+			$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p")));
+			$f = new Entities_Filter_Excerpt();
+			?>
+			<a href="/forum/topic.php?id=<?= $item['forum_post_topic_id']; ?><?= $page_num_str; ?>#post-<?= $item['item_id']; ?>" style="color: #666">
+				<?=$f->filter($fhtml->filter($item['forum_post_post_text']), 30); ?>
+			</a>
+		</div>
+		<div class="post_stamp">
+			<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

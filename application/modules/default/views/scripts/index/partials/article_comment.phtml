@@ -1,0 +1,32 @@
+<div class="new_block block_forum_post">
+	<div class="avatar">
+		<a href="/brewers/<?= $item['user_id']; ?>">
+			<img  src="http://www.gravatar.com/avatar/<?= $item['email_hash']; ?>?rating=G&size=50&default=mm" border="0"/>
+		</a>
+	</div>
+	<div class="post">
+		<div class="post_action">
+			<a href="/brewers/<?= $item['user_id']; ?>">
+				<?= $item["user_name"] ?>
+			</a>
+			komentavo straipsnį 
+			<a href="/content/read/1/<?= $item['article_comment_comment_article']; ?>-<?= $this->urlMaker($item["article_comment_article_title"])?>">
+				<?= $item["article_comment_article_title"] ?>
+			</a>
+		</div>
+		<div class="post_content">
+			<?php
+			$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p")));
+			$f = new Entities_Filter_Excerpt();
+			$item['article_comment_comment_text'] = str_replace("\n", "<br />", $item['article_comment_comment_text']);
+			?>
+			<a href="/content/read/1/<?= $item['article_comment_comment_article']; ?>-<?= $this->urlMaker($item["article_comment_article_title"])?>" style="color: #666">
+				<?=$f->filter($fhtml->filter($item['article_comment_comment_text']), 30); ?>
+			</a>
+		</div>
+		<div class="post_stamp">
+			<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

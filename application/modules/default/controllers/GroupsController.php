@@ -4,6 +4,20 @@ class GroupsController extends Zend_Controller_Action {
 
 	function init() {
 		$this->db = Zend_Registry::get('db');
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		$this->show_beta = false;
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$select = $this->db->select()
+					->from("users_attributes")
+					->where("users_attributes.user_id = ?", $user_info->user_id)
+					->limit(1);
+			$u_atribs= $this->db->fetchRow($select);
+			if ($u_atribs['beta_tester'] == 1) {
+				$this->show_beta = true;
+				$this->_helper->layout()->setLayout('layoutnew');
+			}
+		}
 	}
 
 	public function indexAction() {

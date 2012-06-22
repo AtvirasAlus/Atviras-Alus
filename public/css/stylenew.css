@@ -1,6 +1,9 @@
 body {
 	text-align: center;	
 }
+a, a:visited {
+	color: #A8582D;
+}
 .body_center {
 	width: 1051px;
 	overflow: hidden;
@@ -109,4 +112,52 @@ body {
 }
 #new_topmenu ul li a.active {
 	background-color: #ddd;
+}
+.new_right {
+	float: right;
+	margin-left: 10px;
+	width: 240px;
+}
+.new_left {
+	float: left;
+	width: 610px;
+}
+.new_block {
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+.new_block .avatar {
+	float: left;
+	width: 50px;
+	padding-top: 3px;
+	overflow: hidden;
+}
+.new_block .post {
+	float: left;
+	margin-left: 20px;
+	width: 510px;
+	overflow: hidden;
+}
+.new_block .post .post_action {
+	margin-bottom: 5px;
+	font-size: 13px;
+}
+.new_block .post .post_action a {
+	font-weight: bold;
+}
+.post_stamp {
+	text-align: right;
+	font-size: 10px;
+	color: #666;
+	margin-top: 8px;
+}
+.new_tweet-attachment {
+	margin-top: 15px;
+}
+.new_tweet-attachment .wi-240 {
+	width: 420px;
+}
+.new_tweet-attachment .wi-320 {
+	width: 500px;
 }

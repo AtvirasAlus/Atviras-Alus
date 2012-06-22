@@ -1,0 +1,91 @@
+<div class="new_home">
+	<div class="new_left">
+		<div class="inner_container" style="padding-top: 20px;">
+			<?php
+			foreach ($this->items as $item):
+				switch($item['type']){
+					case "idea_comment":
+						include("partials/idea_comment.phtml");
+					break;
+					case "idea":
+						include("partials/idea.phtml");
+					break;
+					case "forum_post":
+						include("partials/forum_post.phtml");
+					break;
+					case "article":
+						include("partials/article.phtml");
+					break;
+					case "article_comment":
+						include("partials/article_comment.phtml");
+					break;
+					case "session":
+						$temp_rname = trim($item['session_recipe_name']);
+						if ($item['session_recipe_publish'] == 1 && !empty($temp_rname))
+							include("partials/session.phtml");
+					break;
+					case "event":
+						if ($item['event_published'] == 1)
+							include("partials/event.phtml");
+					break;
+					case "recipe":
+						include("partials/recipe.phtml");
+					break;
+					case "recipe_comment":
+						include("partials/recipe_comment.phtml");
+					break;
+					case "tweet":
+						include("partials/tweet.phtml");
+					break;
+					case "user":
+						include("partials/user.phtml");
+					break;
+				}
+			endforeach;
+			?>
+		</div>
+	</div>
+	<div class="new_right">
+		<?php
+		if (isset($this->unvoted) && $this->unvoted > 0){
+			?>
+			<div class="inner_container">
+				Idėjų banke užregistruota <?=$this->unvoted?> <?=$this->plurify($this->unvoted, "idėja", "idėjos", "idėjų")?>, už kurias dar nebalsavote. 
+				<a href="/idejos/balsavimas">Peržiūrėti idėjų sąrašą</a>
+			</div>		
+			<?
+		}
+		?>
+		<div class="index_block index_stats">
+			<div class="block_header">Guobalynas 2012</div>
+			<div class="block_content">
+				Šių metų <b>liepos 14-15</b> dienomis organizuojamas jau tradicija tapęs renginys - <b>Guobalynas 2012</b>. Renginys skirtas naminio alaus gamintojams ir jų draugams.<br /><br />
+				<a href="/ivykis/25-Guobalynas+2012">Skaityti plačiau...</a>
+			</div>
+		</div>
+		<!-- ĮVYKIAI -->
+		<?php
+		if (count($this->events) > 0): 
+		?>
+			<div class="index_block index_events">
+				<div class="block_header">Įvykiai:</div>
+				<div class="block_content">
+					<?php
+					foreach ($this->events as $event):
+					?>
+						<div>
+							<a href="/ivykis/<?=$event['event_id']; ?>-<?=$this->urlMaker($event['event_name']); ?>">
+								<?=$event['event_name']; ?>
+							</a> - <i><?=$event['event_start']; ?></i>
+						</div>
+					<?php
+					endforeach;
+					?>
+				</div>
+			</div>
+		<?php
+		endif;
+		?>
+	</div>
+	<div class="clear"></div>
+</div>

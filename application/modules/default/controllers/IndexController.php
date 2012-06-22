@@ -3,7 +3,39 @@
 class IndexController extends Zend_Controller_Action {
 
 	function init() {
-		//$this->_helper->layout->setLayout('main');
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		$this->show_beta = false;
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$db = Zend_Registry::get("db");
+			$select = $db->select()
+					->from("users_attributes")
+					->where("users_attributes.user_id = ?", $user_info->user_id)
+					->limit(1);
+			$u_atribs= $db->fetchRow($select);
+			if ($u_atribs['beta_tester'] == 1) {
+				$this->show_beta = true;
+				$this->_helper->layout()->setLayout('layoutnew');
+			}
+		}
+	}
+	public function enablebetaAction(){
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$db = Zend_Registry::get("db");
+			$db->update("users_attributes", array("beta_tester" => "1"), array("user_id = '" . $user_info->user_id . "'"));
+		}
+		$this->_redirect('/');
+	}
+	public function disablebetaAction(){
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$db = Zend_Registry::get("db");
+			$db->update("users_attributes", array("beta_tester" => "0"), array("user_id = '" . $user_info->user_id . "'"));
+		}
+		$this->_redirect('/');
 	}
 
 	public function indexAction() {
@@ -39,15 +71,7 @@ class IndexController extends Zend_Controller_Action {
 		
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
-		$show_beta = false;
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
-			$select = $db->select()
-					->from("users_attributes")
-					->where("users_attributes.user_id = ?", $user_info->user_id)
-					->limit(1);
-			$u_atribs= $db->fetchRow($select);
-			if ($u_atribs['beta_tester'] == 1) $show_beta = true;
-			
 			$select = $db->select()
 					->from("idea_items", array("idea_id"))
 					->where("idea_items.idea_status != 1 AND idea_items.idea_status != 2 AND idea_items.user_id != ?", $user_info->user_id);
@@ -62,8 +86,23 @@ class IndexController extends Zend_Controller_Action {
 			$voted = $db->fetchRow($select);
 			$this->view->unvoted = sizeof($ids)-$voted['kiekis'];
 		}
-		if ($show_beta === true){
+		if ($this->show_beta === true){
 			$this->_helper->layout->setLayout('layoutnew');
+			$select = $db->select()
+					->from("activity")
+					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
+					->order("posted DESC")
+					->limit(100);
+			$result = $db->fetchAll($select);
+			$this->view->items = $result;
+
+			$select = $db->select()
+					->from("beer_events", array("*", "DATE_FORMAT(event_start, '%Y-%m-%d %H:%i') as event_start"))
+					->where("event_registration_end >= CURDATE( )")
+					->where("event_registration_end  != '0000-00-00'")
+					->order("event_start");
+			$this->view->events = $db->fetchAll($select);
+
 			$this->_helper->viewRenderer('indexnew'); 
 			
 		} else {

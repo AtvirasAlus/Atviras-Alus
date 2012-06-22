@@ -5,6 +5,21 @@ class AuthController extends Zend_Controller_Action {
 	var $translate;
 
 	public function init() {
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		$this->show_beta = false;
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$db = Zend_Registry::get("db");
+			$select = $db->select()
+					->from("users_attributes")
+					->where("users_attributes.user_id = ?", $user_info->user_id)
+					->limit(1);
+			$u_atribs= $db->fetchRow($select);
+			if ($u_atribs['beta_tester'] == 1) {
+				$this->show_beta = true;
+				$this->_helper->layout()->setLayout('layoutnew');
+			}
+		}
 		$this->view->errors = array();
 	}
 
@@ -51,7 +66,7 @@ class AuthController extends Zend_Controller_Action {
 	}
 
 	public function logoutAction() {
-		setcookie("user_email", null, time() - 1209600, "/", ".atvirasalus.loc");
+		setcookie("user_email", null, time() - 1209600, "/", ".atvirasalus.lt");
 		$storage = new Zend_Auth_Storage_Session();
 		$storage->clear();
 		$this->_redirect('/index');
