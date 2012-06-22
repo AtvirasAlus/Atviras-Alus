@@ -163,7 +163,6 @@ class CronController extends Zend_Controller_Action {
 			$data['recipe_name'] = $val['recipe_name'];
 			$data['recipe_style'] = $val['recipe_style'];
 			$data['style_name'] = $val['style_name'];
-			$data['recipe_created'] = $val['recipe_created'];
 			$temp['data'] = serialize($data);
 			$activity[$val['recipe_published']." # ".$val['recipe_id']." # recipe"] = $temp;
 		}

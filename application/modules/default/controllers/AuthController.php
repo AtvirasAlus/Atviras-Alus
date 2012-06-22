@@ -51,7 +51,7 @@ class AuthController extends Zend_Controller_Action {
 	}
 
 	public function logoutAction() {
-		setcookie("user_email", null, time() - 1209600, "/", ".atvirasalus.lt");
+		setcookie("user_email", null, time() - 1209600, "/", ".atvirasalus.loc");
 		$storage = new Zend_Auth_Storage_Session();
 		$storage->clear();
 		$this->_redirect('/index');

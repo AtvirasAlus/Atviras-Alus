@@ -10,12 +10,12 @@ class Entities_AUTH
               
                   if ($result->isValid()) {   
                   	  if ($remember_me) {
-                      	      setcookie("user_email",$user_email,time()+1209600,"/",".atvirasalus.lt"); 
-                      	      setcookie("user_password",$user_password,time()+1209600,"/",".atvirasalus.lt");
-                      	      setcookie("remember",'1',time()+1209600,"/",".atvirasalus.lt");
+                      	      setcookie("user_email",$user_email,time()+1209600,"/",".atvirasalus.loc"); 
+                      	      setcookie("user_password",$user_password,time()+1209600,"/",".atvirasalus.loc");
+                      	      setcookie("remember",'1',time()+1209600,"/",".atvirasalus.loc");
                       	  }else{
-                      	      setcookie("user_email",$user_email,time()+21600,"/",".atvirasalus.lt"); 
-                      	      setcookie("user_password",$user_password,time()+21600,"/",".atvirasalus.lt");
+                      	      setcookie("user_email",$user_email,time()+21600,"/",".atvirasalus.loc"); 
+                      	      setcookie("user_password",$user_password,time()+21600,"/",".atvirasalus.loc");
                       	      setcookie("remember",'0',time()+21600,"/",".atvirasalus.lt");
                       	    
                       	  }   
