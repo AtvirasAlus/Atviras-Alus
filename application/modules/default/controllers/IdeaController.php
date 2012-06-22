@@ -188,7 +188,7 @@ class IdeaController extends Zend_Controller_Action {
 				$select->order("idea_items.idea_posted DESC");
 			} else {
 				if ($type != "my") {
-					$select->where("idea_items.idea_status != ?", "1");
+					$select->where("idea_items.idea_status != 1 AND idea_items.idea_status != 2");
 				}
 			}
 		}
