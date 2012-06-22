@@ -42,7 +42,7 @@ class IndexController extends Zend_Controller_Action {
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$select = $db->select()
 					->from("idea_items", array("idea_id"))
-					->where("idea_items.idea_status != 1 AND idea_items.user_id != ?", $user_info->user_id);
+					->where("idea_items.idea_status != 1 AND idea_items.idea_status != 2 AND idea_items.user_id != ?", $user_info->user_id);
 			$ideas = $db->fetchAll($select);
 			$ids = array();
 			foreach($ideas as $key=>$val){
