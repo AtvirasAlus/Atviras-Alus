@@ -39,7 +39,15 @@ class IndexController extends Zend_Controller_Action {
 		
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
+		$show_beta = false;
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$select = $db->select()
+					->from("users_attributes")
+					->where("users_attributes.user_id = ?", $user_info->user_id)
+					->limit(1);
+			$u_atribs= $db->fetchRow($select);
+			if ($u_atribs['beta_tester'] == 1) $show_beta = true;
+			
 			$select = $db->select()
 					->from("idea_items", array("idea_id"))
 					->where("idea_items.idea_status != 1 AND idea_items.user_id != ?", $user_info->user_id);
@@ -54,111 +62,117 @@ class IndexController extends Zend_Controller_Action {
 			$voted = $db->fetchRow($select);
 			$this->view->unvoted = sizeof($ids)-$voted['kiekis'];
 		}
-		$select = $db->select()
-				->from("users", array("user_name", "user_id", "user_email"))
-				->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.brewer_id=users.user_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
-				->where("users.user_active = ?", '1')
-				->group("users.user_id")
-				->order("user_lastlogin DESC")
-				->order("count DESC")
-				->order("recipe_created DESC")
-				->order("user_name ASC")
-				->limit(12);
-		$this->view->users = $db->fetchAll($select);
-
-		$select = $db->select()
-				->from("users", array("count" => "count(*)"))
-				->where("users.user_active = ?", '1');
-		$this->view->users_total = $db->fetchRow($select);
-		$select = $db->select()
-				->from("VIEW_public_recipes", array("recipe_id", "recipe_name", "recipe_published" => "MAX(recipe_published)"))
-				->joinLeft("beer_styles", "VIEW_public_recipes.recipe_style=beer_styles.style_id", array("style_name"))
-				->group("VIEW_public_recipes.recipe_id")
-				->order("recipe_published DESC")
-				->limit(12);
-		$this->view->recipes = $db->fetchAll($select);
-		$select = $db->select()
-				->from("users", array("user_name", "user_id", "user_created" => "MAX(user_created)"))
-				->where("user_active =?", '1')
-				->group("users.user_id")
-				->order("user_created DESC")
-				->limit(1);
-		$this->view->welcome = $db->fetchRow($select);
-		$select = $db->select()
-				->from("VIEW_public_recipes", array("count" => "count(*)"));
-		$this->view->total_recipes = $db->fetchRow($select);
-		$select = $db->select()
-				->from("beer_recipes_comments", array("comment_id", "comment_brewer", "comment_recipe", "comment_date" => "MAX(comment_date)"))
-				->join("VIEW_public_recipes", "VIEW_public_recipes.recipe_id=beer_recipes_comments.comment_recipe", array("recipe_name", "recipe_id"))
-				->join("users", "beer_recipes_comments.comment_brewer=users.user_id", array("user_name", "user_email", "user_id"))
-				->group("comment_id")
-				->order("comment_date DESC")
-				->limit(10);
-		$this->view->comments = $db->fetchAll($select);
-		$select = $db->select()
-				->from("VIEW_public_recipes", array("recipe_id", "recipe_name"))
-				->join("beer_brew_sessions", "VIEW_public_recipes.recipe_id=beer_brew_sessions.session_recipe")
-				->join("users", "beer_brew_sessions.session_brewer=users.user_id", array("user_id", "user_name"))
-				->where("session_primarydate <= CURDATE( )")
-				->where("session_primarydate  >= DATE_SUB(CURDATE(),INTERVAL 2 MONTH)")
-				->where("recipe_publish =?", '1')
-				->where("session_caskingdate  = '0000-00-00' OR session_caskingdate > CURDATE( )")
-				->order("session_primarydate DESC")
-				->limit(10);
-		$this->view->brew_session = $db->fetchAll($select);
-
-
-		$select = $db->select()
-				->from("beer_brew_sessions", array("SUM(beer_brew_sessions.session_size) AS beer_total", "COUNT(DISTINCT(beer_brew_sessions.session_brewer)) AS brewers_total"))
-				->where("beer_brew_sessions.session_primarydate >= (curdate() - interval 30 day)");
-		$this->view->total_brewed = $db->fetchRow($select);
-
-		$select = $db->select()
-				->from('cache_fav_recipes')
-				->join("users", "users.user_id=cache_fav_recipes.brewer_id", array("user_name"))
-				->limit(5)
-				->order("total DESC");
-		$this->view->fav_recipes = $db->fetchAll($select);
-
-		$select = $db->select()
-				->from("beer_articles")
-				->joinLeft("beer_articles_comments", "beer_articles_comments.comment_article=beer_articles.article_id", array("COUNT(comment_id) as total"))
-				->group("beer_articles.article_id")
-				->where("article_cat =?", 1)
-				->where("article_publish =?", '1')
-				->order("article_modified DESC")
-				->limit(5);
-		$this->view->articles = $db->fetchAll($select);
-		
-		$select = $db->select()
-				->from("bb_posts", array("post_id", "forum_id", "topic_id", "poster_id", "post_text", "post_time", "poster_ip", "post_status", "post_position"))
-				->join("bb_topics", "bb_topics.topic_id = bb_posts.topic_id", array("topic_title"))
-				->join("users", "bb_posts.poster_id = users.user_id", array("user_name", "MD5(user_email) AS email_hash"))
-				->where("bb_posts.post_status = 0")
-				->order("bb_posts.post_time DESC")
-				->limit(7);
-		;
-		$this->view->posts = $db->fetchAll($select);
-		if ($this->view->blogs = $cache->load('blog_latest')) {
+		if ($show_beta === true){
+			$this->_helper->layout->setLayout('layoutnew');
+			$this->_helper->viewRenderer('indexnew'); 
 			
 		} else {
-			$blog_ids = array(20, 19, 16, 18, 17, 15, 7, 11, 10, 8, 9, 2, 3, 4, 5, 6);
-			foreach($blog_ids as $blog_id){
-				$select_ar[$blog_id] = $db->select()
-						->from("wp_".$blog_id."_posts", array("post_date", "post_modified", "ID", "post_author", "post_title", "comment_count", "guid", "post_content"))
-						->join("users", "users.user_id=wp_".$blog_id."_posts.post_author", array("user_name"))
-						->where("wp_".$blog_id."_posts.post_status = 'publish' AND wp_".$blog_id."_posts.post_type = 'post'");
+			$select = $db->select()
+					->from("users", array("user_name", "user_id", "user_email"))
+					->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.brewer_id=users.user_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
+					->where("users.user_active = ?", '1')
+					->group("users.user_id")
+					->order("user_lastlogin DESC")
+					->order("count DESC")
+					->order("recipe_created DESC")
+					->order("user_name ASC")
+					->limit(12);
+			$this->view->users = $db->fetchAll($select);
+
+			$select = $db->select()
+					->from("users", array("count" => "count(*)"))
+					->where("users.user_active = ?", '1');
+			$this->view->users_total = $db->fetchRow($select);
+			$select = $db->select()
+					->from("VIEW_public_recipes", array("recipe_id", "recipe_name", "recipe_published" => "MAX(recipe_published)"))
+					->joinLeft("beer_styles", "VIEW_public_recipes.recipe_style=beer_styles.style_id", array("style_name"))
+					->group("VIEW_public_recipes.recipe_id")
+					->order("recipe_published DESC")
+					->limit(12);
+			$this->view->recipes = $db->fetchAll($select);
+			$select = $db->select()
+					->from("users", array("user_name", "user_id", "user_created" => "MAX(user_created)"))
+					->where("user_active =?", '1')
+					->group("users.user_id")
+					->order("user_created DESC")
+					->limit(1);
+			$this->view->welcome = $db->fetchRow($select);
+			$select = $db->select()
+					->from("VIEW_public_recipes", array("count" => "count(*)"));
+			$this->view->total_recipes = $db->fetchRow($select);
+			$select = $db->select()
+					->from("beer_recipes_comments", array("comment_id", "comment_brewer", "comment_recipe", "comment_date" => "MAX(comment_date)"))
+					->join("VIEW_public_recipes", "VIEW_public_recipes.recipe_id=beer_recipes_comments.comment_recipe", array("recipe_name", "recipe_id"))
+					->join("users", "beer_recipes_comments.comment_brewer=users.user_id", array("user_name", "user_email", "user_id"))
+					->group("comment_id")
+					->order("comment_date DESC")
+					->limit(10);
+			$this->view->comments = $db->fetchAll($select);
+			$select = $db->select()
+					->from("VIEW_public_recipes", array("recipe_id", "recipe_name"))
+					->join("beer_brew_sessions", "VIEW_public_recipes.recipe_id=beer_brew_sessions.session_recipe")
+					->join("users", "beer_brew_sessions.session_brewer=users.user_id", array("user_id", "user_name"))
+					->where("session_primarydate <= CURDATE( )")
+					->where("session_primarydate  >= DATE_SUB(CURDATE(),INTERVAL 2 MONTH)")
+					->where("recipe_publish =?", '1')
+					->where("session_caskingdate  = '0000-00-00' OR session_caskingdate > CURDATE( )")
+					->order("session_primarydate DESC")
+					->limit(10);
+			$this->view->brew_session = $db->fetchAll($select);
+
+
+			$select = $db->select()
+					->from("beer_brew_sessions", array("SUM(beer_brew_sessions.session_size) AS beer_total", "COUNT(DISTINCT(beer_brew_sessions.session_brewer)) AS brewers_total"))
+					->where("beer_brew_sessions.session_primarydate >= (curdate() - interval 30 day)");
+			$this->view->total_brewed = $db->fetchRow($select);
+
+			$select = $db->select()
+					->from('cache_fav_recipes')
+					->join("users", "users.user_id=cache_fav_recipes.brewer_id", array("user_name"))
+					->limit(5)
+					->order("total DESC");
+			$this->view->fav_recipes = $db->fetchAll($select);
+
+			$select = $db->select()
+					->from("beer_articles")
+					->joinLeft("beer_articles_comments", "beer_articles_comments.comment_article=beer_articles.article_id", array("COUNT(comment_id) as total"))
+					->group("beer_articles.article_id")
+					->where("article_cat =?", 1)
+					->where("article_publish =?", '1')
+					->order("article_modified DESC")
+					->limit(5);
+			$this->view->articles = $db->fetchAll($select);
+
+			$select = $db->select()
+					->from("bb_posts", array("post_id", "forum_id", "topic_id", "poster_id", "post_text", "post_time", "poster_ip", "post_status", "post_position"))
+					->join("bb_topics", "bb_topics.topic_id = bb_posts.topic_id", array("topic_title"))
+					->join("users", "bb_posts.poster_id = users.user_id", array("user_name", "MD5(user_email) AS email_hash"))
+					->where("bb_posts.post_status = 0")
+					->order("bb_posts.post_time DESC")
+					->limit(7);
+			;
+			$this->view->posts = $db->fetchAll($select);
+			if ($this->view->blogs = $cache->load('blog_latest')) {
+
+			} else {
+				$blog_ids = array(20, 19, 16, 18, 17, 15, 7, 11, 10, 8, 9, 2, 3, 4, 5, 6);
+				foreach($blog_ids as $blog_id){
+					$select_ar[$blog_id] = $db->select()
+							->from("wp_".$blog_id."_posts", array("post_date", "post_modified", "ID", "post_author", "post_title", "comment_count", "guid", "post_content"))
+							->join("users", "users.user_id=wp_".$blog_id."_posts.post_author", array("user_name"))
+							->where("wp_".$blog_id."_posts.post_status = 'publish' AND wp_".$blog_id."_posts.post_type = 'post'");
+				}
+				$select = $db->select()->union($select_ar)->order("post_date DESC")->limit(5);
+				$this->view->blogs = $db->fetchAll($select);
+				$cache->save($this->view->blogs, 'blog_latest');
 			}
-			$select = $db->select()->union($select_ar)->order("post_date DESC")->limit(5);
-			$this->view->blogs = $db->fetchAll($select);
-			$cache->save($this->view->blogs, 'blog_latest');
+			$select = $db->select()
+					->from("beer_events", array("*", "DATE_FORMAT(event_start, '%Y-%m-%d %H:%i') as event_start"))
+					->where("event_registration_end >= CURDATE( )")
+					->where("event_registration_end  != '0000-00-00'")
+					->order("event_start");
+			$this->view->events = $db->fetchAll($select);
 		}
-		$select = $db->select()
-				->from("beer_events", array("*", "DATE_FORMAT(event_start, '%Y-%m-%d %H:%i') as event_start"))
-				->where("event_registration_end >= CURDATE( )")
-				->where("event_registration_end  != '0000-00-00'")
-				->order("event_start");
-		$this->view->events = $db->fetchAll($select);
 	}
 
 	public function sitemapAction() {
