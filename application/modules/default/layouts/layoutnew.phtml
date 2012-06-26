@@ -31,7 +31,6 @@
 	<body>
 		<div class="new_header">
 			<div class="new_header_contrainer">
-				<a href="/" class="new_logo" title="Atviras alus"></a>
 				<div class="new_proverb"><?=$this->fortune();?></div>
 				<div class="new_userinfo"><?=$this->loginScreen();?></div>
 				<div class="clear"></div>
@@ -40,6 +39,7 @@
 		<div class="body_center">
 			<div id="main_container">
 				<div id="left">
+					<a href="/" class="new_logo" title="Atviras alus"></a>
 					<?php
 					$storage = new Zend_Auth_Storage_Session();
 					$user_info = $storage->read();
@@ -57,44 +57,53 @@
 								} else {
 									$class = "";
 								}
-								?>
-								<li>
-									<a href="<?=$page->getHref();?>" class="<?=$class?>">
-										<?=$page->label;?>
-									</a>
-									<?php
-									if ($page->isActive(true)) {
-										$subpages = $page->getPages();
-										if (sizeof($subpages) > 0){
-											?>
-											<ul>
+								if ($page->isVisible()){
+									?>
+									<li>
+										<a href="<?=$page->getHref();?>" class="<?=$class?>">
+											<?=$page->label;?>
+											<?php
+											if ($page->label == "Paštas"){
+												?>
+												<span>#</span>
 												<?php
-												foreach ($subpages as $subpage){
-													if ($subpage->restrict == 0 || $user_id != 0){
-														if ($subpage->isActive()) {
-															$subclass = "active";
-														} else {
-															$subclass = "";
-														}
-														if ($subpage->isVisible()){
-															?>
-															<li>
-																<a href="<?=$subpage->getHref();?>" class="<?=$subclass?>">
-																	<?=$subpage->label;?>
-																</a>
-															</li>
-															<?php
+											}
+											?>
+										</a>
+										<?php
+										if ($page->isActive(true)) {
+											$subpages = $page->getPages();
+											if (sizeof($subpages) > 0){
+												?>
+												<ul>
+													<?php
+													foreach ($subpages as $subpage){
+														if ($subpage->restrict == 0 || $user_id != 0){
+															if ($subpage->isActive()) {
+																$subclass = "active";
+															} else {
+																$subclass = "";
+															}
+															if ($subpage->isVisible()){
+																?>
+																<li>
+																	<a href="<?=$subpage->getHref();?>" class="<?=$subclass?>">
+																		<?=$subpage->label;?>
+																	</a>
+																</li>
+																<?php
+															}
 														}
 													}
-												}
-												?>
-											</ul>
-											<?php
+													?>
+												</ul>
+												<?php
+											}
 										}
-									}
-									?>
-								</li>
-								<?php
+										?>
+									</li>
+									<?php
+								}
 							}
 						endforeach;
 						?>

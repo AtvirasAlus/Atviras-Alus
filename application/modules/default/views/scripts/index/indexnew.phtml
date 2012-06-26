@@ -86,6 +86,16 @@
 		<?php
 		endif;
 		?>
+		<div class="index_block index_sitenews">
+			<div class="block_content">
+				<div style="margin-bottom: 10px;">
+					Per mėnėsį 
+					<b><?= $this->total_brewed['brewers_total']; ?></b>
+					aludariai išvirė 
+					<b><a href="http://www.atvirasalus.lt/stats?id=sessions"><?= (float)$this->total_brewed['beer_total']; ?></a></b>&nbsp;litrus alaus
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="clear"></div>
 </div>

@@ -8,6 +8,14 @@
 			<action>index</action>
 			<route>default</route>
 		</home>
+		<mail>
+			<label>Paštas</label>
+			<module>default</module>
+			<controller>mail</controller>
+			<action>inbox</action>
+			<route>default</route>
+			<visible>1</visible>
+		</mail>
 		<styles>
 			<label>Alaus stiliai</label>
 			<module>default</module>
@@ -54,6 +62,13 @@
 					<action>search</action>
 					<route>default</route>
 				</search>
+				<favrecipes>
+					<label>Įdomiausi receptai</label>
+					<module>default</module>
+					<controller>recipes</controller>
+					<action>favorites</action>
+					<route>default</route>
+				</favrecipes>
 				<random>
 					<label>Atsitiktinis</label>
 					<module>default</module>
@@ -94,6 +109,30 @@
 				</rview>
 			</pages>
 		</recipes>
+		<sessions>
+			<label>Virimai</label>
+			<module>default</module>
+			<controller>brew-session</controller>
+			<action>history</action>
+			<route>default</route>
+			<pages>
+				<allsessions>
+					<label>Visi virimai</label>
+					<module>default</module>
+					<controller>brew-session</controller>
+					<action>history</action>
+					<route>default</route>
+				</allsessions>
+				<mysessions>
+					<label>Mano virimai</label>
+					<module>default</module>
+					<controller>brew-session</controller>
+					<action>brewer</action>
+					<route>default</route>
+					<visible>1</visible>
+				</mysessions>
+			</pages>
+		</sessions>
 		<calculus>
 			<label>Skaičiuoklės</label>
 			<module>default</module>
@@ -122,12 +161,51 @@
 			<module>forum</module>
 			<route>default</route>
 		</forum>
+		<brewers>
+			<label>Aludariai</label>
+			<module>default</module>
+			<controller>brewer</controller>
+			<action>list</action>
+			<route>default</route>
+			<pages>
+				<allbrewers>
+					<label>Aludariai</label>
+					<module>default</module>
+					<controller>brewer</controller>
+					<action>list</action>
+					<route>default</route>
+				</allbrewers>
+				<brewergroups>
+					<label>Grupės</label>
+					<module>default</module>
+					<controller>groups</controller>
+					<action>index</action>
+					<route>default</route>
+				</brewergroups>
+			</pages>
+		</brewers>
 		<skaitykla>
-			<label>Straipsniai</label>
+			<label>Skaitykla</label>
 			<module>default</module>
 			<controller>content</controller>
 			<action>list</action>
 			<route>skaitykla</route>
+			<pages>
+				<articles>
+					<label>Straipsniai</label>
+					<module>default</module>
+					<controller>content</controller>
+					<action>list</action>
+					<route>skaitykla</route>
+				</articles>
+				<tweets>
+					<label>Burbuliatorius</label>
+					<module>default</module>
+					<controller>tweet</controller>
+					<action>all</action>
+					<route>default</route>
+				</tweets>
+			</pages>
 		</skaitykla>
 		<events>
 			<label>Įvykiai</label>
@@ -196,13 +274,35 @@
 				</commentidea>
 			</pages>
 		</idea>
-		<help>
-			<label>Pagalba</label>
+		<aboutus>
+			<label>Atviras Alus</label>
 			<module>default</module>
 			<controller>content</controller>
-			<action>read</action>
-			<route>pagalba</route>
-		</help>
+			<action>about</action>
+			<route>default</route>
+			<pages>
+				<aboutusinner>
+					<label>Apie projektą</label>
+					<module>default</module>
+					<controller>content</controller>
+					<action>about</action>
+				</aboutusinner>
+				<help>
+					<label>Pagalba</label>
+					<module>default</module>
+					<controller>content</controller>
+					<action>read</action>
+					<route>pagalba</route>
+				</help>
+				<stats>
+					<label>Statistika</label>
+					<module>default</module>
+					<controller>stats</controller>
+					<action>index</action>
+					<route>default</route>
+				</stats>
+			</pages>
+		</aboutus>
 		
 		
 	</nav>

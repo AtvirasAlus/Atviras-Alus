@@ -103,6 +103,11 @@ class IndexController extends Zend_Controller_Action {
 					->order("event_start");
 			$this->view->events = $db->fetchAll($select);
 
+			$select = $db->select()
+					->from("beer_brew_sessions", array("SUM(beer_brew_sessions.session_size) AS beer_total", "COUNT(DISTINCT(beer_brew_sessions.session_brewer)) AS brewers_total"))
+					->where("beer_brew_sessions.session_primarydate >= (curdate() - interval 30 day)");
+			$this->view->total_brewed = $db->fetchRow($select);
+
 			$this->_helper->viewRenderer('indexnew'); 
 			
 		} else {
