@@ -71,7 +71,15 @@ if (bb_is_profile()) {
 								<a href="/">Titulinis</a>
 							</li>
 							<li>
-								<a href="/mail/inbox" class="">Paštas</a>
+								<a href="/mail/inbox" class="">Paštas
+									<?php
+									if ($mail_count > 0){
+										?>
+										<span><?=$mail_count?></span>
+										<?php
+									}
+									?>
+								</a>
 							</li>
 							<li>
 								<a href="/styles" class="">Alaus stiliai</a>
