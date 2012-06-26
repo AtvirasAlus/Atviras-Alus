@@ -240,6 +240,20 @@ a, a:visited {
 	background-repeat: no-repeat;
 	background-position: 4px 22px;
 }
+.ico_rss {
+	background-color: #eee;
+	padding-left: 40px;
+	background-image: url("/public/images/new/ico_rss.png");
+	background-repeat: no-repeat;
+	background-position: 4px 22px;
+}
+.ico_blog {
+	background-color: #eee;
+	padding-left: 40px;
+	background-image: url("/public/images/new/ico_blog.png");
+	background-repeat: no-repeat;
+	background-position: 4px 22px;
+}
 .new_ublock {
 	background-color: #ddd;
 	-webkit-border-radius: 5px;

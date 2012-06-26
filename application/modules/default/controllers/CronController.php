@@ -9,6 +9,36 @@ class CronController extends Zend_Controller_Action {
 	public function indexAction() {
 		
 	}
+	
+	public function rssnewsAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		echo "<pre>";
+		$url = "http://pipes.yahoo.com/pipes/pipe.run?_id=210aea0f65d951e98dc682a8136c4ee9&_render=rss";
+		$feed = Zend_Feed::import($url);
+
+		foreach ($feed as $item) {
+			$select = $db->select()
+					->from("activity", "id")
+					->where("type = 'rss' AND rss_guid = '".$item->guid()."'");
+			$result = $db->fetchAll($select);
+			if (sizeof($result) == 0){
+				$db->insert("activity", array(
+					"user_id" => "0",
+					"item_id" => "0",
+					"posted" => date("Y-m-d H:i:s"),
+					"type" => "rss",
+					"rss_title" => $item->title(),
+					"rss_link" => $item->link(),
+					"rss_description" => $item->description(),
+					"rss_guid" => $item->guid(),
+					"rss_posted" => date("Y-m-d H:i:s", strtotime($item->pubDate())),
+				));
+			}
+		}
+		echo "Done.";
+	}
 
 	public function favoritesAction() {
 		$this->_helper->layout->disableLayout();
@@ -78,6 +108,14 @@ class CronController extends Zend_Controller_Action {
 		$tpl['idea_comment_text'] = NULL;
 		$tpl['idea_comment_idea_id'] = NULL;
 		$tpl['user_name'] = NULL;
+		$tpl['rss_title'] = NULL;
+		$tpl['rss_link'] = NULL;
+		$tpl['rss_description'] = NULL;
+		$tpl['rss_guid'] = NULL;
+		$tpl['rss_posted'] = NULL;
+		$tpl['blog_title'] = NULL;
+		$tpl['blog_content'] = NULL;
+		$tpl['blog_link'] = NULL;
 		
 		$limit = 100000000000;
 
@@ -87,6 +125,43 @@ class CronController extends Zend_Controller_Action {
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
 		
+		$blog_ids = array(2, 3, 4, 5, 6, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20);
+		foreach($blog_ids as $blog_id){
+			$select_ar[$blog_id] = $db->select()
+					->from("wp_".$blog_id."_posts", array("post_date", "ID", "post_author", "post_title", "guid", "post_content"))
+					->where("wp_".$blog_id."_posts.post_status = 'publish' AND wp_".$blog_id."_posts.post_type = 'post'");
+		}
+		$select = $db->select()->union($select_ar)->order("post_date DESC");
+		$result = $db->fetchAll($select);
+		foreach($result as $key=>$val){
+			$temp = $tpl;
+			$temp['type'] = "blog";
+			$temp['user_id'] = $val['post_author'];
+			$temp['item_id'] = $val['ID'];
+			$temp['posted'] = $val['post_date'];
+			$temp['blog_title'] = $val['post_title'];
+			$temp['blog_content'] = $val['post_content'];
+			$temp['blog_link'] = $val['guid'];
+			$activity[] = $temp;
+		}
+		
+		$url = "http://pipes.yahoo.com/pipes/pipe.run?_id=210aea0f65d951e98dc682a8136c4ee9&_render=rss";
+		$feed = Zend_Feed::import($url);
+
+		foreach ($feed as $item) {
+			$temp = $tpl;
+			$temp['type'] = "rss";
+			$temp['user_id'] = "0";
+			$temp['item_id'] = "0";
+			$temp['posted'] = date("Y-m-d H:i:s", strtotime($item->pubDate()));
+			$temp['rss_title'] = $item->title();
+			$temp['rss_link'] = $item->link();
+			$temp['rss_description'] = $item->description();
+			$temp['rss_guid'] = $item->guid();
+			$temp['rss_posted'] = date("Y-m-d H:i:s", strtotime($item->pubDate()));
+			$activity[] = $temp;
+		}
+
 		// FORUMO ŽINUTĖS
 		$select = $db->select()
 				->from("bb_posts", array("post_id", "poster_id AS user_id", "post_text", "post_time", "post_position"))

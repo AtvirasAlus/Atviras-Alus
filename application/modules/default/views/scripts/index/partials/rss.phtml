@@ -1,0 +1,30 @@
+<div class="new_block ico_rss">
+	<div class="white">
+		<div class="avatar">
+			<img  src="/public/images/new/rss.png" border="0"/>
+		</div>
+		<div class="post">
+			<div class="post_action">
+				<div>
+					Mūsų draugų svetainėje patalpintas naujas įrašas<a href="<?=$item['rss_link']?>">
+						<?=$item['rss_title']?>
+					</a>
+				</div>
+				<div style="margin-top: 5px;">
+					<?php
+					$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p")));
+					$f = new Entities_Filter_Excerpt();
+					$item['rss_description'] = str_replace("\n", "<br />", $item['rss_description']);
+					?>
+					<a href="<?=$item['rss_link']?>" style="color: #666; font-weight: normal;">
+						<?=$f->filter($fhtml->filter($item['rss_description']), 30); ?>
+					</a>
+				</div>
+			</div>
+			<div class="post_stamp">
+				<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
