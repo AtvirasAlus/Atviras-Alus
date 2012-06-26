@@ -14,7 +14,33 @@
 			<controller>mail</controller>
 			<action>inbox</action>
 			<route>default</route>
-			<visible>1</visible>
+			<restrict>1</restrict>
+			<pages>
+				<mail-in>
+					<label>Gautieji</label>
+					<module>default</module>
+					<controller>mail</controller>
+					<action>inbox</action>
+					<route>default</route>
+					<restrict>1</restrict>
+				</mail-in>
+				<mail-compose>
+					<label>Rašyti laišką</label>
+					<module>default</module>
+					<controller>mail</controller>
+					<action>compose</action>
+					<route>default</route>
+					<restrict>1</restrict>
+				</mail-compose>
+				<mail-out>
+					<label>Išsiųsti laiškai</label>
+					<module>default</module>
+					<controller>mail</controller>
+					<action>outbox</action>
+					<route>default</route>
+					<restrict>1</restrict>
+				</mail-out>
+			</pages>
 		</mail>
 		<styles>
 			<label>Alaus stiliai</label>
@@ -129,8 +155,40 @@
 					<controller>brew-session</controller>
 					<action>brewer</action>
 					<route>default</route>
-					<visible>1</visible>
+					<restrict>1</restrict>
 				</mysessions>
+				<session>
+					<label>Virimas</label>
+					<module>default</module>
+					<controller>brew-session</controller>
+					<action>recipe</action>
+					<route>default</route>
+					<visible>0</visible>
+				</session>
+				<sessionnew>
+					<label>Naujas virimas</label>
+					<module>default</module>
+					<controller>brew-session</controller>
+					<action>new</action>
+					<route>default</route>
+					<visible>0</visible>
+				</sessionnew>
+				<sessiondetail>
+					<label>Virimas</label>
+					<module>default</module>
+					<controller>brew-session</controller>
+					<action>detail</action>
+					<route>default</route>
+					<visible>0</visible>
+				</sessiondetail>
+				<sessionedit>
+					<label>Virimo redagavimas</label>
+					<module>default</module>
+					<controller>brew-session</controller>
+					<action>edit</action>
+					<route>default</route>
+					<visible>0</visible>
+				</sessionedit>
 			</pages>
 		</sessions>
 		<calculus>
@@ -182,6 +240,22 @@
 					<action>index</action>
 					<route>default</route>
 				</brewergroups>
+				<brewer>
+					<label>Aludaris</label>
+					<module>default</module>
+					<controller>brewer</controller>
+					<action>info</action>
+					<route>default</route>
+					<visible>0</visible>
+				</brewer>
+				<brewersessions>
+					<label>Aludario virimai</label>
+					<module>default</module>
+					<controller>brewer</controller>
+					<action>sessions</action>
+					<route>default</route>
+					<visible>0</visible>
+				</brewersessions>
 			</pages>
 		</brewers>
 		<skaitykla>
@@ -198,6 +272,13 @@
 					<action>list</action>
 					<route>skaitykla</route>
 				</articles>
+				<read>
+					<label>Straipsnis</label>
+					<module>default</module>
+					<controller>content</controller>
+					<action>read</action>
+					<visible>0</visible>
+				</read>
 				<tweets>
 					<label>Burbuliatorius</label>
 					<module>default</module>
@@ -213,6 +294,16 @@
 			<controller>events</controller>
 			<action>index</action>
 			<route>events</route>
+			<pages>
+				<event>
+					<label>Įvykis</label>
+					<module>default</module>
+					<controller>events</controller>
+					<action>view</action>
+					<route>event</route>
+					<visible>0</visible>
+				</event>
+			</pages>
 		</events>
 		<idea>
 			<label>Idėjos</label>
@@ -291,8 +382,8 @@
 					<label>Pagalba</label>
 					<module>default</module>
 					<controller>content</controller>
-					<action>read</action>
-					<route>pagalba</route>
+					<action>help</action>
+					<route>default</route>
 				</help>
 				<stats>
 					<label>Statistika</label>

@@ -1,6 +1,7 @@
 <?php
 	$isloged = isset($this->user_data->user_id);
 	$mail_count = "?";
+	$beta = false;
 ?>
 <div id="user_info" style="display:<?= $isloged ? 'block' : 'none'; ?>;">
 	<div id="user_info_label">Prisijungęs:</div>
@@ -8,20 +9,42 @@
 		<span>
 			<?php
 			if ($isloged) {
+				$db = Zend_Registry::get("db");
+				$select = $db->select()
+						->from("users_attributes")
+						->where("users_attributes.user_id = ?", $this->user_data->user_id)
+						->limit(1);
+				$u_atribs= $db->fetchRow($select);
+				if ($u_atribs['beta_tester'] == 1) {
+					$beta = true;
+				}
+
 				$mail = new Entities_Mail($this->user_data);
 				$mail_count = $mail->getUnreadCount();
 				echo $this->user_data->user_name;
 			}
 			?>
 		</span>
-		<a rel="nofollow" href="/mail/inbox" id="mail_counter"><?= $mail_count; ?></a>
+		<?php
+		if ($beta === false) {
+			?>
+			<a rel="nofollow" href="/mail/inbox" id="mail_counter"><?= $mail_count; ?></a>
+			<?php
+		}
+		?>
 	</div>
 	<div class="clear"></div>
 	<ul style="list-style-type:none;" id="user_info_submenu"> 
-		<li><a href="/brewer/recipes" rel="nofollow">Receptai</a></li> 
-		<li><a href="/brewer/favorites" rel="nofollow">Mėgstamiausi receptai</a></li> 
-		<li><a href="/mail/inbox" rel="nofollow">Paštas</a></li> 
-		<li><a href="/brew-session/brewer" rel="nofollow">Virimų istorija</a></li>
+		<?php
+		if ($beta === false) {
+			?>
+			<li><a href="/brewer/recipes" rel="nofollow">Receptai</a></li> 
+			<li><a href="/brewer/favorites" rel="nofollow">Mėgstamiausi receptai</a></li> 
+			<li><a href="/mail/inbox" rel="nofollow">Paštas</a></li> 
+			<li><a href="/brew-session/brewer" rel="nofollow">Virimų istorija</a></li>
+			<?php
+		}
+		?>
 		<li><a href="/brewer/profile" rel="nofollow">Paskyra</a></li>
 		<li><a href="/auth/logout" rel="nofollow">Atsijungti</a></li> 
 	</ul> 

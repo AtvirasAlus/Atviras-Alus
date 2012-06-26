@@ -39,6 +39,9 @@ class ContentController extends Zend_Controller_Action {
 	public function aboutAction() {
 	}
 
+	public function helpAction() {
+	}
+
 	public function articleAction() {
 		
 	}
