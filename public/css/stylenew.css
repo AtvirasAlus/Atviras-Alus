@@ -152,7 +152,7 @@ a, a:visited {
 	margin-top: 15px;
 }
 .new_tweet-attachment .wi-240 {
-	width: 420px;
+	width: 370px;
 }
 .new_tweet-attachment .wi-320 {
 	width: 500px;
@@ -280,4 +280,82 @@ a, a:visited {
 	padding-left: 5px;
 	padding-right: 5px;
 	line-height: 16px;
+}
+.new_filter {
+	background-color: #eee;
+	padding: 4px;
+}
+.new_filter input#new_tweet {
+	float: left;
+	height: 28px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 2px;
+	background-color: #f5f5f5;
+	cursor: pointer;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+.new_filter input#new_tweet:hover {
+	color: #A8582D;
+}
+.new_filter select {
+	height: 28px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 2px;
+	background-color: #f5f5f5;
+	cursor: pointer;
+	float: right;
+}
+#tweet_form textarea {
+	margin-top: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	width: 545px;
+	height: 60px;
+	margin-left: 3px;
+}
+.tt_image {
+	width: 70px;
+	height: 70px;
+}
+.tt_images {
+	float: left;
+	width: 70px;
+	overflow: hidden;
+	text-align: center;
+}
+.tt_images a {
+	display: inline-block;
+	background-color: #ccc;
+	text-align: center;
+	line-height: 20px;
+	height: 20px;
+	width: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-weight: bold;
+	color: #000;
+}
+.tt_info {
+	float: left;
+	margin-left: 20px;
+	width: 440px;
+}
+.tt_title {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+#tweet_form {
+	background-color: #eee;
+	padding: 4px;
+	text-align: right;
 }

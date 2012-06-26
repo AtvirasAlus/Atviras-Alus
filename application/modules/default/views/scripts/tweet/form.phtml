@@ -19,6 +19,7 @@ function getImages(img) {
 			$('img#' + firstimage).hide();
 			firstimage = parseInt(firstimage);
 			if (firstimage <= $('#total_images').val()) {
+				alert(firstimage+" "+$('#total_images').val());
 				firstimage++;
 				$('#cur_image').val(firstimage);
 				$('#link_image').val($('img#' + firstimage).attr("src"));

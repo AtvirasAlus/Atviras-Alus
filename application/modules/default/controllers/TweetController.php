@@ -1,24 +1,23 @@
 <?php
 
 class TweetController extends Zend_Controller_Action {
-	
-	public function init(){
+
+	public function init() {
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
 		$this->show_beta = false;
-		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+		if (isset($user_info->user_id) && !empty($user_info->user_id)) {
 			$db = Zend_Registry::get("db");
 			$select = $db->select()
 					->from("users_attributes")
 					->where("users_attributes.user_id = ?", $user_info->user_id)
 					->limit(1);
-			$u_atribs= $db->fetchRow($select);
+			$u_atribs = $db->fetchRow($select);
 			if ($u_atribs['beta_tester'] == 1) {
 				$this->show_beta = true;
 				$this->_helper->layout()->setLayout('layoutnew');
 			}
 		}
-		
 	}
 
 	public function formAction() {
@@ -103,6 +102,25 @@ class TweetController extends Zend_Controller_Action {
 					->joinLeft("users", "beer_tweets.tweet_owner=users.user_id", array("user_id", "user_name", "user_email"))
 					->where("beer_tweets.tweet_id = ?", $db->lastInsertId());
 			$this->view->twitterItem = $db->fetchRow($select);
+		}
+	}
+
+	public function submitnewAction() {
+		$this->_helper->layout->setLayout('empty');
+		$storage = new Zend_Auth_Storage_Session();
+		$storage_data = $storage->read();
+		if (isset($storage_data->user_id)) {
+			$db = Zend_Registry::get('db');
+			$fields = array("tweet_link_url" => "new_tweet_url", "tweet_link_title" => "new_tweet_title", "tweet_link_description" => "new_tweet_description", "tweet_link_image" => "new_tweet_image", "tweet_message" => "new_tweet_message");
+			$inserts = array();
+			foreach ($fields as $key => $value) {
+				if (isset($_POST[$value])) {
+					$inserts[$key] = strip_tags($_POST[$value]);
+				}
+			}
+			$inserts["tweet_owner"] = $storage_data->user_id;
+			$db->insert("beer_tweets", $inserts);
+			$this->_redirect("/index");
 		}
 	}
 
@@ -194,6 +212,80 @@ class TweetController extends Zend_Controller_Action {
 		$this->view->url = $url;
 	}
 
+	public function getimagesAction() {
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$this->view->http_status = 200;
+		$images_array = array();
+		$__url = $this->getRequest()->getParam("url");
+		preg_match_all('!https?://[\S]+!', $__url, $matches);
+		if (count($matches) > 0) {
+			$url = $matches[0][0];
+		} else {
+			$url = $__url;
+		}
+		$url_title = $url;
+		$url_description = "";
+		$client = new Zend_Http_Client($url);
+		if ($response = @$client->request()) {
+			$ctype = $response->getHeader('Content-type');
+			$string = $response->getBody();
+			if (is_array($ctype))
+				$ctype = $ctype[0];
+			$parsed_url = parse_url($url);
+			if (stripos($ctype, "text/html") !== false) {
+				$doc = new DOMDocument();
+				@$doc->loadHTML('<?xml encoding="UTF-8">' . $string);
+				$title = $doc->getElementsByTagName('title');
+				if ($title->length > 0) {
+					$url_title = $title->item(0)->nodeValue;
+				}
+				if (stripos($parsed_url['host'], "youtube.com") !== false) {
+					$q = $this->parse_query($url);
+					if (isset($q['v'])) {
+						$images_array[] = "http://img.youtube.com/vi/" . $q['v'] . "/1.jpg";
+					}
+				}
+				if (count($images_array) == 0) {
+					$images = $doc->getElementsByTagName('img');
+					for ($i = 0; $i < $images->length; $i++) {
+						if ($attr_src = $images->item($i)->getAttributeNode('src')) {
+							if ($abs_url = $this->relative2absolute($url, $attr_src->nodeValue)) {
+								$images_array[] = $abs_url;
+							}
+						}
+					}
+				}
+				$url_tags = array();
+				$tags = $doc->getElementsByTagName('meta');
+				for ($i = 0; $i < $tags->length; $i++) {
+					if ($attr_name = $tags->item($i)->getAttributeNode('name')) {
+						if ($attr_content = $tags->item($i)->getAttributeNode('content')) {
+							$url_tags[$attr_name->nodeValue] = $attr_content->nodeValue;
+						}
+					}
+				}
+				if (!isset($url_tags['description'])) {
+
+					$tagStripper = new Zend_Filter_StripTags();
+					$url_description = mb_substr($tagStripper->filter(preg_replace('#<script[^>]*>.*?</script>#is', "", preg_replace('#<style[^>]*>.*?</style>#is', "", $string))), 0, 255);
+				} else {
+					$url_description = $url_tags['description'];
+				}
+			}
+		} else {
+			$this->view->http_status = 404;
+		}
+		$out = array(
+			"url" => $url,
+			"title" => trim($url_title),
+			"description" => trim($url_description),
+			"images_count" => sizeof($images_array),
+			"images" => $images_array,
+		);
+		echo json_encode($out);
+	}
+	
 	private function parse_query($var) {
 		/**
 		 *  Use this function to parse out the query array element from

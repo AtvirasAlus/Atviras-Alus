@@ -1,54 +1,213 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#new_filter_select").change(function(){
+			window.location.href = "/filter/"+$(this).val();
+		});
+	});
+</script>
+<script type="text/javascript">
+	var timeOutIdle = null;
+	var currentURL = null;
+	var currentImage = null;
+	var imageSize = null;
+	function preview() {
+		clearTimeout(timeOutIdle);
+		timeOutIdle = setTimeout("getPreview()", 1000);
+	}
+	function getPreview() {
+		var curl = getcURL($('#new_tweet_message').val());
+		if (curl == null) {
+			currentURL = curl;
+			return false;
+		} else if (curl != currentURL) {
+			currentURL = curl;
+			$('#loader').html('<img src="/public/images/load.gif">');
+			$('#loader').show();
+			$.getJSON("/tweet/getimages", {
+				url: currentURL
+			}, function (data) {
+				$("#new_tweet_url").val("");
+				$("#new_tweet_title").val("");
+				$("#new_tweet_description").val("");
+				$("#new_tweet_image").val("");
+				if (data.images_count > 0){
+					$("#tt .tt_images .tt_image_total").html("<span>1</span> / "+data.images_count);
+					$("#tt .tt_images .tt_image").html("");
+					$.each(data.images, function(key, val) {
+						$("#tt .tt_images .tt_image").html($("#tt .tt_images .tt_image").html() + '<img src="'+val+'" style="width: 70px; max-heigt: 70px; display: none;" class="t_image t_image_'+key+'" />');
+					});
+					$("#tt .tt_images .tt_image .t_image_0").show();
+					currentImage = 0;
+					$("#new_tweet_image").val($("#tt .tt_images .tt_image .t_image_"+currentImage).attr("src"));
+				} else {
+					$("#tt .tt_images").hide();
+				}
+				imageSize = data.images_count;
+				$("#tt .tt_info .tt_title").html(data.title);
+				$("#tt .tt_info .tt_description").html(data.description);
+				//$("#loader").html("");
+				$("#loader").html($("#tt").html());
+				$("#new_tweet_url").val(data.url);
+				$("#new_tweet_title").val(data.title);
+				$("#new_tweet_description").val(data.description);
+				rebindlinks();
+			});
+		}
+	}
+	function rebindlinks(){
+		$(".tt_link_next").click(function(){
+			if (currentImage < imageSize - 1){
+				$(".t_image").hide();
+				currentImage = currentImage + 1;
+				$("#loader .tt_images .tt_image_total span").html(currentImage + 1);
+				$("#new_tweet_image").val($(".t_image_"+currentImage).attr("src"));
+				$(".t_image_"+currentImage).show();
+			}
+		});
+		$(".tt_link_prev").click(function(){
+			if (currentImage > 0){
+				$(".t_image").hide();
+				currentImage = currentImage - 1;
+				$("#loader .tt_images .tt_image_total span").html(currentImage + 1);
+				$("#new_tweet_image").val($(".t_image_"+currentImage).attr("src"));
+				$(".t_image_"+currentImage).show();
+			}
+		});
+	}
+	$(document).ready(function () {
+		$('#new_tweet_message').bind("paste", preview);
+		$('#new_tweet_message').bind("click", preview);
+		$("#new_tweet").click(function(){
+			if (!$("#tweet_form").is(":visible")){
+				$("#tweet_form").show('slide', {direction: 'up'});
+			}
+		});
+	});
+	function getcURL(url) {
+		var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+		var cURL = RegExp.exec(url);
+		if (cURL != null) {
+			return cURL[0];
+		} else {
+			return null;
+		}
+	}
+</script>
 <div class="new_home">
 	<div class="new_left">
 		<div class="inner_container" style="padding-top: 20px;">
-			<?php
-			foreach ($this->items as $item):
-				switch($item['type']){
-					case "idea_comment":
-						include("partials/idea_comment.phtml");
-					break;
-					case "idea":
-						include("partials/idea.phtml");
-					break;
-					case "forum_post":
-						include("partials/forum_post.phtml");
-					break;
-					case "article":
-						include("partials/article.phtml");
-					break;
-					case "article_comment":
-						include("partials/article_comment.phtml");
-					break;
-					case "session":
-						$temp_rname = trim($item['session_recipe_name']);
-						if ($item['session_recipe_publish'] == 1 && !empty($temp_rname))
-							include("partials/session.phtml");
-					break;
-					case "event":
-						if ($item['event_published'] == 1)
-							include("partials/event.phtml");
-					break;
-					case "recipe":
-						include("partials/recipe.phtml");
-					break;
-					case "recipe_comment":
-						include("partials/recipe_comment.phtml");
-					break;
-					case "tweet":
-						include("partials/tweet.phtml");
-					break;
-					case "user":
-						include("partials/user.phtml");
-					break;
-					case "rss":
-						include("partials/rss.phtml");
-					break;
-					case "blog":
-						include("partials/blog.phtml");
-					break;
-				}
-			endforeach;
-			?>
+			<div class="new_filter">
+				<div>
+					<input type="button" name="new_tweet" id="new_tweet" value="Sukurti burbuliatoriaus įrašą" />
+					<select id="new_filter_select" name="new_filter_select">
+						<option value="all" <?=($this->filter_type == "all") ? 'selected="selected"' : ''?>>Visi įrašai</option>
+						<optgroup label="Receptai">
+							<option value="recipe" <?=($this->filter_type == "recipe") ? 'selected="selected"' : ''?>>Receptai</option>
+							<option value="recipe_comment" <?=($this->filter_type == "recipe_comment") ? 'selected="selected"' : ''?>>Receptų komentarai</option>
+							<option style="font-weight: bold;" value="session" <?=($this->filter_type == "session") ? 'selected="selected"' : ''?>>Virimai</option>
+						</optgroup>
+						<optgroup label="Forumas">
+							<option value="forum_post" <?=($this->filter_type == "forum_post") ? 'selected="selected"' : ''?>>Forumo žinutės</option>
+						</optgroup>
+						<optgroup label="Įvykiai">
+							<option value="event" <?=($this->filter_type == "event") ? 'selected="selected"' : ''?>>Įvykiai</option>
+						</optgroup>
+						<optgroup label="Idėjos">
+							<option value="idea" <?=($this->filter_type == "idea") ? 'selected="selected"' : ''?>>Idėjos</option>
+							<option value="idea_comment" <?=($this->filter_type == "idea_comment") ? 'selected="selected"' : ''?>>Idėjų komentarai</option>
+						</optgroup>
+						<optgroup label="Skaitykla">
+							<option value="tweet" <?=($this->filter_type == "tweet") ? 'selected="selected"' : ''?>>Burbuliatorius</option>
+							<option value="blog" <?=($this->filter_type == "blog") ? 'selected="selected"' : ''?>>Dienoraščiai</option>
+							<option value="rss" <?=($this->filter_type == "rss") ? 'selected="selected"' : ''?>>Naujienos iš kitų svetainių</option>
+							<option value="article" <?=($this->filter_type == "article") ? 'selected="selected"' : ''?>>Straipsniai</option>
+							<option value="article_comment" <?=($this->filter_type == "article_comment") ? 'selected="selected"' : ''?>>Straipsnių komentarai</option>
+						</optgroup>
+						<optgroup label="Aludariai">
+							<option value="user" <?=($this->filter_type == "user") ? 'selected="selected"' : ''?>>Nauji aludariai</option>
+						</optgroup>
+					</select>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div id="tweet_form" style="display: none;">
+				<form action="/tweet/submitnew" method="post">
+					<textarea id="new_tweet_message" name="new_tweet_message"></textarea>
+					<input type="hidden" id="new_tweet_url" name="new_tweet_url" value="" />
+					<input type="hidden" id="new_tweet_image" name="new_tweet_image" value="" />
+					<input type="hidden" id="new_tweet_title" name="new_tweet_title" value="" />
+					<input type="hidden" id="new_tweet_description" name="new_tweet_description" value="" />
+					<div id="loader" style="text-align: left; padding: 10px 20px 10px 20px; display: none;"></div>
+					<div>
+						<input type="submit" value="Skelbti" class="ui-button">
+					</div>
+				</form>
+			</div>
+			<div id="tt" style="display: none;">
+				<div class="tt_images">
+					<div class="tt_image"></div>
+					<div class="tt_image_links">
+						<a href="javascript:void(0);" class="tt_link_prev">&lt;</a>
+						<a href="javascript:void(0);" class="tt_link_next">&gt;</a>
+					</div>
+					<div class="tt_image_total"></div>
+				</div>
+				<div class="tt_info">
+					<div class="tt_title"></div>
+					<div class="tt_description"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div style="margin-top: 10px;">
+				<?php
+				foreach ($this->items as $item):
+					switch($item['type']){
+						case "idea_comment":
+							include("partials/idea_comment.phtml");
+						break;
+						case "idea":
+							include("partials/idea.phtml");
+						break;
+						case "forum_post":
+							include("partials/forum_post.phtml");
+						break;
+						case "article":
+							include("partials/article.phtml");
+						break;
+						case "article_comment":
+							include("partials/article_comment.phtml");
+						break;
+						case "session":
+							$temp_rname = trim($item['session_recipe_name']);
+							if ($item['session_recipe_publish'] == 1 && !empty($temp_rname))
+								include("partials/session.phtml");
+						break;
+						case "event":
+							if ($item['event_published'] == 1)
+								include("partials/event.phtml");
+						break;
+						case "recipe":
+							include("partials/recipe.phtml");
+						break;
+						case "recipe_comment":
+							include("partials/recipe_comment.phtml");
+						break;
+						case "tweet":
+							include("partials/tweet.phtml");
+						break;
+						case "user":
+							include("partials/user.phtml");
+						break;
+						case "rss":
+							include("partials/rss.phtml");
+						break;
+						case "blog":
+							include("partials/blog.phtml");
+						break;
+					}
+				endforeach;
+				?>
+			</div>
 		</div>
 	</div>
 	<div class="new_right">

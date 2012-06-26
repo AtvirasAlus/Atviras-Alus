@@ -63,6 +63,7 @@ function _initAutoLoad() {
 		$router->addRoute("calculus_recipe",new Zend_Controller_Router_Route("index/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
 		//$router->addRoute("calculus",new Zend_Controller_Router_Route("/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
 		$router->addRoute("group",new Zend_Controller_Router_Route("/groups/view/:group_id",array("module"=>"default","controller" => "groups","action" => "view","group_id"=>0)));
+		$router->addRoute("index_filter",new Zend_Controller_Router_Route("/filter/:type",array("module"=>"default","controller" => "index","action" => "index", "type"=>'all')));
 		$router->addRoute("idejos",new Zend_Controller_Router_Route("/idejos/:page",array("module"=>"default","controller" => "idea","action" => "list","page"=>0)));
 		$router->addRoute("idejos_my",new Zend_Controller_Router_Route("/idejos/mano/:page",array("module"=>"default","controller" => "idea","action" => "list_my","page"=>0)));
 		$router->addRoute("idejos_unvoted",new Zend_Controller_Router_Route("/idejos/balsavimas/:page",array("module"=>"default","controller" => "idea","action" => "list_unvoted","page"=>0)));

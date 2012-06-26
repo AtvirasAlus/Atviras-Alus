@@ -1730,10 +1730,10 @@ ul.ui-autocomplete li a {
 	width: 70px;
 	overflow: hidden;
 	margin-left: 10px;
+	margin-right: 10px;
 }
 .tw_link_text {
 	float: left;
-	margin-left: 10px;
 }
 .tw_link_text span {
 	font-weight: bold;
