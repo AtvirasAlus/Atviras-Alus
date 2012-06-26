@@ -1,30 +1,32 @@
-<div class="new_block block_forum_post">
-	<div class="avatar">
-		<img  src="/public/images/new/atvirasalus.png" border="0"/>
-	</div>
-	<div class="post">
-		<div class="post_action">
-			Paskelbtas naujas įvykis
-			<a href="/ivykis/<?= $item["item_id"] ?>-<?= $this->urlMaker($item["event_name"]) ?>">
-				<?= $item["event_name"] ?>
-			</a>
+<div class="new_block ico_event">
+	<div class="white">
+		<div class="avatar">
+			<img  src="/public/images/new/atvirasalus.png" border="0"/>
 		</div>
-		<div class="post_content">
-			<?php
-			$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p")));
-			$f = new Entities_Filter_Excerpt();
-			$item['event_resume'] = str_replace("\n", "<br />", $item['event_resume']);
-			?>
-			<a href="/ivykis/<?= $item["item_id"] ?>-<?= $this->urlMaker($item["event_name"]) ?>" style="display: block; color: #666">
-				<?=$f->filter($fhtml->filter($item['event_resume']), 30); ?>
-			</a>
-			<div style="margin-top: 5px;">
-				<b>Renginio pradžia: </b> <?=date("Y-m-d H:i", strtotime($item['event_start']))?>
+		<div class="post">
+			<div class="post_action">
+				Paskelbtas naujas įvykis
+				<a href="/ivykis/<?= $item["item_id"] ?>-<?= $this->urlMaker($item["event_name"]) ?>">
+					<?= $item["event_name"] ?>
+				</a>
+			</div>
+			<div class="post_content">
+				<?php
+				$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p")));
+				$f = new Entities_Filter_Excerpt();
+				$item['event_resume'] = str_replace("\n", "<br />", $item['event_resume']);
+				?>
+				<a href="/ivykis/<?= $item["item_id"] ?>-<?= $this->urlMaker($item["event_name"]) ?>" style="display: block; color: #666">
+					<?=$f->filter($fhtml->filter($item['event_resume']), 30); ?>
+				</a>
+				<div style="margin-top: 5px;">
+					<b>Renginio pradžia: </b> <?=date("Y-m-d H:i", strtotime($item['event_start']))?>
+				</div>
+			</div>
+			<div class="post_stamp">
+				<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
 			</div>
 		</div>
-		<div class="post_stamp">
-			<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
-		</div>
+		<div class="clear"></div>
 	</div>
-	<div class="clear"></div>
 </div>
