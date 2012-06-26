@@ -40,6 +40,24 @@
 					<route>default</route>
 					<restrict>1</restrict>
 				</mail-out>
+				<mail-inread>
+					<label>Laiško skaitymas</label>
+					<module>default</module>
+					<controller>mail</controller>
+					<action>read</action>
+					<route>default</route>
+					<restrict>1</restrict>
+					<visible>0</visible>
+				</mail-inread>
+				<mail-outread>
+					<label>Laiško skaitymas</label>
+					<module>default</module>
+					<controller>mail</controller>
+					<action>readoutbox</action>
+					<route>default</route>
+					<restrict>1</restrict>
+					<visible>0</visible>
+				</mail-outread>
 			</pages>
 		</mail>
 		<styles>
