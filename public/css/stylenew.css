@@ -359,3 +359,7 @@ a, a:visited {
 	padding: 4px;
 	text-align: right;
 }
+.home_more {
+	text-align: center;
+	margin-top: 10px;
+}

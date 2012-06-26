@@ -82,7 +82,24 @@
 				$("#tweet_form").show('slide', {direction: 'up'});
 			}
 		});
+		rebindlinks2();
 	});
+	function rebindlinks2(){
+		$(".home_more input").click(function(){
+			$(".home_more").html('<img src="/public/images/load.gif">');
+			var last_id = $(this).attr("data-last");
+			var type_name = $(this).attr("data-type");
+			$.ajax({
+				url: "/index/more/last/"+last_id+"/type/"+type_name,
+				success: function(data) {
+					$(".home_more").hide();
+					$("#home_items").append(data);
+					rebindlinks2();
+				}
+			});
+		});
+	
+	}
 	function getcURL(url) {
 		var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
 		var cURL = RegExp.exec(url);
@@ -158,9 +175,11 @@
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div style="margin-top: 10px;">
+			<div style="margin-top: 10px;" id="home_items">
 				<?php
+				$last_id = 0;
 				foreach ($this->items as $item):
+					$last_id = $item['id'];
 					switch($item['type']){
 						case "idea_comment":
 							include("partials/idea_comment.phtml");
@@ -207,6 +226,9 @@
 					}
 				endforeach;
 				?>
+				<div class="home_more">
+					<input type="button" value="Užkrauti daugiau įrašų" id="load_more" class="ui-button" data-last="<?=$last_id?>" data-type="<?=$this->filter_type?>"/>
+				</div>
 			</div>
 		</div>
 	</div>

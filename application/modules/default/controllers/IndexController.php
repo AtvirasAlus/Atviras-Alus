@@ -37,6 +37,69 @@ class IndexController extends Zend_Controller_Action {
 		}
 		$this->_redirect('/');
 	}
+	
+	public function moreAction(){
+		$this->_helper->layout->disableLayout();
+		$db = Zend_Registry::get("db");
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		if ($this->show_beta === true){
+			$filter_type = $this->getRequest()->getParam("type");
+			$last_id = $this->getRequest()->getParam("last");
+			if (!isset($filter_type) || empty($filter_type)) $filter_type = "all";
+			$this->view->filter_type = $filter_type;
+			$select = $db->select()
+					->from("activity")
+					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
+					->order("posted DESC")
+					->where("id < '".$last_id."'")
+					->limit(30);
+			switch($filter_type){
+				case "idea":
+					$select->where("type = 'idea'");
+				break;
+				case "idea_comment":
+					$select->where("type = 'idea_comment'");
+				break;
+				case "forum_post":
+					$select->where("type = 'forum_post'");
+				break;
+				case "article":
+					$select->where("type = 'article'");
+				break;
+				case "article_comment":
+					$select->where("type = 'article_comment'");
+				break;
+				case "session":
+					$select->where("type = 'session'");
+				break;
+				case "event":
+					$select->where("type = 'event'");
+				break;
+				case "recipe":
+					$select->where("type = 'recipe'");
+				break;
+				case "recipe_comment":
+					$select->where("type = 'recipe_comment'");
+				break;
+				case "tweet":
+					$select->where("type = 'tweet'");
+				break;
+				case "user":
+					$select->where("type = 'user'");
+				break;
+				case "rss":
+					$select->where("type = 'rss'");
+				break;
+				case "blog":
+					$select->where("type = 'blog'");
+				break;
+			}
+			$result = $db->fetchAll($select);
+			$this->view->items = $result;
+		}
+		
+	}
 
 	public function indexAction() {
 		// $this->view->addHelperPath(APPLICATION_PATH .'/default/helpers', 'View_Helper');
@@ -95,7 +158,7 @@ class IndexController extends Zend_Controller_Action {
 					->from("activity")
 					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
 					->order("posted DESC")
-					->limit(100);
+					->limit(30);
 			switch($filter_type){
 				case "idea":
 					$select->where("type = 'idea'");
