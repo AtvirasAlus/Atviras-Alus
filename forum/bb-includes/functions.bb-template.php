@@ -73,7 +73,22 @@ function bb_get_default_template( $file )
 
 function bb_get_header()
 {
-	bb_load_template( 'header.php' );
+	$uid = (int)bb_get_current_user_info( 'id' );
+	$show_beta = false;
+	if (isset($uid) && !empty($uid)){
+		$sql = "SELECT * FROM users_attributes WHERE user_id='".$uid."' LIMIT 1";
+		$result = mysql_query($sql) or die(mysql_error());
+		while($row = mysql_fetch_assoc($result)){
+			if ($row['beta_tester'] == 1){
+				$show_beta = true;
+			}
+		}
+	}
+	if ($show_beta === false){
+		bb_load_template( 'header.php' );
+	} else {
+		bb_load_template( 'header_new.php' );
+	}
 }
 
 function bb_language_attributes( $xhtml = 0 )
@@ -187,7 +202,22 @@ function bb_get_theme_uri( $theme = false )
 
 function bb_get_footer()
 {
-	bb_load_template( 'footer.php' );
+	$uid = (int)bb_get_current_user_info( 'id' );
+	$show_beta = false;
+	if (isset($uid) && !empty($uid)){
+		$sql = "SELECT * FROM users_attributes WHERE user_id='".$uid."' LIMIT 1";
+		$result = mysql_query($sql) or die(mysql_error());
+		while($row = mysql_fetch_assoc($result)){
+			if ($row['beta_tester'] == 1){
+				$show_beta = true;
+			}
+		}
+	}
+	if ($show_beta === false){
+		bb_load_template( 'footer.php' );
+	} else {
+		bb_load_template( 'footer_new.php' );
+	}
 }
 
 function bb_head()
