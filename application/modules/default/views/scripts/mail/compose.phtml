@@ -15,7 +15,7 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 			<dt>Adresatas:</dt>
 			<dd>
 					<? $mail_to = isset($_GET["token"]) ? trim($_GET["token"]) : ""; ?>
-					<input type="text" id="mail_to" name="mail_to" value="<?= base64_decode($mail_to); ?>"/> 
+				<input type="text" id="mail_to" name="mail_to" value="<?= urldecode(base64_decode($mail_to)); ?>"/> 
 			</dd>
 			<div class="clear"></div>
 		</dl>
