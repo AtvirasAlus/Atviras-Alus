@@ -363,3 +363,20 @@ a, a:visited {
 	text-align: center;
 	margin-top: 10px;
 }
+.home_user_avatar {
+	float: left;
+	width: 50px;
+	margin-right: 2px;
+	margin-bottom: 2px;
+}
+.home_user_name {
+	float: left;
+	font-weight: bold;
+	line-height: 50px;
+	width: 150px;
+	overflow: hidden;
+	height: 50px;
+}
+.home_user {
+	margin-bottom: 5px;
+}

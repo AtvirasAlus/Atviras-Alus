@@ -215,6 +215,18 @@ class IndexController extends Zend_Controller_Action {
 					->where("beer_brew_sessions.session_primarydate >= (curdate() - interval 30 day)");
 			$this->view->total_brewed = $db->fetchRow($select);
 
+			$select = $db->select()
+					->from("users", array("user_name", "user_id", "user_email"))
+					->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.brewer_id=users.user_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
+					->where("users.user_active = ?", '1')
+					->group("users.user_id")
+					->order("user_lastlogin DESC")
+					->order("count DESC")
+					->order("recipe_created DESC")
+					->order("user_name ASC")
+					->limit(16);
+			$this->view->users = $db->fetchAll($select);
+
 			$this->_helper->viewRenderer('indexnew'); 
 			
 		} else {
