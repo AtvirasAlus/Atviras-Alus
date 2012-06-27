@@ -4,6 +4,9 @@ body {
 a, a:visited {
 	color: #A8582D;
 }
+a:hover {
+	color: #F8966E;
+}
 .body_center {
 	width: 1051px;
 	overflow: hidden;
