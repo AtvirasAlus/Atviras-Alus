@@ -31,7 +31,7 @@
 		<div class="brewer_info_avatar">
 			<img src="http://www.gravatar.com/avatar/<?=md5($this->user_info['user_email']);?>?rating=G&size=80&default=mm" border="0"/>
 			<div class="brewer_info_actions">
-				<a href="/mail/compose?token=<? print base64_encode($this->user_info['user_name']);?>" rel="nofollow">
+				<a href="/mail/compose?token=<? print urlencode(base64_encode($this->user_info['user_name']));?>" rel="nofollow">
 					Rašyti žinutę
 				</a>
 			</div>
