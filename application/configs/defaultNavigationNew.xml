@@ -298,7 +298,7 @@
 					<visible>0</visible>
 				</read>
 				<tweets>
-					<label>Burbuliatorius</label>
+					<label>Aludarių naujienos</label>
 					<module>default</module>
 					<controller>tweet</controller>
 					<action>all</action>

@@ -115,7 +115,7 @@
 		<div class="inner_container" style="padding-top: 20px;">
 			<div class="new_filter">
 				<div>
-					<input type="button" name="new_tweet" id="new_tweet" value="Sukurti burbuliatoriaus įrašą" />
+					<input type="button" name="new_tweet" id="new_tweet" value="Pasidalinti naujiena ar nuoroda" />
 					<select id="new_filter_select" name="new_filter_select">
 						<option value="all" <?=($this->filter_type == "all") ? 'selected="selected"' : ''?>>Visi įrašai</option>
 						<optgroup label="Receptai">
@@ -134,7 +134,7 @@
 							<option value="idea_comment" <?=($this->filter_type == "idea_comment") ? 'selected="selected"' : ''?>>Idėjų komentarai</option>
 						</optgroup>
 						<optgroup label="Skaitykla">
-							<option value="tweet" <?=($this->filter_type == "tweet") ? 'selected="selected"' : ''?>>Burbuliatorius</option>
+							<option value="tweet" <?=($this->filter_type == "tweet") ? 'selected="selected"' : ''?>>Aludarių naujienos</option>
 							<option value="blog" <?=($this->filter_type == "blog") ? 'selected="selected"' : ''?>>Dienoraščiai</option>
 							<option value="rss" <?=($this->filter_type == "rss") ? 'selected="selected"' : ''?>>Naujienos iš kitų svetainių</option>
 							<option value="article" <?=($this->filter_type == "article") ? 'selected="selected"' : ''?>>Straipsniai</option>
