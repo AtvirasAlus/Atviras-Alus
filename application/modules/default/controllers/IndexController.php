@@ -150,6 +150,14 @@ class IndexController extends Zend_Controller_Action {
 			$this->view->unvoted = sizeof($ids)-$voted['kiekis'];
 		}
 		if ($this->show_beta === true){
+			$this->view->is_admin = 0;
+			$this->view->user_id = 0;
+			if (isset($user_info) && !empty($user_info)){
+				$this->view->user_id = $user_info->user_id;
+				if ($user_info->user_type == "admin"){
+					$this->view->is_admin = 1;
+				}
+			}
 			$filter_type = $this->getRequest()->getParam("type");
 			if (!isset($filter_type) || empty($filter_type)) $filter_type = "all";
 			$this->view->filter_type = $filter_type;

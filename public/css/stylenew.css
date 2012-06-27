@@ -386,3 +386,12 @@ a:hover {
 input, select, .editable-select-options, .ui-autocomplete {
 	text-align: left;
 }
+.tweet_del {
+	color: #666;
+	display: inline-block;
+	margin-right: 20px;
+}
+.index_events {
+	background-color: #fff;
+	border: none;
+}

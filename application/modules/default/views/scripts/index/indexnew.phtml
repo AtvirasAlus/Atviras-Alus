@@ -3,6 +3,18 @@
 		$("#new_filter_select").change(function(){
 			window.location.href = "/filter/"+$(this).val();
 		});
+		$(".tweet_del").click(function(){
+			if (confirm('Ar tikrai norite ištrinti šį įrašą?')) {
+				var item = $(this).attr("data-item");
+				$.post("/tweet/removetweet/",{
+					id: item
+				}, function(msg){	
+					if(parseInt(msg)!=0){
+						$("#tweet-"+item).hide();
+					}	
+				});
+			}
+		});
 	});
 </script>
 <script type="text/javascript">
@@ -83,6 +95,15 @@
 			}
 		});
 		rebindlinks2();
+		$("#close_tweet").click(function(){
+			$("#new_tweet_message").val("");
+			$("#new_tweet_url").val("");
+			$("#new_tweet_image").val("");
+			$("#new_tweet_title").val("");
+			$("#new_tweet_description").val("");
+			$("#tweet_form").hide('slide', {direction: 'up'});
+			$("#loader").hide();
+		});
 	});
 	function rebindlinks2(){
 		$(".home_more input").click(function(){
@@ -156,6 +177,7 @@
 					<input type="hidden" id="new_tweet_description" name="new_tweet_description" value="" />
 					<div id="loader" style="text-align: left; padding: 10px 20px 10px 20px; display: none;"></div>
 					<div>
+						<input type="button" value="Atšaukti" id="close_tweet" class="ui-button">
 						<input type="submit" value="Skelbti" class="ui-button">
 					</div>
 				</form>

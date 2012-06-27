@@ -1,4 +1,4 @@
-<div class="new_block ico_tweet">
+<div class="new_block ico_tweet" id="tweet-<?=$item['item_id']?>">
 	<div class="white">
 		<div class="avatar">
 			<a href="/brewers/<?= $item['user_id']; ?>">
@@ -51,6 +51,13 @@
 				?>
 			</div>
 			<div class="post_stamp">
+				<?php
+				if ($item['user_id'] == $this->user_id || $this->is_admin == "1") {
+					?>
+					<a href="javascript:void(0)" class="tweet_del" data-item="<?=$item['item_id']?>">Trinti</a>
+					<?php
+				}
+				?>
 				<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
 			</div>
 		</div>
