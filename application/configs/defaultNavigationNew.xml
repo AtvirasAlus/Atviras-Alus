@@ -283,11 +283,6 @@
 			<action>list</action>
 			<route>skaitykla</route>
 			<pages>
-				<blog>
-					<label>Dienoraščiai</label>
-					<module>blog</module>
-					<route>default</route>
-				</blog>
 				<articles>
 					<label>Straipsniai</label>
 					<module>default</module>
@@ -302,6 +297,11 @@
 					<action>read</action>
 					<visible>0</visible>
 				</read>
+				<blog>
+					<label>Dienoraščiai</label>
+					<module>blog</module>
+					<route>default</route>
+				</blog>
 				<tweets>
 					<label>Aludarių naujienos</label>
 					<module>default</module>
