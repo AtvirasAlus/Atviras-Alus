@@ -380,3 +380,6 @@ a, a:visited {
 .home_user {
 	margin-bottom: 5px;
 }
+input, select, .editable-select-options, .ui-autocomplete {
+	text-align: left;
+}
