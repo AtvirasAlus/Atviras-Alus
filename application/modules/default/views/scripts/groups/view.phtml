@@ -50,7 +50,7 @@
 		<div class="clear"></div>
 	</div>
             <div class="usergroup_actions">
-                    <a href="/mail/compose?token=<? print base64_encode($this->group['group_name']); ?>" rel="nofollow">
+                    <a href="/mail/compose?token=<? print urlencode(base64_encode($this->group['group_name'])); ?>" rel="nofollow">
                             Rašyti grupei žinutę
                     </a>
                 
