@@ -120,6 +120,7 @@ class TweetController extends Zend_Controller_Action {
 			}
 			$inserts["tweet_owner"] = $storage_data->user_id;
 			$db->insert("beer_tweets", $inserts);
+			@$this->removeCache('tweet_latest');
 			$this->_redirect("/index");
 		}
 	}
