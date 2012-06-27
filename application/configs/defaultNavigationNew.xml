@@ -283,6 +283,11 @@
 			<action>list</action>
 			<route>skaitykla</route>
 			<pages>
+				<blog>
+					<label>Dienoraščiai</label>
+					<module>blog</module>
+					<route>default</route>
+				</blog>
 				<articles>
 					<label>Straipsniai</label>
 					<module>default</module>
