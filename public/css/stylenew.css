@@ -42,13 +42,16 @@ a:hover {
 	text-align: left;
 }
 .new_logo {
+	margin-bottom: 20px;
+	text-align: center;
+}
+.new_logo a {
+	margin: auto;
 	display: block;
 	width: 135px;
 	height: 122px;
 	background-image: url("/public/images/logo.png");
 	background-repeat: no-repeat;
-	margin-left: 10px;
-	margin-bottom: 20px;
 }
 .new_userinfo {
 	float: right;
@@ -414,4 +417,127 @@ input, select, .editable-select-options, .ui-autocomplete {
 	height: 10px;
 	overflow: hidden;
 	background-color: #ccc;
+}
+.new_user_info_block_username {
+	line-height: 25px;
+	font-weight: bold;
+	margin-top: 5px;
+	float: left;
+}
+.new_user_info_block_mail {
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin-top: 5px;
+	margin-left: 20px;
+}
+.new_user_info_block_mail a {
+	width: 25px;
+	height: 25px;
+	background-image: url("/public/images/new/ico_mail.png");
+	background-position: 0px 0px;
+	display: block;
+	text-align: right;
+}
+.new_user_info_block_mail a:hover {
+	background-position: 0px 25px;
+}
+.new_user_info_block_mail a span {
+	color: #fff;
+	background-color: #ee0000;
+	font-size: 12px;
+	padding: 0px 3px 0px 3px;
+	margin-top: 10px;
+	font-weight: bold;
+	display: inline-block;
+}
+.new_user_info_block_settings {
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+.new_user_info_block_settings a {
+	width: 25px;
+	height: 25px;
+	background-image: url("/public/images/new/ico_settings.png");
+	background-position: 0px 0px;
+	display: block;
+	text-align: right;
+}
+.new_user_info_block_settings a:hover {
+	background-position: 0px 25px;
+}
+.new_user_info_block_logout {
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+.new_user_info_block_logout a {
+	width: 25px;
+	height: 25px;
+	background-image: url("/public/images/new/ico_logout.png");
+	background-position: 0px 0px;
+	display: block;
+	text-align: right;
+}
+.new_user_info_block_logout a:hover {
+	background-position: 0px 25px;
+}
+.new_user_info_block_recipes {
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+.new_user_info_block_recipes a {
+	width: 25px;
+	height: 25px;
+	background-image: url("/public/images/new/ico_myrecipes.png");
+	background-position: 0px 0px;
+	display: block;
+	text-align: right;
+}
+.new_user_info_block_recipes a:hover {
+	background-position: 0px 25px;
+}
+.new_user_info_block_sessions {
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+.new_user_info_block_sessions a {
+	width: 25px;
+	height: 25px;
+	background-image: url("/public/images/new/ico_sessions.png");
+	background-position: 0px 0px;
+	display: block;
+	text-align: right;
+}
+.new_user_info_block_sessions a:hover {
+	background-position: 0px 25px;
+}
+.new_user_info_block_favorites {
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+.new_user_info_block_favorites a {
+	width: 25px;
+	height: 25px;
+	background-image: url("/public/images/new/ico_favorites.png");
+	background-position: 0px 0px;
+	display: block;
+	text-align: right;
+}
+.new_user_info_block_favorites a:hover {
+	background-position: 0px 25px;
 }

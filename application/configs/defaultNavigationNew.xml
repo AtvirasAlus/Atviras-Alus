@@ -8,58 +8,6 @@
 			<action>index</action>
 			<route>default</route>
 		</home>
-		<mail>
-			<label>Paštas</label>
-			<module>default</module>
-			<controller>mail</controller>
-			<action>inbox</action>
-			<route>default</route>
-			<restrict>1</restrict>
-			<pages>
-				<mail-in>
-					<label>Gautieji</label>
-					<module>default</module>
-					<controller>mail</controller>
-					<action>inbox</action>
-					<route>default</route>
-					<restrict>1</restrict>
-				</mail-in>
-				<mail-compose>
-					<label>Rašyti laišką</label>
-					<module>default</module>
-					<controller>mail</controller>
-					<action>compose</action>
-					<route>default</route>
-					<restrict>1</restrict>
-				</mail-compose>
-				<mail-out>
-					<label>Išsiųsti laiškai</label>
-					<module>default</module>
-					<controller>mail</controller>
-					<action>outbox</action>
-					<route>default</route>
-					<restrict>1</restrict>
-				</mail-out>
-				<mail-inread>
-					<label>Laiško skaitymas</label>
-					<module>default</module>
-					<controller>mail</controller>
-					<action>read</action>
-					<route>default</route>
-					<restrict>1</restrict>
-					<visible>0</visible>
-				</mail-inread>
-				<mail-outread>
-					<label>Laiško skaitymas</label>
-					<module>default</module>
-					<controller>mail</controller>
-					<action>readoutbox</action>
-					<route>default</route>
-					<restrict>1</restrict>
-					<visible>0</visible>
-				</mail-outread>
-			</pages>
-		</mail>
 		<styles>
 			<label>Alaus stiliai</label>
 			<module>default</module>

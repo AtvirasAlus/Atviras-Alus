@@ -39,19 +39,13 @@
 		<div class="body_center">
 			<div id="main_container">
 				<div id="left">
-					<a href="/" class="new_logo" title="Atviras alus"></a>
 					<?php
 					$storage = new Zend_Auth_Storage_Session();
 					$user_info = $storage->read();
 					$user_id = isset($user_info->user_id) ? $user_info->user_id : 0;
-					if ($user_id != 0){
-						$mail = new Entities_Mail($user_info);
-						$mail_count = $mail->getUnreadCount();
-					} else {
-						$mail_count = 0;
-					}
 					?>
 					<div id="new_menu">
+						<div class="new_logo"><a href="/" title="Atviras alus"></a></div>
 						<ul id="new_topmenu">
 						<?php
 						$this->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigationNew.xml","nav")));
@@ -68,13 +62,6 @@
 									<li>
 										<a href="<?=$page->getHref();?>" class="<?=$class?>">
 											<?=$page->label;?>
-											<?php
-											if ($page->label == "Paštas" && $mail_count > 0){
-												?>
-												<span><?=$mail_count?></span>
-												<?php
-											}
-											?>
 										</a>
 										<?php
 										if ($page->isActive(true)) {

@@ -1,62 +1,83 @@
 <?php
-	$isloged = isset($this->user_data->user_id);
-	$mail_count = "?";
-	$beta = false;
-?>
-<div id="user_info" style="display:<?= $isloged ? 'block' : 'none'; ?>;">
-	<div id="user_info_label">Prisijungęs:</div>
-	<div id="user_info_name">
-		<span>
-			<?php
-			if ($isloged) {
-				$db = Zend_Registry::get("db");
-				$select = $db->select()
-						->from("users_attributes")
-						->where("users_attributes.user_id = ?", $this->user_data->user_id)
-						->limit(1);
-				$u_atribs= $db->fetchRow($select);
-				if ($u_atribs['beta_tester'] == 1) {
-					$beta = true;
-				}
-
-				$mail = new Entities_Mail($this->user_data);
-				$mail_count = $mail->getUnreadCount();
-				echo $this->user_data->user_name;
-			}
-			?>
-		</span>
-		<?php
-		if ($beta === false) {
-			?>
-			<a rel="nofollow" href="/mail/inbox" id="mail_counter"><?= $mail_count; ?></a>
-			<?php
-		}
+$isloged = isset($this->user_data->user_id);
+$mail_count = "?";
+$beta = false;
+if ($isloged){
+	$db = Zend_Registry::get("db");
+	$select = $db->select()
+			->from("users_attributes")
+			->where("users_attributes.user_id = ?", $this->user_data->user_id)
+			->limit(1);
+	$u_atribs= $db->fetchRow($select);
+	if ($u_atribs['beta_tester'] == 1) {
+		$beta = true;
+	}
+	$mail = new Entities_Mail($this->user_data);
+	$mail_count = $mail->getUnreadCount();
+	if ($beta === true){
 		?>
-	</div>
-	<div class="clear"></div>
-	<ul style="list-style-type:none;" id="user_info_submenu"> 
+		<div class="new_user_info_block">
+			<div class="new_user_info_block_username">
+				<a href="/brewers/<?=$this->user_data->user_id?>"><?=$this->user_data->user_name;?></a>
+			</div>
+			<div class="new_user_info_block_mail">
+				<a href="/mail/inbox" title="Paštas">
+					<?php
+					if ($mail_count > 0){
+						?>
+						<span><?=$mail_count?></span>
+						<?php
+					}
+					?>
+				</a>
+			</div>
+			<div class="new_user_info_block_recipes" title="Mano receptai">
+				<a href="/brewer/recipes"></a>
+			</div>
+			<div class="new_user_info_block_sessions" title="Mano virimai">
+				<a href="/brew-session/brewer"></a>
+			</div>
+			<div class="new_user_info_block_favorites" title="Mėgstamiausi receptai">
+				<a href="/brewer/favorites"></a>
+			</div>
+			<div class="new_user_info_block_settings" title="Paskyros nustatymai">
+				<a href="/brewer/profile"></a>
+			</div>
+			<div class="new_user_info_block_logout" title="Atsijungti">
+				<a href="/auth/logout"></a>
+			</div>
+			<div class="clear"></div>
+		</div>
 		<?php
-		if ($beta === false) {
-			?>
-			<li><a href="/brewer/recipes" rel="nofollow">Receptai</a></li> 
-			<li><a href="/brewer/favorites" rel="nofollow">Mėgstamiausi receptai</a></li> 
-			<li><a href="/mail/inbox" rel="nofollow">Paštas</a></li> 
-			<li><a href="/brew-session/brewer" rel="nofollow">Virimų istorija</a></li>
-			<?php
-		}
+	} else {
 		?>
-		<li><a href="/brewer/profile" rel="nofollow">Paskyra</a></li>
-		<li><a href="/auth/logout" rel="nofollow">Atsijungti</a></li> 
-	</ul> 
-</div>
-<?php
-	if (!$isloged) :
-?> 
+		<div id="user_info" style="display: block;">
+			<div id="user_info_label">Prisijungęs:</div>
+			<div id="user_info_name">
+				<span>
+					<?=$this->user_data->user_name;?>
+				</span>
+				<a rel="nofollow" href="/mail/inbox" id="mail_counter"><?= $mail_count; ?></a>
+			</div>
+			<div class="clear"></div>
+			<ul style="list-style-type:none;" id="user_info_submenu"> 
+				<li><a href="/brewer/recipes" rel="nofollow">Receptai</a></li> 
+				<li><a href="/brewer/favorites" rel="nofollow">Mėgstamiausi receptai</a></li> 
+				<li><a href="/mail/inbox" rel="nofollow">Paštas</a></li> 
+				<li><a href="/brew-session/brewer" rel="nofollow">Virimų istorija</a></li>
+				<li><a href="/brewer/profile" rel="nofollow">Paskyra</a></li>
+				<li><a href="/auth/logout" rel="nofollow">Atsijungti</a></li> 
+			</ul> 
+		</div>		
+		<?php
+	}
+} else {
+	?> 
 	<div id="user-login-links">
 		<a href="#"  onclick="showLogin()">prisijungti </a> / <a href="/auth/register" style="font-weight:bold">registruotis</a>
 	</div>
-<?php
-	endif;
+	<?php
+}
 ?>
 <div id="login-dialog"  title="Prisijungti" style="display:none">
 	<form id="login-form" onsubmit="return false">
