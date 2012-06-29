@@ -55,6 +55,8 @@ a:hover {
 }
 .new_userinfo {
 	float: right;
+	width: 541px;
+	text-align: right;
 }
 #new_menu {
 	background-color: #f9f9f9;
@@ -417,6 +419,9 @@ input, select, .editable-select-options, .ui-autocomplete {
 	height: 10px;
 	overflow: hidden;
 	background-color: #ccc;
+}
+.new_user_info_block {
+	float: right;
 }
 .new_user_info_block_username {
 	line-height: 25px;
