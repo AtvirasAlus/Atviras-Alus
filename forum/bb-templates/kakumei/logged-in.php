@@ -41,6 +41,7 @@ if ($beta_tester == "1"){
 		</div>
 		<div class="clear"></div>
 	</div>
+	<div class="clear"></div>
 	<?php
 } else{
 	?>

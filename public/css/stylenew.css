@@ -55,7 +55,7 @@ a:hover {
 }
 .new_userinfo {
 	float: right;
-	width: 541px;
+	width: 441px;
 	text-align: right;
 }
 #new_menu {
@@ -86,7 +86,7 @@ a:hover {
 }
 .new_proverb {
 	float: left;
-	width: 500px;
+	width: 600px;
 	margin-left: 10px;
 	font-style: italic;
 	color: #666;
