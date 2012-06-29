@@ -52,7 +52,6 @@ if (bb_is_profile()) {
 		<div class="body_center">
 			<div id="main_container">
 				<div id="left">
-					<a href="/" class="new_logo" title="Atviras alus"></a>
 					<?php
 					$user_id = (int)bb_get_current_user_info( 'id' );
 					if (isset($user_id) && !empty($user_id)){
@@ -66,6 +65,7 @@ if (bb_is_profile()) {
 					}
 					?>
 					<div id="new_menu">
+						<div class="new_logo"><a href="/" title="Atviras alus"></a></div>
 						<ul id="new_topmenu">
 							<li>
 								<a href="/">Titulinis</a>
