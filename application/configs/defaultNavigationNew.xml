@@ -303,7 +303,7 @@
 					<route>default</route>
 				</blog>
 				<tweets>
-					<label>Aludarių naujienos</label>
+					<label>Aludarių pranešimai</label>
 					<module>default</module>
 					<controller>tweet</controller>
 					<action>all</action>

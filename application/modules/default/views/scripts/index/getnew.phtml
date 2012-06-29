@@ -1,0 +1,52 @@
+<div class="new_updated_items">
+	<?php
+	$last_id = 0;
+	foreach ($this->items as $item):
+		$last_id = $item['id'];
+		switch($item['type']){
+			case "idea_comment":
+				include("partials/idea_comment.phtml");
+			break;
+			case "idea":
+				include("partials/idea.phtml");
+			break;
+			case "forum_post":
+				include("partials/forum_post.phtml");
+			break;
+			case "article":
+				include("partials/article.phtml");
+			break;
+			case "article_comment":
+				include("partials/article_comment.phtml");
+			break;
+			case "session":
+				$temp_rname = trim($item['session_recipe_name']);
+				if ($item['session_recipe_publish'] == 1 && !empty($temp_rname))
+					include("partials/session.phtml");
+			break;
+			case "event":
+				if ($item['event_published'] == 1)
+					include("partials/event.phtml");
+			break;
+			case "recipe":
+				include("partials/recipe.phtml");
+			break;
+			case "recipe_comment":
+				include("partials/recipe_comment.phtml");
+			break;
+			case "tweet":
+				include("partials/tweet.phtml");
+			break;
+			case "user":
+				include("partials/user.phtml");
+			break;
+			case "rss":
+				include("partials/rss.phtml");
+			break;
+			case "blog":
+				include("partials/blog.phtml");
+			break;
+		}
+	endforeach;
+	?>
+</div>

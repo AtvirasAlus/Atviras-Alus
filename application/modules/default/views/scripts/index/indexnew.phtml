@@ -104,6 +104,16 @@
 			$("#tweet_form").hide('slide', {direction: 'up'});
 			$("#loader").hide();
 		});
+		window.setInterval(function(){
+			$.getJSON("/index/getnew/last/"+$("#newest_id").val()+"/type/<?=$this->filter_type?>", {
+				url: currentURL
+			}, function (data) {
+				if (data.last != 0){
+					$("#home_items").prepend(data.content);
+					$("#newest_id").val(data.last);
+				}
+			});
+		}, 10000);
 	});
 	function rebindlinks2(){
 		$(".home_more input").click(function(){
@@ -136,7 +146,7 @@
 		<div class="inner_container" style="padding-top: 20px;">
 			<div class="new_filter">
 				<div>
-					<input type="button" name="new_tweet" id="new_tweet" value="Pasidalinti naujiena ar nuoroda" />
+					<input type="button" name="new_tweet" id="new_tweet" value="Pranešk naujieną arba nuorodą" />
 					<select id="new_filter_select" name="new_filter_select">
 						<option value="all" <?=($this->filter_type == "all") ? 'selected="selected"' : ''?>>Visi įrašai</option>
 						<optgroup label="Receptai">
@@ -155,7 +165,7 @@
 							<option value="idea_comment" <?=($this->filter_type == "idea_comment") ? 'selected="selected"' : ''?>>Idėjų komentarai</option>
 						</optgroup>
 						<optgroup label="Skaitykla">
-							<option value="tweet" <?=($this->filter_type == "tweet") ? 'selected="selected"' : ''?>>Aludarių naujienos</option>
+							<option value="tweet" <?=($this->filter_type == "tweet") ? 'selected="selected"' : ''?>>Aludarių pranešimai</option>
 							<option value="blog" <?=($this->filter_type == "blog") ? 'selected="selected"' : ''?>>Dienoraščiai</option>
 							<option value="rss" <?=($this->filter_type == "rss") ? 'selected="selected"' : ''?>>Naujienos iš kitų svetainių</option>
 							<option value="article" <?=($this->filter_type == "article") ? 'selected="selected"' : ''?>>Straipsniai</option>
@@ -197,10 +207,25 @@
 				</div>
 				<div class="clear"></div>
 			</div>
+			<div style="height: 1px;" id="new_visibility"></div>
 			<div style="margin-top: 10px;" id="home_items">
 				<?php
 				$last_id = 0;
+				$first = true;
+				$old_time = "3000-01-01 01:01:01";
 				foreach ($this->items as $item):
+					if ($this->past_login < $old_time && $this->past_login > $item['posted']){
+						?>
+						<div class="pastlogin_line"></div>
+						<?
+					}
+					$old_time = $item['posted'];
+					if ($first === true){
+						$first = false;
+						?>
+						<input type="hidden" id="newest_id" name="newest_id" value="<?=$item['id']?>" />
+						<?php
+					}
 					$last_id = $item['id'];
 					switch($item['type']){
 						case "idea_comment":

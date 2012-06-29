@@ -38,6 +38,81 @@ class IndexController extends Zend_Controller_Action {
 		$this->_redirect('/');
 	}
 	
+	public function getnewAction(){
+		$out = array();
+		$out['last'] = 0;
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		if ($this->show_beta === true){
+			$filter_type = $this->getRequest()->getParam("type");
+			$last_id = $this->getRequest()->getParam("last");
+			$select = $db->select("posted")
+					->from("activity")
+					->where("id = ?", $last_id)
+					->limit(1);
+			$result = $db->fetchRow($select);
+			$last_stamp = $result['posted'];
+			if (!isset($filter_type) || empty($filter_type)) $filter_type = "all";
+			$this->view->filter_type = $filter_type;
+			$select = $db->select()
+					->from("activity")
+					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
+					->order("posted DESC")
+					->where("posted > '".$last_stamp."'");
+			switch($filter_type){
+				case "idea":
+					$select->where("type = 'idea'");
+				break;
+				case "idea_comment":
+					$select->where("type = 'idea_comment'");
+				break;
+				case "forum_post":
+					$select->where("type = 'forum_post'");
+				break;
+				case "article":
+					$select->where("type = 'article'");
+				break;
+				case "article_comment":
+					$select->where("type = 'article_comment'");
+				break;
+				case "session":
+					$select->where("type = 'session'");
+				break;
+				case "event":
+					$select->where("type = 'event'");
+				break;
+				case "recipe":
+					$select->where("type = 'recipe'");
+				break;
+				case "recipe_comment":
+					$select->where("type = 'recipe_comment'");
+				break;
+				case "tweet":
+					$select->where("type = 'tweet'");
+				break;
+				case "user":
+					$select->where("type = 'user'");
+				break;
+				case "rss":
+					$select->where("type = 'rss'");
+				break;
+				case "blog":
+					$select->where("type = 'blog'");
+				break;
+			}
+			$result = $db->fetchAll($select);
+			if (sizeof($result) > 0){
+				$out['last'] = $result[0]['id'];
+			}
+			$this->view->items = $result;
+		}
+		$out['content'] = $this->view->render('index/getnew.phtml');
+		echo json_encode($out);
+	}
+
 	public function moreAction(){
 		$this->_helper->layout->disableLayout();
 		$db = Zend_Registry::get("db");
@@ -46,13 +121,19 @@ class IndexController extends Zend_Controller_Action {
 		if ($this->show_beta === true){
 			$filter_type = $this->getRequest()->getParam("type");
 			$last_id = $this->getRequest()->getParam("last");
+			$select = $db->select("posted")
+					->from("activity")
+					->where("id = ?", $last_id)
+					->limit(1);
+			$result = $db->fetchRow($select);
+			$last_stamp = $result['posted'];
 			if (!isset($filter_type) || empty($filter_type)) $filter_type = "all";
 			$this->view->filter_type = $filter_type;
 			$select = $db->select()
 					->from("activity")
 					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
 					->order("posted DESC")
-					->where("id < '".$last_id."'")
+					->where("posted < '".$last_stamp."'")
 					->limit(30);
 			switch($filter_type){
 				case "idea":
@@ -135,6 +216,11 @@ class IndexController extends Zend_Controller_Action {
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$select = $db->select("user_pastlogin")
+					->from("users")
+					->where("user_id = ?", $user_info->user_id);
+			$result = $db->fetchRow($select);
+			$this->view->past_login = $result['user_pastlogin'];
 			$select = $db->select()
 					->from("idea_items", array("idea_id"))
 					->where("idea_items.idea_status != 1 AND idea_items.idea_status != 2 AND idea_items.user_id != ?", $user_info->user_id);

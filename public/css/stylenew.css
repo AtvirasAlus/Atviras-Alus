@@ -395,3 +395,23 @@ input, select, .editable-select-options, .ui-autocomplete {
 	background-color: #fff;
 	border: none;
 }
+.new_updated_items .ico_idea_comment,
+.new_updated_items .ico_idea,
+.new_updated_items .ico_forum_post,
+.new_updated_items .ico_article,
+.new_updated_items .ico_article_comment,
+.new_updated_items .ico_session,
+.new_updated_items .ico_event,
+.new_updated_items .ico_recipe,
+.new_updated_items .ico_recipe_comment,
+.new_updated_items .ico_tweet,
+.new_updated_items .ico_user,
+.new_updated_items .ico_rss,
+.new_updated_items .ico_blog {
+	background-color: #ddd;	
+}
+.pastlogin_line {
+	height: 10px;
+	overflow: hidden;
+	background-color: #ccc;
+}
