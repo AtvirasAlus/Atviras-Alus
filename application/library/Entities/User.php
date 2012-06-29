@@ -24,7 +24,7 @@ class Entities_User {
         ->from("users_attributes")
         ->where("user_id = ?", $this->user_id);
         if (!$row = $this->db->fetchRow($select)) {
-          $row = array("user_id" => $this->user_id, "user_location" => "", "user_about" => "","user_mail_comments"=>'0');
+          $row = array("user_id" => $this->user_id, "user_location" => "", "user_about" => "","user_mail_comments"=>'0', "beta_tester"=>'0');
         }
         $row["user_about_plain"] = $row["user_about"];
         $row["user_about"] = preg_replace('/((?:[^"\'])(?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i', '<a href="$1" rel="nofollow" target="blank">$1</a>', nl2br($row["user_about"]));
@@ -80,7 +80,7 @@ class Entities_User {
         $this->db->delete("users_attributes", $where);
         $stripTags = new Zend_Filter_StripTags(array('p', 'b', 'br', 'strong'), array());
         $user_about = $stripTags->filter($att["user_about"]);
-        return $this->db->insert("users_attributes", array("user_id" => $this->user_id, "user_location" => $att["user_location"], "user_about" => $user_about,'user_mail_comments'=>$att["user_mail_comments"]));
+        return $this->db->insert("users_attributes", array("user_id" => $this->user_id, "user_location" => $att["user_location"], "user_about" => $user_about,'user_mail_comments'=>$att["user_mail_comments"],'beta_tester'=>$att['beta_tester']));
       }else{
         return false;
       }

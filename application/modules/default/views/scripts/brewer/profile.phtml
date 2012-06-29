@@ -27,6 +27,7 @@
 		<?php
 	}
 	$this->userAttributesForm->getElement('user_mail_comments')->setValue($this->user_attributes['user_mail_comments']);
+	$this->userAttributesForm->getElement('beta_tester')->setValue($this->user_attributes['beta_tester']);
 	$this->userAttributesForm->getElement('user_about')->setValue($this->user_attributes['user_about_plain']);
 	if (strlen($this->user_attributes['user_location']) > 0) {
 		$this->userAttributesForm->getElement('user_location')->setValue($this->user_attributes['user_location']);

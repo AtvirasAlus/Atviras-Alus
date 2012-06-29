@@ -541,3 +541,10 @@ input, select, .editable-select-options, .ui-autocomplete {
 .new_user_info_block_favorites a:hover {
 	background-position: 0px 25px;
 }
+.new_user_info_block_avatar {
+	margin-top: 5px;
+	width: 25px;
+	height: 25px;
+	float: left;
+	margin-right: 10px;
+}
