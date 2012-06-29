@@ -1,6 +1,13 @@
 <?php
+$old_time = $this->last_stamp;
 $last_id = 0;
 foreach ($this->items as $item):
+	if ($this->past_login < $old_time && $this->past_login > $item['posted']){
+		?>
+		<div class="pastlogin_line"></div>
+		<?
+	}
+	$old_time = $item['posted'];
 	$last_id = $item['id'];
 	switch($item['type']){
 		case "idea_comment":

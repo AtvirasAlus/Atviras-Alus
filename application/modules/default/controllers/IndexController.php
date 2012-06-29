@@ -119,6 +119,11 @@ class IndexController extends Zend_Controller_Action {
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
 		if ($this->show_beta === true){
+			$select = $db->select("user_pastlogin")
+					->from("users")
+					->where("user_id = ?", $user_info->user_id);
+			$result = $db->fetchRow($select);
+			$this->view->past_login = $result['user_pastlogin'];
 			$filter_type = $this->getRequest()->getParam("type");
 			$last_id = $this->getRequest()->getParam("last");
 			$select = $db->select("posted")
@@ -127,6 +132,7 @@ class IndexController extends Zend_Controller_Action {
 					->limit(1);
 			$result = $db->fetchRow($select);
 			$last_stamp = $result['posted'];
+			$this->view->last_stamp = $last_stamp;
 			if (!isset($filter_type) || empty($filter_type)) $filter_type = "all";
 			$this->view->filter_type = $filter_type;
 			$select = $db->select()
