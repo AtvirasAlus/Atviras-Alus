@@ -10,6 +10,23 @@ class CronController extends Zend_Controller_Action {
 		
 	}
 	
+	public function populaterecipecommentsAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("beer_recipes", array("beer_recipes.recipe_id"))
+				->joinLeft("beer_recipes_comments", "beer_recipes.recipe_id=beer_recipes_comments.comment_recipe", array("COUNT(comment_id) AS kiekis"))
+				->group("beer_recipes.recipe_id");
+		$result = $db->fetchAll($select);
+		foreach ($result as $key=>$val){
+			$db->update("beer_recipes", array(
+				"recipe_total_comments" => $val['kiekis']
+			), "beer_recipes.recipe_id = '".$val['recipe_id']."'");
+		}
+		echo "done.";
+	}
+	
 	public function rssnewsAction(){
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
