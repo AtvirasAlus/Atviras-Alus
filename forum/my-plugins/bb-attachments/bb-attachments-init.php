@@ -395,7 +395,7 @@ else {echo '';}
 echo	'
 	<dl>
 		<dt>&nbsp;</dt>
-		<dd><a href="javascript:void(0)" onClick="bb_attachment_inputs();">[+] '.__('Prkabinti daugiau failų').'</a></dd>
+		<dd><a href="javascript:void(0)" onClick="bb_attachment_inputs();">[+] '.__('Prikabinti daugiau failų').'</a></dd>
 		<div class="clear"></div>
 	</dl>
 	<dl>
