@@ -15,18 +15,55 @@ class CronController extends Zend_Controller_Action {
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
 		$select = $db->select()
-				->from("beer_recipes", array("beer_recipes.recipe_id"))
-				->joinLeft("beer_recipes_comments", "beer_recipes.recipe_id=beer_recipes_comments.comment_recipe", array("COUNT(comment_id) AS kiekis"))
-				->group("beer_recipes.recipe_id");
+				->from("beer_recipes", array("beer_recipes.recipe_id"));
 		$result = $db->fetchAll($select);
 		foreach ($result as $key=>$val){
+			$last = false;
+			$count = 0;
+			$select2 = $db->select()
+					->from("beer_recipes_comments")
+					->order("comment_date DESC")
+					->where("comment_recipe = ?", $val['recipe_id']);
+			$result2 = $db->FetchAll($select2);
+			foreach($result2 as $k=>$v){
+				if ($last === false) $last = $v['comment_date'];
+				$count++;
+			}
 			$db->update("beer_recipes", array(
-				"recipe_total_comments" => $val['kiekis']
+				"recipe_total_comments" => $count,
+				"recipe_last_comment_date" => $last,
 			), "beer_recipes.recipe_id = '".$val['recipe_id']."'");
 		}
 		echo "done.";
 	}
 	
+	public function populaterecipesessionsAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("beer_recipes", array("beer_recipes.recipe_id"));
+		$result = $db->fetchAll($select);
+		foreach ($result as $key=>$val){
+			$last = false;
+			$count = 0;
+			$select2 = $db->select()
+					->from("beer_brew_sessions")
+					->order("session_primarydate DESC")
+					->where("session_recipe = ?", $val['recipe_id']);
+			$result2 = $db->FetchAll($select2);
+			foreach($result2 as $k=>$v){
+				if ($last === false) $last = $v['session_primarydate'];
+				$count++;
+			}
+			$db->update("beer_recipes", array(
+				"recipe_total_sessions" => $count,
+				"recipe_last_session_date" => $last,
+			), "beer_recipes.recipe_id = '".$val['recipe_id']."'");
+		}
+		echo "done.";
+	}
+
 	public function rssnewsAction(){
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);

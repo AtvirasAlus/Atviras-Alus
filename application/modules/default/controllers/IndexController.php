@@ -15,9 +15,9 @@ class IndexController extends Zend_Controller_Action {
 			$u_atribs= $db->fetchRow($select);
 			if ($u_atribs['beta_tester'] == 1) {
 				$this->show_beta = true;
-				$this->_helper->layout()->setLayout('layoutnew');
 			}
 		}
+		$this->_helper->layout()->setLayout('layoutnew');
 	}
 	public function enablebetaAction(){
 		$storage = new Zend_Auth_Storage_Session();
@@ -329,8 +329,7 @@ class IndexController extends Zend_Controller_Action {
 
 			$this->_helper->viewRenderer('indexnew'); 
 			
-		} else {
-			$select = $db->select()
+		} else {$select = $db->select()
 					->from("users", array("user_name", "user_id", "user_email"))
 					->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.brewer_id=users.user_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
 					->where("users.user_active = ?", '1')

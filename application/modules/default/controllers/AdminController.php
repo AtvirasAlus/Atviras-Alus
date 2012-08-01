@@ -23,9 +23,9 @@ class AdminController extends Zend_Controller_Action {
 			$u_atribs= $db->fetchRow($select);
 			if ($u_atribs['beta_tester'] == 1) {
 				$this->show_beta = true;
-				$this->_helper->layout()->setLayout('layoutnew');
 			}
 		}
+		$this->_helper->layout()->setLayout('layoutnew');
 	}
 
 	public function indexAction() {

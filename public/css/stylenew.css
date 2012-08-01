@@ -553,3 +553,7 @@ input, select, .editable-select-options, .ui-autocomplete {
 	float: left;
 	margin-right: 10px;
 }
+#user-login-links {
+	margin-top: 4px;
+	display: inline-block;
+}

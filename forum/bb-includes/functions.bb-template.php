@@ -85,7 +85,7 @@ function bb_get_header()
 		}
 	}
 	if ($show_beta === false){
-		bb_load_template( 'header.php' );
+		bb_load_template( 'header_new.php' );
 	} else {
 		bb_load_template( 'header_new.php' );
 	}
