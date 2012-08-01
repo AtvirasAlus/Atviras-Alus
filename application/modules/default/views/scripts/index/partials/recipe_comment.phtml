@@ -11,7 +11,7 @@
 					<?= $item["user_name"] ?>
 				</a>
 				komentavo receptą 
-				<a href="/alus/receptas/<?= $item['recipe_comment_recipe_id']; ?>-<?= $this->urlMaker($item["recipe_comment_recipe_name"])?>">
+				<a href="/alus/receptas/<?= $item['recipe_comment_recipe_id']; ?>-<?= $this->urlMaker($item["recipe_comment_recipe_name"])?>#comment-<?=$item['item_id']?>">
 					<?= $item["recipe_comment_recipe_name"] ?>
 				</a>
 			</div>
