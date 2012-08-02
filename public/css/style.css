@@ -2048,3 +2048,17 @@ ul.statuses li {
 	background-repeat: no-repeat;
 	margin-right: 10px;
 }
+.recipe_order_block {
+	margin-bottom: 10px;
+	text-align: right;
+	font-size: 13px;
+}
+.recipe_order_block select {
+	height: 28px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 2px;
+	background-color: #fff;
+}

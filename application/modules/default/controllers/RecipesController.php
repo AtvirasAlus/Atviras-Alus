@@ -20,13 +20,52 @@ class RecipesController extends Zend_Controller_Action {
 	}
 
 	public function indexAction() {
+		$ord = $this->_getParam('recipe_order');
+		if (empty($ord)) {
+			if (isset($_COOKIE['recipe_sort']) && !empty($_COOKIE['recipe_sort'])){
+				$ord = $_COOKIE['recipe_sort'];
+			} else {
+				$ord = "posted";
+				setcookie("recipe_sort", $ord, time() + 60*60*24*356);
+			}
+		} else {
+			setcookie("recipe_sort", $ord, time() + 60*60*24*356);
+		}
+		$this->view->order = $ord;
 		$db = Zend_Registry::get('db');
 		$select = $db->select()
 				->from("beer_recipes")
 				->join("users", "users.user_id = beer_recipes.brewer_id", array("user_name"))
 				->joinLeft("beer_styles", "beer_recipes.recipe_style = beer_styles.style_id", array("style_name"))
-				->where("beer_recipes.recipe_publish = ?", '1')
-				->order("beer_recipes.recipe_created DESC");
+				->where("beer_recipes.recipe_publish = ?", '1');
+		switch($ord){
+			case "posted":
+				$select->order("beer_recipes.recipe_created DESC");
+			break;
+			case "title":
+				$select->order("TRIM(beer_recipes.recipe_name) ASC");
+			break;
+			case "sessions":
+				$select->order("beer_recipes.recipe_total_sessions DESC");
+			break;
+			case "lastsession":
+				$select->order("beer_recipes.recipe_last_session DESC");
+			break;
+			case "likes":
+				$select->order("beer_recipes.recipe_total_likes DESC");
+			break;
+			case "awards":
+				$select->order("beer_recipes.recipe_total_awards DESC");
+				$select->order("beer_recipes.recipe_total_awards_weight DESC");
+			break;
+			case "comments":
+				$select->order("beer_recipes.recipe_total_comments DESC");
+			break;
+			default:
+				$select->order("beer_recipes.recipe_created DESC");
+			break;
+				
+		}
 
 
 		//$this->view->recipes=$db->fetchAll($select);
@@ -58,6 +97,18 @@ class RecipesController extends Zend_Controller_Action {
 	}
 
 	public function stylesAction() {
+		$ord = $this->_getParam('recipe_order');
+		if (empty($ord)) {
+			if (isset($_COOKIE['recipe_sort']) && !empty($_COOKIE['recipe_sort'])){
+				$ord = $_COOKIE['recipe_sort'];
+			} else {
+				$ord = "posted";
+				setcookie("recipe_sort", $ord, time() + 60*60*24*356);
+			}
+		} else {
+			setcookie("recipe_sort", $ord, time() + 60*60*24*356);
+		}
+		$this->view->order = $ord;
 		$db = Zend_Registry::get("db");
 		$select = $db->select()
 				->from("beer_recipes")
@@ -65,7 +116,34 @@ class RecipesController extends Zend_Controller_Action {
 				->joinLeft("beer_styles", "beer_recipes.recipe_style = beer_styles.style_id", array("style_name"));
 		$select->where("beer_recipes.recipe_publish = ?", '1');
 		$select->where("beer_recipes.recipe_style= ?", $this->_getParam('style'));
-		$select->order("beer_recipes.recipe_created DESC");
+		switch($ord){
+			case "posted":
+				$select->order("beer_recipes.recipe_created DESC");
+			break;
+			case "title":
+				$select->order("TRIM(beer_recipes.recipe_name) ASC");
+			break;
+			case "sessions":
+				$select->order("beer_recipes.recipe_total_sessions DESC");
+			break;
+			case "lastsession":
+				$select->order("beer_recipes.recipe_last_session DESC");
+			break;
+			case "likes":
+				$select->order("beer_recipes.recipe_total_likes DESC");
+			break;
+			case "awards":
+				$select->order("beer_recipes.recipe_total_awards DESC");
+				$select->order("beer_recipes.recipe_total_awards_weight DESC");
+			break;
+			case "comments":
+				$select->order("beer_recipes.recipe_total_comments DESC");
+			break;
+			default:
+				$select->order("beer_recipes.recipe_created DESC");
+			break;
+				
+		}
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($this->_getParam('page'));
