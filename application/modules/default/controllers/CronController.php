@@ -64,6 +64,27 @@ class CronController extends Zend_Controller_Action {
 		echo "done.";
 	}
 
+	public function populaterecipelikesAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("beer_recipes", array("beer_recipes.recipe_id"));
+		$result = $db->fetchAll($select);
+		foreach ($result as $key=>$val){
+			$count = 0;
+			$select2 = $db->select("COUNT(user_id) AS kiekis")
+					->from("beer_recipes_favorites")
+					->order("favorite_date DESC")
+					->where("recipe_id = ?", $val['recipe_id']);
+			$result2 = $db->FetchRow($select2);
+			$db->update("beer_recipes", array(
+				"recipe_total_likes" => $result2['kiekis'],
+			), "beer_recipes.recipe_id = '".$val['recipe_id']."'");
+		}
+		echo "done.";
+	}
+
 	public function rssnewsAction(){
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -118,6 +139,7 @@ class CronController extends Zend_Controller_Action {
 		
 	}
 	public function populateAction(){
+		exit;
 		set_time_limit(0);
 		$tpl = array();
 		$tpl['user_id'] = NULL;
@@ -437,6 +459,7 @@ class CronController extends Zend_Controller_Action {
 	}
 	
 	public function fixideasAction() {
+		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
