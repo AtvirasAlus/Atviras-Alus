@@ -58,7 +58,7 @@ class CronController extends Zend_Controller_Action {
 			}
 			$db->update("beer_recipes", array(
 				"recipe_total_sessions" => $count,
-				"recipe_last_session_date" => $last,
+				"recipe_last_session" => $last,
 			), "beer_recipes.recipe_id = '".$val['recipe_id']."'");
 		}
 		echo "done.";
