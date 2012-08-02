@@ -2030,3 +2030,21 @@ ul.statuses li {
 	color: #000;
 	border-color: #000;
 }
+.total_comments {
+	display: inline-block;
+	height: 16px;
+	line-height: 16px;
+	background-image: url("/public/images/comments.gif");
+	padding-left: 18px;
+	background-repeat: no-repeat;
+	margin-right: 10px;
+}
+.total_likes {
+	display: inline-block;
+	height: 16px;
+	line-height: 16px;
+	background-image: url("/public/images/likes.gif");
+	padding-left: 18px;
+	background-repeat: no-repeat;
+	margin-right: 10px;
+}

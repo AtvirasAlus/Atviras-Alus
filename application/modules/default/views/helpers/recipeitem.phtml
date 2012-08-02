@@ -73,6 +73,10 @@ if (!isset($this->options['plain'])) {
 			IBU: 
 			<? print $this->item['recipe_ibu']; ?>
 		</div>
+		<div>
+			<span class="total_comments"><?=$this->item['recipe_total_comments']?></span>
+			<span class="total_likes"><?=$this->item['recipe_total_likes']?></span>
+		</div>
 		<? if ($this->item['recipe_total_awards'] > 0 && !isset($this->options['without_awards'])) : ?>
 			<div style="padding-top: 5px;">
 				<?
