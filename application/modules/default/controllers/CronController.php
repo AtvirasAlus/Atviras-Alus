@@ -73,8 +73,8 @@ class CronController extends Zend_Controller_Action {
 		$result = $db->fetchAll($select);
 		foreach ($result as $key=>$val){
 			$count = 0;
-			$select2 = $db->select("COUNT(user_id) AS kiekis")
-					->from("beer_recipes_favorites")
+			$select2 = $db->select()
+					->from("beer_recipes_favorites", array("COUNT(user_id) AS kiekis"))
 					->order("favorite_date DESC")
 					->where("recipe_id = ?", $val['recipe_id']);
 			$result2 = $db->FetchRow($select2);
