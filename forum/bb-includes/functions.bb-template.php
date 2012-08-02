@@ -84,11 +84,7 @@ function bb_get_header()
 			}
 		}
 	}
-	if ($show_beta === false){
-		bb_load_template( 'header_new.php' );
-	} else {
-		bb_load_template( 'header_new.php' );
-	}
+	bb_load_template( 'header.php' );
 }
 
 function bb_language_attributes( $xhtml = 0 )
@@ -213,11 +209,7 @@ function bb_get_footer()
 			}
 		}
 	}
-	if ($show_beta === false){
-		bb_load_template( 'footer.php' );
-	} else {
-		bb_load_template( 'footer_new.php' );
-	}
+	bb_load_template( 'footer.php' );
 }
 
 function bb_head()

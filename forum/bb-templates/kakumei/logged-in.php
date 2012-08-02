@@ -7,7 +7,7 @@ $sql = "SELECT beta_tester FROM users_attributes WHERE user_id='".$uid."'";
 $result = mysql_query($sql) or die(mysql_error());
 $beta_tester = mysql_fetch_assoc($result);
 $beta_tester = $beta_tester['beta_tester'];
-if ($beta_tester == "1"){
+if ($beta_tester === "change me"){
 	?>
 	<div class="new_user_info_block">
 		<div class="new_user_info_block_username">

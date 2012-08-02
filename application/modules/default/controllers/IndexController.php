@@ -17,7 +17,6 @@ class IndexController extends Zend_Controller_Action {
 				$this->show_beta = true;
 			}
 		}
-		$this->_helper->layout()->setLayout('layoutnew');
 	}
 	public function enablebetaAction(){
 		$storage = new Zend_Auth_Storage_Session();
@@ -253,7 +252,6 @@ class IndexController extends Zend_Controller_Action {
 			$filter_type = $this->getRequest()->getParam("type");
 			if (!isset($filter_type) || empty($filter_type)) $filter_type = "all";
 			$this->view->filter_type = $filter_type;
-			$this->_helper->layout->setLayout('layoutnew');
 			$select = $db->select()
 					->from("activity")
 					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))

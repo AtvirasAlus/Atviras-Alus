@@ -20,7 +20,6 @@ class EventsController extends Zend_Controller_Action {
 				$this->show_beta = true;
 			}
 		}
-		$this->_helper->layout()->setLayout('layoutnew');
     }
 
     function indexAction() {

@@ -20,7 +20,6 @@ class AuthController extends Zend_Controller_Action {
 			}
 		}
 		$this->view->errors = array();
-		$this->_helper->layout()->setLayout('layoutnew');
 	}
 
 	public function homeAction() {
