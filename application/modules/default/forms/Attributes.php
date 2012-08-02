@@ -37,7 +37,7 @@ class Form_Attributes extends Zend_Form {
 				->setLabel('Siųsti pranešimą elektroniniu paštu, kai komentuojamas mano receptas');
 		$this->addElement('checkbox', 'beta_tester');
 		$this->getElement('beta_tester')
-				->setLabel('Įjungti naują (beta) svetainės išvaizdą');
+				->setLabel('Tituliniame puslapyje vietoj informacinių blokų rodyti naujienų srautą');
 		$this->addElement('submit', 'attributes_action', array('type' => 'submit', 'class' => 'ui-button'));
 		$this->getElement('attributes_action')
 				->setLabel('Saugoti')
