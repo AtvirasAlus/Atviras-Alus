@@ -73,14 +73,23 @@ if (!isset($this->options['plain'])) {
 			IBU: 
 			<? print $this->item['recipe_ibu']; ?>
 		</div>
-		<? if (!empty($this->item['recipe_awards']) && !isset($this->options['without_awards'])) : ?>
+		<? if ($this->item['recipe_total_awards'] > 0 && !isset($this->options['without_awards'])) : ?>
 			<div style="padding-top: 5px;">
 				<?
-				$awards = explode("\n", trim($this->item['recipe_awards']));
-				foreach ($awards as $award_string):
-					$award = explode("#", $award_string);
+				$awards = $this->awards[$this->item['recipe_id']];
+				foreach ($awards as $key=>$val):
+					$title = $val['event_name'];
+					if (!empty($val['category'])){
+						$title .= ", ".$val['category'];
+					}
+					if (!empty($val['place'])){
+						$title .= ", ".$val['place']." vieta";
+					}
+					if (!empty($val['points']) && $val['points'] != "0"){
+						$title .= " (".$val['points']." tšk.)";
+					}
 					?>
-					<img src="/public/images/<?= trim($award[0]) ?>-32_grey.gif" width="32" title="<?= trim($award[1]) ?>" />
+					<img src="/public/images/<?= trim($val['icon']) ?>-32_grey.gif" width="32" title="<?= trim($title) ?>" />
 					<?
 				endforeach;
 				?>

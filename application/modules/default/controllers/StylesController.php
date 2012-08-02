@@ -43,6 +43,15 @@ class StylesController extends Zend_Controller_Action {
 					->where("beer_styles.style_id= ?", $style[0]);
 			$this->view->current_style = $db->fetchRow($select);
 		}
+		$select = $db->select()
+				->from("beer_awards")
+				->order("posted DESC");
+		$result = $db->FetchAll($select);
+		$aw = array();
+		foreach ($result as $key=>$val){
+			$aw[$val['recipe_id']][] = $val;
+		}
+		$this->view->awards = $aw;
 	}
 
 	public function indexAction() {

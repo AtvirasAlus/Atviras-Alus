@@ -46,6 +46,15 @@ class RecipesController extends Zend_Controller_Action {
 		if ($rows = $db->fetchAll($select)) {
 			$this->view->tags = $rows;
 		}
+		$select = $db->select()
+				->from("beer_awards")
+				->order("posted DESC");
+		$result = $db->FetchAll($select);
+		$aw = array();
+		foreach ($result as $key=>$val){
+			$aw[$val['recipe_id']][] = $val;
+		}
+		$this->view->awards = $aw;
 	}
 
 	public function stylesAction() {
@@ -65,6 +74,15 @@ class RecipesController extends Zend_Controller_Action {
 				->from("beer_styles")
 				->where("beer_styles.style_id= ?", $this->_getParam('style'));
 		$this->view->beer_style = $db->fetchRow($select);
+		$select = $db->select()
+				->from("beer_awards")
+				->order("posted DESC");
+		$result = $db->FetchAll($select);
+		$aw = array();
+		foreach ($result as $key=>$val){
+			$aw[$val['recipe_id']][] = $val;
+		}
+		$this->view->awards = $aw;
 		$this->_helper->viewRenderer("index");
 	}
 
@@ -131,7 +149,7 @@ class RecipesController extends Zend_Controller_Action {
 				$filter["recipe_name"] = "";
 			}
 			if (isset($filter["medals"]) && $filter["medals"] == "1") {
-				$select->where("recipe_awards != ''");
+				$select->where("recipe_total_awards > 0");
 			} else {
 				$filter["medals"] = "";
 			}
@@ -190,6 +208,16 @@ class RecipesController extends Zend_Controller_Action {
 			$this->view->content->setCurrentPageNumber($this->_getParam('page'));
 			$this->view->content->setItemCountPerPage(15);
 			//print $select->__toString();
+			
+			$select = $db->select()
+					->from("beer_awards")
+					->order("posted DESC");
+			$result = $db->FetchAll($select);
+			$aw = array();
+			foreach ($result as $key=>$val){
+				$aw[$val['recipe_id']][] = $val;
+			}
+			$this->view->awards = $aw;
 		} else {
 			$filter = array("recipe_style" => 0, "recipe_type" => 0, "recipe_name" => "", "hop_name" => "", "yeast_name" => "", "malt_name" => "", "user_name" => "", "tag_text" => "", "medals" => "");
 		}
@@ -275,6 +303,16 @@ class RecipesController extends Zend_Controller_Action {
 				$user_id = $this->view->user_info->user_id;
 			}
 			$this->view->recipe_votes = array("total" => $this->getVotes($recipe_id), "user_vote" => $this->getUserVotes($recipe_id, $user_id));
+			$select = $db->select()
+					->from("beer_awards")
+					->order("posted DESC")
+					->where("recipe_id = ?", $recipe_id);
+			$result = $db->FetchAll($select);
+			$aw = array();
+			foreach ($result as $key=>$val){
+				$aw[$val['recipe_id']][] = $val;
+			}
+			$this->view->awards = $aw;
 		}
 	}
 
