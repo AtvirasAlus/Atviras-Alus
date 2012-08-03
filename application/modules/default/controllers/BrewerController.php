@@ -264,6 +264,9 @@ class BrewerController extends Zend_Controller_Action {
 	}
 
 	public function recipesAction() {
+		$storage = new Zend_Auth_Storage_Session();
+		$u = $storage->read();
+		$db = Zend_Registry::get('db');
 		$select = $db->select()
 				->from("beer_awards")
 				->order("posted DESC");
@@ -273,9 +276,6 @@ class BrewerController extends Zend_Controller_Action {
 			$aw[$val['recipe_id']][] = $val;
 		}
 		$this->view->awards = $aw;
-		$storage = new Zend_Auth_Storage_Session();
-		$u = $storage->read();
-		$db = Zend_Registry::get('db');
 		if ($this->_getParam('brewer') > 0) {
 			$brewer = $this->_getParam('brewer');
 			//$this->_helper->viewRenderer->render("../recipes/index");
