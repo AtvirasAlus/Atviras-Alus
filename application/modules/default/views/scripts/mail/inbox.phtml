@@ -1,9 +1,17 @@
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Gautieji laiškai</div>
 	<div class="mail_tools">
-		<a href="/mail/inbox"><b>Gautieji</b></a>
-		<a href="/mail/compose">Rašyti laišką</a>
+		<div class="mail_search">
+			<form action="" method="get">
+				<input type="text" value="<?=$this->search?>" id="mail_search" name="mail_search" />
+				<input type="submit" value="Ieškoti" class="ui-button" />
+				<div class="clear"></div>
+			</form>
+		</div>
 		<a href="/mail/outbox">Išsiųsti laiškai</a>
+		<a href="/mail/compose">Rašyti laišką</a>
+		<a href="/mail/inbox"><b>Gautieji</b></a>
+		<div class="clear"></div>
 	</div>
 	<? if (isset($_GET["succes"])) { ?>
 		<div class="mail_success">

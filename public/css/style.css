@@ -1211,10 +1211,32 @@ div.as-row:hover {
 	margin-bottom: 10px;
 }
 .mail_tools a {
-	display: inline-block;
+	float: right;
+	display: block;
 	margin-left: 15px;
 	font-size: 14px;
 	line-height: 32px;
+}
+.mail_search {
+	float: left;
+}
+.mail_search input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 200px;
+	padding: 2px;
+	margin: 0px;
+	float: left;
+}
+.mail_search input[type="submit"] {
+	padding: 6px 15px 6px 15px !important;
+	float: left;
+	margin: 0px;
+	margin-left: 10px;
+	cursor: pointer;
 }
 .mail_success {
 	background-color: #F6F6F6;

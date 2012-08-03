@@ -6,9 +6,10 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Naujas laiškas</div>
 	<div class="mail_tools">
-		<a href="/mail/inbox">Gautieji</a>
-		<a href="/mail/compose"><b>Rašyti laišką</b></a>
 		<a href="/mail/outbox">Išsiųsti laiškai</a>
+		<a href="/mail/compose"><b>Rašyti laišką</b></a>
+		<a href="/mail/inbox">Gautieji</a>
+		<div class="clear"></div>
 	</div>
 	<form action="/mail/send" method="post" id="sendMailForm">
 		<dl>

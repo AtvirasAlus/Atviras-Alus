@@ -39,6 +39,12 @@ class MailController extends Zend_Controller_Action {
 				->join("users", "mail.mail_sender=users.user_id", array("user_name"))
 				->where("mail_users.user_id = ?", $this->user->user_id)
 				->order("mail_date DESC");
+		$search = $this->_getParam("mail_search");
+		$this->view->search = "";
+		if (isset($search) && !empty ($search)){
+			$this->view->search = $search;
+			$select->where("mail.mail_subject LIKE '%".$search."%' OR mail.mail_body LIKE '%".$search."%' OR users.user_name LIKE '%".$search."%'");
+		}
 		//$this->view->recipes=$db->fetchAll($select);
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
@@ -67,6 +73,12 @@ class MailController extends Zend_Controller_Action {
 				->where("mail.mail_deleted = ?", '0')
 				->order("mail_date DESC")
 				->group("mail.mail_id");
+		$search = $this->_getParam("mail_search");
+		$this->view->search = "";
+		if (isset($search) && !empty ($search)){
+			$this->view->search = $search;
+			$select->where("mail.mail_subject LIKE '%".$search."%' OR mail.mail_body LIKE '%".$search."%' OR users.user_name LIKE '%".$search."%'");
+		}
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($this->_getParam('page'));
