@@ -11,6 +11,9 @@
 		<?
 	} else {
 		?>
+		<div style="margin-bottom: 15px;">
+			<?=$this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');?>
+		</div>
 		<div class="style_recipes">
 			<?php
 			$i = 0;
