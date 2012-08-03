@@ -264,6 +264,15 @@ class BrewerController extends Zend_Controller_Action {
 	}
 
 	public function recipesAction() {
+		$select = $db->select()
+				->from("beer_awards")
+				->order("posted DESC");
+		$result = $db->FetchAll($select);
+		$aw = array();
+		foreach ($result as $key=>$val){
+			$aw[$val['recipe_id']][] = $val;
+		}
+		$this->view->awards = $aw;
 		$storage = new Zend_Auth_Storage_Session();
 		$u = $storage->read();
 		$db = Zend_Registry::get('db');
