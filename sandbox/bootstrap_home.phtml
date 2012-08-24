@@ -11,33 +11,92 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
-		<div class="navbar navbar-fixed-top">
+		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<div class="pull-right">
-						<button type="button" class="btn btn-small" title="Paštas">
-							<i class="icon-envelope"></i>
-						</button>
-						<button type="button" class="btn btn-small" title="Mano receptai">
-							<i class="icon-book"></i>
-						</button>
-						<button type="button" class="btn btn-small" title="Mėgstamiausi receptai">
-							<i class="icon-star"></i>
-						</button>
-						<button type="button" class="btn btn-small" title="Mano virimai">
-							<i class="icon-th-list"></i>
-						</button>
-						<button type="button" class="btn btn-small" title="Paskyros nustatymai">
-							<i class="icon-wrench"></i>
-						</button>
-						<button type="button" class="btn btn-small btn-inverse" title="Atsijungti">
-							<i class="icon-off icon-white"></i>
-						</button>
-					</div>	
-					<button type="button" class="btn btn-small btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<i class="icon-align-justify"></i>
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse">
+						<i class="icon-align-justify icon-white"></i>
 					</button>
-					<div class="nav-collapse colapse">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#user-collapse">
+						<i class="icon-user icon-white"></i>
+					</button>
+					<div class="btn-group pull-right hidden-phone">
+						<button class="btn btn-small">Tomas (T&amp;M Beer)</button>
+						<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+							&nbsp;<span class="caret"></span>&nbsp;
+						</button>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#">
+									Paštas
+								</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="#">
+									Receptai
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Mėgstamiausi receptai
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Virimų istorija
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Paskyros nustatymai
+								</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="#">
+									Atsijungti
+								</a>
+							</li>
+						</ul>
+					</div>	
+					<div class="nav-collapse collapse visible-phone" id="user-collapse">
+						<ul class="nav">
+							<li>
+								<a href="#">
+									Paštas
+								</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="#">
+									Receptai
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Mėgstamiausi receptai
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Virimų istorija
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Paskyros nustatymai
+								</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="#">
+									Atsijungti
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="nav-collapse collapse" id="nav-collapse">
 						<ul class="nav">
 							<li class="active">
 								<a href="#">
