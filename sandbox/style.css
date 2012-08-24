@@ -1,11 +1,36 @@
-.home_user_avatar {
-	float: left;
-	margin-left: 3px;
-	margin-right: 3px;
-	margin-bottom: 6px;
-	width: 50px;
-	height: 50px;
-	overflow: hidden;
+.home_block {
+	display: table;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 10px;
+	width: 100%;
 }
-.btn-navbar {
+.home_block_row {
+	display: table-row;
+}
+.home_avatar {
+	display: table-cell;
+	width: 70px;
+	vertical-align: top;
+}
+.home_text {
+	display: table-cell;
+	vertical-align: top;
+}
+.home_link {
+	margin-top: 5px;
+}
+.home_link a {
+	text-decoration: none !important;
+	color: #666 !important;
+}
+.home_time {
+	text-align: right;
+	font-size: 80%;
+	color: #999 !important;
+	line-height: 10px;
+	margin-top: 5px;
+}
+select {
+	margin-bottom: 0px !important;
 }
