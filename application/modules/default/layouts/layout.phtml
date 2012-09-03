@@ -63,10 +63,32 @@
 		</div>
 		<div id="main_container">
 			<div id="left">
-				<div style="margin-bottom: 7px;">
-					<a href="/parama">
-						<img src="/public/images/new/donate.png" />
-					</a>
+				<div class="banner" style="height: 110px;">
+					<div>
+						<a href="/parama">
+							<img src="/public/images/new/donate.png" />
+						</a>
+					</div>
+					<?php
+					$db = Zend_Registry::get("db");
+					$select = $db->select()
+							->from("donation")
+							->where("id=?", array("1"));
+					$donate = $db->FetchRow($select);
+					$money = $donate['money'];
+					$wid = $money;
+					if ($wid > 97) $wid = 97;
+					?>
+					<div>
+						Šį mėnesį surinkta <b><?=$money?>&nbsp;Lt</b>
+					</div>
+					<div style="height: 5px; background-color: #eee; width: 97px; margin-top: 10px; margin-left: 30px; border: 1px solid black;">
+						<div style="height: 5px; width: <?=$wid?>px; background-color: green;"></div>
+					</div>
+					<div>
+						<span style="width: 47px; display: inline-block; text-align: left;">0</span>
+						<span style="width: 50px; display: inline-block; text-align: right;">96.80</span>
+					</div>
 				</div>
 				<div class="banner">
 					<a href="http://tikrasalus.lt" target="_blank">
