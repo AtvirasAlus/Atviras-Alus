@@ -63,7 +63,7 @@
 		</div>
 		<div id="main_container">
 			<div id="left">
-				<div class="banner" style="height: 110px;">
+				<div class="banner" style="height: 145px;">
 					<div>
 						<a href="/parama">
 							<img src="/public/images/new/donate.png" />
@@ -76,8 +76,14 @@
 							->where("id=?", array("1"));
 					$donate = $db->FetchRow($select);
 					$money = $donate['money'];
+					$next = $donate['next'];
 					$wid = $money;
 					if ($wid > 97) $wid = 97;
+					if (date("Y-m-d") >= $next){
+						$ndiff = 0;
+					} else {
+						$ndiff = round(abs(strtotime(date("Y-m-d"))-strtotime($next))/86400);
+					}
 					?>
 					<div>
 						Šį mėnesį surinkta <b><?=$money?>&nbsp;Lt</b>
@@ -88,6 +94,9 @@
 					<div>
 						<span style="width: 47px; display: inline-block; text-align: left;">0</span>
 						<span style="width: 50px; display: inline-block; text-align: right;">96.80</span>
+					</div>
+					<div style="padding: 5px 10px 10px 10px; <?=($money < 97 && $ndiff < 10) ? "color: #ee0000;" : ""?>">
+						Reikiamai sumai surinkti liko <b><?=$ndiff?> d.</b>
 					</div>
 				</div>
 				<div class="banner">
