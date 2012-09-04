@@ -46,6 +46,13 @@
 			<action>calculus</action>
 			<route>default</route>
 		</research>
+		<food>
+			<label>Alus ir maistas</label>
+			<module>default</module>
+			<controller>food</controller>
+			<action>index</action>
+			<route>food_list</route>
+		</food>
 		<forum>
 			<label>Forumas</label>
 			<module>forum</module>

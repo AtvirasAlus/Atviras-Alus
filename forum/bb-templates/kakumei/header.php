@@ -70,6 +70,11 @@ if (bb_is_profile()) {
 								</a>
 							</li>
 							<li>
+								<a href="/maistas" class="">
+									Alus ir maistas
+								</a>
+							</li>
+							<li>
 								<a href="/forum" class="">
 									Forumas
 								</a>

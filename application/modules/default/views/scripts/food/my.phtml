@@ -1,0 +1,110 @@
+<?php
+$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+?>
+<script type="text/javascript">
+	$(document).ready(function() {
+	});
+</script>
+<div id="food_bc_container" class="inner_container">
+	<a href="/maistas">Alus ir maistas</a>
+	&raquo;	Mano receptai
+</div>
+
+<div id="food_cats_container" class="inner_container">
+	<div class="inner_header">Mano receptai</div>
+	<div style="margin: 0px 0px 20px 8px;">
+		<input type="button" onclick="window.location.href='/maistas/naujas'" value="Sukurti naują receptą" class="ui-button">
+	</div>
+	<?php
+	if (isset($this->items) && sizeof($this->items)>0){
+		foreach($this->items as $item):
+			?>
+			<div class="food_item_info">
+				<div class="food_image">
+					<a href="/patiekalas/<?=$item['id']?>-<?=$this->urlMaker($item['title'])?>">
+						<?php
+						if ($item['image1'] != ""){
+							?>
+							<img src="/food/<?=$item['id']?>/t_<?=$item['image1']?>" alt="<?=$item['title']?>" />
+							<?php
+						} else {
+							if ($item['image2'] != ""){
+								?>
+								<img src="/food/<?=$item['id']?>/t_<?=$item['image2']?>" alt="<?=$item['title']?>" />
+								<?php
+							} else {
+								if ($item['image3'] != ""){
+									?>
+									<img src="/food/<?=$item['id']?>/t_<?=$item['image3']?>" alt="<?=$item['title']?>" />
+									<?php
+								} else {
+									?>
+									<img src="/public/images/no_photo.jpg" alt="<?=$item['title']?>" />
+									<?php
+								}
+							}
+						}
+						?>
+					</a>
+				</div>
+				<div class="food_title">
+					<a href="/patiekalas/<?=$item['id']?>-<?=$this->urlMaker($item['title'])?>"><?=$item['title']?></a>
+				</div>
+				<div class="food_info">
+					Receptas sukurtas: <?=$item['postedf']?>
+					<?php
+					if ($item['modifiedf'] != "0000-00-00 00:00:00"){
+						?>
+						<br />Receptas modifikuotas: <?=$item['modifiedf']?>
+						<?php
+					}
+					?>
+				</div>
+				<div class="myfood_tools">
+					<a href="/maistas/redaguoti/<?=$item['id']?>" alt="Redaguoti" title="Redaguoti">
+						<span class="ui-icon ui-icon-wrench">Redaguoti</span>
+					</a>
+					<a href="javascript:deleteRecipe(<?= $item['id']; ?>,unescape('<?= urlencode($item['title']); ?>'))" alt="Trinti" title="Trinti">
+						<span class="ui-icon ui-icon-trash">Trinti</span>
+					</a>
+				</div>
+			</div>
+			<?php
+		endforeach;
+		?>
+		<div class="clear"></div>
+		<?php
+	} else {
+		?>
+		<div>Jūs nesukūrėte nei vieno patiekalo recepto</div>
+		<?php
+	}
+	?>
+</div>
+
+<script>
+	function deleteRecipe(id, recipe_name) {
+		if (confirm("Ar norite ištrinti '" + recipe_name + "' ?")) {
+			$.ajax({
+				type: 'POST',
+				url: "/maistas/trinti/",
+				data: "recipe_id=" + id,
+				success: function (d) {
+					var data = jQuery.parseJSON(d);
+					if (data) {
+						if (data.status == "1") {
+							if (data.errors[0].type == "authentication") {
+								showLogin();
+								return
+							}
+						} else {
+							location.reload()
+						}
+					} else {
+						alert("Klaida")
+					}
+				}
+			})
+		}
+	}
+</script>

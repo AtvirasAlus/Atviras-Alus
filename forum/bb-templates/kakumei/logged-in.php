@@ -57,6 +57,7 @@ if ($beta_tester === "change me"){
 			<li><a href="/brewer/favorites" rel="nofollow">Mėgstamiausi receptai</a></li> 
 			<li><a href="/mail/inbox" rel="nofollow">Paštas</a></li> 
 			<li><a href="/brew-session/brewer" rel="nofollow">Virimų istorija</a></li>
+			<li><a href="/maistas/mano" rel="nofollow">Patiekalai</a></li>
 			<li><a href="/brewer/profile" rel="nofollow">Paskyra</a></li>
 			<li><a href="/auth/logout" rel="nofollow">Atsijungti</a></li> 
 		</ul>

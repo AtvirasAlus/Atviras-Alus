@@ -1,0 +1,301 @@
+<script>
+	$(function(){
+		<?php
+		if (isset($this->errors)){
+			?>
+			alert("<?=$this->errors?>");
+			<?php
+		}
+		?>
+		$("#food_form").submit(function(){
+			if ($("#rec_title").val().trim() == ""){
+				alert("Įveskite recepto pavadinimą");
+				$("#rec_title").focus();
+				return false;
+			}
+			if ($("#rec_cat").val() == ""){
+				alert("Pasirinkite recepto kategoriją");
+				$("#rec_cat").focus();
+				return false;
+			}
+			if ($("#rec_description").val().trim() == ""){
+				alert("Aprašykite gaminimo eigą");
+				$("#rec_description").focus();
+				return false;
+			}
+			var found = true;
+			var found2 = false;
+			$('.food_in_table .rec_ing_name').each(function(index) {
+				found2 = true;
+				if ($(this).val().trim() == ""){
+					alert("Įveskite ingridiento pavadinimą");
+					$(this).focus();
+					found = false;
+				}
+			});
+			if (found2 == false) {
+				alert("Sukurkite bent vieną ingridientą");
+				return false;
+			}
+			if (found == false) return false;
+			found = true;
+			$('.food_in_table .rec_ing_amount').each(function(index) {
+				if ($(this).val().trim() == ""){
+					alert("Įveskite ingridiento kiekį");
+					$(this).focus();
+					found = false;
+				}
+			});
+			if (found == false) return false;
+			if ($("#rec_image1").val() == "" && $("#rec_image2").val() == "" && $("#rec_image3").val() == ""){
+				if (confirm("Ar tikrai norite sukurti receptą be nuotraukų?")) { 
+				} else {
+					return false;
+				}
+			}
+			return true;
+		});
+		$("#add_line").click(function(){
+			$(".food_in_table").append($("#row_tpl").html());
+			reinit();
+		});
+		$("#add_style_line").click(function(){
+			$(".food_style_table").append($("#style_row_tpl").html());
+			$("#style_info").hide();
+			reinit();
+		});
+		reinit();
+	});
+	function reinit(){
+		$(".remlink").click(function(){
+			$(this).parent().parent().remove();
+		});
+		$(".remstylelink").click(function(){
+			$(this).parent().parent().remove();
+			n = $(".food_style_table .food_in_row").length;
+			if (n == 0){
+				$("#style_info").show();
+			}
+		});
+	}
+</script>
+<div id="food_bc_container" class="inner_container">
+	<a href="/maistas">Alus ir maistas</a>
+	<a href="/maistas/mano">Mano receptai</a>
+	&raquo;	Naujas receptas
+</div>
+
+<div id="food_info_container" class="inner_container">
+	<div class="inner_header"><h1>Naujas receptas</h1></div>
+	<form id="food_form" method="post" action="" enctype="multipart/form-data">
+		<dl>
+			<dt>Recepto pavadinimas:</dt>
+			<dd><input type="text" name="rec_title" id="rec_title" value="<?=(isset($this->postdata['rec_title'])) ? $this->postdata['rec_title'] : "";?>"></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Kategorija:</dt>
+			<dd>
+				<select name="rec_cat" id="rec_cat">
+					<option value="">Pasirinkite</option>
+					<?php
+					foreach($this->cats as $cat){
+						?>
+						<optgroup label="<?=$cat['title']?>">
+							<?php
+							foreach($cat['childs'] as $child){
+								$selected = "";
+								if (isset($this->postdata['rec_cat']) && $this->postdata['rec_cat'] == $child['id']){
+									$selected = ' selected="selected"';
+								}
+								?>
+								<option value="<?=$child['id']?>"<?=$selected?>><?=$child['title']?></option>
+								<?
+							}
+							?>
+						</optgroup>
+						<?
+					}
+					?>
+				</select>
+			</dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Gaminimas:</dt>
+			<dd>
+				<textarea name="rec_description" id="rec_description"><?=(isset($this->postdata['rec_description'])) ? $this->postdata['rec_description'] : "";?></textarea>
+			</dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Ingridientai:</dt>
+			<dd>
+				<div class="food_in_table">
+					<div class="food_in_row">
+						<div class="food_in_cell in_cell1 in_h">Ingridiento pavadinimas</div>
+						<div class="food_in_cell in_cell2 in_h">Kiekis</div>
+						<div class="food_in_cell in_cell3 in_h">&nbsp;</div>
+					</div>
+					<?php
+					if (isset($this->postdata['rec_ing_name'])){
+						foreach($this->postdata['rec_ing_name'] as $key=>$val){
+							?>
+							<div class="food_in_row">
+								<div class="food_in_cell in_cell1">
+									<input type="text" name="rec_ing_name[]" class="rec_ing_name" value="<?=$val?>" />
+								</div>
+								<div class="food_in_cell in_cell2">
+									<input type="text" name="rec_ing_amount[]" class="rec_ing_amount" value="<?=$this->postdata['rec_ing_amount'][$key]?>" />
+								</div>
+								<div class="food_in_cell in_cell3">
+									<a href="javascript:void(0);" alt="Pašalinti" title="Pašalinti" class="remlink">
+										<span class="ui-icon ui-icon-minusthick">Pašalinti</span>
+									</a>
+								</div>
+							</div>
+							<?php
+						}
+					} else {
+						?>
+						<div class="food_in_row">
+							<div class="food_in_cell in_cell1">
+								<input type="text" name="rec_ing_name[]" class="rec_ing_name" />
+							</div>
+							<div class="food_in_cell in_cell2">
+								<input type="text" name="rec_ing_amount[]" class="rec_ing_amount" />
+							</div>
+							<div class="food_in_cell in_cell3">
+								<a href="javascript:void(0);" alt="Pašalinti" title="Pašalinti" class="remlink">
+									<span class="ui-icon ui-icon-minusthick">Pašalinti</span>
+								</a>
+							</div>
+						</div>
+						<?php
+					}
+					?>
+				</div>
+				<div class="in_add">
+					<a href="javascript:void(0);" id="add_line" class="ui-button">Pridėti ingridientą</a>
+				</div>
+			</dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Tinkatis alus:</dt>
+			<dd>
+				<div class="food_style_table">
+					<?php
+					if (isset($this->postdata['rec_style'])){
+						foreach($this->postdata['rec_style'] as $key=>$val){
+							?>
+							<div class="food_in_row">
+								<div class="food_in_cell style_cell1">
+									<select name="rec_style[]">
+										<?php
+										foreach($this->styles as $cat){
+											?>
+											<optgroup label="<?=$cat['cat_name']?>">
+												<?php
+												foreach($cat['childs'] as $child){
+													$selected = "";
+													if ($val == $child['style_id']){
+														$selected = ' selected="selected"';
+													}
+													?>
+													<option value="<?=$child['style_id']?>"<?=$selected?>><?=$child['style_name']?></option>
+													<?
+												}
+												?>
+											</optgroup>
+											<?
+										}
+										?>
+									</select>
+								</div>
+								<div class="food_in_cell style_cell2">
+									<a href="javascript:void(0);" alt="Pašalinti" title="Pašalinti" class="remstylelink">
+										<span class="ui-icon ui-icon-minusthick">Pašalinti</span>
+									</a>
+								</div>
+							</div>
+							<?php
+						}
+					}
+					?>
+				</div>
+				<div id="style_info" <?=(isset($this->postdata['rec_style']) && sizeof($this->postdata['rec_style']) > 0) ? ' style="display: none;"' : '';?>>
+					Nenurodžius konkrečių alaus stilių bus traktuojama prie patiekalo (arba patiekalo gamybai) tinka bet koks alus.
+				</div>
+				<div class="style_add">
+					<a href="javascript:void(0);" id="add_style_line" class="ui-button">Pridėti alaus stilių</a>
+				</div>
+			</dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Nuotrauka #1:</dt>
+			<dd><input name="rec_image1" id="rec_image1" type="file" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Nuotrauka #2:</dt>
+			<dd><input name="rec_image2" id="rec_image2" type="file" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Nuotrauka #3:</dt>
+			<dd><input name="rec_image3" id="rec_image3" type="file" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>&nbsp;</dt>
+			<dd style="text-align: right;"><input name="rec_submit" type="submit" value="Saugoti" class="ui-button"></dd>
+			<div class="clear"></div>
+		</dl>
+	</form>	
+</div>
+<div id="row_tpl" style="display: none;">
+	<div class="food_in_row">
+		<div class="food_in_cell in_cell1">
+			<input type="text" name="rec_ing_name[]" class="rec_ing_name" />
+		</div>
+		<div class="food_in_cell in_cell2">
+			<input type="text" name="rec_ing_amount[]" class="rec_ing_amount" />
+		</div>
+		<div class="food_in_cell in_cell3">
+			<a href="javascript:void(0);" alt="Pašalinti" title="Pašalinti" class="remlink">
+				<span class="ui-icon ui-icon-minusthick">Pašalinti</span>
+			</a>
+		</div>
+	</div>
+</div>
+<div id="style_row_tpl" style="display: none;">
+	<div class="food_in_row">
+		<div class="food_in_cell style_cell1">
+			<select name="rec_style[]">
+				<?php
+				foreach($this->styles as $cat){
+					?>
+					<optgroup label="<?=$cat['cat_name']?>">
+						<?php
+						foreach($cat['childs'] as $child){
+							$selected = "";
+							?>
+							<option value="<?=$child['style_id']?>"<?=$selected?>><?=$child['style_name']?></option>
+							<?
+						}
+						?>
+					</optgroup>
+					<?
+				}
+				?>
+			</select>
+		</div>
+		<div class="food_in_cell style_cell2">
+			<a href="javascript:void(0);" alt="Pašalinti" title="Pašalinti" class="remstylelink">
+				<span class="ui-icon ui-icon-minusthick">Pašalinti</span>
+			</a>
+		</div>
+	</div>
+</div>

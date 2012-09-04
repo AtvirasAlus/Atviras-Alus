@@ -95,14 +95,14 @@ ul#topmenu {
 	list-style: none;
 	padding: 0px;
 	margin: 0px;
-	margin-top: 20px;
+	margin-top: 3	0px;
 }
 ul#topmenu li {
 	display: inline;
-	margin-right: 20px;
+	margin-right: 19px;
 }
 ul#topmenu li a, ul#topmenu li a:visited {
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: bold;
 }
 ul#topmenu li a:hover {
@@ -743,6 +743,15 @@ ul#topmenu li a:hover {
 	padding: 10px;
 	width: 480px;
 	height: 60px;
+}
+#rec_description {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	width: 600px;
+	height: 100px;
 }
 .article_title_url {
 	font-size: 14px;
@@ -2168,4 +2177,125 @@ ul.statuses li {
 }
 .food_style_list {
 	line-height: 20px;
+}
+.myfood_tools {
+	padding: 10px;
+}
+.myfood_tools a {
+	display: inline-block;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 5px;
+}
+
+#food_form dl {
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 5px;
+}
+#food_form dd {
+	padding: 0px;
+	margin: 0px;
+	width: 620px;
+	margin-left: 20px;
+	float: left;
+}
+#food_form dt {
+	padding: 0px;
+	margin: 0px;
+	width: 150px;
+	float: left;
+	font-size: 14px;
+	margin-left: 20px;
+	line-height: 26px;
+}
+#food_form dd input[type=file]{
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 0px solid #ccc;
+	width: 617px;
+	padding: 2px;
+	cursor: pointer;
+}
+#food_form dd input[type=text]{
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 617px;
+	padding: 2px;
+}
+#food_form dd select{
+	height: 28px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 623px;
+	padding: 2px;
+	background-color: #fff;
+}
+.food_style_table,
+.food_in_table {
+	display: table;
+	width: 620px;
+}
+.food_in_row {
+	display: table-row;
+}
+.food_in_cell {
+	display: table-cell;
+	padding-bottom: 5px;
+}
+.style_cell1 {
+	width: 574px;
+}
+.style_cell1 select {
+	width: 583px !important;
+}
+.in_cell1 {
+	width: 297px;
+}
+.in_cell2 {
+	width: 277px;
+}
+.style_cell2,
+.in_cell3 {
+	width: 26px;
+}
+.in_h {
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 26px;
+}
+.food_in_cell input[type=text] {
+	width: 270px !important;
+}
+.in_add {
+	text-align: right;
+	padding: 0px 37px 0px 0px;
+}
+.style_add {
+	text-align: right;
+	padding: 0px 37px 0px 0px;
+}
+#add_line {
+	color: black;
+}
+#add_style_line {
+	color: black;
+}
+#style_info {
+	font-size: 12px;
+	line-height: 24px;
+	color: #666;
+}
+.food_t img,
+.food_i img {
+	border: 1px solid #ccc;
 }
