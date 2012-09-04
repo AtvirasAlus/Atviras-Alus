@@ -1,0 +1,98 @@
+<?php
+$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+?>
+<script type="text/javascript">
+	$(document).ready(function() {
+	});
+</script>
+<?php
+if ($this->cat_id != 0):
+	?>
+	<div id="food_bc_container" class="inner_container">
+		<a href="/maistas">Alus ir maistas</a>
+		<?php
+		if (isset($this->parent)){
+			?>
+			&raquo;	<a href="/maistas/<?=$this->parent['id']?>-<?=$this->urlMaker($this->parent['title'])?>"><?=$this->parent['title']?></a>
+			<?php
+		}
+		?>
+		&raquo;	<?=$this->current['title']?>
+	</div>
+	<?php
+endif;
+?>
+<?php
+if (isset($this->subcategories) && sizeof($this->subcategories)>0){
+	?>
+	<div id="food_cats_container" class="inner_container">
+		<div class="inner_header">Kategorijos</div>
+		<?php
+		foreach($this->subcategories as $subcategory):
+			if ($subcategory['recipe_count'] > 0):
+				?>
+				<div class="food_cat_link">
+					<a href="/maistas/<?=$subcategory['id']?>-<?=$this->urlMaker($subcategory['title'])?>"><?=$subcategory['title']?></a> (<?=$subcategory['recipe_count']?>)
+				</div>
+				<?php
+			endif;
+		endforeach;
+		?>
+	</div>
+	<?php
+}
+if (isset($this->items) && sizeof($this->items)>0){
+	?>
+	<div id="food_cats_container" class="inner_container">
+		<div class="inner_header">Patiekalai</div>
+		<?php
+		foreach($this->items as $item):
+			?>
+			<div class="food_item_info">
+				<div class="food_image">
+					<a href="/patiekalas/<?=$item['id']?>-<?=$this->urlMaker($item['title'])?>">
+						<?php
+						if ($item['image1'] != ""){
+							?>
+							<img src="/food/<?=$item['id']?>/t_<?=$item['image1']?>" alt="<?=$item['title']?>" />
+							<?php
+						} else {
+							if ($item['image2'] != ""){
+								?>
+								<img src="/food/<?=$item['id']?>/t_<?=$item['image2']?>" alt="<?=$item['title']?>" />
+								<?php
+							} else {
+								if ($item['image3'] != ""){
+									?>
+									<img src="/food/<?=$item['id']?>/t_<?=$item['image3']?>" alt="<?=$item['title']?>" />
+									<?php
+								} else {
+									?>
+									<img src="/public/images/no_photo.jpg" alt="<?=$item['title']?>" />
+									<?php
+								}
+							}
+						}
+						?>
+					</a>
+				</div>
+				<div class="food_title">
+					<a href="/patiekalas/<?=$item['id']?>-<?=$this->urlMaker($item['title'])?>"><?=$item['title']?></a>
+				</div>
+				<div class="food_info">
+					Autorius: <a href="/brewers/<?=$item['author_id']?>"><?=$item['user_name']?></a><br />
+					Receptas sukurtas: <?=$item['postedf']?>
+				</div>
+				<div class="food_icons">
+					<span class="total_comments"><?=$item['total_comments']?></span>
+					<span class="total_likes"><?=$item['total_likes']?></span>
+				</div>
+			</div>
+			<?php
+		endforeach;
+		?>
+		<div class="clear"></div>
+	</div>
+	<?php
+}
+?>

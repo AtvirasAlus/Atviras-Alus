@@ -558,6 +558,9 @@ ul#topmenu li a:hover {
 .recipe_tools_container {
 	margin-bottom: 20px;
 }
+.food_tools_container {
+	margin-bottom: 20px;
+}
 .recipe_awards {
 	float: left;
 }
@@ -573,7 +576,25 @@ ul#topmenu li a:hover {
 .recipe_tools #vote_icon {
 	display: inline-block;
 }
+.food_tools {
+	float: right;
+}
+.food_tools a {
+	display: inline-block;
+	margin-left: 15px;
+	font-size: 14px;
+	line-height: 32px;
+}
+.food_tools #vote_icon {
+	display: inline-block;
+}
 .ingridient_category {
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom: 10px;
+	margin-top: 20px;
+}
+.food_line {
 	font-weight: bold;
 	font-size: 16px;
 	margin-bottom: 10px;
@@ -2083,4 +2104,68 @@ ul.statuses li {
 	border: 1px solid #ccc;
 	padding: 2px;
 	background-color: #fff;
+}
+.food_cat_link {
+	font-size: 14px;
+	line-height: 24px;
+}
+.food_item_info {
+	float: left;
+	width: 265px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #DDD;
+	overflow: hidden;
+}
+.food_image {
+	padding: 10px;
+}
+.food_image img {
+	width: 245px;
+	height: 176px;
+	overflow: hidden;
+}
+.food_title {
+	text-align: center;
+	padding: 0px 10px 10px 10px;
+}
+.food_title a {
+	font-weight: bold;
+	font-size: 14px;
+}
+.food_info {
+	padding: 0px 10px 5px 10px;
+	line-height: 20px;
+}
+.food_icons {
+	padding: 0px 10px 10px 10px;
+}
+.food_info {
+	float: left;
+	width: 540px;
+}
+.food_images {
+	float: right;
+	width: 250px;
+}
+.food_t {
+	margin-top: 10px;
+}
+.food_t img {
+	float: left;
+	width: 80px;
+	margin-right: 3px;
+}
+.food_t img {
+	cursor: pointer;
+}
+.food_info_details {
+	line-height: 20px;
+}
+.food_style_list {
+	line-height: 20px;
 }

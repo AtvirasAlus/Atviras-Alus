@@ -1,0 +1,226 @@
+<script>
+	$(function(){
+		$("#vote_up_button").click(function(){
+			$("#vote_icon").html("<img src='/public/images/spinner.gif'/>");
+			$("span#votes_count").fadeOut("fast");
+			$.ajax({
+				type: "POST",
+				data: "action=vote_up&id=<?=$this->item['id'];?>",
+				url: "/food/vote",
+				success: function(msg){
+					$("#vote_icon").html('<img src="/public/images/thumb_up.png">');
+					var data = jQuery.parseJSON(msg);
+					if (data) {
+						$("span#votes_count").html(data.data.votes);
+						$("span#votes_count").fadeOut();
+						$("span#votes_count").fadeIn();
+					}
+					$("#vote_button").html("Nepatinka");
+					$("#vote_down_button").css("display","inline");
+					$("#vote_up_button").css("display","none");
+				}
+			});
+		});
+
+		$("#vote_down_button").click(function(){
+			the_id = $(this).attr('id');
+			$("#vote_icon").html("<img src='/public/images/spinner.gif'/>");
+			$.ajax({
+				type: "POST",
+				data: "action=vote_down&id=<?=$this->item['id'];?>",
+				url: "/food/vote",
+				success: function(msg){
+					var data = jQuery.parseJSON(msg);
+					$("#vote_icon").html('<img src="/public/images/thumb_up.png">');
+					$("#vote_up_button").css("display","inline");
+					$("#vote_down_button").css("display","none");
+					if (data) {
+						$("span#votes_count").html(data.data.votes);
+						$("span#votes_count").fadeOut();
+						$("span#votes_count").fadeIn();
+					}
+				}
+			});
+		});
+		$(".food_t img").click(function(){
+			$(".food_i img").attr("src", $(this).attr("src"));
+			$(".food_i a").attr("href", $(this).attr("data-link"));
+		});
+		$(".fancybox").lightBox({
+			imageLoading:'/public/lightbox/images/lightbox-ico-loading.gif',
+			imageBtnPrev:'/public/lightbox/images/lightbox-btn-prev.gif',
+			imageBtnNext:'/public/lightbox/images/lightbox-btn-next.gif',
+			imageBtnClose:'/public/lightbox/images/lightbox-btn-close.gif',
+			imageBlank:'/public/lightbox/images/lightbox-blank.gif',
+		});
+		
+	});
+	
+</script>
+<div id="food_bc_container" class="inner_container">
+	<a href="/maistas">Alus ir maistas</a>
+	&raquo;	<a href="/maistas/<?=$this->item['parent_cat_id']?>-<?=$this->urlMaker($this->item['parent_cat_title'])?>"><?=$this->item['parent_cat_title']?></a>
+	&raquo;	<a href="/maistas/<?=$this->item['cat_id']?>-<?=$this->urlMaker($this->item['cat_title'])?>"><?=$this->item['cat_title']?></a>
+	&raquo;	<?=$this->item['title']?>
+</div>
+
+<div id="food_info_container" class="inner_container">
+	<div class="inner_header"><h1><?=$this->item['title']?></h1></div>
+	<div class="food_tools_container">
+		<div class="food_tools">
+			<?php
+			if ($this->user_info->user_id == $this->item['author_id']){
+				?>
+				<a href="/maistas/redaguoti/<?=$this->item['id']?>">Redaguoti</a>
+				<?php
+			}
+			?>
+			<?php
+			if (isset($this->user_info)) {
+				if ($this->recipe_votes["user_vote"]) {
+					?>
+					<a href='javascript:void(0);' id='vote_up_button' style="display:none">Patinka</a>
+					<a href='javascript:void(0);' id='vote_down_button'>Nebepatinka</a>
+					<?php 
+				} else {
+					?>
+					<a href='javascript:void(0);' id='vote_down_button' style="display:none">Nebepatinka</a>
+					<a href='javascript:void(0);' id='vote_up_button'>Patinka</a>
+					<?
+				}
+            }
+			?>
+			<span id='votes_count'><?=$this->recipe_votes["total"];?></span>
+			<div id='vote_icon'><img src="/public/images/thumb_up.png"  border="0" /></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="food_info_container">
+		<div class="food_info">
+			<div class="food_info_details">
+				<div>Autorius: <a href="/brewers/<?=$this->item['author_id']?>"><?=$this->item['user_name']?></a></div>
+				<div>Receptas sukurtas: <?=$this->item['posted']?></div>
+				<?php
+				if ($this->item['modified'] != "0000-00-00 00:00:00"){
+					?>
+					<div>Receptas modifikuotas: <?=$this->item['modified']?></div>
+					<?php
+				}
+				?>
+			</div>
+			<div class="food_line">Ingridientai</div>
+			<ul>
+				<?php
+				foreach($this->ingridients as $ing):
+					?>
+					<li><b><?=$ing['title']?></b>, <?=$ing['amount']?></li>
+					<?php
+				endforeach;
+				?>
+			</ul>
+		</div>
+		<div class="food_images">
+			<div class="food_i">
+				<?php
+				if ($this->item['thumb'] === false){
+					?>
+					<img src="/public/images/no_photo.jpg" alt="<?=$item['title']?>" />
+					<?php
+				} else {
+					?>
+					<a class="fancybox" href="/food/<?=$this->item['id']?>/<?=$this->item[$this->item['thumb']]?>"><img src="/food/<?=$this->item['id']?>/t_<?=$this->item[$this->item['thumb']]?>" /></a>
+					<?php
+				}
+				?>
+			</div>
+			<div class="food_t">
+				<?php
+				if ($this->item['image1'] != ""){
+					?>
+					<img src="/food/<?=$this->item['id']?>/t_<?=$this->item['image1']?>" data-link="/food/<?=$this->item['id']?>/<?=$this->item['image1']?>" />
+					<?php
+				}
+				if ($this->item['image2'] != ""){
+					?>
+					<img src="/food/<?=$this->item['id']?>/t_<?=$this->item['image2']?>" data-link="/food/<?=$this->item['id']?>/<?=$this->item['image2']?>" />
+					<?php
+				}
+				if ($this->item['image3'] != ""){
+					?>
+					<img src="/food/<?=$this->item['id']?>/t_<?=$this->item['image3']?>" data-link="/food/<?=$this->item['id']?>/<?=$this->item['image3']?>" />
+					<?php
+				}
+				?>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div style="padding: 10px;">
+		<div class="food_line">Gaminimas</div>
+		<div><?=str_replace("\n", "<br />", $this->item['description']);?></div>
+		<?php
+		if ($this->item['parent_cat_id'] == 3){
+			?>
+			<div class="food_line">Stiliai kurių alus tinka šio patekalo paruošimui</div>
+			<?php
+		} else {
+			?>
+			<div class="food_line">Stiliai kurių alus tinka prie šio patiekalo</div>
+			<?php
+		}
+		?>
+		<div class="food_style_list">
+			<ul>
+				<?php
+				if (sizeof($this->styles) > 0){
+					foreach($this->styles as $style):
+						?>
+						<li>
+							<a href="/stilius/<?=$style['style_id']?>-<?=$this->urlMaker($style['style_name'])?>">
+								<?=$style['style_name']?>
+							</a>
+						</li>
+						<?php
+					endforeach;
+				} else {
+					?>
+					<li>Tinka bet kokio stiliaus alus</li>
+					<?php
+				}
+				?>
+			</ul>
+		</div>
+	</div>
+<?php
+	if (isset($this->recipes)){
+		?>
+		<div class="food_line" style="padding-left: 10px; margin-top: 0px;">Keletas įdomesnių tinkančio alaus receptų</div>
+		<div>
+			<?php
+			$i = 0;
+			foreach ($this->recipes as $recipe){
+				$i++;
+				?>
+				<div class="style_recipe">
+					<?= $this->recipeItem($recipe); ?>
+				</div>
+				<?php
+				if ($i == 3){
+					$i = 0;
+					?>
+					<div class="clear"></div>
+					<?php
+				}
+			}
+			?>
+			<div class="clear"></div>
+		</div>
+		<?php
+	}
+	?>
+	<div class="recipe_comments">
+		<div class="ingridient_category2">Komentarai</div>
+		<div><?=$this->foodComments($this->item_id);?></div>
+	</div>
+</div>
