@@ -33,8 +33,14 @@
 			<?= nl2br(preg_replace('/((?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i', '<a href="$1" rel="nofollow" target="blank">$1</a>', $this->mail['mail_body'])); ?>
 		</div>
 		<div style="text-align: right;">
+			<input type="button" id="deleteButton" value="Trinti žinutę" class="ui-button" />
 			<input type="button" id="respondButton" value="Atsakyti" class="ui-button" />
 		</div>
+		<form action="/mail/delete" method="POST" id="inboxForm">
+			<input type="hidden" name="type" value="inbox">
+			<input type="hidden" name="redirect" value="/mail/inbox">
+			<input type="hidden" name="mail_id[]" id="chMail" value="<?= $this->mail["mail_id"]; ?>"/>
+		</form>
 		<?php
 	}
 	?>
@@ -42,8 +48,14 @@
 
 <script>
 	$(function() {
+		$('#deleteButton').click(function(){
+			if (confirm("Ar tikrai norite ištrinti žinutę?")) { 
+				$("#inboxForm").submit();
+			}
+		});
 		$('#respondButton').click(function() {
 			window.location='/mail/respond?id=<?= $this->mail['mail_id']; ?>';
+			return false;
 		});
 	})
 </script>
