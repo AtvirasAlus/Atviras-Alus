@@ -10,7 +10,35 @@ class CronController extends Zend_Controller_Action {
 		
 	}
 	
+	public function populatemwusersAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("users");
+		$users = $db->FetchAll($select);
+		foreach($users as $user){
+			$insert = $db->insert("wiki_user", array(
+				"user_id" => $user['user_id'],
+				"user_name" => $user['user_name'],
+				"user_real_name" => $user['user_name'],
+				"user_password" => ":A:".$user['user_password'],
+				"user_newpassword" => "",
+				"user_newpass_time" => null,
+				"user_email" => $user['user_email'],
+				"user_touched" => str_replace(array(" ",  "-", ":"), array("", "", ""), $user['user_lastlogin']),
+				"user_token" => $user['user_password'],
+				"user_email_authenticated" => null,
+				"user_email_token" => null,
+				"user_email_token_expires" => null,
+				"user_registration" => str_replace(array(" ",  "-", ":"), array("", "", ""), $user['user_created']),
+				"user_editcount" => "0"
+			));
+		}
+	}
+	
 	public function populaterecipecommentsAction(){
+		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
@@ -38,6 +66,7 @@ class CronController extends Zend_Controller_Action {
 	}
 	
 	public function populaterecipesessionsAction(){
+		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
@@ -65,6 +94,7 @@ class CronController extends Zend_Controller_Action {
 	}
 
 	public function populaterecipelikesAction(){
+		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
@@ -86,6 +116,7 @@ class CronController extends Zend_Controller_Action {
 	}
 
 	public function populaterecipeawardsAction(){
+		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
