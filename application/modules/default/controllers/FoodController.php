@@ -481,7 +481,7 @@ class FoodController extends Zend_Controller_Action {
 					"parent_cat_id" =>  $cat['parent_id'],
 					"title" =>  trim(strip_tags($post['rec_title'])),
 					"description" => strip_tags($post['rec_description'], "<a><b><i>"),
-					"modified" => date("Y-m-d H:i:s"),
+					"modified" => date("Y-m-d H:i:s", "id = '".$item_id."'"),
 				));
 				$last_id = $item_id;
 				$db->delete("food_ingridients", "recipe_id = '".$item_id."'");
