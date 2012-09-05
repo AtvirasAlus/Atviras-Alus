@@ -224,6 +224,16 @@ class FoodController extends Zend_Controller_Action {
 		$items = $db->FetchAll($select);
 		$this->view->items = $items;
 		
+		if ($category == 0){
+			$select = $db->select()
+					->from("food_items", array("*", "DATE_FORMAT(posted, '%Y-%m-%d') as postedf"))
+					->join("users", "food_items.author_id = users.user_id", array("user_name"))
+					->order("food_items.posted DESC")
+					->limit(9);
+			$news = $db->FetchAll($select);
+			$this->view->news = $news;
+		}
+		
 	}
 
 	public function myAction() {
