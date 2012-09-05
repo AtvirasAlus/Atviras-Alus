@@ -38,15 +38,6 @@
 				return false;
 			}
 			if (found == false) return false;
-			found = true;
-			$('.food_in_table .rec_ing_amount').each(function(index) {
-				if ($(this).val().trim() == ""){
-					alert("Įveskite ingridiento kiekį");
-					$(this).focus();
-					found = false;
-				}
-			});
-			if (found == false) return false;
 			if ($("#rec_image1").val() == "" && $("#rec_image2").val() == "" && $("#rec_image3").val() == ""){
 				if (confirm("Ar tikrai norite sukurti receptą be nuotraukų?")) { 
 				} else {

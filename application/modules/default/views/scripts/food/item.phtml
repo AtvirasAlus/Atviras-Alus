@@ -113,7 +113,7 @@
 				<?php
 				foreach($this->ingridients as $ing):
 					?>
-					<li><b><?=$ing['title']?></b>, <?=$ing['amount']?></li>
+					<li><b><?=$ing['title']?></b><?=($ing['amount'] != "") ? ", ".$ing['amount'] : "";?></li>
 					<?php
 				endforeach;
 				?>

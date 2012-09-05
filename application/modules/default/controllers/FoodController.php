@@ -277,12 +277,6 @@ class FoodController extends Zend_Controller_Action {
 						break;
 					}
 				}
-				foreach($post['rec_ing_amount'] as $k=>$v){
-					if (empty($v)){
-						$errors[] = "Įveskite ingridiento kiekįą";
-						break;
-					}
-				}
 			}
 			$allowedExts = array("jpg", "jpeg", "gif", "png");
 			foreach($_FILES as $key=>$file){
@@ -452,12 +446,6 @@ class FoodController extends Zend_Controller_Action {
 						break;
 					}
 				}
-				foreach($post['rec_ing_amount'] as $k=>$v){
-					if (empty($v)){
-						$errors[] = "Įveskite ingridiento kiekįą";
-						break;
-					}
-				}
 			}
 			$allowedExts = array("jpg", "jpeg", "gif", "png");
 			foreach($_FILES as $key=>$file){
@@ -492,6 +480,7 @@ class FoodController extends Zend_Controller_Action {
 						"amount" =>  trim(strip_tags($post['rec_ing_amount'][$key]))
 					));
 				}
+				$db->delete("food_styles", "recipe_id = '".$item_id."'");
 				if (isset($post['rec_style'])){
 					$db->delete("food_styles", "recipe_id = '".$item_id."'");
 					foreach($post['rec_style'] as $key=>$val){

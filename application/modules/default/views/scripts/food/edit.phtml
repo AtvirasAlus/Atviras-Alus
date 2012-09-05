@@ -38,15 +38,6 @@
 				return false;
 			}
 			if (found == false) return false;
-			found = true;
-			$('.food_in_table .rec_ing_amount').each(function(index) {
-				if ($(this).val().trim() == ""){
-					alert("Įveskite ingridiento kiekį");
-					$(this).focus();
-					found = false;
-				}
-			});
-			if (found == false) return false;
 			return true;
 		});
 		$("#add_line").click(function(){
