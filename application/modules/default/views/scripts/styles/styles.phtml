@@ -16,6 +16,30 @@ foreach ($dfields as $dfield) {
 	}
 }
 ?>
+<script type="text/javascript">
+	$(function(){
+		$(".ttip_og").simpletip({
+			content: '<b>Pradinis tirštumas</b> (angl. <i>original gravity</i>, <i>OG</i>). Misos specifinis tirštumas prieš fermentaciją. Šis matas nurodo cukringųjų medžiagų, būsiančių perdirbtų į alkoholį, kiekį – kuo tirštesnė misa, tuo stipresnis alus gausis.',
+			fixed: false
+		});
+		$(".ttip_fg").simpletip({
+			content: '<b>Galutinis tirštumas</b> (angl. <i>final gravity</i>, <i>FG</i>). Misos specifinis tirštumas fermentacijos pabaigoje.',
+			fixed: false
+		});
+		$(".ttip_abv").simpletip({
+			content: '<b>Alkoholio kiekis pagal tūrį</b> (angl. <i>Alcohol By Volume</i>, <i>ABV</i>, <i>v/v</i>). Alaus stiprumas išreiškiamas procentais.',
+			fixed: false
+		});
+		$(".ttip_ibu").simpletip({
+			content: '<b>Kartumo vienetai</b> (angl. <i>International Bittering Units</i>, <i>IBU</i>). Standartinis alaus kartumo matavimo skalės vienetas, žymintis apynių apimtį ir intensyvumą.',
+			fixed: false
+		});
+		$(".ttip_ebc").simpletip({
+			content: '<b>Spalva</b> (angl. <i>EBC</i>). Šiuo atveju alaus spalvos standartas pagal European Brewery Convention (Europos Aludarių Konvencija)',
+			fixed: false
+		});
+	})
+</script>
 <div id="style_info_container" class="inner_container">
 	<div class="inner_header">
 		<h1>
@@ -88,27 +112,27 @@ foreach ($dfields as $dfield) {
 	?>
 	<div id="style_params">
 		<div class="params_block">
-			<div class="params_title">OG:</div>
+			<div class="params_title"><span class="ttip ttip_og"><b>OG:</b></span></div>
 			<div class="params_content"><?= $this->current_style["style_oglow"]; ?> - <?= $this->current_style["style_oghigh"]; ?></div>
 			<div class="clear"></div>
 		</div>
 		<div class="params_block">
-			<div class="params_title">FG:</div>
+			<div class="params_title"><span class="ttip ttip_fg"><b>FG:</b></span></div>
 			<div class="params_content"><?= $this->current_style["style_fglow"]; ?> - <?= $this->current_style["style_fghigh"]; ?></div>
 			<div class="clear"></div>
 		</div>
 		<div class="params_block">
-			<div class="params_title">ABV (%):</div>
+			<div class="params_title"><span class="ttip ttip_abv"><b>ABV (%):</b></span></div>
 			<div class="params_content"><?= round(Entities_BrewCalc::abv($this->current_style["style_oglow"] * 100, $this->current_style["style_fglow"] * 100), 1); ?> - <?= round(Entities_BrewCalc::abv($this->current_style["style_oghigh"] * 100, $this->current_style["style_fglow"] * 100), 1); ?></div>
 			<div class="clear"></div>
 		</div>
 		<div class="params_block">
-			<div class="params_title">Kartumas:</div>
+			<div class="params_title"><span class="ttip ttip_ibu"><b>Kartumas:</b></span></div>
 			<div class="params_content"><?= $this->current_style["style_ibulow"]; ?> - <?= $this->current_style["style_ibuhigh"]; ?> IBU</div>
 			<div class="clear"></div>
 		</div>
 		<div class="params_block">
-			<div class="params_title">Spalva:</div>
+			<div class="params_title"><span class="ttip ttip_ebc"><b>Spalva:</b></span></div>
 			<div class="params_content">
 				<?php
 				$step = $this->current_style["style_srmhigh"] / $this->current_style["style_srmlow"] / 10;

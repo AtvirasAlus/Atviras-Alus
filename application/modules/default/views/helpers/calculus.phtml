@@ -3,6 +3,7 @@
 <? $this->headScript()->appendFile("/public/ui/external/ui.core.js"); ?>
 <? $this->headScript()->appendFile("/public/ui/external/ui.spinner.js"); ?>
 <? $this->headScript()->appendFile("/public/ui/external/jquery.editable-select.js"); ?>
+
 <script type="text/javascript">
 	function getMalts() {
 		var malts = '<option malt_id="0" type="malt" ebc="3" extract="1.036">Bazinis salyklas</option>';
@@ -458,6 +459,51 @@
 
 	//
 	$(document).ready(function () {
+		$(".ttip_efektyvumas").simpletip({
+			content: '<b>Efektyvumas</b> (angl. <i>Efficiency</i>; <i>Extraction efficiency</i>). Cukringų medžiagų "išplovimo" iš salyklo efektyvumas. Tai yra santykis cukraus, kurį iš tikrųjų "išplovėt" , su teoriškai didžiausiu įmanomu "išplauti" cukraus kiekiu.',
+			fixed: false
+		});
+		$(".ttip_atenuacija").simpletip({
+			content: '<b>Atenuacija</b>, <b>silpimas</b> (angl. <i>Attenuation</i>). Misos tirštumo mažėjimas, joje esančias cukringąsias medžiagas fermentacijos būdu perdirbant į alkoholį ir angliarūgštę. Alus laikomas pasiekęs galutinę atenuaciją, kai mielės daugiau nebegali fermentuoti saldžiųjų medžiagų.<br /><br /><b>Tariama atenuacija</b> (angl. <i>Apparent attenuation</i>). Paprastas fermentacijos, kurią patyrė misa virsdama alumi, lygio išraiškos būdas. Naudojant Gravity Units (GU), Balling (B) arba Plato (P) vienetus išreikšti tirštumui, tariama atenuacija yra lygi iš pradinio tirštumo atėmus galutinį tirštumą ir padalinus iš pradinio tirštumo. Rezultatas išreiškiamas procentais ir daugumai alaus rūšių yra lygus 65-80%.',
+			fixed: false
+		});
+		$(".ttip_matavimosistema").simpletip({
+			content: '<b>Matavimo systema</b>. Misos tirštumo, potencialaus alaus stiprumo po fermentacijos, matavimo sistema.<br /><br /><b>°Plato</b>, <b>Balingas</b>, <b>°Balling</b>. Misos tirštumo, taigi ir potencialaus alaus stiprumo po fermentacijos, mato vienetas. Balling matavimo sistema buvo sukurta čeko aludarystės mokslininko Carl Joseph Napoleon Balling. Vėliau patobulinta į °Plato.<br /><br /><b>Specifinis tirštumas</b>, <b>cukringumas</b> (angl. <i>specific gravity</i>, <i>SG</i>). Misos matas, nurodantis jos tirštumą (kietųjų medžiagų kiekį).',
+			fixed: false
+		});
+		$(".ttip_og").simpletip({
+			content: '<b>Pradinis tirštumas</b> (angl. <i>original gravity</i>, <i>OG</i>). Misos specifinis tirštumas prieš fermentaciją. Šis matas nurodo cukringųjų medžiagų, būsiančių perdirbtų į alkoholį, kiekį – kuo tirštesnė misa, tuo stipresnis alus gausis.',
+			fixed: false
+		});
+		$(".ttip_fg").simpletip({
+			content: '<b>Galutinis tirštumas</b> (angl. <i>final gravity</i>, <i>FG</i>). Misos specifinis tirštumas fermentacijos pabaigoje.',
+			fixed: false
+		});
+		$(".ttip_abv").simpletip({
+			content: '<b>Alkoholio kiekis pagal tūrį</b> (angl. <i>Alcohol By Volume</i>, <i>ABV</i>, <i>v/v</i>). Alaus stiprumas išreiškiamas procentais.',
+			fixed: false
+		});
+		$(".ttip_ibu").simpletip({
+			content: '<b>Kartumo vienetai</b> (angl. <i>International Bittering Units</i>, <i>IBU</i>). Standartinis alaus kartumo matavimo skalės vienetas, žymintis apynių apimtį ir intensyvumą.',
+			fixed: false
+		});
+		$(".ttip_ebc").simpletip({
+			content: '<b>Spalva</b> (angl. <i>EBC</i>). Šiuo atveju alaus spalvos standartas pagal European Brewery Convention (Europos Aludarių Konvencija)',
+			fixed: false
+		});
+		$(".ttip_ibuog").simpletip({
+			content: '<b>IBU/OG balansas</b> (angl. <i>IBU/Gravity ratio</i>). Kartumo ir pradinio tirštumo santykis. Išskaičiuojamas, sąlyginis vienetas apsprendžiantis tariamą burnos kartumo pojūtį.',
+			fixed: false
+		});
+		$(".ttip_ekstraktingumas").simpletip({
+			content: '<b>Ekstraktingumas</b> (tech) (angl. <i>extraction rate</i>). Kramolingųjų medžiagų kiekio, paverstų į fermentuojamąsias cukringąsias medžiagas salinimo metu, matas.',
+			fixed: false
+		});
+		$(".ttip_alfa").simpletip({
+			content: '<b>Alfa rūgštys</b> (angl. <i>alpha acids</i>, <i>AA</i>). Esminis kartumo šaltinis, gaunamas iš apynių, izomerizuojant juos virimo būdu.',
+			fixed: false
+		});
+
 		$("#attenuation").spinner({min:0, stepping:0.01, max:1});
 		$('#attenuation').bind('spinchange', function (event, ui) {
 			calc();
@@ -733,7 +779,7 @@
 				<div class="clear"></div>
 			</div>
 			<div class="calc_info_block smaller_block">
-				<div class="calc_info_label">Matavimo sistema:</div>
+				<div class="calc_info_label"><span class="ttip ttip_matavimosistema">Matavimo sistema</span>:</div>
 				<div class="calc_info_data">
 					<input type="radio" name="extract_m" value="plato" id="extract_m_plato"> <label for="extract_m_plato">Plato</label>
 					<input type="radio" name="extract_m" value="sg" id="extract_m_sg" checked> <label for="extract_m_sg">SG</label>
@@ -743,33 +789,33 @@
 				<div class="clear"></div>
 			</div>
 			<div class="calc_info_block smaller_block">
-				<div class="calc_info_label">OG:</div>
+				<div class="calc_info_label"><span class="ttip ttip_og">OG</span>:</div>
 				<div class="calc_info_data"><span id="recipe_sg_span" class="style_res">?</span><span id="style_sg" class="style_recom"></span></div>
 				<div class="calc_info_label">Virimo laikas:</div>
 				<div class="calc_info_data"><input type="text" id="boil_time" value="60"/></div>
 				<div class="clear"></div>
 			</div>
 			<div class="calc_info_block smaller_block">
-				<div class="calc_info_label">FG:</div>
+				<div class="calc_info_label"><span class="ttip ttip_fg">FG</span>:</div>
 				<div class="calc_info_data"><span id="recipe_fg_span" class="style_res">?</span><span id="style_fg" class="style_recom"></span></div>
-				<div class="calc_info_label">Efektyvumas:</div>
+				<div class="calc_info_label"><span class="ttip ttip_efektyvumas">Efektyvumas</span>:</div>
 				<div class="calc_info_data"><input type="text" id="efficiency" value="0.70"/></div>
 				<div class="clear"></div>
 			</div>
 			<div class="calc_info_block smaller_block">
-				<div class="calc_info_label">ABV:</div>
+				<div class="calc_info_label"><span class="ttip ttip_abv">ABV</span>:</div>
 				<div class="calc_info_data"><span id="recipe_abv_span" class="style_res">?</span><span id="style_abv" class="style_recom"></span></div>
-				<div class="calc_info_label">Atenuacija:</div>
+				<div class="calc_info_label"><span class="ttip ttip_atenuacija">Atenuacija</span>:</div>
 				<div class="calc_info_data"><input type="text" id="attenuation" value="0.75"/></div>
 				<div class="clear"></div>
 			</div>
 			<div class="calc_info_block smaller_block">
-				<div class="calc_info_label">IBU:</div>
+				<div class="calc_info_label"><span class="ttip ttip_ibu">IBU</span>:</div>
 				<div class="calc_info_data"><span id="recipe_ibu_span" class="style_res">?</span><span id="style_ibu" class="style_recom"></span></div>
 				<div class="clear"></div>
 			</div>
 			<div class="calc_info_block smaller_block">
-				<div class="calc_info_label">EBC:</div>
+				<div class="calc_info_label"><span class="ttip ttip_ebc">EBC</span>:</div>
 				<div class="calc_info_data"><span id="recipe_ebc_span" class="style_res">?</span><span id="style_ebc" class="style_recom"></span></div>
 				<div class="calc_info_label">Pritaikyti:</div>
 				<div class="calc_info_data">
@@ -779,7 +825,7 @@
 				<div class="clear"></div>
 			</div>
 			<div class="calc_info_block smaller_block">
-				<div class="calc_info_label">IBU/OG balansas:</div>
+				<div class="calc_info_label"><span class="ttip ttip_ibuog">IBU/OG balansas</span>:</div>
 				<div class="calc_info_data" style="font-size: 14px; line-height: 26px; width: 400px;"><div id="feel_container">-</div></div>
 				<div class="clear"></div>
 			</div>
@@ -804,8 +850,8 @@
 					<div class="as-cell" style="width: 40px"></div>
 					<div class="as-cell"><b>Salyklas</b></div>
 					<div class="as-cell" style="width: 120px"><b>Kiekis (kg)</b></div>
-					<div class="as-cell" style="width: 120px"><b>Ekstraktingumas</b></div>
-					<div class="as-cell" style="width: 120px"><b>Spalva (EBC)</b></div>
+					<div class="as-cell" style="width: 120px"><span class="ttip ttip_ekstraktingumas"><b>Ekstraktingumas</b></span></div>
+					<div class="as-cell" style="width: 120px"><span class="ttip ttip_ebc"><b>Spalva (EBC)</b></span></div>
 					<div class="as-cell" style="width: 90px"><b>Tipas</b></div>
 				</div>
 			</div>
@@ -832,7 +878,7 @@
 				<div class="as-row">
 					<div class="as-cell"><b>Apyniai</b></div>
 					<div class="as-cell" style="width: 120px"><b>Kiekis (gr.)</b></div>
-					<div class="as-cell" style="width: 120px"><b>Alfa (%)</b></div>
+					<div class="as-cell" style="width: 120px"><span class="ttip ttip_alfa"><b>Alfa (%)</b></span></div>
 					<div class="as-cell" style="width: 120px"><b>Laikas (min.)</b></div>
 				</div>
 			</div>

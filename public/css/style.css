@@ -416,7 +416,6 @@ ul#topmenu li a:hover {
 #style_params .params_block .params_title {
 	float: left;
 	width: 100px;
-	font-weight: bold;
 	font-size: 14px;
 	line-height: 20px;
 }
@@ -667,7 +666,6 @@ ul#topmenu li a:hover {
 	width: 70px;
 	text-align: right;
 	font-size: 14px;
-	font-weight: bold;
 }
 .recipe_result_text {
 	float: left;
@@ -2298,4 +2296,27 @@ ul.statuses li {
 .food_t img,
 .food_i img {
 	border: 1px solid #ccc;
+}
+.tooltip{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 3;
+	display: none;
+	background-color: #FFC;
+	border: 1px solid #999;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 12px;
+	max-width: 300px;
+	text-align: left;
+	line-height: 16px;
+}
+.ttip {
+	border-bottom: 1px dashed #755531;
+	cursor: help;
 }

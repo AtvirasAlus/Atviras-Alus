@@ -4,6 +4,51 @@ $this->headMeta()->setName('keywords', 'apyniai, mielės, salyklas,alaus gamyba,
 ?>
 <script>
 	$(function(){
+		$(".ttip_efektyvumas").simpletip({
+			content: '<b>Efektyvumas</b> (angl. <i>Efficiency</i>; <i>Extraction efficiency</i>). Cukringų medžiagų "išplovimo" iš salyklo efektyvumas. Tai yra santykis cukraus, kurį iš tikrųjų "išplovėt" , su teoriškai didžiausiu įmanomu "išplauti" cukraus kiekiu.',
+			fixed: false
+		});
+		$(".ttip_atenuacija").simpletip({
+			content: '<b>Atenuacija</b>, <b>silpimas</b> (angl. <i>Attenuation</i>). Misos tirštumo mažėjimas, joje esančias cukringąsias medžiagas fermentacijos būdu perdirbant į alkoholį ir angliarūgštę. Alus laikomas pasiekęs galutinę atenuaciją, kai mielės daugiau nebegali fermentuoti saldžiųjų medžiagų.<br /><br /><b>Tariama atenuacija</b> (angl. <i>Apparent attenuation</i>). Paprastas fermentacijos, kurią patyrė misa virsdama alumi, lygio išraiškos būdas. Naudojant Gravity Units (GU), Balling (B) arba Plato (P) vienetus išreikšti tirštumui, tariama atenuacija yra lygi iš pradinio tirštumo atėmus galutinį tirštumą ir padalinus iš pradinio tirštumo. Rezultatas išreiškiamas procentais ir daugumai alaus rūšių yra lygus 65-80%.',
+			fixed: false
+		});
+		$(".ttip_matavimosistema").simpletip({
+			content: '<b>Matavimo systema</b>. Misos tirštumo, potencialaus alaus stiprumo po fermentacijos, matavimo sistema.<br /><br /><b>°Plato</b>, <b>Balingas</b>, <b>°Balling</b>. Misos tirštumo, taigi ir potencialaus alaus stiprumo po fermentacijos, mato vienetas. Balling matavimo sistema buvo sukurta čeko aludarystės mokslininko Carl Joseph Napoleon Balling. Vėliau patobulinta į °Plato.<br /><br /><b>Specifinis tirštumas</b>, <b>cukringumas</b> (angl. <i>specific gravity</i>, <i>SG</i>). Misos matas, nurodantis jos tirštumą (kietųjų medžiagų kiekį).',
+			fixed: false
+		});
+		$(".ttip_og").simpletip({
+			content: '<b>Pradinis tirštumas</b> (angl. <i>original gravity</i>, <i>OG</i>). Misos specifinis tirštumas prieš fermentaciją. Šis matas nurodo cukringųjų medžiagų, būsiančių perdirbtų į alkoholį, kiekį – kuo tirštesnė misa, tuo stipresnis alus gausis.',
+			fixed: false
+		});
+		$(".ttip_fg").simpletip({
+			content: '<b>Galutinis tirštumas</b> (angl. <i>final gravity</i>, <i>FG</i>). Misos specifinis tirštumas fermentacijos pabaigoje.',
+			fixed: false
+		});
+		$(".ttip_abv").simpletip({
+			content: '<b>Alkoholio kiekis pagal tūrį</b> (angl. <i>Alcohol By Volume</i>, <i>ABV</i>, <i>v/v</i>). Alaus stiprumas išreiškiamas procentais.',
+			fixed: false
+		});
+		$(".ttip_ibu").simpletip({
+			content: '<b>Kartumo vienetai</b> (angl. <i>International Bittering Units</i>, <i>IBU</i>). Standartinis alaus kartumo matavimo skalės vienetas, žymintis apynių apimtį ir intensyvumą.',
+			fixed: false
+		});
+		$(".ttip_ebc").simpletip({
+			content: '<b>Spalva</b> (angl. <i>EBC</i>). Šiuo atveju alaus spalvos standartas pagal European Brewery Convention (Europos Aludarių Konvencija)',
+			fixed: false
+		});
+		$(".ttip_ibuog").simpletip({
+			content: '<b>IBU/OG balansas</b> (angl. <i>IBU/Gravity ratio</i>). Kartumo ir pradinio tirštumo santykis. Išskaičiuojamas, sąlyginis vienetas apsprendžiantis tariamą burnos kartumo pojūtį.',
+			fixed: false
+		});
+		$(".ttip_ekstraktingumas").simpletip({
+			content: '<b>Ekstraktingumas</b> (tech) (angl. <i>extraction rate</i>). Kramolingųjų medžiagų kiekio, paverstų į fermentuojamąsias cukringąsias medžiagas salinimo metu, matas.',
+			fixed: false
+		});
+		$(".ttip_alfa").simpletip({
+			content: '<b>Alfa rūgštys</b> (angl. <i>alpha acids</i>, <i>AA</i>). Esminis kartumo šaltinis, gaunamas iš apynių, izomerizuojant juos virimo būdu.',
+			fixed: false
+		});
+		
 		$("#vote_up_button").click(function(){
 			$("#vote_icon").html("<img src='/public/images/spinner.gif'/>");
 			$("span#votes_count").fadeOut("fast");
@@ -131,7 +176,7 @@ function i_bu($ibu,$og) {
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_info_block">
-				<div class="recipe_info_label">Efektyvumas:</div>
+				<div class="recipe_info_label"><span class="ttip ttip_efektyvumas">Efektyvumas</span>:</div>
 				<div class="recipe_info_text"><?=round($this->data['recipe']['recipe_efficiency'],2);?></div>
 				<div class="clear"></div>
 			</div>
@@ -141,7 +186,7 @@ function i_bu($ibu,$og) {
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_info_block">
-				<div class="recipe_info_label">Atenuacija:</div>
+				<div class="recipe_info_label"><span class="ttip ttip_atenuacija">Atenuacija</span>:</div>
 				<div class="recipe_info_text"><?=round($this->data['recipe']['recipe_attenuation'],2);?></div>
 				<div class="clear"></div>
 			</div>
@@ -189,7 +234,7 @@ function i_bu($ibu,$og) {
 				?>
 				<div class="malt_item">
 					<div class="title"><b>Pavadinimas</b></div>
-					<div class="color"><b>Spalva (EBC)</b></div>
+					<div class="color"><span class="ttip ttip_ebc"><b>Spalva (EBC)</b></span></div>
 					<div class="amount_w"><b>Kiekis (kg)</b></div>
 					<div class="amount_p"><b>Kiekis (%)</b></div>
 					<div class="clear"></div>
@@ -225,7 +270,7 @@ function i_bu($ibu,$og) {
 				?>
 				<div class="hop_item">
 					<div class="title"><b>Pavadinimas</b></div>
-					<div class="alpha"><b>Kartumas (AA%)</b></div>
+					<div class="alpha"><span class="ttip ttip_alfa"><b>Kartumas (AA%)</b></span></div>
 					<div class="amount_w"><b>Kiekis (g)</b></div>
 					<div class="time"><b>Laikas</b></div>
 					<div class="clear"></div>
@@ -348,27 +393,27 @@ function i_bu($ibu,$og) {
 		</div>
 		<div class="recipe_result">
 			<div class="recipe_result_block">
-				<div class="recipe_result_label"><span title="Pradinis tankis">OG:</span></div>
+				<div class="recipe_result_label"><span class="ttip ttip_og"><b>OG:</b></span></div>
 				<div class="recipe_result_text"><?=$this->data['recipe']['recipe_sg'];?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_result_block">
-				<div class="recipe_result_label"><span title="Galutinis tankis">FG:</span></div>
+				<div class="recipe_result_label"><span class="ttip ttip_fg"><b>FG:</b></span></div>
 				<div class="recipe_result_text"><?=$this->data['recipe']['recipe_fg'];?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_result_block">
-				<div class="recipe_result_label"><span title="Stiprumas">ABV:</span></div>
+				<div class="recipe_result_label"><span class="ttip ttip_abv"><b>ABV:</b></span></div>
 				<div class="recipe_result_text"><?=$this->data['recipe']['recipe_abv'];?> %</div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_result_block">
-				<div class="recipe_result_label"><span title="Spalva, EBC">EBC:</span></div>
+				<div class="recipe_result_label"><span class="ttip ttip_ebc"><b>EBC:</b></span></div>
 				<div class="recipe_result_text"><?=$this->data['recipe']['recipe_ebc'];?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_result_block">
-				<div class="recipe_result_label"><span title="Kalorijų kiekis litre">CAL/L:</span></div>
+				<div class="recipe_result_label"><span title="Kalorijų kiekis litre"><b>CAL/L:</b></span></div>
 				<div class="recipe_result_text"><?=Entities_BrewCalc::calories($this->data['recipe']['recipe_sg'],$this->data['recipe']['recipe_fg']);?></div>
 				<div class="clear"></div>
 			</div>
@@ -376,12 +421,12 @@ function i_bu($ibu,$og) {
 			if (count($this->data['hops'])>0){
 				?>
 				<div class="recipe_result_block">
-					<div class="recipe_result_label"><span title="Kartumas">IBU:</span></div>
+					<div class="recipe_result_label"><span class="ttip ttip_ibu"><b>IBU:</b></span></div>
 					<div class="recipe_result_text"><?=$this->data['recipe']['recipe_ibu'];?></div>
 					<div class="clear"></div>
 				</div>
 				<div class="recipe_result_block">
-					<div class="recipe_result_label"><span>IBU/OG:</span></div>
+					<div class="recipe_result_label"><span class="ttip ttip_ibuog"><b>IBU/OG:</b></span></div>
 					<div class="recipe_result_text"><?=round($this->data['recipe']['recipe_ibu']/(($this->data['recipe']['recipe_sg']*1000)-1000),2);?></div>
 					<div class="clear"></div>
 				</div>
