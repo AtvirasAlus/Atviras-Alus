@@ -65,9 +65,6 @@ class AuthController extends Zend_Controller_Action {
 	}
 
 	public function logoutAction() {
-		setcookie("atvirasalus_wiki_UserID", null, time() - 1209600, "/", ".atvirasalus.lt");
-		setcookie("atvirasalus_wiki_UserName", null, time() - 1209600, "/", ".atvirasalus.lt");
-		setcookie("atvirasalus_wiki_Token", null, time() - 1209600, "/", ".atvirasalus.lt");
 		setcookie("user_email", null, time() - 1209600, "/", ".atvirasalus.lt");
 		$storage = new Zend_Auth_Storage_Session();
 		$storage->clear();

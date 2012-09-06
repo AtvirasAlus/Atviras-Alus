@@ -10,21 +10,11 @@ class Entities_AUTH {
 		$result = $auth->authenticate($authAdapter);
 
 		if ($result->isValid()) {
-			$select = $db->select()
-					->from("users")
-					->where("user_email = ?", $user_email);
-			$us = $db->FetchRow($select);
 			if ($remember_me) {
-				setcookie("atvirasalus_wiki_UserID", $us['user_id'], time() + 1209600, "/", ".atvirasalus.lt");
-				setcookie("atvirasalus_wiki_UserName", $us['user_name'], time() + 1209600, "/", ".atvirasalus.lt");
-				setcookie("atvirasalus_wiki_Token", $us['user_password'], time() + 1209600, "/", ".atvirasalus.lt");
 				setcookie("user_email", $user_email, time() + 1209600, "/", ".atvirasalus.lt");
 				setcookie("user_password", $user_password, time() + 1209600, "/", ".atvirasalus.lt");
 				setcookie("remember", '1', time() + 1209600, "/", ".atvirasalus.lt");
 			} else {
-				setcookie("atvirasalus_wiki_UserID", $us['user_id'], time() + 21600, "/", ".atvirasalus.lt");
-				setcookie("atvirasalus_wiki_UserName", $us['user_name'], time() + 21600, "/", ".atvirasalus.lt");
-				setcookie("atvirasalus_wiki_Token", $us['user_password'], time() + 21600, "/", ".atvirasalus.lt");
 				setcookie("user_email", $user_email, time() + 21600, "/", ".atvirasalus.lt");
 				setcookie("user_password", $user_password, time() + 21600, "/", ".atvirasalus.lt");
 				setcookie("remember", '0', time() + 21600, "/", ".atvirasalus.lt");
