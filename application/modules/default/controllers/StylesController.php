@@ -32,6 +32,7 @@ class StylesController extends Zend_Controller_Action {
 		$select->order("beer_recipes.recipe_total_awards_weight DESC");
 		$select->order("beer_recipes.recipe_total_likes DESC");
 		$select->order("beer_recipes.recipe_total_comments DESC");
+		$select->order("beer_recipes.recipe_created DESC");
 		$select->limit(9);
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
