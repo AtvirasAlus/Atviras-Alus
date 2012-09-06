@@ -13,7 +13,7 @@ class Entities_AUTH {
 			$select = $db->select()
 					->from("users")
 					->where("user_email = ?", $user_email);
-			$us = $result->FetchRow();
+			$us = $db->FetchRow($select);
 			if ($remember_me) {
 				setcookie("atvirasalus_wiki_UserID", $us['user_id'], time() + 1209600, "/", ".atvirasalus.lt");
 				setcookie("atvirasalus_wiki_UserName", $us['user_name'], time() + 1209600, "/", ".atvirasalus.lt");
