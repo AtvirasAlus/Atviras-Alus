@@ -29,7 +29,9 @@ class StylesController extends Zend_Controller_Action {
 				->joinLeft("beer_styles", "beer_recipes.recipe_style = beer_styles.style_id", array("style_name"));
 		$select->where("beer_recipes.recipe_publish = ?", '1');
 		$select->where("beer_recipes.recipe_style= ?", $style[0]);
-		$select->order("beer_recipes.recipe_created DESC");
+		$select->order("beer_recipes.recipe_total_awards_weight DESC");
+		$select->order("beer_recipes.recipe_total_likes DESC");
+		$select->order("beer_recipes.recipe_total_comments DESC");
 		$select->limit(9);
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
