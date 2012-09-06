@@ -41,6 +41,9 @@ class ContentController extends Zend_Controller_Action {
 	public function helpAction() {
 	}
 
+	public function faqAction() {
+	}
+
 	public function paramaAction() {
 	}
 

@@ -3,7 +3,14 @@ $this->headTitle()->append(" - Skaičiuoklė ");
 $this->headMeta()->setName('keywords', 'apyniai, mielės, salyklas,alaus gamyba,naminis,receptai,receptas,alus,skaičiuoklė,ibu,ebc,abv');
 ?>
 <div id="calculus_container" class="inner_container">
-	<div class="inner_header">Skaičiuoklė</div>
+	<div class="inner_header">
+		<span style="float: right;">
+			<a href="/content/faq" title="Kaip naudotis skaičiuokle?" target="_blank">
+				<img src="/public/images/help.png" />
+			</a>
+		</span>
+		Skaičiuoklė
+	</div>
 	<div>
 		<?=$this->beerCalculus($this->data);?>
 	</div>
