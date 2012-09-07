@@ -18,6 +18,16 @@ class IndexController extends Zend_Controller_Action {
 			}
 		}
 	}
+	public function pingAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$db = Zend_Registry::get("db");
+			$db->update("users", array("ping_time" => date("Y-m-d H:i:s")), array("user_id = '" . $user_info->user_id . "'"));
+		}
+	}
 	public function enablebetaAction(){
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
@@ -312,30 +322,40 @@ class IndexController extends Zend_Controller_Action {
 					->from("beer_brew_sessions", array("SUM(beer_brew_sessions.session_size) AS beer_total", "COUNT(DISTINCT(beer_brew_sessions.session_brewer)) AS brewers_total"))
 					->where("beer_brew_sessions.session_primarydate >= (curdate() - interval 30 day)");
 			$this->view->total_brewed = $db->fetchRow($select);
-
+			
+			if (isset($user_info->user_id) && !empty($user_info->user_id)){
+				$me = $user_info->user_id;
+			} else {
+				$me = -1;
+			}
+			$this->view->me = $me;
 			$select = $db->select()
-					->from("users", array("user_name", "user_id", "user_email"))
-					->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.brewer_id=users.user_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
+					->from("users", array("user_name", "user_id", "user_email", "ping_time", "IF (user_id= '".$me."', '0', '1') as me"))
 					->where("users.user_active = ?", '1')
 					->group("users.user_id")
+					->order("me ASC")
+					->order("ping_time DESC")
 					->order("user_lastlogin DESC")
-					->order("count DESC")
-					->order("recipe_created DESC")
-					->order("user_name ASC")
 					->limit(16);
 			$this->view->users = $db->fetchAll($select);
 
 			$this->_helper->viewRenderer('indexnew'); 
 			
-		} else {$select = $db->select()
-					->from("users", array("user_name", "user_id", "user_email"))
+		} else {
+			if (isset($user_info->user_id) && !empty($user_info->user_id)){
+				$me = $user_info->user_id;
+			} else {
+				$me = -1;
+			}
+			$this->view->me = $me;
+			$select = $db->select()
+					->from("users", array("user_name", "user_id", "user_email", "ping_time", "IF (user_id= '".$me."', '0', '1') as me"))
 					->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.brewer_id=users.user_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
 					->where("users.user_active = ?", '1')
 					->group("users.user_id")
+					->order("me ASC")
+					->order("ping_time DESC")
 					->order("user_lastlogin DESC")
-					->order("count DESC")
-					->order("recipe_created DESC")
-					->order("user_name ASC")
 					->limit(12);
 			$this->view->users = $db->fetchAll($select);
 

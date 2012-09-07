@@ -23,10 +23,25 @@
 		<script type="text/javascript" src="/public/js/website.js"></script>
 	    <script type="text/javascript" src="/public/lightbox/js/jquery.lightbox-0.5.js"></script>
 	    <script type="text/javascript" src="/public/js/jquery.simpletip-1.3.1.min.js"></script>
+	    <script type="text/javascript" src="/public/js/jquery.timer.js"></script>
 		<?= $this->headScript() ?>
 		<?  $front = Zend_Controller_Front::getInstance();?>
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
 			{lang: 'lt'}
+		</script>
+		<script type="text/javascript">
+			$(function(){
+				function pingme(){
+					$.ajax({
+						url: "/index/ping"
+					});
+				}
+				var timer = $.timer(function(){
+					pingme();
+				});
+				timer.set({ time : 1000*30, autostart : true });
+				pingme();
+			});
 		</script>
 	</head>
 	<body>

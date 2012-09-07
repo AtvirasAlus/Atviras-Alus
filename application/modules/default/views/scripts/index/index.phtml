@@ -184,8 +184,18 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 					$i++;
 				?>
 					<div class="index-user" <?=($i!=3) ? 'style="margin-right: 25px;"' : ""; ?>>
-						<a href="/brewers/<?=$user['user_id'];?>">
-							<img src="http://www.gravatar.com/avatar/<?=md5($user['user_email']); ?>?rating=G&size=50&default=mm" border="0"/>
+						<a href="/brewers/<?=$user['user_id'];?>" style="width: 50px; height: 50px; display: inline-block; background-image: url('http://www.gravatar.com/avatar/<?=md5($user['user_email']); ?>?rating=G&size=50&default=mm')">
+							<?php
+							if ($user['ping_time'] > date("Y-m-d H:i:s", strtotime("-40 second")) || $user['user_id'] == $this->me){
+								?>
+								<img src="/public/images/new/user_on.gif" />
+								<?php
+							} else {
+								?>
+								<img src="/public/images/new/user_off.gif" />
+								<?php
+							}
+							?>
 						</a>
 						<span>
 							<a href="/brewers/<?=$user['user_id'];?>">

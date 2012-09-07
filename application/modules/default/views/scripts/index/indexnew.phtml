@@ -251,6 +251,7 @@
 	width: 50px;
 	margin-right: 2px;
 	margin-bottom: 2px;
+	height: 50px;
 }
 .home_user_name {
 	float: left;
@@ -636,8 +637,18 @@ input, select, .editable-select-options, .ui-autocomplete {
 					<?php
 					foreach($this->users as $user){
 						?>
-						<div class="home_user_avatar">
-							<a href="/brewers/<?= $user['user_id']; ?>" title="<?=$user['user_name']?>"><img src="http://www.gravatar.com/avatar/<?= md5($user['user_email']); ?>?rating=G&size=50&default=mm" border="0" /></a>
+						<div class="home_user_avatar" style="background-image: url('http://www.gravatar.com/avatar/<?= md5($user['user_email']); ?>?rating=G&size=50&default=mm')">
+							<?php
+							if ($user['ping_time'] > date("Y-m-d H:i:s", strtotime("-40 second")) || $user['user_id'] == $this->me){
+								?>
+								<a href="/brewers/<?= $user['user_id']; ?>" title="<?=$user['user_name']?>"><img src="/public/images/new/user_on.gif" /></a>
+								<?php
+							} else {
+								?>
+								<a href="/brewers/<?= $user['user_id']; ?>" title="<?=$user['user_name']?>"><img src="/public/images/new/user_off.gif" /></a>
+								<?php
+							}
+							?>
 						</div>
 						<?php
 					}
