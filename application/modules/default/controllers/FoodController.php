@@ -291,7 +291,7 @@ class FoodController extends Zend_Controller_Action {
 			$allowedExts = array("jpg", "jpeg", "gif", "png");
 			foreach($_FILES as $key=>$file){
 				if ($file["name"] != ""){
-					$extension = end(explode(".", $file["name"]));
+					$extension = strtolower(end(explode(".", $file["name"])));
 					if ((($file["type"] != "image/gif") && ($file["type"] != "image/jpeg") && ($file["type"] != "image/png")) || !in_array($extension, $allowedExts)){
 						$errors[] = "Neleistinas failas. Galima įkelti tik PNG, GIF ir JPG failus";
 						break;
@@ -460,7 +460,7 @@ class FoodController extends Zend_Controller_Action {
 			$allowedExts = array("jpg", "jpeg", "gif", "png");
 			foreach($_FILES as $key=>$file){
 				if ($file["name"] != ""){
-					$extension = end(explode(".", $file["name"]));
+					$extension = strtolower(end(explode(".", $file["name"])));
 					if ((($file["type"] != "image/gif") && ($file["type"] != "image/jpeg") && ($file["type"] != "image/png")) || !in_array($extension, $allowedExts)){
 						$errors[] = "Neleistinas failas. Galima įkelti tik PNG, GIF ir JPG failus";
 						break;
