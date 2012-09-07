@@ -1,9 +1,36 @@
+<script src="/public/colorbox/colorbox/jquery.colorbox.js"></script>
+<link rel="stylesheet" href="/public/colorbox/colorbox.css" />
 <?php
 $this->headTitle()->append(" - Receptas: ".$this->data['recipe']['recipe_name']);
 $this->headMeta()->setName('keywords', 'apyniai, mielės, salyklas,alaus gamyba,naminis,receptai,receptas,alus,'.$this->data['recipe']['recipe_name'].','.$this->data['recipe']['style_name']);
 ?>
 <script>
 	$(function(){
+		$("#recipe_image_form").submit(function(){
+			if ($("#recipe_image").val() != ""){
+				var ext = $('#recipe_image').val().split('.').pop().toLowerCase();
+				if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+					alert('Draudžiama įkelti "'+ext+'" tipo failus');
+					return false;
+				}
+			} else {
+				alert('Nepasirinkote failo');
+				return false;
+			}
+			return true;
+		});
+		$(".del_image").click(function(){
+			if (confirm("Ar tikrai norite ištrinti nuotrauką?")) { 
+				return true;
+			}
+			return false;
+		});
+		$(".fancybox").colorbox({
+			maxWidth: "80%",
+			maxHeight: "80%",
+			scrolling: false,
+			current: "{current}/{total}"
+		});
 		$(".ttip_efektyvumas").simpletip({
 			content: '<b>Efektyvumas</b> (angl. <i>Efficiency</i>; <i>Extraction efficiency</i>). Cukringų medžiagų "išplovimo" iš salyklo efektyvumas. Tai yra santykis cukraus, kurį iš tikrųjų "išplovėt" , su teoriškai didžiausiu įmanomu "išplauti" cukraus kiekiu.',
 			fixed: false
@@ -385,6 +412,59 @@ function i_bu($ibu,$og) {
 						<input type="button" onClick="hideInput()" class="ui-button" value="atšaukti" />
 					</div>
 				</div>
+			</div>
+			<div class="beer_images">
+				<div class="ingridient_category2">Nuotraukos</div>
+				<div>
+					<?php
+					foreach($this->images as $img){
+						?>
+						<div class="beer_image">
+							<div>
+								<a title="<a href='/brewers/<?=$img['user_id']?>'><?=$img['user_name']?></a>, <?=$img['postedf']?>" rel="gallery" class="fancybox" href="/recipe_images/<?=$this->data['recipe']['recipe_id']?>/<?=$img['file_name']?>.jpg"><img src="/recipe_images/<?=$this->data['recipe']['recipe_id']?>/t_<?=$img['file_name']?>.jpg" alt="" /></a>
+							</div>
+							<?php
+							if (isset($this->user_info->user_id) && $this->user_info->user_id!=0 && ($this->user_info->user_id == $this->data['recipe']['brewer_id'] || $this->user_info->user_id == $img['user_id'])){
+								?>
+								<div>
+									<a href="/alus/trinti_nuotrauka/<?=$img['id']?>" class="del_image">Trinti</a>
+								</div>
+								<?php
+							} else {
+								?>
+								<div>&nbsp;</div>
+								<?php
+							}
+							?>
+						</div>
+						<?php
+					}
+					?>
+					<div class="clear"></div>
+				</div>
+				<?php
+				if (isset($this->user_info->user_id) && $this->user_info->user_id!=0){
+					?>
+					<div>
+						<form id="recipe_image_form" method="post" action="/recipes/upload_image" enctype="multipart/form-data">
+							<dl>
+								<dt>Įkelti nuotrauką:</dt>
+								<dd><input name="recipe_image" id="recipe_image" type="file" /></dd>
+								<div class="clear"></div>
+							</dl>
+							<dl>
+								<dt>&nbsp;</dt>
+								<dd>
+									<input name="submit" type="submit" value="Įkelti" class="ui-button" />
+									<input name="recipe_id" type="hidden" value="<?=$this->data['recipe']['recipe_id']?>" />
+								</dd>
+								<div class="clear"></div>
+							</dl>
+						</form>
+					</div>
+					<?php
+				}
+				?>
 			</div>
 			<div class="recipe_comments">
 				<div class="ingridient_category2">Komentarai</div>

@@ -391,12 +391,19 @@ class RecipesController extends Zend_Controller_Action {
 				$aw[$val['recipe_id']][] = $val;
 			}
 			$this->view->awards = $aw;
+			
+			$select = $db->select()
+					->from("beer_images", array("*", "DATE_FORMAT(posted, '%Y-%m-%d') as postedf"))
+					->join("users", "users.user_id=beer_images.user_id", "user_name")
+					->where("recipe_id = ?", array($recipe_id))
+					->order("posted ASC");
+			$images = $db->FetchAll($select);
+			$this->view->images = $images;
 		}
 	}
 
 	public function favoritesAction() {
 		$db = Zend_Registry::get('db');
-		$select = $db->select();
 		$select = $db->select()
 				->from('cache_fav_recipes', array("votes"))
 				->join("beer_recipes", "beer_recipes.recipe_id = cache_fav_recipes.recipe_id")
@@ -407,8 +414,129 @@ class RecipesController extends Zend_Controller_Action {
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($this->_getParam('page'));
 		$this->view->content->setItemCountPerPage(100);
+		$select = $db->select()
+				->from("beer_awards")
+				->order("posted DESC");
+		$result = $db->FetchAll($select);
+		$aw = array();
+		foreach ($result as $key=>$val){
+			$aw[$val['recipe_id']][] = $val;
+		}
+		$this->view->awards = $aw;
+	}
+	
+	public function deleteimageAction(){
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$image_id = $this->_getParam('image_id');
+		$db = Zend_Registry::get('db');
+		$storage = new Zend_Auth_Storage_Session();
+		$u = $storage->read();
+		$select = $db->select()
+				->from("beer_images")
+				->where("id = ?", array($image_id));
+		$result = $db->FetchRow($select);
+		if (isset($u->user_id) && !empty($u->user_id)){
+			if ($result['user_id'] == $u->user_id){
+				$db->delete("beer_images", "id = '".$image_id."'");
+				unlink($_SERVER['DOCUMENT_ROOT'] . "/recipe_images/".$result['recipe_id']."/".$result['file_name'].".jpg");
+				unlink($_SERVER['DOCUMENT_ROOT'] . "/recipe_images/".$result['recipe_id']."/t_".$result['file_name'].".jpg");
+			} else {
+				$select = $db->select()
+						->from("beer_recipes")
+						->where("recipe_id = ?", $result['recipe_id']);
+				$result2 = $db->FetchRow($select);
+				if ($result2['brewer_id'] == $u->user_id){
+					$db->delete("beer_images", "id = '".$image_id."'");
+					unlink($_SERVER['DOCUMENT_ROOT'] . "/recipe_images/".$result['recipe_id']."/".$result['file_name'].".jpg");
+					unlink($_SERVER['DOCUMENT_ROOT'] . "/recipe_images/".$result['recipe_id']."/t_".$result['file_name'].".jpg");
+				}
+			}
+		}
+		$this->_redirect("/alus/receptas/".$result["recipe_id"]);
+	}
+	
+	private function getAvailableName($rid){
+		$rand = md5(mktime().rand(0, 1000000));
+		if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/recipe_images/".$rid."/".$rand.".jpg")){
+			return $this->getAvailableName($rid);
+		} else {
+			return $rand;
+		}
 	}
 
+	public function uploadimageAction(){
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$image_id = $this->_getParam('image_id');
+		$db = Zend_Registry::get('db');
+		$storage = new Zend_Auth_Storage_Session();
+		$u = $storage->read();
+		$post = $this->getRequest()->getPost();
+		if (isset($u->user_id) && $u->user_id != 0){
+			if (!file_exists($_SERVER['DOCUMENT_ROOT'] . "/recipe_images/".$post['recipe_id'])){
+				mkdir($_SERVER['DOCUMENT_ROOT'] . "/recipe_images/".$post['recipe_id']);
+			}
+			$allowedExts = array("jpg", "jpeg", "gif", "png");
+			$file = $_FILES['recipe_image'];
+			if ($file["name"] != ""){
+				$newname = $this->getAvailableName($post['recipe_id']);
+				$fullFilePath = $_SERVER['DOCUMENT_ROOT'] . "/recipe_images/".$post['recipe_id']."/".$newname.".jpg";
+				$t_fullFilePath = $_SERVER['DOCUMENT_ROOT'] . "/recipe_images/".$post['recipe_id']."/t_".$newname.".jpg";
+				$extension = end(explode(".", $file["name"]));
+				if ((($file["type"] != "image/gif") && ($file["type"] != "image/jpeg") && ($file["type"] != "image/png")) || !in_array($extension, $allowedExts)){
+				} else {
+					switch(strtolower($file['type'])){
+						case 'image/jpeg':
+							$image = imagecreatefromjpeg($file['tmp_name']);
+							break;
+						case 'image/png':
+							$image = imagecreatefrompng($file['tmp_name']);
+							break;
+						case 'image/gif':
+							$image = imagecreatefromgif($file['tmp_name']);
+							break;
+						default:
+							exit('Unsupported type: '.$file['type']);
+					}
+					$max_width = 1024;
+					$max_height = 1024;
+					$old_width  = imagesx($image);
+					$old_height = imagesy($image);
+					$scale      = min($max_width/$old_width, $max_height/$old_height);
+					$new_width  = ceil($scale*$old_width);
+					$new_height = ceil($scale*$old_height);
+					$newf = imagecreatetruecolor($new_width, $new_height);
+					imagecopyresampled($newf, $image, 0, 0, 0, 0, $new_width, $new_height, $old_width, $old_height);
+					imagejpeg($newf, $fullFilePath);
+					
+					$canvas_w = 90;
+					$canvas_h = 68;
+					$width  = imagesx($image);
+					$height = imagesy($image);
+					$original_overcanvas_w = $width/$canvas_w;
+					$original_overcanvas_h = $height/$canvas_h;
+					$dst_w = round($width/min($original_overcanvas_w,$original_overcanvas_h),0);
+					$dst_h = round($height/min($original_overcanvas_w,$original_overcanvas_h),0);
+					$new = imagecreatetruecolor($canvas_w, $canvas_h);
+					$background = imagecolorallocate($new, 255, 255, 255);
+					imagefill($new, 0, 0, $background);
+					imagecopyresampled($new, $image, ($canvas_w-$dst_w)/2, ($canvas_h-$dst_h)/2, 0, 0, $dst_w, $dst_h, $width, $height);
+					imagejpeg($new, $t_fullFilePath);
+					
+					$insert = $db->insert("beer_images", array(
+						"user_id" => $u->user_id,
+						"recipe_id" => $post['recipe_id'],
+						"file_name" => $newname,
+						"posted" => date("Y-m-d H:i:s"),
+						"title" => ""
+					));
+				}
+			}
+		}
+		$this->_redirect("/alus/receptas/".$post["recipe_id"]);
+	}
+	
 	public function getVotes($recipe_id = 0) {
 		$db = Zend_Registry::get('db');
 		$select = $db->select();

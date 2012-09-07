@@ -2336,3 +2336,52 @@ ul.statuses li {
 	border-bottom: 1px dashed #755531;
 	cursor: help;
 }
+.beer_image {
+	float: left;
+	width: 90px;
+	overflow: hidden;
+	margin-right: 8px;
+	margin-bottom: 8px;
+	text-align: center;
+}
+.beer_image img {
+	border: 1px solid #ccc;
+}
+#recipe_image_form dl {
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 5px;
+}
+#recipe_image_form dd {
+	padding: 0px;
+	margin: 0px;
+	margin-left: 20px;
+	float: left;
+}
+#recipe_image_form dt {
+	padding: 0px;
+	margin: 0px;
+	width: 110px;
+	float: left;
+	font-size: 14px;
+	margin-left: 20px;
+	line-height: 26px;
+}
+#recipe_image_form dd input[type=file]{
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 0px solid #ccc;
+	padding: 2px;
+	cursor: pointer;
+}
+#recipe_image_form {
+	margin-top: 20px;
+	background-color: #f9f9f9;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
