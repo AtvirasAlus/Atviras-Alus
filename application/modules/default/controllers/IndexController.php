@@ -344,6 +344,7 @@ class IndexController extends Zend_Controller_Action {
 					->where("users.user_active = ?", '1')
 					->group("users.user_id")
 					->order("me ASC")
+					->order("ping_time DESC")
 					->order("last_action_time DESC")
 					->order("user_lastlogin DESC")
 					->limit(16);
@@ -365,6 +366,7 @@ class IndexController extends Zend_Controller_Action {
 					->group("users.user_id")
 					->order("me ASC")
 					->order("last_action_time DESC")
+					->order("ping_time DESC")
 					->order("user_lastlogin DESC")
 					->limit(12);
 			$this->view->users = $db->fetchAll($select);
