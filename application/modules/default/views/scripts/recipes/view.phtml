@@ -421,7 +421,7 @@ function i_bu($ibu,$og) {
 						?>
 						<div class="beer_image">
 							<div>
-								<a title="<a href='/brewers/<?=$img['user_id']?>'><?=$img['user_name']?></a>, <?=$img['postedf']?>" rel="gallery" class="fancybox" href="/recipe_images/<?=$this->data['recipe']['recipe_id']?>/<?=$img['file_name']?>.jpg"><img src="/recipe_images/<?=$this->data['recipe']['recipe_id']?>/t_<?=$img['file_name']?>.jpg" alt="" /></a>
+								<a title="<?=$img['user_name']?>, <?=$img['postedf']?>" rel="gallery" class="fancybox" href="/recipe_images/<?=$this->data['recipe']['recipe_id']?>/<?=$img['file_name']?>.jpg"><img src="/recipe_images/<?=$this->data['recipe']['recipe_id']?>/t_<?=$img['file_name']?>.jpg" alt="" /></a>
 							</div>
 							<?php
 							if (isset($this->user_info->user_id) && $this->user_info->user_id!=0 && ($this->user_info->user_id == $this->data['recipe']['brewer_id'] || $this->user_info->user_id == $img['user_id'])){
