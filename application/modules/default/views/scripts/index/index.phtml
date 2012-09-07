@@ -186,26 +186,20 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 					<div class="index-user" <?=($i!=3) ? 'style="margin-right: 25px;"' : ""; ?>>
 						<a href="/brewers/<?=$user['user_id'];?>" style="width: 50px; height: 50px; display: inline-block; background-image: url('http://www.gravatar.com/avatar/<?=md5($user['user_email']); ?>?rating=G&size=50&default=mm')">
 							<?php
-							if ($user['ping_time'] > date("Y-m-d H:i:s", strtotime("-40 second")) || $user['user_id'] == $this->me){
-								if ($user['user_id'] == $this->me){
+							if ($user['online_status'] == "2"){
 									?>
 									<img src="/public/images/new/user_on.gif" />
 									<?php
-								} else {
-									if ($user['last_action_time'] > date("Y-m-d H:i:s", strtotime("-10 min"))){
-										?>
-										<img src="/public/images/new/user_on.gif" />
-										<?php
-									} else {
-										?>
-										<img src="/public/images/new/user_idle.gif" />
-										<?php
-									}
-								}
 							} else {
-								?>
-								<img src="/public/images/new/user_off.gif" />
-								<?php
+								if ($user['online_status'] == "1"){
+									?>
+									<img src="/public/images/new/user_idle.gif" />
+									<?php
+								} else {
+									?>
+									<img src="/public/images/new/user_off.gif" />
+									<?php
+								}
 							}
 							?>
 						</a>

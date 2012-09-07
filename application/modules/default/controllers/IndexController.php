@@ -340,12 +340,13 @@ class IndexController extends Zend_Controller_Action {
 			}
 			$this->view->me = $me;
 			$select = $db->select()
-					->from("users", array("user_name", "user_id", "user_email", "ping_time", "last_action_time", "IF (user_id= '".$me."', '0', '1') as me"))
+					->from("users", array("IF (user_id='".$me."', 2, IF (TIMESTAMPDIFF(SECOND, ping_time, NOW()) < 40, IF (TIMESTAMPDIFF(MINUTE, last_action_time, NOW()) < 10, 2, 1), 0)) AS online_status", "user_name", "user_id", "user_email", "ping_time", "last_action_time", "IF (user_id= '".$me."', '0', '1') as me"))
 					->where("users.user_active = ?", '1')
 					->group("users.user_id")
 					->order("me ASC")
-					->order("last_action_time DESC")
+					->order("online_status DESC")
 					->order("ping_time DESC")
+					->order("last_action_time DESC")
 					->order("user_lastlogin DESC")
 					->limit(16);
 			$this->view->users = $db->fetchAll($select);
@@ -360,13 +361,14 @@ class IndexController extends Zend_Controller_Action {
 			}
 			$this->view->me = $me;
 			$select = $db->select()
-					->from("users", array("user_name", "user_id", "user_email", "ping_time", "last_action_time", "IF (user_id= '".$me."', '0', '1') as me"))
+					->from("users", array("IF (user_id='".$me."', 2, IF (TIMESTAMPDIFF(SECOND, ping_time, NOW()) < 40, IF (TIMESTAMPDIFF(MINUTE, last_action_time, NOW()) < 10, 2, 1), 0)) AS online_status", "user_name", "user_id", "user_email", "ping_time", "last_action_time", "IF (user_id= '".$me."', '0', '1') as me"))
 					->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.brewer_id=users.user_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
 					->where("users.user_active = ?", '1')
 					->group("users.user_id")
 					->order("me ASC")
-					->order("last_action_time DESC")
+					->order("online_status DESC")
 					->order("ping_time DESC")
+					->order("last_action_time DESC")
 					->order("user_lastlogin DESC")
 					->limit(12);
 			$this->view->users = $db->fetchAll($select);
