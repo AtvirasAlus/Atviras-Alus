@@ -12,7 +12,7 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 			$session["redirect"] = "brew-session/brewer";
 		}
 		if ($add) {
-			$session = array_merge($session, array("session_name" => "", "session_size" => "", "session_og" => "", "session_fg" => "", "session_comments" => "", "session_caskingdate" => "", "session_secondarydate" => "", "session_primarydate" => ""));
+			$session = array_merge($session, array("session_fg" => "", "session_comments" => "", "session_caskingdate" => "", "session_secondarydate" => ""));
 			$line2 = '
 				<dl>
 					<dt>&nbsp;</dt>
