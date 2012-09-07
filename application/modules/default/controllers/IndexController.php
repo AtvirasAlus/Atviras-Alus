@@ -28,6 +28,16 @@ class IndexController extends Zend_Controller_Action {
 			$db->update("users", array("ping_time" => date("Y-m-d H:i:s")), array("user_id = '" . $user_info->user_id . "'"));
 		}
 	}
+	public function pingstartAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$db = Zend_Registry::get("db");
+			$db->update("users", array("last_action_time" => date("Y-m-d H:i:s"), "ping_time" => date("Y-m-d H:i:s")), array("user_id = '" . $user_info->user_id . "'"));
+		}
+	}
 	public function enablebetaAction(){
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
@@ -330,7 +340,7 @@ class IndexController extends Zend_Controller_Action {
 			}
 			$this->view->me = $me;
 			$select = $db->select()
-					->from("users", array("user_name", "user_id", "user_email", "ping_time", "IF (user_id= '".$me."', '0', '1') as me"))
+					->from("users", array("user_name", "user_id", "user_email", "ping_time", "last_action_time", "IF (user_id= '".$me."', '0', '1') as me"))
 					->where("users.user_active = ?", '1')
 					->group("users.user_id")
 					->order("me ASC")
@@ -349,7 +359,7 @@ class IndexController extends Zend_Controller_Action {
 			}
 			$this->view->me = $me;
 			$select = $db->select()
-					->from("users", array("user_name", "user_id", "user_email", "ping_time", "IF (user_id= '".$me."', '0', '1') as me"))
+					->from("users", array("user_name", "user_id", "user_email", "ping_time", "last_action_time", "IF (user_id= '".$me."', '0', '1') as me"))
 					->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.brewer_id=users.user_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
 					->where("users.user_active = ?", '1')
 					->group("users.user_id")

@@ -640,9 +640,21 @@ input, select, .editable-select-options, .ui-autocomplete {
 						<div class="home_user_avatar" style="background-image: url('http://www.gravatar.com/avatar/<?= md5($user['user_email']); ?>?rating=G&size=50&default=mm')">
 							<?php
 							if ($user['ping_time'] > date("Y-m-d H:i:s", strtotime("-40 second")) || $user['user_id'] == $this->me){
-								?>
-								<a href="/brewers/<?= $user['user_id']; ?>" title="<?=$user['user_name']?>"><img src="/public/images/new/user_on.gif" /></a>
-								<?php
+								if ($user['user_id'] == $this->me){
+									?>
+									<a href="/brewers/<?= $user['user_id']; ?>" title="<?=$user['user_name']?>"><img src="/public/images/new/user_on.gif" /></a>
+									<?php
+								} else {
+									if ($user['last_action_time'] > date("Y-m-d H:i:s", strtotime("-10 min"))){
+										?>
+										<a href="/brewers/<?= $user['user_id']; ?>" title="<?=$user['user_name']?>"><img src="/public/images/new/user_on.gif" /></a>
+										<?php
+									} else {
+										?>
+										<a href="/brewers/<?= $user['user_id']; ?>" title="<?=$user['user_name']?>"><img src="/public/images/new/user_idle.gif" /></a>
+										<?php
+									}
+								}
 							} else {
 								?>
 								<a href="/brewers/<?= $user['user_id']; ?>" title="<?=$user['user_name']?>"><img src="/public/images/new/user_off.gif" /></a>

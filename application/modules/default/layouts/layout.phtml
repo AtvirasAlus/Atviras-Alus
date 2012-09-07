@@ -31,16 +31,15 @@
 		</script>
 		<script type="text/javascript">
 			$(function(){
-				function pingme(){
+				var timer = $.timer(function(){
 					$.ajax({
 						url: "/index/ping"
 					});
-				}
-				var timer = $.timer(function(){
-					pingme();
 				});
 				timer.set({ time : 1000*30, autostart : true });
-				pingme();
+				$.ajax({
+					url: "/index/pingstart"
+				});
 			});
 		</script>
 	</head>
