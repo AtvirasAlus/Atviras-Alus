@@ -510,8 +510,8 @@ class RecipesController extends Zend_Controller_Action {
 					imagecopyresampled($newf, $image, 0, 0, 0, 0, $new_width, $new_height, $old_width, $old_height);
 					imagejpeg($newf, $fullFilePath);
 					
-					$canvas_w = 90;
-					$canvas_h = 68;
+					$canvas_w = 138;
+					$canvas_h = 104;
 					$width  = imagesx($image);
 					$height = imagesy($image);
 					$original_overcanvas_w = $width/$canvas_w;

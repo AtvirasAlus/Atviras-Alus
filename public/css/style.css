@@ -2338,13 +2338,15 @@ ul.statuses li {
 }
 .beer_image {
 	float: left;
-	width: 90px;
+	width: 140px;
 	overflow: hidden;
-	margin-right: 8px;
+	margin-right: 9px;
 	margin-bottom: 8px;
 	text-align: center;
 }
 .beer_image img {
+	width: 138px;
+	height: 104px;
 	border: 1px solid #ccc;
 }
 #recipe_image_form dl {
