@@ -340,13 +340,12 @@ class IndexController extends Zend_Controller_Action {
 			}
 			$this->view->me = $me;
 			$select = $db->select()
-					->from("users", array("(ping_time-last_action_time) AS delta", "user_name", "user_id", "user_email", "ping_time", "last_action_time", "IF (user_id= '".$me."', '0', '1') as me"))
+					->from("users", array("user_name", "user_id", "user_email", "ping_time", "last_action_time", "IF (user_id= '".$me."', '0', '1') as me"))
 					->where("users.user_active = ?", '1')
-					->where("users.ping_time != ?", '0000-00-00 00:00:00')
-					->where("users.last_action_time != ?", '0000-00-00 00:00:00')
 					->group("users.user_id")
 					->order("me ASC")
-					->order("delta ASC")
+					->order("last_action_time DESC")
+					->order("ping_time DESC")
 					->order("user_lastlogin DESC")
 					->limit(16);
 			$this->view->users = $db->fetchAll($select);
@@ -361,14 +360,13 @@ class IndexController extends Zend_Controller_Action {
 			}
 			$this->view->me = $me;
 			$select = $db->select()
-					->from("users", array("(ping_time-last_action_time) AS delta", "user_name", "user_id", "user_email", "ping_time", "last_action_time", "IF (user_id= '".$me."', '0', '1') as me"))
+					->from("users", array("user_name", "user_id", "user_email", "ping_time", "last_action_time", "IF (user_id= '".$me."', '0', '1') as me"))
 					->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.brewer_id=users.user_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
 					->where("users.user_active = ?", '1')
-					->where("users.ping_time != ?", '0000-00-00 00:00:00')
-					->where("users.last_action_time != ?", '0000-00-00 00:00:00')
 					->group("users.user_id")
 					->order("me ASC")
-					->order("delta ASC")
+					->order("last_action_time DESC")
+					->order("ping_time DESC")
 					->order("user_lastlogin DESC")
 					->limit(12);
 			$this->view->users = $db->fetchAll($select);
