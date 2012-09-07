@@ -1167,6 +1167,22 @@ div.as-row:hover {
 .event_block:hover {
 	background-color: #fafafa;
 }
+.event_block_future {
+	float: left;
+	width: 265px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	background-color: #E6E6E6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	min-height: 170px;
+	cursor: pointer;
+}
+.event_block_future:hover {
+	background-color: #eaeaea;
+}
 .event_title {
 	margin: 10px;
 	font-size: 16px;

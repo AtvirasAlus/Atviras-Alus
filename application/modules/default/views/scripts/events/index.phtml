@@ -14,8 +14,12 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 		$z = 0;
 		foreach ($this->content as $item) {
 			$z++;
+			$class = "event_block";
+			if ($item["event_start"] > date("Y-m-d H:i")){
+				$class = "event_block_future";
+			}
 			?>
-			<div class="event_block" onclick="window.location.href='/ivykis/<?= $item["event_id"]; ?>-<?= urlencode($item["event_name"]); ?>'">
+			<div class="<?=$class;?>" onclick="window.location.href='/ivykis/<?= $item["event_id"]; ?>-<?= urlencode($item["event_name"]); ?>'">
 				<div class="event_title">
 					<?= $item["event_name"]; ?>
 				</div>
