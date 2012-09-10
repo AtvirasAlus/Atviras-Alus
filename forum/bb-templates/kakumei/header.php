@@ -18,14 +18,14 @@ if (bb_is_profile()) {
 		<script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery-ui-1.8.7.custom.js"></script>
 		<link type="text/css" href="/public/css/pepper-grinder/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
-		<link type="text/css" href="/public/css/style.css" rel="stylesheet" media="all" />
+		<link type="text/css" href="/public/css/style.css?ver=5" rel="stylesheet" media="all" />
 		<link type="text/css" href="/public/css/forum.css" rel="stylesheet" media="all" />
 		<link href="/public/css/userScreen.css" media="screen, projection" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="/public/js/jquery.timer.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.widget.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.dialog.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.position.js"></script>
-		<script type="text/javascript" src="/public/js/website.js"></script>
+		<script type="text/javascript" src="/public/js/website.js?ver=1"></script>
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
 			{lang: 'lt'}
 		</script>
