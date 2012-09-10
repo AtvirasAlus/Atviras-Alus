@@ -20,7 +20,8 @@ if (bb_is_profile()) {
 		<link type="text/css" href="/public/css/pepper-grinder/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
 		<link type="text/css" href="/public/css/style.css" rel="stylesheet" media="all" />
 		<link type="text/css" href="/public/css/forum.css" rel="stylesheet" media="all" />
-		<link href="/public/css/userScreen.css" media="screen, projection" rel="stylesheet" type="text/css">
+		<link href="/public/css/userScreen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="/public/js/jquery.timer.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.widget.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.dialog.js"></script>
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.position.js"></script>
@@ -52,59 +53,192 @@ if (bb_is_profile()) {
 					<div class="clear"></div>
 				</div>
 				<div id="menu">
-					<ul id="topmenu">
-						<ul id="topmenu">
-							<li>
-								<a href="/styles" class="">
-									Alaus stiliai
-								</a>
-							</li>
-							<li>
-								<a href="/recipes" class="">
-									Receptai
-								</a>
-							</li>
-							<li>
-								<a href="/index/calculus" class="">
-									Skaičiuoklė
-								</a>
-							</li>
-							<li>
-								<a href="/maistas" class="">
-									Alus ir maistas
-								</a>
-							</li>
-							<li>
-								<a href="/forum" class="">
-									Forumas
-								</a>
-							</li>
-							<li>
-								<a href="/skaitykla" class="">
-									Skaitykla
-								</a>
-							</li>
-							<li>
-								<a href="/search" class="">
-									Paieška
-								</a>
-							</li>
-							<li>
-								<a href="/ivykiai" class="">
-									Įvykiai
-								</a>
-							</li>
-							<li>
-								<a href="/idejos" class="">
-									Idėjos
-								</a>
-							</li>
-							<li>
-								<a href="/pagalba" class="">
-									Pagalba
-								</a>
-							</li>
-						</ul>
+					<ul class="topnav">
+						<li>
+							<a href="javascript:void(0);" class="tria">
+								Receptai								
+							</a>
+							<ul class="subnav" style="display: none; ">
+								<li>
+									<a href="/styles">
+										Alaus stiliai													
+									</a>
+								</li>
+								<li class="menuspacer"></li>
+								<li>
+									<a href="/recipes">
+										Visi receptai													
+									</a>
+								</li>
+								<li>
+									<a href="/search">
+										Receptų paieška													
+									</a>
+								</li>
+								<li>
+									<a href="/recipes/favorites">
+										Įdomiausi receptai													
+									</a>
+								</li>
+								<li>
+									<a href="/comments">
+										Komentarai													
+									</a>
+								</li>
+								<li class="menuspacer"></li>
+								<li>
+									<a href="/brew-session/history">
+										Virimai													
+									</a>
+								</li>
+								<?php
+								if (bb_is_user_logged_in()){
+									?>
+									<li class="menuspacer"></li>
+									<li>
+										<a href="/brewer/recipes">
+											Mano receptai													
+										</a>
+									</li>
+									<li>
+										<a href="/brewer/favorites">
+											Mėgstamiausi receptai													
+										</a>
+									</li>
+									<li>
+										<a href="/brew-session/brewer">
+											Mano virimai													
+										</a>
+									</li>
+									<?php
+								}
+								?>
+							</ul>								
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="tria">
+								Skaičiuoklės								
+							</a>
+							<ul class="subnav" style="display: none; ">
+								<li>
+									<a href="/index/calculus">
+										Receptų skaičiuoklė													
+									</a>
+								</li>
+								<li>
+									<a href="/calculus">
+										Kitos skaičiuoklės													
+									</a>
+								</li>
+							</ul>								
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="tria">
+								Alus ir maistas								
+							</a>
+							<ul class="subnav" style="display: none; ">
+								<li>
+									<a href="/maistas/uzkandziai-prie-alaus">
+										Užkandžiai prie alaus													
+									</a>
+								</li>
+								<li>
+									<a href="/maistas/pagrindiniai-patiekalai">
+										Pagrindiniai patiekalai													
+									</a>
+								</li>
+								<li>
+									<a href="/maistas/receptai-su-alumi">
+										Patiekalai iš alaus													
+									</a>
+								</li>
+								<?php
+								if (bb_is_user_logged_in()){
+									?>
+									<li class="menuspacer"></li>
+									<li>
+										<a href="/food/my">
+											Mano receptai													
+										</a>
+									</li>
+									<?php
+								}
+								?>
+							</ul>								
+						</li>
+						<li>
+							<a href="/forum">
+								Forumas								
+							</a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="tria">
+								Skaitykla								
+							</a>
+							<ul class="subnav" style="display: none; ">
+								<li>
+									<a href="/skaitykla">
+										Straipsniai													
+									</a>
+								</li>
+								<li>
+									<a href="/blog">
+										Dienoraščiai													
+									</a>
+								</li>
+								<li>
+									<a href="/tweet/all">
+										Aludarių pranešimai													
+									</a>
+								</li>
+							</ul>								
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="tria">
+								Bendruomenė								
+							</a>
+							<ul class="subnav" style="display: none; ">
+								<li>
+									<a href="/ivykiai">
+										Įvykiai													
+									</a>
+								</li>
+								<li class="menuspacer"></li>
+								<li>
+									<a href="/brewer/list">
+										Aludariai													
+									</a>
+								</li>
+								<li>
+									<a href="/groups">
+										Aludarių grupės													
+									</a>
+								</li>
+								<li class="menuspacer"></li>
+								<li>
+									<a href="/content/about">
+										Apie projektą													
+									</a>
+								</li>
+								<li>
+									<a href="/content/help">
+										Pagalba													
+									</a>
+								</li>
+								<li>
+									<a href="/stats">
+										Statistika													
+									</a>
+								</li>
+								<li class="menuspacer"></li>
+								<li>
+									<a href="/idejos/naujausios">
+										Idėjų bankas													
+									</a>
+								</li>
+							</ul>								
+						</li>
+					</ul>
 				</div>
 			</div>
 			<div class="clear"></div>

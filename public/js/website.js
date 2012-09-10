@@ -79,6 +79,24 @@ $(document).ready(function () {
 		window.open('/tracker/bug_report_page.php', '_blank');
 		return false;
 	});
+	var timer = $.timer(function(){
+		$.ajax({
+			url: "/index/ping"
+		});
+	});
+	timer.set({ time : 1000*30, autostart : true });
+	$.ajax({
+		url: "/index/pingstart"
+	});
+
+	$("ul.topnav li a").click(function() {
+		$(this).parent().find("ul.subnav").slideDown('fast').show();
+	});
+	$(document).mouseup(function (e) {
+		if ($(e.target).parent("#user_info_name").length == 0) {
+			$("ul.topnav li ul.subnav").hide();
+		}
+	});
 });
 function createUserMenu() {
 	$("#user_info_name").click(function (e) {

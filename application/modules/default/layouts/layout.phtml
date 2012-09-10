@@ -29,29 +29,6 @@
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
 			{lang: 'lt'}
 		</script>
-		<script type="text/javascript">
-			$(function(){
-				var timer = $.timer(function(){
-					$.ajax({
-						url: "/index/ping"
-					});
-				});
-				timer.set({ time : 1000*30, autostart : true });
-				$.ajax({
-					url: "/index/pingstart"
-				});
-				
-				$("ul.topnav li a").click(function() {
-					$(this).parent().find("ul.subnav").slideDown('fast').show();
-				});
-				$(document).mouseup(function (e) {
-					if ($(e.target).parent("#user_info_name").length == 0) {
-						$("ul.topnav li ul.subnav").hide();
-					}
-				});
-
-			});
-		</script>
 	</head>
 	<body>
 		<div id="header_container">
