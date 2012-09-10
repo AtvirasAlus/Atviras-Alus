@@ -14,7 +14,7 @@
 		<?=$this->headLink();?>
 		<?=$this->headStyle();?>
 		<link type="text/css" href="/public/css/pepper-grinder/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
-		<link type="text/css" href="/public/css/style.css?ver=4" rel="stylesheet" media="all" />
+		<link type="text/css" href="/public/css/style.css?ver=5" rel="stylesheet" media="all" />
 		<link type="text/css" href="/public/css/print.css" rel="stylesheet" media="print" />
 		<link href="/public/css/userScreen.css" media="screen, projection" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="/public/ui/ui/jquery.ui.widget.js"></script>
@@ -40,6 +40,16 @@
 				$.ajax({
 					url: "/index/pingstart"
 				});
+				
+				$("ul.topnav li a").click(function() {
+					$(this).parent().find("ul.subnav").slideDown('fast').show();
+				});
+				$(document).mouseup(function (e) {
+					if ($(e.target).parent("#user_info_name").length == 0) {
+						$("ul.topnav li ul.subnav").hide();
+					}
+				});
+
 			});
 		</script>
 	</head>
@@ -53,23 +63,54 @@
 					<div class="clear"></div>
 				</div>
 				<div id="menu">
-					<ul id="topmenu">
+					<?php
+					$storage = new Zend_Auth_Storage_Session();
+					$user_info = $storage->read();
+					$user_id = isset($user_info->user_id) ? $user_info->user_id : 0;
+					?>
+					<ul class="topnav">
 					<?php
 					$this->navigation(new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH."/configs/defaultNavigation.xml","nav")));
 					$pages = $this->navigation()->getPages();
 					foreach ($pages as $page):
-						if ($page->isActive()) {
-							$class = "active";
+						if (isset($page->pages) && sizeof($page->pages) > 0){
+							?>
+							<li>
+								<a href="javascript:void(0);" class="tria">
+									<?=$page->label;?>
+								</a>
+								<ul class="subnav">
+									<?php
+									foreach($page->pages as $subpage){
+										if ($subpage->restrict == 0 || $user_id != 0){
+											if ($subpage->label == "spacer"){
+												?>
+												<li class="menuspacer"></li>
+												<?php
+											} else {
+												?>
+												<li>
+													<a href="<?=$subpage->getHref();?>">
+														<?=$subpage->label;?>
+													</a>
+												</li>
+												<?php
+											}
+										}
+									}
+									?>
+								</ul>								
+							</li>
+							<?php
 						} else {
-							$class = "";
+							?>
+							<li>
+								<a href="<?=$page->getHref();?>">
+									<?=$page->label;?>
+								</a>
+							</li>
+							<?php
 						}
-						?>
-						<li>
-							<a href="<?=$page->getHref();?>" class="<?=$class?>">
-								<?=$page->label;?>
-							</a>
-						</li>
-						<?php
 					endforeach;
 					?>
 					</ul>

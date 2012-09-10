@@ -1,100 +1,246 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<nav>
-		
-		<about>
-			<label>Alaus stiliai</label>
-			<module>default</module>
-			<controller>styles</controller>
-			<action>index</action>
-			<route>default</route>
-		</about>
-		<practises>
+		<men-recipes>
 			<label>Receptai</label>
-			<module>default</module>
-			<controller>recipes</controller>
-			<action>index</action>
 			<route>default</route>
 			<pages>
-				<all>
-					<label>Praktikų mokymo programos</label>
-					<module>account</module>
-					<controller>practises</controller>
+				<men-beer-styles>
+					<label>Alaus stiliai</label>
+					<module>default</module>
+					<controller>styles</controller>
 					<action>index</action>
-					<resource>practises</resource>
-				</all>
-				<favorites>
-					<label>Sukurti praktikos mokymo programą</label>
-					<module>account</module>
-					<controller>practises</controller>
-					<action>add-practise</action>
-					<resource>add_practises</resource>
-				</favorites>
-				<create>
-					<label>Sukurti praktikos mokymo programą</label>
-					<module>account</module>
-					<controller>practises</controller>
-					<action>add-practise</action>
-					<resource>add_practises</resource>
-				</create>
+					<route>default</route>
+				</men-beer-styles>
+				<men-spacer-1>
+					<label>spacer</label>
+					<route>default</route>
+				</men-spacer-1>
+				<men-all-recipes>
+					<label>Visi receptai</label>
+					<module>default</module>
+					<controller>recipes</controller>
+					<action>index</action>
+					<route>default</route>
+				</men-all-recipes>
+				<men-recipe-search>
+					<label>Receptų paieška</label>
+					<module>default</module>
+					<controller>recipes</controller>
+					<action>search</action>
+					<route>search</route>
+				</men-recipe-search>
+				<men-favorite-recipes>
+					<label>Įdomiausi receptai</label>
+					<module>default</module>
+					<controller>recipes</controller>
+					<action>favorites</action>
+					<route>default</route>
+				</men-favorite-recipes>
+				<men-recipe-comments>
+					<label>Komentarai</label>
+					<module>default</module>
+					<controller>comments</controller>
+					<action>index</action>
+					<route>default</route>
+				</men-recipe-comments>
+				<men-spacer-2>
+					<label>spacer</label>
+					<route>default</route>
+				</men-spacer-2>
+				<men-all-sessions>
+					<label>Virimai</label>
+					<module>default</module>
+					<controller>brew-session</controller>
+					<action>history</action>
+					<route>default</route>
+				</men-all-sessions>
+				<men-spacer-3>
+					<label>spacer</label>
+					<route>default</route>
+					<restrict>1</restrict>
+				</men-spacer-3>
+				<men-my-recipes>
+					<label>Mano receptai</label>
+					<module>default</module>
+					<controller>brewer</controller>
+					<action>recipes</action>
+					<route>default</route>
+					<restrict>1</restrict>
+				</men-my-recipes>
+				<men-my-favorites>
+					<label>Mėgstamiausi receptai</label>
+					<module>default</module>
+					<controller>brewer</controller>
+					<action>favorites</action>
+					<route>default</route>
+					<restrict>1</restrict>
+				</men-my-favorites>
+				<men-my-sessions>
+					<label>Mano virimai</label>
+					<module>default</module>
+					<controller>brew-session</controller>
+					<action>brewer</action>
+					<route>default</route>
+					<restrict>1</restrict>
+				</men-my-sessions>
 			</pages>
-		</practises>
-		<research>
-			<label>Skaičiuoklė</label>
-			<module>default</module>
-			<controller>index</controller>
-			<action>calculus</action>
+		</men-recipes>
+		<men-calculus>
+			<label>Skaičiuoklės</label>
 			<route>default</route>
-		</research>
-		<food>
+			<pages>
+				<men-recipe-calculus>
+					<label>Receptų skaičiuoklė</label>
+					<module>default</module>
+					<controller>index</controller>
+					<action>calculus</action>
+					<route>default</route>
+				</men-recipe-calculus>
+				<men-other-calculus>
+					<label>Kitos skaičiuoklės</label>
+					<module>default</module>
+					<controller>calculus</controller>
+					<action>index</action>
+					<route>default</route>
+				</men-other-calculus>
+			</pages>
+		</men-calculus>
+		<men-food>
 			<label>Alus ir maistas</label>
-			<module>default</module>
-			<controller>food</controller>
-			<action>index</action>
-			<route>food_list</route>
-		</food>
-		<forum>
+			<route>default</route>
+			<pages>
+				<men-food-snacks>
+					<label>Užkandžiai prie alaus</label>
+					<module>default</module>
+					<controller>food</controller>
+					<action>list</action>
+					<route>food3</route>
+				</men-food-snacks>
+				<men-food-main>
+					<label>Pagrindiniai patiekalai</label>
+					<module>default</module>
+					<controller>food</controller>
+					<action>list</action>
+					<route>food2</route>
+				</men-food-main>
+				<men-food-with>
+					<label>Patiekalai iš alaus</label>
+					<module>default</module>
+					<controller>food</controller>
+					<action>list</action>
+					<route>food1</route>
+				</men-food-with>
+				<men-spacer-1>
+					<label>spacer</label>
+					<route>default</route>
+					<restrict>1</restrict>
+				</men-spacer-1>
+				<men-tweets>
+					<label>Mano receptai</label>
+					<module>default</module>
+					<controller>food</controller>
+					<action>my</action>
+					<route>default</route>
+					<restrict>1</restrict>
+				</men-tweets>
+			</pages>
+		</men-food>
+		<men-forum>
 			<label>Forumas</label>
 			<module>forum</module>
-		
 			<route>default</route>
-		</forum>
-		<skaitykla>
+		</men-forum>
+		<men-library>
 			<label>Skaitykla</label>
-			<module>default</module>
-			<controller>content</controller>
-			<action>list</action>
-			<route>skaitykla</route>
-		</skaitykla>
-		<search>
-			<label>Paieška</label>
-			<module>default</module>
-			<controller>recipes</controller>
-			<action>search</action>
-			<route>search</route>
-		</search>
-		<events>
-			<label>Įvykiai</label>
-			<module>default</module>
-			<controller>events</controller>
-			<action>index</action>
-			<route>events</route>
-		</events>
-		<idea>
-			<label>Idėjos</label>
-			<module>default</module>
-			<controller>idea</controller>
-			<action>default</action>
-			<route>idejos</route>
-		</idea>
-		<help>
-			<label>Pagalba</label>
-			<module>default</module>
-			<controller>content</controller>
-			<action>read</action>
-			<route>pagalba</route>
-		</help>
-		
-		
+			<route>default</route>
+			<pages>
+				<men-articles>
+					<label>Straipsniai</label>
+					<module>default</module>
+					<controller>content</controller>
+					<action>list</action>
+					<route>skaitykla</route>
+				</men-articles>
+				<men-blogs>
+					<label>Dienoraščiai</label>
+					<module>blog</module>
+					<route>default</route>
+				</men-blogs>
+				<men-tweets>
+					<label>Aludarių pranešimai</label>
+					<module>default</module>
+					<controller>tweet</controller>
+					<action>all</action>
+					<route>default</route>
+				</men-tweets>
+			</pages>
+		</men-library>
+		<men-community>
+			<label>Bendruomenė</label>
+			<route>default</route>
+			<pages>
+				<men-events>
+					<label>Įvykiai</label>
+					<module>default</module>
+					<controller>events</controller>
+					<action>index</action>
+					<route>events</route>
+				</men-events>
+				<men-spacer-1>
+					<label>spacer</label>
+					<route>default</route>
+				</men-spacer-1>
+				<men-brewers>
+					<label>Aludariai</label>
+					<module>default</module>
+					<controller>brewer</controller>
+					<action>list</action>
+					<route>default</route>
+				</men-brewers>
+				<men-groups>
+					<label>Aludarių grupės</label>
+					<module>default</module>
+					<controller>groups</controller>
+					<action>index</action>
+					<route>default</route>
+				</men-groups>
+				<men-spacer-2>
+					<label>spacer</label>
+					<route>default</route>
+				</men-spacer-2>
+				<men-about>
+					<label>Apie projektą</label>
+					<module>default</module>
+					<controller>content</controller>
+					<action>about</action>
+				</men-about>
+				<men-help>
+					<label>Pagalba</label>
+					<module>default</module>
+					<controller>content</controller>
+					<action>help</action>
+					<route>default</route>
+				</men-help>
+				<men-stats>
+					<label>Statistika</label>
+					<module>default</module>
+					<controller>stats</controller>
+					<action>index</action>
+					<route>default</route>
+				</men-stats>
+				<men-spacer-3>
+					<label>spacer</label>
+					<route>default</route>
+				</men-spacer-3>
+				<men-ideas>
+					<label>Idėjų bankas</label>
+					<module>default</module>
+					<controller>idea</controller>
+					<action>list_new</action>
+					<route>idejos_new</route>
+				</men-ideas>
+			</pages>
+		</men-community>
 	</nav>
 </config>

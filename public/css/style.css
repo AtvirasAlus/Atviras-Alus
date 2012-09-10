@@ -37,7 +37,6 @@ body {
 }
 #header_container {
 	width: 1101px;
-	overflow: hidden;
 	margin-top: 12px;
 }
 #main_container {
@@ -99,11 +98,12 @@ ul#topmenu {
 }
 ul#topmenu li {
 	display: inline;
-	margin-right: 18px;
+	margin-right: 30px;
 }
 ul#topmenu li a, ul#topmenu li a:visited {
-	font-size: 15px;
+	font-size: 16px;
 	font-weight: bold;
+	display: inline-block;
 }
 ul#topmenu li a:hover {
 	color: #000;
@@ -2386,4 +2386,75 @@ ul.statuses li {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+}
+.menu_sub {
+	background-image: url("/public/images/submenu.gif");
+	background-repeat: no-repeat;
+	background-position: right center;
+	padding-right: 12px;
+}
+
+
+
+ul.topnav {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	margin-top: 30px;
+}
+ul.topnav li {
+	display: inline-block;
+	margin: 0;	
+	padding: 0;
+	position: relative;
+	margin-right: 30px;
+	font-size: 16px;
+	font-weight: bold;
+}
+ul.topnav li a{
+	display: block;
+}
+ul.topnav li ul.subnav {
+	list-style: none;
+	position: absolute;
+	left: 0;
+	top: 20px;
+	margin: 0;
+	padding: 0;
+	z-index: 100;
+	background-color: #C7A27C;
+	padding: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	display: none;
+}
+ul.topnav li ul.subnav li{
+	margin: 0;
+	padding: 0;
+	line-height: 26px;
+	min-width: 160px;
+	display: block;
+}
+html ul.topnav li ul.subnav li a {
+	color: #fff;
+	font-size: 13px;
+	font-weight: normal;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+html ul.topnav li ul.subnav li a:hover {
+	background-color: #755531;
+}
+.tria {
+	background-image: url("/public/images/submenu.gif");
+	background-repeat: no-repeat;
+	background-position: right center;
+	padding-right: 12px;
+}
+.menuspacer {
+	height: 1px;
+	overflow: hidden;
+	background-color: #ddd;
+	margin: 5px !important;
 }

@@ -72,6 +72,9 @@ function _initAutoLoad() {
 		$router->addRoute("food_new",new Zend_Controller_Router_Route("/maistas/naujas",array("module"=>"default","controller" => "food","action" => "new")));
 		$router->addRoute("food_edit",new Zend_Controller_Router_Route("/maistas/redaguoti/:item",array("module"=>"default","controller" => "food","action" => "edit", "item"=>0)));
 		$router->addRoute("food_delete",new Zend_Controller_Router_Route("/maistas/trinti/:item",array("module"=>"default","controller" => "food","action" => "delete", "item"=>0)));
+		$router->addRoute("food1",new Zend_Controller_Router_Route("/maistas/receptai-su-alumi",array("module"=>"default","controller" => "food","action" => "list", "category"=>3)));
+		$router->addRoute("food2",new Zend_Controller_Router_Route("/maistas/pagrindiniai-patiekalai",array("module"=>"default","controller" => "food","action" => "list", "category"=>2)));
+		$router->addRoute("food3",new Zend_Controller_Router_Route("/maistas/uzkandziai-prie-alaus",array("module"=>"default","controller" => "food","action" => "list", "category"=>1)));
 		$router->addRoute("idejos",new Zend_Controller_Router_Route("/idejos/:page",array("module"=>"default","controller" => "idea","action" => "list","page"=>0)));
 		$router->addRoute("idejos_my",new Zend_Controller_Router_Route("/idejos/mano/:page",array("module"=>"default","controller" => "idea","action" => "list_my","page"=>0)));
 		$router->addRoute("idejos_unvoted",new Zend_Controller_Router_Route("/idejos/balsavimas/:page",array("module"=>"default","controller" => "idea","action" => "list_unvoted","page"=>0)));
