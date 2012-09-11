@@ -44,6 +44,13 @@
 					<action>index</action>
 					<route>default</route>
 				</men-recipe-comments>
+				<men-gallery>
+					<label>Atviro alaus galerija</label>
+					<module>default</module>
+					<controller>recipe</controller>
+					<action>gallery</action>
+					<route>gallery</route>
+				</men-gallery>
 				<men-spacer-2>
 					<label>spacer</label>
 					<route>default</route>
