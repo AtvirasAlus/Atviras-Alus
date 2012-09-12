@@ -30,13 +30,6 @@
 					<action>search</action>
 					<route>search</route>
 				</men-recipe-search>
-				<men-favorite-recipes>
-					<label>Įdomiausi receptai</label>
-					<module>default</module>
-					<controller>recipes</controller>
-					<action>favorites</action>
-					<route>default</route>
-				</men-favorite-recipes>
 				<men-recipe-comments>
 					<label>Komentarai</label>
 					<module>default</module>
