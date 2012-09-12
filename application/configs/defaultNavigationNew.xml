@@ -54,13 +54,6 @@
 					<action>search</action>
 					<route>default</route>
 				</search>
-				<favrecipes>
-					<label>Įdomiausi receptai</label>
-					<module>default</module>
-					<controller>recipes</controller>
-					<action>favorites</action>
-					<route>default</route>
-				</favrecipes>
 				<random>
 					<label>Atsitiktinis</label>
 					<module>default</module>
