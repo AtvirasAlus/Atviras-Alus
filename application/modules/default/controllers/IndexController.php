@@ -103,6 +103,15 @@ class IndexController extends Zend_Controller_Action {
 				case "event":
 					$select->where("type = 'event'");
 				break;
+				case "event_comment":
+					$select->where("type = 'event_comment'");
+				break;
+				case "food":
+					$select->where("type = 'food'");
+				break;
+				case "food_comment":
+					$select->where("type = 'food_comment'");
+				break;
 				case "recipe":
 					$select->where("type = 'recipe'");
 				break;
@@ -181,6 +190,15 @@ class IndexController extends Zend_Controller_Action {
 				break;
 				case "event":
 					$select->where("type = 'event'");
+				break;
+				case "event_comment":
+					$select->where("type = 'event_comment'");
+				break;
+				case "food":
+					$select->where("type = 'food'");
+				break;
+				case "food_comment":
+					$select->where("type = 'food_comment'");
 				break;
 				case "recipe":
 					$select->where("type = 'recipe'");
@@ -298,6 +316,15 @@ class IndexController extends Zend_Controller_Action {
 				break;
 				case "event":
 					$select->where("type = 'event'");
+				break;
+				case "event_comment":
+					$select->where("type = 'event_comment'");
+				break;
+				case "food":
+					$select->where("type = 'food'");
+				break;
+				case "food_comment":
+					$select->where("type = 'food_comment'");
 				break;
 				case "recipe":
 					$select->where("type = 'recipe'");
