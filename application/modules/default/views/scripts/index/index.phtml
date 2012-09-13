@@ -38,36 +38,6 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 				<a href="/recipes/random">Atsitiktinis receptas</a>
 			</div>
 		</div>
-		
-		<!-- BURBULIATORIUS -->
-		<div class="index_block index_tweet">
-			<div class="block_header">Burbuliatorius:</div>
-			<div class="block_content">
-				<?php
-				$tweet = $this->twitter();
-				echo $tweet->tweetList(5, 0);
-				?>
-			</div>
-		</div>
-
-		<!-- ATVIRO ALAUS NAUJIENOS -->
-		<div class="index_block index_sitenews">
-			<div class="block_header">Atviro alaus naujienos:</div>
-			<div class="block_content">
-				<div style="margin-bottom: 10px;">
-					Per mėnėsį 
-					<b><?= $this->total_brewed['brewers_total']; ?></b>
-					aludariai išvirė 
-					<b><a href="http://www.atvirasalus.lt/stats?id=sessions"><?= $this->total_brewed['beer_total']; ?></b></a> 
-					litrus alaus
-				</div>
-				<div>
-					Sveikiname mūsų naująjį aludarį,
-					<a href="/brewers/<?= $this->welcome['user_id']; ?>"><?= $this->welcome['user_name']; ?></a>
-				</div>
-			</div>
-		</div>
-
 		<!-- FORUMAS -->
 		<div class="index_block index_forum">
 			<div class="block_header">Forumas:</div>
@@ -111,6 +81,37 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 				?>
 			</div>
 		</div>
+		
+		<!-- BURBULIATORIUS -->
+		<div class="index_block index_tweet">
+			<div class="block_header">Burbuliatorius:</div>
+			<div class="block_content">
+				<?php
+				$tweet = $this->twitter();
+				echo $tweet->tweetList(5, 0);
+				?>
+			</div>
+		</div>
+
+		<!-- ATVIRO ALAUS NAUJIENOS -->
+		<div class="index_block index_sitenews">
+			<div class="block_header">Atviro alaus naujienos:</div>
+			<div class="block_content">
+				<div style="margin-bottom: 10px;">
+					Per mėnėsį 
+					<b><?= $this->total_brewed['brewers_total']; ?></b>
+					aludariai išvirė 
+					<b><a href="http://www.atvirasalus.lt/stats?id=sessions"><?= $this->total_brewed['beer_total']; ?></b></a> 
+					litrus alaus
+				</div>
+				<div>
+					Sveikiname mūsų naująjį aludarį,
+					<a href="/brewers/<?= $this->welcome['user_id']; ?>"><?= $this->welcome['user_name']; ?></a>
+				</div>
+			</div>
+		</div>
+
+		
 <?/*
 		<!-- ĮDOMIAUSI -->
 		<div class="index_block index_favorites">
