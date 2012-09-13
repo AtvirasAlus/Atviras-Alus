@@ -27,6 +27,7 @@ class EventsController extends Zend_Controller_Action {
 
         $select = $this->db->select()
                 ->from("beer_events", array("*", "DATE_FORMAT(event_start, '%Y-%m-%d %H:%i') as event_start"))
+                ->joinLeft("beer_events_comments", "beer_events_comments.comment_event=beer_events.event_id", array("COUNT(comment_id) AS total"))
                 ->where("beer_events.event_published = ?", '1')
                 ->order("beer_events.event_start DESC");
 

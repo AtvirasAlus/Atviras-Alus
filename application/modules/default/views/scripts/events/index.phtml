@@ -22,6 +22,8 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 			<div class="<?=$class;?>" onclick="window.location.href='/ivykis/<?= $item["event_id"]; ?>-<?= urlencode($item["event_name"]); ?>'">
 				<div class="event_title">
 					<?= $item["event_name"]; ?>
+						<span style="font-size: 12px;">(<?=intval($item['total']);?>)</span>
+			<img src="/public/images/comments_icon.png" />
 				</div>
 				<div class="event_resume">
 					<?= $item["event_resume"]; ?>
