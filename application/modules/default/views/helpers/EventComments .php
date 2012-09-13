@@ -8,7 +8,7 @@ public function  eventComments($event_id) {
 		$select=$db->select()
 			->from("beer_events_comments")
 			->joinLeft("users","users.user_id = beer_events_comments.comment_brewer",array("user_id","user_name","user_email"))
-			->where("comment_article =?",$article_id)
+			->where("comment_article =?",$event_id)
 			->order("comment_date ASC");
 			$this->view->comments=$db->fetchAll($select);
 			$this->view->event_id=$event_id;
