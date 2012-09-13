@@ -59,7 +59,7 @@ class IndexController extends Zend_Controller_Action {
 	
 	public function getnewAction(){
 		$out = array();
-		$out['last'] = 0;
+		$out['last'] = $this->getRequest()->getParam("last");
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
@@ -67,20 +67,13 @@ class IndexController extends Zend_Controller_Action {
 		$user_info = $storage->read();
 		if ($this->show_beta === true){
 			$filter_type = $this->getRequest()->getParam("type");
-			$last_id = $this->getRequest()->getParam("last");
-			$select = $db->select("posted")
-					->from("activity")
-					->where("id = ?", $last_id)
-					->limit(1);
-			$result = $db->fetchRow($select);
-			$last_stamp = $result['posted'];
 			if (!isset($filter_type) || empty($filter_type)) $filter_type = "all";
 			$this->view->filter_type = $filter_type;
 			$select = $db->select()
 					->from("activity")
 					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
 					->order("posted DESC")
-					->where("posted > '".$last_stamp."'");
+					->where("id > '".$out['last']."'");
 			switch($filter_type){
 				case "idea":
 					$select->where("type = 'idea'");

@@ -1,8 +1,6 @@
 <div class="new_updated_items">
 	<?php
-	$last_id = 0;
 	foreach ($this->items as $item):
-		$last_id = $item['id'];
 		switch($item['type']){
 			case "idea_comment":
 				include("partials/idea_comment.phtml");
