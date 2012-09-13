@@ -52,8 +52,13 @@ class CommentsController extends Zend_Controller_Action {
 						$db->insert("food_comments", array("food_id" => $_POST['food_id'], "user_id" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
 						$this->_redirect("/patiekalas/" . $_POST['food_id']);
 					} else {
-						$db->insert("beer_articles_comments", array("comment_article" => $_POST['article_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
-						$this->_redirect("/content/read/1/" . $_POST['article_id']);
+					if (isset($_POST['event_id'])) {
+						$db->insert("beer_events_comments", array("comment_article" => $_POST['event_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
+						$this->_redirect("/ivykis/" . $_POST['event_id']);
+						}else{
+							$db->insert("beer_articles_comments", array("comment_article" => $_POST['article_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
+              $this->_redirect("/content/read/1/" . $_POST['article_id']);
+						}
 					}
 				}
 			}
@@ -80,6 +85,9 @@ class CommentsController extends Zend_Controller_Action {
 				case 'food':
 					$table = "food_comments";
 					break;
+						case 'event':
+					$table = "beer_events_comments";
+					break;
 			}
 			if (isset($table)) {
 				$select = $db->select()
@@ -105,6 +113,8 @@ class CommentsController extends Zend_Controller_Action {
 			} else if (isset($_POST["food"])) {
 				$table = "food_comments";
 			} else if (isset($_POST["article"])) {
+				$table = "beer_articles_comments";
+			}else if (isset($_POST["event"])) {
 				$table = "beer_articles_comments";
 			}
 
