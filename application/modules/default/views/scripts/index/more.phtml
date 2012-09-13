@@ -16,6 +16,12 @@ foreach ($this->items as $item):
 		case "idea":
 			include("partials/idea.phtml");
 		break;
+		case "food":
+			include("partials/food.phtml");
+		break;
+		case "food_comment":
+			include("partials/food_comment.phtml");
+		break;
 		case "forum_post":
 			include("partials/forum_post.phtml");
 		break;
@@ -33,6 +39,9 @@ foreach ($this->items as $item):
 		case "event":
 			if ($item['event_published'] == 1)
 				include("partials/event.phtml");
+		break;
+		case "event_comment":
+			include("partials/event_comment.phtml");
 		break;
 		case "recipe":
 			include("partials/recipe.phtml");
