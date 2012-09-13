@@ -79,6 +79,13 @@
 	background-repeat: no-repeat;
 	background-position: 4px 22px;
 }
+.ico_event_comment {
+	background-color: #eee;
+	padding-left: 40px;
+	background-image: url("/public/images/new/ico_event_comment.png");
+	background-repeat: no-repeat;
+	background-position: 4px 22px;
+}
 .ico_forum_post {
 	background-color: #eee;
 	padding-left: 40px;
@@ -282,6 +289,7 @@ input, select, .editable-select-options, .ui-autocomplete {
 .new_updated_items .ico_food_comment,
 .new_updated_items .ico_forum_post,
 .new_updated_items .ico_article,
+.new_updated_items .ico_event_comment,
 .new_updated_items .ico_article_comment,
 .new_updated_items .ico_session,
 .new_updated_items .ico_event,
@@ -558,6 +566,9 @@ input, select, .editable-select-options, .ui-autocomplete {
 						case "event":
 							if ($item['event_published'] == 1)
 								include("partials/event.phtml");
+						break;
+						case "event_comment":
+							include("partials/event_comment.phtml");
 						break;
 						case "recipe":
 							include("partials/recipe.phtml");
