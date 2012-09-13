@@ -89,6 +89,7 @@ class EventsController extends Zend_Controller_Action {
             }
 
             $this->view->user_id = $this->user->user_id;
+             $this->view->user_info = $this->user;
             //visi aludariu receptai 
             if ($this->view->event['event_type'] == 'competition') {
                 $select = $this->db->select();
