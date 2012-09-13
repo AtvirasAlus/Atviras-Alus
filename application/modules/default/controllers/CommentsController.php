@@ -53,7 +53,7 @@ class CommentsController extends Zend_Controller_Action {
 						$this->_redirect("/patiekalas/" . $_POST['food_id']);
 					} else {
 					if (isset($_POST['event_id'])) {
-						$db->insert("beer_events_comments", array("comment_article" => $_POST['event_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
+						$db->insert("beer_events_comments", array("comment_event" => $_POST['event_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
 						$this->_redirect("/ivykis/" . $_POST['event_id']);
 						}else{
 							$db->insert("beer_articles_comments", array("comment_article" => $_POST['article_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
