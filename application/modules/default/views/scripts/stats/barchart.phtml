@@ -4,7 +4,7 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");
 
 $id = isset($_GET['id']) ? $_GET['id'] : "";
-$_options = array("recipes" => "Sukurtų receptų skaičius (mėnesiais)", "users" => "Prisiregistravusių naujų nautotojų skaičius (mėnesiais)", "sessions" => "Virimų statistika", "styles" => "Sukurtų receptų skaičius pagal stilių", "cats" => "Sukurtų receptų skaičius pagal kategorijas", "abv" => "Išvirto alaus stiprumas", "locations" => "Nautotojų geografija");
+$_options = array("recipes" => "Sukurtų receptų skaičius (mėnesiais)", "users" => "Prisiregistravusių naujų nautotojų skaičius (mėnesiais)", "sessions" => "Virimų statistika", "styles" => "Sukurtų receptų skaičius pagal stilių", "cats" => "Sukurtų receptų skaičius pagal kategorijas", "abv" => "Išvirto alaus stiprumas", "ibu" => "Išvirto alaus kartumas", "locations" => "Nautotojų geografija");
 ?>
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Statistika</div>
@@ -25,39 +25,73 @@ $_options = array("recipes" => "Sukurtų receptų skaičius (mėnesiais)", "user
 	<div id="hover" style="margin-left:50px;margin-top:10px;width:700px;"></div> 
 </div> 
 <script id="source"> 
-var stack = 1, bars = true, lines = false, steps = false;
-
+	var stack = 1, bars = true, lines = false, steps = false;
 	<?
 	switch ($id) {
-
 		case "locations":
 			?>
+			var a=<?= $this->location_count; ?>;
+			var d = [];
+			var total=0;
+			var dn=[];
+			for (var i=0;i<a.length;i++) {
+				a[i].user_location=a[i].user_location==null ? "?" : a[i].user_location;
+				d[i]={label:a[i].user_location+" - " +a[i].count,data:[[i,a[i].count]]};
+				dn[i]=[i,a[i].user_location]
 
-		var a=<?= $this->location_count; ?>;
-		var d = [];
-		var total=0;
-		var dn=[];
-		for (var i=0;i<a.length;i++) {
-			a[i].user_location=a[i].user_location==null ? "?" : a[i].user_location;
-			d[i]={label:a[i].user_location+" - " +a[i].count,data:[[i,a[i].count]]};
-			dn[i]=[i,a[i].user_location]
-
-		}
-		var options = {
+			}
+			var options = {
 
 
-			bars:{show: true, barWidth: 0.9, align: 'center'}, 
-			xaxis: { ticks: dn, autoscaleMargin: .10 }, 
-			grid: { hoverable: true, clickable: true }
-		}
-
+				bars:{show: true, barWidth: 0.9, align: 'center'}, 
+				xaxis: { ticks: dn, autoscaleMargin: .10 }, 
+				grid: { hoverable: true, clickable: true }
+			}
 			<?
-			break;
+		break;
+		case "abv":
+			?>
+			var a=<?= $this->abv; ?>;
+			var d = [];
+			var total=0;
+			var dn=[];
+			for (var i=0;i<a.length;i++) {
+				a[i].label=a[i].label==null ? "?" : a[i].label;
+				d[i]={label:a[i].label+"% - " +a[i].count,data:[[i,a[i].count]]};
+				dn[i]=[i,a[i].label]
+
+			}
+			var options = {
+
+
+				bars:{show: true, barWidth: 0.9, align: 'center'}, 
+				xaxis: { ticks: dn, autoscaleMargin: .10 }, 
+				grid: { hoverable: true, clickable: true }
+			}
+			<?
+		break;
+		case "ibu":
+			?>
+			var a=<?= $this->ibu; ?>;
+			var d = [];
+			var total=0;
+			var dn=[];
+			for (var i=0;i<a.length;i++) {
+				a[i].label=a[i].label==null ? "?" : a[i].label;
+				d[i]={label:a[i].label+" IBU - " +a[i].count,data:[[i,a[i].count]]};
+				dn[i]=[i,a[i].label]
+
+			}
+			var options = {
+
+
+				bars:{show: true, barWidth: 0.9, align: 'center'}, 
+				xaxis: { ticks: dn, autoscaleMargin: .10 }, 
+				grid: { hoverable: true, clickable: true }
+			}
+			<?
+		break;
 	}
 	?>
-
-
-$.plot($("#placeholder"),d,options);
-
-
+	$.plot($("#placeholder"),d,options);
 </script> 

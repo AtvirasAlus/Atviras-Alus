@@ -72,37 +72,188 @@ class StatsController extends Zend_Controller_Action {
 				$this->_helper->viewRenderer("piechart");
 				break;
 			case "abv":
-				$selectA = $db->select()
-						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('0 - 3,5%')"))
+				$selectas = array();
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('0.5')"))
 						->where('recipe_abv >= 0')
+						->where('recipe_abv <= 0.5');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('1.0')"))
+						->where('recipe_abv >= 0.6')
+						->where('recipe_abv <= 1');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('1.5')"))
+						->where('recipe_abv >= 1.1')
+						->where('recipe_abv <= 1.5');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('2.0')"))
+						->where('recipe_abv >= 1.6')
+						->where('recipe_abv <= 2');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('2.5')"))
+						->where('recipe_abv >= 2.1')
+						->where('recipe_abv <= 2.5');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('3.0')"))
+						->where('recipe_abv >= 2.6')
+						->where('recipe_abv <= 3');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('3.5')"))
+						->where('recipe_abv >= 3.1')
 						->where('recipe_abv <= 3.5');
-
-				$selectB = $db->select()
-						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('3,6- 4,6%')"))
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('4.0')"))
 						->where('recipe_abv >= 3.6')
-						->where('recipe_abv <= 4.6');
-				$selectC = $db->select()
-						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('4,7- 5,7%')"))
-						->where('recipe_abv >= 4.7')
-						->where('recipe_abv <= 5.7');
-				$selectD = $db->select()
-						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('5,8 - 6,9%')"))
-						->where('recipe_abv >= 5.8')
-						->where('recipe_abv <= 6.9');
-				$selectE = $db->select()
-						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('7,0- 9,0%')"))
-						->where('recipe_abv >= 7')
+						->where('recipe_abv <= 4');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('4.5')"))
+						->where('recipe_abv >= 4.1')
+						->where('recipe_abv <= 4.5');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('5.0')"))
+						->where('recipe_abv >= 4.6')
+						->where('recipe_abv <= 5');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('5.5')"))
+						->where('recipe_abv >= 5.1')
+						->where('recipe_abv <= 5.5');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('6.0')"))
+						->where('recipe_abv >= 5.6')
+						->where('recipe_abv <= 6');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('6.5')"))
+						->where('recipe_abv >= 6.1')
+						->where('recipe_abv <= 6.5');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('7.0')"))
+						->where('recipe_abv >= 6.6')
+						->where('recipe_abv <= 7');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('7.5')"))
+						->where('recipe_abv >= 7.1')
+						->where('recipe_abv <= 7.5');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('8.0')"))
+						->where('recipe_abv >= 7.6')
+						->where('recipe_abv <= 8');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('8.5')"))
+						->where('recipe_abv >= 8.1')
+						->where('recipe_abv <= 8.5');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('9.0')"))
+						->where('recipe_abv >= 8.6')
 						->where('recipe_abv <= 9');
-				$selectF = $db->select()
-						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('> 9,0%')"))
-						->where('recipe_abv >9');
-
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('9.5')"))
+						->where('recipe_abv >= 9.1')
+						->where('recipe_abv <= 9.5');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('10.0')"))
+						->where('recipe_abv >= 9.6')
+						->where('recipe_abv <= 10');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_abv)', 'label' => "CONCAT('>10.0')"))
+						->where('recipe_abv >= 10.1');
 
 				$select = $db->select()
-						->union(array($selectA, $selectB, $selectC, $selectD, $selectE, $selectF));
+						->union($selectas);
 				$this->view->abv = Zend_Json::encode($db->fetchAll($select));
 
-				$this->_helper->viewRenderer("piechart");
+				$this->_helper->viewRenderer("barchart");
+				break;
+			case "ibu":
+				$selectas = array();
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('5')"))
+						->where('recipe_ibu >= 0')
+						->where('recipe_ibu <= 5');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('10')"))
+						->where('recipe_ibu > 0')
+						->where('recipe_ibu <= 10');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('15')"))
+						->where('recipe_ibu > 10')
+						->where('recipe_ibu <= 15');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('20')"))
+						->where('recipe_ibu > 15')
+						->where('recipe_ibu <= 20');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('25')"))
+						->where('recipe_ibu > 20')
+						->where('recipe_ibu <= 25');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('30')"))
+						->where('recipe_ibu > 25')
+						->where('recipe_ibu <= 30');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('35')"))
+						->where('recipe_ibu > 30')
+						->where('recipe_ibu <= 35');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('30')"))
+						->where('recipe_ibu > 35')
+						->where('recipe_ibu <= 40');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('45')"))
+						->where('recipe_ibu > 40')
+						->where('recipe_ibu <= 45');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('50')"))
+						->where('recipe_ibu > 45')
+						->where('recipe_ibu <= 50');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('55')"))
+						->where('recipe_ibu > 50')
+						->where('recipe_ibu <= 55');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('60')"))
+						->where('recipe_ibu > 55')
+						->where('recipe_ibu <= 60');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('65')"))
+						->where('recipe_ibu > 60')
+						->where('recipe_ibu <= 65');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('70')"))
+						->where('recipe_ibu > 65')
+						->where('recipe_ibu <= 70');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('75')"))
+						->where('recipe_ibu > 70')
+						->where('recipe_ibu <= 75');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('80')"))
+						->where('recipe_ibu > 75')
+						->where('recipe_ibu <= 80');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('85')"))
+						->where('recipe_ibu > 80')
+						->where('recipe_ibu <= 85');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('90')"))
+						->where('recipe_ibu > 85')
+						->where('recipe_ibu <= 90');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('95')"))
+						->where('recipe_ibu > 90')
+						->where('recipe_ibu <= 95');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('100')"))
+						->where('recipe_ibu > 95')
+						->where('recipe_ibu <= 100');
+				$selectas[] = $db->select()
+						->from('VIEW_public_recipes', array('count' => 'count(recipe_ibu)', 'label' => "CONCAT('>100')"))
+						->where('recipe_ibu > 100');
+
+				$select = $db->select()
+						->union($selectas);
+				$this->view->ibu = Zend_Json::encode($db->fetchAll($select));
+
+				$this->_helper->viewRenderer("barchart");
 				break;
 			default:
 				$select->from("beer_recipes", array("total" => "count(recipe_id)", "day" => "DATE(Concat(year(recipe_created),'.',month(recipe_created),'.1'))"))

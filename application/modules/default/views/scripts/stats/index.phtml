@@ -2,7 +2,7 @@
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.js");
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");
 $id = isset($_GET['id']) ? $_GET['id'] : "";
-$_options = array("recipes" => "Sukurtų receptų skaičius (mėnesiais)", "users" => "Prisiregistravusių naujų nautotojų skaičius (mėnesiais)", "sessions" => "Virimų statistika", "styles" => "Sukurtų receptų skaičius pagal stilių", "cats" => "Sukurtų receptų skaičius pagal kategorijas", "abv" => "Išvirto alaus stiprumas", "locations" => "Nautotojų geografija");
+	$_options = array("recipes" => "Sukurtų receptų skaičius (mėnesiais)", "users" => "Prisiregistravusių naujų nautotojų skaičius (mėnesiais)", "sessions" => "Virimų statistika", "styles" => "Sukurtų receptų skaičius pagal stilių", "cats" => "Sukurtų receptų skaičius pagal kategorijas", "abv" => "Išvirto alaus stiprumas", "ibu" => "Išvirto alaus kartumas", "locations" => "Nautotojų geografija");
 ?>
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Statistika</div>
