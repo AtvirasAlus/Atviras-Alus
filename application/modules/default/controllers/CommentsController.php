@@ -115,7 +115,7 @@ class CommentsController extends Zend_Controller_Action {
 			} else if (isset($_POST["article"])) {
 				$table = "beer_articles_comments";
 			}else if (isset($_POST["event"])) {
-				$table = "beer_articles_comments";
+				$table = "beer_events_comments";
 			}
 
 			if (isset($table)) {
