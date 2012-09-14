@@ -271,6 +271,7 @@ class EventsController extends Zend_Controller_Action {
                                         "event_start" => $_POST['event_start'],
                                         "event_published" => isset($_POST['event_published']) ? 1 : 0,
                                         "event_registration_end" => $_POST['event_registration_end'],
+                                        "event_type" =>$_POST['event_type'],
                                         "event_posted" => date("Y-m-d H:i:s")
                                             ), $where);
 
@@ -326,6 +327,7 @@ class EventsController extends Zend_Controller_Action {
                                     "event_start" => $_POST['event_start'],
                                     "event_published" => isset($_POST['event_published']) ? 1 : 0,
                                     "event_registration_end" => $_POST['event_registration_end'],
+                                     "event_type" =>$_POST['event_type'],
                                     "event_posted" => date("Y-m-d H:i:s")
                                 ));
                                 $ev_id = $this->db->lastInsertId();
