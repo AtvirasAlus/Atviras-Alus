@@ -27,7 +27,10 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 		<?php
 		if ($this->event['event_type'] == 'competition') {
 			$evInfo = $this->eventInfo();
-			echo $evInfo->showCompetitionDetails($this->event['event_id'], "Ketegorijoms registruoti alūs");
+			echo $evInfo->showCompetitionDetails($this->event['event_id'], "Registruoti alūs");
+		}else if $this->event['event_type'] == 'exhibition'){
+		$evInfo = $this->eventInfo();
+			echo $evInfo->showExhibitionDetails($this->event['event_id'], "Registruoti alūs");
 		}
 		switch ($this->registration_status) {
 			case 0:
@@ -62,7 +65,7 @@ if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
 		<div style="margin-bottom: 20px; margin-left: 10px;">
 			Pažymėkite receptus kuriuos norite pateikti konkursui
 		</div>
-		<div class="selectable_recipes">
+		<div class="selectable_recipes" style="max-height:200px;overflow:auto">
 			<?php
 			$z = 0;
 			foreach ($this->beer_recipes as $key => $value) {
