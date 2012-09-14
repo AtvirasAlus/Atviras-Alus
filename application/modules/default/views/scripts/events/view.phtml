@@ -27,10 +27,10 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 		<?php
 		if ($this->event['event_type'] == 'competition') {
 			$evInfo = $this->eventInfo();
-			echo $evInfo->showCompetitionDetails($this->event['event_id'], "Registruoti alūs");
+			echo $evInfo->showCompetitionDetails($this->event['event_id'], "Pateikti alūs:");
 		}else if ($this->event['event_type'] == 'exhibition'){
       $evInfo = $this->eventInfo();
-			echo $evInfo->showExhibitionDetails($this->event['event_id'], "Registruoti alūs");
+			echo $evInfo->showExhibitionDetails($this->event['event_id'], "Pateikti alūs:");
 		}
 		switch ($this->registration_status) {
 			case 0:
