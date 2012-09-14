@@ -31,9 +31,10 @@ class Zend_View_Helper_EventInfo extends Zend_View_Helper_Abstract{
 			  ->joinLeft("users","beer_competition_entries.event_user_id=users.user_id") 
 			  ->where("beer_competition_entries.event_id = ?",$event_id);
 			
-			 
+			 print $select->__toString();
 			  $this->view->title =$title;
-			  $this->view->recipes = $this->db->fetchAll($select);
+			  $this->view->recipes = array();
+			  //$this->db->fetchAll($select);
         return $this->view->render("exhibition.phtml");
 		 
 	}
