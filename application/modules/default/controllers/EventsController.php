@@ -93,7 +93,7 @@ class EventsController extends Zend_Controller_Action {
             $this->view->user_id = $this->user->user_id;
              $this->view->user_info = $this->user;
             //visi aludariu receptai 
-            if ($this->view->event['event_type'] == 'competition') {
+            if ($this->view->event['event_type'] == 'competition' || $this->view->event['event_type'] =='exhibition') {
                 $select = $this->db->select();
                 $select->from("beer_recipes")
                         ->join("beer_styles", "beer_recipes.recipe_style=beer_styles.style_id")

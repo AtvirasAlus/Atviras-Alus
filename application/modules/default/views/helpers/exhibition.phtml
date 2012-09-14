@@ -1,0 +1,11 @@
+<?php
+		$z=0;
+		foreach ($this->recipes as $item) {
+			$z++;
+			?>
+			<div class="favorites_list_item">
+					<?=$this->recipeItem($item,"thumb");?>
+			</div>
+		<?
+		}
+		?>

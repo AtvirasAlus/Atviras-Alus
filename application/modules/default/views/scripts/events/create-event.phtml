@@ -41,7 +41,7 @@
 	            <dl>
 	                <dt>Įvykio tipas:</dt>
 					<dd>
-            <? $this->event_types=array(array("event_type"=>"default","event_type_name"=>"Paprastas"),array("event_type"=>"competition","event_type_name"=>"Su alaus pateikimu"));?>
+            <? $this->event_types=array(array("event_type"=>"default","event_type_name"=>"Paprastas"),array("event_type"=>"competition","event_type_name"=>"Su slaptu alaus pateikimu"),array("event_type"=>"exhibition","event_type_name"=>"Su viešu alaus pateikimu"));?>
 						<select name="event_type" id="event_type" >
 							<?
 							foreach ($this->event_types as $event_type) {
