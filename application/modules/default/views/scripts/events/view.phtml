@@ -57,8 +57,36 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 	</div>
 
 </div>
+
+<div id="events_participants_container" class="inner_container">
+	<div class="inner_header">Dalyviai</div>
+	<div class="participants_list" id="registered">
+		<?
+		$z = 0;
+		for ($ii = 0; $ii < count($this->registered_users); $ii++) {
+			$z++;
+			?>
+			<a href="/brewers/<?= $this->registered_users[$ii]['user_id']; ?>">
+				<img src="http://www.gravatar.com/avatar/<?= md5($this->registered_users[$ii]['user_email']); ?>?rating=G&size=50&default=mm" border="0"/>
+				<span><?= $this->registered_users[$ii]['user_name']; ?></span>
+			</a>
+			<?
+			if ($z == 8) {
+				$z = 0;
+				?>
+				<div class="clear"></div>
+				<?php
+			}
+		}
+		?>		
+		<div class="clear"></div>
+		
+	</div>
+
+
+</div>
 <?
-if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
+if (($this->event['event_type'] == 'competition' || $this->event['event_type'] == 'exhibition' ) && count($this->beer_recipes)) {
 	?>
 	<div id="entries_container" class="inner_container" style="<?= ($this->registration_status != 2) ? "display: none;" : ""; ?>">
 		<div class="inner_header">Mano receptai</div>
@@ -90,33 +118,6 @@ if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
 	<?php
 }
 ?>
-<div id="events_participants_container" class="inner_container">
-	<div class="inner_header">Dalyviai</div>
-	<div class="participants_list" id="registered">
-		<?
-		$z = 0;
-		for ($ii = 0; $ii < count($this->registered_users); $ii++) {
-			$z++;
-			?>
-			<a href="/brewers/<?= $this->registered_users[$ii]['user_id']; ?>">
-				<img src="http://www.gravatar.com/avatar/<?= md5($this->registered_users[$ii]['user_email']); ?>?rating=G&size=50&default=mm" border="0"/>
-				<span><?= $this->registered_users[$ii]['user_name']; ?></span>
-			</a>
-			<?
-			if ($z == 8) {
-				$z = 0;
-				?>
-				<div class="clear"></div>
-				<?php
-			}
-		}
-		?>		
-		<div class="clear"></div>
-		
-	</div>
-
-
-</div>
 <div class="clear"></div>
 <div id="comments_container" class="inner_container">
 	<div class="recipe_comments">
