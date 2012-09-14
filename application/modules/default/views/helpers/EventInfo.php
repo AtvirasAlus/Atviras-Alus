@@ -27,7 +27,7 @@ class Zend_View_Helper_EventInfo extends Zend_View_Helper_Abstract{
     $select =$this->db->select()
     	->from("beer_competition_entries",array())
 			  ->joinLeft("beer_styles","beer_competition_entries.style_id=beer_styles.style_id")
-			   ->joinLeft("beer_recipes","beer_competition_entries.style_id=beer_styles.style_id")
+			   ->joinLeft("beer_recipes","beer_competition_entries.recipe_id=beer_recipes.recipe_id")
 			  ->joinLeft("users","beer_competition_entries.event_user_id=users.user_id") 
 			  ->where("beer_competition_entries.event_id = ?",$event_id);
 			
