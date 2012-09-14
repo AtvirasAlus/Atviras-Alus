@@ -28,8 +28,8 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 		if ($this->event['event_type'] == 'competition') {
 			$evInfo = $this->eventInfo();
 			echo $evInfo->showCompetitionDetails($this->event['event_id'], "Registruoti alūs");
-		}else if $this->event['event_type'] == 'exhibition'){
-		$evInfo = $this->eventInfo();
+		}else if ($this->event['event_type'] == 'exhibition'){
+      $evInfo = $this->eventInfo();
 			echo $evInfo->showExhibitionDetails($this->event['event_id'], "Registruoti alūs");
 		}
 		switch ($this->registration_status) {
