@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $this->headTitle()->append(" - Įvykis - " . $this->event['event_name']);
 $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,degustacija,receptas,alus');
 ?>
@@ -27,7 +27,10 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 		<?php
 		if ($this->event['event_type'] == 'competition') {
 			$evInfo = $this->eventInfo();
-			echo $evInfo->showCompetitionDetails($this->event['event_id'], "Ketegorijoms registruoti alūs");
+			echo $evInfo->showCompetitionDetails($this->event['event_id'], "Pateikti alūs:");
+		}else if ($this->event['event_type'] == 'exhibition'){
+      $evInfo = $this->eventInfo();
+			echo $evInfo->showExhibitionDetails($this->event['event_id'], "Pateikti alūs:");
 		}
 		switch ($this->registration_status) {
 			case 0:
@@ -54,39 +57,7 @@ $this->headMeta()->setName('keywords', 'alaus gamyba,naminis,įvykis,renginys,de
 	</div>
 
 </div>
-<?
-if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
-	?>
-	<div id="entries_container" class="inner_container" style="<?= ($this->registration_status != 2) ? "display: none;" : ""; ?>">
-		<div class="inner_header">Mano receptai</div>
-		<div style="margin-bottom: 20px; margin-left: 10px;">
-			Pažymėkite receptus kuriuos norite pateikti konkursui
-		</div>
-		<div class="selectable_recipes">
-			<?php
-			$z = 0;
-			foreach ($this->beer_recipes as $key => $value) {
-				$z++;
-				?>
-				<div class="style_recipe <?= (!empty($value['event_id'])) ? "recipe_selected" : ""; ?>" data-recipe="<?= $value['recipe_id'] ?>" data-style="<?= $value['style_id'] ?>" data-eventuser="<?= $this->user_id; ?>" data-event="<?= $this->event['event_id']; ?>">
-					<?php echo $this->recipeItem($value, "large", array('without_brewer' => true, 'without_awards' => true, 'plain' => true)); ?>
-				</div>
-				<?php
-				if ($z == 3) {
-					$z = 0;
-					?>
-					<div class="clear"></div>
-					<?php
-				}
-			}
-			?>
-			<div class="clear"></div>
 
-		</div>
-	</div>
-	<?php
-}
-?>
 <div id="events_participants_container" class="inner_container">
 	<div class="inner_header">Dalyviai</div>
 	<div class="participants_list" id="registered">
@@ -114,6 +85,39 @@ if ($this->event['event_type'] == 'competition' && count($this->beer_recipes)) {
 
 
 </div>
+<?
+if (($this->event['event_type'] == 'competition' || $this->event['event_type'] == 'exhibition' ) && count($this->beer_recipes)) {
+	?>
+	<div id="entries_container" class="inner_container" style="<?= ($this->registration_status != 2) ? "display: none;" : ""; ?>">
+		<div class="inner_header">Mano receptai</div>
+		<div style="margin-bottom: 20px; margin-left: 10px;">
+			Pažymėkite receptus kuriuos norite pateikti konkursui
+		</div>
+		<div class="selectable_recipes" style="max-height:200px;overflow:auto">
+			<?php
+			$z = 0;
+			foreach ($this->beer_recipes as $key => $value) {
+				$z++;
+				?>
+				<div class="style_recipe <?= (!empty($value['event_id'])) ? "recipe_selected" : ""; ?>" data-recipe="<?= $value['recipe_id'] ?>" data-style="<?= $value['style_id'] ?>" data-eventuser="<?= $this->user_id; ?>" data-event="<?= $this->event['event_id']; ?>">
+					<?php echo $this->recipeItem($value, "large", array('without_brewer' => true, 'without_awards' => true, 'plain' => true)); ?>
+				</div>
+				<?php
+				if ($z == 3) {
+					$z = 0;
+					?>
+					<div class="clear"></div>
+					<?php
+				}
+			}
+			?>
+			<div class="clear"></div>
+
+		</div>
+	</div>
+	<?php
+}
+?>
 <div class="clear"></div>
 <div id="comments_container" class="inner_container">
 	<div class="recipe_comments">

@@ -23,6 +23,20 @@ class Zend_View_Helper_EventInfo extends Zend_View_Helper_Abstract{
         return $this->view->render("competition.phtml");
 		 
 	}
+	public function showExhibitionDetails($event_id,$title="") {
+    $select =$this->db->select()
+    	->from("beer_competition_entries",array())
+			  ->joinLeft("beer_styles","beer_competition_entries.style_id=beer_styles.style_id")
+			   ->joinLeft("beer_recipes","beer_competition_entries.recipe_id=beer_recipes.recipe_id")
+			  ->joinLeft("users","beer_competition_entries.event_user_id=users.user_id") 
+			  ->where("beer_competition_entries.event_id = ?",$event_id);
+			
+		
+			  $this->view->title =$title;
+			  $this->view->recipes = $this->db->fetchAll($select);
+        return $this->view->render("exhibition.phtml");
+		 
+	}
 	
 	public function setView(Zend_View_Interface $view) 
 	{ 

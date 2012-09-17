@@ -34,7 +34,27 @@
 					<dd class="large">
 						<textarea name="event_description" id="event_description" rows="24" cols="80"><?= $this->event['event_description']; ?></textarea></dd>
 					<div class="clear"></div>
-				</dl>
+				</dl>	<dl>
+	                <dt>Įvykio tipas:</dt>
+					<dd>
+            <? $this->event_types=array(array("event_type"=>"default","event_type_name"=>"Paprastas"),array("event_type"=>"competition","event_type_name"=>"Su slaptu alaus pateikimu"),array("event_type"=>"exhibition","event_type_name"=>"Su viešu alaus pateikimu"));?>
+						<select name="event_type" id="event_type" >
+							<?
+							foreach ($this->event_types as $event_type) {
+								$selected = "";
+								if ($this->event["event_type"] == $event_type["event_type"]) {
+									$selected = 'selected=\'selected\'';
+								}
+								?>
+								<option value="<?= $event_type["event_type"]; ?>" <?= $selected; ?>><?= $event_type["event_type_name"]; ?></option>
+								<?
+							}
+							?>
+
+						</select>  
+					</dd>
+					<div class="clear"></div>
+	            </dl>
 				<dl>
 	                <dt>Įvykį skelbti grupėje:</dt>
 					<dd>
