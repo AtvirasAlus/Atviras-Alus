@@ -16,7 +16,7 @@ class RateController extends Zend_Controller_Action {
 		$page = $this->_getParam('page');
 		$this->view->breweries = new Zend_Paginator($adapter);
 		$this->view->breweries->setCurrentPageNumber($page);
-		$this->view->breweries->setItemCountPerPage(16);
+		$this->view->breweries->setItemCountPerPage(12);
 
 	}
 
@@ -42,7 +42,7 @@ class RateController extends Zend_Controller_Action {
 		$page = $this->_getParam('page');
 		$this->view->beers = new Zend_Paginator($adapter);
 		$this->view->beers->setCurrentPageNumber($page);
-		$this->view->beers->setItemCountPerPage(16);
+		$this->view->beers->setItemCountPerPage(12);
 
 	}
 	
@@ -66,7 +66,7 @@ class RateController extends Zend_Controller_Action {
 		$page = $this->_getParam('page');
 		$this->view->beers = new Zend_Paginator($adapter);
 		$this->view->beers->setCurrentPageNumber($page);
-		$this->view->beers->setItemCountPerPage(16);
+		$this->view->beers->setItemCountPerPage(12);
 
 	}
 }

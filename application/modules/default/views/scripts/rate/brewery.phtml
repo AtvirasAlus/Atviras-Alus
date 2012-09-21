@@ -28,7 +28,6 @@
 		</div>
 		<div class="clear"></div>
 	</div>
-	<div>Pasirinkite vertinamą  bravoro alų:</div>
 	<div class="brewery_list">
 		<?php
 		$i = 1;
@@ -37,7 +36,7 @@
 				$offset = 100;
 				$votes_avg = "";
 			} else {
-				$votes_avg = round($beer['beer_votes_value'] / $beer['beer_votes_count'], 1);
+				$votes_avg = round($beer['beer_votes_value'] / $beer['beer_votes_count']/10, 1);
 				$offset = 100-$votes_avg*10;
 			}
 			?>
