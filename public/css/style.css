@@ -2550,12 +2550,12 @@ html ul.topnav li ul.subnav li a:hover {
 	background-image: url("/public/images/rate_bar.gif");
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
-	width: 100px;
+	width: 130px;
 	padding: 0px;
 	margin: 0px;
-	height: 9px;
+	height: 12px;
 	float: left;
-	margin-top: 5px;
+	margin-top: 3px;
 }
 .brewery_rate_bar img {
 	padding: 0px;
@@ -2564,7 +2564,7 @@ html ul.topnav li ul.subnav li a:hover {
 }
 .brewery_rate_text {
 	float: left;
-	width: 80px;
+	width: 50px;
 	margin-left: 10px;
 	font-size: 16px;
 	font-weight: bold;

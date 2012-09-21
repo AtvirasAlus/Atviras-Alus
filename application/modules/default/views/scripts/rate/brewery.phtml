@@ -33,11 +33,12 @@
 		$i = 1;
 		foreach($this->beers as $beer){
 			if ($beer['beer_votes_count'] < 1){
-				$offset = 100;
+				$offset = 130;
 				$votes_avg = "";
 			} else {
 				$votes_avg = round($beer['beer_votes_value'] / $beer['beer_votes_count']/10, 1);
-				$offset = 100-$votes_avg*10;
+				$offset = 130-$votes_avg*10;
+				$offset = $offset - (floor($votes_avg)*3+1);
 			}
 			?>
 			<div class="brewery_item" data-id="<?=$beer['beer_id']?>">
