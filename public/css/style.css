@@ -2509,6 +2509,8 @@ html ul.topnav li ul.subnav li a:hover {
 }
 .ibrewery_image img {
 	border: 1px solid #ccc;
+	width: 180px;
+	height: 180px;
 }
 .ibrewery_image {
 	float: left;
@@ -2568,4 +2570,73 @@ html ul.topnav li ul.subnav li a:hover {
 	margin-left: 10px;
 	font-size: 16px;
 	font-weight: bold;
+}
+.rate_form {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ddd;	
+	padding: 10px;
+}
+.rate_form h1 {
+	display: block;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom: 20px;
+}
+#rate_form dl {
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 5px;
+}
+#rate_form dd {
+	padding: 0px;
+	margin: 0px;
+	float: left;
+	margin-left: 20px;
+}
+#rate_form dt {
+	padding: 0px;
+	margin: 0px;
+	display: inline-block;
+	width: 150px;
+	font-size: 14px;
+	margin-left: 20px;
+	float: left;
+	line-height: 24px;
+}
+#rate_form dd input[type=text]{
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 2px;
+}
+#rate_form dd select{
+	height: 28px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 2px;
+	background-color: #fff;
+	width: 50px;
+}
+#rate_form dd textarea{
+	height: 100px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 2px;
+	width: 500px;
+}
+#rate_form dt span {
+	display: block;
+	font-size: 12px;
+	line-height: 12px;
+	color: #999;
+	margin-bottom: 4px;
 }

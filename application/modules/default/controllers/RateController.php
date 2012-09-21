@@ -69,4 +69,25 @@ class RateController extends Zend_Controller_Action {
 		$this->view->beers->setItemCountPerPage(12);
 
 	}
+
+	public function beerAction() {
+		$db = $this->db;
+		$bid = $this->_getParam('bid');
+		if (!isset($bid) || $bid == 0) $this->_redirect('/vertinimas');
+		$select = $db->select()
+				->from("rate_beers")
+				->join("beer_styles", "rate_beers.style_id = beer_styles.style_id", array("style_name"))
+				->join("rate_breweries", "rate_beers.brewery_id = rate_breweries.brewery_id", array("brewery_title"))
+				->order("beer_title ASC")
+				->where("beer_id = ?", $bid);
+		$beer = $db->fetchRow($select);
+		if (!$beer) $this->_redirect('/vertinimas');
+		$this->view->beer = $beer;
+		
+		$select = $db->select()
+				->from("rate_systems")
+				->where("system_purpose = ?", array("brewery"));
+		$system = $db->FetchRow($select);
+		$this->view->system = $system;
+	}
 }

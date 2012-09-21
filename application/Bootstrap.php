@@ -65,6 +65,7 @@ function _initAutoLoad() {
 		$router->addRoute("rate",new Zend_Controller_Router_Route("vertinimas/:page",array("module"=>"default","controller" => "rate","action" => "index","page"=>0)));
 		$router->addRoute("rate_brewery",new Zend_Controller_Router_Route("vertinimas/bravoras/:bid/:page",array("module"=>"default","controller" => "rate","action" => "brewery","bid"=>0, "page"=>0)));
 		$router->addRoute("rate_style",new Zend_Controller_Router_Route("vertinimas/stilius/:sid/:page",array("module"=>"default","controller" => "rate","action" => "style","sid"=>0, "page"=>0)));
+		$router->addRoute("rate_beer",new Zend_Controller_Router_Route("vertinimas/alus/:bid",array("module"=>"default","controller" => "rate","action" => "beer","bid"=>0)));
 
 		$router->addRoute("calculus_recipe",new Zend_Controller_Router_Route("index/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
 		//$router->addRoute("calculus",new Zend_Controller_Router_Route("/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
