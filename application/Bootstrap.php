@@ -55,12 +55,17 @@ function _initAutoLoad() {
 		$router->addRoute("beta_enable",new Zend_Controller_Router_Route("/beta_on",array("module"=>"default","controller" => "index","action" => "enablebeta")));
 		$router->addRoute("beta_disable",new Zend_Controller_Router_Route("/beta_off",array("module"=>"default","controller" => "index","action" => "disablebeta")));
 		$router->addRoute("activate",new Zend_Controller_Router_Route("auth/activate/:emailhash",array("module"=>"default","controller" => "auth","action" => "activate","emailhash"=>0)));
+		
 		$router->addRoute("recipes",new Zend_Controller_Router_Route("brewer/recipes/:page",array("module"=>"default","controller" => "brewer","action" => "recipes","page"=>0)));
 		$router->addRoute("recipes_favorites",new Zend_Controller_Router_Route("recipes/favorites/:page",array("module"=>"default","controller" => "recipes","action" => "favorites","page"=>0)));
 		$router->addRoute("recipes_view_0",new Zend_Controller_Router_Route("recipes/view/:recipe",array("module"=>"default","controller" => "recipes","action" => "view","recipe"=>0)));
 		$router->addRoute("recipes_view",new Zend_Controller_Router_Route("alus/receptas/:recipe",array("module"=>"default","controller" => "recipes","action" => "view","recipe"=>0)));
 		$router->addRoute("recipes_del_image",new Zend_Controller_Router_Route("/alus/trinti_nuotrauka/:image_id",array("module"=>"default","controller" => "recipes","action" => "delete_image","image_id"=>0)));
 	
+		$router->addRoute("rate",new Zend_Controller_Router_Route("vertinimas/:page",array("module"=>"default","controller" => "rate","action" => "index","page"=>0)));
+		$router->addRoute("rate_brewery",new Zend_Controller_Router_Route("vertinimas/bravoras/:bid/:page",array("module"=>"default","controller" => "rate","action" => "brewery","bid"=>0, "page"=>0)));
+		$router->addRoute("rate_style",new Zend_Controller_Router_Route("vertinimas/stilius/:sid/:page",array("module"=>"default","controller" => "rate","action" => "style","sid"=>0, "page"=>0)));
+
 		$router->addRoute("calculus_recipe",new Zend_Controller_Router_Route("index/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
 		//$router->addRoute("calculus",new Zend_Controller_Router_Route("/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
 		$router->addRoute("group",new Zend_Controller_Router_Route("/groups/view/:group_id",array("module"=>"default","controller" => "groups","action" => "view","group_id"=>0)));

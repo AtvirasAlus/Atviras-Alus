@@ -2458,3 +2458,114 @@ html ul.topnav li ul.subnav li a:hover {
 	background-color: #ddd;
 	margin: 5px !important;
 }
+
+.brewery_item {
+	float: left;
+	width: 200px;
+	margin-right: 7px;
+	margin-bottom: 8px;
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+}
+.brewery_image {
+	padding: 9px;
+}
+.brewery_image img {
+	border: 1px solid #ccc;
+	width: 180px;
+	height: 180px;
+}
+.brewery_title {
+	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	font-size: 16px;
+	color: #755531;
+}
+.brewery_list {
+	margin-top: 15px;
+}
+.brewery_info {
+	margin-bottom: 9px;
+}
+.brewery_info div {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 4px;
+}
+.brewery_info div span {
+	font-weight: bold;
+}
+.ibrewery {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ddd;	
+	margin-bottom: 15px;
+}
+.ibrewery_image img {
+	border: 1px solid #ccc;
+}
+.ibrewery_image {
+	float: left;
+	margin: 10px;
+}
+.ibrewery_info {
+	float: left;
+	width: 610px;
+	margin-left: 10px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+.ibrewery_info h1 {
+	font-weight: bold;
+	font-size: 18px;
+	margin-bottom: 10px;
+	display: block;
+}
+.ibrewery_info div {
+	margin-bottom: 4px;
+}
+.ibrewery_info div span {
+	font-weight: bold;
+}
+.new_rate_link {
+	margin-top: 15px;
+}
+.new_rate_link a {
+	display: block;
+	padding: 10px;
+	font-size: 14px;
+	text-align: center;
+}
+.brewery_rate_block {
+	padding-left: 10px;
+	padding-bottom: 10px;
+}
+.brewery_rate_bar {
+	background-image: url("/public/images/rate_bar.gif");
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	width: 100px;
+	padding: 0px;
+	margin: 0px;
+	height: 9px;
+	float: left;
+	margin-top: 5px;
+}
+.brewery_rate_bar img {
+	padding: 0px;
+	margin: 0px;
+	float: left;
+}
+.brewery_rate_text {
+	float: left;
+	width: 80px;
+	margin-left: 10px;
+	font-size: 16px;
+	font-weight: bold;
+}

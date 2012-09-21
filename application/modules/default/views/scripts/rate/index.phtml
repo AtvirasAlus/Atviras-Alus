@@ -1,0 +1,57 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+	});
+</script>
+<div id="rate_container" class="inner_container">
+	<div class="inner_header">Bravorų vertinimo sistema</div>
+	<div>Pasirinkite vertinamo alaus gamintoją:</div>
+	<div class="brewery_list">
+		<?php
+		$i = 1;
+		foreach($this->breweries as $brewery){
+			?>
+			<div class="brewery_item" data-id="<?=$brewery['brewery_id']?>">
+				<div class="brewery_image">
+					<img src="/rate_images/breweries/<?=$brewery['brewery_id']?>.jpg" />
+				</div>
+				<div class="brewery_title">
+					<a href="/vertinimas/bravoras/<?=$brewery['brewery_id']?>-<?=$this->urlMaker($brewery['brewery_title'])?>">
+						<?=$brewery['brewery_title']?>
+					</a>
+				</div>
+				<div class="brewery_info">
+					<div>
+						<span>Šalis:</span> <?=$brewery['country_title']?>
+					</div>
+					<div>
+						<span>Alaus rūšys:</span> <?=$brewery['brewery_beers_count']?>
+					</div>
+				</div>
+			</div>
+			<?php
+			if ($i == 4){
+				$i = 0;
+				?>
+				<div class="clear"></div>
+				<?php
+			}
+			$i++;
+		}
+		?>
+		<div class="clear"></div>
+	</div>
+	<?php
+	if (sizeof($this->breweries) > 0){
+		?>
+		<div style="margin-top: 10px;">
+			<?php echo $this->paginationControl($this->breweries, 'Sliding', 'paginator/item.phtml'); ?>
+		</div>
+		<?
+	}
+	?>
+	<div class="new_rate_link ui-state-highlight ui-corner-all">
+		<a href="/vertinimas/naujas">
+			Sąraše nerandate norimo įvertinti alaus gamintojo? <span>Spauskite čia!</span>
+		</a>
+	</div>
+</div>
