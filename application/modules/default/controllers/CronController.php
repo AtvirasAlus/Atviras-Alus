@@ -531,6 +531,23 @@ class CronController extends Zend_Controller_Action {
 		//print_r($activity);
 	}
 	
+	public function fixsessionsAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("activity")
+				->where("type = 'session'");
+		$result = $db->fetchAll($select);
+		foreach($result as $key=>$val){
+			$select = $db->select()
+					->from("beer_recipes", "recipe_name")
+					->where("recipe_id = '".$val['session_recipe_id']."'");
+			$row = $db->fetchRow($select);
+			$update = $db->update("activity", array("session_recipe_name" => $row['recipe_name']), "item_id = '".$val['item_id']."'");
+		}
+		echo "Done";
+	}
 	public function fixideasAction() {
 		exit;
 		$this->_helper->layout->disableLayout();
