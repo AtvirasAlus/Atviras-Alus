@@ -73,6 +73,7 @@ class IndexController extends Zend_Controller_Action {
 					->from("activity")
 					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
 					->order("posted DESC")
+					->order("id DESC")
 					->where("id > '".$out['last']."'");
 			switch($filter_type){
 				case "idea":
@@ -160,6 +161,7 @@ class IndexController extends Zend_Controller_Action {
 					->from("activity")
 					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
 					->order("posted DESC")
+					->order("id DESC")
 					->where("posted < '".$last_stamp."'")
 					->limit(30);
 			switch($filter_type){
@@ -287,6 +289,7 @@ class IndexController extends Zend_Controller_Action {
 					->from("activity")
 					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
 					->order("posted DESC")
+					->order("id DESC")
 					->limit(30);
 			switch($filter_type){
 				case "idea":
