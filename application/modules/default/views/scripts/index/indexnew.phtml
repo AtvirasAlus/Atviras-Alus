@@ -423,6 +423,26 @@ input, select, .editable-select-options, .ui-autocomplete {
 				}
 			});
 		}, 1000*30);
+		alreadyloading = false;
+		$(window).scroll(function() {
+			if ($('body').height() <= ($(window).height() + $(window).scrollTop())) {
+				if (alreadyloading == false) {
+					alreadyloading = true;
+					var last_id = $("#load_more").attr("data-last");
+					var type_name = $("#load_more").attr("data-type");
+					$(".home_more").html('<img src="/public/images/load.gif">');
+					$.ajax({
+						url: "/index/more/last/"+last_id+"/type/"+type_name,
+						success: function(data) {
+							alreadyloading = false;
+							$(".home_more").remove();
+							$("#home_items").append(data);
+							rebindlinks2();
+						}
+					});
+				}
+			}
+		});
 	});
 	function rebindlinks2(){
 		$(".home_more input").click(function(){

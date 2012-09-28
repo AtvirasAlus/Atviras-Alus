@@ -148,12 +148,7 @@ class IndexController extends Zend_Controller_Action {
 			$this->view->past_login = $result['user_pastlogin'];
 			$filter_type = $this->getRequest()->getParam("type");
 			$last_id = $this->getRequest()->getParam("last");
-			$select = $db->select("posted")
-					->from("activity")
-					->where("id = ?", $last_id)
-					->limit(1);
-			$result = $db->fetchRow($select);
-			$last_stamp = $result['posted'];
+			$last_stamp = $last_id;
 			$this->view->last_stamp = $last_stamp;
 			if (!isset($filter_type) || empty($filter_type)) $filter_type = "all";
 			$this->view->filter_type = $filter_type;
@@ -162,7 +157,7 @@ class IndexController extends Zend_Controller_Action {
 					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
 					->order("posted DESC")
 					->order("id DESC")
-					->where("posted < '".$last_stamp."'")
+					->where("id < '".$last_stamp."'")
 					->limit(30);
 			switch($filter_type){
 				case "idea":
