@@ -214,6 +214,7 @@
 					<module>default</module>
 					<controller>content</controller>
 					<action>about</action>
+					<route>default</route>
 				</men-about>
 				<men-help>
 					<label>Pagalba</label>
