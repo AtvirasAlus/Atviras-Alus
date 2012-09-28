@@ -424,9 +424,10 @@ input, select, .editable-select-options, .ui-autocomplete {
 			});
 		}, 1000*30);
 		alreadyloading = false;
+		times_loaded = 0;
 		$(window).scroll(function() {
 			if ($('body').height() <= ($(window).height() + $(window).scrollTop())) {
-				if (alreadyloading == false) {
+				if (alreadyloading == false && times_loaded < 3) {
 					alreadyloading = true;
 					var last_id = $("#load_more").attr("data-last");
 					var type_name = $("#load_more").attr("data-type");
@@ -435,6 +436,7 @@ input, select, .editable-select-options, .ui-autocomplete {
 						url: "/index/more/last/"+last_id+"/type/"+type_name,
 						success: function(data) {
 							alreadyloading = false;
+							times_loaded = times_loaded + 1;
 							$(".home_more").remove();
 							$("#home_items").append(data);
 							rebindlinks2();
