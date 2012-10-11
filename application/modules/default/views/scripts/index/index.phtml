@@ -255,7 +255,33 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 				<a href="/comments" >Visi komentarai</a>
 			</div>
 		</div>
-		
+		<!-- STRAIPSNIAI -->
+		<div class="index_block index_articles">
+			<div class="block_header">Straipsniai:</div>
+			<div class="block_content">
+			<div>
+			<h1>Kaip išsivirti naminio alaus iš salyklo ekstrakto:</h1>
+			<iframe width="200" height="113" src="http://www.youtube.com/embed/wEUmlHuLweA" frameborder="0" allowfullscreen></iframe>
+			</div>
+			<div>
+			<h1>Naminio alaus gamyba iš salyklo</h1>
+			<iframe width="200" height="113" src="http://www.youtube.com/embed/UBRHnZ8rArw" frameborder="0" allowfullscreen></iframe>
+			</div>
+				<?php
+				foreach ($this->articles as $article):
+				?>
+					<div>
+						<a href="/content/read/<?= $article['article_cat']; ?>/<?= $article['article_id']; ?>-<?= $article['article_title']; ?>">
+							<?=$article['article_title']; ?>
+						</a>
+						(<?=intval($article['total']); ?>)
+						<img src="/public/images/comments_icon.png" />
+					</div>
+				<?php
+				endforeach;
+				?>
+			</div>
+		</div>
 		<!-- KUBILUOSE GYVENA -->
 		<div class="index_block index_sessions">
 			<div class="block_header">Kubiluose gyvena:</div>
@@ -281,25 +307,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 			</div>
 		</div>
 		
-		<!-- STRAIPSNIAI -->
-		<div class="index_block index_articles">
-			<div class="block_header">Straipsniai:</div>
-			<div class="block_content">
-				<?php
-				foreach ($this->articles as $article):
-				?>
-					<div>
-						<a href="/content/read/<?= $article['article_cat']; ?>/<?= $article['article_id']; ?>-<?= $article['article_title']; ?>">
-							<?=$article['article_title']; ?>
-						</a>
-						(<?=intval($article['total']); ?>)
-						<img src="/public/images/comments_icon.png" />
-					</div>
-				<?php
-				endforeach;
-				?>
-			</div>
-		</div>
+		
 		
 		<!-- DIENORAŠČIAI -->
 		<div class="index_block index_blogs">
