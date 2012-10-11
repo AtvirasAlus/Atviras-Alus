@@ -1,6 +1,6 @@
 <?php
-$this->headMeta()->setName('keywords', 'alaus gamyba,naminis,receptai,receptas,alus,skaièiuoklë,ibu,ebc,abv');
-$this->headTitle()->append(" - atvira namø aludariø bendruomenë ");
+$this->headMeta()->setName('keywords', 'alaus gamyba,naminis,receptai,receptas,alus,skaiÄiuoklÄ—,ibu,ebc,abv');
+$this->headTitle()->append(" - atvira namÅ³ aludariÅ³ bendruomenÄ— ");
 $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 ?>
 
@@ -9,8 +9,8 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 	if (isset($this->unvoted) && $this->unvoted > 0){
 		?>
 		<div class="inner_container" style="text-align: center;">
-			Idëjø banke uşregistruota <?=$this->unvoted?> <?=$this->plurify($this->unvoted, "idëja", "idëjos", "idëjø")?>, uş kurias dar nebalsavote. 
-			<a href="/idejos/balsavimas">Perşiûrëti idëjø sàrağà</a>
+			IdÄ—jÅ³ banke uÅ¾registruota <?=$this->unvoted?> <?=$this->plurify($this->unvoted, "idÄ—ja", "idÄ—jos", "idÄ—jÅ³")?>, uÅ¾ kurias dar nebalsavote. 
+			<a href="/idejos/balsavimas">PerÅ¾iÅ«rÄ—ti idÄ—jÅ³ sÄ…raÅ¡Ä…</a>
 		</div>
 		<?
 	}
@@ -34,7 +34,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 				?>
 			</div>
 			<div class="block_footer">
-				<a href="/recipes">Perşiûrëti visus</a> (<?=$this->total_recipes["count"] ?>) 
+				<a href="/recipes">PerÅ¾iÅ«rÄ—ti visus</a> (<?=$this->total_recipes["count"] ?>) 
 				<a href="/recipes/random">Atsitiktinis receptas</a>
 			</div>
 		</div>
@@ -71,7 +71,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 							$fhtml = new Zend_Filter_StripTags();
 							$f = new Entities_Filter_Excerpt();
 							?>
-							<span class="quotes">“</span>
+							<span class="quotes">â€œ</span>
 							<?php
 							$page_num = ceil($this->posts[$i]['post_position'] / 30);
 							if ($page_num < 2){
@@ -83,7 +83,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 							<a class="post_link" href="/forum/topic.php?id=<?= $this->posts[$i]['topic_id']; ?><?= $page_num_str; ?>#post-<?= $this->posts[$i]['post_id']; ?>">
 								<?=wordwrap($f->filter($fhtml->filter($this->posts[$i]['post_text']), 30), 62, '</br>', true); ?>
 							</a>
-							<span class="quotes">”</span>
+							<span class="quotes">â€</span>
 						</div>
 						<div class="clear"></div>
 					</div>
@@ -100,14 +100,14 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 			<div class="block_header">Atviro alaus naujienos:</div>
 			<div class="block_content">
 				<div style="margin-bottom: 10px;">
-					Per mënësá 
+					Per mÄ—nÄ—sÄ¯ 
 					<b><?= $this->total_brewed['brewers_total']; ?></b>
-					aludariai iğvirë 
+					aludariai iÅ¡virÄ— 
 					<b><a href="http://www.atvirasalus.lt/stats?id=sessions"><?= $this->total_brewed['beer_total']; ?></b></a> 
 					litrus alaus
 				</div>
 				<div>
-					Sveikiname mûsø naujàjá aludará,
+					Sveikiname mÅ«sÅ³ naujÄ…jÄ¯ aludarÄ¯,
 					<a href="/brewers/<?= $this->welcome['user_id']; ?>"><?= $this->welcome['user_name']; ?></a>
 				</div>
 			</div>
@@ -115,9 +115,9 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 
 		
 <?/*
-		<!-- ÁDOMIAUSI -->
+		<!-- Ä®DOMIAUSI -->
 		<div class="index_block index_favorites">
-			<div class="block_header">Ádomiausi receptai:</div>
+			<div class="block_header">Ä®domiausi receptai:</div>
 			<div class="block_content">
 				<?php
 				foreach ($this->fav_recipes as $favorite): 
@@ -137,7 +137,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 			</div>
 			
 			<div class="block_footer">
-				<a href="/recipes/favorites">Perşiûrët visus</a>
+				<a href="/recipes/favorites">PerÅ¾iÅ«rÄ—t visus</a>
 			</div>
 		</div>*/?>
 
@@ -154,12 +154,12 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 
 	</div>
 	<div id="index_right">
-		<!-- ÁVYKIAI -->
+		<!-- Ä®VYKIAI -->
 		<?php
 		if (count($this->events) > 0): 
 		?>
 			<div class="index_block index_events">
-				<div class="block_header">Ávykiai:</div>
+				<div class="block_header">Ä®vykiai:</div>
 				<div class="block_content">
 					<?php
 					foreach ($this->events as $event):
@@ -226,8 +226,8 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 				<div class="clear"></div>
 			</div>
 			<div class="block_footer">
-				<a href="/brewer/list">Perşiûrët visus</a> (<?= $this->users_total["count"]; ?>)
-				<a href="/groups" >Grupës</a>
+				<a href="/brewer/list">PerÅ¾iÅ«rÄ—t visus</a> (<?= $this->users_total["count"]; ?>)
+				<a href="/groups" >GrupÄ—s</a>
 			</div>
 		</div>
 		<!-- STRAIPSNIAI -->
@@ -235,11 +235,11 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 			<div class="block_header">Straipsniai:</div>
 			<div class="block_content">
 			<div>
-			<h1><b>Kaip iğsivirti naminio alaus iğ salyklo ekstrakto:</b></h1>
+			<h1><b>Kaip iÅ¡sivirti naminio alaus iÅ¡ salyklo ekstrakto:</b></h1>
 			<iframe width="300" height="169" src="http://www.youtube.com/embed/wEUmlHuLweA" frameborder="0" allowfullscreen></iframe>
 			</div>
 			<div>
-			<h1><b>Naminio alaus gamyba iğ salyklo</b></h1>
+			<h1><b>Naminio alaus gamyba iÅ¡ salyklo</b></h1>
 			<iframe width="300" height="169" src="http://www.youtube.com/embed/UBRHnZ8rArw" frameborder="0" allowfullscreen></iframe>
 			</div>
 				<?php
@@ -311,9 +311,9 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 		
 		
 		
-		<!-- DIENORAĞÈIAI -->
+		<!-- DIENORAÅ ÄŒIAI -->
 		<div class="index_block index_blogs">
-			<div class="block_header">Iğ aludariø dienorağèio:</div>
+			<div class="block_header">IÅ¡ aludariÅ³ dienoraÅ¡Äio:</div>
 			<div class="block_content">
 				<?php
 				foreach ($this->blogs as $blog):
@@ -343,7 +343,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 				?>
 			</div>
 			<div class="block_footer">
-				<a href="/blog" >Visi dienorağèiai</a>
+				<a href="/blog" >Visi dienoraÅ¡Äiai</a>
 			</div>
 		</div>
 		
