@@ -154,6 +154,37 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 
 	</div>
 	<div id="index_right">
+		<!-- STRAIPSNIAI -->
+		<div class="index_block index_articles">
+			<div class="block_header">Pradedantiesiems:</div>
+			<div class="block_content">
+			<div >
+			<h1><i><a href="http://www.atvirasalus.lt/content/read/1/17">Kaip išsivirti naminio alaus iš salyklo ekstrakto</a></i></h1><br/>
+			<div align="center">
+			<iframe width="300" height="169" src="http://www.youtube.com/embed/wEUmlHuLweA" frameborder="0" allowfullscreen></iframe></div>
+			</div>
+			<div>
+			<h1><i><a href="http://www.atvirasalus.lt/content/read/1/18">Naminio alaus gamyba iš salyklo</a></i></h1><br/>
+			<div align="center">
+			<iframe width="300" height="169" src="http://www.youtube.com/embed/UBRHnZ8rArw" frameborder="0" allowfullscreen></iframe></div>
+			</div>
+				<?php
+				
+				$this->articles = array(); //padisablinai laikinai
+				foreach ($this->articles as $article):
+				?>
+					<div>
+						<a href="/content/read/<?= $article['article_cat']; ?>/<?= $article['article_id']; ?>-<?= $article['article_title']; ?>">
+							<?=$article['article_title']; ?>
+						</a>
+						(<?=intval($article['total']); ?>)
+						<img src="/public/images/comments_icon.png" />
+					</div>
+				<?php
+				endforeach;
+				?>
+			</div>
+		</div>
 		<!-- ĮVYKIAI -->
 		<?php
 		if (count($this->events) > 0): 
@@ -230,35 +261,7 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 				<a href="/groups" >Grupės</a>
 			</div>
 		</div>
-		<!-- STRAIPSNIAI -->
-		<div class="index_block index_articles">
-			<div class="block_header">Straipsniai:</div>
-			<div class="block_content">
-			<div >
-			<h1><i>Kaip išsivirti naminio alaus iš salyklo ekstrakto</i></h1><br/><div align="center">
-			<iframe width="300" height="169" src="http://www.youtube.com/embed/wEUmlHuLweA" frameborder="0" allowfullscreen></iframe></div>
-			</div>
-			<div>
-			<h1><i>Naminio alaus gamyba iš salyklo</i></h1><br/><div align="center">
-			<iframe width="300" height="169" src="http://www.youtube.com/embed/UBRHnZ8rArw" frameborder="0" allowfullscreen></iframe></div>
-			</div>
-				<?php
-				
-				$this->articles = array(); //padisablinai laikinai
-				foreach ($this->articles as $article):
-				?>
-					<div>
-						<a href="/content/read/<?= $article['article_cat']; ?>/<?= $article['article_id']; ?>-<?= $article['article_title']; ?>">
-							<?=$article['article_title']; ?>
-						</a>
-						(<?=intval($article['total']); ?>)
-						<img src="/public/images/comments_icon.png" />
-					</div>
-				<?php
-				endforeach;
-				?>
-			</div>
-		</div>
+	
 		<!-- KOMENTARAI -->
 		<div class="index_block index_comments">
 			<div class="block_header">Komentarai:</div>
