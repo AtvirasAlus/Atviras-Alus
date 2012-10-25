@@ -96,7 +96,7 @@ add_meta_box( 'new_promo', __( 'Promotion', $this->domain ), 'ims_new_promotion'
 <?php 
 foreach( $tabs as $tabid => $tabname ){
 	echo '<div id="'.$tabid.'" class="ims-box" >';
-		do_action( "ims_pricing_{$tabid}_tab", &$this );
+		do_action( "ims_pricing_{$tabid}_tab", $this );
 	echo '</div>';
 }
 
@@ -227,7 +227,7 @@ function ims_price_lists( $ims ){
 								<input type="text" name="_ims_ship_inter" value="<?php echo $ims->format_price( $meta['ims_ship_inter'] ) ?>" /></label>
 						</td>
 					</tr>
-					<?php do_action( 'ims_pricelist_options', $list->ID, &$this )?>
+					<?php do_action( 'ims_pricelist_options', $list->ID, $this )?>
 					<tr>
 						<td colspan="6" align="right">
 							<input type="hidden" name="sizes[random]" value="<?php echo rand(0,3000)?>"/>

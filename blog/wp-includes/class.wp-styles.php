@@ -29,7 +29,7 @@ class WP_Styles extends WP_Dependencies {
 	var $default_dirs;
 
 	function __construct() {
-		do_action_ref_array( 'wp_default_styles', array(&$this) );
+		do_action_ref_array( 'wp_default_styles', array($this) );
 	}
 
 	function do_item( $handle ) {
@@ -168,4 +168,3 @@ class WP_Styles extends WP_Dependencies {
 		$this->print_html = '';
 	}
 }
-

@@ -24,7 +24,7 @@ class ImStoreShortCode{
 	 */
 	function __construct(){
 		$this->opts = get_option('ims_front_options');
-		add_shortcode('ims-gallery',array(&$this,'ims_gallery_shortcode'),50);
+		add_shortcode('ims-gallery',array($this,'ims_gallery_shortcode'),50);
 	}
 	
 	/**

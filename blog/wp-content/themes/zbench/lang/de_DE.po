@@ -1,0 +1,428 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: zBench\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-21 19:53+0800\n"
+"PO-Revision-Date: 2011-07-21 19:53+0800\n"
+"Last-Translator: zwwooooo <zwwblog@gmail.com>\n"
+"Language-Team: zwwooooo <http://zww.me/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: 404.php:4
+#: archive.php:37
+#: index.php:24
+msgid "Error 404 - Not Found"
+msgstr "404 - Nicht gefunden"
+
+#: 404.php:6
+#: archive.php:40
+#: index.php:27
+msgid "Sorry, but you are looking for something that isn&#8217;t here."
+msgstr "Die gesuchte Seite kann leider nicht gefunden werden"
+
+#: 404.php:7
+#: archive.php:41
+#: index.php:28
+#: sidebar.php:40
+msgid "Random Posts"
+msgstr "Zufällige Artikel"
+
+#: 404.php:16
+#: archive.php:50
+#: index.php:37
+msgid "Tag Cloud"
+msgstr "Schlagwörter"
+
+#: archive.php:6
+msgid "Daily Archives:"
+msgstr "Tägliche Archive:"
+
+#: archive.php:8
+msgid "Monthly Archives:"
+msgstr "Archiv nach Monaten:"
+
+#: archive.php:10
+msgid "Yearly Archives:"
+msgstr "Archiv nach Jahren:"
+
+#: archive.php:12
+msgid "Category Archives:"
+msgstr "Archiv nach Kategorien:"
+
+#: archive.php:14
+msgid "Tag Archives:"
+msgstr "Archiv nach Schlagworten:"
+
+#: archive.php:16
+msgid "Blog Archives"
+msgstr "Archiv nach Blogs:"
+
+#: archive.php:24
+#: index.php:8
+#: single.php:7
+msgid "Posted by"
+msgstr "Veröffentlicht von"
+
+#: archive.php:25
+#: index.php:9
+#: single.php:7
+msgid "on"
+msgstr "am"
+
+#: archive.php:26
+#: index.php:10
+#: single.php:7
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: archive.php:28
+#: index.php:12
+msgid "No comments"
+msgstr "Keine Kommentare"
+
+#: archive.php:28
+#: index.php:12
+msgid "comment"
+msgstr "Kommentar"
+
+#: archive.php:28
+#: index.php:12
+msgid "comments"
+msgstr "Kommentare"
+
+#: archive.php:32
+#: functions.php:94
+#: index.php:16
+msgid "Read more &raquo;"
+msgstr "Weiterlesen &raquo;"
+
+#: archive.php:66
+#: index.php:53
+msgid "&laquo; Previous page"
+msgstr "&laquo; vorherige Seite"
+
+#: archive.php:66
+#: index.php:53
+msgid "Next page &raquo;"
+msgstr "Nächste Seite &raquo;"
+
+#: comments.php:10
+msgid "This post is password protected. Enter the password to view comments."
+msgstr "Dieser Beitrag ist passwortgeschützt. Passwort eingeben, um die Kommentare zu lesen."
+
+#: comments.php:18
+msgid "Leave a comment ?"
+msgstr "Kommentar schreiben"
+
+#: comments.php:18
+msgid "Comments."
+msgstr "Kommentare."
+
+#: comments.php:25
+msgid "Comments are closed."
+msgstr "Keine Kommentare möglich."
+
+#: comments.php:97
+msgid "NOTE - You can use these "
+msgstr "Hinweis - Du kannst dies benutzen"
+
+#: comments.php:101
+msgid "NAME"
+msgstr "Name"
+
+#: comments.php:103
+msgid "EMAIL"
+msgstr "E-Mail"
+
+#: comments.php:105
+msgid "Website URL"
+msgstr "Webseite"
+
+#: comments.php:112
+msgid "Leave a Comment"
+msgstr "Kommentar schreiben"
+
+#: comments.php:113
+#, php-format
+msgid "Reply to %s &not;<br />"
+msgstr "Antwort an %s &not;<br />"
+
+#: comments.php:114
+msgid "<small>Cancel reply</small>"
+msgstr "<small>Antwort abbrechen</small>"
+
+#: comments.php:115
+msgid "SUBMIT"
+msgstr "Abschicken"
+
+#: comments.php:124
+msgid "Trackbacks and Pingbacks:"
+msgstr "Trackbacks und Pingbacks:"
+
+#: footer.php:6
+msgid "Copyright"
+msgstr "Copyright"
+
+#: footer.php:10
+msgid "Top"
+msgstr "Nach oben"
+
+#: functions.php:4
+msgid "Primary Widget Area"
+msgstr "Primärer Widget Bereich"
+
+#: functions.php:6
+msgid "The primary widget area"
+msgstr "Primäre Widgets"
+
+#: functions.php:13
+msgid "Singular Widget Area"
+msgstr "Einmaliger Widget Bereich"
+
+#: functions.php:15
+msgid "The singular widget area"
+msgstr "Einmalige Widgets"
+
+#: functions.php:22
+msgid "Not Singular Widget Area"
+msgstr "Nicht einmaliger Widget Bereich"
+
+#: functions.php:24
+msgid "Not the singular widget area"
+msgstr "Der nicht einmalige Widget Bereich"
+
+#: functions.php:31
+msgid "Footer Widget Area"
+msgstr "Footer Widget Bereich"
+
+#: functions.php:33
+msgid "The footer widget area"
+msgstr "Footer Widgets"
+
+#: functions.php:51
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s um %2$s"
+
+#: functions.php:51
+msgid "[Edit]"
+msgstr "[Bearbeiten]"
+
+#: functions.php:54
+msgid "Your comment is awaiting moderation."
+msgstr "Dein Kommentar muss noch bestätigt werden."
+
+#: functions.php:185
+msgid "Logo URL"
+msgstr "Logo URL"
+
+#: functions.php:186
+msgid "Put your full logo image address here.(with http://) Image Height: 36px"
+msgstr "Put your full logo image address here.(with http://) Image Height: 36px"
+
+#: functions.php:190
+msgid "RSS URL"
+msgstr "RSS URL"
+
+#: functions.php:191
+msgid "Put your full rss subscribe address here.(with http://)"
+msgstr "Gib hier deine RSS Adresse ein (mit http://)"
+
+#: functions.php:195
+msgid "twitter URL"
+msgstr "Twitter URL"
+
+#: functions.php:196
+msgid "Put your full twitter address here.(with http:// , leave it blank for display none.)"
+msgstr "Gib hier deine Twitter Adresse ein (mit http://)"
+
+#: functions.php:200
+msgid "facebook URL"
+msgstr "Facebook URL"
+
+#: functions.php:201
+msgid "Put your full facebook address here.(with http:// , leave it blank for no display none.)"
+msgstr "Gib hier deine Facebook Adresse ein (mit http://)"
+
+#: functions.php:205
+msgid "Google+ URL"
+msgstr "Google+ URL"
+
+#: functions.php:206
+msgid "Put your full Google+ address here.(with http:// , leave it blank for no display none.)"
+msgstr "Put your full Google+ address here.(with http:// , leave it blank for no display none.)"
+
+#: functions.php:210
+msgid "Excerpt?"
+msgstr "Vorschau"
+
+#: functions.php:211
+msgid "If the home page and archive pages to display excerpt of post, check."
+msgstr "Anklicken, wenn die Hauptseite und die Archive nur Auszüge deiner Artikel zeigen sollen."
+
+#: functions.php:215
+msgid "Disable the comment notes"
+msgstr "Kommentare deaktivieren"
+
+#: functions.php:216
+msgid "Disabling this will remove the note text that displays with more options for adding to comments (html)."
+msgstr "Entferne den Haken, wenn bei den Komenateren kein erweiterter Hinweis erscheinen soll."
+
+#: functions.php:220
+msgid "Disable the comments smilies"
+msgstr "Smilies"
+
+#: functions.php:221
+msgid "Disabling this will remove the comments smilies."
+msgstr "Haken entfernen, um Smilies bei Kommentaren zu deaktivieren"
+
+#: functions.php:233
+msgid "Theme Options"
+msgstr "Theme Einstellungen"
+
+#: functions.php:252
+#, php-format
+msgid "%1$s Theme Options"
+msgstr "%1$s Theme Einstellungen"
+
+#: functions.php:254
+msgid "Options saved"
+msgstr "Einstellungen wurden gespeichert"
+
+#: functions.php:282
+msgid "Save Options"
+msgstr "Einstellungen speichern"
+
+#: functions.php:290
+msgid "Donation"
+msgstr "Spenden"
+
+#: functions.php:292
+msgid "If you feel my work is useful and want to support the development of more free resources, you can donate me. Thank you very much!"
+msgstr "Wenn dir meine Arbeit gefällt und du sie nützlich findest, kannst du die Entwicklung neuer kostenloser Produkte mit einer Spende unterstützen. Vielen Dank!"
+
+#: header.php:18
+msgid "Home"
+msgstr "Startseite"
+
+#: index.php:19
+msgid "This is a sticky post!"
+msgstr "Dieser Artikel ist wichtig"
+
+#: index.php:19
+msgid "continue reading?"
+msgstr "weiterlesen?"
+
+#: page.php:8
+#: single.php:9
+msgid "Leave a comment"
+msgstr "Schreibe einen Kommentar"
+
+#: page.php:9
+#: single.php:10
+msgid "Go to comments"
+msgstr "Kommentare ansehen"
+
+#: page.php:17
+#: single.php:16
+msgid "Pages:"
+msgstr "Seiten:"
+
+#: searchform.php:2
+msgid "Search: type, hit enter"
+msgstr "Suchwort eingeben, Enter drücken"
+
+#: searchform.php:3
+msgid "SEARCH"
+msgstr "Suchen"
+
+#: sidebar.php:8
+msgid "RSS Feed"
+msgstr "RSS Feed"
+
+#: sidebar.php:10
+msgid "Follow me on twitter."
+msgstr "Folge mir auf Twitter"
+
+#: sidebar.php:13
+msgid "Facebook"
+msgstr "Facebook"
+
+#: sidebar.php:16
+msgid "Google+"
+msgstr "Google+"
+
+#: sidebar.php:28
+msgid "Recent Posts"
+msgstr "Aktuelle Artikel"
+
+#: sidebar.php:52
+msgid "Search by Tags!"
+msgstr "Suche nach Schlagwörtern!"
+
+#: sidebar.php:56
+msgid "Archives"
+msgstr "Archive"
+
+#: sidebar.php:62
+msgid "Links"
+msgstr "Links"
+
+#: sidebar.php:68
+msgid "Meta"
+msgstr "Meta"
+
+#: single.php:19
+msgid "Related Posts"
+msgstr "Verwandte Artikel"
+
+#~ msgid "1 comments"
+#~ msgstr "1 Yorum"
+
+#~ msgid "&raquo; Read more..."
+#~ msgstr "&raquo; Devamını Oku ..."
+
+#~ msgid "(Edit)"
+#~ msgstr "(Düzenle)"
+
+#~ msgid "Rss Url"
+#~ msgstr "RSS Bağlantısı"
+
+#~ msgid "Update Options &raquo;"
+#~ msgstr "Seçenkleri Güncelle &raquo;"
+
+#~ msgid "Reset Options &raquo;"
+#~ msgstr "Seçenekleri Sıfırla &raquo;"
+
+#~ msgid "Disable the comment notes: HTML tags and attributes."
+#~ msgstr "关闭评论 HTML tags and attributes 的提示。"
+
+#~ msgid "Excerpt"
+#~ msgstr "摘录"
+
+#~ msgid "1% comments"
+#~ msgstr "1%条评论 "
+
+#~ msgid "% comments"
+#~ msgstr "1%条评论"
+
+#~ msgid "&nbsp;% comments"
+#~ msgstr "&nbsp;% 条评论"
+
+#, fuzzy
+#~ msgid "z % comments"
+#~ msgstr " % 条评论"
+
+#~ msgid "Please do not load this page directly. Thanks!"
+#~ msgstr "请不要直接加载这个页面。谢谢！"
+
+#~ msgid "404 Error - Not found"
+#~ msgstr "错误 404 - 没有找到"

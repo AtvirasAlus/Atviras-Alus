@@ -37,7 +37,7 @@ class SLB_Utilities {
 	/* Constructors */
 	
 	function SLB_Utilities(&$obj) {
-		$this->__construct(&$obj);
+		$this->__construct($obj);
 	}
 	
 	function __construct(&$obj) {

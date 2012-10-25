@@ -1,0 +1,250 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Facebook, Twitter & Google+ Social Widgets v1.3.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-05 21:05+0100\n"
+"PO-Revision-Date: 2012-03-05 21:07+0100\n"
+"Last-Translator: froozeify <froozeify@mail.com>\n"
+"Translator site: froozeify.freeiz.com\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: includes/SWAdmin.php:6
+#@ sw
+msgid "Social Widgets Options"
+msgstr "Options des Widgets sociaux"
+
+#: includes/SWAdmin.php:36
+#: includes/SWAdmin.php:39
+#: includes/SWAdmin.php:46
+#: includes/SWAdmin.php:49
+#: includes/SWAdmin.php:52
+#@ sw
+msgid "Error while saving options."
+msgstr "Il y a eu une erreur lors de la sauvegarde des options."
+
+#: includes/SWAdmin.php:37
+#@ sw
+msgid "Please make sure that each position for a widget is only chosen once!"
+msgstr "Assurez-vous que chaque position d'un widget est seulement affichée une fois!"
+
+#: includes/SWAdmin.php:40
+#@ sw
+msgid "At least one widget needs to be displayed!"
+msgstr "Au moins un widget doit être affichée !"
+
+#: includes/SWAdmin.php:47
+#@ sw
+msgid "The widgets need to be displayed at least on one page!"
+msgstr "Les widgets doivent être affichées au moins sur une seule page!"
+
+#: includes/SWAdmin.php:50
+#@ sw
+msgid "The widgets need to be displayed either above the posts, below them or both!"
+msgstr "Les widgets doivent être affichées soit au-dessus des messages, soit en dessous d'eux ou les deux!"
+
+#: includes/SWAdmin.php:53
+#@ sw
+msgid "The content filter priority needs to be an integer value!"
+msgstr "La priorité du filtre de contenu doit être une valeur entière!"
+
+#: includes/SWAdmin.php:75
+#@ sw
+msgid "Options saved."
+msgstr "Options enregistrées."
+
+#: includes/SWAdmin.php:86
+#, php-format
+#@ sw
+msgid "If you like this plug-in, please <a href=\"%s\">consider a donation</a> to keep it free. Thank you!"
+msgstr "Si vous aimez ce plug-in, merci <a href=\"%s\">faire un don</a> pour le maintenir gratuit. Merci!"
+
+#: includes/SWAdmin.php:139
+#@ sw
+msgid "Display Order of Social Widgets"
+msgstr "Ordre d'affichage des Widgets sociaux"
+
+#: includes/SWAdmin.php:146
+#@ sw
+msgid "Facebook:"
+msgstr "Facebook :"
+
+#: includes/SWAdmin.php:149
+#: includes/SWAdmin.php:160
+#: includes/SWAdmin.php:171
+#@ sw
+msgid "Don't display"
+msgstr "Ne pas afficher"
+
+#: includes/SWAdmin.php:150
+#: includes/SWAdmin.php:161
+#: includes/SWAdmin.php:172
+#@ sw
+msgid "Position 1"
+msgstr "Position 1"
+
+#: includes/SWAdmin.php:151
+#: includes/SWAdmin.php:162
+#: includes/SWAdmin.php:173
+#@ sw
+msgid "Position 2"
+msgstr "Position 2"
+
+#: includes/SWAdmin.php:152
+#: includes/SWAdmin.php:163
+#: includes/SWAdmin.php:174
+#@ sw
+msgid "Position 3"
+msgstr "Position 3"
+
+#: includes/SWAdmin.php:157
+#@ sw
+msgid "Twitter:"
+msgstr "Twitter :"
+
+#: includes/SWAdmin.php:168
+#@ sw
+msgid "Google+:"
+msgstr "Google+ :"
+
+#: includes/SWAdmin.php:184
+#@ sw
+msgid "Display social widgets on these pages"
+msgstr "Afficher les Widgets sociaux sur ces pages"
+
+#: includes/SWAdmin.php:192
+#@ sw
+msgid "Posts"
+msgstr "Messages"
+
+#: includes/SWAdmin.php:193
+#@ sw
+msgid "Pages"
+msgstr "Pages"
+
+#: includes/SWAdmin.php:194
+#@ sw
+msgid "Homepage"
+msgstr "Page d'accueil"
+
+#: includes/SWAdmin.php:195
+#@ sw
+msgid "Categories"
+msgstr "Catégories"
+
+#: includes/SWAdmin.php:196
+#@ sw
+msgid "Tags"
+msgstr "Balises (Tags)"
+
+#: includes/SWAdmin.php:197
+#@ sw
+msgid "Taxonomies"
+msgstr "Taxonomies"
+
+#: includes/SWAdmin.php:198
+#@ sw
+msgid "Dates"
+msgstr "Dates"
+
+#: includes/SWAdmin.php:199
+#@ sw
+msgid "Authors"
+msgstr "Auteurs"
+
+#: includes/SWAdmin.php:200
+#@ sw
+msgid "Searches"
+msgstr "Recherche"
+
+#: includes/SWAdmin.php:201
+#@ sw
+msgid "Attachments"
+msgstr "Pièces jointes"
+
+#: includes/SWAdmin.php:203
+#@ sw
+msgid "Tip: Don't display the social widgets on pages with excerpts as this leads to broken code."
+msgstr "Conseil : Ne pas afficher les widgets sociaux sur les pages avec des extraits cela conduit à un code erroné."
+
+#: includes/SWAdmin.php:212
+#@ sw
+msgid "Display position of social widgets"
+msgstr "Afficher la position des widgets sociaux"
+
+#: includes/SWAdmin.php:220
+#@ sw
+msgid "Display social widgets above posts"
+msgstr "Afficher les widgets sociaux au dessus des messages"
+
+#: includes/SWAdmin.php:221
+#@ sw
+msgid "Display social widgets below posts"
+msgstr "Afficher les widgets sociaux en-dessous des messages"
+
+#: includes/SWAdmin.php:230
+#@ sw
+msgid "Other Settings"
+msgstr "Autres paramètres"
+
+#: includes/SWAdmin.php:237
+#@ sw
+msgid "Additional CSS styles applied to whole widget box:"
+msgstr "Styles CSS additionnel à ajouter avec la boite de widget :"
+
+#: includes/SWAdmin.php:238
+#@ sw
+msgid "(e. g. \"margin-bottom:20px\")"
+msgstr "(ex : \"margin-bottom:20px\")"
+
+#: includes/SWAdmin.php:241
+#@ sw
+msgid "Additional CSS styles applied to every widget:"
+msgstr "Styles CSS additionnel à appliquer à chaque widget"
+
+#: includes/SWAdmin.php:242
+#@ sw
+msgid "(e. g. \"margin-right:10px\")"
+msgstr "(ex : \"margin-right:10px\")"
+
+#: includes/SWAdmin.php:245
+#@ sw
+msgid "Content filter priority:"
+msgstr "Priorité du filtrage de contenu :"
+
+#: includes/SWAdmin.php:246
+#@ sw
+msgid "(plug-in priority (default: 10))"
+msgstr "(priorité du plug-in (par défaut : 10))"
+
+#: includes/SWAdmin.php:249
+#@ sw
+msgid "Support this free plug-in with a small powered by link at your page footer. Thank you!"
+msgstr "Soutenez ce plug-in gratuit avec un petit lien dans votre pied de page. Merci!"
+
+#: includes/SWAdmin.php:256
+#@ sw
+msgid "Save options"
+msgstr "Enregistrer les options"
+
+#: includes/SWAdmin.php:277
+#@ sw
+msgid "Settings"
+msgstr "Options"
+
+#: includes/SWOutput.php:79
+#@ sw
+msgid "Tweet"
+msgstr "Tweet"
+

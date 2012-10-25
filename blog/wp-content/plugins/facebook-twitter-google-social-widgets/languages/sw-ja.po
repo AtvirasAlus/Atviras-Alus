@@ -1,0 +1,211 @@
+# German translations for PACKAGE package.
+# Copyright (C) 2011 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Andreas Breitschopp <a-breitschopp@ab-tools.com>
+# http://www.ab-weblog.com
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Facebook, Twitter & Google+ Social Widgets\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-04 05:36+0900\n"
+"PO-Revision-Date: 2011-12-04 05:40+0900\n"
+"Last-Translator: redcocker <masa153@gmail.com>\n"
+"Language-Team: redcocker\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../includes/SWAdmin.php:6
+msgid "Social Widgets Options"
+msgstr "ソーシャル・ウィジェットの設定"
+
+#: ../includes/SWAdmin.php:36
+#: ../includes/SWAdmin.php:39
+#: ../includes/SWAdmin.php:46
+#: ../includes/SWAdmin.php:49
+#: ../includes/SWAdmin.php:52
+msgid "Error while saving options."
+msgstr "設定の保存中にエラーが発生しました。"
+
+#: ../includes/SWAdmin.php:37
+msgid "Please make sure that each position for a widget is only chosen once!"
+msgstr "「各ソーシャル・ウィジェットの表示順」に重複がないことを確認して下さい。"
+
+#: ../includes/SWAdmin.php:40
+msgid "At least one widget needs to be displayed!"
+msgstr "少なくとも１つのウィジェットの表示が必要です。「各ソーシャル・ウィジェットの表示順」を確認して下さい。"
+
+#: ../includes/SWAdmin.php:47
+msgid "The widgets need to be displayed at least on one page!"
+msgstr "ウィジェットは、少なくとも１つのページで表示させる必要があります。「ソーシャル・ウィジェットを表示するページ」を確認して下さい。"
+
+#: ../includes/SWAdmin.php:50
+msgid "The widgets need to be displayed either above the posts, below them or both!"
+msgstr "ウィジェットは、投稿の上、投稿の下、または両方で表示させる必要があります。「ソーシャル・ウィジェットの表示位置」を確認して下さい。"
+
+#: ../includes/SWAdmin.php:53
+msgid "The content filter priority needs to be an integer value!"
+msgstr "コンテンツに適用されるフィルターのプライオリティは、整数で入力して下さい。"
+
+#: ../includes/SWAdmin.php:75
+msgid "Options saved."
+msgstr "設定を保存しました。"
+
+#: ../includes/SWAdmin.php:86
+#, php-format
+msgid "If you like this plug-in, please <a href=\"%s\">consider a donation</a> to keep it free. Thank you!"
+msgstr "このプラグインが気に入りましたら、どうか、<a href=\"%s\">作者への寄付</a>をご検討下さい。"
+
+#: ../includes/SWAdmin.php:139
+msgid "Display Order of Social Widgets"
+msgstr "各ソーシャル・ウィジェットの表示順"
+
+#: ../includes/SWAdmin.php:146
+msgid "Facebook:"
+msgstr "Facebook:"
+
+#: ../includes/SWAdmin.php:149
+#: ../includes/SWAdmin.php:160
+#: ../includes/SWAdmin.php:171
+msgid "Don't display"
+msgstr "表示しない"
+
+#: ../includes/SWAdmin.php:150
+#: ../includes/SWAdmin.php:161
+#: ../includes/SWAdmin.php:172
+msgid "Position 1"
+msgstr "1番目"
+
+#: ../includes/SWAdmin.php:151
+#: ../includes/SWAdmin.php:162
+#: ../includes/SWAdmin.php:173
+msgid "Position 2"
+msgstr "2番目"
+
+#: ../includes/SWAdmin.php:152
+#: ../includes/SWAdmin.php:163
+#: ../includes/SWAdmin.php:174
+msgid "Position 3"
+msgstr "3番目"
+
+#: ../includes/SWAdmin.php:157
+msgid "Twitter:"
+msgstr "Twitter:"
+
+#: ../includes/SWAdmin.php:168
+msgid "Google+:"
+msgstr "Google+:"
+
+#: ../includes/SWAdmin.php:184
+msgid "Display social widgets on these pages"
+msgstr "ソーシャル・ウィジェットを表示するページ"
+
+#: ../includes/SWAdmin.php:192
+msgid "Posts"
+msgstr "投稿"
+
+#: ../includes/SWAdmin.php:193
+msgid "Pages"
+msgstr "固定ページ"
+
+#: ../includes/SWAdmin.php:194
+msgid "Homepage"
+msgstr "ホーム"
+
+#: ../includes/SWAdmin.php:195
+msgid "Categories"
+msgstr "カテゴリーページ"
+
+#: ../includes/SWAdmin.php:196
+msgid "Tags"
+msgstr "タグページ"
+
+#: ../includes/SWAdmin.php:197
+msgid "Taxonomies"
+msgstr "タクソノミーページ"
+
+#: ../includes/SWAdmin.php:198
+msgid "Dates"
+msgstr "日付別ページ"
+
+#: ../includes/SWAdmin.php:199
+msgid "Authors"
+msgstr "作成者ページ"
+
+#: ../includes/SWAdmin.php:200
+msgid "Searches"
+msgstr "検索結果"
+
+#: ../includes/SWAdmin.php:201
+msgid "Attachments"
+msgstr "添付ファイルページ"
+
+#: ../includes/SWAdmin.php:203
+msgid "Tip: Don't display the social widgets on pages with excerpts as this leads to broken code."
+msgstr "注意: コードの破壊の原因となりますので、抜粋の一覧が表示されるページでは、ソーシャル・ウィジェットを表示しないで下さい。"
+
+#: ../includes/SWAdmin.php:212
+msgid "Display position of social widgets"
+msgstr "ソーシャル・ウィジェットの表示位置"
+
+#: ../includes/SWAdmin.php:220
+msgid "Display social widgets above posts"
+msgstr "投稿の上に表示"
+
+#: ../includes/SWAdmin.php:221
+msgid "Display social widgets below posts"
+msgstr "投稿の下に表示"
+
+#: ../includes/SWAdmin.php:230
+msgid "Other Settings"
+msgstr "その他の設定"
+
+#: ../includes/SWAdmin.php:237
+msgid "Additional CSS styles applied to whole widget box:"
+msgstr "ウィジェット全体にの追加のCSSを適用する："
+
+#: ../includes/SWAdmin.php:238
+msgid "(e. g. \"margin-bottom:20px\")"
+msgstr "(例: \"margin-bottom:20px\")"
+
+#: ../includes/SWAdmin.php:241
+msgid "Additional CSS styles applied to every widget:"
+msgstr "各ウィジェットにの追加のCSSを適用する："
+
+#: ../includes/SWAdmin.php:242
+msgid "(e. g. \"margin-right:10px\")"
+msgstr "(例: \"margin-right:10px\")"
+
+#: ../includes/SWAdmin.php:245
+msgid "Content filter priority:"
+msgstr "コンテンツに適用されるフィルターのプライオリティ："
+
+#: ../includes/SWAdmin.php:246
+msgid "(plug-in priority (default: 10))"
+msgstr "（このプラグインのプライオリティ （デフォルト：10））"
+
+#: ../includes/SWAdmin.php:249
+msgid "Support this free plug-in with a small powered by link at your page footer. Thank you!"
+msgstr "フッターに小さな「powered by」リンクを表示して、このフリーのプラグインを応援する。"
+
+#: ../includes/SWAdmin.php:256
+msgid "Save options"
+msgstr "設定を保存"
+
+#: ../includes/SWAdmin.php:277
+msgid "Settings"
+msgstr "設定"
+
+#: ../includes/SWOutput.php:70
+msgid "Tweet"
+msgstr "ツイート"
+
+#~ msgid "Display social widgets on post pages"
+#~ msgstr "Social Widgets auf Artikelseiten anzeigen"

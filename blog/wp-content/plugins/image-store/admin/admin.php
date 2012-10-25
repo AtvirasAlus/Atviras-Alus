@@ -22,41 +22,41 @@ class ImStoreAdmin{
 		
 		//ad a unique Gallery IDentifier to make sure that the actions come from this plugin
 		if(('media-upload.php' == $pagenow || 'async-upload.php' == $pagenow) && isset($_GET['imstore'])){
-			add_filter('media_send_to_editor',array(&$this,'media_send_to_editor'),1,3);
-			add_filter('media_upload_form_url',array(&$this,'media_upload_form_url'),1,1); 
+			add_filter('media_send_to_editor',array($this,'media_send_to_editor'),1,3);
+			add_filter('media_upload_form_url',array($this,'media_upload_form_url'),1,1); 
 		}
 		
 		$this->useropts = get_option('ims_user_options');
 		$this->opts = (array)get_option('ims_front_options'); 
-		add_filter('intermediate_image_sizes',array(&$this,'image_sizes'),15,1);
-		add_filter('get_attached_file',array(&$this,'load_ims_image_path'),15,2);
-		add_filter('load_image_to_edit_path',array(&$this,'load_ims_image_path'),15,2);
-		add_filter('wp_update_attachment_metadata',array(&$this,'update_attachment_metadata'),15,2);
+		add_filter('intermediate_image_sizes',array($this,'image_sizes'),15,1);
+		add_filter('get_attached_file',array($this,'load_ims_image_path'),15,2);
+		add_filter('load_image_to_edit_path',array($this,'load_ims_image_path'),15,2);
+		add_filter('wp_update_attachment_metadata',array($this,'update_attachment_metadata'),15,2);
 		
-		add_filter('intermediate_image_sizes',array(&$this,'ims_image_sizes'),15,1);
-		add_filter('manage_edit-ims_gallery_columns',array(&$this,"add_columns"),10);
-		add_filter('manage_posts_custom_column',array(&$this,'add_columns_val_gal'),15,2);
+		add_filter('intermediate_image_sizes',array($this,'ims_image_sizes'),15,1);
+		add_filter('manage_edit-ims_gallery_columns',array($this,"add_columns"),10);
+		add_filter('manage_posts_custom_column',array($this,'add_columns_val_gal'),15,2);
 		
 		//speed up ajax we don't need this
 		if(defined('DOING_AJAX') || defined('DOING_AUTOSAVE')) return;
 		
-		add_action('admin_menu',array(&$this,'add_menu'),20);	
-		add_action('save_post',array(&$this,'save_post'),1,2);
-		add_action('admin_init',array(&$this,'int_actions'),1);	
-		add_action('delete_post',array(&$this,'delete_post'),1);
-		add_action('edit_user_profile',array(&$this,'profile_fields'),1);
-		add_action('show_user_profile',array(&$this,'profile_fields'),1);
-		add_action('post_edit_form_tag',array(&$this,'multidata_form'),20);	
-		add_action('admin_print_styles',array(&$this,'load_admin_styles'),1);
-		add_action('ims_album_pre_add_form',array(&$this,'add_album_link'),1);
-		add_action('admin_print_scripts',array(&$this,'load_admin_scripts'),1);
-		add_action('admin_print_styles',array(&$this,'register_screen_columns'),10);
+		add_action('admin_menu',array($this,'add_menu'),20);	
+		add_action('save_post',array($this,'save_post'),1,2);
+		add_action('admin_init',array($this,'int_actions'),1);	
+		add_action('delete_post',array($this,'delete_post'),1);
+		add_action('edit_user_profile',array($this,'profile_fields'),1);
+		add_action('show_user_profile',array($this,'profile_fields'),1);
+		add_action('post_edit_form_tag',array($this,'multidata_form'),20);	
+		add_action('admin_print_styles',array($this,'load_admin_styles'),1);
+		add_action('ims_album_pre_add_form',array($this,'add_album_link'),1);
+		add_action('admin_print_scripts',array($this,'load_admin_scripts'),1);
+		add_action('admin_print_styles',array($this,'register_screen_columns'),10);
 		
-		add_filter('screen_settings',array(&$this,'register_screen_columns'),15,2); 		
-		add_filter('manage_edit-ims_order_columns',array(&$this,"add_columns"),10);
-		add_filter('manage_users_columns',array(&$this,'add_columns'),10);
-		add_filter('redirect_post_location',array(&$this,'post_messeges'),25);
-		add_filter('post_updated_messages',array(&$this,'add_auto_password'),1);
+		add_filter('screen_settings',array($this,'register_screen_columns'),15,2); 		
+		add_filter('manage_edit-ims_order_columns',array($this,"add_columns"),10);
+		add_filter('manage_users_columns',array($this,'add_columns'),10);
+		add_filter('redirect_post_location',array($this,'post_messeges'),25);
+		add_filter('post_updated_messages',array($this,'add_auto_password'),1);
 
 		$this->units = array('in' => __('in',ImStore::domain),'cm' => __('cm',ImStore::domain),'px' => __('px',ImStore::domain));
 	}
@@ -300,16 +300,16 @@ class ImStoreAdmin{
 		//if store is enable
 		if(!$this->opts['disablestore']){
 			add_submenu_page('edit.php?post_type=ims_gallery',__('Sales',ImStore::domain),__('Sales',ImStore::domain),
-				'ims_read_sales','ims-sales',array(&$this,'show_menu'));
+				'ims_read_sales','ims-sales',array($this,'show_menu'));
 			add_submenu_page('edit.php?post_type=ims_gallery',__('Pricing',ImStore::domain),__('Pricing',ImStore::domain),
-				'ims_change_pricing','ims-pricing',array(&$this,'show_menu'));
+				'ims_change_pricing','ims-pricing',array($this,'show_menu'));
 			add_submenu_page('edit.php?post_type=ims_gallery',__('Customers',ImStore::domain),__('Customers',ImStore::domain),
-				'ims_manage_customers','ims-customers',array(&$this,'show_menu'));
+				'ims_manage_customers','ims-customers',array($this,'show_menu'));
 		}
 		add_submenu_page('edit.php?post_type=ims_gallery',__('Settings',ImStore::domain),__('Settings',ImStore::domain),
-			'ims_change_settings','ims-settings',array(&$this,'show_menu'));
+			'ims_change_settings','ims-settings',array($this,'show_menu'));
 		add_users_page(__('Image Store',ImStore::domain),__('Galleries',ImStore::domain),
-			'ims_read_galleries','user-galleries',array(&$this,'show_menu'));
+			'ims_read_galleries','user-galleries',array($this,'show_menu'));
 	}
 	
 	/**
@@ -916,10 +916,10 @@ class ImStoreAdmin{
 		$this->dformat 		= get_option('date_format');
 		$this->meta 		= get_post_custom($_GET['post']);
 		$this->permalinks 	= get_option('permalink_structure');
-		add_meta_box("ims_customers_box",__('Customers',ImStore::domain),array(&$this,"dis_customers"),"ims_gallery","side","low");
-		add_meta_box("ims_info_box",__('Gallery Information',ImStore::domain),array(&$this,"dis_info"),"ims_gallery","normal","high");
-		add_meta_box("ims_import_box",__('Import Images',ImStore::domain),array(&$this,"import_img"),"ims_gallery","normal","high");
-		add_meta_box("ims_images_box",__('Images',ImStore::domain),array(&$this,"dis_images"),"ims_gallery","normal","high");
+		add_meta_box("ims_customers_box",__('Customers',ImStore::domain),array($this,"dis_customers"),"ims_gallery","side","low");
+		add_meta_box("ims_info_box",__('Gallery Information',ImStore::domain),array($this,"dis_info"),"ims_gallery","normal","high");
+		add_meta_box("ims_import_box",__('Import Images',ImStore::domain),array($this,"import_img"),"ims_gallery","normal","high");
+		add_meta_box("ims_images_box",__('Images',ImStore::domain),array($this,"dis_images"),"ims_gallery","normal","high");
 		$this->color 		= array(
 			'ims_sepia' => __('Sepia + ',ImStore::domain),
 			'color' => __('Full Color',ImStore::domain),

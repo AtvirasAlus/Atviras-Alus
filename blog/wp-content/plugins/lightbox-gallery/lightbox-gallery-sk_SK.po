@@ -1,0 +1,246 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Lightbox Gallery\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-01-12 01:35+0900\n"
+"PO-Revision-Date: 2012-01-12 01:35+0900\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: \n"
+"X-Poedit-Country: \n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: lightbox-gallery\n"
+"X-Textdomain-Support: yes"
+
+#: lightbox-gallery.php:213
+#@ default
+msgid "Settings"
+msgstr "Nastavenia"
+
+#: lightbox-gallery.php:228
+#: lightbox-gallery.php:261
+#@ lightbox-gallery
+msgid "Lightbox Gallery"
+msgstr "Lightbox galéria"
+
+#: lightbox-gallery.php:244
+#@ lightbox-gallery
+msgid "Options updated."
+msgstr "Nastavenia zmenené."
+
+#: lightbox-gallery.php:248
+#@ lightbox-gallery
+msgid "Options deleted."
+msgstr "Nastavenia zmazané."
+
+#: lightbox-gallery.php:268
+#: lightbox-gallery.php:337
+#: lightbox-gallery.php:355
+#: lightbox-gallery.php:371
+#@ lightbox-gallery
+msgid "Click to toggle"
+msgstr "Kliknite pre prepnutie"
+
+#: lightbox-gallery.php:269
+#@ lightbox-gallery
+msgid "Lightbox Gallery Options"
+msgstr "Nastavenia Lightbox galérie"
+
+#: lightbox-gallery.php:278
+#@ lightbox-gallery
+msgid "Choose the gallery loading type"
+msgstr "Vyberte typ galérie"
+
+#: lightbox-gallery.php:279
+#@ lightbox-gallery
+msgid "Lightbox"
+msgstr "Lightbox"
+
+#: lightbox-gallery.php:280
+#@ lightbox-gallery
+msgid "Highslide JS"
+msgstr "Highslide JS"
+
+#: lightbox-gallery.php:281
+#, php-format
+#@ lightbox-gallery
+msgid "Caution: Highslide JS is licensed under a Creative Commons Attribution-NonCommercial 2.5 License. You need the author's permission to use Highslide JS on commercial websites. <a href=\"%s\" target=\"_blank\">Please look at the author's website.</a>"
+msgstr "Upozornenie: Highslide JS patrí pod Creative Commons Attribution-NonCommercial 2.5 License. Ak chcete modul používať na komerčné účely, potrebujete povolenie autora. <a href=\"%s\" target=\"_blank\">Navštívte prosím stránku autora.</a>"
+
+#: lightbox-gallery.php:284
+#@ lightbox-gallery
+msgid "In case that you would like to use the lightbox in certain categories (comma-deliminated)"
+msgstr "V prípade, že chcete lightbox používať v určitých kategóriách (oddeľujte čiarkou)"
+
+#: lightbox-gallery.php:288
+#@ lightbox-gallery
+msgid "In case that you would like to use the lightbox in certain pages (comma-deliminated)"
+msgstr "V prípade, že chcete lightbox používať na určitých stránkach (oddeľujte čiarkou)"
+
+#: lightbox-gallery.php:292
+#@ lightbox-gallery
+msgid "Enforce loading the lightbox gallery scripts"
+msgstr "Vynútiť načítanie skriptov lightbox galérie"
+
+#: lightbox-gallery.php:293
+#@ lightbox-gallery
+msgid "The lightbox gallery scripts are loaded in every page"
+msgstr "Lightbox galérie sú načítané na každej stránke"
+
+#: lightbox-gallery.php:296
+#@ lightbox-gallery
+msgid "Add rel=&quot;lightbox&quot; automatically in the post insert"
+msgstr "Pridať rel=&quot;lightbox&quot; automaticky do príspevku"
+
+#: lightbox-gallery.php:297
+#@ lightbox-gallery
+msgid "Do not forget to check the script enforcement option above with this"
+msgstr "Skontrolujte či skript podporuje vynútené spustenie"
+
+#: lightbox-gallery.php:300
+#@ lightbox-gallery
+msgid "In case that you would like to disable to load the lightbox-gallery.css"
+msgstr "V prípade, že chcete vypnúť načítanie lightbox-gallery.css"
+
+#: lightbox-gallery.php:301
+#@ lightbox-gallery
+msgid "Do not use the lightbox-gallery.css"
+msgstr "Nepoužívať lightbox-gallery.css"
+
+#: lightbox-gallery.php:304
+#@ lightbox-gallery
+msgid "In case that you would like to disable to load the column inline css"
+msgstr "V prípade, že chcete zakázať načítanie vnútorného css stĺpca"
+
+#: lightbox-gallery.php:305
+#@ lightbox-gallery
+msgid "Do not use the column inline css"
+msgstr "Nepoužívať vnútorný css stĺpec"
+
+#: lightbox-gallery.php:308
+#@ lightbox-gallery
+msgid "In case that you would like to set the default number of columns"
+msgstr "V prípade, že chcete nastaviť predvolený počet stĺpcov"
+
+#: lightbox-gallery.php:312
+#@ lightbox-gallery
+msgid "In case that you would like to set the default thumbnail size"
+msgstr "V prípade, že chcete nastaviť predvolené rozlíšenie náhľadu"
+
+#: lightbox-gallery.php:316
+#@ lightbox-gallery
+msgid "In case that you would like to set the default lightbox size"
+msgstr "V prípade, že chcete nastaviť predvolenú veľkosť lightboxu"
+
+#: lightbox-gallery.php:323
+#@ lightbox-gallery
+msgid "Choose the script loading point"
+msgstr "Vyberte miesto čítania skriptu"
+
+#: lightbox-gallery.php:324
+#@ lightbox-gallery
+msgid "Header"
+msgstr "Hlavička"
+
+#: lightbox-gallery.php:325
+#@ lightbox-gallery
+msgid "Footer"
+msgstr "Pätička"
+
+#: lightbox-gallery.php:328
+#@ lightbox-gallery
+msgid "Update Options &raquo;"
+msgstr "Upraviť možnosti &raquo;"
+
+#: lightbox-gallery.php:338
+#@ lightbox-gallery
+msgid "Delete Options"
+msgstr "Vymazať možnosti"
+
+#: lightbox-gallery.php:340
+#@ lightbox-gallery
+msgid "Are you sure to delete options? Options you set will be deleted."
+msgstr "Naozaj chcete zmazať možnosti? Všetky, ktoré ste označili budú odstránené."
+
+#: lightbox-gallery.php:344
+#@ lightbox-gallery
+msgid "Delete Options &raquo;"
+msgstr "Zmazať možnosti &raquo;"
+
+#: lightbox-gallery.php:356
+#@ lightbox-gallery
+msgid "Donation"
+msgstr "Prispejte"
+
+#: lightbox-gallery.php:358
+#@ lightbox-gallery
+msgid "If you liked this plugin, please make a donation via paypal! Any amount is welcome. Your support is much appreciated."
+msgstr "Ak ste spokojný s modulom, pošlite prosím symbolickú čiastku cez PayPal! Každá suma sa cení a veľmi si vážime Vašu podporu."
+
+#: lightbox-gallery.php:372
+#@ lightbox-gallery
+msgid "CMS x WP"
+msgstr "CMS x WP"
+
+#: lightbox-gallery.php:374
+#@ lightbox-gallery
+msgid "There are much more plugins which are useful for developing business websites such as membership sites or ec sites. You could totally treat WordPress as CMS by use of CMS x WP plugins."
+msgstr "Existuje veľké množstvo ďalších modulov pre vyvíjanie biznis stránok. Wordpress môžte prestavať od základov použitím CMS x WP modulov."
+
+#: lightbox-gallery.php:375
+#@ lightbox-gallery
+msgid "WordPress plugin sales site: CMS x WP"
+msgstr "Obchod s WordPress modulmii: CMS x WP"
+
+#: lightbox-gallery.php:449
+#@ default
+msgid "Pages:"
+msgstr "Stránky"
+
+#: lightbox-gallery.php:451
+#@ default
+msgid "Next page"
+msgstr "Ďalšia stránka"
+
+#: lightbox-gallery.php:452
+#@ default
+msgid "Previous page"
+msgstr "Predošlá stránka"
+
+#: lightbox-gallery.php:535
+#@ lightbox-gallery
+msgid "camera"
+msgstr "fotoaparát"
+
+#: lightbox-gallery.php:537
+#@ lightbox-gallery
+msgid "aperture"
+msgstr "svetelnosť"
+
+#: lightbox-gallery.php:539
+#@ lightbox-gallery
+msgid "focal_length"
+msgstr "ohnisková_vzdialenosť"
+
+#: lightbox-gallery.php:541
+#@ lightbox-gallery
+msgid "ISO"
+msgstr "ISO"
+
+#: lightbox-gallery.php:545
+#@ lightbox-gallery
+msgid "shutter_speed"
+msgstr "rýchlosť_uzávierky"
+
+#: lightbox-gallery.php:548
+#@ lightbox-gallery
+msgid "created_timestamp"
+msgstr "časová_značka"
+
