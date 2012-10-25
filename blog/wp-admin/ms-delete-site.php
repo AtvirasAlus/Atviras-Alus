@@ -80,3 +80,4 @@ Webmaster
 echo '</div>';
 
 include( './admin-footer.php' );
+?>

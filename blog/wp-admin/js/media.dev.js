@@ -28,9 +28,12 @@ var findPosts;
 			var post = {
 				ps: $('#find-posts-input').val(),
 				action: 'find_posts',
-				_ajax_nonce: $('#_ajax_nonce').val(),
-				post_type: $('input[name="find-posts-what"]:checked').val()
+				_ajax_nonce: $('#_ajax_nonce').val()
 			};
+
+			var selectedItem;
+			$("input[@name='itemSelect[]']:checked").each(function() { selectedItem = $(this).val() });
+			post['post_type'] = selectedItem;
 
 			$.ajax({
 				type : 'POST',

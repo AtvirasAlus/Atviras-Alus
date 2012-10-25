@@ -228,6 +228,7 @@ textarea {
 	background-color: #ffffe0;
 }
 
+
 /* install-rtl */
 body.rtl {
 	font-family: Tahoma, arial;
@@ -239,7 +240,7 @@ body.rtl {
 }
 
 .rtl ul,
-.rtl ol {
+.rtl  ol {
 	padding: 5px 22px 5px 5px;
 }
 
@@ -255,14 +256,10 @@ body.rtl {
 	margin-right: 0;
 }
 
-.rtl #dbname,
-.rtl #uname,
-.rtl #pwd,
-.rtl #dbhost,
-.rtl #prefix,
 .rtl #user_login,
 .rtl #admin_email,
 .rtl #pass1,
 .rtl #pass2 {
 	direction: ltr;
 }
+

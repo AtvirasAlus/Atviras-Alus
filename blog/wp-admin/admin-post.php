@@ -29,3 +29,5 @@ if ( !empty($_REQUEST['action']) )
 	$action .= '_' . $_REQUEST['action'];
 
 do_action($action);
+
+?>

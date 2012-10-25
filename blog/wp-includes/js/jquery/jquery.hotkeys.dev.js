@@ -51,12 +51,10 @@ USAGE:
         
         // inspect if keystroke matches
         var inspector = function(event) {
-            // WP: not needed with newer jQuery
-            // event = jQuery.event.fix(event); // jQuery event normalization.
+            event = jQuery.event.fix(event); // jQuery event normalization.
             var element = event.target;
             // @ TextNode -> nodeType == 3
-            // WP: not needed with newer jQuery
-            // element = (element.nodeType==3) ? element.parentNode : element;
+            element = (element.nodeType==3) ? element.parentNode : element;
             
             if(opt['disableInInput']) { // Disable shortcut keys in Input, Textarea fields
                 var target = jQuery(element);
@@ -78,12 +76,11 @@ USAGE:
             // in opera + safari, the event.target is unpredictable.
             // for example: 'keydown' might be associated with HtmlBodyElement 
             // or the element where you last clicked with your mouse.
-            // WP: needed for all browsers 
-            // if (jQuery.browser.opera || jQuery.browser.safari){
+            if (jQuery.browser.opera || jQuery.browser.safari){
                 while (!that.all[element] && element.parentNode){
                     element = element.parentNode;
                 }
-            // }
+            }
             var cbMap = that.all[element].events[type].callbackMap;
             if(!shift && !ctrl && !alt && !meta) { // No Modifiers
                 mapPoint = cbMap[special] ||  cbMap[character]

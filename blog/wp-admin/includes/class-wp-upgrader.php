@@ -374,6 +374,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 		$this->strings['no_package'] = __('Update package not available.');
 		$this->strings['downloading_package'] = __('Downloading update from <span class="code">%s</span>&#8230;');
 		$this->strings['unpack_package'] = __('Unpacking the update&#8230;');
+		$this->strings['deactivate_plugin'] = __('Deactivating the plugin&#8230;');
 		$this->strings['remove_old'] = __('Removing the old version of the plugin&#8230;');
 		$this->strings['remove_old_failed'] = __('Could not remove the old plugin.');
 		$this->strings['process_failed'] = __('Plugin update failed.');
@@ -394,7 +395,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 		$this->init();
 		$this->install_strings();
 
-		add_filter('upgrader_source_selection', array($this, 'check_package') );
+		add_filter('upgrader_source_selection', array(&$this, 'check_package') );
 
 		$this->run(array(
 					'package' => $package,
@@ -404,14 +405,13 @@ class Plugin_Upgrader extends WP_Upgrader {
 					'hook_extra' => array()
 					));
 
-		remove_filter('upgrader_source_selection', array($this, 'check_package') );
+		remove_filter('upgrader_source_selection', array(&$this, 'check_package') );
 
 		if ( ! $this->result || is_wp_error($this->result) )
 			return $this->result;
 
 		// Force refresh of plugin update information
 		delete_site_transient('update_plugins');
-		wp_cache_delete( 'plugins', 'plugins' );
 
 		return true;
 	}
@@ -433,9 +433,9 @@ class Plugin_Upgrader extends WP_Upgrader {
 		// Get the URL to the zip file
 		$r = $current->response[ $plugin ];
 
-		add_filter('upgrader_pre_install', array($this, 'deactivate_plugin_before_upgrade'), 10, 2);
-		add_filter('upgrader_clear_destination', array($this, 'delete_old_plugin'), 10, 4);
-		//'source_selection' => array($this, 'source_selection'), //there's a trac ticket to move up the directory for zip's which are made a bit differently, useful for non-.org plugins.
+		add_filter('upgrader_pre_install', array(&$this, 'deactivate_plugin_before_upgrade'), 10, 2);
+		add_filter('upgrader_clear_destination', array(&$this, 'delete_old_plugin'), 10, 4);
+		//'source_selection' => array(&$this, 'source_selection'), //there's a trac ticket to move up the directory for zip's which are made a bit differently, useful for non-.org plugins.
 
 		$this->run(array(
 					'package' => $r->package,
@@ -448,15 +448,14 @@ class Plugin_Upgrader extends WP_Upgrader {
 				));
 
 		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter('upgrader_pre_install', array($this, 'deactivate_plugin_before_upgrade'));
-		remove_filter('upgrader_clear_destination', array($this, 'delete_old_plugin'));
+		remove_filter('upgrader_pre_install', array(&$this, 'deactivate_plugin_before_upgrade'));
+		remove_filter('upgrader_clear_destination', array(&$this, 'delete_old_plugin'));
 
 		if ( ! $this->result || is_wp_error($this->result) )
 			return $this->result;
 
 		// Force refresh of plugin update information
 		delete_site_transient('update_plugins');
-		wp_cache_delete( 'plugins', 'plugins' );
 	}
 
 	function bulk_upgrade($plugins) {
@@ -467,7 +466,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 
 		$current = get_site_transient( 'update_plugins' );
 
-		add_filter('upgrader_clear_destination', array($this, 'delete_old_plugin'), 10, 4);
+		add_filter('upgrader_clear_destination', array(&$this, 'delete_old_plugin'), 10, 4);
 
 		$this->skin->header();
 
@@ -534,11 +533,10 @@ class Plugin_Upgrader extends WP_Upgrader {
 		$this->skin->footer();
 
 		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter('upgrader_clear_destination', array($this, 'delete_old_plugin'));
+		remove_filter('upgrader_clear_destination', array(&$this, 'delete_old_plugin'));
 
 		// Force refresh of plugin update information
 		delete_site_transient('update_plugins');
-		wp_cache_delete( 'plugins', 'plugins' );
 
 		return $results;
 	}
@@ -596,6 +594,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 			return new WP_Error('bad_request', $this->strings['bad_request']);
 
 		if ( is_plugin_active($plugin) ) {
+			$this->skin->feedback('deactivate_plugin');
 			//Deactivate the plugin silently, Prevent deactivation hooks from running.
 			deactivate_plugins($plugin, true);
 		}
@@ -663,80 +662,6 @@ class Theme_Upgrader extends WP_Upgrader {
 		$this->strings['installing_package'] = __('Installing the theme&#8230;');
 		$this->strings['process_failed'] = __('Theme install failed.');
 		$this->strings['process_success'] = __('Theme installed successfully.');
-		/* translators: 1: theme name, 2: version */
-		$this->strings['process_success_specific'] = __('Successfully installed the theme <strong>%1$s %2$s</strong>.');
-		$this->strings['parent_theme_search'] = __('This theme requires a parent theme. Checking if it is installed&#8230;');
-		/* translators: 1: theme name, 2: version */
-		$this->strings['parent_theme_prepare_install'] = __('Preparing to install <strong>%1$s %2$s</strong>&#8230;');
-		/* translators: 1: theme name, 2: version */
-		$this->strings['parent_theme_currently_installed'] = __('The parent theme, <strong>%1$s %2$s</strong>, is currently installed.');
-		/* translators: 1: theme name, 2: version */
-		$this->strings['parent_theme_install_success'] = __('Successfully installed the parent theme, <strong>%1$s %2$s</strong>.');
-		$this->strings['parent_theme_not_found'] = __('<strong>The parent theme could not be found.</strong> You will need to install the parent theme, <strong>%s</strong>, before you can use this child theme.');
-	}
-
-	function check_parent_theme_filter($install_result, $hook_extra, $child_result) {
-		// Check to see if we need to install a parent theme
-		$theme_info = $this->theme_info();
-
-		if ( ! $theme_info->parent() )
-			return $install_result;
-
-		$this->skin->feedback( 'parent_theme_search' );
-
-		if ( ! $theme_info->parent()->errors() ) {
-			$this->skin->feedback( 'parent_theme_currently_installed', $theme_info->parent()->display('Name'), $theme_info->parent()->display('Version') );
-			// We already have the theme, fall through.
-			return $install_result;
-		}
-
-		// We don't have the parent theme, lets install it
-		$api = themes_api('theme_information', array('slug' => $theme_info->get('Template'), 'fields' => array('sections' => false, 'tags' => false) ) ); //Save on a bit of bandwidth.
-
-		if ( ! $api || is_wp_error($api) ) {
-			$this->skin->feedback( 'parent_theme_not_found', $theme_info->get('Template') );
-			// Don't show activate or preview actions after install
-			add_filter('install_theme_complete_actions', array($this, 'hide_activate_preview_actions') );
-			return $install_result;
-		}
-
-		// Backup required data we're going to override:
-		$child_api = $this->skin->api;
-		$child_success_message = $this->strings['process_success'];
-
-		// Override them
-		$this->skin->api = $api;
-		$this->strings['process_success_specific'] = $this->strings['parent_theme_install_success'];//, $api->name, $api->version);
-
-		$this->skin->feedback('parent_theme_prepare_install', $api->name, $api->version);
-
-		add_filter('install_theme_complete_actions', '__return_false', 999); // Don't show any actions after installing the theme.
-
-		// Install the parent theme
-		$parent_result = $this->run( array(
-			'package' => $api->download_link,
-			'destination' => WP_CONTENT_DIR . '/themes',
-			'clear_destination' => false, //Do not overwrite files.
-			'clear_working' => true
-		) );
-
-		if ( is_wp_error($parent_result) )
-			add_filter('install_theme_complete_actions', array($this, 'hide_activate_preview_actions') );
-
-		// Start cleaning up after the parents installation
-		remove_filter('install_theme_complete_actions', '__return_false', 999);
-
-		// Reset child's result and data
-		$this->result = $child_result;
-		$this->skin->api = $child_api;
-		$this->strings['process_success'] = $child_success_message;
-
-		return $install_result;
-	}
-
-	function hide_activate_preview_actions($actions) {
-		unset($actions['activate'], $actions['preview']);
-		return $actions;
 	}
 
 	function install($package) {
@@ -744,8 +669,7 @@ class Theme_Upgrader extends WP_Upgrader {
 		$this->init();
 		$this->install_strings();
 
-		add_filter('upgrader_source_selection', array($this, 'check_package') );
-		add_filter('upgrader_post_install', array($this, 'check_parent_theme_filter'), 10, 3);
+		add_filter('upgrader_source_selection', array(&$this, 'check_package') );
 
 		$options = array(
 						'package' => $package,
@@ -756,17 +680,13 @@ class Theme_Upgrader extends WP_Upgrader {
 
 		$this->run($options);
 
-		remove_filter('upgrader_source_selection', array($this, 'check_package') );
-		remove_filter('upgrader_post_install', array($this, 'check_parent_theme_filter'), 10, 3);
+		remove_filter('upgrader_source_selection', array(&$this, 'check_package') );
 
 		if ( ! $this->result || is_wp_error($this->result) )
 			return $this->result;
 
 		// Force refresh of theme update information
 		delete_site_transient('update_themes');
-		search_theme_directories( true );
-		foreach ( wp_get_themes() as $theme )
-			$theme->cache_delete();
 
 		return true;
 	}
@@ -788,9 +708,9 @@ class Theme_Upgrader extends WP_Upgrader {
 
 		$r = $current->response[ $theme ];
 
-		add_filter('upgrader_pre_install', array($this, 'current_before'), 10, 2);
-		add_filter('upgrader_post_install', array($this, 'current_after'), 10, 2);
-		add_filter('upgrader_clear_destination', array($this, 'delete_old_theme'), 10, 4);
+		add_filter('upgrader_pre_install', array(&$this, 'current_before'), 10, 2);
+		add_filter('upgrader_post_install', array(&$this, 'current_after'), 10, 2);
+		add_filter('upgrader_clear_destination', array(&$this, 'delete_old_theme'), 10, 4);
 
 		$options = array(
 						'package' => $r['package'],
@@ -804,18 +724,15 @@ class Theme_Upgrader extends WP_Upgrader {
 
 		$this->run($options);
 
-		remove_filter('upgrader_pre_install', array($this, 'current_before'), 10, 2);
-		remove_filter('upgrader_post_install', array($this, 'current_after'), 10, 2);
-		remove_filter('upgrader_clear_destination', array($this, 'delete_old_theme'), 10, 4);
+		remove_filter('upgrader_pre_install', array(&$this, 'current_before'), 10, 2);
+		remove_filter('upgrader_post_install', array(&$this, 'current_after'), 10, 2);
+		remove_filter('upgrader_clear_destination', array(&$this, 'delete_old_theme'), 10, 4);
 
 		if ( ! $this->result || is_wp_error($this->result) )
 			return $this->result;
 
 		// Force refresh of theme update information
 		delete_site_transient('update_themes');
-		search_theme_directories( true );
-		foreach ( wp_get_themes() as $theme )
-			$theme->cache_delete();
 
 		return true;
 	}
@@ -828,9 +745,9 @@ class Theme_Upgrader extends WP_Upgrader {
 
 		$current = get_site_transient( 'update_themes' );
 
-		add_filter('upgrader_pre_install', array($this, 'current_before'), 10, 2);
-		add_filter('upgrader_post_install', array($this, 'current_after'), 10, 2);
-		add_filter('upgrader_clear_destination', array($this, 'delete_old_theme'), 10, 4);
+		add_filter('upgrader_pre_install', array(&$this, 'current_before'), 10, 2);
+		add_filter('upgrader_post_install', array(&$this, 'current_after'), 10, 2);
+		add_filter('upgrader_clear_destination', array(&$this, 'delete_old_theme'), 10, 4);
 
 		$this->skin->header();
 
@@ -897,15 +814,12 @@ class Theme_Upgrader extends WP_Upgrader {
 		$this->skin->footer();
 
 		// Cleanup our hooks, in case something else does a upgrade on this connection.
-		remove_filter('upgrader_pre_install', array($this, 'current_before'), 10, 2);
-		remove_filter('upgrader_post_install', array($this, 'current_after'), 10, 2);
-		remove_filter('upgrader_clear_destination', array($this, 'delete_old_theme'), 10, 4);
+		remove_filter('upgrader_pre_install', array(&$this, 'current_before'), 10, 2);
+		remove_filter('upgrader_post_install', array(&$this, 'current_after'), 10, 2);
+		remove_filter('upgrader_clear_destination', array(&$this, 'delete_old_theme'), 10, 4);
 
 		// Force refresh of theme update information
 		delete_site_transient('update_themes');
-		search_theme_directories( true );
-		foreach ( wp_get_themes() as $theme )
-			$theme->cache_delete();
 
 		return $results;
 	}
@@ -921,17 +835,14 @@ class Theme_Upgrader extends WP_Upgrader {
 		if ( ! is_dir($working_directory) ) // Sanity check, if the above fails, lets not prevent installation.
 			return $source;
 
-		// A proper archive should have a style.css file in the single subdirectory
-		if ( ! file_exists( $working_directory . 'style.css' ) )
+		if ( ! file_exists( $working_directory . 'style.css' ) ) // A proper archive should have a style.css file in the single subdirectory
 			return new WP_Error( 'incompatible_archive', $this->strings['incompatible_archive'], __('The theme is missing the <code>style.css</code> stylesheet.') );
 
-		$info = get_file_data( $working_directory . 'style.css', array( 'Name' => 'Theme Name', 'Template' => 'Template' ) );
-
-		if ( empty( $info['Name'] ) )
+		$info = get_theme_data( $working_directory . 'style.css' );
+		if ( empty($info['Name']) )
 			return new WP_Error( 'incompatible_archive', $this->strings['incompatible_archive'], __("The <code>style.css</code> stylesheet doesn't contain a valid theme header.") );
 
-		// If it's not a child theme, it must have at least an index.php to be legit.
-		if ( empty( $info['Template'] ) && ! file_exists( $working_directory . 'index.php' ) )
+		if ( empty($info['Template']) && ! file_exists( $working_directory . 'index.php' ) ) // If no template is set, it must have at least an index.php to be legit.
 			return new WP_Error( 'incompatible_archive', $this->strings['incompatible_archive'], __('The theme is missing the <code>index.php</code> file.') );
 
 		return $source;
@@ -959,15 +870,15 @@ class Theme_Upgrader extends WP_Upgrader {
 
 		$theme = isset($theme['theme']) ? $theme['theme'] : '';
 
-		if ( $theme != get_stylesheet() ) // If not current
+		if ( $theme != get_stylesheet() ) //If not current
 			return $return;
 
-		// Ensure stylesheet name hasnt changed after the upgrade:
+		//Ensure stylesheet name hasnt changed after the upgrade:
 		// @TODO: Note, This doesn't handle the Template changing, or the Template name changing.
 		if ( $theme == get_stylesheet() && $theme != $this->result['destination_name'] ) {
 			$theme_info = $this->theme_info();
 			$stylesheet = $this->result['destination_name'];
-			$template = $theme_info->get_template();
+			$template = !empty($theme_info['Template']) ? $theme_info['Template'] : $stylesheet;
 			switch_theme($template, $stylesheet, true);
 		}
 
@@ -1000,7 +911,7 @@ class Theme_Upgrader extends WP_Upgrader {
 			else
 				return false;
 		}
-		return wp_get_theme( $theme, WP_CONTENT_DIR . '/themes/' );
+		return get_theme_data(WP_CONTENT_DIR . '/themes/' . $theme . '/style.css');
 	}
 
 }
@@ -1022,7 +933,6 @@ class Core_Upgrader extends WP_Upgrader {
 		$this->strings['downloading_package'] = __('Downloading update from <span class="code">%s</span>&#8230;');
 		$this->strings['unpack_package'] = __('Unpacking the update&#8230;');
 		$this->strings['copy_failed'] = __('Could not copy files.');
-		$this->strings['copy_failed_space'] = __('Could not copy files. You may have run out of disk space.' );
 	}
 
 	function upgrade($current) {
@@ -1074,9 +984,6 @@ class Core_Upgrader extends WP_Upgrader {
 		$wp_filesystem->chmod($wp_dir . 'wp-admin/includes/update-core.php', FS_CHMOD_FILE);
 
 		require(ABSPATH . 'wp-admin/includes/update-core.php');
-
-		if ( ! function_exists( 'update_core' ) )
-			return new WP_Error( 'copy_failed_space', $this->strings['copy_failed_space'] );
 
 		return update_core($working_dir, $wp_dir);
 	}
@@ -1199,6 +1106,7 @@ class Plugin_Upgrader_Skin extends WP_Upgrader_Skin {
 	function after() {
 		$this->plugin = $this->upgrader->plugin_info();
 		if ( !empty($this->plugin) && !is_wp_error($this->result) && $this->plugin_active ){
+			show_message(__('Reactivating the plugin&#8230;'));
 			echo '<iframe style="border:0;overflow:hidden" width="100%" height="170px" src="' . wp_nonce_url('update.php?action=activate-plugin&networkwide=' . $this->plugin_network_active . '&plugin=' . $this->plugin, 'activate-plugin_' . $this->plugin) .'"></iframe>';
 		}
 
@@ -1382,13 +1290,12 @@ class Bulk_Theme_Upgrader_Skin extends Bulk_Upgrader_Skin {
 	}
 
 	function before() {
-		parent::before( $this->theme_info->display('Name') );
+		parent::before($this->theme_info['Name']);
 	}
 
 	function after() {
-		parent::after( $this->theme_info->display('Name') );
+		parent::after($this->theme_info['Name']);
 	}
-
 	function bulk_footer() {
 		parent::bulk_footer();
 		$update_actions =  array(
@@ -1396,7 +1303,7 @@ class Bulk_Theme_Upgrader_Skin extends Bulk_Upgrader_Skin {
 			'updates_page' => '<a href="' . self_admin_url('update-core.php') . '" title="' . esc_attr__('Go to WordPress Updates page') . '" target="_parent">' . __('Return to WordPress Updates') . '</a>'
 		);
 
-		$update_actions = apply_filters('update_bulk_theme_complete_actions', $update_actions, $this->theme_info );
+		$update_actions = apply_filters('update_bulk_theme_complete_actions', $update_actions, $this->theme_info);
 		if ( ! empty($update_actions) )
 			$this->feedback(implode(' | ', (array)$update_actions));
 	}
@@ -1455,6 +1362,7 @@ class Plugin_Installer_Skin extends WP_Upgrader_Skin {
 		else
 			$install_actions['plugins_page'] = '<a href="' . self_admin_url('plugins.php') . '" title="' . esc_attr__('Return to Plugins page') . '" target="_parent">' . __('Return to Plugins page') . '</a>';
 
+
 		if ( ! $this->result || is_wp_error($this->result) ) {
 			unset( $install_actions['activate_plugin'] );
 			unset( $install_actions['network_activate'] );
@@ -1489,8 +1397,10 @@ class Theme_Installer_Skin extends WP_Upgrader_Skin {
 	}
 
 	function before() {
-		if ( !empty($this->api) )
-			$this->upgrader->strings['process_success'] = sprintf( $this->upgrader->strings['process_success_specific'], $this->api->name, $this->api->version);
+		if ( !empty($this->api) ) {
+			/* translators: 1: theme name, 2: version */
+			$this->upgrader->strings['process_success'] = sprintf( __('Successfully installed the theme <strong>%1$s %2$s</strong>.'), $this->api->name, $this->api->version);
+		}
 	}
 
 	function after() {
@@ -1498,33 +1408,22 @@ class Theme_Installer_Skin extends WP_Upgrader_Skin {
 			return;
 
 		$theme_info = $this->upgrader->theme_info();
-		if ( empty( $theme_info ) )
+		if ( empty($theme_info) )
 			return;
-
-		$name       = $theme_info->display('Name');
+		$name = $theme_info['Name'];
 		$stylesheet = $this->upgrader->result['destination_name'];
-		$template   = $theme_info->get_template();
+		$template = !empty($theme_info['Template']) ? $theme_info['Template'] : $stylesheet;
 
-		$preview_link = add_query_arg( array(
-			'preview'    => 1,
-			'template'   => $template,
-			'stylesheet' => $stylesheet,
-		), trailingslashit( get_home_url() ) );
+		$preview_link = htmlspecialchars( add_query_arg( array('preview' => 1, 'template' => $template, 'stylesheet' => $stylesheet, 'preview_iframe' => 1, 'TB_iframe' => 'true' ), trailingslashit(esc_url(get_option('home'))) ) );
+		$activate_link = wp_nonce_url("themes.php?action=activate&amp;template=" . urlencode($template) . "&amp;stylesheet=" . urlencode($stylesheet), 'switch-theme_' . $template);
 
-		$activate_link = add_query_arg( array(
-			'action'     => 'activate',
-			'template'   => $template,
-			'stylesheet' => $stylesheet,
-		), admin_url('themes.php') );
-		$activate_link = wp_nonce_url( $activate_link, 'switch-theme_' . $stylesheet );
-
-		$install_actions = array();
-		$install_actions['preview']  = '<a href="' . esc_url( $preview_link ) . '" class="hide-if-customize" title="' . esc_attr( sprintf( __('Preview &#8220;%s&#8221;'), $name ) ) . '">' . __('Preview') . '</a>';
-		$install_actions['preview'] .= '<a href="' . wp_customize_url( $stylesheet ) . '" class="hide-if-no-customize load-customize" title="' . esc_attr( sprintf( __('Preview &#8220;%s&#8221;'), $name ) ) . '">' . __('Live Preview') . '</a>';
-		$install_actions['activate'] = '<a href="' . esc_url( $activate_link ) . '" class="activatelink" title="' . esc_attr( sprintf( __('Activate &#8220;%s&#8221;'), $name ) ) . '">' . __('Activate') . '</a>';
+		$install_actions = array(
+			'preview' => '<a href="' . $preview_link . '" class="thickbox thickbox-preview" title="' . esc_attr(sprintf(__('Preview &#8220;%s&#8221;'), $name)) . '">' . __('Preview') . '</a>',
+			'activate' => '<a href="' . $activate_link .  '" class="activatelink" title="' . esc_attr( sprintf( __('Activate &#8220;%s&#8221;'), $name ) ) . '">' . __('Activate') . '</a>'
+							);
 
 		if ( is_network_admin() && current_user_can( 'manage_network_themes' ) )
-			$install_actions['network_enable'] = '<a href="' . esc_url( wp_nonce_url( 'themes.php?action=enable&amp;theme=' . $stylesheet, 'enable-theme_' . $stylesheet ) ) . '" title="' . esc_attr__( 'Enable this theme for all sites in this network' ) . '" target="_parent">' . __( 'Network Enable' ) . '</a>';
+			$install_actions['network_enable'] = '<a href="' . esc_url( wp_nonce_url( 'themes.php?action=enable&amp;theme=' . $template, 'enable-theme_' . $template ) ) . '" title="' . esc_attr__( 'Enable this theme for all sites in this network' ) . '" target="_parent">' . __( 'Network Enable' ) . '</a>';
 
 		if ( $this->type == 'web' )
 			$install_actions['themes_page'] = '<a href="' . self_admin_url('theme-install.php') . '" title="' . esc_attr__('Return to Theme Installer') . '" target="_parent">' . __('Return to Theme Installer') . '</a>';
@@ -1564,34 +1463,22 @@ class Theme_Upgrader_Skin extends WP_Upgrader_Skin {
 	function after() {
 
 		$update_actions = array();
-		if ( ! empty( $this->upgrader->result['destination_name'] ) && $theme_info = $this->upgrader->theme_info() ) {
-			$name       = $theme_info->display('Name');
+		if ( !empty($this->upgrader->result['destination_name']) &&
+			($theme_info = $this->upgrader->theme_info()) &&
+			!empty($theme_info) ) {
+
+			$name = $theme_info['Name'];
 			$stylesheet = $this->upgrader->result['destination_name'];
-			$template   = $theme_info->get_template();
+			$template = !empty($theme_info['Template']) ? $theme_info['Template'] : $stylesheet;
 
-			$preview_link = add_query_arg( array(
-				'preview'    => 1,
-				'template'   => $template,
-				'stylesheet' => $stylesheet,
-			), trailingslashit( get_home_url() ) );
+			$preview_link = htmlspecialchars( add_query_arg( array('preview' => 1, 'template' => $template, 'stylesheet' => $stylesheet, 'TB_iframe' => 'true' ), trailingslashit(esc_url(get_option('home'))) ) );
+			$activate_link = wp_nonce_url("themes.php?action=activate&amp;template=" . urlencode($template) . "&amp;stylesheet=" . urlencode($stylesheet), 'switch-theme_' . $template);
 
-			$activate_link = add_query_arg( array(
-				'action'     => 'activate',
-				'template'   => $template,
-				'stylesheet' => $stylesheet,
-			), admin_url('themes.php') );
-			$activate_link = wp_nonce_url( $activate_link, 'switch-theme_' . $stylesheet );
+			$update_actions['preview'] = '<a href="' . $preview_link . '" class="thickbox thickbox-preview" title="' . esc_attr(sprintf(__('Preview &#8220;%s&#8221;'), $name)) . '">' . __('Preview') . '</a>';
+			$update_actions['activate'] = '<a href="' . $activate_link .  '" class="activatelink" title="' . esc_attr( sprintf( __('Activate &#8220;%s&#8221;'), $name ) ) . '">' . __('Activate') . '</a>';
 
-			if ( get_stylesheet() == $stylesheet ) {
-				$update_actions['preview']  = '<a href="' . wp_customize_url( $stylesheet ) . '" class="hide-if-no-customize load-customize" title="' . esc_attr( sprintf( __('Customize &#8220;%s&#8221;'), $name ) ) . '">' . __('Customize') . '</a>';
-			} else {
-				$update_actions['preview']  = '<a href="' . esc_url( $preview_link ) . '" class="hide-if-customize" title="' . esc_attr( sprintf( __('Preview &#8220;%s&#8221;'), $name ) ) . '">' . __('Preview') . '</a>';
-				$update_actions['preview'] .= '<a href="' . wp_customize_url( $stylesheet ) . '" class="hide-if-no-customize load-customize" title="' . esc_attr( sprintf( __('Preview &#8220;%s&#8221;'), $name ) ) . '">' . __('Live Preview') . '</a>';
-				$update_actions['activate'] = '<a href="' . esc_url( $activate_link ) . '" class="activatelink" title="' . esc_attr( sprintf( __('Activate &#8220;%s&#8221;'), $name ) ) . '">' . __('Activate') . '</a>';
-			}
-
-			if ( ! $this->result || is_wp_error( $this->result ) || is_network_admin() )
-				unset( $update_actions['preview'], $update_actions['activate'] );
+			if ( ( ! $this->result || is_wp_error($this->result) ) || $stylesheet == get_stylesheet() )
+				unset($update_actions['preview'], $update_actions['activate']);
 		}
 
 		$update_actions['themes_page'] = '<a href="' . self_admin_url('themes.php') . '" title="' . esc_attr__('Return to Themes page') . '" target="_parent">' . __('Return to Themes page') . '</a>';

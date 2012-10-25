@@ -7,7 +7,7 @@
  * @since 3.1.0
  */
 
-define('WP_USER_ADMIN', true);
+define('WP_USER_ADMIN', TRUE);
 
 require_once( dirname(dirname(__FILE__)) . '/admin.php');
 
@@ -23,3 +23,5 @@ if ( $redirect_user_admin_request ) {
 	exit;
 }
 unset( $redirect_user_admin_request );
+
+?>

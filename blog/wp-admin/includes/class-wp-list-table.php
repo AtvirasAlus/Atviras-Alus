@@ -86,7 +86,7 @@ class WP_List_Table {
 
 		$screen = get_current_screen();
 
-		add_filter( "manage_{$screen->id}_columns", array( $this, 'get_columns' ), 0 );
+		add_filter( "manage_{$screen->id}_columns", array( &$this, 'get_columns' ), 0 );
 
 		if ( !$args['plural'] )
 			$args['plural'] = $screen->base;
@@ -98,7 +98,7 @@ class WP_List_Table {
 
 		if ( $args['ajax'] ) {
 			// wp_enqueue_script( 'list-table' );
-			add_action( 'admin_footer', array( $this, '_js_vars' ) );
+			add_action( 'admin_footer', array( &$this, '_js_vars' ) );
 		}
 	}
 
@@ -212,7 +212,7 @@ class WP_List_Table {
 ?>
 <p class="search-box">
 	<label class="screen-reader-text" for="<?php echo $input_id ?>"><?php echo $text; ?>:</label>
-	<input type="search" id="<?php echo $input_id ?>" name="s" value="<?php _admin_search_query(); ?>" />
+	<input type="text" id="<?php echo $input_id ?>" name="s" value="<?php _admin_search_query(); ?>" />
 	<?php submit_button( $text, 'button', false, false, array('id' => 'search-submit') ); ?>
 </p>
 <?php
@@ -386,8 +386,7 @@ class WP_List_Table {
 			printf( "<option %s value='%s'>%s</option>\n",
 				selected( $m, $year . $month, false ),
 				esc_attr( $arc_row->year . $month ),
-				/* translators: 1: month name, 2: 4-digit year */
-				sprintf( __( '%1$s %2$d' ), $wp_locale->get_month( $month ), $year )
+				$wp_locale->get_month( $month ) . " $year"
 			);
 		}
 ?>
@@ -484,7 +483,7 @@ class WP_List_Table {
 		if ( empty( $this->_pagination_args ) )
 			return;
 
-		extract( $this->_pagination_args, EXTR_SKIP );
+		extract( $this->_pagination_args );
 
 		$output = '<span class="displaying-num">' . sprintf( _n( '1 item', '%s items', $total_items ), number_format_i18n( $total_items ) ) . '</span>';
 
@@ -519,8 +518,9 @@ class WP_List_Table {
 		if ( 'bottom' == $which )
 			$html_current_page = $current;
 		else
-			$html_current_page = sprintf( "<input class='current-page' title='%s' type='text' name='paged' value='%s' size='%d' />",
+			$html_current_page = sprintf( "<input class='current-page' title='%s' type='text' name='%s' value='%s' size='%d' />",
 				esc_attr__( 'Current page' ),
+				esc_attr( 'paged' ),
 				$current,
 				strlen( $total_pages )
 			);
@@ -542,10 +542,7 @@ class WP_List_Table {
 			'&raquo;'
 		);
 
-		$pagination_links_class = 'pagination-links';
-		if ( ! empty( $infinite_scroll ) )
-			$pagination_links_class = ' hide-if-js';
-		$output .= "\n<span class='$pagination_links_class'>" . join( "\n", $page_links ) . '</span>';
+		$output .= "\n<span class='pagination-links'>" . join( "\n", $page_links ) . '</span>';
 
 		if ( $total_pages )
 			$page_class = $total_pages < 2 ? ' one-page' : '';
@@ -853,7 +850,7 @@ class WP_List_Table {
 			}
 			elseif ( method_exists( $this, 'column_' . $column_name ) ) {
 				echo "<td $attributes>";
-				echo call_user_func( array( $this, 'column_' . $column_name ), $item );
+				echo call_user_func( array( &$this, 'column_' . $column_name ), $item );
 				echo "</td>";
 			}
 			else {
@@ -874,7 +871,7 @@ class WP_List_Table {
 		$this->prepare_items();
 
 		extract( $this->_args );
-		extract( $this->_pagination_args, EXTR_SKIP );
+		extract( $this->_pagination_args );
 
 		ob_start();
 		if ( ! empty( $_REQUEST['no_placeholder'] ) )
@@ -916,3 +913,4 @@ class WP_List_Table {
 		printf( "<script type='text/javascript'>list_args = %s;</script>\n", json_encode( $args ) );
 	}
 }
+?>

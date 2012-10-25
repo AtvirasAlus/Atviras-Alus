@@ -62,22 +62,13 @@ var switchEditors = {
 	},
 
 	_wp_Nop : function(content) {
-		var blocklist1, blocklist2, preserve_linebreaks = false, preserve_br = false;
+		var blocklist1, blocklist2;
 
 		// Protect pre|script tags
 		if ( content.indexOf('<pre') != -1 || content.indexOf('<script') != -1 ) {
-			preserve_linebreaks = true;
 			content = content.replace(/<(pre|script)[^>]*>[\s\S]+?<\/\1>/g, function(a) {
-				a = a.replace(/<br ?\/?>(\r\n|\n)?/g, '<wp-temp-lb>');
-				return a.replace(/<\/?p( [^>]*)?>(\r\n|\n)?/g, '<wp-temp-lb>');
-			});
-		}
-
-		// keep <br> tags inside captions and remove line breaks
-		if ( content.indexOf('[caption') != -1 ) {
-			preserve_br = true;
-			content = content.replace(/\[caption[\s\S]+?\[\/caption\]/g, function(a) {
-				return a.replace(/<br([^>]*)>/g, '<wp-temp-br$1>').replace(/[\r\n\t]+/, '');
+				a = a.replace(/<br ?\/?>(\r\n|\n)?/g, '<wp_temp>');
+				return a.replace(/<\/?p( [^>]*)?>(\r\n|\n)?/g, '<wp_temp>');
 			});
 		}
 
@@ -128,19 +119,13 @@ var switchEditors = {
 		content = content.replace(/[\s\u00a0]+$/, '');
 
 		// put back the line breaks in pre|script
-		if ( preserve_linebreaks )
-			content = content.replace(/<wp-temp-lb>/g, '\n');
-
-		// and the <br> tags in captions
-		if ( preserve_br )
-			content = content.replace(/<wp-temp-br([^>]*)>/g, '<br$1>');
+		content = content.replace(/<wp_temp>/g, '\n');
 
 		return content;
 	},
 
 	_wp_Autop : function(pee) {
-		var preserve_linebreaks = false, preserve_br = false,
-			blocklist = 'table|thead|tfoot|tbody|tr|td|th|caption|col|colgroup|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|p|h[1-6]|fieldset|legend|hr|noscript|menu|samp|header|footer|article|section|hgroup|nav|aside|details|summary';
+		var blocklist = 'table|thead|tfoot|tbody|tr|td|th|caption|col|colgroup|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|p|h[1-6]|fieldset|legend|hr|noscript|menu|samp|header|footer|article|section|hgroup|nav|aside|details|summary';
 
 		if ( pee.indexOf('<object') != -1 ) {
 			pee = pee.replace(/<object[\s\S]+?<\/object>/g, function(a){
@@ -154,24 +139,8 @@ var switchEditors = {
 
 		// Protect pre|script tags
 		if ( pee.indexOf('<pre') != -1 || pee.indexOf('<script') != -1 ) {
-			preserve_linebreaks = true;
 			pee = pee.replace(/<(pre|script)[^>]*>[\s\S]+?<\/\1>/g, function(a) {
-				return a.replace(/(\r\n|\n)/g, '<wp-temp-lb>');
-			});
-		}
-
-		// keep <br> tags inside captions and convert line breaks
-		if ( pee.indexOf('[caption') != -1 ) {
-			preserve_br = true;
-			pee = pee.replace(/\[caption[\s\S]+?\[\/caption\]/g, function(a) {
-				// keep existing <br>
-				a = a.replace(/<br([^>]*)>/g, '<wp-temp-br$1>');
-				// no line breaks inside HTML tags
-				a = a.replace(/<[a-zA-Z0-9]+( [^<>]+)?>/g, function(b){
-					return b.replace(/[\r\n\t]+/, ' ');
-				});
-				// convert remaining line breaks to <br>
-				return a.replace(/\s*\n\s*/g, '<wp-temp-br />');
+				return a.replace(/(\r\n|\n)/g, '<wp_temp_br>');
 			});
 		}
 
@@ -203,11 +172,7 @@ var switchEditors = {
 		});
 
 		// put back the line breaks in pre|script
-		if ( preserve_linebreaks )
-			pee = pee.replace(/<wp-temp-lb>/g, '\n');
-
-		if ( preserve_br )
-			pee = pee.replace(/<wp-temp-br([^>]*)>/g, '<br$1>');
+		pee = pee.replace(/<wp_temp_br>/g, '\n');
 
 		return pee;
 	},
@@ -238,3 +203,4 @@ var switchEditors = {
 		return o.data;
 	}
 }
+

@@ -208,3 +208,5 @@ function is_wp_error($thing) {
 		return true;
 	return false;
 }
+
+?>

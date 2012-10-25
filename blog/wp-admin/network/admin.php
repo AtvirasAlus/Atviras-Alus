@@ -7,7 +7,7 @@
  * @since 3.1.0
  */
 
-define( 'WP_NETWORK_ADMIN', true );
+define( 'WP_NETWORK_ADMIN', TRUE );
 
 /** Load WordPress Administration Bootstrap */
 require_once( dirname( dirname( __FILE__ ) ) . '/admin.php' );
@@ -22,3 +22,4 @@ if ( $redirect_network_admin_request ) {
 	exit;
 }
 unset( $redirect_network_admin_request );
+?>

@@ -27,12 +27,12 @@ if ( !function_exists('wp_set_current_user') ) :
 function wp_set_current_user($id, $name = '') {
 	global $current_user;
 
-	if ( isset( $current_user ) && ( $current_user instanceof WP_User ) && ( $id == $current_user->ID ) )
+	if ( isset($current_user) && ($id == $current_user->ID) )
 		return $current_user;
 
-	$current_user = new WP_User( $id, $name );
+	$current_user = new WP_User($id, $name);
 
-	setup_userdata( $current_user->ID );
+	setup_userdata($current_user->ID);
 
 	do_action('set_current_user');
 
@@ -74,37 +74,20 @@ if ( !function_exists('get_currentuserinfo') ) :
 function get_currentuserinfo() {
 	global $current_user;
 
-	if ( ! empty( $current_user ) ) {
-		if ( $current_user instanceof WP_User )
-			return;
-
-		// Upgrade stdClass to WP_User
-		if ( is_object( $current_user ) && isset( $current_user->ID ) ) {
-			$cur_id = $current_user->ID;
-			$current_user = null;
-			wp_set_current_user( $cur_id );
-			return;
-		}
-
-		// $current_user has a junk value. Force to WP_User with ID 0.
-		$current_user = null;
-		wp_set_current_user( 0 );
+	if ( defined('XMLRPC_REQUEST') && XMLRPC_REQUEST )
 		return false;
-	}
 
-	if ( defined('XMLRPC_REQUEST') && XMLRPC_REQUEST ) {
-		wp_set_current_user( 0 );
-		return false;
-	}
+	if ( ! empty($current_user) )
+		return;
 
 	if ( ! $user = wp_validate_auth_cookie() ) {
-		 if ( is_blog_admin() || is_network_admin() || empty( $_COOKIE[LOGGED_IN_COOKIE] ) || !$user = wp_validate_auth_cookie( $_COOKIE[LOGGED_IN_COOKIE], 'logged_in' ) ) {
-		 	wp_set_current_user( 0 );
+		 if ( is_blog_admin() || is_network_admin() || empty($_COOKIE[LOGGED_IN_COOKIE]) || !$user = wp_validate_auth_cookie($_COOKIE[LOGGED_IN_COOKIE], 'logged_in') ) {
+		 	wp_set_current_user(0);
 		 	return false;
 		 }
 	}
 
-	wp_set_current_user( $user );
+	wp_set_current_user($user);
 }
 endif;
 
@@ -128,8 +111,8 @@ if ( !function_exists('get_user_by') ) :
  *
  * @since 2.8.0
  *
- * @param string $field The field to retrieve the user with. id | slug | email | login
- * @param int|string $value A value for $field. A user ID, slug, email address, or login name.
+ * @param string $field The field to retrieve the user with.  id | slug | email | login
+ * @param int|string $value A value for $field.  A user ID, slug, email address, or login name.
  * @return bool|object False on failure, WP_User object on success
  */
 function get_user_by( $field, $value ) {
@@ -156,7 +139,13 @@ if ( !function_exists('cache_users') ) :
 function cache_users( $user_ids ) {
 	global $wpdb;
 
-	$clean = _get_non_cached_ids( $user_ids, 'users' );
+	$clean = array();
+	foreach ( $user_ids as $id ) {
+		$id = (int) $id;
+		if ( !wp_cache_get( $id, 'users' ) ) {
+			$clean[] = $id;
+		}
+	}
 
 	if ( empty( $clean ) )
 		return;
@@ -726,7 +715,7 @@ if ( !function_exists('is_user_logged_in') ) :
 function is_user_logged_in() {
 	$user = wp_get_current_user();
 
-	if ( ! $user->exists() )
+	if ( empty( $user->ID ) )
 		return false;
 
 	return true;
@@ -840,12 +829,8 @@ function check_ajax_referer( $action = -1, $query_arg = false, $die = true ) {
 
 	$result = wp_verify_nonce( $nonce, $action );
 
-	if ( $die && false == $result ) {
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX )
-			wp_die( -1 );
-		else
-			die( '-1' );
-	}
+	if ( $die && false == $result )
+		die('-1');
 
 	do_action('check_ajax_referer', $action, $result);
 
@@ -944,7 +929,7 @@ if ( !function_exists('wp_validate_redirect') ) :
  *		WordPress host string and $location host string.
  *
  * @param string $location The redirect to validate
- * @param string $default The value to return if $location is not allowed
+ * @param string $default The value to return is $location is not allowed
  * @return string redirect-sanitized URL
  **/
 function wp_validate_redirect($location, $default = '') {
@@ -1291,89 +1276,108 @@ endif;
 
 if ( !function_exists('wp_salt') ) :
 /**
- * Get salt to add to hashes.
+ * Get salt to add to hashes to help prevent attacks.
  *
- * Salts are created using secret keys. Secret keys are located in two places:
- * in the database and in the wp-config.php file. The secret key in the database
- * is randomly generated and will be appended to the secret keys in wp-config.php.
+ * The secret key is located in two places: the database in case the secret key
+ * isn't defined in the second place, which is in the wp-config.php file. If you
+ * are going to set the secret key, then you must do so in the wp-config.php
+ * file.
  *
- * The secret keys in wp-config.php should be updated to strong, random keys to maximize
- * security. Below is an example of how the secret key constants are defined.
- * Do not paste this example directly into wp-config.php. Instead, have a
- * {@link https://api.wordpress.org/secret-key/1.1/salt/ secret key created} just
- * for you.
+ * The secret key in the database is randomly generated and will be appended to
+ * the secret key that is in wp-config.php file in some instances. It is
+ * important to have the secret key defined or changed in wp-config.php.
+ *
+ * If you have installed WordPress 2.5 or later, then you will have the
+ * SECRET_KEY defined in the wp-config.php already. You will want to change the
+ * value in it because hackers will know what it is. If you have upgraded to
+ * WordPress 2.5 or later version from a version before WordPress 2.5, then you
+ * should add the constant to your wp-config.php file.
+ *
+ * Below is an example of how the SECRET_KEY constant is defined with a value.
+ * You must not copy the below example and paste into your wp-config.php. If you
+ * need an example, then you can have a
+ * {@link https://api.wordpress.org/secret-key/1.1/ secret key created} for you.
  *
  * <code>
- * define('AUTH_KEY',         ' Xakm<o xQy rw4EMsLKM-?!T+,PFF})H4lzcW57AF0U@N@< >M%G4Yt>f`z]MON');
- * define('SECURE_AUTH_KEY',  'LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~');
- * define('LOGGED_IN_KEY',    '|i|Ux`9<p-h$aFf(qnT:sDO:D1P^wZ$$/Ra@miTJi9G;ddp_<q}6H1)o|a +&JCM');
- * define('NONCE_KEY',        '%:R{[P|,s.KuMltH5}cI;/k<Gx~j!f0I)m_sIyu+&NJZ)-iO>z7X>QYR0Z_XnZ@|');
- * define('AUTH_SALT',        'eZyT)-Naw]F8CwA*VaW#q*|.)g@o}||wf~@C-YSt}(dh_r6EbI#A,y|nU2{B#JBW');
- * define('SECURE_AUTH_SALT', '!=oLUTXh,QW=H `}`L|9/^4-3 STz},T(w}W<I`.JjPi)<Bmf1v,HpGe}T1:Xt7n');
- * define('LOGGED_IN_SALT',   '+XSqHc;@Q*K_b|Z?NC[3H!!EONbh.n<+=uKR:>*c(u`g~EJBf#8u#R{mUEZrozmm');
- * define('NONCE_SALT',       'h`GXHhD>SLWVfg1(1(N{;.V!MoE(SfbA_ksP@&`+AycHcAV$+?@3q+rxV{%^VyKT');
+ * define('SECRET_KEY', 'mAry1HadA15|\/|b17w55w1t3asSn09w');
  * </code>
  *
  * Salting passwords helps against tools which has stored hashed values of
- * common dictionary strings. The added values makes it harder to crack.
+ * common dictionary strings. The added values makes it harder to crack if given
+ * salt string is not weak.
  *
  * @since 2.5
+ * @link https://api.wordpress.org/secret-key/1.1/ Create a Secret Key for wp-config.php
  *
- * @link https://api.wordpress.org/secret-key/1.1/salt/ Create secrets for wp-config.php
- *
- * @param string $scheme Authentication scheme (auth, secure_auth, logged_in, nonce)
+ * @param string $scheme Authentication scheme
  * @return string Salt value
  */
-function wp_salt( $scheme = 'auth' ) {
-	static $cached_salts = array();
-	if ( isset( $cached_salts[ $scheme ] ) )
-		return apply_filters( 'salt', $cached_salts[ $scheme ], $scheme );
+function wp_salt($scheme = 'auth') {
+	global $wp_default_secret_key;
+	$secret_key = '';
+	if ( defined('SECRET_KEY') && ('' != SECRET_KEY) && ( $wp_default_secret_key != SECRET_KEY) )
+		$secret_key = SECRET_KEY;
 
-	static $duplicated_keys;
-	if ( null === $duplicated_keys ) {
-		$duplicated_keys = array( 'put your unique phrase here' => true );
-		foreach ( array( 'AUTH', 'SECURE_AUTH', 'LOGGED_IN', 'NONCE', 'SECRET' ) as $first ) {
-			foreach ( array( 'KEY', 'SALT' ) as $second ) {
-				if ( ! defined( "{$first}_{$second}" ) )
-					continue;
-				$value = constant( "{$first}_{$second}" );
-				$duplicated_keys[ $value ] = isset( $duplicated_keys[ $value ] );
+	if ( 'auth' == $scheme ) {
+		if ( defined('AUTH_KEY') && ('' != AUTH_KEY) && ( $wp_default_secret_key != AUTH_KEY) )
+			$secret_key = AUTH_KEY;
+
+		if ( defined('AUTH_SALT') && ('' != AUTH_SALT) && ( $wp_default_secret_key != AUTH_SALT) ) {
+			$salt = AUTH_SALT;
+		} elseif ( defined('SECRET_SALT') && ('' != SECRET_SALT) && ( $wp_default_secret_key != SECRET_SALT) ) {
+			$salt = SECRET_SALT;
+		} else {
+			$salt = get_site_option('auth_salt');
+			if ( empty($salt) ) {
+				$salt = wp_generate_password( 64, true, true );
+				update_site_option('auth_salt', $salt);
 			}
 		}
-	}
+	} elseif ( 'secure_auth' == $scheme ) {
+		if ( defined('SECURE_AUTH_KEY') && ('' != SECURE_AUTH_KEY) && ( $wp_default_secret_key != SECURE_AUTH_KEY) )
+			$secret_key = SECURE_AUTH_KEY;
 
-	$key = $salt = '';
-	if ( defined( 'SECRET_KEY' ) && SECRET_KEY && empty( $duplicated_keys[ SECRET_KEY ] ) )
-		$key = SECRET_KEY;
-	if ( 'auth' == $scheme && defined( 'SECRET_SALT' ) && SECRET_SALT && empty( $duplicated_keys[ SECRET_SALT ] ) )
-		$salt = SECRET_SALT;
+		if ( defined('SECURE_AUTH_SALT') && ('' != SECURE_AUTH_SALT) && ( $wp_default_secret_key != SECURE_AUTH_SALT) ) {
+			$salt = SECURE_AUTH_SALT;
+		} else {
+			$salt = get_site_option('secure_auth_salt');
+			if ( empty($salt) ) {
+				$salt = wp_generate_password( 64, true, true );
+				update_site_option('secure_auth_salt', $salt);
+			}
+		}
+	} elseif ( 'logged_in' == $scheme ) {
+		if ( defined('LOGGED_IN_KEY') && ('' != LOGGED_IN_KEY) && ( $wp_default_secret_key != LOGGED_IN_KEY) )
+			$secret_key = LOGGED_IN_KEY;
 
-	if ( in_array( $scheme, array( 'auth', 'secure_auth', 'logged_in', 'nonce' ) ) ) {
-		foreach ( array( 'key', 'salt' ) as $type ) {
-			$const = strtoupper( "{$scheme}_{$type}" );
-			if ( defined( $const ) && constant( $const ) && empty( $duplicated_keys[ constant( $const ) ] ) ) {
-				$$type = constant( $const );
-			} elseif ( ! $$type ) {
-				$$type = get_site_option( "{$scheme}_{$type}" );
-				if ( ! $$type ) {
-					$$type = wp_generate_password( 64, true, true );
-					update_site_option( "{$scheme}_{$type}", $$type );
-				}
+		if ( defined('LOGGED_IN_SALT') && ('' != LOGGED_IN_SALT) && ( $wp_default_secret_key != LOGGED_IN_SALT) ) {
+			$salt = LOGGED_IN_SALT;
+		} else {
+			$salt = get_site_option('logged_in_salt');
+			if ( empty($salt) ) {
+				$salt = wp_generate_password( 64, true, true );
+				update_site_option('logged_in_salt', $salt);
+			}
+		}
+	} elseif ( 'nonce' == $scheme ) {
+		if ( defined('NONCE_KEY') && ('' != NONCE_KEY) && ( $wp_default_secret_key != NONCE_KEY) )
+			$secret_key = NONCE_KEY;
+
+		if ( defined('NONCE_SALT') && ('' != NONCE_SALT) && ( $wp_default_secret_key != NONCE_SALT) ) {
+			$salt = NONCE_SALT;
+		} else {
+			$salt = get_site_option('nonce_salt');
+			if ( empty($salt) ) {
+				$salt = wp_generate_password( 64, true, true );
+				update_site_option('nonce_salt', $salt);
 			}
 		}
 	} else {
-		if ( ! $key ) {
-			$key = get_site_option( 'secret_key' );
-			if ( ! $key ) {
-				$key = wp_generate_password( 64, true, true );
-				update_site_option( 'secret_key', $key );
-			}
-		}
-		$salt = hash_hmac( 'md5', $scheme, $key );
+		// ensure each auth scheme has its own unique salt
+		$salt = hash_hmac('md5', $scheme, $secret_key);
 	}
 
-	$cached_salts[ $scheme ] = $key . $salt;
-	return apply_filters( 'salt', $cached_salts[ $scheme ], $scheme );
+	return apply_filters('salt', $secret_key . $salt, $scheme);
 }
 endif;
 
@@ -1414,7 +1418,7 @@ function wp_hash_password($password) {
 	if ( empty($wp_hasher) ) {
 		require_once( ABSPATH . 'wp-includes/class-phpass.php');
 		// By default, use the portable hash from phpass
-		$wp_hasher = new PasswordHash(8, true);
+		$wp_hasher = new PasswordHash(8, TRUE);
 	}
 
 	return $wp_hasher->HashPassword($password);
@@ -1462,7 +1466,7 @@ function wp_check_password($password, $hash, $user_id = '') {
 	if ( empty($wp_hasher) ) {
 		require_once( ABSPATH . 'wp-includes/class-phpass.php');
 		// By default, use the portable hash from phpass
-		$wp_hasher = new PasswordHash(8, true);
+		$wp_hasher = new PasswordHash(8, TRUE);
 	}
 
 	$check = $wp_hasher->CheckPassword($password, $hash);
@@ -1625,7 +1629,7 @@ function get_avatar( $id_or_email, $size = '96', $default = '', $alt = false ) {
 	}
 
 	if ( !empty($email) )
-		$email_hash = md5( strtolower( trim( $email ) ) );
+		$email_hash = md5( strtolower( $email ) );
 
 	if ( is_ssl() ) {
 		$host = 'https://secure.gravatar.com';
@@ -1643,7 +1647,7 @@ function get_avatar( $id_or_email, $size = '96', $default = '', $alt = false ) {
 	elseif ( !empty($email) && 'gravatar_default' == $default )
 		$default = '';
 	elseif ( 'gravatar_default' == $default )
-		$default = "$host/avatar/?s={$size}";
+		$default = "$host/avatar/s={$size}";
 	elseif ( empty($email) )
 		$default = "$host/avatar/?d=$default&amp;s={$size}";
 	elseif ( strpos($default, 'http://') === 0 )
@@ -1705,8 +1709,8 @@ function wp_text_diff( $left_string, $right_string, $args = null ) {
 	$left_string  = normalize_whitespace($left_string);
 	$right_string = normalize_whitespace($right_string);
 
-	$left_lines  = explode("\n", $left_string);
-	$right_lines = explode("\n", $right_string);
+	$left_lines  = split("\n", $left_string);
+	$right_lines = split("\n", $right_string);
 
 	$text_diff = new Text_Diff($left_lines, $right_lines);
 	$renderer  = new WP_Text_Diff_Renderer_Table();

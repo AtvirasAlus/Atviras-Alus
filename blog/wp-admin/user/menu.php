@@ -20,3 +20,5 @@ $compat = array();
 $submenu = array();
 
 require_once(ABSPATH . 'wp-admin/includes/menu.php');
+
+?>

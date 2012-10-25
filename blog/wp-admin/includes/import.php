@@ -93,3 +93,5 @@ function wp_import_handle_upload() {
 
 	return array( 'file' => $file, 'id' => $id );
 }
+
+?>

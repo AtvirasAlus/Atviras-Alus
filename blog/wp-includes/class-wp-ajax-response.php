@@ -131,9 +131,8 @@ class WP_Ajax_Response {
 		foreach ( (array) $this->responses as $response )
 			echo $response;
 		echo '</wp_ajax>';
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX )
-			wp_die();
-		else
-			die();
+		die();
 	}
 }
+
+?>

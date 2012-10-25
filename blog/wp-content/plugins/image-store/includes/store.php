@@ -22,19 +22,19 @@ class ImStoreFront{
 		$this->opts = get_option('ims_front_options');
 		$this->page_front= get_option('page_on_front');
 		
-		add_action('get_header',array($this,'ims_init'));
-		add_action('wp_head',array($this,'print_ie_styles'));
-		add_action('pre_get_posts',array($this,'pre_get_posts'));
-		add_filter('pre_get_posts',array($this,'dis_custom_types'),1,30);
-		add_filter('query_vars',array($this,'add_var_for_rewrites'),1,10);
-		add_filter('protected_title_format',array($this,'remove_protected'));
-		add_filter('template_include',array($this,'taxonomy_template'),1,50);
-		add_filter('single_template',array($this,'change_gallery_template'),1,50);
-		add_filter('posts_where',array($this,'search_image_info'),2,50);
+		add_action('get_header',array(&$this,'ims_init'));
+		add_action('wp_head',array(&$this,'print_ie_styles'));
+		add_action('pre_get_posts',array(&$this,'pre_get_posts'));
+		add_filter('pre_get_posts',array(&$this,'dis_custom_types'),1,30);
+		add_filter('query_vars',array(&$this,'add_var_for_rewrites'),1,10);
+		add_filter('protected_title_format',array(&$this,'remove_protected'));
+		add_filter('template_include',array(&$this,'taxonomy_template'),1,50);
+		add_filter('single_template',array(&$this,'change_gallery_template'),1,50);
+		add_filter('posts_where',array(&$this,'search_image_info'),2,50);
 		
-		add_action('wp_enqueue_scripts',array($this,'load_scripts_styles'));
-		add_shortcode('image-store',array($this,'imstore_shortcode'));
-		add_shortcode('ims-gallery-content',array($this,'ims_gallery_shortcode'));
+		add_action('wp_enqueue_scripts',array(&$this,'load_scripts_styles'));
+		add_shortcode('image-store',array(&$this,'imstore_shortcode'));
+		add_shortcode('ims-gallery-content',array(&$this,'ims_gallery_shortcode'));
 	}
 
 	

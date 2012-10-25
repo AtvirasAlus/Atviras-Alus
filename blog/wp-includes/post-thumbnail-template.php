@@ -39,7 +39,7 @@ function get_post_thumbnail_id( $post_id = null ) {
  *
  * @since 2.9.0
  *
- * @param int $size Optional. Image size. Defaults to 'post-thumbnail', which theme sets using set_post_thumbnail_size( $width, $height, $crop_flag );.
+ * @param int $size Optional. Image size.  Defaults to 'post-thumbnail', which theme sets using set_post_thumbnail_size( $width, $height, $crop_flag );.
  * @param string|array $attr Optional. Query string or array of attributes.
  */
 function the_post_thumbnail( $size = 'post-thumbnail', $attr = '' ) {
@@ -50,12 +50,9 @@ function the_post_thumbnail( $size = 'post-thumbnail', $attr = '' ) {
  * Update cache for thumbnails in the current loop
  *
  * @since 3.2
- *
- * @param object $wp_query Optional. A WP_Query instance. Defaults to the $wp_query global.
  */
-function update_post_thumbnail_cache( $wp_query = null ) {
-	if ( ! $wp_query )
-		$wp_query = $GLOBALS['wp_query'];
+function update_post_thumbnail_cache() {
+	global $wp_query;
 
 	if ( $wp_query->thumbnails_cached )
 		return;
@@ -67,7 +64,13 @@ function update_post_thumbnail_cache( $wp_query = null ) {
 	}
 
 	if ( ! empty ( $thumb_ids ) ) {
-		_prime_post_caches( $thumb_ids, false, true );
+		get_posts( array(
+				'update_post_term_cache' => false,
+				'include' => $thumb_ids,
+				'post_type' => 'attachment',
+				'post_status' => 'inherit',
+				'nopaging' => true
+		) );
 	}
 
 	$wp_query->thumbnails_cached = true;
@@ -79,7 +82,7 @@ function update_post_thumbnail_cache( $wp_query = null ) {
  * @since 2.9.0
  *
  * @param int $post_id Optional. Post ID.
- * @param string $size Optional. Image size. Defaults to 'post-thumbnail'.
+ * @param string $size Optional. Image size.  Defaults to 'thumbnail'.
  * @param string|array $attr Optional. Query string or array of attributes.
  */
 function get_the_post_thumbnail( $post_id = null, $size = 'post-thumbnail', $attr = '' ) {
@@ -97,3 +100,5 @@ function get_the_post_thumbnail( $post_id = null, $size = 'post-thumbnail', $att
 	}
 	return apply_filters( 'post_thumbnail_html', $html, $post_id, $post_thumbnail_id, $size, $attr );
 }
+
+?>

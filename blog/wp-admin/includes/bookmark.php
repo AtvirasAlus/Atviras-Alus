@@ -53,7 +53,6 @@ function edit_link( $link_id = 0 ) {
  * @return object Default link
  */
 function get_default_link_to_edit() {
-	$link = new stdClass;
 	if ( isset( $_GET['linkurl'] ) )
 		$link->link_url = esc_url( $_GET['linkurl'] );
 	else
@@ -84,7 +83,7 @@ function wp_delete_link( $link_id ) {
 
 	wp_delete_object_term_relationships( $link_id, 'link_category' );
 
-	$wpdb->delete( $wpdb->links, array( 'link_id' => $link_id ) );
+	$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->links WHERE link_id = %d", $link_id ) );
 
 	do_action( 'deleted_link', $link_id );
 
@@ -266,3 +265,5 @@ function wp_update_link( $linkdata ) {
 
 	return wp_insert_link( $linkdata );
 }
+
+?>

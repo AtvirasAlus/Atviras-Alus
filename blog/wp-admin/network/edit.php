@@ -25,3 +25,5 @@ do_action( 'network_admin_edit_' . $_GET['action'] );
 
 wp_redirect( network_admin_url() );
 exit();
+
+?>

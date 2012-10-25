@@ -81,3 +81,4 @@ _deprecated_file( sprintf( __( 'Theme without %1$s' ), basename(__FILE__) ), '3.
 			<?php endif; ?>
 		</ul>
 	</div>
+

@@ -99,9 +99,6 @@ switch ($action) {
 		wp_enqueue_script('link');
 		wp_enqueue_script('xfn');
 
-		if ( wp_is_mobile() )
-			wp_enqueue_script( 'jquery-touch-punch' );
-
 		$parent_file = 'link-manager.php';
 		$submenu_file = 'link-manager.php';
 		$title = __('Edit Link');
@@ -118,3 +115,4 @@ switch ($action) {
 	default :
 		break;
 }
+?>

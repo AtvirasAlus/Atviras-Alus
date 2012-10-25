@@ -49,7 +49,7 @@ function is_site_admin( $user_login = '' ) {
 			return false;
 	} else {
 		$user = get_user_by( 'login', $user_login );
-		if ( ! $user->exists() )
+		if ( empty( $user->ID ) )
 			return false;
 		$user_id = $user->ID;
 	}
@@ -270,3 +270,5 @@ function wpmu_admin_redirect_add_updated_param( $url = '' ) {
 	}
 	return $url;
 }
+
+?>

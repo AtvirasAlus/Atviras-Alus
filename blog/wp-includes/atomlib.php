@@ -107,7 +107,7 @@ class AtomParser {
 
     function parse() {
 
-        set_error_handler(array($this, 'error_handler'));
+        set_error_handler(array(&$this, 'error_handler'));
 
         array_unshift($this->ns_contexts, array());
 
@@ -350,3 +350,5 @@ class AtomParser {
                 $string );
     }
 }
+
+?>

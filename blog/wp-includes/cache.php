@@ -51,7 +51,7 @@ function wp_cache_close() {
  * @see WP_Object_Cache::decr()
  *
  * @param int|string $key The cache key to increment
- * @param int $offset The amount by which to decrement the item's value. Default is 1.
+ * @param int $offset The amount by which to decrement the item's value.  Default is 1.
  * @param string $group The group the key is in.
  * @return false|int False on failure, the item's new value on success.
  */
@@ -103,14 +103,13 @@ function wp_cache_flush() {
  * @param int|string $key What the contents in the cache are called
  * @param string $group Where the cache contents are grouped
  * @param bool $force Whether to force an update of the local cache from the persistent cache (default is false)
- * @param &bool $found Whether key was found in the cache. Disambiguates a return of false, a storable value.
  * @return bool|mixed False on failure to retrieve contents or the cache
  *		contents on success
  */
-function wp_cache_get( $key, $group = '', $force = false, &$found = null ) {
+function wp_cache_get( $key, $group = '', $force = false ) {
 	global $wp_object_cache;
 
-	return $wp_object_cache->get( $key, $group, $force, $found );
+	return $wp_object_cache->get( $key, $group, $force );
 }
 
 /**
@@ -121,7 +120,7 @@ function wp_cache_get( $key, $group = '', $force = false, &$found = null ) {
  * @see WP_Object_Cache::incr()
  *
  * @param int|string $key The cache key to increment
- * @param int $offset The amount by which to increment the item's value. Default is 1.
+ * @param int $offset The amount by which to increment the item's value.  Default is 1.
  * @param string $group The group the key is in.
  * @return false|int False on failure, the item's new value on success.
  */
@@ -205,7 +204,7 @@ function wp_cache_add_non_persistent_groups( $groups ) {
 }
 
 /**
- * Reset internal cache keys and structures. If the cache backend uses global blog or site IDs as part of its cache keys,
+ * Reset internal cache keys and structures.  If the cache backend uses global blog or site IDs as part of its cache keys,
  * this function instructs the backend to reset those keys and perform any cleanup since blog or site IDs have changed since cache init.
  *
  * @since 2.6.0
@@ -273,7 +272,7 @@ class WP_Object_Cache {
 	/**
 	 * Adds data to the cache if it doesn't already exist.
 	 *
-	 * @uses WP_Object_Cache::_exists Checks to see if the cache already has data.
+	 * @uses WP_Object_Cache::get Checks to see if the cache already has data.
 	 * @uses WP_Object_Cache::set Sets the data after the checking the cache
 	 *		contents existence.
 	 *
@@ -289,10 +288,10 @@ class WP_Object_Cache {
 		if ( wp_suspend_cache_addition() )
 			return false;
 
-		if ( empty( $group ) )
+		if ( empty ($group) )
 			$group = 'default';
 
-		if ( $this->_exists($key, $group) )
+		if (false !== $this->get($key, $group))
 			return false;
 
 		return $this->set($key, $data, $group, $expire);
@@ -318,12 +317,12 @@ class WP_Object_Cache {
 	 * @since 3.3.0
 	 *
 	 * @param int|string $key The cache key to increment
-	 * @param int $offset The amount by which to decrement the item's value. Default is 1.
+	 * @param int $offset The amount by which to decrement the item's value.  Default is 1.
 	 * @param string $group The group the key is in.
 	 * @return false|int False on failure, the item's new value on success.
 	 */
 	function decr( $key, $offset = 1, $group = 'default' ) {
-		if ( ! $this->_exists( $key, $group ) )
+		if ( ! isset( $this->cache[ $group ][ $key ] ) )
 			return false;
 
 		if ( ! is_numeric( $this->cache[ $group ][ $key ] ) )
@@ -355,13 +354,13 @@ class WP_Object_Cache {
 	 * @return bool False if the contents weren't deleted and true on success
 	 */
 	function delete($key, $group = 'default', $force = false) {
-		if ( empty( $group ) )
+		if (empty ($group))
 			$group = 'default';
 
-		if ( ! $force && ! $this->_exists( $key, $group ) )
+		if (!$force && false === $this->get($key, $group))
 			return false;
 
-		unset( $this->cache[$group][$key] );
+		unset ($this->cache[$group][$key]);
 		return true;
 	}
 
@@ -395,12 +394,11 @@ class WP_Object_Cache {
 	 * @return bool|mixed False on failure to retrieve contents or the cache
 	 *		contents on success
 	 */
-	function get( $key, $group = 'default', $force = false, &$found = null ) {
-		if ( empty( $group ) )
+	function get( $key, $group = 'default', $force = false) {
+		if ( empty ($group) )
 			$group = 'default';
 
-		if ( $this->_exists( $key, $group ) ) {
-			$found = true;
+		if ( isset ($this->cache[$group][$key]) ) {
 			$this->cache_hits += 1;
 			if ( is_object($this->cache[$group][$key]) )
 				return clone $this->cache[$group][$key];
@@ -408,7 +406,6 @@ class WP_Object_Cache {
 				return $this->cache[$group][$key];
 		}
 
-		$found = false;
 		$this->cache_misses += 1;
 		return false;
 	}
@@ -419,15 +416,12 @@ class WP_Object_Cache {
 	 * @since 3.3.0
 	 *
 	 * @param int|string $key The cache key to increment
-	 * @param int $offset The amount by which to increment the item's value. Default is 1.
+	 * @param int $offset The amount by which to increment the item's value.  Default is 1.
 	 * @param string $group The group the key is in.
 	 * @return false|int False on failure, the item's new value on success.
 	 */
 	function incr( $key, $offset = 1, $group = 'default' ) {
-		if ( empty( $group ) )
-			$group = 'default';
-
-		if ( ! $this->_exists( $key, $group ) )
+		if ( ! isset( $this->cache[ $group ][ $key ] ) )
 			return false;
 
 		if ( ! is_numeric( $this->cache[ $group ][ $key ] ) )
@@ -456,10 +450,10 @@ class WP_Object_Cache {
 	 * @return bool False if not exists, true if contents were replaced
 	 */
 	function replace($key, $data, $group = 'default', $expire = '') {
-		if ( empty( $group ) )
+		if (empty ($group))
 			$group = 'default';
 
-		if ( ! $this->_exists( $key, $group ) )
+		if ( false === $this->get($key, $group) )
 			return false;
 
 		return $this->set($key, $data, $group, $expire);
@@ -499,8 +493,11 @@ class WP_Object_Cache {
 	 * @return bool Always returns true
 	 */
 	function set($key, $data, $group = 'default', $expire = '') {
-		if ( empty( $group ) )
+		if ( empty ($group) )
 			$group = 'default';
+
+		if ( NULL === $data )
+			$data = '';
 
 		if ( is_object($data) )
 			$data = clone $data;
@@ -530,14 +527,6 @@ class WP_Object_Cache {
 	}
 
 	/**
-	 * Utility function to determine whether a key exists in the cache.
-	 * @access private
-	 */
-	protected function _exists($key, $group) {
-		return isset( $this->cache[$group] ) && is_array( $this->cache[$group] ) && array_key_exists( $key, $this->cache[$group] );
-	}
-
-	/**
 	 * Sets up object properties; PHP 5 style constructor
 	 *
 	 * @since 2.0.8
@@ -548,7 +537,7 @@ class WP_Object_Cache {
 		 * @todo This should be moved to the PHP4 style constructor, PHP5
 		 * already calls __destruct()
 		 */
-		register_shutdown_function(array($this, "__destruct"));
+		register_shutdown_function(array(&$this, "__destruct"));
 	}
 
 	/**
@@ -564,3 +553,4 @@ class WP_Object_Cache {
 		return true;
 	}
 }
+?>

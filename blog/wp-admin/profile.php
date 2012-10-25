@@ -16,3 +16,4 @@ define('IS_PROFILE_PAGE', true);
 
 /** Load User Editing Page */
 require_once('./user-edit.php');
+?>

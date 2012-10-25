@@ -17,8 +17,8 @@ class ImStoreFeeds{
 	*@since 0.5.3 
 	*/
 	function __construct(){
-		add_action('wp_head',array($this,'print_rss_link'));
-		add_action('parse_query',array($this,'dis_feed'));
+		add_action('wp_head',array(&$this,'print_rss_link'));
+		add_action('parse_query',array(&$this,'dis_feed'));
 	}
 	
 	/**

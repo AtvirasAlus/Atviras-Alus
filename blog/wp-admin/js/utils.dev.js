@@ -3,23 +3,23 @@
 var wpCookies = {
 // The following functions are from Cookie.js class in TinyMCE, Moxiecode, used under LGPL.
 
-	each : function(obj, cb, scope) {
+	each : function(o, cb, s) {
 		var n, l;
 
-		if ( !obj )
+		if (!o)
 			return 0;
 
-		scope = scope || obj;
+		s = s || o;
 
-		if ( typeof(obj.length) != 'undefined' ) {
-			for ( n = 0, l = obj.length; n < l; n++ ) {
-				if ( cb.call(scope, obj[n], n, obj) === false )
+		if (typeof(o.length) != 'undefined') {
+			for (n=0, l = o.length; n<l; n++) {
+				if (cb.call(s, o[n], n, o) === false)
 					return 0;
 			}
 		} else {
-			for ( n in obj ) {
-				if ( obj.hasOwnProperty(n) ) {
-					if ( cb.call(scope, obj[n], n, obj) === false ) {
+			for (n in o) {
+				if (o.hasOwnProperty(n)) {
+					if (cb.call(s, o[n], n, o) === false) {
 						return 0;
 					}
 				}
@@ -28,108 +28,78 @@ var wpCookies = {
 		return 1;
 	},
 
-	/**
-	 * Get a multi-values cookie.
-	 * Returns a JS object with the name: 'value' pairs.
-	 */
-	getHash : function(name) {
-		var all = this.get(name), ret;
+	getHash : function(n) {
+		var v = this.get(n), h;
 
-		if ( all ) {
-			this.each( all.split('&'), function(pair) {
-				pair = pair.split('=');
-				ret = ret || {};
-				ret[pair[0]] = pair[1];
+		if (v) {
+			this.each(v.split('&'), function(v) {
+				v = v.split('=');
+				h = h || {};
+				h[v[0]] = v[1];
 			});
 		}
-		return ret;
+		return h;
 	},
 
-	/**
-	 * Set a multi-values cookie.
-	 *
-	 * 'values_obj' is the JS object that is stored. It is encoded as URI in wpCookies.set().
-	 */
-	setHash : function(name, values_obj, expires, path, domain, secure) {
-		var str = '';
+	setHash : function(n, v, e, p, d, s) {
+		var o = '';
 
-		this.each(values_obj, function(val, key) {
-			str += (!str ? '' : '&') + key + '=' + val;
+		this.each(v, function(v, k) {
+			o += (!o ? '' : '&') + k + '=' + v;
 		});
 
-		this.set(name, str, expires, path, domain, secure);
+		this.set(n, o, e, p, d, s);
 	},
 
-	/**
-	 * Get a cookie.
-	 */
-	get : function(name) {
-		var cookie = document.cookie, e, p = name + "=", b;
+	get : function(n) {
+		var c = document.cookie, e, p = n + "=", b;
 
-		if ( !cookie )
+		if (!c)
 			return;
 
-		b = cookie.indexOf("; " + p);
+		b = c.indexOf("; " + p);
 
-		if ( b == -1 ) {
-			b = cookie.indexOf(p);
+		if (b == -1) {
+			b = c.indexOf(p);
 
-			if ( b != 0 )
+			if (b != 0)
 				return null;
 
 		} else {
 			b += 2;
 		}
 
-		e = cookie.indexOf(";", b);
+		e = c.indexOf(";", b);
 
-		if ( e == -1 )
-			e = cookie.length;
+		if (e == -1)
+			e = c.length;
 
-		return decodeURIComponent( cookie.substring(b + p.length, e) );
+		return decodeURIComponent(c.substring(b + p.length, e));
 	},
 
-	/**
-	 * Set a cookie.
-	 *
-	 * The 'expires' arg can be either a JS Date() object set to the expiration date (back-compat)
-	 * or the number of seconds until expiration
-	 */
-	set : function(name, value, expires, path, domain, secure) {
+	set : function(n, v, e, p, d, s) {
+		document.cookie = n + "=" + encodeURIComponent(v) +
+			((e) ? "; expires=" + e.toGMTString() : "") +
+			((p) ? "; path=" + p : "") +
+			((d) ? "; domain=" + d : "") +
+			((s) ? "; secure" : "");
+	},
+
+	remove : function(n, p) {
 		var d = new Date();
 
-		if ( typeof(expires) == 'object' && expires.toGMTString ) {
-			expires = expires.toGMTString();
-		} else if ( parseInt(expires, 10) ) {
-			d.setTime( d.getTime() + ( parseInt(expires, 10) * 1000 ) ); // time must be in miliseconds
-			expires = d.toGMTString();
-		} else {
-			expires = '';
-		}
+		d.setTime(d.getTime() - 1000);
 
-		document.cookie = name + "=" + encodeURIComponent(value) +
-			((expires) ? "; expires=" + expires : "") +
-			((path) ? "; path=" + path : "") +
-			((domain) ? "; domain=" + domain : "") +
-			((secure) ? "; secure" : "");
-	},
-
-	/**
-	 * Remove a cookie.
-	 *
-	 * This is done by setting it to an empty value and setting the expiration time in the past.
-	 */
-	remove : function(name, path) {
-		this.set(name, '', -1000, path);
+		this.set(n, '', d, p, d);
 	}
 };
 
 // Returns the value as string. Second arg or empty string is returned when value is not set.
 function getUserSetting( name, def ) {
-	var obj = getAllUserSettings();
+	var o = getAllUserSettings();
 
-	if ( obj.hasOwnProperty(name) )
-		return obj[name];
+	if ( o.hasOwnProperty(name) )
+		return o[name];
 
 	if ( typeof def != 'undefined' )
 		return def;
@@ -139,21 +109,24 @@ function getUserSetting( name, def ) {
 
 // Both name and value must be only ASCII letters, numbers or underscore
 // and the shorter, the better (cookies can store maximum 4KB). Not suitable to store text.
-function setUserSetting( name, value, _del ) {
+function setUserSetting( name, value, del ) {
 	if ( 'object' !== typeof userSettings )
 		return false;
 
-	var cookie = 'wp-settings-' + userSettings.uid, all = wpCookies.getHash(cookie) || {}, path = userSettings.url,
+	var c = 'wp-settings-' + userSettings.uid, o = wpCookies.getHash(c) || {}, d = new Date(), p,
 	n = name.toString().replace(/[^A-Za-z0-9_]/, ''), v = value.toString().replace(/[^A-Za-z0-9_]/, '');
 
-	if ( _del ) {
-		delete all[n];
+	if ( del ) {
+		delete o[n];
 	} else {
-		all[n] = v;
+		o[n] = v;
 	}
 
-	wpCookies.setHash(cookie, all, 31536000, path);
-	wpCookies.set('wp-settings-time-'+userSettings.uid, userSettings.time, 31536000, path);
+	d.setTime( d.getTime() + 31536000000 );
+	p = userSettings.url;
+
+	wpCookies.setHash(c, o, d, p);
+	wpCookies.set('wp-settings-time-'+userSettings.uid, userSettings.time, d, p);
 
 	return name;
 }

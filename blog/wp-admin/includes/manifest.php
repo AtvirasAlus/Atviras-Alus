@@ -43,6 +43,7 @@ function &get_manifest() {
 		array('images/wpspin_dark.gif'),
 		array('images/logo.gif'),
 		array('images/logo-ghost.png'),
+		array('images/logo-login.gif'),
 		array('images/media-button-image.gif'),
 		array('images/media-button-music.gif'),
 		array('images/media-button-other.gif'),

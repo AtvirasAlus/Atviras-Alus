@@ -126,6 +126,10 @@ p.submit { /* quick edit and reply in edit-comments.php */
 	height:22px;
 }
 
+.inner-sidebar { /* fix edit single comment */
+	position: static;
+}
+
 form#widgets-filter { /* fix widget page */
 	position: static;
 }
@@ -237,3 +241,4 @@ p.button-controls,
 #nav-menus-frame .delete-action {
 	float: none;
 }
+

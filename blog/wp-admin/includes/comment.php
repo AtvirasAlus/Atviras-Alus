@@ -156,3 +156,4 @@ function enqueue_comment_hotkeys_js() {
 	if ( 'true' == get_user_option( 'comment_shortcuts' ) )
 		wp_enqueue_script( 'jquery-table-hotkeys' );
 }
+?>

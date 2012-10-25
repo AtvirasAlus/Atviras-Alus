@@ -599,18 +599,6 @@ class WP_User {
 	}
 
 	/**
-	 * Determine whether the user exists in the database.
-	 *
-	 * @since 3.4.0
-	 * @access public
-	 *
-	 * @return bool True if user exists in the database, false if not.
-	 */
-	function exists() {
-		return ! empty( $this->ID );
-	}
-
-	/**
 	 * Retrieve the value of a property or meta key.
 	 *
 	 * Retrieves from the users and usermeta table.
@@ -853,12 +841,13 @@ class WP_User {
 	 *
 	 * This is useful for looking up whether the user has a specific role
 	 * assigned to the user. The second optional parameter can also be used to
-	 * check for capabilities against a specific object, such as a post or user.
+	 * check for capabilities against a specific post.
 	 *
 	 * @since 2.0.0
 	 * @access public
 	 *
 	 * @param string|int $cap Capability or role name to search.
+	 * @param int $post_id Optional. Post ID to check capability against specific post.
 	 * @return bool True, if user has capability; false, if user does not have capability.
 	 */
 	function has_cap( $cap ) {
@@ -1076,8 +1065,7 @@ function map_meta_cap( $cap, $user_id ) {
 			break;
 		}
 
-		$status_obj = get_post_status_object( $post->post_status );
-		if ( $status_obj->public ) {
+		if ( 'private' != $post->post_status ) {
 			$caps[] = $post_type->cap->read;
 			break;
 		}
@@ -1091,10 +1079,8 @@ function map_meta_cap( $cap, $user_id ) {
 
 		if ( is_object( $post_author_data ) && $user_id == $post_author_data->ID )
 			$caps[] = $post_type->cap->read;
-		elseif ( $status_obj->private )
-			$caps[] = $post_type->cap->read_private_posts;
 		else
-			$caps = map_meta_cap( 'edit_post', $user_id, $post->ID );
+			$caps[] = $post_type->cap->read_private_posts;
 		break;
 	case 'edit_post_meta':
 	case 'delete_post_meta':
@@ -1126,15 +1112,6 @@ function map_meta_cap( $cap, $user_id ) {
 		else
 			$caps[] = 'do_not_allow';
 		break;
-	case 'unfiltered_html' :
-		// Disallow unfiltered_html for all users, even admins and super admins.
-		if ( defined( 'DISALLOW_UNFILTERED_HTML' ) && DISALLOW_UNFILTERED_HTML )
-			$caps[] = 'do_not_allow';
-		elseif ( is_multisite() && ! is_super_admin( $user_id ) )
-			$caps[] = $cap;
-		else
-			$caps[] = $cap;
-		break;
 	case 'edit_files':
 	case 'edit_plugins':
 	case 'edit_themes':
@@ -1157,6 +1134,13 @@ function map_meta_cap( $cap, $user_id ) {
 			break;
 		}
 		// Fall through if not DISALLOW_FILE_MODS.
+	case 'unfiltered_html':
+		// Disallow unfiltered_html for all users, even admins and super admins.
+		if ( defined('DISALLOW_UNFILTERED_HTML') && DISALLOW_UNFILTERED_HTML ) {
+			$caps[] = 'do_not_allow';
+			break;
+		}
+		// Fall through if not DISALLOW_UNFILTERED_HTML
 	case 'delete_user':
 	case 'delete_users':
 		// If multisite these caps are allowed only for super admins.
@@ -1229,7 +1213,7 @@ function current_user_can_for_blog( $blog_id, $capability ) {
 	// Create new object to avoid stomping the global current_user.
 	$user = new WP_User( $current_user->ID) ;
 
-	// Set the blog id. @todo add blog id arg to WP_User constructor?
+	// Set the blog id.  @todo add blog id arg to WP_User constructor?
 	$user->for_blog( $blog_id );
 
 	$args = array_slice( func_get_args(), 2 );
@@ -1275,7 +1259,7 @@ function user_can( $user, $capability ) {
 	if ( ! is_object( $user ) )
 		$user = new WP_User( $user );
 
-	if ( ! $user || ! $user->exists() )
+	if ( ! $user || ! $user->ID )
 		return false;
 
 	$args = array_slice( func_get_args(), 2 );
@@ -1372,7 +1356,7 @@ function is_super_admin( $user_id = false ) {
 	else
 		$user = wp_get_current_user();
 
-	if ( ! $user->exists() )
+	if ( empty( $user->ID ) )
 		return false;
 
 	if ( is_multisite() ) {
@@ -1386,3 +1370,5 @@ function is_super_admin( $user_id = false ) {
 
 	return false;
 }
+
+?>

@@ -53,9 +53,9 @@ function image_constrain_size_for_editor($width, $height, $size = 'medium') {
 		// if no width is set, default to the theme content width if available
 	}
 	elseif ( $size == 'large' ) {
-		// We're inserting a large size image into the editor. If it's a really
+		// we're inserting a large size image into the editor.  if it's a really
 		// big image we'll scale it down to fit reasonably within the editor
-		// itself, and within the theme's content width if it's known. The user
+		// itself, and within the theme's content width if it's known.  the user
 		// can resize it in the editor if they wish.
 		$max_width = intval(get_option('large_size_w'));
 		$max_height = intval(get_option('large_size_h'));
@@ -327,8 +327,6 @@ function wp_constrain_dimensions( $current_width, $current_height, $max_width=0,
  * portion of the image will be cropped out and resized to the required size.
  *
  * @since 2.5.0
- * @uses apply_filters() Calls 'image_resize_dimensions' on $orig_w, $orig_h, $dest_w, $dest_h and
- *		$crop to provide custom resize dimensions.
  *
  * @param int $orig_w Original width.
  * @param int $orig_h Original height.
@@ -344,11 +342,6 @@ function image_resize_dimensions($orig_w, $orig_h, $dest_w, $dest_h, $crop = fal
 	// at least one of dest_w or dest_h must be specific
 	if ($dest_w <= 0 && $dest_h <= 0)
 		return false;
-
-	// plugins can use this to provide custom resize dimensions
-	$output = apply_filters( 'image_resize_dimensions', null, $orig_w, $orig_h, $dest_w, $dest_h, $crop );
-	if ( null !== $output )
-		return $output;
 
 	if ( $crop ) {
 		// crop the largest possible portion of the original image that we can size to $dest_w x $dest_h
@@ -462,8 +455,7 @@ function image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, $de
 			return new WP_Error('resize_path_invalid', __( 'Resize path invalid' ));
 	} else {
 		// all other formats are converted to jpg
-		if ( 'jpg' != $ext && 'jpeg' != $ext )
-			$destfilename = "{$dir}/{$name}-{$suffix}.jpg";
+		$destfilename = "{$dir}/{$name}-{$suffix}.jpg";
 		if ( !imagejpeg( $newimage, $destfilename, apply_filters( 'jpeg_quality', $jpeg_quality, 'image_resize' ) ) )
 			return new WP_Error('resize_path_invalid', __( 'Resize path invalid' ));
 	}
@@ -732,13 +724,6 @@ add_shortcode('caption', 'img_caption_shortcode');
  * @return string
  */
 function img_caption_shortcode($attr, $content = null) {
-	// New-style shortcode with the caption inside the shortcode with the link and image tags.
-	if ( ! isset( $attr['caption'] ) ) {
-		if ( preg_match( '#((?:<a [^>]+>\s*)?<img [^>]+>(?:\s*</a>)?)(.*)#is', $content, $matches ) ) {
-			$content = $matches[1];
-			$attr['caption'] = trim( $matches[2] );
-		}
-	}
 
 	// Allow plugins/themes to override the default caption template.
 	$output = apply_filters('img_caption_shortcode', '', $attr, $content);
@@ -1048,20 +1033,20 @@ class WP_Embed {
 	 */
 	function __construct() {
 		// Hack to get the [embed] shortcode to run before wpautop()
-		add_filter( 'the_content', array($this, 'run_shortcode'), 8 );
+		add_filter( 'the_content', array(&$this, 'run_shortcode'), 8 );
 
 		// Shortcode placeholder for strip_shortcodes()
 		add_shortcode( 'embed', '__return_false' );
 
 		// Attempts to embed all URLs in a post
 		if ( get_option('embed_autourls') )
-			add_filter( 'the_content', array($this, 'autoembed'), 8 );
+			add_filter( 'the_content', array(&$this, 'autoembed'), 8 );
 
 		// After a post is saved, invalidate the oEmbed cache
-		add_action( 'save_post', array($this, 'delete_oembed_caches') );
+		add_action( 'save_post', array(&$this, 'delete_oembed_caches') );
 
 		// After a post is saved, cache oEmbed items via AJAX
-		add_action( 'edit_form_advanced', array($this, 'maybe_run_ajax_cache') );
+		add_action( 'edit_form_advanced', array(&$this, 'maybe_run_ajax_cache') );
 	}
 
 	/**
@@ -1086,7 +1071,7 @@ class WP_Embed {
 		$orig_shortcode_tags = $shortcode_tags;
 		remove_all_shortcodes();
 
-		add_shortcode( 'embed', array($this, 'shortcode') );
+		add_shortcode( 'embed', array(&$this, 'shortcode') );
 
 		// Do the shortcode (only the [embed] one is registered)
 		$content = do_shortcode( $content );
@@ -1111,7 +1096,7 @@ class WP_Embed {
 <script type="text/javascript">
 /* <![CDATA[ */
 	jQuery(document).ready(function($){
-		$.get("<?php echo admin_url( 'admin-ajax.php?action=oembed-cache&post=' . $post_ID, 'relative' ); ?>");
+		$.get("<?php echo admin_url( 'admin-ajax.php?action=oembed-cache&post=' . $post_ID ); ?>");
 	});
 /* ]]> */
 </script>
@@ -1276,7 +1261,7 @@ class WP_Embed {
 	 * @return string Potentially modified $content.
 	 */
 	function autoembed( $content ) {
-		return preg_replace_callback( '|^\s*(https?://[^\s"]+)\s*$|im', array($this, 'autoembed_callback'), $content );
+		return preg_replace_callback( '|^\s*(https?://[^\s"]+)\s*$|im', array(&$this, 'autoembed_callback'), $content );
 	}
 
 	/**
@@ -1393,7 +1378,7 @@ function wp_expand_dimensions( $example_width, $example_height, $max_width, $max
  *
  * @param string $url The URL that should be embedded.
  * @param array $args Additional arguments and parameters.
- * @return bool|string False on failure or the embed HTML on success.
+ * @return string The original URL on failure or the embed HTML on success.
  */
 function wp_oembed_get( $url, $args = '' ) {
 	require_once( ABSPATH . WPINC . '/class-oembed.php' );
@@ -1457,53 +1442,4 @@ function wp_embed_handler_googlevideo( $matches, $attr, $url, $rawattr ) {
 	return apply_filters( 'embed_googlevideo', '<embed type="application/x-shockwave-flash" src="http://video.google.com/googleplayer.swf?docid=' . esc_attr($matches[2]) . '&amp;hl=en&amp;fs=true" style="width:' . esc_attr($width) . 'px;height:' . esc_attr($height) . 'px" allowFullScreen="true" allowScriptAccess="always" />', $matches, $attr, $url, $rawattr );
 }
 
-/**
- * Prints default plupload arguments.
- *
- * @since 3.4.0
- */
-function wp_plupload_default_settings() {
-	global $wp_scripts;
-
-	$max_upload_size = wp_max_upload_size();
-
-	$defaults = array(
-		'runtimes'            => 'html5,silverlight,flash,html4',
-		'file_data_name'      => 'async-upload', // key passed to $_FILE.
-		'multiple_queues'     => true,
-		'max_file_size'       => $max_upload_size . 'b',
-		'url'                 => admin_url( 'admin-ajax.php', 'relative' ),
-		'flash_swf_url'       => includes_url( 'js/plupload/plupload.flash.swf' ),
-		'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
-		'filters'             => array( array( 'title' => __( 'Allowed Files' ), 'extensions' => '*') ),
-		'multipart'           => true,
-		'urlstream_upload'    => true,
-	);
-
-	$defaults = apply_filters( 'plupload_default_settings', $defaults );
-
-	$params = array(
-		'action' => 'upload-attachment',
-	);
-
-	$params = apply_filters( 'plupload_default_params', $params );
-	$params['_wpnonce'] = wp_create_nonce( 'media-form' );
-	$defaults['multipart_params'] = $params;
-
-	$settings = array(
-		'defaults' => $defaults,
-		'browser'  => array(
-			'mobile'    => wp_is_mobile(),
-			'supported' => _device_can_upload(),
-		),
-	);
-
-	$script = 'var _wpPluploadSettings = ' . json_encode( $settings ) . ';';
-
-	$data = $wp_scripts->get_data( 'wp-plupload', 'data' );
-	if ( $data )
-		$script = "$data\n$script";
-
-	$wp_scripts->add_data( 'wp-plupload', 'data', $script );
-}
-add_action( 'customize_controls_enqueue_scripts', 'wp_plupload_default_settings' );
+?>

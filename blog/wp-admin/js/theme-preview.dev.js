@@ -53,4 +53,12 @@ jQuery(document).ready(function($) {
 
 		return false;
 	} );
+
+	// Theme details
+	$('.theme-detail').click(function () {
+		$(this).siblings('.themedetaildiv').toggle();
+		return false;
+	});
+
 });
+

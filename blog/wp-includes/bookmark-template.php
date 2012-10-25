@@ -252,3 +252,5 @@ function wp_list_bookmarks($args = '') {
 		return $output;
 	echo $output;
 }
+
+?>

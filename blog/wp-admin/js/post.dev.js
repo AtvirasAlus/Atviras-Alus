@@ -15,19 +15,11 @@ function array_unique_noempty(a) {
 
 tagBox = {
 	clean : function(tags) {
-		var comma = postL10n.comma;
-		if ( ',' !== comma )
-			tags = tags.replace(new RegExp(comma, 'g'), ',');
-		tags = tags.replace(/\s*,\s*/g, ',').replace(/,+/g, ',').replace(/[,\s]+$/, '').replace(/^[,\s]+/, '');
-		if ( ',' !== comma )
-			tags = tags.replace(/,/g, comma);
-		return tags;
+		return tags.replace(/\s*,\s*/g, ',').replace(/,+/g, ',').replace(/[,\s]+$/, '').replace(/^[,\s]+/, '');
 	},
 
 	parseTags : function(el) {
-		var id = el.id, num = id.split('-check-num-')[1], taxbox = $(el).closest('.tagsdiv'),
-			thetags = taxbox.find('.the-tags'), comma = postL10n.comma,
-			current_tags = thetags.val().split(comma), new_tags = [];
+		var id = el.id, num = id.split('-check-num-')[1], taxbox = $(el).closest('.tagsdiv'), thetags = taxbox.find('.the-tags'), current_tags = thetags.val().split(','), new_tags = [];
 		delete current_tags[num];
 
 		$.each( current_tags, function(key, val) {
@@ -37,7 +29,7 @@ tagBox = {
 			}
 		});
 
-		thetags.val( this.clean( new_tags.join(comma) ) );
+		thetags.val( this.clean( new_tags.join(',') ) );
 
 		this.quickClicks(taxbox);
 		return false;
@@ -54,7 +46,7 @@ tagBox = {
 
 		disabled = thetags.prop('disabled');
 
-		current_tags = thetags.val().split(postL10n.comma);
+		current_tags = thetags.val().split(',');
 		tagchecklist.empty();
 
 		$.each( current_tags, function( key, val ) {
@@ -82,17 +74,14 @@ tagBox = {
 
 	flushTags : function(el, a, f) {
 		a = a || false;
-		var tags = $('.the-tags', el),
-			newtag = $('input.newtag', el),
-			comma = postL10n.comma,
-			newtags, text;
+		var text, tags = $('.the-tags', el), newtag = $('input.newtag', el), newtags;
 
 		text = a ? $(a).text() : newtag.val();
 		tagsval = tags.val();
-		newtags = tagsval ? tagsval + comma + text : text;
+		newtags = tagsval ? tagsval + ',' + text : text;
 
 		newtags = this.clean( newtags );
-		newtags = array_unique_noempty( newtags.split(comma) ).join(comma);
+		newtags = array_unique_noempty( newtags.split(',') ).join(',');
 		tags.val(newtags);
 		this.quickClicks(el);
 
@@ -107,7 +96,7 @@ tagBox = {
 	get : function(id) {
 		var tax = id.substr(id.indexOf('-')+1);
 
-		$.post(ajaxurl, {'action':'get-tagcloud', 'tax':tax}, function(r, stat) {
+		$.post(ajaxurl, {'action':'get-tagcloud','tax':tax}, function(r, stat) {
 			if ( 0 == r || 'success' != stat )
 				r = wpAjax.broken;
 
@@ -153,7 +142,7 @@ tagBox = {
 			}
 		}).each(function(){
 			var tax = $(this).closest('div.tagsdiv').attr('id');
-			$(this).suggest( ajaxurl + '?action=ajax-tag-search&tax=' + tax, { delay: 500, minchars: 2, multiple: true, multipleSep: postL10n.comma + ' ' } );
+			$(this).suggest( ajaxurl + '?action=ajax-tag-search&tax=' + tax, { delay: 500, minchars: 2, multiple: true, multipleSep: "," } );
 		});
 
 	    // save tags on post save/publish
@@ -211,11 +200,10 @@ commentsBox = {
 					if ( commentsBox.st > commentsBox.total )
 						$('#show-comments').hide();
 					else
-						$('#show-comments').show().children('a').html(postL10n.showcomm);
-
+						$('#show-comments').html(postL10n.showcomm);
 					return;
 				} else if ( 1 == r ) {
-					$('#show-comments').html(postL10n.endcomm);
+					$('#show-comments').parent().html(postL10n.endcomm);
 					return;
 				}
 
@@ -314,14 +302,12 @@ jQuery(document).ready( function($) {
 			if ( !$('#new'+taxonomy).val() )
 				return false;
 			s.data += '&' + $( ':checked', '#'+taxonomy+'checklist' ).serialize();
-			$( '#' + taxonomy + '-add-submit' ).prop( 'disabled', true );
 			return s;
 		};
 
 		catAddAfter = function( r, s ) {
 			var sup, drop = $('#new'+taxonomy+'_parent');
 
-			$( '#' + taxonomy + '-add-submit' ).prop( 'disabled', false );
 			if ( 'undefined' != s.parsed.responses[0] && (sup = s.parsed.responses[0].supplemental.newcat_parent) ) {
 				drop.before(sup);
 				drop.remove();

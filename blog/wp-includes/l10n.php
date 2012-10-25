@@ -272,11 +272,10 @@ function _nx($single, $plural, $number, $context, $domain = 'default') {
  * @since 2.5
  * @param string $singular Single form to be i18ned
  * @param string $plural Plural form to be i18ned
- * @param string $domain Optional. The domain identifier the text will be retrieved in
  * @return array array($singular, $plural)
  */
-function _n_noop( $singular, $plural, $domain = null ) {
-	return array( 0 => $singular, 1 => $plural, 'singular' => $singular, 'plural' => $plural, 'context' => null, 'domain' => $domain );
+function _n_noop( $singular, $plural ) {
+	return array( 0 => $singular, 1 => $plural, 'singular' => $singular, 'plural' => $plural, 'context' => null );
 }
 
 /**
@@ -284,8 +283,8 @@ function _n_noop( $singular, $plural, $domain = null ) {
  *
  * @see _n_noop()
  */
-function _nx_noop( $singular, $plural, $context, $domain = null ) {
-	return array( 0 => $singular, 1 => $plural, 2 => $context, 'singular' => $singular, 'plural' => $plural, 'context' => $context, 'domain' => $domain );
+function _nx_noop( $singular, $plural, $context ) {
+	return array( 0 => $singular, 1 => $plural, 2 => $context, 'singular' => $singular, 'plural' => $plural, 'context' => $context );
 }
 
 /**
@@ -294,13 +293,9 @@ function _nx_noop( $singular, $plural, $context, $domain = null ) {
  * @since 3.1
  * @param array $nooped_plural Array with singular, plural and context keys, usually the result of _n_noop() or _nx_noop()
  * @param int $count Number of objects
- * @param string $domain Optional. The domain identifier the text should be retrieved in. If $nooped_plural contains
- * 	a domain passed to _n_noop() or _nx_noop(), it will override this value.
+ * @param string $domain Optional. The domain identifier the text should be retrieved in
  */
 function translate_nooped_plural( $nooped_plural, $count, $domain = 'default' ) {
-	if ( $nooped_plural['domain'] )
-		$domain = $nooped_plural['domain'];
-
 	if ( $nooped_plural['context'] )
 		return _nx( $nooped_plural['singular'], $nooped_plural['plural'], $count, $nooped_plural['context'], $domain );
 	else
@@ -387,17 +382,9 @@ function load_default_textdomain() {
 
 	load_textdomain( 'default', WP_LANG_DIR . "/$locale.mo" );
 
-	if ( ( is_multisite() || ( defined( 'WP_INSTALLING_NETWORK' ) && WP_INSTALLING_NETWORK ) ) && ! file_exists(  WP_LANG_DIR . "/admin-$locale.mo" ) ) {
+	if ( is_multisite() || ( defined( 'WP_INSTALLING_NETWORK' ) && WP_INSTALLING_NETWORK ) ) {
 		load_textdomain( 'default', WP_LANG_DIR . "/ms-$locale.mo" );
-		return;
 	}
-
-	if ( is_admin() || ( defined( 'WP_REPAIRING' ) && WP_REPAIRING ) )
-		load_textdomain( 'default', WP_LANG_DIR . "/admin-$locale.mo" );
-
-	if ( is_network_admin() || ( defined( 'WP_INSTALLING_NETWORK' ) && WP_INSTALLING_NETWORK ) )
-		load_textdomain( 'default', WP_LANG_DIR . "/admin-network-$locale.mo" );
-
 }
 
 /**
@@ -540,8 +527,7 @@ function get_available_languages( $dir = null ) {
 
 	foreach( (array)glob( ( is_null( $dir) ? WP_LANG_DIR : $dir ) . '/*.mo' ) as $lang_file ) {
 		$lang_file = basename($lang_file, '.mo');
-		if ( 0 !== strpos( $lang_file, 'continents-cities' ) && 0 !== strpos( $lang_file, 'ms-' ) &&
-			0 !== strpos( $lang_file, 'admin-' ))
+		if ( 0 !== strpos( $lang_file, 'continents-cities' ) && 0 !== strpos( $lang_file, 'ms-' ) )
 			$languages[] = $lang_file;
 	}
 

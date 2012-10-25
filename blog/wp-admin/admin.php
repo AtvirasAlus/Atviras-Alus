@@ -12,16 +12,16 @@
  * @since 2.3.2
  */
 if ( ! defined('WP_ADMIN') )
-	define('WP_ADMIN', true);
+	define('WP_ADMIN', TRUE);
 
 if ( ! defined('WP_NETWORK_ADMIN') )
-	define('WP_NETWORK_ADMIN', false);
+	define('WP_NETWORK_ADMIN', FALSE);
 
 if ( ! defined('WP_USER_ADMIN') )
-	define('WP_USER_ADMIN', false);
+	define('WP_USER_ADMIN', FALSE);
 
 if ( ! WP_NETWORK_ADMIN && ! WP_USER_ADMIN ) {
-	define('WP_BLOG_ADMIN', true);
+	define('WP_BLOG_ADMIN', TRUE);
 }
 
 if ( isset($_GET['import']) && !defined('WP_LOAD_IMPORTERS') )
@@ -30,7 +30,7 @@ if ( isset($_GET['import']) && !defined('WP_LOAD_IMPORTERS') )
 require_once(dirname(dirname(__FILE__)) . '/wp-load.php');
 
 if ( get_option('db_upgraded') ) {
-	flush_rewrite_rules();
+	$wp_rewrite->flush_rules();
 	update_option( 'db_upgraded',  false );
 
 	/**
@@ -153,6 +153,7 @@ if ( isset($plugin_page) ) {
 		if ( validate_file($plugin_page) )
 			wp_die(__('Invalid plugin page'));
 
+
 		if ( !( file_exists(WP_PLUGIN_DIR . "/$plugin_page") && is_file(WP_PLUGIN_DIR . "/$plugin_page") ) && !( file_exists(WPMU_PLUGIN_DIR . "/$plugin_page") && is_file(WPMU_PLUGIN_DIR . "/$plugin_page") ) )
 			wp_die(sprintf(__('Cannot load %s.'), htmlentities($plugin_page)));
 
@@ -228,3 +229,5 @@ if ( isset($plugin_page) ) {
 
 if ( !empty($_REQUEST['action']) )
 	do_action('admin_action_' . $_REQUEST['action']);
+
+?>

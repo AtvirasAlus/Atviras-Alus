@@ -17,3 +17,5 @@ if ( isset( $_GET['updated'] ) && isset( $_GET['page'] ) ) {
 }
 
 settings_errors();
+
+?>
