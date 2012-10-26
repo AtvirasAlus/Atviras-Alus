@@ -1,0 +1,152 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		function colorHex(srm) {
+			srm = srm / 1.97;
+			SRMColor = new Array();
+			SRMColor.push('#FFFFFF');
+			SRMColor.push('#FFE699');
+			SRMColor.push('#FFD878');
+			SRMColor.push('#FFCA5A');
+			SRMColor.push('#FFBF42');
+			SRMColor.push('#FBB123');
+			SRMColor.push('#F8A600');
+			SRMColor.push('#F39C00');
+			SRMColor.push('#EA8F00');
+			SRMColor.push('#E58500');
+			SRMColor.push('#DE7C00');
+			SRMColor.push('#D77200');
+			SRMColor.push('#CF6900');
+			SRMColor.push('#CB6200');
+			SRMColor.push('#C35900');
+			SRMColor.push('#BB5100');
+			SRMColor.push('#B54C00');
+			SRMColor.push('#B04500');
+			SRMColor.push('#A63E00');
+			SRMColor.push('#A13700');
+			SRMColor.push('#9B3200');
+			SRMColor.push('#952D00');
+			SRMColor.push('#8E2900');
+			SRMColor.push('#882300');
+			SRMColor.push('#821E00');
+			SRMColor.push('#7B1A00');
+			SRMColor.push('#771900');
+			SRMColor.push('#701400');
+			SRMColor.push('#6A0E00');
+			SRMColor.push('#660D00');
+			SRMColor.push('#5E0B00');
+			SRMColor.push('#5A0A02');
+			SRMColor.push('#600903');
+			SRMColor.push('#520907');
+			SRMColor.push('#4C0505');
+			SRMColor.push('#470606');
+			SRMColor.push('#440607');
+			SRMColor.push('#3F0708');
+			SRMColor.push('#3B0607');
+			SRMColor.push('#3A070B');
+			SRMColor.push('#36080A');
+			if (SRMColor[Math.round(srm)]) {
+				return SRMColor[Math.round(srm)];
+			} else {
+				return "#000000";
+			}
+		}
+		function getpreview(){
+			$(".picker_results div").html($("#loader_block").html());
+			$(".picker_results div").load("/paieska/preview/"+$("#slider-ibu").slider("values", 0)+"/"+$("#slider-ibu").slider("values", 1)+"/"+$("#slider-ebc").slider("values", 0)+"/"+$("#slider-ebc").slider("values", 1)+"/"+$("#slider-abv").slider("values", 0)+"/"+$("#slider-abv").slider("values", 1));
+		}
+		$("#picker_submit").click(function(){
+			window.location.href = "/paieska/rezultatai/"+$("#slider-ibu").slider("values", 0)+"/"+$("#slider-ibu").slider("values", 1)+"/"+$("#slider-ebc").slider("values", 0)+"/"+$("#slider-ebc").slider("values", 1)+"/"+$("#slider-abv").slider("values", 0)+"/"+$("#slider-abv").slider("values", 1);
+		});
+		$( "#slider-ebc" ).slider({
+			range: true,
+			step: 1,
+			min: <?=$this->params['min_ebc']?>,
+			max: <?=$this->params['max_ebc']?>,
+			values: [ <?=$this->params['min_ebc']?>, <?=$this->params['max_ebc']?> ],
+			slide: function(event, ui) {
+				$("#ebc_min").html(ui.values[0]);
+				$("#ebc_min_color").css("background-color", colorHex(ui.values[0]));
+				$("#ebc_max").html(ui.values[1]);
+				$("#ebc_max_color").css("background-color", colorHex(ui.values[1]));
+			},
+			change: function(event, ui){
+				getpreview();
+			}
+		});
+		$( "#slider-abv" ).slider({
+			range: true,
+			step: 0.1,
+			min: <?=$this->params['min_abv']?>,
+			max: <?=$this->params['max_abv']?>,
+			values: [ <?=$this->params['min_abv']?>, <?=$this->params['max_abv']?> ],
+			slide: function( event, ui ) {
+				$("#abv_min").html(ui.values[0].toFixed(1));
+				$("#abv_max").html(ui.values[1].toFixed(1));
+			},
+			change: function(event, ui){
+				getpreview();
+			}
+		});
+		$( "#slider-ibu" ).slider({
+			range: true,
+			step: 1,
+			min: <?=$this->params['min_ibu']?>,
+			max: <?=$this->params['max_ibu']?>,
+			values: [ <?=$this->params['min_ibu']?>, <?=$this->params['max_ibu']?> ],
+			slide: function( event, ui ) {
+				$("#ibu_min").html(ui.values[0]);
+				$("#ibu_max").html(ui.values[1]);
+			},
+			change: function(event, ui){
+				getpreview();
+			}
+		});
+		$("#ebc_min_color").css("background-color", colorHex($("#slider-ebc").slider("values", 0)));
+		$("#ebc_max_color").css("background-color", colorHex($("#slider-ebc").slider("values", 1)));
+	});
+</script>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Receptų paieška pagal parametrus</div>
+	<div>
+		<div class="picker_title">Spalva (EBC)</div>
+		<div class="picker_item">
+			<div class="picker_row">
+				<div class="picker_min_block" id="ebc_min_color"></div>
+				<div class="picker_min_val" id="ebc_min"><?=$this->params['min_ebc']?></div>
+				<div class="picker_slider">
+					<div id="slider-ebc"></div>
+				</div>
+				<div class="picker_max_val" id="ebc_max"><?=$this->params['max_ebc']?></div>
+				<div class="picker_max_block" id="ebc_max_color"></div>
+			</div>
+		</div>
+		<div class="picker_title">Alkoholio kiekis (ABV)</div>
+		<div class="picker_item">
+			<div class="picker_row">
+				<div class="picker_min_val" id="abv_min"><?=$this->params['min_abv']?></div>
+				<div class="picker_slider">
+					<div id="slider-abv"></div>
+				</div>
+				<div class="picker_max_val" id="abv_max"><?=$this->params['max_abv']?></div>
+			</div>
+		</div>
+		<div class="picker_title">Kartumas (IBU)</div>
+		<div class="picker_item">
+			<div class="picker_row">
+				<div class="picker_min_val" id="ibu_min"><?=$this->params['min_ibu']?></div>
+				<div class="picker_slider">
+					<div id="slider-ibu"></div>
+				</div>
+				<div class="picker_max_val" id="ibu_max"><?=$this->params['max_ibu']?></div>
+			</div>
+		</div>
+		<div class="picker_title" style="text-align: center">Receptų kiekis</div>
+		<div class="picker_results">
+			<div><?=$this->params['kiekis']?></div>
+		</div>
+		<div class="picker_submit">
+			<input type="button" name="picker_submit" value="Peržiūrėti receptų sąrašą" class="ui-button" id="picker_submit" />
+		</div>
+	</div>
+	<div id="loader_block" style="display: none;"><img src="/public/images/picker-loader.gif" width="54" height="55" alt="" /></div>
+</div>

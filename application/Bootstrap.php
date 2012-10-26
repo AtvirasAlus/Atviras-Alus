@@ -61,6 +61,10 @@ function _initAutoLoad() {
 		$router->addRoute("recipes_view",new Zend_Controller_Router_Route("alus/receptas/:recipe",array("module"=>"default","controller" => "recipes","action" => "view","recipe"=>0)));
 		$router->addRoute("recipes_del_image",new Zend_Controller_Router_Route("/alus/trinti_nuotrauka/:image_id",array("module"=>"default","controller" => "recipes","action" => "delete_image","image_id"=>0)));
 	
+		$router->addRoute("picker",new Zend_Controller_Router_Route("/paieska",array("module"=>"default","controller" => "picker","action" => "index")));
+		$router->addRoute("picker_results",new Zend_Controller_Router_Route("/paieska/rezultatai/:ibu_min/:ibu_max/:ebc_min/:ebc_max/:abv_min/:abv_max/:page",array("module"=>"default","controller" => "picker","action" => "results", "ibu_min" => 0, "ebc_min" => 0, "abv_min" => 0, "ibu_max" => 0, "ebc_max" => 0, "abv_max" => 0, "page" => 0)));
+		$router->addRoute("picker_preview",new Zend_Controller_Router_Route("/paieska/preview/:ibu_min/:ibu_max/:ebc_min/:ebc_max/:abv_min/:abv_max",array("module"=>"default","controller" => "picker","action" => "preview", "ibu_min" => 0, "ebc_min" => 0, "abv_min" => 0, "ibu_max" => 0, "ebc_max" => 0, "abv_max" => 0)));
+		
 		$router->addRoute("rate",new Zend_Controller_Router_Route("vertinimas/:page",array("module"=>"default","controller" => "rate","action" => "index","page"=>0)));
 		$router->addRoute("rate_brewery",new Zend_Controller_Router_Route("vertinimas/bravoras/:bid/:page",array("module"=>"default","controller" => "rate","action" => "brewery","bid"=>0, "page"=>0)));
 		$router->addRoute("rate_style",new Zend_Controller_Router_Route("vertinimas/stilius/:sid/:page",array("module"=>"default","controller" => "rate","action" => "style","sid"=>0, "page"=>0)));

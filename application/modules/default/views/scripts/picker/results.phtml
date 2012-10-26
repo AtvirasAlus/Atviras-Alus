@@ -1,0 +1,47 @@
+<script>
+	$(function() {
+	})
+</script>
+<?php
+if (isset($this->content)) {
+	?>
+	<div class="inner_container" id="search_result_container">
+		<div class="inner_header">
+			Paieškos rezultatai
+		</div>
+		<?php
+		if (isset($this->filter_values['tag_text']) && !empty($this->filter_values['tag_text'])){
+			?>
+			<div style="height: 0px; overflow: hidden;">
+				<h1><?=$this->filter_values['tag_text'];?></h1>
+			</div>
+			<?
+		}
+		?>
+		<div class="style_recipes">
+			<?php
+			$i = 0;
+			foreach ($this->content as $item):
+				$i++;
+			?>
+				<div class="style_recipe">
+					<?= $this->recipeItem($item); ?>
+				</div>
+			<?php
+				if ($i == 3){
+					$i = 0;
+					?>
+					<div class="clear"></div>
+					<?php
+				}
+			endforeach;
+			?>
+			<div class="clear"></div>
+		</div>		
+		<?php
+		echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');
+		?>
+	</div>
+	<?php
+}
+?>

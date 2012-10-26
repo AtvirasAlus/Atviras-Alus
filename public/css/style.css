@@ -2755,3 +2755,71 @@ html ul.topnav li ul.subnav li a:hover {
 	margin-bottom: 10px;
 	font-style: italic;
 }
+.picker_item {
+	display: table;
+	width: 820px;
+	padding-bottom: 15px;
+}
+.picker_row {
+	display: table-row;
+}
+.picker_min_block,
+.picker_max_block,
+.picker_min_val,
+.picker_max_val,
+.picker_slider {
+	display: table-cell;
+}
+.picker_min_block {
+	width: 40px;
+	height: 20px;
+	border-left: 10px solid white;
+}
+.picker_max_block {
+	width: 40px;
+	height: 20px;
+	border-right: 10px solid white;
+}
+.picker_min_val {
+	width: 30px;
+	padding-left: 10px;
+	padding-right: 15px;
+	text-align: left;
+	line-height: 20px;
+}
+.picker_max_val {
+	width: 30px;
+	padding-left: 15px;
+	padding-right: 10px;
+	text-align: right;
+	line-height: 20px;
+}
+.picker_slider {
+	padding-top: 5px;
+}
+.picker_title {
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+.picker_results {
+	text-align: center;
+}
+.picker_results div {
+	margin: auto;
+	border: 1px solid black;
+	width: 150px;
+	line-height: 60px;
+	font-weight: bold;
+	font-size: 26px;
+	color: #755531;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	height: 60px;
+}
+.picker_submit {
+	text-align: center;
+	margin-top: 10px;
+}
