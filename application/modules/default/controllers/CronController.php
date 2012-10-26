@@ -11,6 +11,7 @@ class CronController extends Zend_Controller_Action {
 	}
 	
 	public function fixmailsubjectsAction(){
+		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
