@@ -1,0 +1,38 @@
+<script src="/public/colorbox/colorbox/jquery.colorbox.js"></script>
+<link rel="stylesheet" href="/public/colorbox/colorbox.css" />
+<script type="text/javascript">
+	$(function(){
+		$(".fancybox").colorbox({
+			maxWidth: "80%",
+			maxHeight: "80%",
+			scrolling: false,
+			current: "{current}/{total}"
+		});
+	});
+</script>
+<div class="index_block">
+	<div class="block_header">
+		<?=($widget['limit'] == 1) ? "Naujausia recepto nuotrauka" : "Naujausios receptų nuotraukos";?>
+	</div>
+	<div class="block_content">
+		<?php
+		foreach($widget['items'] as $item){
+			?>
+			<div class="wg_galery_item">
+				<a title="<?=$item['recipe_name']?>, <?=$item['user_name']?>" href="/recipe_images/<?=$item['recipe_id']?>/<?=$item['file_name']?>.jpg" class="fancybox"><img src="/recipe_images/<?=$item['recipe_id']?>/t_<?=$item['file_name']?>.jpg" width="138" height="104" /></a>
+				<div class="wg_galery_description">
+					<a href="/alus/receptas/<?=$item['recipe_id']?>-<?=$this->urlMaker($item['recipe_name'])?>"><?=$item['recipe_name']?></a>
+				</div>
+				<div class="wg_galery_user">
+					<a href="/brewers/<?=$item['user_id']?>"><?=$item['user_name']?></a>
+				</div>
+			</div>
+			<?
+		}
+		?>
+		<div class="clear"></div>
+		<div class="wg_more">
+			<a href="/gallery">Visos receptų nuotraukos</a>
+		</div>
+	</div>
+</div>

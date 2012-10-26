@@ -9,41 +9,9 @@
 
 global $suffusion_social_networks, $suffusion_comment_label_name, $suffusion_comment_label_req, $suffusion_comment_label_email, $suffusion_comment_label_uri, $suffusion_comment_label_your_comment;
 $suffusion_blog_features_options = array(
-	array("name" => "Back-End Settings",
+	array("name" => "Back-End",
 		"type" => "sub-section-2",
 		"category" => "blog-features",
-		"help" => "This section has options to help fine-tune your site's back-end. Think of it as a GUI alternative to PHP.
-			<br /><b>Version Info: </b> In version 3.7.3 and older this section was broadly called \"Blog Features\". The following options from 3.7.3 have been moved to other sections:
-			<table>
-				<tr>
-					<th>Option</th>
-					<th>Now in Section</th>
-				</tr>
-				<tr>
-					<td>Main Navigation Bar Setup</td>
-					<td>Other Graphical Elements</td>
-				</tr>
-				<tr>
-					<td>Top Navigation Bar Setup</td>
-					<td>Other Graphical Elements</td>
-				</tr>
-				<tr>
-					<td>Post and Page Bylines</td>
-					<td>Other Graphical Elements</td>
-				</tr>
-				<tr>
-					<td>Layout: Excerpt / List / Tile / Full</td>
-					<td>Other Graphical Elements</td>
-				</tr>
-				<tr>
-					<td>Featured Content</td>
-					<td>Other Graphical Elements</td>
-				</tr>
-				<tr>
-					<td>Tabbed Sidebar</td>
-					<td>Sidebar Configuration</td>
-				</tr>
-			</table>",
 		"parent" => "root"
 	),
 
@@ -159,7 +127,7 @@ $suffusion_blog_features_options = array(
 		"parent" => "comment-settings",
 		"export" => "ne",
 		"type" => "multi-select",
-		"options" => suffusion_get_formatted_page_array("suf_comments_disabled")),
+		"options" => suffusion_get_formatted_page_array()),
 
 	array("name" => "Hide \"Comment form closed\" Message on Posts",
 		"desc" => "If you disable comments on a post, you can make a  \"Comment form closed\" message show up. " .
@@ -188,13 +156,26 @@ $suffusion_blog_features_options = array(
 		"options" => array("allow" => "Allow replies to Trackbacks and Pingbacks", "disallow" => "Don't allow replies to Trackbacks and Pingbacks"),
 		"std" => "disallow"),
 
+	array("name" => "Comment styles",
+		"desc" => "How do you want your comments to be displayed?",
+		"id" => "suf_comment_display_type",
+		"parent" => "comment-settings",
+		"type" => "radio",
+		"options" => array(
+			"theme" => "Theme default",
+			"plain" => "Plain nested",
+			"author-above" => "Bubble with author above comment",
+			"author-below" => "Bubble with author below comment",
+		),
+		"std" => "theme"),
+
 	array("name" => "Comment form labels styles",
 		"desc" => "You can choose to have theme-based styles for labels in your comment form, or leave them unstyled. The theme-based style is more colorful (which you may or may not prefer): ",
 		"id" => "suf_comment_label_styles",
 		"parent" => "comment-settings",
 		"type" => "radio",
-		"options" => array("plain" => "Plain (unstyled, default)", "theme" => "Theme-based style"),
-		"std" => "plain"),
+		"options" => array("theme" => "Theme default", "plain" => "Plain (unstyled)", "colored" => "Coloured", "inside" => "Label inside field"),
+		"std" => "theme"),
 
 	array("name" => "Comment form labels",
 		"desc" => "Setup your comment form labels here",
@@ -249,6 +230,15 @@ $suffusion_blog_features_options = array(
 		"grouping" => "comment-labels",
 		"type" => "text",
 		"std" => esc_attr($suffusion_comment_label_your_comment)),
+
+	array("name" => "Comment form: HTML Tags",
+		"desc" => "Show the message about allowed HTML tags?",
+		"id" => "suf_comment_show_html_tags",
+		"parent" => "comment-settings",
+		"grouping" => "comment-labels",
+		"type" => "radio",
+		"options" => array("show" => "Show message", "hide" => "Hide message"),
+		"std" => "show"),
 
 	array("name" => "User Profiles",
 		"type" => "sub-section-3",
@@ -325,7 +315,7 @@ $suffusion_blog_features_options = array(
 		"parent" => "analytics",
 		"type" => "radio",
 		"note" => "Please set this option to \"Analytics enabled\" if you want to override the theme's settings for Analytics.",
-		"options" => array("not-enabled" => "Analytics not enabled(default)",
+		"options" => array("not-enabled" => "Analytics not enabled",
 			"enabled" => "Analytics enabled"),
 		"std" => "not-enabled"),
 
@@ -351,7 +341,7 @@ $suffusion_blog_features_options = array(
 		"parent" => "openid-setup",
 		"type" => "radio",
 		"note" => "Please set this option to \"OpenID enabled\" if you want to override the theme's settings for OpenID.",
-		"options" => array("not-enabled" => "OpenID not enabled(default)",
+		"options" => array("not-enabled" => "OpenID not enabled",
 			"enabled" => "OpenID enabled"),
 		"std" => "not-enabled"),
 
@@ -400,7 +390,7 @@ $suffusion_blog_features_options = array(
 		"std" => ""),
 
 	array("name" => "First Additional Stylesheet link",
-		"desc" => "If you want to define any additional stylesheets, include the entire link here for the first sheet. An example would be a plugin with a separate stylesheet.",
+		"desc" => "If you want to define any additional stylesheets, include the entire link here for the first sheet. An example would be a plugin with a separate stylesheet. Note that for this option to work you have to set <i>Back-end &rarr; Site Optimization &rarr; Auto-generate CSS file for customization options</i> to be linked in the source.",
 		"id" => "suf_custom_css_link_1",
 		"parent" => "custom-additions",
 		"grouping" => "custom-css",
@@ -409,7 +399,7 @@ $suffusion_blog_features_options = array(
 		"std" => ""),
 
 	array("name" => "Second Additional Stylesheet link",
-		"desc" => "If you want to define any additional stylesheets, include the entire link here for the second sheet. An example would be a plugin with a separate stylesheet.",
+		"desc" => "If you want to define any additional stylesheets, include the entire link here for the second sheet. An example would be a plugin with a separate stylesheet.  Note that for this option to work you have to set <i>Back-end &rarr; Site Optimization &rarr; Auto-generate CSS file for customization options</i> to be linked in the source.",
 		"id" => "suf_custom_css_link_2",
 		"parent" => "custom-additions",
 		"grouping" => "custom-css",
@@ -418,37 +408,12 @@ $suffusion_blog_features_options = array(
 		"std" => ""),
 
 	array("name" => "Third Additional Stylesheet link",
-		"desc" => "If you want to define any additional stylesheets, include the entire link here for the third sheet. An example would be a plugin with a separate stylesheet.",
+		"desc" => "If you want to define any additional stylesheets, include the entire link here for the third sheet. An example would be a plugin with a separate stylesheet. Note that for this option to work you have to set <i>Back-end &rarr; Site Optimization &rarr; Auto-generate CSS file for customization options</i> to be linked in the source.",
 		"id" => "suf_custom_css_link_3",
 		"parent" => "custom-additions",
 		"grouping" => "custom-css",
 		"type" => "text",
 		"hint" => "Enter the stylesheet here, including http://",
-		"std" => ""),
-
-	array("name" => "Custom PHP",
-		"desc" => "Suffusion offers a number of action hooks defined in the actions.php file, and some filter hooks defined in the file filters.php.
-			You can extend this functionality by including your own PHP.",
-		"parent" => "custom-additions",
-		"category" => "custom-php",
-		"type" => "sub-section-4",
-	),
-
-	array("name" => "Custom PHP file location",
-		"desc" => "You can define your custom PHP code in a separate file and include a reference to that file here. Do note the following:
-			<ul class='margin-20'>
-				<li>This file must be put somewhere under your WordPress content directory, " . WP_CONTENT_DIR . ".</li>
-				<li>Include the path relative to the content directory, e.g. my-functions/custom-functions.php. Make sure you use the path separator \"/\", not \"\\\".</li>
-				<li>If your path includes a sub-directory like \"my-functions\", make sure that the sub-directory exists in your content directory.</li>
-				<li>Don't use the Unix folder paths \".\" and \"..\".</li>
-				<li><b>Don't put any \"echo\" or \"print\" calls in your file outside a function call.</b> Otherwise you will get an error saying that you attempted to write the headers after they had already been sent.</li>
-				<li><b>Make sure that your file has no syntax errors.</b> Otherwise you will see a white page.</li>
-			</ul>",
-		"id" => "suf_custom_php_file",
-		"parent" => "custom-additions",
-		"grouping" => "custom-php",
-		"type" => "text",
-		"hint" => "Enter the path to the file",
 		"std" => ""),
 
 	array("name" => "Got JavaScript?",
@@ -644,32 +609,6 @@ $suffusion_blog_features_options = array(
 		"parent" => "blog-features"
 	),
 
-	array("name" => "Removal of Options",
-		"desc" => "With effect from version 3.7.4 of Suffusion the following options have been removed:
-			<ul class='margin-20'>
-				<li>CSS Compression - GZip, minify etc. A new CSS minification option has been introduced only for the generated CSS, so that it doesn't clutter the site's HTML.</li>
-				<li>WordPress JS compression - GZip</li>
-				<li>Site GZip compression</li>
-				<li>CDN JQuery support</li>
-			</ul>
-			There are quite a few reasons for the removal of the compression options, primary among which is the fact that the theme's compression
-			capabilities are quite localized and do not take effect for plugins. There are also some compatibility issues with using GZip with
-			certain plugins. If you want to use compression please use a plugin such as W3 Total Cache.<br/>
-			The reason why CDN JQuery support has been removed is because of the changing nature of WP's dependencies. Depending on CDN would have
-			meant a more elaborate set of options to handle different JQuery versions.
-			",
-		"parent" => "site-optimization",
-		"type" => "blurb"),
-
-	array("name" => "Include JavaScript in Footer",
-		"desc" => "Including the JS in the footer will speed up the load times and improve your site's performance on Yahoo YSlow or Google Page Speed. But there may be some incompatibility with certain plugins, in which case leave the JS in the header.",
-		"id" => "suf_js_in_footer",
-		"parent" => "site-optimization",
-		"type" => "radio",
-		"options" => array("header" => "JS in header",
-			"footer" => "JS in footer"),
-		"std" => "header"),
-
 	array("name" => "Auto-generate CSS file for customization options",
 		"desc" => "You can cache the generated CSS and/or link it to another file instead of printing it all out in your site's HTML.",
 		"id" => "suf_autogen_css",
@@ -677,10 +616,11 @@ $suffusion_blog_features_options = array(
 		"type" => "radio",
 		"options" => array("autogen" => "Auto-generate the CSS and include it as a linked file (High load on server, elegant page source code)",
 			"autogen-inline" => "Auto-generate the CSS and print it in the HTML source (Least load on server, ugly page source code)",
+			"autogen-file" => "Auto-generate the CSS and link it as a file (Low load on server, elegant page source code)",
 			"nogen" => "Don't auto-generate the CSS, and print it in the HTML source (Low load on server, ugly page source code)",
 			"nogen-link" => "Don't auto-generate the CSS, and link it in the HTML source (Highest load on server, elegant page source code)"
 		),
-		"std" => "autogen"),
+		"std" => "autogen-file"),
 
 	array("name" => "Minify generated CSS",
 		"desc" => "Minifying the generated CSS will make it all be printed in a single line. Disable this if you are using a caching plugin.",
@@ -690,14 +630,13 @@ $suffusion_blog_features_options = array(
 		"options" => array("minify" => "Minify the CSS", "no-minify" => "Don't minify the CSS"),
 		"std" => "no-minify"),
 
-	array("name" => "Cache dynamic options?",
-		"desc" => "The foundation of Suffusion is its set of options. Over time this set has become quite large and heavy and tends to take up a lot of memory.
-			By caching the options you can save on the load that each page on your site gets.",
-		"id" => "suf_cache_unified",
+	array("name" => "Use \"Lite\" version of JQuery Cycle?",
+		"desc" => "If you are using the \"Featured Content\" or the Advanced Gallery features (in <em>Other Graphical Elements</em>) and you require only the 'Fade' transition and you don't want the post index, you should use the Lite version of the JQuery Cycle plugin. It is much smaller: ",
+		"id" => "suf_featured_use_lite",
 		"parent" => "site-optimization",
 		"type" => "radio",
-		"options" => array("cache" => "Cache all options", "nocache" => "Don't cache options"),
-		"std" => "cache"),
+		"options" => array("lite" => "Use Lite version (4 KB)", "regular" => "Use Regular version (29 KB)"),
+		"std" => "regular"),
 
 	array("name" => "Child Themes",
 		"type" => "sub-section-3",
@@ -712,7 +651,7 @@ $suffusion_blog_features_options = array(
 		"id" => "suf_style_inheritance",
 		"parent" => "child-themes",
 		"type" => "radio",
-		"options" => array("everything" => "Inherit all stylesheets corresponding to the theme selection (You will still need the @import for Suffusion's style.css)",
+		"options" => array("everything" => "Inherit all stylesheets corresponding to the theme selection (You don't need any @import in your style.css)",
 			"nothing" => "Don't inherit any stylesheet (all inclusions will be done using @import tags in your child theme's style.css. Use this if you don't want any pre-defined color scheme)"),
 		"std" => "everything"),
 );

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class IndexController extends Zend_Controller_Action {
 
@@ -373,7 +373,69 @@ class IndexController extends Zend_Controller_Action {
 					->order("user_lastlogin DESC")
 					->limit(16);
 			$this->view->users = $db->fetchAll($select);
+			
+			/*
+			$widgets = array();
+			$widgets['left'] = array();
+			$widgets['right'] = array();
 
+			// NEWBIE
+			$temp = array();
+			$temp['type'] = "newbie";
+			$widgets['left'][] = $temp;
+			unset($temp);
+
+			// LAST RECIPE COMMENTS
+			$temp = array();
+			$temp['type'] = "last_recipe_comments";
+			$temp['limit'] = 3;
+			$temp['items'] = $this->getWidgetLastRecipeComments($temp['limit']);
+			$widgets['right'][] = $temp;
+			unset($temp);
+
+			// NEW RECIPE IMAGE
+			$temp = array();
+			$temp['type'] = "new_recipe_images";
+			$temp['limit'] = 1;
+			$temp['items'] = $this->getWidgetNewRecipeImages($temp['limit']);
+			$widgets['right'][] = $temp;
+			unset($temp);
+
+			// RANDOM RECIPE IMAGE
+			$temp = array();
+			$temp['type'] = "random_recipe_images";
+			$temp['limit'] = 1;
+			$temp['items'] = $this->getWidgetRandomRecipeImages($temp['limit']);
+			$widgets['right'][] = $temp;
+			unset($temp);
+
+			// RANDOM RECIPE
+			$temp = array();
+			$temp['type'] = "random_recipe";
+			$temp['limit'] = 3;
+			$temp['items'] = $this->getWidgetRandomRecipe($temp['limit']);
+			$widgets['right'][] = $temp;
+			unset($temp);
+
+			// LAST COMMENTED RECIPES
+			$temp = array();
+			$temp['type'] = "last_commented_recipes";
+			$temp['limit'] = 3;
+			$temp['items'] = $this->getWidgetLastCommentedRecipes($temp['limit']);
+			$widgets['right'][] = $temp;
+			unset($temp);
+
+			// NEW RECIPES
+			$temp = array();
+			$temp['type'] = "new_recipes";
+			$temp['limit'] = 3;
+			$temp['items'] = $this->getWidgetNewRecipes($temp['limit']);
+			$widgets['right'][] = $temp;
+			unset($temp);
+			
+			$this->view->widgets = $widgets;
+			*/
+			
 			$this->_helper->viewRenderer('indexnew'); 
 			
 		} else {
@@ -660,6 +722,85 @@ class IndexController extends Zend_Controller_Action {
 
 	public function stylesAction() {
 		
+	}
+	
+	private function getWidgetNewRecipes($limit = 3){
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("activity")
+				->join("users", "users.user_id=activity.user_id", array("user_name"))
+				->join("beer_recipes", "beer_recipes.recipe_id=activity.item_id", array("recipe_ebc"))
+				->where("type = ?", array("recipe"))
+				->order("posted DESC")
+				->limit($limit);
+		$result = $db->FetchAll($select);
+		return $result;
+	}
+	private function getWidgetLastCommentedRecipes($limit = 3){
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("activity", array("DISTINCT(recipe_comment_recipe_id), item_id"))
+				->join("beer_recipes", "beer_recipes.recipe_id=activity.recipe_comment_recipe_id", array("recipe_ebc", "recipe_name"))
+				->join("beer_styles", "beer_recipes.recipe_style=beer_styles.style_id", array("style_name AS recipe_style_name"))
+				->join("users", "beer_recipes.brewer_id=users.user_id", array("user_id", "user_name"))
+				->where("type = ?", array("recipe_comment"))
+				->group("activity.recipe_comment_recipe_id")
+				->order("posted DESC")
+				->limit($limit);
+		$result = $db->FetchAll($select);
+		return $result;
+	}
+	
+	private function getWidgetRandomRecipe($limit = 3){
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("beer_recipes")
+				->join("beer_styles", "beer_recipes.recipe_style=beer_styles.style_id", array("style_name"))
+				->join("users", "beer_recipes.brewer_id=users.user_id", array("user_name"))
+				->where("recipe_name != ''")
+				->where("recipe_publish = '1'")
+				->order("RAND()")
+				->limit($limit);
+		$result = $db->FetchAll($select);
+		foreach($result as $key=>$val){
+			$result[$key]['hex'] = $this->view->colorHex($val['recipe_ebc']);
+		}
+		return $result;
+	}
+	private function getWidgetRandomRecipeImages($limit = 3){
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("beer_images")
+				->join("beer_recipes", "beer_recipes.recipe_id=beer_images.recipe_id", array("recipe_name"))
+				->join("users", "beer_images.user_id=users.user_id", array("user_name"))
+				->where("beer_recipes.recipe_publish = '1'")
+				->order("RAND()")
+				->limit($limit);
+		$result = $db->FetchAll($select);
+		return $result;
+	}
+	private function getWidgetNewRecipeImages($limit = 3){
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("beer_images")
+				->join("beer_recipes", "beer_recipes.recipe_id=beer_images.recipe_id", array("recipe_name"))
+				->join("users", "beer_images.user_id=users.user_id", array("user_name"))
+				->where("beer_recipes.recipe_publish = '1'")
+				->order("beer_images.posted DESC")
+				->limit($limit);
+		$result = $db->FetchAll($select);
+		return $result;
+	}
+	private function getWidgetLastRecipeComments($limit = 3){
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("activity", array("item_id", "recipe_comment_recipe_id", "recipe_comment_recipe_name", "recipe_comment_text"))
+				->join("users", "activity.user_id=users.user_id", array("user_id", "user_name", "user_email"))
+				->where("type = ?", array("recipe_comment"))
+				->order("posted DESC")
+				->limit($limit);
+		$result = $db->FetchAll($select);
+		return $result;
 	}
 
 }

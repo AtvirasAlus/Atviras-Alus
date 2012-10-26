@@ -6,13 +6,6 @@
  * @package Suffusion
  * @subpackage Functions
  */
-
-// First we will get all options from the database, then we will individually invoke the options within each function as required.
-global $suffusion_unified_options;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
-
 function suffusion_document_header() {
 	do_action('suffusion_document_header');
 }
@@ -78,7 +71,7 @@ function suffusion_page_footer() {
 }
 
 function suffusion_document_footer() {
-	do_action('suffusion_document_footer');
+	do_action('suffusion_document_footer', 'footer');
 }
 
 function suffusion_page_navigation() {
@@ -125,111 +118,79 @@ function suffusion_after_comment() {
 // This section defines the individual callback functions
 //
 function suffusion_include_dbx() {
-	global $suf_sidebar_1_dnd, $suf_sidebar_2_dnd, $suf_sidebar_1_expcoll, $suf_sidebar_2_expcoll, $suf_sidebar_count, $suf_wa_sb2_style;
 	if (suffusion_should_include_dbx()) {
-		$expcoll_1 = $suf_sidebar_1_expcoll == "enabled" ? "yes" : "no";
-		$expcoll_2 = $suf_sidebar_2_expcoll == "enabled" ? "yes" : "no";
-?>
-	<!-- Sidebar docking boxes (dbx) by Brothercake - http://www.brothercake.com/ -->
-	<script type="text/javascript">
-	/* <![CDATA[ */
-	window.onload = function() {
-		//initialise the docking boxes manager
-		var manager = new dbxManager('main'); 	//session ID [/-_a-zA-Z0-9/]
-
-<?php
-		if ($suf_sidebar_1_dnd == "enabled") {?>
-		//create new docking boxes group
-		var sidebar = new dbxGroup(
-			'sidebar', 		// container ID [/-_a-zA-Z0-9/]
-			'vertical', 		// orientation ['vertical'|'horizontal']
-			'7', 			// drag threshold ['n' pixels]
-			'no',			// restrict drag movement to container axis ['yes'|'no']
-			'10', 			// animate re-ordering [frames per transition, or '0' for no effect]
-			'<?php echo $expcoll_1; ?>', 			// include open/close toggle buttons ['yes'|'no']
-			'open', 		// default state ['open'|'closed']
-			'open', 		// word for "open", as in "open this box"
-			'close', 		// word for "close", as in "close this box"
-			'click-down and drag to move this box', // sentence for "move this box" by mouse
-			'click to %toggle% this box', // pattern-match sentence for "(open|close) this box" by mouse
-			'use the arrow keys to move this box', // sentence for "move this box" by keyboard
-			', or press the enter key to %toggle% it',  // pattern-match sentence-fragment for "(open|close) this box" by keyboard
-			'%mytitle%  [%dbxtitle%]' // pattern-match syntax for title-attribute conflicts
-		);
-<?php
-		}
-		if (($suf_sidebar_count > 1 && $suf_sidebar_2_dnd == "enabled" && $suf_wa_sb2_style == "boxed" && !(is_page_template('1l-sidebar.php') || is_page_template('1r-sidebar.php'))) ||
-				($suf_sidebar_2_dnd == "enabled" && $suf_wa_sb2_style == "boxed" && (is_page_template('1l1r-sidebar.php') || is_page_template('2l-sidebars.php') || is_page_template('2r-sidebars.php')))) {
-?>
-		var sidebar_2 = new dbxGroup(
-			'sidebar-2', 		// container ID [/-_a-zA-Z0-9/]
-			'vertical', 		// orientation ['vertical'|'horizontal']
-			'7', 			// drag threshold ['n' pixels]
-			'no',			// restrict drag movement to container axis ['yes'|'no']
-			'10', 			// animate re-ordering [frames per transition, or '0' for no effect]
-			'<?php echo $expcoll_2; ?>', 			// include open/close toggle buttons ['yes'|'no']
-			'open', 		// default state ['open'|'closed']
-			'open', 		// word for "open", as in "open this box"
-			'close', 		// word for "close", as in "close this box"
-			'click-down and drag to move this box', // sentence for "move this box" by mouse
-			'click to %toggle% this box', // pattern-match sentence for "(open|close) this box" by mouse
-			'use the arrow keys to move this box', // sentence for "move this box" by keyboard
-			', or press the enter key to %toggle% it',  // pattern-match sentence-fragment for "(open|close) this box" by keyboard
-			'%mytitle%  [%dbxtitle%]' // pattern-match syntax for title-attribute conflicts
-		);
-<?php
-		}
-		?>
-	};
-	/* ]]> */
-	</script>
-
-<?php
+		get_template_part('custom/dbx');
 	}
 }
 
-function suffusion_include_ie_fixes() {?>
-<!--[if lt IE 7]>
-<script src="<?php echo get_template_directory_uri(); ?>/belatedpng.js"></script>
-<script>
-	//Drew Diller's Belated PNG: http://dillerdesign.wordpress.com/2009/07/02/belatedpng-img-nodes-javascript-event-handling/
-  	DD_belatedPNG.fix('img, .suf-widget ul li, #sidebar ul li, #sidebar-2 ul li, .sidebar-tab-content ul li, li.suf-mag-catblock-post, input, .searchform .searchsubmit, #right-header-widgets .searchsubmit, #left-header-widgets .searchsubmit, #top-bar-left-widgets .searchsubmit,  #top-bar-right-widgets .searchsubmit, submit, .searchsubmit, .postdata .category, .postdata .comments, .postdata .edit, .previous-entries a, .next-entries a, .post-nav .next a, .post-nav .previous a, .post .date, h3#comments, h3.comments, #h3#respond, h3.respond, blockquote, blockquote div');
- </script>
-<![endif]-->
-<?php
-}
-
-function suffusion_include_custom_header_js() {
-	global $suf_custom_header_js;
-	if (isset($suf_custom_header_js) && trim($suf_custom_header_js) != "") {?>
-<!-- Custom JavaScript for header defined in options -->
+function suffusion_include_custom_js($location = 'footer') {
+	echo "<!-- location $location -->\n";
+	$script = "suf_custom_{$location}_js";
+	global $$script;
+	if (isset($$script) && trim($$script) != "") {?>
+<!-- Custom JavaScript for <?php echo $location; ?> defined in options -->
 <script type="text/javascript">
 /* <![CDATA[ */
 <?php
-		$strip = stripslashes($suf_custom_header_js);
+		$strip = stripslashes($$script);
 		$strip = wp_specialchars_decode($strip, ENT_QUOTES);
 		echo $strip."\n";
 ?>
 /* ]]> */
 </script>
-<!-- /Custom JavaScript for header defined in options -->
+<!-- /Custom JavaScript for <?php echo $location; ?> defined in options -->
+<?php
+	}
+}
+
+/**
+ * Includes JavaScript to play an audio file. Suffusion is bundled with the standalone version of the Open Source WP Audio Player plugin.
+ * See http://wpaudioplayer.com/ for the plugin page.
+ *
+ * Suffusion is bundled with the JS and the SWF files from the plugin. For the FLA file corresponding to the SWF, see http://tools.assembla.com/1pixelout/browser/audio-player/trunk/source
+ *
+ * @return void
+ */
+function suffusion_include_audio_player_script() {
+	global $suf_enable_audio_shortcode;
+	if (!class_exists('Suffusion_Shortcodes') && !function_exists('audio_shortcode') && !class_exists('AudioPlayer') && isset($suf_enable_audio_shortcode) && $suf_enable_audio_shortcode == 'on') {?>
+<!-- Include AudioPlayer via Suffusion -->
+<script type="text/javascript">
+/* <![CDATA[ */
+	if (typeof AudioPlayer != 'undefined') {
+		AudioPlayer.setup("<?php echo get_template_directory_uri().'/scripts/player.swf'; ?>", {
+			width: 500,
+			initialvolume: 100,
+			transparentpagebg: "yes",
+			left: "000000",
+			lefticon: "FFFFFF"
+		});
+	}
+/* ]]> */
+</script>
+<!-- /AudioPlayer -->
 <?php
 	}
 }
 
 function suffusion_display_header() {
-	global $suf_sub_header_vertical_alignment, $suf_header_fg_image_type, $suf_header_fg_image, $suf_header_alignment;
+	global $suf_sub_header_vertical_alignment, $suf_header_fg_image_type, $suf_header_fg_image, $suf_header_alignment, $suf_sub_header_alignment;
+	$display = apply_filters('suffusion_can_display_header', true);
+	if (!$display) {
+		return;
+	}
+
 	if ($suf_header_alignment == 'right') {
 		suffusion_display_widgets_in_header();
 	}
-	if (!is_singular()) {
+	if (!is_singular() || is_page_template('magazine.php')) {
 		$header_tag = "h1";
 	}
 	else {
 		$header_tag = "h2";
 	}
 ?>
-	<div id="header" class="fix">
+	<header id="header" class="fix">
 	<?php
 	$header = ($suf_header_fg_image_type == 'image' && trim($suf_header_fg_image) != '') ? "<img src='$suf_header_fg_image' alt='".esc_attr(get_bloginfo('name'))."'/>" : get_bloginfo('name', 'display');
 	$home_link = home_url();
@@ -238,18 +199,18 @@ function suffusion_display_header() {
 	}
 	if ($suf_sub_header_vertical_alignment == "above") {
 		?>
-		<div class="description"><?php bloginfo('description');?></div>
-		<<?php echo $header_tag?> class="blogtitle"><a href="<?php echo $home_link;?>"><?php echo $header;?></a></<?php echo $header_tag?>>
+		<div class="description <?php echo $suf_sub_header_alignment; ?>"><?php bloginfo('description');?></div>
+		<<?php echo $header_tag?> class="blogtitle <?php echo $suf_header_alignment; ?>"><a href="<?php echo $home_link;?>"><?php echo $header;?></a></<?php echo $header_tag?>>
 	<?php
 	}
 	else {
 		?>
-		<<?php echo $header_tag?> class="blogtitle"><a href="<?php echo $home_link;?>"><?php echo $header;?></a></<?php echo $header_tag?>>
-		<div class="description"><?php bloginfo('description');?></div>
+		<<?php echo $header_tag?> class="blogtitle <?php echo $suf_header_alignment; ?>"><a href="<?php echo $home_link;?>"><?php echo $header;?></a></<?php echo $header_tag?>>
+		<div class="description <?php echo $suf_sub_header_alignment; ?>"><?php bloginfo('description');?></div>
 <?php
 	}
 	?>
-    </div><!-- /header -->
+    </header><!-- /header -->
 <?php
 	if ($suf_header_alignment != 'right') {
 		suffusion_display_widgets_in_header();
@@ -257,31 +218,27 @@ function suffusion_display_header() {
 }
 
 function suffusion_display_main_navigation() {
-	global $suf_nav_contents, $suf_nav_item_type;
+	global $suf_nav_contents, $suf_nav_item_type, $suf_nav_dd_pos;
 	$display = apply_filters('suffusion_can_display_main_navigation', true);
 	if ($display) {
 ?>
- 	<div id="nav" class="<?php echo $suf_nav_item_type; ?> fix">
-		<div class='col-control'>
+ 	<nav id="nav" class="<?php echo $suf_nav_item_type; ?> fix">
+		<div class='col-control <?php echo $suf_nav_dd_pos; ?>'>
 <?php
 	suffusion_display_left_header_widgets();
-	//Two options using native WP functionality:
-	//1. wp_list_pages('title_li=&sort_column=menu_order&depth=3'); // This will need you to add the starting and ending <ul> tags
-	//2. wp_page_menu('show_home=Home&menu_class=nav'); // This needs nothing and even creates the div. Works only for WP 2.7+
-	//I am using a custom function here because I want to show the ">" for items with a dropdown. Also, page exclusions don't work as desired with standard functionality.
-	if ($suf_nav_contents == "pages") {
-		suffusion_create_navigation_html(true, $suf_nav_contents, 'main', 'suf_nav_pages', 'suf_nav_cats', 'suf_nav_links', 'suf_nav_menus');
-	}
 	suffusion_display_right_header_widgets();
+	if ($suf_nav_contents == "pages") {
+		suffusion_create_navigation_html(true, 'main', 'suf_nav_pages', 'suf_nav_cats', 'suf_nav_links', 'suf_nav_menus');
+	}
 ?>
 		</div><!-- /col-control -->
-	</div><!-- /nav -->
+	</nav><!-- /nav -->
 <?php
 	}
 }
 
 function suffusion_display_top_navigation() {
-	global $suf_navt_contents, $suf_wa_tbrh_style, $suf_wa_tbrh_open_text, $suf_wa_tbrh_close_text, $suf_navt_item_type;
+	global $suf_navt_contents, $suf_wa_tbrh_style, $suf_wa_tbrh_open_text, $suf_wa_tbrh_close_text, $suf_navt_item_type, $suf_navt_dd_pos;
 	if ($suf_navt_contents == "pages" || (has_nav_menu('top'))) {
 		if (!suffusion_is_sidebar_empty(7)) {
 			if ($suf_wa_tbrh_style == 'sliding-panel' || $suf_wa_tbrh_style == 'spanel-flat' || $suf_wa_tbrh_style == 'spanel-boxed') {
@@ -289,7 +246,7 @@ function suffusion_display_top_navigation() {
 				if ($display) {
 ?>
 	<!-- #top-bar-right-spanel -->
-	<div id="top-bar-right-spanel" class='warea fix'>
+	<div id="top-bar-right-spanel" class='custom warea fix'>
 		<div class='col-control'>
 			<div class='spanel'>
 				<div class='spanel-content fix'>
@@ -308,27 +265,17 @@ function suffusion_display_top_navigation() {
 		$display = apply_filters('suffusion_can_display_top_navigation', true);
 		if ($display) {
 ?>
-	<div id='nav-top' class='<?php echo $suf_navt_item_type; ?> fix'>
-		<div class='col-control'>
+	<nav id='nav-top' class='<?php echo $suf_navt_item_type; ?> fix'>
+		<div class='col-control <?php echo $suf_navt_dd_pos; ?>'>
 <?php
-		if (!suffusion_is_sidebar_empty(6)) {
-?>
-			<!-- #top-bar-left-widgets -->
-			<div id="top-bar-left-widgets" class="warea">
-<?php
-			dynamic_sidebar('Top Bar Left Widgets');
-?>
-			</div>
-			<!-- /#top-bar-left-widgets -->
-<?php
-		}
-		if (!suffusion_is_sidebar_empty(7)) {
+			get_sidebar('nav-top-left');
+			if (!suffusion_is_sidebar_empty(7)) {
 			if ($suf_wa_tbrh_style == 'sliding-panel' || $suf_wa_tbrh_style == 'spanel-flat' || $suf_wa_tbrh_style == 'spanel-boxed') {
 ?>
 		<div id="top-bar-right-spanel-tab">
 			<div class="toggle">
 				<a class="open" href="#"><?php echo $suf_wa_tbrh_open_text; ?></a>
-				<a style="display: none;" class="close" href="#"><?php echo $suf_wa_tbrh_close_text; ?></a>
+				<a class="close" href="#"><?php echo $suf_wa_tbrh_close_text; ?></a>
 			</div>
 		</div> <!-- /#top-bar-right-spanel-tab -->
 <?php
@@ -345,68 +292,30 @@ function suffusion_display_top_navigation() {
 <?php
 			}
 		}
-		suffusion_create_navigation_html(true, "pages", 'top', 'suf_navt_pages', 'suf_navt_cats', 'suf_navt_links', 'suf_navt_menus');
+		suffusion_create_navigation_html(true, 'top', 'suf_navt_pages', 'suf_navt_cats', 'suf_navt_links', 'suf_navt_menus');
 ?>
 		</div><!-- /.col-control -->
-	</div><!-- /#nav-top -->
+	</nav><!-- /#nav-top -->
 <?php
 		}
 	}
 }
 
 function suffusion_display_left_header_widgets() {
-	if (!suffusion_is_sidebar_empty('8')) {?>
-		<!-- left-header-widgets -->
-		<div id="left-header-widgets" class='warea fix'>
-		<?php
-			dynamic_sidebar('Left Header Widgets');
-		?>
-		</div>
-		<!-- /left-header-widgets -->
-<?php
-	}
+	get_sidebar('nav-main-left');
 }
 
 function suffusion_display_right_header_widgets() {
-	global $suf_show_search;
-	if ($suf_show_search == "show" || !suffusion_is_sidebar_empty(3)) {?>
-		<!-- right-header-widgets -->
-		<div id="right-header-widgets" class="warea">
-		<?php
-			if (!dynamic_sidebar('Right Header Widgets')) {
-				if ($suf_show_search == "show") {
-					get_search_form();
-				}
-			}
-		?>
-		</div>
-		<!-- /right-header-widgets -->
-<?php
-	}
+	get_sidebar('nav-main-right');
 }
 
-/*
+/**
  * Displays the widget area below the header, if it is enabled.
+ *
+ * @return void
  */
 function suffusion_print_widget_area_below_header() {
-	global $suf_widget_area_below_header_enabled, $suf_ns_wabh_enabled, $suf_wa_wabh_style;
-	$display = apply_filters('suffusion_can_display_widget_area_below_header', true);
-	if (!$display) {
-		return;
-	}
-	if ($suf_widget_area_below_header_enabled == "enabled") {
-		if ((is_page_template('no-sidebars.php') && $suf_ns_wabh_enabled == 'not-enabled')) {
-		}
-		else if (!suffusion_is_sidebar_empty(4)) { ?>
-	<!-- horizontal-outer-widgets-1 Widget Area -->
-	<div id="horizontal-outer-widgets-1" class="dbx-group <?php echo $suf_wa_wabh_style;?> warea fix">
-		<?php
-			dynamic_sidebar('Widget Area Below Header');
-		?>
-	</div>
-	<!-- /horizontal-outer-widgets-1 --><?php
-		}
-	}
+	get_sidebar('below-header');
 }
 
 /**
@@ -421,6 +330,7 @@ function suffusion_print_widget_area_below_header() {
  */
 function suffusion_print_left_sidebars() {
 	global $suffusion;
+	wp_reset_postdata();
 	if (!isset($suffusion) || is_null($suffusion)) {
 		$suffusion = new Suffusion();
 	}
@@ -441,7 +351,7 @@ function suffusion_print_left_sidebars() {
 	if ($suf_sbtab_enabled == 'enabled' && ($suf_sbtab_alignment == 'left' || ($left_count == 1 && $right_count == 0) || $left_count == 2)) {
 		echo "<div id='sidebar-container' class='sidebar-container-left fix'>";
 		$suffusion_tabs_alignment = 'left';
-		get_template_part('sidebar-tabs');
+		get_sidebar('tabs');
 	}
 
 	// Show Wide Sidebar Top if there are 2 left sidebars
@@ -505,12 +415,14 @@ function suffusion_print_left_sidebars() {
  */
 function suffusion_print_right_sidebars() {
 	global $suffusion;
+	wp_reset_postdata();
 	if (!isset($suffusion) || is_null($suffusion)) {
 		$suffusion = new Suffusion();
 	}
 	$context = $suffusion->get_context();
 
 	$right_count = suffusion_get_right_sidebar_count($context);
+
 	if ($right_count == 0) {
 		return;
 	}
@@ -525,7 +437,7 @@ function suffusion_print_right_sidebars() {
 	if ($suf_sbtab_enabled == 'enabled' && ($suf_sbtab_alignment == 'right' || ($right_count == 1 && $left_count == 0) || $right_count == 2)) {
 		echo "<div id='sidebar-container' class='sidebar-container-right fix'>";
 		$suffusion_tabs_alignment = 'right';
-		get_template_part('sidebar-tabs');
+		get_sidebar('tabs');
 	}
 
 	// Show Wide Sidebar Top if there are 2 right sidebars
@@ -580,7 +492,8 @@ function suffusion_print_right_sidebars() {
 /**
  * Computes and returns the number of sidebars to show on the left. The result is passed through the filter "suffusion_left_sidebar_count".
  *
- * @return mixed|void
+ * @param array $context
+ * @return int|mixed|void
  */
 function suffusion_get_left_sidebar_count($context = array()) {
 	global $suf_sidebar_count, $suf_sidebar_alignment, $suf_sidebar_2_alignment;
@@ -619,11 +532,12 @@ function suffusion_get_left_sidebar_count($context = array()) {
  * @return mixed|void
  */
 function suffusion_get_right_sidebar_count($context = array()) {
-	global $suf_sidebar_count, $suf_sidebar_alignment, $suf_sidebar_2_alignment;
+	global $suf_sidebar_count, $suf_sidebar_alignment, $suf_sidebar_2_alignment, $post;
 	$display = apply_filters('suffusion_can_display_right_sidebars', true); // Custom templates can use this hook to avoid sidebars
 	if (!$display) {
 		return 0;
 	}
+//	$page_layout = suffusion_get_post_meta($post->ID, 'suf_pseudo_template', true);
 
 	if (is_page_template('no-sidebars.php') || is_page_template('1l-sidebar.php') || is_page_template('2l-sidebars.php')) {
 		$ret = 0;
@@ -658,25 +572,40 @@ function suffusion_get_right_sidebar_count($context = array()) {
  * @return
  */
 function suffusion_get_sidebar_count_for_view($count, $position = 'right', $context = array()) {
-	global $suffusion_sidebar_context_presets;
+	global $suffusion_sidebar_context_presets, $post;
 	foreach ($suffusion_sidebar_context_presets as $preset) {
 		if (in_array($preset, $context)) {
 			$count_option = "suf_{$preset}_sidebar_count";
 			global $$count_option;
+			if (isset($$count_option)) {
+				$special_template = $$count_option;
+			}
 		}
 	}
-/*	if (in_array('blog', $context)) {
-		$count_option = "suf_blog_sidebar_count";
-		global $$count_option;
-	}*/
 
-	if (!isset($$count_option)) {
+	// The current view is not any preset ('search', 'date', 'author', 'tag', 'category', 'blog', 'magazine'). Check if this is a single post.
+	if (!isset($count_option)) {
+		if (is_singular() && !is_page()) {
+			$post_template = suffusion_get_post_meta($post->ID, 'suf_pseudo_template', true);
+			$special_template = ($post_template == '' || $post_template === 0 || $post_template == "0") ? 'default' : $post_template;
+		}
+		else if (is_page()) {
+			$post_template = suffusion_get_post_meta($post->ID, 'suf_pseudo_template', true);
+			if ($post_template != '' && $post_template !== 0 && $post_template != "0" &&
+				!(is_page_template('no-sidebars.php') || is_page_template('1l-sidebar.php') || is_page_template('1r-sidebar.php') ||
+				  is_page_template('2l-sidebars.php') || is_page_template('2r-sidebars.php') || is_page_template('1l1r-sidebar.php'))) {
+				$special_template = $post_template;
+			}
+		}
+	}
+
+	if (!isset($special_template)) {
 		return $count;
 	}
 	
-	$inherit = $$count_option;
+	$inherit = $special_template;
 
-	$position_count = array('default' => $count, '0' => 0,
+	$position_count = array('default' => $count, '0' => 0, 'no' => 0,
 		'1l' => array('left' => 1, 'right' => 0), '1r' => array('left' => 0, 'right' => 1), '1l1r' => array('left' => 1, 'right' => 1),
 		'2l' => array('left' => 2, 'right' => 0), '2r' => array('left' => 0, 'right' => 2), );
 	if (!isset($position_count[$inherit])) {
@@ -690,12 +619,13 @@ function suffusion_get_sidebar_count_for_view($count, $position = 'right', $cont
 }
 
 /**
- * Returns the class corresponding to the template that a particular page is supposed to mimic.
+ * Returns the class corresponding to the template that a particular page is supposed to mimic. In case of single posts this gets the value
+ * of the meta field 'suf_pseudo_template' for that post, and returns the template corresponding to that.
  * 
- * @return string
+ * @return array
  */
 function suffusion_get_pseudo_template_class() {
-	global $suffusion, $suffusion_sidebar_context_presets;
+	global $suffusion, $suffusion_sidebar_context_presets, $post;
 	if (!isset($suffusion) || is_null($suffusion)) {
 		$suffusion = new Suffusion();
 	}
@@ -705,24 +635,39 @@ function suffusion_get_pseudo_template_class() {
 		if (in_array($preset, $context)) {
 			$count_option = "suf_{$preset}_sidebar_count";
 			global $$count_option;
+			if (isset($$count_option)) {
+				$special_template = $$count_option;
+			}
 		}
 	}
-/*	if (in_array('blog', $context)) {
-		$count_option = "suf_blog_sidebar_count";
-		global $$count_option;
-	}*/
 
-	if (!isset($$count_option)) {
-		return '';
+	// The current view is not any preset ('search', 'date', 'author', 'tag', 'category', 'blog'). Check if this is a single post.
+	if (!isset($count_option)) {
+		$post_template = suffusion_get_post_meta($post->ID, 'suf_pseudo_template', true);
+		if (is_singular() && !is_page()) {
+			$special_template = ($post_template == '' || $post_template === 0 || $post_template == "0") ? 'default' : $post_template;
+		}
+		else if (is_page()) {
+			if ($post_template != '' && $post_template !== 0 && $post_template != "0" &&
+				!(is_page_template('no-sidebars.php') || is_page_template('1l-sidebar.php') || is_page_template('1r-sidebar.php') ||
+				  is_page_template('2l-sidebars.php') || is_page_template('2r-sidebars.php') || is_page_template('1l1r-sidebar.php'))) {
+				$special_template = $post_template;
+			}
+		}
 	}
 
-	switch ($$count_option) {
+	if (!isset($special_template)) {
+		return array();
+	}
+
+	switch ($special_template) {
 		case 'default':
 			$template = '';
-	        break;
+			break;
 		case '0':
+		case 'no':
 			$template = 'no-sidebars.php';
-	        break;
+			break;
 		case '1l':
 			$template = '1l-sidebar.php';
 			break;
@@ -742,8 +687,14 @@ function suffusion_get_pseudo_template_class() {
 			$template = '';
 			break;
 	}
+
 	if ($template != '') {
 		$template = 'page-template-'.str_replace('.', '-', $template);
+		$suffusion->set_body_layout($template);
+		$template = array($template);
+	}
+	else {
+		$template = array();
 	}
 
 	return apply_filters('suffusion_pseudo_template_class', $template);
@@ -753,194 +704,112 @@ function suffusion_get_pseudo_template_class() {
  * Displays the widget area above the footer, if it is enabled.
  */
 function suffusion_print_widget_area_above_footer() {
-	global $suf_widget_area_above_footer_enabled, $suf_ns_waaf_enabled,  $suf_wa_waaf_style;
-	$display = apply_filters('suffusion_can_display_widget_area_above_footer', true);
-	if (!$display) {
-		return;
-	}
-	if ($suf_widget_area_above_footer_enabled == "enabled") {
-		if (is_page_template('no-sidebars.php') && ($suf_ns_waaf_enabled == 'not-enabled')) {
-		}
-		else if (!suffusion_is_sidebar_empty(5)) { ?>
-	<!-- horizontal-outer-widgets-2 Widget Area -->
-	<div id="horizontal-outer-widgets-2" class="<?php echo $suf_wa_waaf_style; ?> warea fix">
-		<?php
-			dynamic_sidebar('Widget Area Above Footer');
-		?>
-	</div>
-	<!-- /horizontal-outer-widgets-2 -->
-<?php
-		}
-	}
+	get_sidebar('above-footer');
 }
 
 function suffusion_display_footer() {
-	global $suf_footer_left, $suf_footer_center, $suf_footer_layout_style;
-	$display = apply_filters('suffusion_can_display_site_footer', true);
-	if (!$display) {
-		return;
-	}
-	if ($suf_footer_layout_style != 'in-align') {
-	?>
-	<div id='page-footer'>
-		<div class='col-control'>
-	<?php
-	}
-	?>
-	<div id="cred">
-		<table>
-			<tr>
-				<td class="cred-left"><?php $strip = stripslashes($suf_footer_left); $strip = wp_specialchars_decode($strip, ENT_QUOTES); echo do_shortcode($strip); ?></td>
-				<td class="cred-center"><?php $strip = stripslashes($suf_footer_center); $strip = wp_specialchars_decode($strip, ENT_QUOTES); echo do_shortcode($strip); ?></td>
-				<td class="cred-right"><a href="http://www.aquoid.com/news/themes/suffusion/">Suffusion theme by Sayontan Sinha</a></td>
-			</tr>
-		</table>
-	</div>
-	<?php
-	if ($suf_footer_layout_style != 'in-align') {
-	?>
-		</div>
-	</div>
-	<?php
-	}
-	?>
-	<!-- <?php echo get_num_queries(); ?> queries, <?php suffusion_get_memory_usage(); ?> in <?php timer_stop(1); ?> seconds. -->
-	<?php
- }
-
-function suffusion_include_custom_footer_js() {
-	global $suf_custom_footer_js;
-	if (isset($suf_custom_footer_js) && trim($suf_custom_footer_js) != "") {
-?>
-<!-- Custom JavaScript for footer defined in options -->
-<script type="text/javascript">
-/* <![CDATA[ */
-	<?php
-	$strip = stripslashes($suf_custom_footer_js);
-	$strip = wp_specialchars_decode($strip, ENT_QUOTES);
-	echo $strip."\n";
-	?>
-/* ]]> */
-</script>
-<!-- /Custom JavaScript for footer defined in options -->
-<?php }
+	get_template_part('custom/site-footer');
 }
 
 function suffusion_get_siblings_in_nav($ancestors, $index, $exclusion_list, $exclude, $echo = 1) {
 	if (count($ancestors) <= $index || $index < 0) {
-		return;
+		return '';
 	}
 	$exclusion_query = $exclude == "hide" ? "&exclude=".$exclusion_list : "";
 	$children = wp_list_pages("title_li=&child_of=".$ancestors[$index]."&echo=".$echo.$exclusion_query);
 	return $children;
 }
 
-function suffusion_display_hierarchical_navigation() {
-	$display = apply_filters('suffusion_can_display_hierarchical_navigation', true);
-	if (!$display) {
-		return;
-	}
-	global $post, $suf_nav_breadcrumb, $suf_nav_exclude_in_breadcrumb;
-	$ancestors = get_post_ancestors($post);
-	$exclusion_list = suffusion_get_excluded_pages("suf_nav_pages");
-	$num_ancestors = count($ancestors);
-
-	if ($suf_nav_breadcrumb == "all") {
-		for ($anc_index = 1; $num_ancestors - $anc_index >= 0; $anc_index++) {
-			$style = ($anc_index == 1) ? "subnav" : "l".($anc_index + 1)."nav";
-			$class = ($anc_index == 1) ? "" : "hier-nav";
-?>
-	<div id="<?php echo $style;?>" class="<?php echo $class; ?> fix">
-		<ul>
-			<?php suffusion_get_siblings_in_nav($ancestors, $num_ancestors - $anc_index, $exclusion_list, $suf_nav_exclude_in_breadcrumb); ?>
-		</ul>
-	</div><?php echo "<!-- /".$style."-->"; ?>
-<?php
-		}
-		$exclusion_query = $suf_nav_exclude_in_breadcrumb == "hide" ? "&exclude_tree=".$exclusion_list : "";
-		$style = ($num_ancestors == 0) ? "subnav" : "l".($num_ancestors + 2)."nav";
-		$class = ($num_ancestors == 0) ? "" : "hier-nav";
-		$children = wp_list_pages("title_li=&child_of=".$post->ID."&echo=0".$exclusion_query);
-		if ($children) {
-	?>
-	<div id="<?php echo $style;?>" class="<?php echo $class; ?> fix">
-		<ul>
-			<?php echo $children; ?>
-		</ul>
-	</div><!-- /sub nav -->
-<?php
-		}
-	}
-}
-
-function suffusion_create_navigation_breadcrumb() {
-	$display = apply_filters('suffusion_can_display_breadcrumb_navigation', true);
-	if (!$display) {
-		return;
-	}
-	global $suf_nav_breadcrumb, $suf_breadcrumb_separator, $post;
-
-	$ancestors = get_post_ancestors($post);
-	$num_ancestors = count($ancestors);
-	if ($suf_nav_breadcrumb == "breadcrumb") {
-		if ($num_ancestors > 0) {
-	?>
-	<div id="subnav" class="fix">
-		<div class="breadcrumb">
-	<?php
-			for ($i = $num_ancestors-1; $i>=0; $i--) {
-				$anc_page = get_page($ancestors[$i]);
-				echo "<a href='".get_permalink($ancestors[$i])."'>".$anc_page->post_title."</a> ".$suf_breadcrumb_separator." ";
-			}
-			echo $post->post_title;
-	?>
-		</div>
-	</div><!-- /sub nav -->
-	<?php
-		}
-	}
-}
-
 function suffusion_excerpt_or_content() {
-	global $post, $suf_category_excerpt, $suf_tag_excerpt, $suf_archive_excerpt, $suf_index_excerpt, $suf_search_excerpt, $suf_author_excerpt, $suf_show_excerpt_thumbnail, $suf_show_content_thumbnail, $full_content_post_counter, $full_post_count;
-	if (($full_content_post_counter > $full_post_count) && ((is_category() && $suf_category_excerpt == "excerpt") ||
+	global $suf_category_excerpt, $suf_tag_excerpt, $suf_archive_excerpt, $suf_index_excerpt, $suf_search_excerpt, $suf_author_excerpt, $suf_show_excerpt_thumbnail, $suffusion_current_post_index, $suffusion_full_post_count_for_view, $suf_pop_excerpt, $page_of_posts;
+	global $suffusion_cpt_post_id;
+
+	if (isset($suffusion_cpt_post_id)) {
+		$cpt_excerpt = suffusion_get_post_meta($suffusion_cpt_post_id, 'suf_cpt_post_type_layout', true);
+		$cpt_image = suffusion_get_post_meta($suffusion_cpt_post_id, 'suf_cpt_show_excerpt_thumb', true);
+	}
+	else {
+		$cpt_excerpt = false;
+	}
+
+	if (($suffusion_current_post_index > $suffusion_full_post_count_for_view) && ($cpt_excerpt ||
+		(is_category() && $suf_category_excerpt == "excerpt") ||
 		(is_tag() && $suf_tag_excerpt == "excerpt") ||
 		(is_search() && $suf_search_excerpt == "excerpt") ||
 		(is_author() && $suf_author_excerpt == "excerpt") ||
 		((is_date() || is_year() || is_month() || is_day() || is_time())&& $suf_archive_excerpt == "excerpt") ||
+		(isset($page_of_posts) && $page_of_posts && $suf_pop_excerpt == "excerpt") ||
 		(!(is_singular() || is_category() || is_tag() || is_search() || is_author() || is_date() || is_year() || is_month() || is_day() || is_time()) && $suf_index_excerpt == "excerpt"))) {
-		$show_image = $suf_show_excerpt_thumbnail == "show" ? true : false;
+		$show_image = isset($cpt_image) ? $cpt_image : ($suf_show_excerpt_thumbnail == "show" ? true : false);
 		suffusion_excerpt($show_image);
 	}
 	else {
-		if (has_post_thumbnail($post->ID) && $suf_show_content_thumbnail == 'show') {
-			global $suf_excerpt_thumbnail_alignment, $suf_excerpt_thumbnail_size;
-			//Could use suffusion_get_image(), but the theme uploader recommends use of the_post_thumbnail at least once in the theme...
-			//echo suffusion_get_image(array('no-link' => true));
-			if ($suf_excerpt_thumbnail_size == 'custom') {
-				$thumbnail = get_the_post_thumbnail(null, 'excerpt-thumbnail');
+		get_template_part('post-formats/content', suffusion_get_post_format());
+	}
+}
+
+// Wrapping this to account for future plugin development
+if (!function_exists('suffusion_excerpt')) {
+	/**
+	 * Generates an excerpt with additional parameters
+	 *
+	 * @param bool $show_image 			Shows a thumbnail if set to true
+	 * @param bool $echo 				Echoes the output
+	 * @param bool $filter_length		Whether a filter should be applied to restrict the length of the excerpt
+	 * @param string $length_callback	Function to call for controlling the excerpt length. Default is <code>suffusion_excerpt_length</code>
+	 * @return mixed|string|void
+	 */
+	function suffusion_excerpt($show_image = false, $echo = true, $filter_length = true, $length_callback = 'suffusion_excerpt_length') {
+		$ret = "";
+		if ($show_image) {
+			$ret = suffusion_get_image(array());
+		}
+		if ($filter_length) {
+			if (function_exists($length_callback)) {
+				add_filter('excerpt_length', $length_callback);
 			}
 			else {
-				$thumbnail = get_the_post_thumbnail(null, $suf_excerpt_thumbnail_size);
+				add_filter('excerpt_length', 'suffusion_excerpt_length');
 			}
-			echo "<div class='$suf_excerpt_thumbnail_alignment-thumbnail'>".$thumbnail."</div>";
 		}
-		the_content(__('Continue reading', 'suffusion').' &raquo;');
+
+		// If this is a YAPB post, disable this filter, otherwise the YAPB thumbnail is shown in excerpts...
+		if (function_exists('yapb_is_photoblog_post') && yapb_is_photoblog_post()) {
+			global $yapb;
+			remove_filter('the_content', array(&$yapb, '_filter_the_content'));
+		}
+
+		$excerpt = get_the_excerpt();
+		$excerpt = apply_filters('the_excerpt', $excerpt);
+		$ret .= $excerpt;
+		if ($echo) {
+			echo $ret;
+		}
+
+		// If this is a YAPB post, re-add this filter for full content posts
+		if (function_exists('yapb_is_photoblog_post') && yapb_is_photoblog_post()) {
+			global $yapb;
+			add_filter('the_content', array(&$yapb, '_filter_the_content'));
+		}
+
+		return $ret;
 	}
 }
 
-function suffusion_excerpt($show_image = false) {
-	if ($show_image) {
-		echo suffusion_get_image(array());
-	}
-	the_excerpt();
-}
-
-function suffusion_print_author_byline() {
+/**
+ * Returns an author byline. The format is determined by a setting, which can let the user pick between various options, like "Posted by x",
+ * or "Posted by x at <time>" or "Posted by x at <time> on <date>" or "Posted by x on <date> at <time>". Each format is translatable.
+ *
+ * @param bool $echo
+ * @param bool $show_icon
+ * @return string
+ */
+function suffusion_print_author_byline($echo = true, $show_icon = true) {
 	global $suf_page_posted_by_format, $suf_post_posted_by_format;
-?>
-<span class="author">
-	<?php
+	$ret = '<span class="author">';
+	if ($show_icon) {
+		$ret .= '<span class="icon">&nbsp;</span>';
+	}
 	if (is_page()) {
 		$format = $suf_page_posted_by_format;
 	}
@@ -949,69 +818,30 @@ function suffusion_print_author_byline() {
 	}
 	switch ($format) {
 		case 'by':
-			printf(__('Posted by %1$s', 'suffusion'), '<a href="'.get_author_posts_url(get_the_author_meta('ID')).'">'.get_the_author_meta('display_name').'</a>');
+			$ret .= sprintf(__('Posted by %1$s', 'suffusion'), '<span class="vcard"><a href="'.get_author_posts_url(get_the_author_meta('ID')).'" class="url fn" rel="author">'.get_the_author().'</a></span>');
 			break;
 		case 'by-at':
-			printf(__('Posted by %1$s at %2$s', 'suffusion'), '<a href="'.get_author_posts_url(get_the_author_meta('ID')).'">'.get_the_author_meta('display_name').'</a>', sprintf(get_the_time(get_option('time_format'))));
+			$ret .= sprintf(__('Posted by %1$s at %2$s', 'suffusion'), '<span class="vcard"><a href="'.get_author_posts_url(get_the_author_meta('ID')).'" class="url fn" rel="author">'.get_the_author().'</a></span>', get_the_time(get_option('time_format')));
 			break;
 		case 'by-on':
-			printf(__('Posted by %1$s on %2$s', 'suffusion'), '<a href="'.get_author_posts_url(get_the_author_meta('ID')).'">'.get_the_author_meta('display_name').'</a>', sprintf(get_the_time(get_option('date_format'))));
+			$ret .= sprintf(__('Posted by %1$s on %2$s', 'suffusion'), '<span class="vcard"><a href="'.get_author_posts_url(get_the_author_meta('ID')).'" class="url fn" rel="author">'.get_the_author().'</a></span>', get_the_time(get_option('date_format')));
 			break;
 		case 'by-on-at':
-			printf(__('Posted by %1$s on %2$s at %3$s', 'suffusion'), '<a href="'.get_author_posts_url(get_the_author_meta('ID')).'">'.get_the_author_meta('display_name').'</a>', sprintf(get_the_time(get_option('date_format'))), sprintf(get_the_time(get_option('time_format'))));
+			$ret .= sprintf(__('Posted by %1$s on %2$s at %3$s', 'suffusion'), '<span class="vcard"><a href="'.get_author_posts_url(get_the_author_meta('ID')).'" class="url fn" rel="author">'.get_the_author().'</a></span>', get_the_time(get_option('date_format')), get_the_time(get_option('time_format')));
 			break;
 		case 'by-at-on':
-			printf(__('Posted by %1$s at %2$s on %3$s', 'suffusion'), '<a href="'.get_author_posts_url(get_the_author_meta('ID')).'">'.get_the_author_meta('display_name').'</a>', sprintf(get_the_time(get_option('time_format'))), sprintf(get_the_time(get_option('date_format'))));
+			$ret .= sprintf(__('Posted by %1$s at %2$s on %3$s', 'suffusion'), '<span class="vcard"><a href="'.get_author_posts_url(get_the_author_meta('ID')).'" class="url fn" rel="author">'.get_the_author().'</a></span>', get_the_time(get_option('time_format')), get_the_time(get_option('date_format')));
 			break;
 	}
-	?>
-</span>
-<?php
+	$ret .= "</span>";
+	if ($echo) {
+		echo $ret;
+	}
+	return $ret;
 }
 
 function suffusion_post_footer() {
-	global $suf_post_show_posted_by, $suf_page_show_posted_by, $suf_post_show_tags, $suf_post_show_cats, $suf_post_show_comment, $suf_page_show_comment, $post, $suf_post_meta_position, $suf_page_meta_position;
-?>
-	<div class="post-footer fix">
-	<?php
-	if ((!is_page() && $suf_post_meta_position == 'corners' && ($suf_post_show_posted_by == 'show' || $suf_post_show_posted_by == 'show-bright')) ||
-		(is_page() && $suf_page_meta_position == 'corners' && ($suf_page_show_posted_by == 'show' || $suf_page_show_posted_by == 'show-bright'))) {
-		suffusion_print_author_byline();
-	}
-	if (!is_page() && $suf_post_meta_position == 'corners' && ($suf_post_show_cats == 'show-bleft' || $suf_post_show_cats == 'show-bright')) {
-?>
-			<span class="category"><?php the_category(', ') ?></span>
-<?php
-	}
-	if (!is_page()) {
-		if ($suf_post_meta_position == 'corners') {
-			if (is_singular()) {
-				if ('open' == $post->comment_status && ($suf_post_show_comment == 'show-bleft' || $suf_post_show_comment == 'show-bright')) {
-?>
-			<span class="comments"><a href="#respond"><?php _e('Add comments', 'suffusion'); ?></a></span>
-<?php
-				}
-			}
-			else if ($suf_post_show_comment == 'show-bleft' || $suf_post_show_comment == 'show-bright') { ?>
-			<span class="comments"><?php comments_popup_link(__('No Responses', 'suffusion').' &#187;', __('1 Response', 'suffusion').' &#187;', __('% Responses', 'suffusion').' &#187;'); ?></span>
-<?php
-			}
-		}
-	}
-	else {
-		if ('open' == $post->comment_status && $suf_page_meta_position == 'corners' && ($suf_page_show_comment == 'show-bleft' || $suf_page_show_comment == 'show-bright')) {
-?>
-			<span class="comments"><a href="#respond"><?php _e('Add comments', 'suffusion'); ?></a></span>
-<?php
-		}
-	}
-	if (!is_page() && $suf_post_meta_position == 'corners' && ($suf_post_show_tags == 'show' ||  $suf_post_show_tags == 'show-bleft')) { ?>
-			<span class="tags"><?php the_tags(__('Tagged with: ', 'suffusion'),', ','<br />'); ?></span>
-<?php
-	}
-?>
-	</div><!-- .post-footer -->
-<?php
+	get_template_part('custom/post-footer', get_post_type());
 }
 
 function suffusion_disable_plugin_styles() {
@@ -1019,125 +849,15 @@ function suffusion_disable_plugin_styles() {
 }
 
 function suffusion_pagination() {
-	global $suf_pagination_type, $suf_pagination_index, $suf_pagination_prev_next, $suf_pagination_show_all;
-	if (is_singular()) {
-		return;
-	}
-    if (suffusion_show_page_nav()) {
-        if (function_exists("wp_pagenavi")) {
-			// If the user has wp_pagenavi installed, we will use that for pagination
-?>
-		<div class="page-nav fix">
-<?php
-			wp_pagenavi();
-?>
-		</div><!-- page nav -->
-<?php
-		}
-		else if ($suf_pagination_type == "numbered") {
-			// The user doesn't have WP-PageNavi, but still wants pagination
-			global $wp_query, $paged;
-			$max_page = $wp_query->max_num_pages;
-			$prev_next = $suf_pagination_prev_next == "show";
-			$show_all = $suf_pagination_show_all == "all";
-			if (!$paged && $max_page >= 1) {
-				$current_page = 1;
-			}
-			else {
-				$current_page = $paged;
-			}
-?>
-		<div class="page-nav fix">
-			<div class="suf-page-nav fix">
-<?php
-			if ($suf_pagination_index == "show") {
-?>
-				<span class="page-index"><?php printf(__('Page %1$s of %2$s', 'suffusion'), $current_page, $max_page); ?></span>
-<?php
-			}
-			echo paginate_links(array(
-				"base" => add_query_arg("paged", "%#%"),
-				"format" => '',
-				"type" => "plain",
-				"total" => $max_page,
-				"current" => $current_page,
-				"show_all" => $show_all,
-				"end_size" => 2,
-				"mid_size" => 2,
-				"prev_next" => $prev_next,
-				"next_text" => __('Older Entries', 'suffusion'),
-				"prev_text" => __('Newer Entries', 'suffusion'),
-			));
-?>
-			</div><!-- suf page nav -->
-		</div><!-- page nav -->
-<?php
-		}
-		else {
-?>
-		<div class="page-nav fix">
-			<span class="previous-entries"><?php next_posts_link(__('Older Entries', 'suffusion')); ?></span>
-			<span class="next-entries"><?php previous_posts_link(__('Newer Entries', 'suffusion')); ?></span>
-		</div><!-- page nav -->
-<?php
-		}
-    }
-}
-
-function suffusion_comment_pagination() {
-	global $suf_cpagination_type, $suf_cpagination_index, $suf_cpagination_prev_next, $suf_cpagination_show_all;
-	if ($suf_cpagination_type == "numbered") {
-		// The user wants pagination
-		global $wp_query, $paged;
-		$max_page = $wp_query->max_num_pages;
-		$prev_next = $suf_cpagination_prev_next == "show";
-		$show_all = $suf_cpagination_show_all == "all";
-		if (!$paged && $max_page >= 1) {
-			$current_page = 1;
-		}
-		else {
-			$current_page = $paged;
-		}
-?>
-		<div class="page-nav fix">
-			<div class="suf-page-nav fix">
-<?php
-		if ($suf_cpagination_index == "show") {
-?>
-				<span class="page-index"><?php printf(__('Page %1$s of %2$s', 'suffusion'), $current_page, $max_page); ?></span>
-<?php
-		}
-		echo paginate_comments_links(array(
-			"base" => add_query_arg("cpage", "%#%"),
-			"format" => '',
-			"type" => "plain",
-			"total" => $max_page,
-			"current" => $current_page,
-			"show_all" => $show_all,
-			"end_size" => 2,
-			"mid_size" => 2,
-			"prev_next" => $prev_next,
-			"next_text" => __('Older Entries', 'suffusion'),
-			"prev_text" => __('Newer Entries', 'suffusion'),
-		));
-?>
-			</div><!-- suf page nav -->
-		</div><!-- page nav -->
-<?php
-	}
-	else {
-?>
-		<div class="page-nav fix">
-			<span class="previous-entries"><?php next_posts_link(__('Older Entries', 'suffusion')); ?></span>
-			<span class="next-entries"><?php previous_posts_link(__('Newer Entries', 'suffusion')); ?></span>
-		</div><!-- page nav -->
-<?php
-	}
+	get_template_part('custom/pagination', 'posts');
 }
 
 function suffusion_featured_posts() {
+	if (is_singular() && !is_page()) {
+		return;
+	}
 	global $suf_featured_category_view, $suf_featured_tag_view, $suf_featured_search_view, $suf_featured_author_view, $suf_featured_time_view, $suf_featured_index_view;
-	global $suf_mag_featured_enabled, $suf_featured_pages_with_fc, $post;
+	global $suf_mag_featured_enabled, $suf_featured_pages_with_fc, $post, $suf_featured_view_first_only;
     $pages_with_fc = explode(',', $suf_featured_pages_with_fc);
 	if ((is_category() && $suf_featured_category_view == "enabled") || (is_tag() && $suf_featured_tag_view == "enabled") ||
 		(is_search() && $suf_featured_search_view == "enabled") || (is_author() && $suf_featured_author_view == "enabled") ||
@@ -1146,64 +866,74 @@ function suffusion_featured_posts() {
 		((is_date() || is_year() || is_month() || is_day() || is_time()) && $suf_featured_time_view == "enabled") ||
 		(!(is_category() || is_tag() || is_search() || is_author() || is_date() || is_year() || is_month() || is_day() || is_time() || is_page_template('magazine.php') || is_page())
 			&& $suf_featured_index_view == "enabled")) {
+		if (!is_page() && $suf_featured_view_first_only == 'first' && is_paged()) {
+			return;
+		}
 		locate_template(array("featured-posts.php"), true);
 		suffusion_display_featured_posts();
 	}
 }
 
 function suffusion_include_featured_js() {
-	global $suf_featured_category_view, $suf_featured_tag_view, $suf_featured_search_view, $suf_js_in_footer;
+	global $suf_featured_category_view, $suf_featured_tag_view, $suf_featured_search_view;
 	global $suf_featured_author_view, $suf_featured_time_view, $suf_featured_index_view, $suf_mag_featured_enabled, $suf_featured_pages_with_fc;
-	$footer = $suf_js_in_footer == 'footer' ? true : false;
 	if ((is_category() && $suf_featured_category_view == "enabled") || (is_tag() && $suf_featured_tag_view == "enabled") ||
 		(is_search() && $suf_featured_search_view == "enabled") || (is_author() && $suf_featured_author_view == "enabled") ||
 		(is_page_template('magazine.php') && $suf_mag_featured_enabled == 'enabled') ||
         (is_page() && $suf_featured_pages_with_fc != '') ||
+		(!is_admin() && (is_active_widget('Suffusion_Featured_Posts', false, 'suf-featured-posts', true))) ||
 		((is_date() || is_year() || is_month() || is_day() || is_time()) && $suf_featured_time_view == "enabled") ||
 		(!(is_category() || is_tag() || is_search() || is_author() || is_date() || is_year() || is_month() || is_day() || is_time() || is_page_template('magazine.php') || is_page()) && $suf_featured_index_view == "enabled")) {
-		wp_enqueue_script('jquery-cycle');
-        wp_enqueue_script('slider-init', get_template_directory_uri() . '/scripts/slider-init.js', array('jquery-cycle'), null, $footer);
+		// Photonic is a plugin by me, so I know that it loads JQuery Cycle always. If Photonic is active there is no need to load JQuery Cycle via Suffusion.
+		if (!class_exists('Photonic')) {
+			wp_enqueue_script('suffusion-jquery-cycle');
+		}
 	}
-    if (!is_admin() && is_active_widget('Suffusion_Featured_Posts', false, 'suf-featured-posts', true)) {
-	    wp_enqueue_script('jquery-cycle');
-    }
 }
 
 function suffusion_template_specific_header() {
-	global $suf_cat_info_enabled, $suf_author_info_enabled, $suf_tag_info_enabled, $suf_search_info_enabled;
-	if (is_category() && ($suf_cat_info_enabled == 'enabled')) { ?>
-		<div class="info-category fix">
-			<h2 class="category-title"><?php single_cat_title(); ?></h2>
+	global $suf_cat_info_enabled, $suf_author_info_enabled, $suf_tag_info_enabled, $suf_search_info_enabled, $suffusion_mosaic_layout;
+	if (is_category() && ($suf_cat_info_enabled == 'enabled') && apply_filters('suffusion_can_display_category_information', true)) { ?>
+		<section class="info-category post fix">
+			<header class="post-header">
+				<h2 class="category-title"><?php single_cat_title(); ?></h2>
+			</header>
 <?php echo suffusion_get_category_information(); ?>
-		</div><!-- .info-category -->
+		</section><!-- .info-category -->
 <?php
 	}
-	else if (is_author() && ($suf_author_info_enabled == 'enabled')) {
-		$id = get_query_var('author'); ?>
-		<div id="author-profile-<?php the_author_meta('user_nicename', $id); ?>" class="author-profile author-even fix">
-			<h2 class="author-title"><?php the_author_meta('display_name', $id); ?></h2>
+	else if (is_author() && ($suf_author_info_enabled == 'enabled') && apply_filters('suffusion_can_display_author_information', true)) {
+		$author_id = get_query_var('author'); ?>
+		<section id="author-profile-<?php the_author_meta('user_nicename', $author_id); ?>" class="author-profile author-even post fix">
+			<header class="post-header">
+				<h2 class="author-title"><?php the_author_meta('display_name', $author_id); ?></h2>
+			</header>
 			<?php echo suffusion_get_author_information();?>
-		</div><!-- /.author-profile -->
+		</section><!-- /.author-profile -->
 <?php
 	}
-	else if (is_tag() && ($suf_tag_info_enabled == 'enabled')) { ?>
-		<div class="info-tag fix">
-			<h2 class="tag-title"><?php single_tag_title(); ?></h2>
+	else if (is_tag() && ($suf_tag_info_enabled == 'enabled') && apply_filters('suffusion_can_display_tag_information', true)) { ?>
+		<section class="info-tag post fix">
+			<header class="post-header">
+				<h2 class="tag-title"><?php single_tag_title(); ?></h2>
+			</header>
 		<?php echo tag_description(get_query_var('tag_id')); ?>
-		</div><!-- .info-tag -->
+		</section><!-- .info-tag -->
 <?php
 	}
-	else if (is_search() && $suf_search_info_enabled == 'enabled') {
+	else if (is_search() && $suf_search_info_enabled == 'enabled' && apply_filters('suffusion_can_display_search_information', true)) {
 		if (have_posts()) {	?>
-		<div class='post fix'>
-			<h2 class='posttitle'><?php $title = wp_title(':', false); $title = trim($title); if (substr($title, 0, 1) == ':') { $title = substr($title, 1);} echo $title; ?></h2>
+		<section class='post fix'>
+			<header class='post-header'>
+				<h2 class='posttitle'><?php $title = wp_title(':', false); $title = trim($title); if (substr($title, 0, 1) == ':') { $title = substr($title, 1);} echo $title; ?></h2>
+			</header>
 			<form method="get" action="<?php echo home_url(); ?>/" class='search-info' id='search-info'>
 				<input class="search-hl checkbox" name="search-hl" id="search-hl" type="checkbox"/>
 				<label class='search-hl' for='search-hl'><?php _e('Highlight matching results below', 'suffusion');?></label>
 				<input type='hidden' name='search-term' id='search-term' value="<?php $search_term = get_search_query(); echo esc_attr($search_term);?>"/>
 			</form>
 			<?php get_search_form(); ?>
-		</div>
+		</section>
 <?php
 		}
 	}
@@ -1212,7 +942,8 @@ function suffusion_template_specific_header() {
 function suffusion_get_category_information() {
 	$ret = "<div class=\"category-description\">\n";
 	if (function_exists('get_cat_icon')) {
-		$ret .= get_cat_icon('echo=false');
+		$cat = get_queried_object_id();
+		$ret .= get_cat_icon('echo=false&cat='.$cat);
 	}
 	$ret .= category_description()."\n";
 	$ret .= "</div><!-- .category-description -->\n";
@@ -1221,150 +952,147 @@ function suffusion_get_category_information() {
 }
 
 function suffusion_get_author_information() {
-	$id = get_query_var('author');
+	$author_id = get_query_var('author');
 	$ret = "<div class=\"author-description\">\n";
-	$ret .= get_avatar(get_the_author_meta('user_email', $id), '96')."\n";
-	$ret .= "<p class=\"author-bio\">\n";
-	$ret .= get_the_author_meta('description', $id)."\n";
+	$ret .= get_avatar(get_the_author_meta('user_email', $author_id), '96')."\n";
+	$ret .= "<p class=\"author-bio fix\">\n";
+	$ret .= get_the_author_meta('description', $author_id)."\n";
 	$ret .= "</p><!-- /.author-bio -->\n";
+	if (is_author()) {
+		$ret .= suffusion_get_author_profile_links($author_id);
+	}
 	$ret .= "</div><!-- /.author-description -->\n";
 	$ret = apply_filters('suffusion_author_information', $ret);
 	return $ret;
 }
 
 function suffusion_print_post_page_title() {
-	global $post, $suf_post_show_cats, $suf_post_show_comment, $suf_page_show_comment, $suf_post_show_posted_by, $suf_page_show_posted_by, $suf_post_show_tags, $suf_post_meta_position, $suf_page_meta_position;
-	if (is_singular()) {
-		$header_tag = "h1";
-	}
-	else {
-		$header_tag = "h2";
-	}
-
-	if ($post->post_type == 'post') {
-?>
-		<div class='title-container fix'>
-			<div class="title">
-			<?php
-/*			if (!function_exists('has_post_format') ||
-				(function_exists('has_post_format') &&
-						(has_post_format('chat') || has_post_format('gallery') || has_post_format('image') || has_post_format('link') || has_post_format('video') || has_post_format('audio') || !get_post_format()))) {*/
-			?>
-				<<?php echo $header_tag;?>  class="posttitle"><?php echo suffusion_get_post_title_and_link(); ?></<?php echo $header_tag;?>>
-<?php
-
-/*			}*/
-			if ($suf_post_meta_position == 'corners') {
-?>
-				<div class="postdata fix">
-		<?php
-		if (($suf_post_show_posted_by == 'show-tleft' || $suf_post_show_posted_by == 'show-tright') && $suf_post_meta_position == 'corners') {
-			suffusion_print_author_byline();
-		}
-		if ($suf_post_show_cats == 'show' || $suf_post_show_cats == 'show-tright') {
-?>
-			<span class="category"><?php the_category(', ') ?></span>
-<?php
-		}
-		if (is_singular()) {
-			if ('open' == $post->comment_status && ($suf_post_show_comment == 'show' || $suf_post_show_comment == 'show-tleft')) {
-?>
-			<span class="comments"><a href="#respond"><?php _e('Add comments', 'suffusion'); ?></a></span>
-<?php
-			}
-		}
-		else if ($suf_post_show_comment == 'show' || $suf_post_show_comment == 'show-tleft') { ?>
-			<span class="comments"><?php comments_popup_link(__('No Responses', 'suffusion').' &#187;', __('1 Response', 'suffusion').' &#187;', __('% Responses', 'suffusion').' &#187;'); ?></span>
-<?php	}
-		if (is_singular() && get_edit_post_link() != '') { ?>
-   			<span class="edit"><?php edit_post_link(__('Edit', 'suffusion'), '', ''); ?></span>
-<?php
-		}
-		if ($suf_post_show_tags == 'show-tleft' ||  $suf_post_show_tags == 'show-tright') { ?>
-			<span class="tags"><?php the_tags(__('Tagged with: ', 'suffusion'),', ','<br />'); ?></span>
-<?php
-		}
-?>
-				</div><!-- /.postdata -->
-<?php
-	}
-?>
-			</div><!-- /.title -->
-<?php
-		if ("post" == $post->post_type) {
-?>
-			<div class="date"><span class="month"><?php the_time('M'); ?></span> <span class="day"><?php the_time('d'); ?></span><span class="year"><?php the_time('Y'); ?></span></div>
-<?php
-		}
-?>
-		</div><!-- /.title-container -->
-<?php
-	}
-	else {
-		if (!is_singular()) {
-?>
-		<<?php echo $header_tag;?> class="posttitle"><?php echo suffusion_get_post_title_and_link(); ?></<?php echo $header_tag;?>>
-<?php
-		}
-		else {
-?>
-        <<?php echo $header_tag;?> class="posttitle"><?php the_title(); ?></<?php echo $header_tag;?>>
-<?php
-		}
-
-		if ($suf_page_meta_position == 'corners') {
-?>
-        <div class="postdata fix">
-		<?php
-		if ($suf_page_show_posted_by == 'show-tleft' || $suf_page_show_posted_by == 'show-tright') {
-			suffusion_print_author_byline();
-		}
-		if ('open' == $post->comment_status && ($suf_page_show_comment == 'show' || $suf_page_show_comment == 'show-tleft')) {
-?>
-			<span class="comments"><a href="#respond"><?php _e('Add comments', 'suffusion'); ?></a></span>
-<?php
-		}
-		if (get_edit_post_link() != '') {
-?>
-			<span class="edit"><?php edit_post_link(__('Edit', 'suffusion'), '', ''); ?></span>
-<?php
-		}
-?>
-        </div>
-<?php
-		}
-	}
+	get_template_part('custom/post-header', get_post_type());
 }
 
 function suffusion_include_custom_js_files() {
-	global $suf_custom_js_file_1, $suf_custom_js_file_2, $suf_custom_js_file_3, $suf_js_in_footer;
-	$footer = $suf_js_in_footer == 'footer' ? true : false;
-	if ($suf_custom_js_file_1) {
-		wp_enqueue_script('suffusion-js-1', $suf_custom_js_file_1, array(), null, $footer);
-	}
-	if ($suf_custom_js_file_2) {
-		wp_enqueue_script('suffusion-js-2', $suf_custom_js_file_2, array(), null, $footer);
-	}
-	if ($suf_custom_js_file_3) {
-		wp_enqueue_script('suffusion-js-3', $suf_custom_js_file_3, array(), null, $footer);
+	for ($i = 1; $i <= 3; $i++) {
+		$script = "suf_custom_js_file_$i";
+		global $$script;
+		if ($$script) {
+			wp_enqueue_script("suffusion-js-$i", $$script, array(), null);
+		}
 	}
 }
 
 function suffusion_include_jqfix_js() {
-	global $suf_js_in_footer;
-	$footer = $suf_js_in_footer == 'footer' ? true : false;
-	$version = suffusion_get_current_version();
-    wp_enqueue_script('suffusion', get_template_directory_uri() . '/scripts/suffusion.js', array('jquery'), $version, $footer);
+	global $suffusion, $suffusion_is_ie6, $suf_fix_aspect_ratio, $suf_enable_audio_shortcode;
+	global $suf_nav_delay, $suf_nav_effect, $suf_navt_delay, $suf_navt_effect, $suf_featured_interval, $suf_featured_fx, $suf_featured_transition_speed, $suf_featured_sync, $suf_jq_masonry_enabled;
+	global $suf_featured_pager_style, $suf_mosaic_zoom_library;
+
+	if (!function_exists('audio_shortcode') && !class_exists('AudioPlayer') && isset($suf_enable_audio_shortcode) && $suf_enable_audio_shortcode == 'on') {
+		wp_enqueue_script('suffusion-audioplayer', get_template_directory_uri() . '/scripts/audio-player.js', array('jquery'), SUFFUSION_THEME_VERSION);
+	}
+	
+	wp_enqueue_script('suffusion', get_template_directory_uri() . '/scripts/suffusion.js', array('jquery'), SUFFUSION_THEME_VERSION);
+	if ($suffusion_is_ie6) {
+		wp_enqueue_script('suffusion-ie6', get_template_directory_uri() . '/scripts/ie-fix.js', array('suffusion'), SUFFUSION_THEME_VERSION);
+	}
+
+	if ($suffusion->get_content_layout() == 'mosaic') {
+		if ($suf_mosaic_zoom_library == 'fancybox') {
+			wp_enqueue_script('suffusion-slideshow', get_template_directory_uri().'/scripts/jquery.fancybox-1.3.4.pack.js', array('jquery'), SUFFUSION_THEME_VERSION);
+		}
+		else if ($suf_mosaic_zoom_library == 'colorbox') {
+			wp_enqueue_script('suffusion-slideshow', get_template_directory_uri().'/scripts/jquery.colorbox-min.js', array('jquery'), SUFFUSION_THEME_VERSION);
+		}
+	}
+
+	if (!is_admin() && is_active_widget('Suffusion_Google_Translator', false, 'suf-google-translator', true)) {
+		// For some reason the translation widget fails if we load the JS in the header. Hence we are overriding the header/footer JS setting
+		wp_enqueue_script('suffusion-google-translate', 'http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', array(), null, true);
+	}
+
+	$template_widths = suffusion_get_template_prefixes();
+	$template_widths[''] = '';
+	$template_widths['no-sidebars.php'] = '';
+
+	$base_array = array();
+	$widths_array = array();
+	foreach ($template_widths as $template => $prefix) {
+		$template_class = $template == "" ? "" : "_page_template_".str_replace('.', '_', str_replace('-', '_', $template));
+		$width_var = 'suf'.$prefix.'_wrapper_width_type';
+		$max_var = 'suf'.$prefix.'_wrapper_width_flex_max';
+		$min_var = 'suf'.$prefix.'_wrapper_width_flex_min';
+		$orig_var = 'suf'.$prefix.'_wrapper_width_flex';
+		global $$width_var, $$max_var, $$min_var, $$orig_var;
+		$widths_array['wrapper_width_type'.$template_class] = "{$$width_var}";
+		$widths_array['wrapper_max_width'.$template_class] = "{$$max_var}";
+		$widths_array['wrapper_min_width'.$template_class] = "{$$min_var}";
+		$widths_array['wrapper_orig_width'.$template_class] = "{$$orig_var}";
+	}
+
+	foreach ($widths_array as $var => $value) {
+		$base_array[$var] = $value;
+	}
+
+	$base_array['suf_featured_interval'] = $suf_featured_interval;
+	$base_array['suf_featured_transition_speed'] = $suf_featured_transition_speed;
+	$base_array['suf_featured_fx'] = $suf_featured_fx;
+	$base_array['suf_featured_pause'] = __('Pause', 'suffusion');
+	$base_array['suf_featured_resume'] = __('Resume', 'suffusion');
+	$base_array['suf_featured_sync'] = $suf_featured_sync;
+	$base_array['suf_featured_pager_style'] = $suf_featured_pager_style;
+
+	if ($suf_nav_delay == '') {
+		$delay = "0";
+	}
+	else {
+		$delay = $suf_nav_delay;
+	}
+
+	if ($suf_navt_delay == '') {
+		$delay_top = "0";
+	}
+	else {
+		$delay_top = $suf_navt_delay;
+	}
+
+	$base_array['suf_nav_delay'] = $delay;
+	$base_array['suf_nav_effect'] = $suf_nav_effect;
+	$base_array['suf_navt_delay'] = $delay_top;
+	$base_array['suf_navt_effect'] = $suf_navt_effect;
+	$base_array['suf_jq_masonry_enabled'] = $suf_jq_masonry_enabled;
+	$base_array['suf_fix_aspect_ratio'] = $suf_fix_aspect_ratio;
+
+	$drop_caps = array();
+	global $suf_drop_cap_post_views, $suf_drop_cap_post_formats;
+	$post_views = explode(',', $suf_drop_cap_post_views);
+	$post_formats = explode(',', $suf_drop_cap_post_formats);
+	if (is_array($post_views) && count($post_views) > 0) {
+		foreach ($post_views as $view) {
+			if ($view == 'page') {
+				$drop_caps[] = ".$view p.first-para";
+			}
+			else if ($view == 'full-content' || $view == 'excerpt') {
+				if (is_array($post_formats) && count($post_formats) > 0) {
+					foreach ($post_formats as $format) {
+						$drop_caps[] = ".$view.format-$format p.first-para";
+					}
+				}
+			}
+			else if ($view != '') {
+				$drop_caps[] = ".$view p:first-child";
+			}
+		}
+	}
+	$drop_cap = implode(', ', $drop_caps);
+
+	$base_array['suf_show_drop_caps'] = $drop_cap;
+
+	wp_localize_script('suffusion', 'Suffusion_JS', $base_array);
 }
 
 function suffusion_set_title() {
-	global $suf_seo_enabled, $suf_seo_title_style, $suf_seo_title_separator, $suf_seo_show_subtitle, $suf_seo_show_page_num, $paged, $page;
+	global $suf_seo_enabled;
 	if ($suf_seo_enabled != 'enabled') {
 		if (is_home() || is_front_page()) {
-			echo "\t<title>".get_bloginfo('name')."</title>\n";
-		}
-		else if (function_exists('bp_is_group')) {
-			bp_page_title();
+			echo "\t<title>".wp_title('', false)."</title>\n";
 		}
 		else {
 			echo "\t<title>".wp_title('&raquo;', false)."</title>\n";
@@ -1372,54 +1100,11 @@ function suffusion_set_title() {
 		return;
 	}
 
-	if (function_exists('bp_is_group')) {
-		// If this is not set, BP titles come out wrong.
-		$page_title = bp_get_page_title();
-	}
-	else {
-		$page_title = wp_title('', false);
-	}
-	$blog_title = get_bloginfo('name');
-
-	if (is_home() || is_front_page()) {
-		$title = $blog_title;
-		if ($suf_seo_show_subtitle == 'show') {
-			$blog_subtitle = get_bloginfo('description');
-			$title .= " ".$suf_seo_title_separator." ".$blog_subtitle;
-		}
-	}
-	else {
-		if ($suf_seo_title_style == 'page-blog') {
-			$title = $page_title." ".$suf_seo_title_separator." ".$blog_title;
-		}
-		else if ($suf_seo_title_style == 'blog-page') {
-			$title = $blog_title." ".$suf_seo_title_separator." ".$page_title;
-		}
-		else {
-			$title = $page_title;
-		}
-	}
-	if ($suf_seo_show_page_num == 'show' && ($paged >= 2 || $page >= 2)) {
-		$title .= ' '.$suf_seo_title_separator.' '.sprintf(__('Page %s', 'suffusion'), max($paged, $page));
-	}
-    $title = apply_filters('suffusion_set_title', $title);
-    echo "\t<title>{$title}</title>\n";
+	echo "\t<title>".wp_title('', false)."</title>\n";
 }
 
 function suffusion_include_meta() {
-    global $suf_seo_enabled, $suf_seo_all_settings;
-    if ($suf_seo_enabled == 'enabled') {
-        $seo_settings = explode(',', $suf_seo_all_settings);
-        suffusion_include_meta_generator($seo_settings);
-        suffusion_include_meta_theme($seo_settings);
-        suffusion_include_meta_robots($seo_settings);
-        suffusion_include_meta_author($seo_settings);
-        suffusion_include_meta_copyright($seo_settings);
-        suffusion_include_meta_revised($seo_settings);
-
-        suffusion_include_meta_description();
-        suffusion_include_meta_keywords();
-    }
+	get_template_part('custom/seo');
 }
 
 function suffusion_include_ie7_compatibility_mode() {
@@ -1429,70 +1114,6 @@ function suffusion_include_ie7_compatibility_mode() {
 	}
 }
 
-function suffusion_include_meta_generator($seo_settings) {
-    if ($seo_settings && in_array('generator', $seo_settings)) {
-        wp_generator();
-    }
-}
-
-function suffusion_include_meta_theme($seo_settings) {
-    if ($seo_settings && in_array('theme', $seo_settings)) {
-        $theme_data = get_theme_data(TEMPLATEPATH.'/style.css');
-        echo "\t".'<meta name="template" content="'.esc_attr("{$theme_data['Title']} {$theme_data['Version']}").'" />'."\n";
-    }
-}
-
-function suffusion_include_meta_robots($seo_settings) {
-    if ($seo_settings && in_array('robots', $seo_settings) && get_option('blog_public')) {
-        echo "\t".'<meta name="robots" content="noindex,nofollow" />' . "\n";
-    }
-}
-
-function suffusion_include_meta_author($seo_settings) {
-    global $wp_query;
-    if ($seo_settings && in_array('author', $seo_settings)) {
-        if (is_singular()) {
-            $author = get_the_author_meta('display_name', $wp_query->post->post_author);
-        }
-        else {
-            $posts_on_page = $wp_query->posts;
-            $author_array = array();
-            foreach ($posts_on_page as $single_post) {
-                $single_author = get_the_author_meta('display_name', $single_post->post_author);
-                if (!in_array($single_author, $author_array)) {
-                    $author_array[] = get_the_author_meta('display_name', $single_post->post_author);
-                }
-            }
-            $author = implode(',',$author_array);
-        }
-
-        if ($author) {
-            echo "\t".'<meta name="author" content="'.esc_attr($author).'" />' . "\n";
-        }
-    }
-}
-
-function suffusion_include_meta_copyright($seo_settings) {
-    if ($seo_settings && in_array('copyright', $seo_settings)) {
-        if (is_singular()) {
-            $copy_date = sprintf(get_the_time(get_option('date_format')));
-        }
-        else {
-            $copy_date = date('Y');
-        }
-        echo "\t".'<meta name="copyright" content="'.sprintf(esc_attr__('Copyright (c) %1$s', 'suffusion'), $copy_date).'" />'."\n";
-    }
-}
-
-function suffusion_include_meta_revised($seo_settings) {
-    if ($seo_settings && in_array('revised', $seo_settings)) {
-        if (is_singular()) {
-            $mod_time = sprintf(get_the_modified_time(get_option('date_format')." ".get_option('time_format')));
-            echo "\t".'<meta name="revised" content="'.$mod_time.'" />'."\n";
-        }
-    }
-}
-
 function suffusion_include_default_feed() {
 	global $suf_custom_default_rss_enabled, $wp_version;
 	if ($suf_custom_default_rss_enabled == 'enabled') {
@@ -1500,104 +1121,6 @@ function suffusion_include_default_feed() {
 			echo "\t".'<link rel="alternate" type="application/rss+xml" title="'.esc_attr(get_bloginfo('name')).' RSS Feed" href="'.get_feed_link('rss2').'" />'."\n";
 		}
 	}
-}
-
-function suffusion_include_meta_description() {
-    global $suf_seo_meta_description, $wp_query;
-    if (is_home()) {
-        $description = $suf_seo_meta_description;
-    }
-    else if (is_singular()) {
-        $description = get_post_meta($wp_query->post->ID, "meta_description", true);
-        if (empty($description) && is_front_page()) {
-            $description = $suf_seo_meta_description;
-        }
-    }
-    else if (is_category() || is_tag() || is_tax()) {
-        $description = term_description('', get_query_var('taxonomy'));
-    }
-    else if (is_author()) {
-        $description = get_the_author_meta('description', get_query_var('author'));
-    }
-    if (!empty($description)) {
-        $description = stripslashes($description);
-        $description = strip_tags($description);
-        $description = str_replace(array("\r", "\n", "\t"), '', $description);
-        $description = "\t".'<meta name="description" content="' . $description . '" />' . "\n";
-        echo $description;
-    }
-}
-
-function suffusion_include_meta_keywords() {
-    global $suf_seo_meta_keywords, $wp_query;
-    if (is_home() || is_category() || is_tag() || is_tax() || is_author()) {
-        $keywords = $suf_seo_meta_keywords;
-    }
-    else if (is_singular()) {
-        $keywords = get_post_meta($wp_query->post->ID, "meta_keywords", true);
-        if (empty($keywords)) {
-            $keywords = $suf_seo_meta_keywords;
-        }
-    }
-
-    if (!empty($keywords)) {
-        $keywords = stripslashes($keywords);
-        $keywords = strip_tags($keywords);
-        $keywords = str_replace(array("\r", "\n", "\t"), '', $keywords);
-        $keywords = str_replace(array(", ", " ,"), ',', $keywords);
-        $keywords = "\t".'<meta name="keywords" content="' . $keywords . '" />' . "\n";
-        echo $keywords;
-    }
-}
-
-function suffusion_js_initializer() {
-    global $suf_nav_delay, $suf_nav_effect, $suf_navt_delay, $suf_navt_effect, $suf_featured_interval, $suf_featured_fx, $suf_featured_transition_speed, $suf_featured_sync, $suf_jq_masonry_enabled;
-    global $suf_featured_category_view, $suf_featured_tag_view, $suf_featured_search_view;
-    global $suf_featured_author_view, $suf_featured_time_view, $suf_featured_index_view, $suf_featured_pages_with_fc, $suf_mag_featured_enabled;
-
-    if ($suf_nav_delay == '') {
-        $delay = "0";
-    }
-    else {
-        $delay = $suf_nav_delay;
-    }
-
-	if ($suf_navt_delay == '') {
-		$delay_top = "0";
-	}
-	else {
-		$delay_top = $suf_navt_delay;
-	}
-?>
-    <script type='text/javascript'>
-        //Menu effects
-        var suf_nav_delay = <?php echo $delay; ?>;
-        var suf_nav_effect = "<?php echo $suf_nav_effect;?>";
-        var suf_navt_delay = <?php echo $delay_top; ?>;
-        var suf_navt_effect = "<?php echo $suf_navt_effect;?>";
-        var suf_jq_masonry_enabled = "<?php echo $suf_jq_masonry_enabled; ?>";
-<?php
-	if ((is_category() && $suf_featured_category_view == "enabled") || (is_tag() && $suf_featured_tag_view == "enabled") ||
-		(is_search() && $suf_featured_search_view == "enabled") || (is_author() && $suf_featured_author_view == "enabled") ||
-		(is_page_template('magazine.php') && $suf_mag_featured_enabled == 'enabled') ||
-        (is_page() && $suf_featured_pages_with_fc != '') ||
-		((is_date() || is_year() || is_month() || is_day() || is_time()) && $suf_featured_time_view == "enabled") ||
-		(!(is_category() || is_tag() || is_search() || is_author() || is_date() || is_year() || is_month() || is_day() || is_time() || is_page_template('magazine.php') || is_page()) && $suf_featured_index_view == "enabled")) {
-        $pause = __('Pause', 'suffusion');
-        $resume = __('Resume', 'suffusion');
-?>
-        //Featured content
-        var suf_featured_interval = <?php echo $suf_featured_interval; ?>;
-        var suf_featured_transition_speed = <?php echo $suf_featured_transition_speed; ?>;
-        var suf_featured_fx = '<?php echo $suf_featured_fx; ?>';
-        var suf_featured_pause = '<?php echo $pause; ?>';
-        var suf_featured_resume = '<?php echo $resume; ?>';
-		var suf_featured_sync = <?php echo $suf_featured_sync; ?>;
-<?php
-    }
-?>
-    </script>
-<?php
 }
 
 function suffusion_author_information() {
@@ -1635,22 +1158,6 @@ function suffusion_include_favicon() {
 	}
 }
 
-function suffusion_is_sidebar_empty($index) {
-	$sidebars = wp_get_sidebars_widgets();
-	if (!isset($sidebars['sidebar-'.$index]) || $sidebars['sidebar-'.$index] == null || (is_array($sidebars['sidebar-'.$index]) && count($sidebars['sidebar-'.$index]) == 0)) {
-		return true;
-	}
-	return false;
-}
-
-function suffusion_sidebar_widget_count($index) {
-	$sidebars = wp_get_sidebars_widgets();
-	if (!isset($sidebars['sidebar-'.$index]) || $sidebars['sidebar-'.$index] == null || (is_array($sidebars['sidebar-'.$index]) && count($sidebars['sidebar-'.$index]) == 0)) {
-		return 0;
-	}
-	return count($sidebars['sidebar-'.$index]);
-}
-
 function suffusion_display_open_header() {
 	global $suf_header_layout_style;
 	$display = apply_filters('suffusion_can_display_open_header', true);
@@ -1663,7 +1170,7 @@ function suffusion_display_open_header() {
 			suffusion_display_widgets_above_header();
 		}
 ?>
-		<div id="header-container" class="fix">
+		<div id="header-container" class="custom-header fix">
 			<div class='col-control fix'>
 <?php
 		if ($suf_header_layout_style  == 'out-hcfull') {
@@ -1696,57 +1203,12 @@ function suffusion_display_closed_header() {
 	}
 	if ($suf_header_layout_style == 'in-align') {
 ?>
-			<div id="header-container" class="fix">
+			<div id="header-container" class="custom-header fix">
 				<?php
 					suffusion_page_header();
 				?>
 			</div><!-- //#header-container -->
 <?php
-	}
-}
-
-/**
- * Based on the Image Rotator script by Matt Mullenweg > http://photomatt.net
- * Inspired by Dan Benjamin > http://hiveware.com/imagerotator.php
- * Latest version always at: http://photomatt.net/scripts/randomimage
- *
- * Make the folder the relative path to the images, like "../img" or "random/images/".
- *
- * Modifications by Sayontan Sinha, to dynamically pass the folder for images.
- * This cannot exist as a standalone file, because it loads outside the context of WP, so variables such as folder names cannot be fetched by the file automatically.
- */
-function suffusion_get_rotating_image($folder) {
-	// Space seperated list of extensions, you probably won't have to change this.
-	$exts = 'jpg jpeg png gif';
-
-	$files = array(); $i = -1; // Initialize some variables
-//	if ('' == $folder) $folder = './';
-	$content_folder = WP_CONTENT_DIR."/".$folder;
-
-	$handle = opendir($content_folder);
-	$exts = explode(' ', $exts);
-	while (false !== ($file = readdir($handle))) {
-		foreach($exts as $ext) { // for each extension check the extension
-			if (preg_match('/\.'.$ext.'$/i', $file, $test)) { // faster than ereg, case insensitive
-				$files[] = $file; // it's good
-				++$i;
-			}
-		}
-	}
-	closedir($handle); // We're not using it anymore
-	mt_srand((double)microtime()*1000000); // seed for PHP < 4.2
-	$rand = mt_rand(0, $i); // $i was incremented as we went along
-	return WP_CONTENT_URL."/".$folder."/".$files[$rand];
-}
-
-function suffusion_register_jquery() {
-	global $suf_featured_use_lite, $suf_js_in_footer;
-	$footer = $suf_js_in_footer == 'footer' ? true : false;
-	if ($suf_featured_use_lite == 'lite') {
-		wp_register_script('jquery-cycle', get_template_directory_uri() . '/scripts/jquery.cycle.lite.min.js', array('jquery'), null, $footer);
-	}
-	else {
-		wp_register_script('jquery-cycle', get_template_directory_uri() . '/scripts/jquery.cycle.all.min.js', array('jquery'), null, $footer);
 	}
 }
 
@@ -1756,139 +1218,12 @@ function suffusion_include_bp_admin_css() {
 	}
 }
 
-function suffusion_pad_signup_form_start() {
-?>
-<div id="main-col">
-<?php
-}
-
-function suffusion_pad_signup_form_end() {
-?>
-</div><!-- #main-col -->
-<?php
-}
-
-function suffusion_register_custom_types() {
-	global $suffusion_post_type_labels, $suffusion_post_type_args, $suffusion_post_type_supports, $suffusion_taxonomy_labels, $suffusion_taxonomy_args;
-	$suffusion_post_types = get_option('suffusion_post_types');
-	$suffusion_taxonomies = get_option('suffusion_taxonomies');
-	if (is_array($suffusion_post_types)) {
-		foreach ($suffusion_post_types as $id => $suffusion_post_type) {
-			$args = array();
-			$labels = array();
-			$supports = array();
-			foreach ($suffusion_post_type_labels as $label) {
-				if (isset($suffusion_post_type['labels'][$label['name']]) && $suffusion_post_type['labels'][$label['name']] != '') {
-					$labels[$label['name']] = $suffusion_post_type['labels'][$label['name']];
-				}
-			}
-			foreach ($suffusion_post_type_supports as $support) {
-				if (isset($suffusion_post_type['supports'][$support['name']])) {
-					if ($suffusion_post_type['supports'][$support['name']] == '1') {
-						$supports[] = $support['name'];
-					}
-				}
-			}
-			foreach ($suffusion_post_type_args as $arg) {
-				if (isset($suffusion_post_type['args'][$arg['name']])) {
-					if ($arg['type'] == 'checkbox' && $suffusion_post_type['args'][$arg['name']] == '1') {
-						$args[$arg['name']] = true;
-					}
-					else if ($arg['type'] != 'checkbox') {
-						$args[$arg['name']] = $suffusion_post_type['args'][$arg['name']];
-					}
-				}
-			}
-			$args['labels'] = $labels;
-			$args['supports'] = $supports;
-			register_post_type($suffusion_post_type['post_type'], $args);
-		}
-	}
-
-	if (is_array($suffusion_taxonomies)) {
-		foreach ($suffusion_taxonomies as $id => $suffusion_taxonomy) {
-			$labels = array();
-			$args = array();
-			foreach ($suffusion_taxonomy_labels as $label) {
-				if (isset($suffusion_taxonomy['labels'][$label['name']]) && $suffusion_taxonomy['labels'][$label['name']] != '') {
-					$labels[$label['name']] = $suffusion_taxonomy['labels'][$label['name']];
-				}
-			}
-			foreach ($suffusion_taxonomy_args as $arg) {
-				if (isset($suffusion_taxonomy['args'][$arg['name']])) {
-					if ($arg['type'] == 'checkbox' && $suffusion_taxonomy['args'][$arg['name']] == '1') {
-						$args[$arg['name']] = true;
-					}
-					else if ($arg['type'] != 'checkbox') {
-						$args[$arg['name']] = $suffusion_taxonomy['args'][$arg['name']];
-					}
-				}
-			}
-			$args['labels'] = $labels;
-			$object_type_str = $suffusion_taxonomy['object_type'];
-			$object_type_array = explode(',',$object_type_str);
-			$object_types = array();
-			foreach ($object_type_array as $object_type) {
-				if (post_type_exists(trim($object_type))) {
-					$object_types[] = trim($object_type);
-				}
-			}
-			register_taxonomy($suffusion_taxonomy['taxonomy'], $object_types, $args);
-		}
-	}
-}
-
 function suffusion_display_widgets_above_header() {
-	$display = apply_filters('suffusion_can_display_widgets_above_header', true);
-	if (!$display) {
-		return;
-	}
-	if (!suffusion_is_sidebar_empty(11)) {
-?>
-		<!-- #widgets-above-header -->
-		<div id="widgets-above-header" class='warea fix'>
-			<div class='col-control'>
-<?php
-		dynamic_sidebar('Widgets Above Header');
-?>
-			</div>
-		</div>
-		<!-- /#widgets-above-header -->
-<?php
-	}
+	get_sidebar('above-header');
 }
 
 function suffusion_display_widgets_in_header() {
-	if (!suffusion_is_sidebar_empty(12)) {
-?>
-		<!-- #header-widgets -->
-		<div id="header-widgets" class="warea">
-<?php
-		dynamic_sidebar('Header Widgets');
-?>
-		</div>
-		<!-- /#header-widgets -->
-<?php
-	}
-}
-
-/**
- * Function to support meus from the Menu dashboard.
- * Strictly speaking this is not required. You could select these same menus from the Main Navigation Bar Setup or Top Navigation Bar Setup.
- *
- * @return void
- */
-function suffusion_register_menus() {
-	register_nav_menu('top', 'Top Navigation Bar');
-	register_nav_menu('main', 'Main Navigation Bar');
-}
-
-function suffusion_include_google_translate_js() {
-    if (!is_admin() && is_active_widget('Suffusion_Google_Translator', false, 'suf-google-translator', true)) {
-	    // For some reason the translation widget fails if we load the JS in the header. Hence we are overriding the header/footer JS setting
-	    wp_register_script('google-translate', 'http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', array(), null, true);
-	    wp_enqueue_script('google-translate');
-    }
+	get_sidebar('in-header');
 }
 
 function suffusion_should_include_dbx() {
@@ -1900,6 +1235,7 @@ function suffusion_should_include_dbx() {
 
 	$left_count = suffusion_get_left_sidebar_count($context);
 	$right_count = suffusion_get_right_sidebar_count($context);
+
 	$total_count = $left_count + $right_count;
 	if ($total_count == 0 || ($total_count == 1 && $suf_sidebar_1_dnd != "enabled") || ($total_count == 2 && $suf_sidebar_1_dnd != "enabled" && $suf_sidebar_2_dnd != "enabled")) {
 		return false;
@@ -1910,105 +1246,208 @@ function suffusion_should_include_dbx() {
 }
 
 function suffusion_include_bp_js() {
-	global $suf_js_in_footer;
-	$footer = $suf_js_in_footer == 'footer' ? true : false;
-
 	if (!is_admin() && function_exists('bp_is_group')) {
-		wp_enqueue_script('suffusion-bp-ajax-js', WP_PLUGIN_URL . '/buddypress/bp-themes/bp-default/_inc/global.js', array('jquery'), null, $footer);
+		wp_enqueue_script('suffusion-bp-ajax-js', WP_PLUGIN_URL . '/buddypress/bp-themes/bp-default/_inc/global.js', array('jquery'), null);
 	}
 }
 
 function suffusion_meta_pullout() {
-	global $post, $suf_post_meta_position, $suf_page_meta_position;
-	if ($suf_post_meta_position != 'corners' && ((!is_singular() && $post->post_type != 'page') || (is_singular() && !is_page()))) {
-		suffusion_meta_pullout_for_post();
-	}
+	global $post, $suf_page_meta_position;
 
-	if ($suf_page_meta_position != 'corners' && (is_page() || (!is_singular() && $post->post_type == 'page'))) {
-		suffusion_meta_pullout_for_page();
-	}
-}
-
-function suffusion_meta_pullout_for_post() {
-	global $post, $suf_post_meta_position, $suf_post_show_cats, $suf_post_show_posted_by, $suf_post_show_tags, $suf_date_box_show, $suf_post_show_comment;
-	echo "<div class='meta-pullout meta-$suf_post_meta_position'>\n";
-	echo "<ul>\n";
-
-	if ($suf_date_box_show != 'hide' || ($suf_date_box_show == 'hide-search' && !is_search())) {
-		echo "<li><span class='pullout-date'>".get_the_time(get_option('date_format'))."</span></li>\n";
-	}
-
-	if ($suf_post_show_posted_by != 'hide') {
-		echo "<li>";
-		suffusion_print_author_byline();
-		echo "</li>\n";
-	}
-
-	if ($suf_post_show_comment != 'hide') {
-		if ('open' == $post->comment_status && is_singular()) {
-			echo "<li><span class='comments'><a href='#respond'>".__('Add comments', 'suffusion')."</a></span></li>\n";
+	if ((!is_singular() && $post->post_type != 'page') || (is_singular() && !is_page())) {
+		$original_format = suffusion_get_post_format();
+		if ($original_format == 'standard') {
+			$format = '';
 		}
 		else {
-			echo "<li><span class='comments'>";
-			comments_popup_link(__('No Responses', 'suffusion'), __('1 Response', 'suffusion'), __('% Responses', 'suffusion'));
-			echo "</span></li>\n";
+			$format = $original_format . '_';
+		}
+		$meta_position = 'suf_post_' . $format . 'meta_position';
+		global $$meta_position;
+		$post_meta_position = apply_filters('suffusion_byline_position', $$meta_position);
+
+		if ($post_meta_position == 'left-pullout' || $post_meta_position == 'right-pullout') {
+			get_template_part('custom/pullout', $original_format);
 		}
 	}
 
-	if ($suf_post_show_cats != 'hide') {
-		$categories = get_the_category($post->ID);
-		if ($categories) {
-			echo "<li><span class='category'>";
-			the_category(', ');
-			echo "</span></li>\n";
-		}
+	if (($suf_page_meta_position == 'left-pullout' || $suf_page_meta_position == 'right-pullout') && (is_page() || (!is_singular() && $post->post_type == 'page'))) {
+		get_template_part('custom/pullout', suffusion_get_page_template());
 	}
-
-	if ($suf_post_show_tags != 'hide') {
-		$tags = get_the_tags($post->ID);
-		if ($tags != '') {
-			echo "<li><span class='tags'>";
-			the_tags(__('Tagged with: ', 'suffusion'),', ');
-			echo "</span></li>\n";
-		}
-	}
-
-	if (is_singular() && get_edit_post_link() != '') {
-		echo "<li><span class='edit'>";
-?>
-		   <?php edit_post_link(__('Edit', 'suffusion'), '', ''); ?>
-<?php
-		echo "</span></li>\n";
-	}
-
-	echo "</div>\n";
 }
 
-function suffusion_meta_pullout_for_page() {
-	global $post, $suf_page_meta_position, $suf_page_show_posted_by, $suf_page_show_comment;
-	echo "<div class='meta-pullout meta-$suf_page_meta_position'>\n";
-	echo "<ul>\n";
-
-	if ($suf_page_show_posted_by != 'hide') {
-		echo "<li>";
-		suffusion_print_author_byline();
-		echo "</li>\n";
+function suffusion_print_outer_pullout($id = 0, $display = 'blog', $index = 0) {
+	if ($display != 'blog') {
+		return;
+	}
+	global $post, $suf_page_meta_position;
+	if ($id === 0) {
+		$id = $post->ID;
 	}
 
-	if ($suf_page_show_comment != 'hide') {
-		if ('open' == $post->comment_status) {
-			echo "<li><span class='comments'><a href='#respond'>".__('Add comments', 'suffusion')."</a></span></li>\n";
+	if ((!is_singular() && $post->post_type != 'page') || (is_singular() && !is_page())) {
+		$original_format = suffusion_get_post_format();
+		if ($original_format == 'standard') {
+			$format = '';
+		}
+		else {
+			$format = $original_format . '_';
+		}
+		$meta_position = 'suf_post_' . $format . 'meta_position';
+		global $$meta_position;
+		$post_meta_position = apply_filters('suffusion_byline_position', $$meta_position);
+
+		if ($post_meta_position == 'left-outer-pullout' || $post_meta_position == 'right-outer-pullout') {
+			get_template_part('custom/pullout', $original_format);
 		}
 	}
 
-	if (get_edit_post_link() != '') {
-		echo "<li><span class='edit'>";
-?>
-		   <?php edit_post_link(__('Edit', 'suffusion'), '', ''); ?>
-<?php
-		echo "</span></li>\n";
+	if (($suf_page_meta_position == 'left-outer-pullout' || $suf_page_meta_position == 'right-outer-pullout') && (is_page() || (!is_singular() && $post->post_type == 'page'))) {
+		get_template_part('custom/pullout', suffusion_get_page_template());
+	}
+}
+
+function suffusion_start_outer_pullout_div($id = 0, $display = 'blog', $index = 0) {
+	if ($display != 'blog') {
+		return;
+	}
+	global $post, $suf_page_meta_position;
+	if ($id === 0) {
+		$id = $post->ID;
 	}
 
-	echo "</div>\n";
+	if ((!is_singular() && $post->post_type != 'page') || (is_singular() && !is_page())) {
+		$original_format = suffusion_get_post_format();
+		if ($original_format == 'standard') {
+			$format = '';
+		}
+		else {
+			$format = $original_format . '_';
+		}
+		$meta_position = 'suf_post_' . $format . 'meta_position';
+		global $$meta_position;
+		$post_meta_position = apply_filters('suffusion_byline_position', $$meta_position);
+
+		if ($post_meta_position == 'left-outer-pullout' || $post_meta_position == 'right-outer-pullout') {
+			echo "<div class='outer-pullout-container container-$post_meta_position fix'>";
+		}
+	}
+
+	if (($suf_page_meta_position == 'left-outer-pullout' || $suf_page_meta_position == 'right-outer-pullout') && (is_page() || (!is_singular() && $post->post_type == 'page'))) {
+		echo "<div class='outer-pullout-container container-$suf_page_meta_position fix'>";
+	}
 }
-?>
+
+function suffusion_close_outer_pullout_div($id = 0, $display = 'blog', $index = 0) {
+	if ($display != 'blog') {
+		return;
+	}
+	global $post, $suf_page_meta_position;
+	if ($id === 0) {
+		$id = $post->ID;
+	}
+
+	if ((!is_singular() && $post->post_type != 'page') || (is_singular() && !is_page())) {
+		$original_format = suffusion_get_post_format();
+		if ($original_format == 'standard') {
+			$format = '';
+		}
+		else {
+			$format = $original_format . '_';
+		}
+		$meta_position = 'suf_post_' . $format . 'meta_position';
+		global $$meta_position;
+		$post_meta_position = apply_filters('suffusion_byline_position', $$meta_position);
+
+		if ($post_meta_position == 'left-outer-pullout' || $post_meta_position == 'right-outer-pullout') {
+			echo "</div>";
+		}
+	}
+
+	if (($suf_page_meta_position == 'left-outer-pullout' || $suf_page_meta_position == 'right-outer-pullout') && (is_page() || (!is_singular() && $post->post_type == 'page'))) {
+		echo "</div>";
+	}
+}
+
+/**
+ * Creates a "Previous Page" / "Next Page" for photo-blog style displays
+ *
+ * @return void
+ */
+function suffusion_mosaic_pagination() {
+	get_template_part('custom/pagination', 'mosaic');
+}
+
+/**
+ * Builds a breadcrumb for different views in the site. Yoast Breadcrumbs and Breadcrumb Trail are supported. If not available, Suffusion's breadcrumbs will be used.
+ *
+ * @return void
+ */
+function suffusion_build_breadcrumb() {
+	if (function_exists('yoast_breadcrumb_output')) {
+		yoast_breadcrumb_output();
+	}
+	else if (function_exists('breadcrumb_trail')) {
+		breadcrumb_trail();
+	}
+	else {
+		if (!is_page()) {
+			get_template_part('custom/breadcrumb');
+		}
+		else {
+			get_template_part('custom/breadcrumb', 'page');
+		}
+	}
+}
+
+/**
+ * Prints a span for a post format icon.
+ * 
+ * @return void
+ */
+function suffusion_print_post_format_icon() {
+	echo "<span class='post-format-icon'>&nbsp;</span>";
+}
+
+function suffusion_print_line_byline_top() {
+	suffusion_print_line_byline('line-top');
+}
+
+function suffusion_print_line_byline_bottom() {
+	suffusion_print_line_byline('line-bottom');
+}
+
+function suffusion_print_line_byline($position) {
+	global $post, $suf_page_meta_position;
+
+	if ((!is_singular() && $post->post_type != 'page') || (is_singular() && !is_page())) {
+		$original_format = suffusion_get_post_format();
+		if ($original_format == 'standard') {
+			$format = '';
+		}
+		else {
+			$format = $original_format . '_';
+		}
+		$meta_position = 'suf_post_' . $format . 'meta_position';
+
+		global $$meta_position;
+		$post_meta_position = apply_filters('suffusion_byline_position', $$meta_position);
+
+		if ($post_meta_position == $position) {
+			get_template_part('custom/byline-line', $original_format);
+		}
+	}
+
+	if ($suf_page_meta_position == $position && (is_page() || (!is_singular() && $post->post_type == 'page'))) {
+		get_template_part('custom/byline-line-page', suffusion_get_page_template());
+	}
+}
+
+/**
+ * Prints an "updated" tag for Microformat support.
+ *
+ * @since 4.0.1
+ */
+function suffusion_print_post_updated_information() {
+	echo "<span class='updated' title='".get_the_time('c')."'></span>";
+}

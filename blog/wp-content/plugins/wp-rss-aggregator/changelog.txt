@@ -1,0 +1,43 @@
+2.2.1 (2012-10-17)
+Fixed bug: wprss_feed_source_order assumes everyone is an admin
+
+2.2 (2012-10-01)
+Italian translation added
+Feed source order changed to alphabetical
+Fixed bug - repeated entries when having a non-valid feed source
+Fixed bug - all imported feeds deleted upon trashing a single feed source
+
+2.1 (2012-09-27)
+Now localised for translations
+Fixed bug with date string
+Fixed $link_before and $link_after, now working
+Added backwards compatibility for wp_rss_aggregator() function
+
+2.0 (2012-09-21)
+Bulk of code rewritten and refactored
+Added install and upgrade functions
+Added DB version setting
+Feed sources now stored as Custom Post Types
+Feed source list sortable ascending or descending by name
+Removed days subsections in feed display
+Ability to limit total number of feeds displayed
+Feeds now fetched via Cron
+Cron job to delete old feed items, keeps max of 50 items in DB
+Now requires WordPress 3.2
+updated colorbox to v1.3.20.1
+Limit of 15 items max imported for each source
+Fixed issue of page content displaying incorrectly after feeds
+
+1.1 (2012-08-13)
+Now requires WordPress 3.0
+More flexible fetching of images directory
+Has its own top level menu item
+Added settings section
+Ability to open in lightbox, new window or default browser behaviour
+Ability to set links as follow or no follow
+Using constants for oftenly used locations
+Code refactoring
+Changes in file and folder structure
+
+1.0 (2012-01-06)
+First release

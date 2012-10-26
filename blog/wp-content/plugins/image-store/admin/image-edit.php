@@ -17,7 +17,7 @@ require_once '../../../../wp-admin/admin.php';
 
 global $ImStore;
 if( !current_user_can( 'edit_plugins'))
-	wp_die(__( 'Cheatin&#8217; uh?', $ImStore->domain ));
+	wp_die(__( 'Cheatin&#8217; uh?', 'ims'));
 
 check_admin_referer("ims_edit_image");
 
@@ -109,7 +109,7 @@ jQuery(document).ready(function($){
 				if( '' == history)
 					return false;
 					data = {
-					imgid		:postid,
+					imgid			:postid,
 					history		:history,
 					action		:'edit-mini-image',
 					_wpnonce	:'<?php echo $nonce?>'

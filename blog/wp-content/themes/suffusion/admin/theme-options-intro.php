@@ -79,13 +79,21 @@ $suffusion_intro_options = array(
 		"parent" => "intro-pages"
 	),
 
-	array("name" => "Export options for use in other installations",
-		"desc" => "You can export the options you have set in the theme. The options will be stored in a PHP file that you can save to your local disk.",
+	array("name" => "Export core options for use in other installations",
+		"desc" => "You can export the options you have set in the theme. The options will be stored in a PHP file that you can save to your local disk. <strong>This does not export id-based options such as featured content setup, menus etc.</strong>.",
 		"id" => "suf_export_options",
 		"parent" => "export-import",
 		"type" => "button",
 		"action" => "",
-		"std" => "Export to a file"),
+		"std" => "Export core options to a file"),
+
+	array("name" => "Export all options for use in other installations",
+		"desc" => "Like the previous export the options here will be stored in a PHP file that you can save to your local disk. <strong>This will export all options including menus etc.</strong>.",
+		"id" => "suf_export_all_options",
+		"parent" => "export-import",
+		"type" => "button",
+		"action" => "",
+		"std" => "Export all options to a file"),
 
 	array("name" => "Import options from another installation",
 		"desc" => "You can import options that you have exported from another installation. This is a two-step process:
@@ -98,50 +106,5 @@ $suffusion_intro_options = array(
 		"type" => "button",
 		"action" => "",
 		"std" => "Import options"),
-
-	array("name" => "FAQs",
-		"type" => "sub-section-3",
-		"category" => "help-faqs",
-		"buttons" => 'no-buttons',
-		"parent" => "intro-pages"
-	),
-
-	array("name" => "Answers to some frequently asked questions",
-		"type" => "blurb",
-		"parent" => "help-faqs",
-		"desc" => "<ol class='faq-list'>
-			<li><b>Where do I start with customizations?</b><br />
-			Open the section for \"Theme Selection\". If you see a color combination that you like, select it and you are set.</li>
-			<li><b>What if I don't like any of the default color combinations?</b><br />
-			You can perform customizations within certain limits:
-			<ul class='margin-40'>
-			<li>To modify things like the overall background color and the background image, look at \"Theme Skinning\".</li>
-			<li>For font colors used, colors of hyperlinks etc. look at \"Body Font Settings\".</li>
-			<li>To customize the colors used for the blog title and blog description see \"Header Customization\".</li>
-			<li>For the sidebar widgets you can select styled or unstyled headers in the \"Widget Styles\" section.</li>
-			</ul>
-			<li><b>Can I use my own background image for the page?</b><br />
-			Absolutely! You can use any image that you like, tile/repeat it, align it, make it fixed etc. See the \"Theme Skinning\" section.</li>
-			<li><b>Can I use a custom header image?</b><br />
-			Yes. See the \"Header Customization\" section.</li>
-			<li><b>Can I switch the sidebar to the left?</b><br />
-			Of course. See the \"Sidebar Setup\" section.</li>
-			<li><b>Can I define more sidebars?</b><br />
-			Yes. See the \"Sidebar Setup\" section. You can define 2 sidebars and have them positioned either on the same side or on opposite sides of the content.</li>
-			<li><b>The theme's screenshots show navigation menus at the top. Why don't I see any navigation menu?</b><br />
-			There are two possible reasons. First, in the \"Navigation Bar Setup\" section, you may have chosen \"Hidden\" for displaying the navigation bar.
-			Second, by default no pages are selected for display. So even if you have not chosen to hide the navigation bar, you will have to manually select the pages to display.</li>
-			<li><b>Can I define what should show up on the drop-down menus at the top?</b><br />
-			Yes. See the \"Navigation Bar Setup\" section. Only pages that you include there will be shown. New pages that you create will have to be manually added.</li>
-			<li><b>What other features are enabled?</b><br />
-			You can hook up your Google Analytics account to your blog. If you have your blog set up with OpenID, the requisite tags will be added to the header</li>
-			<li><b>Are there any plans to enhance any features?</b><br />
-			Yes. Features that are in consideration are - more default themes and better control over the colors in a post.
-			I have de-scoped some features, like advertising support and support for custom feeds. This is because of the availability of plugins to do these tasks.</li>
-			<li><b>Where can I report bugs or request for features?</b><br />
-			You can visit the <a href='http://www.aquoid.com/news/themes/suffusion/'>theme's page</a> and leave a comment, or you could drop a comment on
-			   <a href='http://mynethome.net/blog/contact'>the author's contact page</a>.</li>
-			</ol>"
-	),
 );
 ?>

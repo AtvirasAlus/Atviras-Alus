@@ -1,0 +1,41 @@
+<div class="index_block">
+	<div class="block_header">
+		<?=($widget['limit'] == 1) ? "Paskutinis receptų komentaras" : "Paskutiniai receptų komentarai";?>
+	</div>
+	<div class="block_content">
+		<?php
+		foreach($widget['items'] as $item){
+			?>
+			<div class="wg_last_recipe_comment">
+				<div>
+					<div class="wg_lrc_avatar">
+						<img src="http://www.gravatar.com/avatar/<?= md5($item['user_email']); ?>?rating=G&size=40&default=mm" alt="">
+					</div>
+					<div class="wg_lrc_info">
+						<a href="/brewers/<?=$item['user_id']?>"><b><?=$item['user_name']?></b></a>
+						<br />
+						komentavo receptą
+						<br />
+						<a href="/alus/receptas/<?=$item['recipe_comment_recipe_id']?>-<?=$this->urlMaker($item['recipe_comment_recipe_name'])?>#comment-<?=$item['item_id']?>"><b><?=$item['recipe_comment_recipe_name']?></b></a>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="wg_lrc_comment">
+					<a href="/alus/receptas/<?=$item['recipe_comment_recipe_id']?>-<?=$this->urlMaker($item['recipe_comment_recipe_name'])?>#comment-<?=$item['item_id']?>">
+						<?php
+						$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p")));
+						$f = new Entities_Filter_Excerpt();
+						$item['recipe_comment_text'] = str_replace("\n", "<br />", $item['recipe_comment_text']);
+						echo $f->filter($fhtml->filter($item['recipe_comment_text']), 15);
+						?>
+					</a>
+				</div>
+			</div>
+			<?
+		}
+		?>
+		<div class="wg_more">
+			<a href="/comments">Visi komentarai</a>
+		</div>
+	</div>
+</div>

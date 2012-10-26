@@ -1,41 +1,50 @@
 === Simple Lightbox ===
 Contributors: Archetyped
-Donate link: http://archetyped.com/tools/simple-lightbox/#donate
+Donate link: http://mycharitywater.org/archetyped-2012-fall
 Tags: lightbox, gallery, photography, images, theme, template, style
-Requires at least: 3.1.2
-Tested up to: 3.2
+Requires at least: 3.3.2
+Tested up to: 3.4
+License: GPLv2 or later
 Stable tag: trunk
 
-A simple, themeable, and customizable Lightbox for Wordpress
+A simple, themeable, and highly customizable Lightbox for Wordpress
 
 == Description ==
-Simple Lightbox is a very simple and customizable lightbox that is easy to add to your Wordpress website.  It also [supports themes](http://archetyped.com/lab/slb-registering-themes/), so it can be fully integrated with your site's theme.
 
-#### Customization
+#### Simple Lightbox 2.0 Beta!
+The next generation of Simple Lightbox is here and ready for brave beta testers.
+[Sign up for SLB 2.0 beta now](http://archetyped.com/lab/simple-lightbox-2-0-beta/) while there's still space available! 
+
+Simple Lightbox is a very simple and highly customizable lightbox that is easy to add to your Wordpress website.  It also [supports skins](http://archetyped.com/lab/slb-registering-themes/), so it can be fully integrated with your site's theme.
+
+#### Features
 Options for customizing the lightbox behavior are located in the **Settings > Media** admin menu in the **Lightbox Settings** section (or just click the **Settings** link below the plugin's name when viewing the list of installed plugins)
 
-* **New: Image Attachment Link Support**
-* **New: Backwards-compatibility with legacy lightbox links**
-* Theme Support
-* Keyboard Navigation
-* Enable Lightbox depending on Page Type (Home, Pages, Archive, etc.)
-* Link Validation (optional)
+* **Supports links in Widgets (New!)**
+* **Supports Image Attachment links**
+* **Display image metadata (caption, description, etc.) in lightbox**
 * Automatically activate links (no manual coding required)
+* Keyboard Navigation
+* Link Validation (optional)
+* User-customizable skin (template) support
+* Enable Lightbox depending on Page Type (Home, Pages, Archive, etc.)
 * Group image links (play as a slideshow)
 * Group image links by Post (e.g. separate slideshow for each post on home page)
 * UI/Animation Customization
 * Slideshow Customization
+* Backwards-compatibility with legacy lightbox links
 
 #### Usage
 1. Insert links to images/image attachments into your posts/pages
 
-**That’s it! The image will be displayed in a lightbox automatically.**
+**That's it! The image will be displayed in a lightbox automatically.**
 
 * For more usage tips, go to [Simple Lightbox's official page](http://archetyped.com/tools/simple-lightbox/)
 
 == Installation ==
 
-1. Install and activate via admin dashboard
+1. Install and activate SLB
+1. Verify that your site's theme uses the `wp_head()`, `wp_footer()`, & `the_content()` template tags (standard in any professional theme)
 
 == Upgrade Notice ==
 
@@ -51,6 +60,68 @@ Post your questions and comments on [Simple Lightbox's official page](http://arc
 2. Customized UI Text
 
 == Changelog ==
+
+= 1.6.3.1 =
+* Fix: Backward compatibility restored (Backward Genius)
+
+= 1.6.3 =
+* Optimize: Improved lightbox overlay display
+
+= 1.6.2 =
+* Update: Rebuild JS code
+* Optimize: Improved compatibility with PHP 5+
+* Optimize: Improved utility code
+* Fix: Some elements can overlap lightbox
+* Fix: Slideshow not automatically starting (Laurence of Autoplay)
+
+= 1.6.1 =
+* Optimize: Handle repeated initializations of lightbox on client-side
+* Fix: Localization not properly loaded (Mustafa Lingo)
+
+= 1.6 =
+* Add: Widget support
+* Add: WordPress 3.3 support
+* Add: Localization support
+* Add: Option to group gallery links separately (supports WordPress & NextGen galleries)
+* Add: Upgrade notice
+* Optimize: WP 3.3 compatibility
+* Optimize: Improved compatibility with URI case-sensitivity
+* Optimize: Activation processing
+* Optimize: Image grouping
+* Optimize: Image metadata loading performance
+* Optimize: File loading
+* Optimize: Improved safeguards against interference by bugs in other plugins
+* Optimize: Link processing performance
+* Optimize: Lightbox styling isolated from site styles
+* Optimize: Improved link processing performance
+* Optimize: Improved image metadata support
+* Optimize: Improved support for HTTP/HTTPS requests
+* Fix: SLB is not defined in JS (Jezz Hands)
+* Fix: Boolean case-sensitivity (78 Truths)
+* Fix: YouTube embed using iFrame overlaps lightbox (Elena in Hiding)
+* Fix: Issue when scanning links without valid URLs (McCloskey Iteration)
+* Fix: Image activation is case-sensitive (Sensitive Tanya)
+* Fix: Visible lightbox overlay edges when image larger than browser window (Chibi Overlay) 
+* Fix: Options availability for some users
+* Fix: Inconsistent loading of image metadata
+* Fix: Links not fully processed when group is set manually
+
+= 1.5.6 =
+* Add: Display image description in lightbox (with HTML support)
+* Add: Support for W3 Total Cache plugin
+* Add: Initial support for NextGEN galleries
+* Update: **Important:** [System Requirements](http://wordpress.org/about/requirements/) aligned with WP 3.2.1
+* Optimize: Improved support for small images in default template
+* Optimize: Support for non-English text in user options
+* Optimize: Improved IE compatibility
+* Optimize: Improved data handling
+* Optimize: Skin loading performance
+* Optimize: Skin CSS Cleanup
+* Optimize: Caption support for galleries
+* Optimize: Options code cleanup (Juga Sweep)
+* Fix: User-defined UI text not used (Ivan gets Even (cooler))
+* Fix: Options reset after update (KRazy Donna)
+
 = 1.5.5.1 =
 * Fix: Disabled links not being disabled (Disabling Sascha)
 

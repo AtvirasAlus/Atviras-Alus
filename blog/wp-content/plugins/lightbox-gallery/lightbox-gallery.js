@@ -11,10 +11,10 @@ if ( typeof hs == "undefined" ) {
 //	var i = 0;
 //	showImg(i);
 
-		if ( jQuery.lightBox ) {
+		if ( jQuery.fn.lightBox ) {
 			jQuery('a[rel*=lightbox]').lightBox();
 			jQuery('.gallery1 a').lightBox({captionPosition:'gallery'});
-		} else if ( jQuery.colorbox ) {
+		} else if ( jQuery.fn.colorbox ) {
 			jQuery('a[rel*=lightbox]').colorbox();
 		}
 		jQuery('.gallery a').tooltip({track:true, delay:0, showURL: false});

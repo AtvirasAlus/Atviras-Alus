@@ -1,0 +1,51 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/rss-image-feed\n"
+"POT-Creation-Date: 2012-06-05 05:26:56+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2012-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: class-lib/A5_ImageClasses.php:28
+msgid "Permalink to"
+msgstr ""
+
+#: image-rss.php:51
+msgid "FAQ"
+msgstr ""
+
+#: image-rss.php:52
+msgid "Donate"
+msgstr ""
+
+#: image-rss.php:68
+msgid "Settings"
+msgstr ""
+
+#: image-rss.php:97
+msgid "Image Settings"
+msgstr ""
+
+#: image-rss.php:99
+msgid "Imagesize:"
+msgstr ""
+
+#: image-rss.php:107
+msgid ""
+"Give here only the longest side of the image. The smaller side will be "
+"counted on displaying the image. There will be no cropping."
+msgstr ""
+
+#: image-rss.php:162
+msgid "Define the size of the images in your feed."
+msgstr ""
+
+#: image-rss.php:169
+msgid "Save Changes"
+msgstr ""

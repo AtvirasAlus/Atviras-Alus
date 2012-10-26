@@ -8,13 +8,11 @@
  * @subpackage Templates
  */
 
-global $wp_query, $suffusion_unified_options, $page_of_posts;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
+global $wp_query, $page_of_posts, $suf_pop_excerpt, $suffusion;
 $page_of_posts = true;
 
 get_header();
+$suffusion->set_content_layout($suf_pop_excerpt);
 $paged = get_query_var('paged');
 if (!isset($paged) || empty($paged)) {
 	$paged = 1;
@@ -41,6 +39,9 @@ if ($suf_pop_excerpt == 'list') {
 else if ($suf_pop_excerpt == 'tiles') {
 	suffusion_after_begin_content();
 	get_template_part('layouts/layout-tiles');
+}
+else if ($suf_pop_excerpt == 'mosaic') {
+	get_template_part('layouts/layout-mosaic');
 }
 else {
 	suffusion_after_begin_content();

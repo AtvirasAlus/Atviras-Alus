@@ -7,33 +7,49 @@
  * @subpackage Templates
  */
 
-global $query_string, $wp_query, $full_content_post_counter, $full_post_count, $suffusion_tile_layout, $suffusion_duplicate_posts;
+global $query_string, $wp_query, $suffusion_current_post_index, $suffusion_full_post_count_for_view, $suffusion_tile_layout, $suffusion_duplicate_posts;
+global $suf_tile_excerpts_per_row, $suf_tile_image_settings, $suf_tile_images_enabled, $suf_mag_excerpt_full_story_text;
+global $suffusion_cpt_post_id;
 $suffusion_tile_layout = true;
-global $suffusion_unified_options;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
+
 if (!isset($suffusion_duplicate_posts)) $suffusion_duplicate_posts = array();
 
 if (have_posts()) {
-	$full_content_post_counter = 0;
-	$full_post_count = suffusion_get_full_content_count();
+	$suffusion_current_post_index = 0;
+	$suffusion_full_post_count_for_view = suffusion_get_full_content_count();
 
-	$number_of_cols = count($wp_query->posts) - $full_post_count;
-	$total = count($wp_query->posts) - $full_post_count;
+	$custom_classes = array();
+	if (isset($suffusion_cpt_post_id)) {
+		add_action('suffusion_add_taxonomy_bylines_line', 'suffusion_cpt_line_taxonomies', 10, 2);
+		add_action('suffusion_add_taxonomy_bylines_pullout', 'suffusion_cpt_line_taxonomies', 10, 4);
+		$cpt_meta_position = suffusion_get_post_meta($suffusion_cpt_post_id, 'suf_cpt_byline_type', true);
+		$custom_classes[] = $cpt_meta_position;
+	}
+
+	$number_of_cols = count($wp_query->posts) - $suffusion_full_post_count_for_view;
+	$total = count($wp_query->posts) - $suffusion_full_post_count_for_view;
+//	$total = $wp_query->post_count;
 
 	while (have_posts()) {
-		$full_content_post_counter++;
-		if ($full_content_post_counter > $full_post_count) {
+		the_post();
+		if (in_array($post->ID, $suffusion_duplicate_posts)) {
+			$total--;
+		}
+	}
+	rewind_posts(); // reset the marker to the start
+
+	while (have_posts()) {
+		$suffusion_current_post_index++;
+		if ($suffusion_current_post_index > $suffusion_full_post_count_for_view) {
 			break;
 		}
 		the_post();
 		if (in_array($post->ID, $suffusion_duplicate_posts)) {
-			$full_content_post_counter--;
+			$suffusion_current_post_index--;
 			continue;
 		}
 ?>
-	<div <?php post_class();?> id="post-<?php the_ID(); ?>">
+	<article <?php post_class($custom_classes);?> id="post-<?php the_ID(); ?>">
 <?php
 		suffusion_after_begin_post();
 ?>
@@ -50,60 +66,86 @@ if (have_posts()) {
 <?php
 		suffusion_before_end_post();
 ?>
-	</div><!--post -->
+	</article><!--post -->
 <?php
 	}
 
-	if ($number_of_cols > (int)$suf_tile_excerpts_per_row) {
-		$number_of_cols = (int)$suf_tile_excerpts_per_row;
+	$excerpts_per_row = (int)$suf_tile_excerpts_per_row;
+	if (isset($suffusion_cpt_post_id)) {
+		$cpt_posts_per_row = suffusion_get_post_meta($suffusion_cpt_post_id, 'suf_cpt_posts_per_row', true);
+		if (!$cpt_posts_per_row && is_integer($cpt_posts_per_row)) {
+			$excerpts_per_row = $cpt_posts_per_row;
+		}
+	}
+
+	if ($number_of_cols > $excerpts_per_row) {
+		$number_of_cols = $excerpts_per_row;
 	}
 
 	if ($number_of_cols > 0) {
-		$ret = "";
 ?>
-<table class='suf-tiles'>
+<div class='suf-tiles'>
 <?php
-		for ($i = 0; $i < $number_of_cols - 1; $i++) {
-			$ret .= "\t<col class='suf-tile'/>\n";
-		}
-		$ret .= "\t<col/>\n";
 		$ctr = 0;
+		$cols_per_row = $number_of_cols;
+		global $suffusion_byline_type, $suffusion_cpt_post_id;
+		if (isset($suffusion_cpt_post_id)) {
+			$suffusion_byline_type = 'cpt';
+			$show_image = suffusion_get_post_meta($suffusion_cpt_post_id, 'suf_cpt_show_tile_thumb', true);
+			add_filter('suffusion_add_taxonomy_bylines_tile', 'suffusion_cpt_tile_taxonomies', 10, 2);
+		}
+		else {
+			$suffusion_byline_type = 'tile_layout';
+		}
+
 		while (have_posts()) {
 			the_post();
 			if (in_array($post->ID, $suffusion_duplicate_posts)) {
 				continue;
 			}
+			$suffusion_current_post_index++;
 			if ($ctr%$number_of_cols == 0) {
-				$ret .= "<tr>\n";
+				if ($total - 1 - $ctr < $number_of_cols) {
+					$cols_per_row = $total - $ctr;
+				}
+				echo "<div class='suf-tile-row suf-tile-row-$cols_per_row-cols fix'>\n";
 			}
 
-			$ret .= "<td>\n";
-			$ret .= "\t<div class='suf-tile'>\n";
-			$image_link = suffusion_get_image(array('mag-excerpt' => true));
+			global $suf_mag_excerpt_full_story_position;
+			do_action('suffusion_before_post', $post->ID, 'tile', $suffusion_current_post_index);
+			echo "\t<article class='suf-tile suf-tile-{$cols_per_row}c $suf_mag_excerpt_full_story_position suf-tile-ctr-$ctr'>\n";
+			$image_size = $suf_tile_image_settings == 'inherit' ? 'mag-excerpt' : 'tile-thumb';
+			$image_link = suffusion_get_image(array($image_size => true));
 
-			if (($suf_tile_images_enabled == 'show') || ($suf_tile_images_enabled == 'hide-empty' && $image_link != '')) {
-				$ret .= "\t\t<div class='suf-tile-image'>".$image_link."</div>\n";
+			$show_image = isset($show_image) ? $show_image : (($suf_tile_images_enabled == 'show') || ($suf_tile_images_enabled == 'hide-empty' && $image_link != ''));
+			$topmost = 'suf-tile-topmost';
+			if ($show_image) {
+				echo "\t\t<div class='suf-tile-image $topmost'>".$image_link."</div>\n";
+				$topmost = '';
 			}
-			$ret .= "\t\t<h2 class='suf-tile-title'><a class='entry-title' rel='bookmark' href='".get_permalink($post->ID)."'>".get_the_title($post->ID)."</a></h2>\n";
-			$ret .= "\t\t<div class='suf-tile-text entry-content'>\n";
-			$excerpt = get_the_excerpt();
-			$ret .= apply_filters('the_excerpt', $excerpt);
-			$ret .= "\t\t</div>\n";
+			echo "\t\t<h2 class='suf-tile-title $topmost'><a class='entry-title' rel='bookmark' href='".get_permalink($post->ID)."'>".get_the_title($post->ID)."</a></h2>\n";
+
+			get_template_part('custom/byline', 'tile');
+
+			echo "\t\t<div class='suf-tile-text entry-content'>\n";
+			suffusion_excerpt();
+			echo "\t\t</div>\n";
 			if (trim($suf_mag_excerpt_full_story_text)) {
-				$ret .= "\t\t<a href='".get_permalink($post->ID)."' class='suf-mag-excerpt-full-story'>$suf_mag_excerpt_full_story_text</a>";
+				echo "\t<div class='suf-mag-excerpt-footer'>\n";
+				echo "\t\t<a href='".get_permalink($post->ID)."' class='suf-mag-excerpt-full-story'>$suf_mag_excerpt_full_story_text</a>";
+				echo "\t</div>\n";
 			}
 
-			$ret .= "\t</div>\n";
-			$ret .= "</td>\n";
+			echo "\t</article>\n";
+			do_action('suffusion_after_post', $post->ID, 'tile', $suffusion_current_post_index);
 
 			if ($ctr == $total - 1 || $ctr%$number_of_cols == $number_of_cols - 1) {
-				$ret .= "</tr>\n";
+				echo "</div>\n";
 			}
 			$ctr++;
 		}
-		echo $ret;
 ?>
-</table>
+</div>
 <?php
 	}
 	suffusion_before_end_content();

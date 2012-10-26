@@ -4,6 +4,14 @@
  * A FeedBurner account is needed. FeedBurner stats can be displayed, optionally. You can additionally set up links for popular social
  * media services: Del.icio.us, Digg, Facebook, Flickr, LinkedIn, Reddit, StumbleUpon, Technorati and Twitter
  *
+ * Icon sets used in this widget are:
+ * 	- "Aquaticus Social" by Jwloh Lin, free for use and distribution (see license: http://www.iconspedia.com/dload.php?up_id=25517)
+ *  - "Stamps" by Marco Folio (http://www.marcofolio.net/), distributed without copyright (http://www.marcofolio.net/icon/social_post_stamps_free_icon_set.html)
+ * 	- Google+ icon set from Theme.fm - GPL v2 (http://theme.fm/2011/08/12-gorgeous-google-icons-for-your-website-1280/)
+ * 	- "Web Social" by Narjis Naqvi - Free for personal and commercial use (http://www.iconspedia.com/pack/web-social-2021/)
+ * 	- "Lifetime Social Networks" from Slodive.com - GPL (http://slodive.com/exclusive/lifetime-social-networks-icons/)
+ * 	- ElegantThemes media icons from ElegantThemes.com - Dual licensed under MIT and GPL v3.0 (http://www.elegantthemes.com/blog/resources/free-social-media-icon-set)
+ * 
  * @package Suffusion
  * @subpackage Widgets
  *
@@ -18,7 +26,7 @@ class Suffusion_Subscription extends WP_Widget {
 
 		$this->WP_Widget("suf-subscription", __("Follow Me", "suffusion"), $widget_ops, $control_ops);
         $this->icon_suffixes = array();
-        $image_path = opendir(TEMPLATEPATH . "/images/follow");
+        $image_path = opendir(get_template_directory() . "/images/follow");
         while (false !== ($icon = readdir($image_path))) {
 			if (!($icon == "." || $icon == "..")) {
 	            if (!is_dir($icon)) {
@@ -44,7 +52,10 @@ class Suffusion_Subscription extends WP_Widget {
             'RSS' => array('account' => 'http://feeds.feedburner.com/%account%'),
             'StumbleUpon' => array('account' => 'http://%account%.stumbleupon.com'),
             'Technorati' => array('account' => 'http://technorati.com/people/technorati/%account%/'),
-            'Twitter' => array('account' => 'http://twitter.com/%account%'));
+            'Twitter' => array('account' => 'http://twitter.com/%account%'),
+			'Google+' => array('url' => '%account%'),
+			'YouTube' => array('account' => 'http://www.youtube.com/%account%'),
+		);
 	}
 
     function form($instance) {
@@ -55,6 +66,7 @@ class Suffusion_Subscription extends WP_Widget {
             "button_text" => __("Subscribe", "suffusion"),
             "show_stats" => false,
             "icon_size" => '48px',
+	        "new_window" => false,
         );
         foreach ($this->icon_suffixes as $icon_type => $icon_type_suffixes) {
             $defaults[$icon_type."_icon"] = $icon_type."-".$icon_type_suffixes[0];
@@ -62,8 +74,8 @@ class Suffusion_Subscription extends WP_Widget {
         }
         $instance = wp_parse_args((array)$instance, $defaults);
 ?>
-<div style='display: inline-block; clear: both;'>
-    <div style='float: left; width: 48%; margin-right: 20px;'>
+<div class="suf-widget-block">
+    <div class="suf-widget-2col">
         <p>
             <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'suffusion'); ?></label>
             <input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $instance['title']; ?>" class="widefat" />
@@ -129,11 +141,32 @@ class Suffusion_Subscription extends WP_Widget {
             }
         }
 ?>
-    </div>
-
-    <div style='float: left; width: 48%;'>
+		<p>
+			<label for="<?php echo $this->get_field_id('icon_size'); ?>"><?php _e('Select your icon size', 'suffusion'); ?></label><br />
+			<select name="<?php echo $this->get_field_name('icon_size'); ?>" id="<?php echo $this->get_field_id('icon_size'); ?>" class='widefat'>
 <?php
+			$size_array = array ('16px', '24px', '32px', '40px', '48px', '64px');
+			foreach($size_array as $size) {
+?>
+				<option value="<?php echo $size; ?>" <?php if ($instance['icon_size'] == $size) { echo " selected "; } ?>><?php echo $size; ?></option>
+<?php
+			}
+?>
+			</select>
+		</p>
+
+		<p>
+			<input id="<?php echo $this->get_field_id('new_window'); ?>" name="<?php echo $this->get_field_name('new_window'); ?>" type="checkbox" <?php checked($instance['new_window'], 'on'); ?>  class="checkbox" />
+			<label for="<?php echo $this->get_field_id('new_window'); ?>">
+				<?php _e('Open follow links in a new window', 'suffusion'); ?>
+			</label>
+		</p>
+<?php
+		$type_counter = 0;
         foreach($this->icon_suffixes as $icon_type => $icon_type_suffixes) {
+			if ($type_counter > 1) {
+				break;
+			}
             $icon = $instance[$icon_type."_icon"];
 ?>
         <p class="follow-icons">
@@ -141,7 +174,33 @@ class Suffusion_Subscription extends WP_Widget {
 <?php
             foreach($icon_type_suffixes as $icon_type_suffix) {
 ?>
-            <span><input type="radio" name="<?php echo $this->get_field_name($icon_type.'_icon'); ?>" value="<?php echo $icon_type."-".$icon_type_suffix; ?>" <?php if ($icon_type."-".$icon_type_suffix == $icon) { echo  ' checked="checked" '; } ?>/><img src="<?php echo get_template_directory_uri(); ?>/images/follow/<?php echo $icon_type."-".$icon_type_suffix; ?>.png" alt="<?php echo $icon_type."-".$icon_type_suffix; ?>"/></span>
+            <div class="suf-radio-block"><input type="radio" name="<?php echo $this->get_field_name($icon_type.'_icon'); ?>" value="<?php echo $icon_type."-".$icon_type_suffix; ?>" <?php checked($icon_type."-".$icon_type_suffix, $icon); ?> /><img src="<?php echo get_template_directory_uri(); ?>/images/follow/<?php echo $icon_type."-".$icon_type_suffix; ?>.png" alt="<?php echo $icon_type."-".$icon_type_suffix; ?>"/></div>
+<?php
+            }
+?>
+        </p>
+<?php
+			$type_counter++;
+		}
+?>
+    </div>
+
+    <div class="suf-widget-2col">
+<?php
+		$type_counter = 0;
+		foreach ($this->icon_suffixes as $icon_type => $icon_type_suffixes) {
+			if ($type_counter <= 1) {
+				$type_counter++;
+				continue;
+			}
+            $icon = $instance[$icon_type."_icon"];
+?>
+        <p class="follow-icons">
+            <label for="<?php echo $this->get_field_id($icon_type.'_icon'); ?>"><?php printf(__('Select your %1$s icon', 'suffusion'), $icon_type); ?></label><br />
+<?php
+            foreach($icon_type_suffixes as $icon_type_suffix) {
+?>
+            <div class="suf-radio-block"><input type="radio" name="<?php echo $this->get_field_name($icon_type.'_icon'); ?>" value="<?php echo $icon_type."-".$icon_type_suffix; ?>" <?php checked($icon_type."-".$icon_type_suffix, $icon); ?> /><img src="<?php echo get_template_directory_uri(); ?>/images/follow/<?php echo $icon_type."-".$icon_type_suffix; ?>.png" alt="<?php echo $icon_type."-".$icon_type_suffix; ?>"/></div>
 <?php
             }
 ?>
@@ -149,19 +208,6 @@ class Suffusion_Subscription extends WP_Widget {
 <?php
         }
 ?>
-        <p>
-            <label for="<?php echo $this->get_field_id('icon_size'); ?>"><?php _e('Select your icon size', 'suffusion'); ?></label><br />
-            <select name="<?php echo $this->get_field_name('icon_size'); ?>" id="<?php echo $this->get_field_id('icon_size'); ?>" class='widefat'>
-<?php
-            $size_array = array ('16px', '24px', '32px', '40px', '48px', '64px');
-            foreach($size_array as $size) {
-?>
-                <option value="<?php echo $size; ?>" <?php if ($instance['icon_size'] == $size) { echo " selected "; } ?>><?php echo $size; ?></option>
-<?php
-            }
-?>
-            </select>
-        </p>
     </div>
 </div>
 <?php
@@ -182,6 +228,9 @@ class Suffusion_Subscription extends WP_Widget {
             $instance[$icon_type.'_icon'] = $new_instance[$icon_type.'_icon'];
             $instance[$icon_type.'_account'] = $new_instance[$icon_type.'_account'];
         }
+		if (isset($new_instance['new_window'])) {
+			$instance['new_window'] = $new_instance['new_window'];
+		}
 
         return $instance;
     }
@@ -195,6 +244,7 @@ class Suffusion_Subscription extends WP_Widget {
 		$button_text = $instance['button_text'];
         $show_stats = $instance['show_stats'];
         $icon_size = $instance['icon_size'];
+		$new_window = isset($instance['new_window']) ? $instance['new_window'] : '';
         echo $before_widget;
         if (!empty($title)) {
             echo $before_title;
@@ -203,11 +253,11 @@ class Suffusion_Subscription extends WP_Widget {
         }
         if ($show_email) {
 ?>
-    <form style="text-align:center;"
+    <form class="aligncenter"
         action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow"
         onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=<?php echo $feed; ?>', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
             <p>
-                <input type="text" style="width:140px" name="email" value='<?php echo $default_text; ?>' class='subscription-email'
+                <input type="text" name="email" value='<?php echo $default_text; ?>' class='subscription-email'
                     onfocus="if (this.value == '<?php echo $default_text; ?>') {this.value = '';}" onblur="if (this.value == '') {this.value = '<?php echo $default_text; ?>';}" />
                 <input type="hidden" value="<?php echo $feed; ?>" name="uri"/>
                 <input type="hidden" name="loc" value="en_US"/>
@@ -220,7 +270,7 @@ class Suffusion_Subscription extends WP_Widget {
 ?>
     <p>
         <a href="http://feeds.feedburner.com/<?php echo $feed;?>">
-            <img src="http://feeds.feedburner.com/~fc/<?php echo $feed;?>?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" />
+            <img src="http://feeds.feedburner.com/~fc/<?php echo $feed;?>?bg=99CCFF&amp;fg=444444&amp;anim=0" class="subscription-stats-icon" alt="" />
         </a>
     </p>
 <?php
@@ -228,7 +278,16 @@ class Suffusion_Subscription extends WP_Widget {
 ?>
     <div class='fix'>
 <?php
+		if ($new_window == 'on') {
+			$blank = 'target="_blank"';
+		}
+		else {
+			$blank = '';
+		}
         foreach ($this->icon_suffixes as $icon_type => $icon_type_suffixes) {
+			if (!isset($instance['show_'.$icon_type])) {
+				continue;
+			}
             $show = $instance['show_'.$icon_type];
             $icon = $instance[$icon_type.'_icon'];
             $account = $instance[$icon_type.'_account'];
@@ -239,9 +298,18 @@ class Suffusion_Subscription extends WP_Widget {
                 $url_or_account = $this->follow_urls[$icon_type];
                 foreach ($url_or_account as $key => $value) {
                     $hyperlink = str_replace('%account%', $account, $value);
+					$image_file = locate_template('images/follow/'.$icon.'.png');
+					$stylesheet_dir = trailingslashit(get_stylesheet_directory());
+					if (strlen($image_file) > strlen($stylesheet_dir) &&
+						substr($image_file, 0, strlen($stylesheet_dir)) == $stylesheet_dir) {
+						$image_url = trailingslashit(get_stylesheet_directory_uri()).'images/follow/'.$icon.'.png';
+					}
+					else {
+						$image_url = trailingslashit(get_template_directory_uri()).'images/follow/'.$icon.'.png';
+					}
 ?>
-        <a href="<?php echo $hyperlink; ?>" class="follow-icon-and-tag" title="<?php echo $icon_type;?>">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/follow/<?php echo $icon;?>.png" alt="<?php echo $icon_type;?>" style='width: <?php echo $icon_size;?>; height: <?php echo $icon_size;?>;' />
+        <a href="<?php echo $hyperlink; ?>" class="follow-icon-and-tag" title="<?php echo $icon_type;?>" <?php echo $blank; ?>>
+            <img src="<?php echo $image_url; ?>" alt="<?php echo $icon_type;?>" style='width: <?php echo $icon_size;?>; height: <?php echo $icon_size;?>;' />
         </a>
 <?php
                 }

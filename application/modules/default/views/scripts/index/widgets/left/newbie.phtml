@@ -1,0 +1,62 @@
+<script>
+	$(document).ready(function() {
+		$(".wg_newbie_links a").click(function(){
+			$(".wg_newbie_links a").removeClass("active");
+			$(this).addClass("active");
+			$(".wg_newbie_info_block").hide();
+			$("#"+$(this).attr("data-target")).show();
+		});
+	});
+</script>
+<div class="wg_newbie_container">
+	<div class="wg_newbie_links">
+		<a href="javascript:void(0);" data-target="wg_newbie_about" class="active">Apie naminį alų</a>
+		<a href="javascript:void(0);" data-target="wg_newbie_legal">Ar tai legalu?</a>
+		<a href="javascript:void(0);" data-target="wg_newbie_inventory">Ko reikia?</a>
+		<a href="javascript:void(0);" data-target="wg_newbie_price">Kiek kainuoja?</a>
+		<a href="javascript:void(0);" data-target="wg_newbie_howto">Kaip pasigaminti?</a>
+	</div>
+	<div class="wg_newbie_info">
+		<div class="wg_newbie_info_block" id="wg_newbie_about">
+			<div class="wg_newbie_title">Naminis alus - kas tai?</div>
+			<div>Donec rutrum, eros eu laoreet tristique, lectus dui lacinia lorem, a pretium eros leo nec est. Morbi odio dui, convallis ac blandit convallis, interdum sit amet diam. In molestie gravida dui, eget varius sapien scelerisque non. Quisque ut nisl luctus est interdum hendrerit eget vitae ligula. Morbi non pellentesque arcu. Fusce id felis vel arcu rutrum cursus vitae eu felis. Quisque dapibus, odio at sodales pellentesque, sapien est mollis nisl, ut hendrerit nibh ipsum nec felis. Etiam a sapien in felis consectetur ullamcorper at ac turpis. Vestibulum sagittis nibh quis felis fringilla a ullamcorper leo rhoncus. Aenean accumsan vestibulum ante quis iaculis. Maecenas rhoncus, sem eu tincidunt elementum, lorem turpis bibendum risus, rutrum vehicula lacus erat sed nisi. Ut sodales purus non justo consequat lobortis. In aliquam, odio id congue vulputate, risus mi tempus nulla, ac varius odio tellus eget velit. Nam at ipsum tortor, eu fringilla velit.</div>
+		</div>
+		<div class="wg_newbie_info_block" id="wg_newbie_legal" style="display: none;">
+			<div class="wg_newbie_title">Ar legalu pačiam gaminti alų?</div>
+			<div>
+				Nemaža dalis žmonių mano, kad namie gaminti alų yra nelegalu, tačiau Lietuvoje alkoholinius, natūralios fermentacijos, gėrimus galima gaminti fizinių asmenų asmeniniam naudojimui. Kitaip tariant – norint ne parduoti, o tik savo ar šeimos poreikiams tenkinti. Alkoholio koncentracija tokiuose gaminiuose privalo būti ne didesnė kaip 18 proc. vynui ir 9,5 proc. alui. Verdamo alaus kiekio įstatymai neriboja.
+			</div>
+			<div style="margin-top: 10px;">
+				<a href="http://www3.lrs.lt/pls/inter2/dokpaieska.showdoc_l?p_id=430458" target="_blank">Lietuvos Respublikos Alkoholio kontrolės Įstatymo</a> 10-as strapsnis "Naminių alkoholinių gėrimų gamybos valstybinis reglamentavimas":
+			</div>
+			<div style="margin-top: 10px; padding-left: 20px;">
+				<i>Lietuvos Respublikoje draudžiama gaminti naminius alkoholinius gėrimus, išskyrus fizinių asmenų asmeniniam naudojimui (t. y. ne parduoti, o tik savo ar šeimos poreikiams tenkinti) gaminamus natūralios fermentacijos alkoholinius gėrimus, kurių tūrinė etilo alkoholio koncentracija ne didesnė kaip 18 procentų (alaus – ne didesnė kaip 9,5 procento).</i>
+			</div>
+		</div>
+		<div class="wg_newbie_info_block" id="wg_newbie_inventory" style="display: none;">
+			<div class="wg_newbie_title">Ko reikia norint pradėti virti alų?</div>
+			<div>Alaus gamybai privalomai naudojami keturi ingridientai: vanduo, salyklas (arba jo ekstraktas), apyniai ir mielės.</div>
+			<div style="margin-top: 10px;">Norint pasigaminti savo, naminio, alaus Jums nebūtina turėti specialių patalpų ar brangios įrangos. Tam, kad pasigaminti savo alaus pradžioje Jums pilnai pakaks namuose esančios virtuvės bei įrangos, kurią galima įsigyti vos už kelis šimtus litų. </div>
+			<div style="margin-top: 10px;">Visų pirma Jums reikės didelio puodo, kuriame alus bus salinamas ir verdamas. Tam tiks bet kuris nerūdijančio plieno, aliumininis ar emaliuotas puodas. Jo talpa turėtų būti bent 19L.</div>
+			<div style="margin-top: 10px;">Išvirtą alų reikės fermentuoti. Tam reikia fermentavimo indo. Paprasčiausia tokį indą įsigyti specializuotoje alaus reikmenų parduotuvėje.</div>
+			<div style="margin-top: 10px;">Papildomai verta įsigyti termometrą, kuriuo bus matuojama alaus temperatūra.</div>
+			<div style="margin-top: 10px;">Na ir žinoma reikės salyklo (arba jo ekstrakto), apynių ir mielių. Visa tai taip pat galite įsigyti specializuotoje parduotuvėje</div>
+		</div>
+		<div class="wg_newbie_info_block" id="wg_newbie_price" style="display: none;">
+			<div class="wg_newbie_title">Kiek kainuoja alaus gamyba?</div>
+			<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec tellus tellus. Aliquam quis elit tortor. Proin id porta erat. Nulla faucibus odio non lacus mollis ut hendrerit neque tincidunt. Aliquam dui augue, auctor ut fringilla eu, laoreet id neque. Aliquam erat volutpat. Nullam nulla orci, aliquet sed tempor in, dignissim eu arcu. Donec tincidunt nulla consectetur mauris dictum consectetur. Fusce placerat est lectus, in pretium erat.</div>
+			<div>Donec rutrum, eros eu laoreet tristique, lectus dui lacinia lorem, a pretium eros leo nec est. Morbi odio dui, convallis ac blandit convallis, interdum sit amet diam. In molestie gravida dui, eget varius sapien scelerisque non. Quisque ut nisl luctus est interdum hendrerit eget vitae ligula. Morbi non pellentesque arcu. Fusce id felis vel arcu rutrum cursus vitae eu felis. Quisque dapibus, odio at sodales pellentesque, sapien est mollis nisl, ut hendrerit nibh ipsum nec felis. Etiam a sapien in felis consectetur ullamcorper at ac turpis. Vestibulum sagittis nibh quis felis fringilla a ullamcorper leo rhoncus. Aenean accumsan vestibulum ante quis iaculis. Maecenas rhoncus, sem eu tincidunt elementum, lorem turpis bibendum risus, rutrum vehicula lacus erat sed nisi. Ut sodales purus non justo consequat lobortis. In aliquam, odio id congue vulputate, risus mi tempus nulla, ac varius odio tellus eget velit. Nam at ipsum tortor, eu fringilla velit.</div>
+		</div>
+		<div class="wg_newbie_info_block" id="wg_newbie_howto" style="display: none;">
+			<div class="wg_newbie_title">Naminio alaus gamyba iš salyklo ekstrakto</div>
+			<div>
+				<iframe width="400" height="225" src="http://www.youtube.com/embed/wEUmlHuLweA?rel=0" frameborder="0" allowfullscreen></iframe>
+			</div>
+			<div class="wg_newbie_title" style="margin-top: 10px;">Naminio alaus gamyba iš salyklo</div>
+			<div>
+				<iframe width="400" height="225" src="http://www.youtube.com/embed/UBRHnZ8rArw?rel=0" frameborder="0" allowfullscreen></iframe>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

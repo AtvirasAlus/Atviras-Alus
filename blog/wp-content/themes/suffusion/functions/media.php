@@ -65,18 +65,57 @@ function suffusion_get_mime_type_class($mime = '') {
  * @return string
  */
 function suffusion_image_attachment($attachment = '', $mime = '', $file = '') {
-	global $suf_image_show_exif;
-	$mime_type_class = suffusion_get_mime_type_class($mime);
+	global $suf_image_show_exif, $suf_image_show_sizes;
 	$display = apply_filters('suffusion_can_display_attachment', 'link', 'image');
 	if ($display == false) {
-		return;
+		return "";
 	}
 
-	$ret = $attachment;
+	$ret = "";
+	if ($suf_image_show_sizes == 'show') {
+		$ret = suffusion_get_image_size_links();
+	}
+	$ret .= "<div class='image-container'>";
+	$ret .= $attachment;
+	$ret .= "</div>";
 	if ($suf_image_show_exif == 'show') {
 		$ret .= suffusion_get_image_exif_data();
 	}
 
+	return $ret;
+}
+
+/**
+ * Provides links to all image sizes for a given attachment.
+ * This is based on a method described by Justin Tadlock: http://justintadlock.com/archives/2011/01/28/linking-to-all-image-sizes-in-wordpress
+ *
+ * @return string
+ */
+function suffusion_get_image_size_links() {
+	/* If not viewing an image attachment page, return. */
+	if (!wp_attachment_is_image(get_the_ID()))
+		return "";
+
+	/* Set up an empty array for the links. */
+	$links = array();
+
+	/* Get the intermediate image sizes and add the full size to the array. */
+	$sizes = get_intermediate_image_sizes();
+	$sizes[] = 'full';
+
+	/* Loop through each of the image sizes. */
+	foreach ($sizes as $size) {
+		/* Get the image source, width, height, and whether it's intermediate. */
+		$image = wp_get_attachment_image_src(get_the_ID(), $size);
+
+		/* Add the link to the array if there's an image and if $is_intermediate (4th array value) is true or full size. */
+		if (!empty($image) && (true == $image[3] || 'full' == $size))
+			$links[] = "<li><a class='image-size-link' href='{$image[0]}'>{$image[1]} &times; {$image[2]}</a></li>";
+	}
+
+	/* Join the links in a string and return. */
+	$ret = join('', $links);
+	$ret = "<ul class='image-sizes fix'>".$ret."</ul>";
 	return $ret;
 }
 
@@ -91,7 +130,8 @@ function suffusion_get_image_exif_data() {
 
 	$exif_pieces = explode(',', $suf_image_exif_pieces);
 
-	$ret = '<table class="exif">';
+	$ret = '<div class="exif-panel">';
+	$ret .= '<table class="exif">';
 	$image_meta = wp_get_attachment_metadata();
 
 	// Start to display EXIF and IPTC data of digital photograph
@@ -149,8 +189,11 @@ function suffusion_get_image_exif_data() {
 	}
 
 	$ret .= '</table>';
+	$ret .= '</div>';
+	$ret .= "<span class='exif-button fix'><a class='open' href='#'><span class='icon'>&nbsp;</span>".__('More Info', 'suffusion')."</a></span>";
 	return $ret;
 }
+
 /**
  * Displays an audio attachment either as a link or as a browser-embedded object.
  *
@@ -163,7 +206,7 @@ function suffusion_audio_attachment($attachment = '', $mime = '', $file = '') {
 	$mime_type_class = suffusion_get_mime_type_class($mime);
 	$display = apply_filters('suffusion_can_display_attachment', 'link', 'audio');
 	if ($display == false) {
-		return;
+		return "";
 	}
 	else if ($display == 'link') {
 		return "<div class='attachment $mime_type_class'><span class='icon'>&nbsp;</span>$attachment</div>";
@@ -186,11 +229,11 @@ function suffusion_audio_attachment($attachment = '', $mime = '', $file = '') {
  * @param string $file
  * @return string
  */
-function suffusion_application_attachment($attachment = '', $mime = '', $file = '' ) {
+function suffusion_application_attachment($attachment = '', $mime = '', $file = '') {
 	$mime_type_class = suffusion_get_mime_type_class($mime);
 	$display = apply_filters('suffusion_can_display_attachment', 'link', 'application');
 	if ($display == false) {
-		return;
+		return "";
 	}
 	else if ($display == 'link') {
 		return "<div class='attachment $mime_type_class'><span class='icon'>&nbsp;</span>$attachment</div>";
@@ -207,15 +250,16 @@ function suffusion_application_attachment($attachment = '', $mime = '', $file = 
  * Displays a text attachment either as a link or as a browser-embedded object.
  *
  * @since 0.3
- * @param string $mime attachment mime type
- * @param string $file attachment file URL
+ * @param string $attachment
+ * @param string $mime
+ * @param string $file
  * @return string
  */
-function suffusion_text_attachment($attachment = '', $mime = '', $file = '' ) {
+function suffusion_text_attachment($attachment = '', $mime = '', $file = '') {
 	$mime_type_class = suffusion_get_mime_type_class($mime);
 	$display = apply_filters('suffusion_can_display_attachment', 'link', 'text');
 	if ($display == false) {
-		return;
+		return "";
 	}
 	else if ($display == 'link') {
 		return "<div class='attachment $mime_type_class'><span class='icon'>&nbsp;</span>$attachment</div>";
@@ -236,17 +280,17 @@ function suffusion_text_attachment($attachment = '', $mime = '', $file = '' ) {
  * @param string $file
  * @return string
  */
-function suffusion_video_attachment($attachment = '', $mime = '', $file = '' ) {
+function suffusion_video_attachment($attachment = '', $mime = '', $file = '') {
 	$mime_type_class = suffusion_get_mime_type_class($mime);
 	$display = apply_filters('suffusion_can_display_attachment', 'link', 'video');
 	if ($display == false) {
-		return;
+		return "";
 	}
 	else if ($display == 'link') {
 		return "<div class='attachment $mime_type_class'><span class='icon'>&nbsp;</span>$attachment</div>";
 	}
 
-	if ( $mime == 'video/asf' )
+	if ($mime == 'video/asf')
 		$mime = 'video/x-ms-wmv';
 
 	$ret = '<object type="' . $mime . '" class="player '.$mime_type_class.'" data="' . $file . '">';
@@ -293,6 +337,8 @@ function suffusion_image_resize($img_url, $width, $height, $crop = false, $quali
 		else {
 			$remote_file_extension = 'jpg';
 		}
+		$remote_file_extension = strtolower($remote_file_extension);	// Not doing this creates multiple copies of a remote image.
+
 		$file_base = md5($img_url).'.'.$remote_file_extension;
 
 		// We will try to copy the file over locally. Otherwise WP's native image_resize() breaks down.
@@ -434,10 +480,12 @@ function suffusion_image_resize($img_url, $width, $height, $crop = false, $quali
 function suffusion_get_image($options = array()) {
 	global $post, $suf_excerpt_thumbnail_alignment, $suf_excerpt_thumbnail_size, $suf_featured_image_size, $suf_featured_image_custom_width, $suf_featured_image_custom_height;
 	global $suf_mag_headline_image_size, $suf_mag_excerpt_image_size, $suf_excerpt_tt_zc, $suf_excerpt_tt_quality;
-	global $suf_mag_excerpt_img_pref, $suf_mag_headline_img_pref, $suf_featured_img_pref, $suf_excerpt_img_pref;
+	global $suf_mag_excerpt_img_pref, $suf_mag_headline_img_pref, $suf_featured_img_pref, $suf_excerpt_img_pref, $suf_tile_img_pref, $suf_tile_image_size;
 
 	$sequence_arrays = array('featured' => $suf_featured_img_pref, 'featured-widget' => $suf_featured_img_pref, 'mag-headline' => $suf_mag_headline_img_pref,
-		'mag-excerpt' => $suf_mag_excerpt_img_pref, 'default' => $suf_excerpt_img_pref);
+		'mag-excerpt' => $suf_mag_excerpt_img_pref, 'default' => $suf_excerpt_img_pref, 'widget-24' => $suf_excerpt_img_pref, 'widget-32' => $suf_excerpt_img_pref,
+		'widget-48' => $suf_excerpt_img_pref, 'widget-64' => $suf_excerpt_img_pref, 'widget-96' => $suf_excerpt_img_pref, 'tile-thumb' => $suf_tile_img_pref,
+		'gallery-thumb' => array('attachment'));
 	$standard_sizes = array('thumbnail', 'medium', 'large');
 
 	$full_size = false;
@@ -501,6 +549,25 @@ function suffusion_get_image($options = array()) {
 			$full_size = false;
 		}
 	}
+	else if (isset($options['tile-thumb']) && $options['tile-thumb']) {
+		$sequence = $sequence_arrays['tile-thumb'];
+		if ($suf_tile_image_size == 'custom') {
+			$size = 'tile-thumb';
+			$full_size = false;
+		}
+	}
+	else if (isset($options['mosaic-thumb']) && $options['mosaic-thumb']) {
+		$size = 'mosaic-thumb';
+		$full_size = false;
+	}
+	else if (isset($options['widget-thumb'])) {
+		$size = $options['widget-thumb'];
+		$full_size = false;
+	}
+	else if (isset($options['gallery-thumb'])) {
+		$size = 'gallery-thumb';
+		$full_size = false;
+	}
 
 	if (is_array($size)) {
 		$size = 'full';
@@ -514,28 +581,55 @@ function suffusion_get_image($options = array()) {
 	}
 
 	$img = "";
+	$original = array();
+	if (isset($options['get-original']) && true === $options['get-original']) {
+		$get_original = true;
+	}
+	else {
+		$get_original = false;
+	}
+
 	foreach ($sequence as $position) {
 		if (!is_null($img) && (is_array($img) || trim($img) != '')) {
 			break;
 		}
 		switch ($position) {
 			case 'native':
-				$img = suffusion_get_image_by_post_thumbnail($size);
+				$img = suffusion_get_image_by_post_thumbnail($size, $original, $get_original);
 				continue;
+
 			case 'custom-thumb':
-				$img = suffusion_get_image_from_custom_field('thumbnail');
+				$img = suffusion_get_image_from_custom_field('suf_thumbnail');
+				$original[0] = $img;
 				continue;
+
 			case 'attachment':
-				$img = suffusion_get_image_from_attachment($size);
+				if (isset($options['attachment-id'])) {
+					$attachment_id = $options['attachment-id'];
+				}
+				else {
+					$attachment_id = false;
+				}
+				$img = suffusion_get_image_from_attachment($size, $original, $get_original, $attachment_id, $options);
+				if (isset($original['yapb']) && $original['yapb']) {
+					$full_size = true;
+				}
 				continue;
+
 			case 'embedded':
 				$img = suffusion_get_image_from_embedded_url();
+				$original[0] = $img;
 				continue;
+
 			case 'custom-featured':
-				$img = suffusion_get_image_from_custom_field('featured_image');
+				$img = suffusion_get_image_from_custom_field('suf_featured_image');
+				$original[0] = $img;
 		        continue;
 		}
 	}
+
+	global $suffusion_original_image;
+	$suffusion_original_image = $original;
 
 	if (is_array($img)) {
 		// This is either from an attachment or from a post thumbnail. If this is from the featured post widget, this is going to be a full-size image
@@ -586,21 +680,40 @@ function suffusion_get_image($options = array()) {
 			$img = $resized_img['url'];
 		}
 
-		if (isset($options["featured"]) || isset($options['featured-widget'])) {
-			$image_html = "<img src=\"".$img."\" alt=\"".$post->post_title."\" class=\"featured-excerpt-".$options["excerpt_position"]."\"/>";
+		if (isset($original['yapb'])) {
+			$image_html = $img;
 		}
-		else if (isset($options['mag-headline']) || isset($options['mag-excerpt'])) {
-			$image_html = "<img src=\"".$img."\" alt=\"".$post->post_title."\" />";
+		else if (isset($options["featured"]) || isset($options['featured-widget'])) {
+			$image_html = "<img src=\"".$img."\" alt=\"".esc_html($post->post_title)."\" class=\"featured-excerpt-".$options["excerpt_position"]."\"/>";
+		}
+		else if (isset($options['mag-headline']) || isset($options['mag-excerpt']) || isset($options['tile-thumb'])) {
+			$a_class = 'fix';
+			$image_html = "<img src=\"".$img."\" alt=\"".esc_html($post->post_title)."\" />";
+		}
+		else if (isset($options['mosaic-thumb'])) {
+			$image_html = "<img src=\"".$img."\" alt=\"".esc_html($post->post_title)."\" class='suf-mosaic-img' />";
+		}
+		else if (isset($options['widget-thumb'])) {
+			$image_html = "<img src=\"".$img."\" alt=\"".esc_html($post->post_title)."\" class='suf-widget-thumb' />";
 		}
 		else {
-			$image_html = "<img src=\"".$img."\" alt=\"".$post->post_title."\" class=\"$suf_excerpt_thumbnail_alignment-thumbnail\"/>";
+			$a_class = 'suf-thumbnail-anchor-'.$suf_excerpt_thumbnail_alignment;
+			$image_html = "<img src=\"".$img."\" alt=\"".esc_html($post->post_title)."\" class=\"$suf_excerpt_thumbnail_alignment-thumbnail\"/>";
 		}
 
 		if (isset($options['no-link']) && $options['no-link']) {
 			return $image_html;
 		}
 		else {
-			return "<a href=\"".get_permalink($post->ID)."\">$image_html</a>";
+			$title = "";
+			$a_id = "";
+			if (isset($options['show-title'])) {
+				$title = "title=\"".esc_attr($post->post_title)."\"";
+			}
+			if (isset($options['mosaic-thumb'])) {
+				$a_id = "id=\"suf-mosaic-thumb-".$post->ID."\"";
+			}
+			return "<a href=\"".get_permalink($post->ID)."\" $a_id $title class='".(isset($a_class) ? $a_class : '')."'>$image_html</a>";
 		}
 	}
 	else {
@@ -610,19 +723,72 @@ function suffusion_get_image($options = array()) {
 
 /**
  * Retrieves an image based on the attachments for a particular post.
- * 
+ *
  * @param string $size
- * @return array|bool|string
+ * @param array $original
+ * @param bool $get_original
+ * @param bool $attachment_id
+ * @param array $options
+ * @return array|bool|mixed|string|void
  */
-function suffusion_get_image_from_attachment($size = 'thumbnail') {
+function suffusion_get_image_from_attachment($size = 'thumbnail', &$original = array(), $get_original = false, $attachment_id = false, $options = array()) {
 	global $post;
 	$img = "";
-	$attachments = get_children(array('post_parent' => $post->ID, 'post_status' => 'inherit', 'post_type' => 'attachment',
-		'post_mime_type' => 'image', 'order' => 'ASC', 'orderby' => 'menu_order'));
-	if (is_array($attachments)) {
-		foreach ($attachments as $id => $attachment) {
-			$img = wp_get_attachment_image_src($id, $size);
-			break;
+	if (!$attachment_id) {
+		$attachments = get_children(array('post_parent' => $post->ID, 'post_status' => 'inherit', 'post_type' => 'attachment',
+			'post_mime_type' => 'image', 'order' => 'ASC', 'orderby' => 'menu_order'));
+		if (is_array($attachments)) {
+			foreach ($attachments as $id => $attachment) {
+				$img = wp_get_attachment_image_src($id, $size);
+				if ($img && $get_original) {
+					$original = wp_get_attachment_image_src($id, 'full');
+				}
+				break;
+			}
+		}
+	}
+	else {
+		$img = wp_get_attachment_image_src($attachment_id, $size);
+	}
+
+	// Try YAPB
+	if (($img == "" || (is_array($img) && count($img) == 0)) && function_exists('yapb_is_photoblog_post') && yapb_is_photoblog_post()) {
+		$standard_sizes = array('thumbnail', 'medium', 'large');
+		if (!isset($width) || !isset($height)) {
+			// Retrieve the physical sizes from the named size.
+			global $_wp_additional_image_sizes;
+			if (isset($_wp_additional_image_sizes[$size])) {
+				$size_array = $_wp_additional_image_sizes[$size];
+				$width = $size_array['width'];
+				$height = $size_array['height'];
+			}
+			else if (in_array($size, $standard_sizes)) {
+				$width = get_option($size.'_size_w');
+				$height = get_option($size.'_size_h');
+			}
+			else {
+				$width = get_option('full_size_w');
+				$height = get_option('full_size_h');
+			}
+			if (isset($options["featured"]) || isset($options['featured-widget'])) {
+				$img_class = "featured-excerpt-".$options["excerpt_position"];
+			}
+			else if (isset($options['mag-headline']) || isset($options['mag-excerpt']) || isset($options['tile-thumb'])) {
+				$img_class = '';
+			}
+			else if (isset($options['mosaic-thumb'])) {
+				$img_class = 'suf-mosaic-img';
+			}
+			else if (isset($options['widget-thumb'])) {
+				$img_class = 'suf-widget-thumb';
+			}
+			else {
+				global $suf_excerpt_thumbnail_alignment;
+				$img_class = $suf_excerpt_thumbnail_alignment.'-thumbnail';
+			}
+
+			$img = yapb_get_thumbnail('', array('alt' => esc_attr($post->post_title)), '', array("w=$width", "h=$height", "q=100"), $img_class);
+			$original['yapb'] = true;
 		}
 	}
 	return $img;
@@ -632,15 +798,20 @@ function suffusion_get_image_from_attachment($size = 'thumbnail') {
  * Retrieves an image if a Native "Featured Image" is attached to the post.
  *
  * @param string $size
+ * @param array $original
+ * @param bool $get_original
  * @return array|bool|string
  */
-function suffusion_get_image_by_post_thumbnail($size = 'excerpt-thumbnail') {
+function suffusion_get_image_by_post_thumbnail($size = 'excerpt-thumbnail', &$original = array(), $get_original = false) {
 	global $post;
 	if (has_post_thumbnail()) {
 		// Problem with using get_the_post_thumbnail() here is that the image might not be resized correctly, so instead we
 		// use wp_get_attachment_image_src, (which is used internally by get_the_post_thumbnail()), and that returns the resized dimensions with the URL.
 		$attachment_id = get_post_thumbnail_id($post->ID);
 		$img = wp_get_attachment_image_src($attachment_id, $size, false);
+		if ($img && $get_original) {
+			$original = wp_get_attachment_image_src($attachment_id, 'full');
+		}
 		return $img;
 	}
 	else {
@@ -652,12 +823,11 @@ function suffusion_get_image_by_post_thumbnail($size = 'excerpt-thumbnail') {
  * Retrieve an image URL based a custom field. A good use case for this call is if you want different images for your thumbnails and featured content.
  *
  * @param string $meta_field
- * @param string $size
  * @return mixed
  */
 function suffusion_get_image_from_custom_field($meta_field = 'thumbnail') {
 	global $post;
-	$img = get_post_meta($post->ID, $meta_field, true);
+	$img = suffusion_get_post_meta($post->ID, $meta_field, true);
 	return $img;
 }
 
@@ -686,7 +856,7 @@ function suffusion_get_image_from_embedded_url() {
  */
 function suffusion_get_document_root($path) {
 	// If the file exists under DOCUMENT_ROOT, return DOCUMENT_ROOT
-	if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $path)) {
+	if (@file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $path)) {
 		return $_SERVER['DOCUMENT_ROOT'];
 	}
 
@@ -695,7 +865,7 @@ function suffusion_get_document_root($path) {
 	$new_path = $_SERVER['DOCUMENT_ROOT'];
 	foreach ($parts as $part) {
 		$new_path .= '/' . $part;
-		if (file_exists($new_path . '/' . $path)) {
+		if (@file_exists($new_path . '/' . $path)) {
 			return $new_path;
 		}
 	}
@@ -705,10 +875,86 @@ function suffusion_get_document_root($path) {
 		$new_path = str_replace("/", "\\", $_SERVER['ORIG_PATH_INFO']);
 		$new_path = str_replace($new_path, "", $_SERVER['SCRIPT_FILENAME']);
 
-		if (file_exists($new_path . '/' . $path)) {
+		if (@file_exists($new_path . '/' . $path)) {
 			return $new_path;
 		}
 	}
 	return false;
 }
-?>
+
+/**
+ * Returns an array of audio files in the document. It first tries to search for audio attachments. If none is found, it looks for the use of
+ * the [audio] shortcode. If none is found, it scans the embedded URLs.
+ *
+ * @return array|string
+ */
+function suffusion_get_audio() {
+	$audios = suffusion_get_audio_from_shortcode();
+	if (is_array($audios) && count($audios) != 0) {
+		return array('shortcode' => $audios);
+	}
+	$audios = suffusion_get_audio_from_attachment();
+	if (is_array($audios) && count($audios) != 0) {
+		return array('attachment' => $audios);
+	}
+	$audios = suffusion_get_audio_from_embedded_url();
+	if (is_array($audios) && count($audios) != 0) {
+		return array('embedded' => $audios);
+	}
+	return array();
+}
+
+/**
+ * Returns all attachments with mime_type 'audio'. Only the URL is returned.
+ *
+ * @return array
+ */
+function suffusion_get_audio_from_attachment() {
+	global $post;
+	$attachments = get_children(array('post_parent' => $post->ID, 'post_status' => 'inherit', 'post_type' => 'attachment',
+		'post_mime_type' => 'audio', 'order' => 'ASC', 'orderby' => 'menu_order'));
+	$ret = array();
+	if (is_array($attachments)) {
+		foreach ($attachments as $attachment) {
+			$ret[] = get_the_guid($attachment->ID);
+		}
+	}
+	return $ret;
+}
+
+/**
+ * Scans the post for occurrences of the 'audio' shortcode. If found, it returns an array with the URLs of all the matches.
+ *
+ * @return array
+ */
+function suffusion_get_audio_from_shortcode() {
+	$shortcode_matches = suffusion_detect_shortcode('audio');
+	if ($shortcode_matches && isset($shortcode_matches[3])) {
+		return $shortcode_matches[3];
+	}
+	return array();
+}
+
+/**
+ * Finds an audio file in a post by looking for the first embedded <a> tags. This can be used to pull external audio files from the post,
+ * though it would work even for internal files.
+ *
+ * @return string
+ */
+function suffusion_get_audio_from_embedded_url() {
+	global $post;
+	$audios = array();
+	preg_match_all('|<a.*?href=[\'"](.*?)[\'"].*?>|i', $post->post_content, $links);
+	if (isset($links) && isset($links[1]) && is_array($links[1])) {
+		foreach ($links[1] as $link) {
+			$dot_pos = strrpos($link, '.');
+			if ($dot_pos < strlen($link)) {
+				$extension = substr($link, $dot_pos + 1);
+				if (wp_ext2type($extension) == 'audio') {
+					$audios[] = $link;
+				}
+			}
+		}
+	}
+	return $audios;
+}

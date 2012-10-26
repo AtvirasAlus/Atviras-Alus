@@ -1,11 +1,13 @@
 === Image Store ===
 Contributors: Hax
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8SJEQXK5NK4ES
-Tags: e-commerce,shop,photo store,picture,image,galleries,imstore,image-store,secure,translate,translatable,watermark,
-slideshow,gallery,sale,photographers,shop,online,google,shopping,cart,paypal,rss,shortcode,multi-languages,widget,prints
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YM9GXCFBND89E
+Tags: e-commerce,shop,photo store,picture,image,galleries,imstore,image-store,secure,translate,translatable,watermark,slideshow,
+gallery,sale,photographers,shop,online,google,shopping,cart,paypal,rss,shortcode,multi-languages,widget,prints,nextgen alternative
 Requires at least: 3.0.0
-Tested up to: 3.4.0
-Stable tag: 3.0.6
+Tested up to: 3.5.0
+Stable tag: 3.1.7
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Image Store (ImStore) is a photo gallery and store plugin for WordPress with Paypal and Google Checkout integration.
 
@@ -79,115 +81,108 @@ so you will not find extra tables on your database(Cool!.. at least for me I hat
 
 == Frequently Asked Questions ==
 
-* http://xparkmedia.com/support/plugin/popular-widget/
+* http://xparkmedia.com/image-store/faq/
 * http://checkout.google.com/support/sell/bin/answer.py?hl=en&answer=70647
 
 == Changelog ==
 
-= 3.0.6 =
-* Fixed: Download links notices.
-* Fixed: issues saving price lists.
-* Fixed: issue processing cart .
+= 3.1.7=
+* Code clean up
+* Fixed: taxonomy template.
+* Fixed: potencial php errors.
+* Fixed: sales customer csv files.
+* Fixed: taxonomy template.
+* Fixed: backward compatibility for WordPress 3.0.0
+* Added: WePay Support.
+* Added: Promotion limits.
+* Added: additional WP 3.5 support.
+* Changed: Taxonomy template.
+* Changed: Taxonomy content display.
 
-= 3.0.5 =
-* Code clean up.
-* WP 3.4.0 compatible.
-* Added: Additional support for multisites.
-* Added: Additional security for secure images.
-* Added: Remove decimal point option.
-* Added: Disable store at gallery level.
-* Added: Option to link to image attachment at gallery level.
-* Fixed: Download links issues.
-* Fixed: Some issues with multisites.
-* Fixed: Single gallery template selection.
-* Fixed: Issue generating image sizes for small images.
+= 3.1.6 =
+* Fixed: Slideshow paging.
+* Fixed: Some translation issues.
+* Fixed: Some price formatting.
+* Fixed: Issue uninstalling plugin.
+* Fixed: Issue images w/not titles and PayPal.
+* Added: WP 3.5 support.
+* Added: Disable shipping option.
+* Added: Additional plugin hooks.
+* Added: Additional template hooks.
+* Added: Additional currencies for eNotifications.
+* Added: Polish and Vietnamese translations.
 
-= 3.0.4 =
-* Added: additional hooks.
-* Added: additional shortcode options.
-* Fixed: blank price lists.
-* Fixed:disable sepia and b&w.
-* Fixed: gallery template selection.
-* Fixed: colorbox add to cart link on pricelist.
-* Fixed: Exit galleries when permalinks not activated.
+= 3.1.5 =
+* Fixed: IE issues.
+* Fixed: Empty gallery error.
+* Fixed: Sales reports.
+* Fixed: Image Edit.
+* Fixed: Cart tax PayPal.
+* Fixed: Receipt issues.
+* Added: WP 3.4.2 support.
 
-= 3.0.3 =
-* Added: watermark location
-* Added: add to cart in lightbox
-* Chaged: shortcode "count"
-* Fixed: add to cart redirect.
-* Fixed: price lists issues.
-* Fixed: promotion code error.
-* Fixed: Multisite option issues.
-* Fixed: download links
+= 3.1.4 =
+* Fixed: PHP notices.
+* Fixed: Issues with image download.
+* Fixed: Issues with PayPal IPN.
+* Fixed: Issues with notifications.
+* Fixed: Issues saving image sizes.
+* Removed: do_action parameters by reference.
 
-= 3.0.2 =
-* Added: Additional multisite support.
-* Changed: Default settings.
-* Changed: Load text domain function.
-* Changed: Theme load order.
-* Fixed: Important cart fixed.
-* Fixed: Gallery pagination.
-* Fixed: Widget image display.
-* Fixed: Scan folder time out.
-* Fixed: Multisite bugs.
-* Fixed: Customer role Multisite.
-* Fixed: possible fix for "Internal Server Error" bug.
+= 3.1.3 =
+* Fixed: customer email.
+* Fixed: Paypal IPN issues.
+* Fixed: page rewrites.
+* Fixed: cart page issues.
+* Fixed: receipt display
 
-= 3.0.1 =
-* Fixed: Colorbox.
-* Fixed: Logout galleries.
-* Fixed: Delete packages issue.
-* Fixed: Not being able to save image sizes.
+= 3.1.2 =
+* Fixed: image download.
+* Fixed: Delete packages.
+* Added: Additional hooks
+* Changed: From WP_MEMORY_LIMIT to WP_MAX_MEMORY_LIMIT
 
-= 3.0.0 =
-* Added: hooks
-* Added: Gallery embed feature.
-* Added: Favorite link feature without store.
-* Added: Template examples.
-* Changed: ImStore class structure.
-* Changed: Full integration with wp media upload.
-* Fixed: Shortcode display.
-* Fixed: Permalink Issues.
-* Fixed: Image display issues.
-* Fixed: Sale information page.
+= 3.1.1 =
+* Fixed: cart issues.
+* Fixed: shortcode gallery title.
+* Fixed: watermark display issue.
+* Fixed: cart page issues.
+* Fixed: receipt display
 
-= 2.2.1 =
-* Fixed: RSS sql error.
-* Fixed: Shortcode image link.
+= 3.1.0 =
+* Added: Gallery tags.
+* Added: Multiple checkout options.
+* Added: Load images by dragging and dropping.
+* Added: View and edit image IPTC metadata.
+* Added: Image Store tools widget
+* Added: Custom color
+* Added: Custom shipping
+* Added: Zero charge ( free images ) using promotions
+* Added: Additional shortcode options
+* Added: Cart page
+* Added: microformats
+* Added: Photo Finishes
+* Added: Color filter options
+* Added: Tools Widget
+* Added: Admin menu
+* Added: Slideshow navigation location
+* Added: Automatic language download
+* Removed: bw and sepia options.
+* Changed: image security link
+* Changed: slideshow display
+* Changed: sale order number display
+* Improved: payment security.
+* Improved: images security and image load
+* Fixed: HTML5 validation. (front-end)
+* Fixed: expiration date display
+* Fixed: download image for loged in users
+* Fixed: Tax / shipping calculation
+* Fixed: Firefox redirect message
+* Fixed: Gallery folder delete issue.
+* Fixed: Image image upload in some servers
 
-= 2.2.0 =
-* Security update
-* Revised: PayPal IPN.
-* Revised: Shopping cart.
-* Revised: Image watermark.
-* Fixed: No comments issue.
-* Fixed: Slideshow unable to save to cart
-* Fixed: Not being able to delete price list.
-* Fixed: Canonical redirect for custom permalinks.
-* Fixed: Customer information not showing  under the WP user menu.
-* Added: Twenty Eleven theme support.
-* Added: Multisite support.
-* Added: jQuery Colorbox support.
-* Added: Dynamic image download.
-* Added: Print-friendly report.
-
-= 2.1.2 =
-* Security update.
-* Fixed: front-end errors for some servers.
-
-= 2.1.1 =
-* Security update.
-* Uploadify update.
-* French Translation.
-* Added: Album ID column.
-* Added: Gallery autosave.
-* Added: Gallery excerpt support.
-* Added: Twenty Eleven theme support.
-* Added: User information auto fill for Email notification .
-* Fixed: Edit image capability issue.
-* Fixed: No report issue and messages.
-
+= Full change log =
+* http://xparkmedia.com/image-store/changelog/
 
 == CREDITS ==
 
@@ -197,8 +192,8 @@ Trent Foley(http://www.twospy.com/galleriffic/)
 = Colorbox =
 Jack Moore,Alex Gregory(http://colorpowered.com/colorbox/)
 
-
 == Upgrade Notice ==
+* Upgrade to 3.1.0 update image and taxonomy templates image-store/theme, deactivate/activate plugin.
 * Upgrade to 3.0.3 please update permalink.
 * Upgrade from 2.0.0 will change your permalinks. 
 * Upgrade from 1.0.2 and previous price lists need to bee updated to use the image unit. 
@@ -216,3 +211,4 @@ Jack Moore,Alex Gregory(http://colorpowered.com/colorbox/)
 7. Screenshot Pricelist
 8. Screenshot Shopping Cart
 9. Screenshot Gallery embed
+10. Users

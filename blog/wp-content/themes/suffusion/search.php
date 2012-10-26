@@ -6,12 +6,10 @@
  * @subpackage Templates
  */
 
-global $suffusion_unified_options;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
+global $suffusion, $suf_search_excerpt;
 
 get_header();
+$suffusion->set_content_layout($suf_search_excerpt);
 suffusion_query_posts();
 ?>
     <div id="main-col">
@@ -24,6 +22,9 @@ if ($suf_search_excerpt == 'list') {
 else if ($suf_search_excerpt == 'tiles') {
 	suffusion_after_begin_content();
 	get_template_part('layouts/layout-tiles');
+}
+else if ($suf_search_excerpt == 'mosaic') {
+	get_template_part('layouts/layout-mosaic');
 }
 else {
 	suffusion_after_begin_content();

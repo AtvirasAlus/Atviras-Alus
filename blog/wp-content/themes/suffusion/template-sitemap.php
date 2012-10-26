@@ -7,11 +7,6 @@
  * @package Suffusion
  * @subpackage Template
  */
-global $suffusion_unified_options;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
-
 get_header();
 ?>
 <div id="main-col">
@@ -23,18 +18,21 @@ if (have_posts()) {
 	while ( have_posts() ) {
 		the_post();
 		$original_post = $post;
-	?>
-			<div id="post-<?php the_ID(); ?>" class="post fix hentry">
+		do_action('suffusion_before_post', $post->ID, 'blog', 1);
+?>
+		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+			<?php suffusion_after_begin_post(); ?>
+			<div class="entry-container fix">
 				<div class="entry fix">
-					<?php the_content(); ?>
 					<?php
+						suffusion_content();
 						global $suf_sitemap_contents, $suf_sitemap_entity_order, $suffusion_sitemap_entities;
 						$show = explode(',',$suf_sitemap_contents);
 						if (is_array($show) && count($show) > 0) {
 							if (is_array($suf_sitemap_entity_order)) {
 								$entity_order = array();
 								foreach ($suf_sitemap_entity_order as $key => $value) {
-									$entity_order[] = $value['key'];
+									$entity_order[] = $key;
 								}
 							}
 							else {
@@ -84,17 +82,21 @@ if (have_posts()) {
 								}
 							}
 						}
-						// Due to the inclusion of Ad Hoc Widgets the global variable $post might have got changed. We will reset it to the original value.
-						$post = $original_post;
-						suffusion_before_end_post();
-						comments_template();
 					?>
 				</div><!-- .entry -->
-			</div><!-- .post -->
+			</div><!-- .entry-container -->
+			<?php
+			// Due to the inclusion of Ad Hoc Widgets the global variable $post might have got changed. We will reset it to the original value.
+			$post = $original_post;
+			suffusion_before_end_post();
+			comments_template();
+			?>
+		</article><!-- .post -->
 <?php
-		}
+		do_action('suffusion_after_post', $post->ID, 'blog', 1);
 	}
+}
 ?>
-  </div><!-- content -->
+	</div><!-- content -->
 </div><!-- main col -->
 <?php get_footer(); ?>

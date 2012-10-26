@@ -94,20 +94,11 @@ class GoogleStatsWidget extends WP_Widget
 		$login = $stats->checkLogin();
 	
 		# Get a list of accounts
-		$accounts = $stats->getAnalyticsAccounts();
+		//$accounts = $stats->getAnalyticsAccounts();
+		$accounts = $stats->getSingleProfile();
 		
 		# Output the options
 		echo '<p style="text-align:right;"><label for="' . $this->get_field_name('title') . '">' . __('Title', 'google-analyticator') . ': <input style="width: 250px;" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" /></label></p>';
-		# The list of accounts
-		echo '<p style="text-align:right;"><label for="' . $this->get_field_name('account') . '">' . __('Analytics account', 'google-analyticator') . ': ';
-		echo '<select name="' . $this->get_field_name('account') . '" id="' . $this->get_field_id('account') . '" style="margin-top: -3px; margin-bottom: 10px;">';
-		if ( count($accounts) > 0 )
-			foreach ( $accounts AS $account ) { $select = ( $acnt == $account['id'] ) ? ' selected="selected"' : ''; echo '<option value="' . $account['id'] . '"' . $select . '>' . $account['title'] . '</option>'; }
-		elseif ( $login == false )
-			echo '<option value="">' . __('Authenticate on settings page.', 'google-analyticator') . '</option>';
-		else
-			echo '<option value="">' . __('No Analytics accounts available.', 'google-analyticator') . '</option>';
-		echo '</select></label></p>';
 		# Time frame
 		echo '<p style="text-align:right;"><label for="' . $this->get_field_name('timeFrame') . '">' . __('Days of data to get', 'google-analyticator') . ': <input style="width: 150px;" id="' . $this->get_field_id('timeFrame') . '" name="' . $this->get_field_name('timeFrame') . '" type="text" value="' . $timeFrame . '" /></label></p>';		
 		# Page background
@@ -235,7 +226,14 @@ class GoogleStatsWidget extends WP_Widget
 		# Get the latest stats
 		$before = date('Y-m-d', strtotime('-' . $time . ' days'));
 		$yesterday = date('Y-m-d', strtotime('-1 day'));
-		$uniques = number_format($stats->getMetric('ga:visitors', $before, $yesterday));
+
+		# Check if Google sucessfully logged in
+		if ( ! $stats->checkLogin() )
+			return false;
+
+		// may need to parse this still
+		$result = $stats->getMetrics('ga:visitors', $before, $yesterday);
+		$uniques = number_format($result->totalsForAllResults['ga:visitors']);
 
 		# Store the array
 		update_option('google_stats_visits_' . $account, array('unique'=>$uniques, 'lastcalled'=>time()));

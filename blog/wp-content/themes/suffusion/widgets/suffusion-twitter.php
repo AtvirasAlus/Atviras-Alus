@@ -9,7 +9,8 @@
 
 class Suffusion_Follow_Twitter extends WP_Widget {
 	function Suffusion_Follow_Twitter() {
-		$widget_ops = array('classname' => 'widget-suf-follow-twitter', 'description' => __("A widget to enable people to follow you on Twitter", "suffusion"));
+		$rest_class = function_exists('simplexml_load_string') ? 'suf-twitter-rest' : '';
+		$widget_ops = array('classname' => 'widget-suf-follow-twitter '.$rest_class, 'description' => __("A widget to enable people to follow you on Twitter", "suffusion"));
 		$control_ops = array('width' => 840, 'height' => 350);
 
 		$this->WP_Widget("suf-follow-twitter", __("Twitter", "suffusion"), $widget_ops, $control_ops);
@@ -38,7 +39,7 @@ class Suffusion_Follow_Twitter extends WP_Widget {
 		if ($show_icon || $show_tagline) {
 ?>
 
-<div style='text-align: center;'>
+<div class='twitter-header'>
 	<a href="http://twitter.com/<?php echo $user; ?>" class="twitter-icon-and-tag" title="<?php echo esc_attr($tagline);?>">
 <?php
 			if ($show_icon) {
@@ -58,40 +59,162 @@ class Suffusion_Follow_Twitter extends WP_Widget {
 		}
 
 		if ($show_tweets) {
-			$feed_url = "http://search.twitter.com/search.atom?q=from:" . $user . "&rpp=" . $num_tweets;
-			$response = wp_remote_request($feed_url);
-			if (is_wp_error($response)) {
-				$feed = '';
-			}
-			else if (200 != $response['response']['code']) {
-				$feed = '';
-			}
-			else {
-				$feed = $response['body'];
-			}
-
-			$feed = str_replace("&lt;", "<", $feed);
-			$feed = str_replace("&gt;", ">", $feed);
-			$feed = str_replace("&apos;", "'", $feed);
-			$feed = str_replace("&quot;", '"', $feed);
-			$feed = str_replace("&amp;", '&', $feed);
-			$clean = explode("<content type=\"html\">", $feed);
-
-			$amount = count($clean) - 1;
-
-			echo "<ul>";
-
-			for ($i = 1; $i <= $amount; $i++) {
-				$cleaner = explode("</content>", $clean[$i]);
-				echo "<li>".$cleaner[0]."</li>";
-			}
-			echo "</ul>";
-		}
-        echo $after_widget; /*
+			$feed_url = "http://api.twitter.com/1/statuses/user_timeline.json?id=$user&include_rts=true&include_entities=true&count=".$num_tweets."&callback=?";
+			$url_var = str_replace('-', '_', $args['widget_id'])."_url";
 ?>
-		</div>
-	</div>
-<?php */
+<div id='<?php echo $args['widget_id'];?>-tweets'>
+<script type="text/javascript">
+/* <![CDATA[ */
+	$j = jQuery.noConflict();
+	$j(document).ready(function() {
+		$j.getJSON("<?php echo $feed_url; ?>", function(data) {
+			if (data.length != 0) {
+				$j('#<?php echo $args['widget_id'];?>-tweets').append('<ul id="<?php echo $args['widget_id'];?>-tweet-list"></ul>');
+				$j.each(data, function(i, status) {
+					var tweeter = status.user;
+					if (typeof status.retweeted_status != 'undefined') {
+						var retweet = status.retweeted_status;
+						tweeter = retweet.user;
+					}
+					var tweeter_url = 'http://twitter.com/' + tweeter.screen_name;
+					var avatar = '';
+					if (typeof tweeter.profile_image_url != 'undefined') {
+						avatar = tweeter.profile_image_url;
+					}
+					var tweet = status.text;
+					if (typeof status.entities != 'undefined') {
+						var entities = status.entities;
+						var tokens = new Array();
+
+						if (typeof entities.user_mentions != 'undefined' && entities.user_mentions.length > 0) {
+							var user_mentions = entities.user_mentions;
+							var um_len = user_mentions.length;
+							for (var j=0; j<um_len; j++) {
+								var user_mention = user_mentions[j];
+								tokens.push({
+									type: 'mention',
+									start: user_mention.indices[0],
+									end: user_mention.indices[1],
+									text: tweet.substr(user_mention.indices[0], user_mention.indices[1] - user_mention.indices[0]),
+									url: 'http://twitter.com/' + user_mention.screen_name,
+									title: user_mention.name
+								});
+							}
+						}
+
+						if (typeof entities.urls != 'undefined' && entities.urls.length > 0) {
+							var urls = entities.urls;
+							var urls_len = urls.length;
+							for (var j=0; j<urls_len; j++) {
+								var url = urls[j];
+								var expanded_url = url.expanded_url != url.url ? (url.expanded_url == null ? '' : url.expanded_url) : '';
+								tokens.push({
+									type: 'url',
+									start: url.indices[0],
+									end: url.indices[1],
+									text: tweet.substr(url.indices[0], url.indices[1] - url.indices[0]),
+									url: url.url,
+									title: expanded_url
+								});
+							}
+						}
+
+						if (typeof entities.hashtags != 'undefined' && entities.hashtags.length > 0) {
+							var hashtags = entities.hashtags;
+							var ht_len = hashtags.length;
+							for (var j=0; j<ht_len; j++) {
+								var hashtag = hashtags[j];
+								tokens.push({
+									type: 'hashtag',
+									start: hashtag.indices[0],
+									end: hashtag.indices[1],
+									text: tweet.substr(hashtag.indices[0], hashtag.indices[1] - hashtag.indices[0]),
+									url: "http://search.twitter.com/search?q=%23" + hashtag.text,
+									title: hashtag.text
+								});
+							}
+						}
+					}
+
+					tokens.sort(function(a, b) {
+						return a.start - b.start;
+					});
+
+					var sortedTokens = new Array();
+					var tok_len = tokens.length;
+					var previous, next;
+					for (var j=0; j<tok_len; j++) {
+						var current = tokens[j];
+						var pushToken, start, end, text;
+						if (j == 0 && current.start != 0) {
+							start = 0;
+							end = current.start;
+							text = tweet.substr(start, end-start);
+							pushToken = {start: start, end: end, text: text};
+							sortedTokens.push(pushToken);
+							sortedTokens.push(current);
+							previous = current;
+						}
+						else if (j == 0 && current.start == 0) {
+							sortedTokens.push(current);
+							previous = current;
+						}
+						else {
+							if (previous.end == current.start) {
+								sortedTokens.push(current);
+								previous = current;
+							}
+							else {
+								start = previous.end;
+								end = current.start;
+								text = tweet.substr(start, end-start);
+								pushToken = {start: start, end: end, text: text};
+								sortedTokens.push(pushToken);
+								sortedTokens.push(current);
+								previous = current;
+							}
+						}
+					}
+
+					if (tok_len > 0) {
+						var last = tokens[tok_len - 1];
+						if (last.end < tweet.length) {
+							var lastToken = {start: last.end, end: tweet.length, text: tweet.substr(last.end, tweet.length - last.end)};
+							sortedTokens.push(lastToken);
+						}
+					}
+					else {
+						sortedTokens.push({start: 0, end: tweet.length, text: tweet});
+					}
+
+					var stok_len = sortedTokens.length;
+					var html_tweet = '';
+					if (avatar != '') {
+						var tweeter_name = sufHtmlEncode(tweeter.name);
+						html_tweet = "<img src='" + avatar +"' class='suf-twitter-avatar' alt='" + tweeter_name + "' title='" + tweeter_name + "' />";
+						html_tweet = "<a href='" + tweeter_url + "'>" + html_tweet + "</a>";
+					}
+					for (var j = 0; j < stok_len; j++) {
+						var curr_token = sortedTokens[j];
+						if (typeof curr_token.type == 'undefined') {
+							html_tweet += curr_token.text;
+						}
+						else {
+							html_tweet += "<a href='" + curr_token.url + "' title='" + curr_token.title + "'>" + curr_token.text + "</a>";
+						}
+					}
+
+					$j('#<?php echo $args['widget_id'];?>-tweet-list').append('<li class="fix">' + html_tweet + '</li>');
+				});
+			}
+		});
+	})
+/* ]]> */
+</script>
+</div>
+<?php
+		}
+        echo $after_widget;
 	}
 
 	function update($new_instance, $old_instance) {
@@ -126,8 +249,8 @@ class Suffusion_Follow_Twitter extends WP_Widget {
 			$icon = $instance['icon'];
 		}
 ?>
-<div style='display: inline-block; clear: both;'>
-	<div style='float: left; width: 32%; margin-right: 10px;'>
+<div class="suf-widget-block">
+	<div class="suf-widget-3col">
 <?php
 		_e("<p>This widget lets you set up a link to allow people to follow you on Twitter. You can additionally show your latest feeds.</p>", "suffusion");
 		printf("<p>%s</p>", __("Recommended settings:","suffusion"));
@@ -150,7 +273,7 @@ class Suffusion_Follow_Twitter extends WP_Widget {
 
 		echo "</ul>\n"; ?>
 	</div>
-	<div style='float: left; width: 32%; margin-right: 10px;'>
+	<div class="suf-widget-3col">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'user' ); ?>"><?php _e('User:', 'suffusion'); ?></label>
 			<input id="<?php echo $this->get_field_id( 'user' ); ?>" name="<?php echo $this->get_field_name( 'user' ); ?>" value="<?php if (isset($instance['user'])) echo $instance['user']; ?>" class="widefat" />
@@ -191,7 +314,7 @@ class Suffusion_Follow_Twitter extends WP_Widget {
 <?php
 		for ($i = 1; $i <= 20; $i++) {
 ?>
-				<option <?php if (isset($instance['num_tweets']) && $i == $instance['num_tweets'] ) echo 'selected="selected"'; ?>><?php echo $i; ?></option>
+				<option <?php if (isset($instance['num_tweets'])) selected($i, $instance['num_tweets']); ?>><?php echo $i; ?></option>
 <?php
 		}
 ?>
@@ -199,13 +322,13 @@ class Suffusion_Follow_Twitter extends WP_Widget {
 		</p>
 	</div>
 
-	<div style='float: left; width: 32%;'>
+	<div class="suf-widget-3col">
 		<p class="twitter-icons">
 			<label for="<?php echo $this->get_field_id( 'icon' ); ?>"><?php _e('Select your Twitter icon:', 'suffusion'); ?></label><br />
 <?php
 		for ($i = 0; $i < 10; $i++) {
 ?>
-			<span><input type="radio" name="<?php echo $this->get_field_name('icon'); ?>" value="twitter-0<?php echo $i; ?>" <?php if ("twitter-0$i" == $icon) { echo  ' checked="checked" '; } ?>/><img src="<?php echo get_template_directory_uri(); ?>/images/twitter/twitter-0<?php echo $i; ?>.png" alt="Twitter 0<?php echo $i; ?>"/></span>
+			<span><input type="radio" name="<?php echo $this->get_field_name('icon'); ?>" value="twitter-0<?php echo $i; ?>" <?php checked("twitter-0$i", $icon); ?>/><img src="<?php echo get_template_directory_uri(); ?>/images/twitter/twitter-0<?php echo $i; ?>.png" alt="Twitter 0<?php echo $i; ?>"/></span>
 <?php
 		}
 ?>

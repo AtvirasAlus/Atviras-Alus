@@ -1,0 +1,196 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Lightbox Gallery\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-01-12 01:35+0900\n"
+"PO-Revision-Date: 2012-01-13 22:50+0900\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_c\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: lightbox-gallery\n"
+
+#: lightbox-gallery/lightbox-gallery.php:209
+msgid "Settings"
+msgstr "Inställningar"
+
+#: lightbox-gallery/lightbox-gallery.php:224
+#: lightbox-gallery/lightbox-gallery.php:257
+msgid "Lightbox Gallery"
+msgstr "Lightbox Gallery"
+
+#: lightbox-gallery/lightbox-gallery.php:240
+msgid "Options updated."
+msgstr "Inställningar uppdaterade"
+
+#: lightbox-gallery/lightbox-gallery.php:244
+msgid "Options deleted."
+msgstr "Inställningar borttagna."
+
+#: lightbox-gallery/lightbox-gallery.php:264
+#: lightbox-gallery/lightbox-gallery.php:333
+#: lightbox-gallery/lightbox-gallery.php:351
+#: lightbox-gallery/lightbox-gallery.php:367
+msgid "Click to toggle"
+msgstr "Klicka för att växla"
+
+#: lightbox-gallery/lightbox-gallery.php:265
+msgid "Lightbox Gallery Options"
+msgstr "Lightbox Gallery inställningar"
+
+#: lightbox-gallery/lightbox-gallery.php:274
+msgid "Choose the gallery loading type"
+msgstr "Välj laddningstyp för gallerier"
+
+#: lightbox-gallery/lightbox-gallery.php:275
+msgid "Lightbox"
+msgstr "Lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:276
+msgid "Highslide JS"
+msgstr "Highslide JS"
+
+#: lightbox-gallery/lightbox-gallery.php:277
+#, php-format
+msgid "Caution: Highslide JS is licensed under a Creative Commons Attribution-NonCommercial 2.5 License. You need the author's permission to use Highslide JS on commercial websites. <a href=\"%s\" target=\"_blank\">Please look at the author's website.</a>"
+msgstr "Varning: Highslide JS använder Creative Commons Erkännande-IckeKommersiell 2.5 som licens. Du behöver författarens tillåtelse för att använda Highslide JS på kommersiella hemsidor. <a href=\"%s\" target=\"_blank\">Var god besök författarens hemsida.</a>"
+
+#: lightbox-gallery/lightbox-gallery.php:280
+msgid "In case that you would like to use the lightbox in certain categories (comma-deliminated)"
+msgstr "Om du skulle vilja använda lightboxen på specifika kategorier (kommaseparerade)"
+
+#: lightbox-gallery/lightbox-gallery.php:284
+msgid "In case that you would like to use the lightbox in certain pages (comma-deliminated)"
+msgstr "Om du skulle vilja använda lightboxen på specifika sidor (kommaseparerade)"
+
+#: lightbox-gallery/lightbox-gallery.php:288
+msgid "Enforce loading the lightbox gallery scripts"
+msgstr "Tvinga laddning av lightbox-skripten"
+
+#: lightbox-gallery/lightbox-gallery.php:289
+msgid "The lightbox gallery scripts are loaded in every page"
+msgstr "Lightbox-skripten laddas på varje sida"
+
+#: lightbox-gallery/lightbox-gallery.php:292
+msgid "Add rel=&quot;lightbox&quot; automatically in the post insert"
+msgstr "Lägg till rel=&quot;lightbox&quot; automatiskt i inlägg"
+
+#: lightbox-gallery/lightbox-gallery.php:293
+msgid "Do not forget to check the script enforcement option above with this"
+msgstr "Glöm inte att sätta på laddningstvånget ovan om du aktiverar detta"
+
+#: lightbox-gallery/lightbox-gallery.php:296
+msgid "In case that you would like to disable to load the lightbox-gallery.css"
+msgstr "Om du skulle vilja stänga av laddningen av lightbox-gallery.css"
+
+#: lightbox-gallery/lightbox-gallery.php:297
+msgid "Do not use the lightbox-gallery.css"
+msgstr "Använd inte lightbox-gallery.css"
+
+#: lightbox-gallery/lightbox-gallery.php:300
+msgid "In case that you would like to disable to load the column inline css"
+msgstr "Om du skulle vilja stänga av laddningen av inline-CSS i kolumner"
+
+#: lightbox-gallery/lightbox-gallery.php:301
+msgid "Do not use the column inline css"
+msgstr "Använd inte inline-CSS i kolumner"
+
+#: lightbox-gallery/lightbox-gallery.php:304
+msgid "In case that you would like to set the default number of columns"
+msgstr "Om du skulle vilja ställa in standardantal av kolumner"
+
+#: lightbox-gallery/lightbox-gallery.php:308
+msgid "In case that you would like to set the default thumbnail size"
+msgstr "Om du skulle vilja ställa in standardstorlek på miniatyrer"
+
+#: lightbox-gallery/lightbox-gallery.php:312
+msgid "In case that you would like to set the default lightbox size"
+msgstr "Om du skulle vilja ställa in standardstorlek på lightboxen"
+
+#: lightbox-gallery/lightbox-gallery.php:319
+msgid "Choose the script loading point"
+msgstr "Välj var skripten ska laddas"
+
+#: lightbox-gallery/lightbox-gallery.php:320
+msgid "Header"
+msgstr "Sidhuvud"
+
+#: lightbox-gallery/lightbox-gallery.php:321
+msgid "Footer"
+msgstr "Sidfot"
+
+#: lightbox-gallery/lightbox-gallery.php:324
+msgid "Update Options &raquo;"
+msgstr "Uppdatera inställningar &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:334
+msgid "Delete Options"
+msgstr "Ta bort inställningar"
+
+#: lightbox-gallery/lightbox-gallery.php:336
+msgid "Are you sure to delete options? Options you set will be deleted."
+msgstr "Är du säker på att du vill ta bort inställningar? Alla inställningar du har ställt in tas bort."
+
+#: lightbox-gallery/lightbox-gallery.php:340
+msgid "Delete Options &raquo;"
+msgstr "Ta bort inställningar &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:352
+msgid "Donation"
+msgstr "Donera"
+
+#: lightbox-gallery/lightbox-gallery.php:354
+msgid "If you liked this plugin, please make a donation via paypal! Any amount is welcome. Your support is much appreciated."
+msgstr "Om du gillade det här tillägget, donera gärna via PayPal! Alla belopp är välkomna. Ert stöd uppskattas."
+
+#: lightbox-gallery/lightbox-gallery.php:368
+msgid "CMS x WP"
+msgstr "CMS x WP"
+
+#: lightbox-gallery/lightbox-gallery.php:370
+msgid "There are much more plugins which are useful for developing business websites such as membership sites or ec sites. You could totally treat WordPress as CMS by use of CMS x WP plugins."
+msgstr "Det finns många fler tillägg som är användbara för att utveckla företagshemsidor såsom medlemssidor eller EC-sidor. Du kan fullkomligt behandla WordPress som ett CMS genom att använda CMS x WP-tillägg."
+
+#: lightbox-gallery/lightbox-gallery.php:371
+msgid "WordPress plugin sales site: CMS x WP"
+msgstr "Säljsida för WordPress-plugin: CMS x WP"
+
+#: lightbox-gallery/lightbox-gallery.php:445
+msgid "Pages:"
+msgstr "Sidor: "
+
+#: lightbox-gallery/lightbox-gallery.php:447
+msgid "Next page"
+msgstr "Nästa sida"
+
+#: lightbox-gallery/lightbox-gallery.php:448
+msgid "Previous page"
+msgstr "Föregående sida"
+
+#: lightbox-gallery/lightbox-gallery.php:531
+msgid "camera"
+msgstr "kamera"
+
+#: lightbox-gallery/lightbox-gallery.php:533
+msgid "aperture"
+msgstr "bländare"
+
+#: lightbox-gallery/lightbox-gallery.php:535
+msgid "focal_length"
+msgstr "brännvidd"
+
+#: lightbox-gallery/lightbox-gallery.php:537
+msgid "ISO"
+msgstr "ISO"
+
+#: lightbox-gallery/lightbox-gallery.php:541
+msgid "shutter_speed"
+msgstr "slutartid"
+
+#: lightbox-gallery/lightbox-gallery.php:544
+msgid "created_timestamp"
+msgstr "skapad_tiddstämpel"
+

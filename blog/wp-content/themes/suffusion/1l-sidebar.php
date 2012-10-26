@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Single Left Sidebar
+ * Template Name: 1 Left Sidebar (Deprecated)
  *
  * @package Suffusion
  * @subpackage Templates
@@ -22,8 +22,9 @@ if (have_posts()) {
 	while (have_posts()) {
 		the_post();
 		$original_post = $post;
+		do_action('suffusion_before_post', $post->ID, 'blog', 1);
 ?>
-		<div <?php post_class('fix'); ?> id="post-<?php the_ID(); ?>">
+		<article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 			<?php suffusion_after_begin_post(); ?>
 			<div class="entry-container fix">
 				<div class="entry fix">
@@ -40,9 +41,10 @@ if (have_posts()) {
 
 			<?php comments_template(); ?>
 
-		</div><!--/post -->
+		</article><!--/post -->
 
 <?php
+		do_action('suffusion_after_post', $post->ID, 'blog', 1);
 	}
 }
 ?>

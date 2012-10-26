@@ -1,0 +1,178 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Lightbox Gallery\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-11-19 17:29+0900\n"
+"PO-Revision-Date: 2011-05-25 18:53+0100\n"
+"Last-Translator: Tom <tomo@kuzam.net>\n"
+"Language-Team: Tom K <tomo@kuzam.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_c\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Croatian\n"
+"X-Poedit-Country: CROATIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: lightbox-gallery\n"
+
+#: lightbox-gallery/lightbox-gallery.php:157
+msgid "Settings"
+msgstr "Postavke"
+
+#: lightbox-gallery/lightbox-gallery.php:165
+#: lightbox-gallery/lightbox-gallery.php:191
+msgid "Lightbox Gallery"
+msgstr "Lightbox galerija"
+
+#: lightbox-gallery/lightbox-gallery.php:179
+msgid "Options updated."
+msgstr "Postavke ažurirane"
+
+#: lightbox-gallery/lightbox-gallery.php:183
+msgid "Options deleted."
+msgstr "Postavke izbrisane"
+
+#: lightbox-gallery/lightbox-gallery.php:197
+#: lightbox-gallery/lightbox-gallery.php:262
+#: lightbox-gallery/lightbox-gallery.php:278
+msgid "Click to toggle"
+msgstr "Kliknite za pritisnuti"
+
+#: lightbox-gallery/lightbox-gallery.php:198
+msgid "Lightbox Gallery Options"
+msgstr "Lightbox Gallery opcije"
+
+#: lightbox-gallery/lightbox-gallery.php:207
+msgid "Choose the gallery loading type"
+msgstr "Odaberite način učitavanja galerije"
+
+#: lightbox-gallery/lightbox-gallery.php:208
+msgid "Lightbox"
+msgstr "Lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:209
+msgid "Highslide JS"
+msgstr "Highslide JS"
+
+#: lightbox-gallery/lightbox-gallery.php:210
+#, php-format
+msgid "Caution: Highslide JS is licensed under a Creative Commons Attribution-NonCommercial 2.5 License. You need the author's permission to use Highslide JS on commercial websites. <a href=\"%s\" target=\"_blank\">Please look at the author's website.</a>"
+msgstr "Pažnja: Highslide JS je licencirano pod Creative Commons Attribution-NonCommercial 2.5 licencom. Potrebna vam je autorova dozvola da koristite Highslide JS na komercijalnim stranicama. <a href=\"%s\" target=\"_blank\">Molimo da pogledate na autorovim stranicama.</a>"
+
+#: lightbox-gallery/lightbox-gallery.php:213
+msgid "In case that you would like to use the lightbox in certain categories (comma-deliminated)"
+msgstr "U slučaju da želite koristiti lightbox u određenim kategorijama (odvojeno zarezom)"
+
+#: lightbox-gallery/lightbox-gallery.php:217
+msgid "In case that you would like to use the lightbox in certain pages (comma-deliminated)"
+msgstr "U slučaju da želite koristiti lightbox u određenim stranicama (odvojeno zarezom)"
+
+#: lightbox-gallery/lightbox-gallery.php:221
+msgid "Enforce loading the lightbox gallery scripts"
+msgstr "Učitaj skripte lightbox galerije"
+
+#: lightbox-gallery/lightbox-gallery.php:222
+msgid "The lightbox gallery scripts are loaded in every page"
+msgstr "Lightbox gallery skripte su učitane u svakoj stranici"
+
+#: lightbox-gallery/lightbox-gallery.php:225
+msgid "In case that you would like to disable to load the lightbox-gallery.css"
+msgstr "U slučaju da želite onemogućiti učitavanje lightbox-gallery.css"
+
+#: lightbox-gallery/lightbox-gallery.php:226
+msgid "Do not use the lightbox-gallery.css"
+msgstr "Ne koristi lightbo-gallery.css"
+
+#: lightbox-gallery/lightbox-gallery.php:229
+msgid "In case that you would like to disable to load the column inline css"
+msgstr "U slučaju da želite onemogućiti column inline css"
+
+#: lightbox-gallery/lightbox-gallery.php:230
+msgid "Do not use the column inline css"
+msgstr "Ne koristi column inline css"
+
+#: lightbox-gallery/lightbox-gallery.php:233
+msgid "In case that you would like to set the default number of columns"
+msgstr "U slučaju da želite namjestiti zadani broj kolona"
+
+#: lightbox-gallery/lightbox-gallery.php:237
+msgid "In case that you would like to set the default thumbnail size"
+msgstr "U slučaju da želite namjestiti zadanu veličinu thumbnaila"
+
+#: lightbox-gallery/lightbox-gallery.php:241
+msgid "In case that you would like to set the default lightbox size"
+msgstr "U slučaju da želite namjestiti zadanu veličinu lightboxa"
+
+#: lightbox-gallery/lightbox-gallery.php:248
+msgid "Choose the script loading point"
+msgstr "Odaberite točku učitavanja skripte"
+
+#: lightbox-gallery/lightbox-gallery.php:249
+msgid "Header"
+msgstr "Zaglavlje"
+
+#: lightbox-gallery/lightbox-gallery.php:250
+msgid "Footer"
+msgstr "Podnožje"
+
+#: lightbox-gallery/lightbox-gallery.php:253
+msgid "Update Options &raquo;"
+msgstr "Ažuriraj opcije &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:263
+msgid "Delete Options"
+msgstr "Izbriši opcije"
+
+#: lightbox-gallery/lightbox-gallery.php:265
+msgid "Are you sure to delete options? Options you set will be deleted."
+msgstr "Da li ste sigurni da želite izbrisati opcije? Vaša podešenja će biti izbrisana."
+
+#: lightbox-gallery/lightbox-gallery.php:269
+msgid "Delete Options &raquo;"
+msgstr "Obriši opcije &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:279
+msgid "Donation"
+msgstr "Donacija"
+
+#: lightbox-gallery/lightbox-gallery.php:281
+msgid "If you liked this plugin, please make a donation via paypal! Any amount is welcome. Your support is much appreciated."
+msgstr "Ako vam se sviđa ovaj dodatak, donirajte preko paypala! Svaka svota je dobro došla. Zahvaljujemo na podršci."
+
+#: lightbox-gallery/lightbox-gallery.php:363
+msgid "Pages:"
+msgstr "Stranice:"
+
+#: lightbox-gallery/lightbox-gallery.php:365
+msgid "Next page"
+msgstr "Slijedeća stranica"
+
+#: lightbox-gallery/lightbox-gallery.php:366
+msgid "Previous page"
+msgstr "Prethodna stranica"
+
+#: lightbox-gallery/lightbox-gallery.php:448
+msgid "camera"
+msgstr "kamera"
+
+#: lightbox-gallery/lightbox-gallery.php:450
+msgid "aperture"
+msgstr "apertura"
+
+#: lightbox-gallery/lightbox-gallery.php:452
+msgid "focal_length"
+msgstr "žarišna duljina"
+
+#: lightbox-gallery/lightbox-gallery.php:454
+msgid "ISO"
+msgstr "ISO"
+
+#: lightbox-gallery/lightbox-gallery.php:458
+msgid "shutter_speed"
+msgstr "brzina okidača"
+
+#: lightbox-gallery/lightbox-gallery.php:461
+msgid "created_timestamp"
+msgstr "datum kreiranja"
+

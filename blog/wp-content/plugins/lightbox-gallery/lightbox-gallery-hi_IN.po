@@ -1,0 +1,177 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Lightbox Gallery 0.6.2 hu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-11-19 17:29+0900\n"
+"PO-Revision-Date: 2011-06-16 17:00+0530\n"
+"Last-Translator: Ashish Jha <ashish@outshinesolutions.com>\n"
+"Language-Team: Outshine Solutions <ash.pr@outshinesolutions.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_c\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Hindi\n"
+"X-Poedit-Country: INDIA\n"
+"X-Poedit-SearchPath-0: lightbox-gallery\n"
+
+#: lightbox-gallery/lightbox-gallery.php:157
+msgid "Settings"
+msgstr "सेटिंग्स"
+
+#: lightbox-gallery/lightbox-gallery.php:165
+#: lightbox-gallery/lightbox-gallery.php:191
+msgid "Lightbox Gallery"
+msgstr "Lightbox गैलरी"
+
+#: lightbox-gallery/lightbox-gallery.php:179
+msgid "Options updated."
+msgstr "Options updated."
+
+#: lightbox-gallery/lightbox-gallery.php:183
+msgid "Options deleted."
+msgstr "विकल्प हटा दिया गया."
+
+#: lightbox-gallery/lightbox-gallery.php:197
+#: lightbox-gallery/lightbox-gallery.php:262
+#: lightbox-gallery/lightbox-gallery.php:278
+msgid "Click to toggle"
+msgstr "टॉगल करने के लिए क्लिक करें"
+
+#: lightbox-gallery/lightbox-gallery.php:198
+msgid "Lightbox Gallery Options"
+msgstr "Lightbox गैलरी विकल्प"
+
+#: lightbox-gallery/lightbox-gallery.php:207
+msgid "Choose the gallery loading type"
+msgstr "गैलरी लोडिंग प्रकार चुनें"
+
+#: lightbox-gallery/lightbox-gallery.php:208
+msgid "Lightbox"
+msgstr "Lightbox"
+
+#: lightbox-gallery/lightbox-gallery.php:209
+msgid "Highslide JS"
+msgstr "Highslide जे एस"
+
+#: lightbox-gallery/lightbox-gallery.php:210
+#, php-format
+msgid "Caution: Highslide JS is licensed under a Creative Commons Attribution-NonCommercial 2.5 License. You need the author's permission to use Highslide JS on commercial websites. <a href=\"%s\" target=\"_blank\">Please look at the author's website.</a>"
+msgstr "सतर्कता: Highslide जे एस एक क्रिएटिव  Commons रोपण  Noncommercial  2.5 लाइसेंस के अंतर्गत  लाइसेंस प्राप्त है. आप लेखक के लिए व्यावसायिक वेबसाइटों पर Highslide जे एस के उपयोग की अनुमति की जरूरत है.. <a href=\"%s\" target=\"_blank\">कृपया लेखक की वेबसाइट को देखो.</a>"
+
+#: lightbox-gallery/lightbox-gallery.php:213
+msgid "In case that you would like to use the lightbox in certain categories (comma-deliminated)"
+msgstr "मामले में है कि आप कुछ निश्चित  श्रेणियों (कॉमा deliminated) में lightbox उपयोग करना पसंद करेंगे"
+
+#: lightbox-gallery/lightbox-gallery.php:217
+msgid "In case that you would like to use the lightbox in certain pages (comma-deliminated)"
+msgstr "कि आप कुछ पृष्ठों (कॉमा deliminated) में lightbox उपयोग करना पसंद करेंगे"
+
+#: lightbox-gallery/lightbox-gallery.php:221
+msgid "Enforce loading the lightbox gallery scripts"
+msgstr "lightbox गैलरी स्क्रिप्ट लोडिंग"
+
+#: lightbox-gallery/lightbox-gallery.php:222
+msgid "The lightbox gallery scripts are loaded in every page"
+msgstr "lightbox गैलरी स्क्रिप्ट हर पृष्ठ में लोड कर रहे हैं"
+
+#: lightbox-gallery/lightbox-gallery.php:225
+msgid "In case that you would like to disable to load the lightbox-gallery.css"
+msgstr "कि आप को निष्क्रिय  करने के लिए तरह लोड करने के लिए होगा में lightbox-gallery.css"
+
+#: lightbox-gallery/lightbox-gallery.php:226
+msgid "Do not use the lightbox-gallery.css"
+msgstr " lightbox-gallery.css का उपयोग न करें"
+
+#: lightbox-gallery/lightbox-gallery.php:229
+msgid "In case that you would like to disable to load the column inline css"
+msgstr " कि आप को निष्क्रिय करने के लिए पसंद करने के लिए  स्तंभ  इनलाइन  सीएसएस  लोड होगा "
+
+#: lightbox-gallery/lightbox-gallery.php:230
+msgid "Do not use the column inline css"
+msgstr "स्तंभ इनलाइन सीएसएस का उपयोग न करें"
+
+#: lightbox-gallery/lightbox-gallery.php:233
+msgid "In case that you would like to set the default number of columns"
+msgstr " कि आप स्तंभ के डिफ़ॉल्ट संख्या निर्धारित  करना चाहते हैं"
+
+#: lightbox-gallery/lightbox-gallery.php:237
+msgid "In case that you would like to set the default thumbnail size"
+msgstr "मामले में आप डिफ़ॉल्ट  थंबनेल  आकार निर्धारित करना चाहते हैं"
+
+#: lightbox-gallery/lightbox-gallery.php:241
+msgid "In case that you would like to set the default lightbox size"
+msgstr "मामले में आप डिफ़ॉल्ट lightbox आकार निर्धारित करना चाहते हैं"
+
+#: lightbox-gallery/lightbox-gallery.php:248
+msgid "Choose the script loading point"
+msgstr "स्क्रिप्ट लोडिंग बिंदु चुनें"
+
+#: lightbox-gallery/lightbox-gallery.php:249
+msgid "Header"
+msgstr "हैडर"
+
+#: lightbox-gallery/lightbox-gallery.php:250
+msgid "Footer"
+msgstr "फूटर"
+
+#: lightbox-gallery/lightbox-gallery.php:253
+msgid "Update Options &raquo;"
+msgstr "अद्यतन विकल्प&raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:263
+msgid "Delete Options"
+msgstr " विकल्प हटाएँ"
+
+#: lightbox-gallery/lightbox-gallery.php:265
+msgid "Are you sure to delete options? Options you set will be deleted."
+msgstr "क्या आप के लिए  विकल्प  हटा यकीन है? विकल्पों का  सेट हटा दिया जाएगा."
+
+#: lightbox-gallery/lightbox-gallery.php:269
+msgid "Delete Options &raquo;"
+msgstr "विकल्प हटाएँ  &raquo;"
+
+#: lightbox-gallery/lightbox-gallery.php:279
+msgid "Donation"
+msgstr "दान"
+
+#: lightbox-gallery/lightbox-gallery.php:281
+msgid "If you liked this plugin, please make a donation via paypal! Any amount is welcome. Your support is much appreciated."
+msgstr "अगर तुम्हें  यह प्लगइन पसंद है , कृपया Paypal के माध्यम से एक दान कर! किसी भी राशि  का स्वागत है. आपका समर्थन बहुत सराहना की है."
+
+#: lightbox-gallery/lightbox-gallery.php:363
+msgid "Pages:"
+msgstr "पृष्ठ:"
+
+#: lightbox-gallery/lightbox-gallery.php:365
+msgid "Next page"
+msgstr "अगले पृष्ठ"
+
+#: lightbox-gallery/lightbox-gallery.php:366
+msgid "Previous page"
+msgstr "पिछले पृष्ठ"
+
+#: lightbox-gallery/lightbox-gallery.php:448
+msgid "camera"
+msgstr "कैमरा"
+
+#: lightbox-gallery/lightbox-gallery.php:450
+msgid "aperture"
+msgstr "छेद"
+
+#: lightbox-gallery/lightbox-gallery.php:452
+msgid "focal_length"
+msgstr "focal_length"
+
+#: lightbox-gallery/lightbox-gallery.php:454
+msgid "ISO"
+msgstr "आईएसओ"
+
+#: lightbox-gallery/lightbox-gallery.php:458
+msgid "shutter_speed"
+msgstr "shutter_speed"
+
+#: lightbox-gallery/lightbox-gallery.php:461
+msgid "created_timestamp"
+msgstr "created_timestamp"
+

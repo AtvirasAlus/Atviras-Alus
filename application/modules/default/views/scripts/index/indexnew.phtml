@@ -474,6 +474,17 @@ input, select, .editable-select-options, .ui-autocomplete {
 </script>
 <div class="new_home">
 	<div class="new_left">
+		<?php
+		/*
+		foreach($this->widgets['left'] as $widget){
+			switch($widget['type']){
+				case "newbie":
+					include("widgets/left/newbie.phtml");
+				break;
+			}
+		}
+		*/
+		?>
 		<div class="inner_container" style="padding-top: 20px;">
 			<div class="new_filter">
 				<div>
@@ -626,6 +637,30 @@ input, select, .editable-select-options, .ui-autocomplete {
 	</div>
 	<div class="new_right">
 		<?php
+		/*
+		foreach($this->widgets['right'] as $widget){
+			switch($widget['type']){
+				case "last_recipe_comments":
+					include("widgets/right/last_recipe_comments.phtml");
+				break;
+				case "new_recipe_images":
+					include("widgets/right/new_recipe_images.phtml");
+				break;
+				case "random_recipe_images":
+					include("widgets/right/random_recipe_images.phtml");
+				break;
+				case "random_recipe":
+					include("widgets/right/random_recipe.phtml");
+				break;
+				case "new_recipes":
+					include("widgets/right/new_recipes.phtml");
+				break;
+				case "last_commented_recipes":
+					include("widgets/right/last_commented_recipes.phtml");
+				break;
+			}
+		}
+		*/
 		if (isset($this->unvoted) && $this->unvoted > 0){
 			?>
 			<div class="inner_container">
@@ -640,7 +675,7 @@ input, select, .editable-select-options, .ui-autocomplete {
 		if (count($this->events) > 0): 
 		?>
 			<div class="index_block index_events">
-				<div class="block_header">Įvykiai:</div>
+				<div class="block_header">Įvykiai</div>
 				<div class="block_content">
 					<?php
 					foreach ($this->events as $event):

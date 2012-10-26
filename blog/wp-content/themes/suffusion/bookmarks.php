@@ -20,11 +20,13 @@ if (have_posts()) {
 	while (have_posts()) {
 		the_post(); 
 		$original_post = $post;
+		do_action('suffusion_before_post', $post->ID, 'blog', 1);
 ?>
-    <div class="post fix" id="post-<?php the_ID(); ?>">
+    <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 <?php suffusion_after_begin_post(); ?>
 
-        <div class="entry fix">
+	    <div class="entry-container fix">
+		    <div class="entry fix">
 <?php
         suffusion_content();
         $args = array(
@@ -42,15 +44,17 @@ if (have_posts()) {
 
         wp_list_bookmarks($args);
 ?>
-		</div><!--/entry -->
+			</div><!--/entry -->
+		</div><!-- .entry-container -->
 <?php
 		// Due to the inclusion of Ad Hoc Widgets the global variable $post might have got changed. We will reset it to the original value.
 		$post = $original_post;
 		suffusion_before_end_post();
 		comments_template();
 ?>
-		</div><!-- post -->
+		</article><!-- post -->
 <?php
+		do_action('suffusion_after_post', $post->ID, 'blog', 1);
 	}
 }
 ?>

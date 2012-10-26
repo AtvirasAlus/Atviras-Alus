@@ -6,10 +6,7 @@
  * @subpackage NowReading
  */
 
-global $nr_book_query, $suffusion_unified_options;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
+global $nr_book_query, $suf_nr_wid_order, $suf_nr_wid_search_show, $suf_nr_wid_curr_show, $suf_nr_wid_curr_title, $suf_nr_no_books_text, $suf_nr_wid_unread_show, $suf_nr_wid_unread_title, $suf_nr_wid_completed_show, $suf_nr_wid_completed_title;
 
 $lib_order = suffusion_get_entity_order($suf_nr_wid_order, 'nr');
 $lib_order = explode(',', $lib_order);

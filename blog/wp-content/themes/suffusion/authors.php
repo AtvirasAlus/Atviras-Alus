@@ -21,53 +21,51 @@ if (have_posts()) {
 	while (have_posts()) {
 		the_post(); 
 		$original_post = $post;
+		do_action('suffusion_before_post', $post->ID, 'blog', 1);
 ?>
-    <div class="post fix" id="post-<?php the_ID(); ?>">
+	<article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 <?php suffusion_after_begin_post(); ?>
 
-        <div class="entry fix">
-			<?php suffusion_content(); ?>
-		</div><!--/entry -->
+		<div class="entry-container fix">
+			<div class="entry fix">
+				<?php suffusion_content(); ?>
+			</div><!--/entry -->
 <?php
-		if (function_exists('get_users')) {
-			$authors = get_users(); // WP 3.1 function.
-		}
-		else {
-			$authors = get_users_of_blog(); // Fallback for WP 3.0 and older.
-		}
+		$authors = get_users(); // WP 3.1 function.
 		$i = 0;
 		foreach ($authors as $author) {
-			$id = $author->ID; 
+			$author_id = $author->ID;
 			if ($i%2 == 0) {
-?>
-		<div id="author-profile-<?php the_author_meta('user_nicename', $id); ?>" class="author-profile author-even fix">
-<?php
+				$odd_or_even = 'even';
 			}
 			else {
-?>
-		<div id="author-profile-<?php the_author_meta('user_nicename', $id); ?>" class="author-profile author-odd fix">
-<?php
+				$odd_or_even = 'odd';
 			}
 ?>
-			<h2 class="author-title fn n"><?php the_author_meta('display_name', $id); ?></h2>
+		<section id="author-profile-<?php the_author_meta('user_nicename', $author_id); ?>" class="author-profile author-<?php echo $odd_or_even; ?> fix">
+			<h2 class="author-title fn n"><?php the_author_meta('display_name', $author_id); ?></h2>
 			<div class="author-description">
-				<?php echo get_avatar(get_the_author_meta('user_email', $id), '96'); ?>
+				<?php echo get_avatar(get_the_author_meta('user_email', $author_id), '96'); ?>
 				<p class="author-bio">
-					<?php the_author_meta('description', $id); ?>
+					<?php the_author_meta('description', $author_id); ?>
 				</p><!-- /.author-bio -->
 			</div><!-- /.author-description -->
-		</div><!-- /.author-profile -->
+		</section><!-- /.author-profile -->
 
 <?php
 			$i++;
 		}
 		// Due to the inclusion of Ad Hoc Widgets the global variable $post might have got changed. We will reset it to the original value.
 		$post = $original_post;
+?>
+		</div><!-- .entry-container -->
+<?php
 		suffusion_before_end_post();
 		comments_template();
 ?>
-		</div><!-- post -->
+		</article><!-- post -->
 <?php
+		do_action('suffusion_after_post', $post->ID, 'blog', 1);
 	}
 }
 ?>

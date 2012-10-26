@@ -6,10 +6,7 @@
  * @subpackage Templates
  */
 
-global $suffusion_unified_options, $sidebar_alignment;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
+global $sidebar_alignment, $suf_sidebar_alignment, $suf_wa_sb1_style, $suf_sidebar_1_def_widgets, $suf_sidebar_header;
 
 if (is_page_template('1l-sidebar.php') || is_page_template('2l-sidebars.php') || (is_page_template('1l1r-sidebar.php') && $suf_sidebar_alignment == 'left')) {
 	$sidebar_alignment = 'left';

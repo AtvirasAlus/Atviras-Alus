@@ -14,18 +14,18 @@ if( !current_user_can( 'ims_change_settings'))
 
 //tab navigation
 $settings_tabs = apply_filters( 'ims_settings_tabs', array(
-	'general' 	=> __( 'General', $this->domain ),
-	'gallery' 	=> __( 'Gallery', $this->domain ),
-	'image' 	=> __( 'Image', $this->domain ),
-	'slideshow' => __( 'Slideshow', $this->domain ),
-	'payment' 	=> __( 'Payment', $this->domain ),
-	'checkout' 	=> __( 'Checkout', $this->domain ),
-	'permissions' => __( 'User permissions', $this->domain ),
-	'reset' 	=> __( 'Reset', $this->domain ),
+	'general' 	=> __( 'General', 'ims'),
+	'gallery' 	=> __( 'Gallery', 'ims'),
+	'image' 	=> __( 'Image', 'ims'),
+	'slideshow' => __( 'Slideshow', 'ims'),
+	'payment' 	=> __( 'Payment', 'ims'),
+	'checkout' 	=> __( 'Checkout', 'ims'),
+	'permissions' => __( 'User permissions', 'ims'),
+	'reset' 	=> __( 'Reset', 'ims'),
 ));
 
 //unset store features if they are disable
-if( isset($this->opts['disablestore'])){
+if( $this->opts['disablestore'] ){
 	foreach(array( 'payment', 'checkout', ) as $name )
 		unset( $settings_tabs[$name] );
 }
@@ -52,13 +52,14 @@ include( IMSTORE_ABSPATH . "/admin/settings-fields.php");
 				<?php 
 				$css = '';
 				foreach( $settings[$boxid] as $name => $row ){
-					echo '<tr class="row-'.$name.$css.'">'	;
+					echo '<tr class="row row-'.$name.$css.'">'	;
 					if( isset($row['col']) ){
 						foreach( (array)$row['opts'] as $id => $opt ){
-							echo '<td scope="row" class="col"><label for="', $id , '">', $opt['label'] , '</label></td>';
+							echo '<td class="col"><label for="', $id , '">', $opt['label'] , '</label></td>';
 							echo '<td class="col-fields">';
 							
-							if( $this->is_checkbox($opt['type']) ) 
+							if(!isset($opt['type'])) ;
+							elseif( $this->is_checkbox($opt['type']) ) 
 								echo '<input type="', $opt['type'] , '" name="', $id , '" id="', $name , '" 
 								value="'. esc_attr((isset($opt['val']) ? $opt['val'] : 0 )) , '"', checked( $opt['val'], $this->vr( $id ), 0 ), ' /> ';
 							else 
@@ -68,7 +69,7 @@ include( IMSTORE_ABSPATH . "/admin/settings-fields.php");
 							echo '</td>';
 						}
 					}elseif( isset($row['multi']) ){
-						echo '<td scope="row" class="multi">' , $row['label'] , '</td>';
+						echo '<td class="multi">' , $row['label'] , '</td>';
 						echo '<td class="multi-fields">'; 
 						foreach( (array)$row['opts'] as $id => $opt ){
 							$user = ( isset($opt['user']) ) ? $opt['user'] : 0 ;
@@ -76,18 +77,19 @@ include( IMSTORE_ABSPATH . "/admin/settings-fields.php");
 							
 							if( $this->is_checkbox($opt['type']) )
 								echo ' <input type="', $opt['type'] , '" name="', $name , '[', $id , ']" 
-								value="'. esc_attr((isset($opt['val']) ? $opt['val'] : 0 )) , '"', checked( $opt['val'], $this->vr( $name.$id, $user ), 0 ) , ' /> ' , $opt['label'] ;
+								value="'. esc_attr((isset($opt['val']) ? $opt['val'] : 0 )) , '"', checked( $opt['val'], $this->vr( $name, $id, $user ), 0 ) , ' /> ' , $opt['label'] ;
 							
 							else echo $opt['label'] , ' <input type="', $opt['type'] , '" name="', $name , '[' , $id , ']" 
-								id="', $name,$id, '" value="', esc_attr( ($val = $this->vr( $name.$id ) ) ? $val : $opt['val'] ) , '" />';
+								id="', $name,$id, '" value="', esc_attr( ($val = $this->vr( $name, $id ) ) ? $val : $opt['val'] ) , '" />';
 							
 							echo ( isset( $opt['desc'] ) ) ? '<small>'. $opt['desc'] .'</small>' : '';
 							
 							echo '</label>';
 						}
+						echo ( isset( $row['desc'] ) ) ? '<small>'. $row['desc'] . '</small>' : '';
 						echo '</td>'; 
 					}else{
-						echo '<td scope="row" class="row">', (( $row['type'] == 'empty') ? '&nbsp;' : '<label for="'. $name .'">'.$row['label'].'</label>') , '</td>';
+						echo '<td class="first">', (( $row['type'] == 'empty') ? '&nbsp;' : '<label for="'. $name .'">'.$row['label'].'</label>') , '</td>';
 						$unstall = ( $row['type'] == 'uninstall' ) ? ' form-invalid error' : '' ;
 						echo '<td class="row-fields', $unstall , '">'; 
 							switch($row['type']){
@@ -112,10 +114,15 @@ include( IMSTORE_ABSPATH . "/admin/settings-fields.php");
 									break;
 								case 'uninstall':
 									echo ( isset( $row['desc'] ) ) ? $row['desc'] : ''; unset( $row['desc'] );
-									echo '<p><input type="submit" name="', $name , '" id="', $name , '" value="', esc_attr( $row['val'] ) , '" /></p>';
+									echo '<p><input type="submit" name="', $name , '" id="', $name , '" value="', esc_attr( $row['val'] ) , '" class="button" /></p>';
+									break;
+								case 'reset':
+								case 'submit':
+								case 'button':
+									echo '<input type="', $row['type'] , '" name="', $name , '" id="', $name , '" class="button" value="',$row['val'] , '" /> ';
 									break;
 								default:
-								echo '<input type="', $row['type'] , '" name="', $name , '" id="', $name , '" value="', esc_attr( ($val = $this->vr( $name ) ) ? $val : $row['val'] ) , '" /> ';
+								echo '<input type="', $row['type'] , '" name="', $name , '" id="', $name , '"  value="', esc_attr( ($val = $this->vr( $name ) ) ? $val : $row['val'] ) , '" /> ';
 							}
 						echo ( isset( $row['desc'] ) ) ? '<small>' . $row['desc'] . '</small>' : '';
 						echo '</td>'; 
@@ -126,10 +133,10 @@ include( IMSTORE_ABSPATH . "/admin/settings-fields.php");
 				?>
 				<?php do_action( 'ims_settings', $boxid) ?>
 				<tr>
-					<td scope="row">&nbsp;</td>
+					<td>&nbsp;</td>
 					<td class="submit">
 						<input type="hidden" name="ims-action" value="<?php echo esc_attr( $boxid ) ?>" />
-						<input type="submit" class="button-primary" value="<?php esc_attr_e( 'Save', $this->domain )?>" />
+						<input type="submit" class="button-primary" value="<?php esc_attr_e( 'Save', 'ims')?>" />
 					</td>
 				</tr>
 				</tbody>

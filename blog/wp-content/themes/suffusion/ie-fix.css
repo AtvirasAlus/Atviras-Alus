@@ -1,12 +1,11 @@
-* html .searchform {
+#ie6 .searchform {
 	margin-bottom: 3px;
 }
-* html .searchform .searchfield {
+#ie6 .searchform .searchfield {
 	padding: 0 7px 0 5px;
-	padd\ing: 0 7px 0 5px;
 }
 
-* html .searchform .searchsubmit {
+#ie6 .searchform .searchsubmit {
 	height: 24px;
 	width: 24px;
 	border: none;
@@ -17,80 +16,66 @@
 }
 
 /* a hack so that IE5.5 faulty box model is corrected */
-* html #nav a,
-* html #nav a:visited,
-* html #nav-top a,
-* html #nav-top a:visited {
+#ie6 #nav a,
+#ie6 #nav a:visited,
+#ie6 #nav-top a,
+#ie6 #nav-top a:visited {
 	font-size:12px;
 	width: auto;
 	display: inline-block;
 }
 
-* html #nav a:hover,
-* html #nav-top a:hover {
+#ie6 #nav a:hover,
+#ie6 #nav-top a:hover {
 	text-decoration: none;
 }
 
 /* another hack for IE5.5 */
-* html #nav ul ul,
-* html #nav-top ul ul {
+#ie6 #nav ul ul,
+#ie6 #nav-top ul ul {
 	top:35px;
-	t\op:35px;
 	width:120px;
-	w\idth:120px;
-	padd\ing-right: 0;
-	marg\in-right: 0;
+	padding-right: 0;
+	margin-right: 0;
 }
 
 /* position the third level flyout menu */
-* html #nav ul ul ul,
-* html #nav-top ul ul ul {
+#ie6 #nav ul ul ul,
+#ie6 #nav-top ul ul ul {
 	visibility:hidden;
 	position:absolute;
-	lef\t:145px;
+	left:145px;
 	top:-1px;
-	w\idth:80px;
-	padd\ing-left: 0;
+	width:80px;
+	padding-left: 0;
 	margin-left: 0;
 }
 
 /* yet another hack for IE5.5 */
-* html #nav ul ul a,
-* html #nav ul ul a:visited,
-* html #nav-top ul ul a,
-* html #nav-top ul ul a:visited {
+#ie6 #nav ul ul a,
+#ie6 #nav ul ul a:visited,
+#ie6 #nav-top ul ul a,
+#ie6 #nav-top ul ul a:visited {
 	width:130px;
-	w\idth:130px;
 	overflow: hidden;
 }
 
-* html .fix {
+#ie6 .fix {
 	height:1%;
 }
 
-* html #commentform label {
-	padd\ing: 6px;
+#ie6 #commentform label {
+	padding: 6px;
 }
 
-* html #commentform input[type="text"] {
-	padd\ing-top: 6px;
+#ie6 #commentform input[type="text"] {
+	padding-top: 6px;
 	margin-left: -4px;
-	marg\in-left: -4px;
 }
 
-* html .post {
+#ie6 .post {
 	overflow: hidden;
-	w\idth: 98%;
-}
-
-* html .entry img {
-	width: expression(this.width > (document.getElementById('main-col') == null ? document.getElementById('single-col').offsetWidth : document.getElementById('main-col').offsetWidth) ? '99%' : true);
-}
-* html .entry .wp-caption {
-	width: expression(this.offsetWidth > (document.getElementById('main-col') == null ? document.getElementById('single-col').offsetWidth : document.getElementById('main-col').offsetWidth) ? (document.getElementById('main-col') == null ? (parseInt(document.getElementById('single-col').offsetWidth) - 30) : (parseInt(document.getElementById('main-col').offsetWidth) - 30)) + 'px' : true);
-}
-* html .wp-caption img {
-	w\idth: expression(this.offsetWidth > (document.getElementById('main-col') == null ? document.getElementById('single-col').offsetWidth : document.getElementById('main-col').offsetWidth) ? (document.getElementById('main-col') == null ? (parseInt(document.getElementById('single-col').offsetWidth) - 30) : (parseInt(document.getElementById('main-col').offsetWidth) - 30)) + 'px' : true);
+	width: 98%;
 }
 
 /* See Ruthsarian Menus: Ruthsarian Layouts at http://webhost.bridgew.edu/etribou/layouts/rMenu/rMenu.css
@@ -118,7 +103,6 @@
 #nav-top ul li:hover ul li,
 #nav-top ul li:hover ul li a {
 	z-index: 100;
-	z-i\ndex: 100;
 }
 
 #nav > ul li:hover ul {
@@ -135,8 +119,8 @@
 }
 
 .suf-mag-headline-block li.suf-mag-headline a {
-	padd\ing: 0 8px;
-	marg\in: 0;
+	padding: 0 8px;
+	margin: 0;
 }
 
 .sliderPager,
@@ -145,24 +129,45 @@
     margin: 5px 0;
 }
 
-* html #nav .home-icon,
-* html #nav-top .home-icon {
-    w\idth: 20px;
-    he\ight: 17px;
+#ie6 #nav .home-icon,
+#ie6 #nav-top .home-icon {
+    width: 20px;
+    height: 17px;
 }
 
-* html .post .date {
-	lef\t: 0;
+#ie6 .post .date {
+	left: 0;
 }
 
 /* WPML Plugin */
-* html #lang_sel ul ul a,
-* html #lang_sel ul ul a:visited {
-    width:150px;
-    w\idth:138px;
+#ie6 #lang_sel ul ul a,
+#ie6 #lang_sel ul ul a:visited {
+    width: 138px;
 }
 
 /* Multi-column */
 .suf-mc-col {margin: 0 2px; padding: 4px 3px}
 
-* html .meta-left-pullout { right: 0; }
+#ie6 .meta-left-pullout { right: 0; }
+
+.suf-horizontal-widget, .flickr_badge_image, .suf-tile-byline-icons, #widgets-above-header .suf-widget {
+	zoom: 1;
+	*display: inline;
+}
+
+.page-template-no-sidebars-php #container { float: left; width: 100%; }
+
+#nav ul.sf-menu, #nav-top ul.sf-menu {
+	zoom: 1;
+	*display: inline;
+}
+#right-header-widgets {
+	max-width: 200px;
+}
+
+.suf-widget-1c { margin: 5px 0; }
+.suf-widget-2c { margin: 5px 3px; }
+.suf-widget-3c { margin: 5px 5px; }
+.suf-widget-4c { margin: 5px 3px; }
+.suf-widget-5c { margin: 5px 2px; }
+

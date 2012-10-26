@@ -2,13 +2,13 @@
 /* 
 Plugin Name: Simple Lightbox
 Plugin URI: http://archetyped.com/tools/simple-lightbox/
-Description: Customizable Lightbox for Wordpress
-Version: 1.5.5.1
+Description: Highly Customizable Lightbox for Wordpress
+Version: 1.6.3.1
 Author: Archetyped
 Author URI: http://archetyped.com
 */
 /* 
-Copyright 2010 Solomon Marchessault (contact@archetyped.com)
+Copyright 2011 Solomon Marchessault (contact@archetyped.com)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -24,10 +24,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-
 require_once 'model.php';
 
-$slb =& new SLB_Lightbox();
+$slb = new SLB_Lightbox();
 
 function slb_enabled() {
 	global $slb;

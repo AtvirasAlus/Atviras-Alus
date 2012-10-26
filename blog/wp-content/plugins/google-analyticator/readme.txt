@@ -1,16 +1,17 @@
 === Google Analyticator ===
-Contributors: cavemonkey50
-Donate link: http://ronaldheft.com/code/donate/
+Contributors: VideoUserManuals, cavemonkey50
 Tags: stats, statistics, google, analytics, google analytics, tracking, widget
-Requires at least: 2.7
-Tested up to: 3.2
-Stable tag: 6.2
+Requires at least: 3.2
+Tested up to: 3.4.2
+Stable tag: 6.3.4
 
 Adds the necessary JavaScript code to enable Google Analytics. Includes widgets for Analytics data display.
 
 == Description ==
 
-Google Analyticator adds the necessary JavaScript code to enable Google Analytics logging on any WordPress blog. This eliminates the need to edit your template code to begin logging. Google Analyticator also includes several widgets for displaying Analytics data in the admin and on your blog.
+Google Analyticator is back! Google Analyticator adds the necessary JavaScript code to enable Google Analytics logging on any WordPress blog. This eliminates the need to edit your template code to begin logging. Google Analyticator also includes several widgets for displaying Analytics data in the admin and on your blog.
+
+For a video explaining the simple installation process, please [visit the new home of Google Analyticator](http://www.videousermanuals.com/google-analyticator/).
 
 = Features =
 
@@ -22,22 +23,30 @@ Google Analyticator Has the Following Features:
 - Supports outbound link tracking of all links on the page, including links not managed by WordPress
 - Supports download link tracking
 - Supports event tracking with outbound links / downloads instead of the old pageview tracking method
-- **NEW!** Support site speed tracking
+- Support site speed tracking
 - Allows hiding of Administrator visits without affecting Google Analytics' site overlay feature
 - Supports any advanced tracking code Google provides
 - Installs easily - unlike other plugins, the user doesn't even have to know their Analytics UID
 - Provides complete control over options; disable any feature if needed
 - Supports localization - get the settings page in your language of choice
 
-For more information, visit the [Google Analyticator plugin page](http://ronaldheft.com/code/analyticator/).
+For more information, visit the [Google Analyticator plugin page](http://www.videousermanuals.com/google-analyticator/).
+
+If you have a great idea on how to improve the plugin, we would love to hear from you at the [Google Analyticator Feature Request page](http://www.videousermanuals.com/google-analyticator/feature-request/)
+
+A big thank you from the whole community to [Ronald](http://ronaldheft.com/) for all the hard work he put into this plugin.
 
 == Installation ==
 
-Please visit [Google Analyticator's support forum](http://forums.ronaldheft.com/viewtopic.php?f=5&t=17) for installation information.
+Please visit the new home of [Google Analyticator](http://www.videousermanuals.com/google-analyticator/) for installation information.
+
+If you are updating, you will need to Authenticate your site again, so it will work with the new Google API
 
 == Frequently Asked Questions ==
 
-Please visit [Google Analyticator's support forum](http://forums.ronaldheft.com/viewforum.php?f=5) for the latest FAQ information.
+If you receive an error after authenticating, refresh the page, and it will work properly. This is a known issue, and we are working with Google to resolve it.
+
+For any support issues, please use the official WordPress support forums.
 
 == Screenshots ==
 
@@ -49,6 +58,27 @@ Please visit [Google Analyticator's support forum](http://forums.ronaldheft.com/
 6. An example of a front-end widget configuration.
 
 == Changelog ==
+
+= 6.3.4 =
+* Missing admin_url() causing issues with sub-directory installs.
+* Legacy code removed causing API errors with old ga_profileid variable conflicting.
+* Added Google App ID To tracking ID as supplied by Google Analytics team. This is just for Google's own reporting. We do not get access to any of your data.
+* Added support for users who wont want to authenticate with Google, but just use tracking code
+= 6.3.3 =
+* Using the admin_url() function for internal links. Should help people with WP installed in a sub directory.
+* Added all vars to reset function to delete / deauthorize from Google.
+
+= 6.3.2 =
+* Based on user issues. Improved error handling from Google APIs (some more to go)
+* Removed Javascript box on activation due to user issues
+* Protected URITemplateParser class from being re-declared
+* Added Reset option on plugin screen to allow re-authentication
+
+= 6.3.1 =
+* Small bug on upgrades patched
+
+= 6.3 =
+* Updated to authenticate with the new Google API
 
 = 6.2 =
 * Adds a new option for site speed tracking (enabled by default).

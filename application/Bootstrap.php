@@ -39,7 +39,6 @@ function _initAutoLoad() {
     	     	     	     $this->post_init_actions[0]=array("action"=>"doautologin","params"=>array("user_email"=>$isin_email,"user_password"=>$isin_password,"remember"=>$isin_remember));
     	     	    } 
     	     }
-    	    $defaultNamespace->isin=true;
     	    Zend_Registry::set('config',$this->config);
     }
     

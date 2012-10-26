@@ -7,12 +7,10 @@
  * @subpackage Templates
  */
 
-global $suffusion_unified_options;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
+global $suffusion, $suf_author_excerpt;
 
 get_header();
+$suffusion->set_content_layout($suf_author_excerpt);
 suffusion_query_posts();
 ?>
 
@@ -26,6 +24,9 @@ if ($suf_author_excerpt == 'list') {
 else if ($suf_author_excerpt == 'tiles') {
 	suffusion_after_begin_content();
 	get_template_part('layouts/layout-tiles');
+}
+else if ($suf_author_excerpt == 'mosaic') {
+	get_template_part('layouts/layout-mosaic');
 }
 else {
 	suffusion_after_begin_content();

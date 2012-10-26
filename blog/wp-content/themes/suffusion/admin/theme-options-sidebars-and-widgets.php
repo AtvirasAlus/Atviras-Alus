@@ -10,12 +10,9 @@
 global $suffusion_theme_name, $suffusion_sidebar_tabs;
 $suffusion_sidebars_and_widgets_options = array(
 	// Main category for Look and Feel settings
-	array("name" => "Sidebar Configuration",
+	array("name" => "Sidebars",
 		"type" => "sub-section-2",
 		"category" => "sidebar-setup",
-		"help" => "In this section you can configure each of the sidebars available with the theme. There are 14 dynamic sidebars with pre-defined positions, 5 \"ad hoc\"
-			sidebars that you can position inside your posts and one static tabbed sidebar that you can put on the left or right of your content.
-			<br /><b>Version Info: </b> In version 3.7.3 and earlier, this section used to be called \"Sidebars and Widgets\".",
 		"parent" => "root"
 	),
 
@@ -28,101 +25,13 @@ $suffusion_sidebars_and_widgets_options = array(
 	array("name" => "Sidebar Layout",
 		"desc" => "Suffusion comes with eight widget areas where you can add widgets. You may choose to not use some of these widget areas depending on your requirements.
 				By default Sidebar 1 and Right Header Widgets are enabled.<br />
-				<div style='text-align: center; display:block;'><img src='" . get_template_directory_uri() . "/admin/images/widgets.jpg' alt='Widgets'/></div>
+				<div class='central-image'><img src='" . get_template_directory_uri() . "/admin/images/widgets.jpg' alt='Widgets'/></div>
 				In addition you have a set of <strong>ad-hoc widget</strong> areas that can be invoked in your posts/pages using the short code [suffusion-widgets id='x']
 				where x is a number from 1 to 5.<br />
 				There is also a <strong>Static Tabbed Sidebar</strong> which comes bundled with pre-defined widgets. You can display that on the left or right.",
 		"parent" => "sidebar-layout",
 		"type" => "blurb",
 	),
-
-	array("name" => "How Many Sidebars?",
-		"desc" => "Control how many sidebars you want.",
-		"parent" => "sidebar-layout",
-		"category" => "how-many-sb",
-		"type" => "sub-section-4"),
-
-	array("name" => "Default Views",
-		"desc" => "The theme is set up with one sidebar (a two-column theme) by default. You could choose to have two sidebars (a three-column theme) or none if you want.
-			Unless otherwise overridden in the subsequent options, this will be applied to your entire blog.",
-		"id" => "suf_sidebar_count",
-		"parent" => "sidebar-layout",
-		"grouping" => "how-many-sb",
-		"type" => "radio",
-		"options" => array("0" => "0 (Zero)", "1" => "1 (One)", "2" => "2 (Two)"),
-		"std" => "1"),
-
-	array("name" => "Blog Page",
-		"desc" => "The \"Blog\" page (set in <em>Settings &rarr; Reading</em>) will inherit the default number of sidebars. You can change this behavior:",
-		"id" => "suf_blog_sidebar_count",
-		"parent" => "sidebar-layout",
-		"grouping" => "how-many-sb",
-		"type" => "radio",
-		"options" => array("default" => "Inherit default number of sidebars", "0" => "0 (Zero) - Will inherit settings of the \"No Sidebars\" template",
-			"1l" => "Single Left - Will inherit settings of the \"Single Left Sidebar\" template", "1r" => "Single Right - Will inherit settings of the \"Single Right Sidebar\" template",
-			"1l1r" => "Single Left, Single Right - Will inherit settings of the \"Single Left and Single Right Sidebar\" template",
-			"2l" => "Double Left - Will inherit settings of the \"Double Left Sidebars\" template", "2r" => "Double Right - Will inherit settings of the \"Double Right Sidebars\" template", ),
-		"std" => "default"),
-
-	array("name" => "Category Views",
-		"desc" => "A page displaying posts in a category will inherit the default number of sidebars. You can change this behavior:",
-		"id" => "suf_category_sidebar_count",
-		"parent" => "sidebar-layout",
-		"grouping" => "how-many-sb",
-		"type" => "radio",
-		"options" => array("default" => "Inherit default number of sidebars", "0" => "0 (Zero) - Will inherit settings of the \"No Sidebars\" template",
-			"1l" => "Single Left - Will inherit settings of the \"Single Left Sidebar\" template", "1r" => "Single Right - Will inherit settings of the \"Single Right Sidebar\" template",
-			"1l1r" => "Single Left, Single Right - Will inherit settings of the \"Single Left and Single Right Sidebar\" template",
-			"2l" => "Double Left - Will inherit settings of the \"Double Left Sidebars\" template", "2r" => "Double Right - Will inherit settings of the \"Double Right Sidebars\" template", ),
-		"std" => "default"),
-
-	array("name" => "Tag Views",
-		"desc" => "A page displaying posts in a tag will inherit the default number of sidebars. You can change this behavior:",
-		"id" => "suf_tag_sidebar_count",
-		"parent" => "sidebar-layout",
-		"grouping" => "how-many-sb",
-		"type" => "radio",
-		"options" => array("default" => "Inherit default number of sidebars", "0" => "0 (Zero) - Will inherit settings of the \"No Sidebars\" template",
-			"1l" => "Single Left - Will inherit settings of the \"Single Left Sidebar\" template", "1r" => "Single Right - Will inherit settings of the \"Single Right Sidebar\" template",
-			"1l1r" => "Single Left, Single Right - Will inherit settings of the \"Single Left and Single Right Sidebar\" template",
-			"2l" => "Double Left - Will inherit settings of the \"Double Left Sidebars\" template", "2r" => "Double Right - Will inherit settings of the \"Double Right Sidebars\" template", ),
-		"std" => "default"),
-
-	array("name" => "Author Views",
-		"desc" => "A page displaying posts in a tag will inherit the default number of sidebars. You can change this behavior:",
-		"id" => "suf_author_sidebar_count",
-		"parent" => "sidebar-layout",
-		"grouping" => "how-many-sb",
-		"type" => "radio",
-		"options" => array("default" => "Inherit default number of sidebars", "0" => "0 (Zero) - Will inherit settings of the \"No Sidebars\" template",
-			"1l" => "Single Left - Will inherit settings of the \"Single Left Sidebar\" template", "1r" => "Single Right - Will inherit settings of the \"Single Right Sidebar\" template",
-			"1l1r" => "Single Left, Single Right - Will inherit settings of the \"Single Left and Single Right Sidebar\" template",
-			"2l" => "Double Left - Will inherit settings of the \"Double Left Sidebars\" template", "2r" => "Double Right - Will inherit settings of the \"Double Right Sidebars\" template", ),
-		"std" => "default"),
-
-	array("name" => "Date Archives",
-		"desc" => "A page displaying posts in a date archive will inherit the default number of sidebars. You can change this behavior:",
-		"id" => "suf_date_sidebar_count",
-		"parent" => "sidebar-layout",
-		"grouping" => "how-many-sb",
-		"type" => "radio",
-		"options" => array("default" => "Inherit default number of sidebars", "0" => "0 (Zero) - Will inherit settings of the \"No Sidebars\" template",
-			"1l" => "Single Left - Will inherit settings of the \"Single Left Sidebar\" template", "1r" => "Single Right - Will inherit settings of the \"Single Right Sidebar\" template",
-			"1l1r" => "Single Left, Single Right - Will inherit settings of the \"Single Left and Single Right Sidebar\" template",
-			"2l" => "Double Left - Will inherit settings of the \"Double Left Sidebars\" template", "2r" => "Double Right - Will inherit settings of the \"Double Right Sidebars\" template", ),
-		"std" => "default"),
-
-	array("name" => "Search Results",
-		"desc" => "A page displaying posts in a search results will inherit the default number of sidebars. You can change this behavior:",
-		"id" => "suf_search_sidebar_count",
-		"parent" => "sidebar-layout",
-		"grouping" => "how-many-sb",
-		"type" => "radio",
-		"options" => array("default" => "Inherit default number of sidebars", "0" => "0 (Zero) - Will inherit settings of the \"No Sidebars\" template",
-			"1l" => "Single Left - Will inherit settings of the \"Single Left Sidebar\" template", "1r" => "Single Right - Will inherit settings of the \"Single Right Sidebar\" template",
-			"1l1r" => "Single Left, Single Right - Will inherit settings of the \"Single Left and Single Right Sidebar\" template",
-			"2l" => "Double Left - Will inherit settings of the \"Double Left Sidebars\" template", "2r" => "Double Right - Will inherit settings of the \"Double Right Sidebars\" template", ),
-		"std" => "default"),
 
 	array("name" => "Use JQuery Masonry?",
 		"desc" => "You can use JQuery Masonry to adjust the layout of the widget areas in the header and footer. Play with this setting if you don't like how your widgets are displaying.",
@@ -180,6 +89,13 @@ $suffusion_sidebars_and_widgets_options = array(
 		"options" => array("1" => "1 (One) Column", "2" => "2 (Two) Columns", "3" => "3 (Three) Columns", "4" => "4 (Four) Columns", "5" => "5 (Five) Columns"),
 		"std" => "3"),
 
+	array("name" => "Sliding Panel skinning",
+		"desc" => "Override skinning CSS of the skin stylesheet, if applicable",
+		"id" => "suf_wa_tbrh_override_theme",
+		"parent" => "sidebar-setup-tbrh",
+		"type" => "checkbox",
+		"std" => ""),
+
 	array("name" => "Sliding Panel Color",
 		"desc" => "Set the color of the sliding panel",
 		"id" => "suf_wa_tbrh_panel_color",
@@ -215,6 +131,16 @@ $suffusion_sidebars_and_widgets_options = array(
 		"options" => array("1" => "1 (One) Column", "2" => "2 (Two) Columns", "3" => "3 (Three) Columns", "4" => "4 (Four) Columns", "5" => "5 (Five) Columns"),
 		"std" => "1"),
 
+	array("name" => "Layout Style for widget area",
+		"desc" => "You can choose different layout widths - full width or page width:",
+		"id" => "suf_wah_layout_style",
+		"parent" => "sidebar-setup-wah",
+		"type" => "radio",
+		"options" => array("full-full" => "Widget area is as wide as your browser window and its contents are aligned with your browser window",
+			"full-align" => "Widget area is as wide as your browser window and its contents are aligned with your main contents",
+			"align" => "Widget area and its contents are aligned with your main contents"),
+		"std" => "full-align"),
+
 	array("name" => "Widgets In Header",
 		"desc" => "Control the settings of the widget area in header",
 		"category" => "sidebar-setup-wih",
@@ -230,23 +156,12 @@ $suffusion_sidebars_and_widgets_options = array(
 		"std" => "1"),
 
 	array("name" => "Width of Widget Area in Header",
-		"desc" => "Please enter the width in pixels. <b>Do not enter px.</b> Note that this is a fixed width theme, not a fluid theme.
-			What this means is that you cannot specify things like 80% as the width. ",
+		"desc" => "Please enter the width in pixels. <b>Do not enter px.</b>",
 		"id" => "suf_wih_width",
 		"parent" => "sidebar-setup-wih",
 		"type" => "text",
 		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 300",
 		"std" => "300"),
-
-	array("name" => "Layout Style for widget area",
-		"desc" => "You can choose different layout widths - full width or page width:",
-		"id" => "suf_wah_layout_style",
-		"parent" => "sidebar-setup-wah",
-		"type" => "radio",
-		"options" => array("full-full" => "Widget area is as wide as your browser window and its contents begin from the left or right",
-			"full-align" => "Widget area is as wide as your browser window and its contents are aligned with your main page",
-			"align" => "Widget area and its contents are aligned with your main page"),
-		"std" => "full-align"),
 
 	array("name" => "Right Header Widgets",
 		"desc" => "Control the settings of the Right Header Widgets",
@@ -261,7 +176,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"id" => "suf_show_search",
 		"parent" => "sidebar-setup-rhw",
 		"type" => "radio",
-		"options" => array("show" => "Show search with navigation (default)",
+		"options" => array("show" => "Show search with navigation",
 			"hide" => "Hide the search (You can add a widget for the Search, if you wish)"),
 		"std" => "show"),
 
@@ -270,16 +185,6 @@ $suffusion_sidebars_and_widgets_options = array(
 		"category" => "sidebar-setup-sidebar-1",
 		"parent" => "sidebar-setup",
 		"type" => "sub-section-3",),
-
-	array("name" => "Position of First Sidebar",
-		"desc" => "Which side would you like your first sidebar? " .
-				"If you have two sidebars enabled and both are positioned on the same side, this sidebar will be the outer one. " .
-				"If you have only one sidebar enabled, this will control the position of that sidebar.",
-		"id" => "suf_sidebar_alignment",
-		"parent" => "sidebar-setup-sidebar-1",
-		"type" => "radio",
-		"options" => array("left" => "Left", "right" => "Right"),
-		"std" => "right"),
 
 	array("name" => "Style of first sidebar",
 		"desc" => "Your sidebar can have widgets displayed in individual boxes or as a flattened list of widgets. Having widgets as boxes lets you use drag and drop.",
@@ -296,7 +201,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"id" => "suf_sidebar_1_def_widgets",
 		"parent" => "sidebar-setup-sidebar-1",
 		"type" => "radio",
-		"options" => array("show" => "Show default widgets if nothing is added in the widget control panel (default)",
+		"options" => array("show" => "Show default widgets if nothing is added in the widget control panel",
 			"hide" => "Hide default widgets if nothing is added in the widget control panel"),
 		"std" => "show"),
 
@@ -305,7 +210,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"id" => "suf_sidebar_1_dnd",
 		"parent" => "sidebar-setup-sidebar-1",
 		"type" => "radio",
-		"options" => array("enabled" => "Enable drag-and-drop (default)", "disabled" => "Disable drag-and-drop (this will also disable the collapsibility of of the widgets)"),
+		"options" => array("enabled" => "Enable drag-and-drop", "disabled" => "Disable drag-and-drop (this will also disable the collapsibility of the widgets)"),
 		"std" => "disabled"),
 
 	array("name" => "Expand / Collapse for First Sidebar Widgets",
@@ -314,7 +219,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"id" => "suf_sidebar_1_expcoll",
 		"parent" => "sidebar-setup-sidebar-1",
 		"type" => "radio",
-		"options" => array("enabled" => "Enable expand / collapse (default)", "disabled" => "Disable expand / collapse"),
+		"options" => array("enabled" => "Enable expand / collapse", "disabled" => "Disable expand / collapse"),
 		"std" => "enabled"),
 
 	array("name" => "Sidebar Widgets Titles",
@@ -335,7 +240,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"parent" => "sidebar-setup-sidebar-1",
 		"note" => "Please set this option to \"Custom styles\" if you want to override the theme's settings for the sidebar fonts.",
 		"type" => "radio",
-		"options" => array("theme" => "Theme styles (default)",
+		"options" => array("theme" => "Theme styles",
 			"custom" => "Custom styles"),
 		"std" => "theme"),
 
@@ -349,8 +254,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"std" => suffusion_evaluate_style("suf_sb_font_color", $suffusion_theme_name)),
 
 	array("name" => "Sidebar Link Color",
-		"desc" => "Set the color of the links in the sidebar. Font colors in the main content are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
+		"desc" => "Set the color of the links in the sidebar. Font colors in the main content are unaffected. " .
 				"If you have chosen default styles above then this setting will be ignored.",
 		"id" => "suf_sb_link_color",
 		"parent" => "sidebar-setup-sidebar-1",
@@ -366,8 +270,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"std" => "none"),
 
 	array("name" => "Sidebar Visited Link Color",
-		"desc" => "Set the color of the visited links in the sidebar. Font colors in the main content are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
+		"desc" => "Set the color of the visited links in the sidebar. Font colors in the main content are unaffected. " .
 				"If you have chosen default styles above then this setting will be ignored.",
 		"id" => "suf_sb_visited_link_color",
 		"parent" => "sidebar-setup-sidebar-1",
@@ -383,8 +286,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"std" => "none"),
 
 	array("name" => "Sidebar Link Hover Color",
-		"desc" => "Set the color that the links should become when you hover over them in the sidebar. Font colors in the main content are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
+		"desc" => "Set the color that the links should become when you hover over them in the sidebar. Font colors in the main content are unaffected. " .
 				"If you have chosen default styles above then this setting will be ignored.",
 		"id" => "suf_sb_link_hover_color",
 		"parent" => "sidebar-setup-sidebar-1",
@@ -422,16 +324,6 @@ $suffusion_sidebars_and_widgets_options = array(
 		"parent" => "sidebar-setup",
 		"type" => "sub-section-3",),
 
-	array("name" => "Position of Second Sidebar",
-		"desc" => "Which side would you like your second sidebar? " .
-				"If you have two sidebars enabled and both are positioned on the same side, this sidebar will be the inner one. " .
-				"If you have only one sidebar enabled, this setting will be ignored.",
-		"id" => "suf_sidebar_2_alignment",
-		"parent" => "sidebar-setup-sidebar-2",
-		"type" => "radio",
-		"options" => array("left" => "Left", "right" => "Right"),
-		"std" => "right"),
-
 	array("name" => "Style of second sidebar",
 		"desc" => "Your sidebar can have widgets displayed in individual boxes or as a flattened list of widgets. Having widgets as boxes lets you use drag and drop.",
 		"id" => "suf_wa_sb2_style",
@@ -447,7 +339,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"id" => "suf_sidebar_2_dnd",
 		"parent" => "sidebar-setup-sidebar-2",
 		"type" => "radio",
-		"options" => array("enabled" => "Enable drag-and-drop (default)", "disabled" => "Disable drag-and-drop (this will also disable the collapsibility of of the widgets)"),
+		"options" => array("enabled" => "Enable drag-and-drop", "disabled" => "Disable drag-and-drop (this will also disable the collapsibility of the widgets)"),
 		"std" => "disabled"),
 
 	array("name" => "Expand / Collapse for Second Sidebar Widgets",
@@ -456,7 +348,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"id" => "suf_sidebar_2_expcoll",
 		"parent" => "sidebar-setup-sidebar-2",
 		"type" => "radio",
-		"options" => array("enabled" => "Enable expand / collapse (default)", "disabled" => "Disable expand / collapse"),
+		"options" => array("enabled" => "Enable expand / collapse", "disabled" => "Disable expand / collapse"),
 		"std" => "enabled"),
 
 	array("name" => "Sidebar 2 (Bottom)",
@@ -558,7 +450,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"parent" => "sidebar-setup-wabh",
 		"note" => "Please set this option to \"Custom styles\" if you want to override the theme's settings for the fonts in the widget area below the header.",
 		"type" => "radio",
-		"options" => array("theme" => "Theme styles (default)",
+		"options" => array("theme" => "Theme styles",
 			"custom" => "Custom styles"),
 		"std" => "theme"),
 
@@ -572,8 +464,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"std" => suffusion_evaluate_style("suf_wabh_font_color", $suffusion_theme_name)),
 
 	array("name" => "Link Color for Widget Area Below Header",
-		"desc" => "Set the color of the links in the widgets. Font colors in the main content are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
+		"desc" => "Set the color of the links in the widgets. Font colors in the main content are unaffected. " .
 				"If you have chosen default styles above then this setting will be ignored.",
 		"id" => "suf_wabh_link_color",
 		"parent" => "sidebar-setup-wabh",
@@ -589,8 +480,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"std" => "none"),
 
 	array("name" => "Visited Link Color for Widget Area Below Header",
-		"desc" => "Set the color of the visited links in the widgets. Font colors in the main content are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
+		"desc" => "Set the color of the visited links in the widgets. Font colors in the main content are unaffected. " .
 				"If you have chosen default styles above then this setting will be ignored.",
 		"id" => "suf_wabh_visited_link_color",
 		"parent" => "sidebar-setup-wabh",
@@ -606,8 +496,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"std" => "none"),
 
 	array("name" => "Link Hover Color for Widget Area Below Header",
-		"desc" => "Set the color that the links should become when you hover over them in the widgets. Font colors in the main content are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
+		"desc" => "Set the color that the links should become when you hover over them in the widgets. Font colors in the main content are unaffected. " .
 				"If you have chosen default styles above then this setting will be ignored.",
 		"id" => "suf_wabh_link_hover_color",
 		"parent" => "sidebar-setup-wabh",
@@ -673,7 +562,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"parent" => "sidebar-setup-waaf",
 		"note" => "Please set this option to \"Custom styles\" if you want to override the theme's settings for the widget area above the footer.",
 		"type" => "radio",
-		"options" => array("theme" => "Theme styles (default)",
+		"options" => array("theme" => "Theme styles",
 			"custom" => "Custom styles"),
 		"std" => "theme"),
 
@@ -687,8 +576,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"std" => suffusion_evaluate_style("suf_waaf_font_color", $suffusion_theme_name)),
 
 	array("name" => "Link Color for Widget Area Above Footer",
-		"desc" => "Set the color of the links in the widgets. Font colors in the main content are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
+		"desc" => "Set the color of the links in the widgets. Font colors in the main content are unaffected. " .
 				"If you have chosen default styles above then this setting will be ignored.",
 		"id" => "suf_waaf_link_color",
 		"parent" => "sidebar-setup-waaf",
@@ -704,8 +592,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"std" => "none"),
 
 	array("name" => "Visited Link Color for Widget Area Above Footer",
-		"desc" => "Set the color of the visited links in the widgets. Font colors in the main content are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
+		"desc" => "Set the color of the visited links in the widgets. Font colors in the main content are unaffected. " .
 				"If you have chosen default styles above then this setting will be ignored.",
 		"id" => "suf_waaf_visited_link_color",
 		"parent" => "sidebar-setup-waaf",
@@ -721,8 +608,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"std" => "none"),
 
 	array("name" => "Link Hover Color for Widget Area Above Footer",
-		"desc" => "Set the color that the links should become when you hover over them in the widgets. Font colors in the main content are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
+		"desc" => "Set the color that the links should become when you hover over them in the widgets. Font colors in the main content are unaffected. " .
 				"If you have chosen default styles above then this setting will be ignored.",
 		"id" => "suf_waaf_link_hover_color",
 		"parent" => "sidebar-setup-waaf",
@@ -947,7 +833,7 @@ $suffusion_sidebars_and_widgets_options = array(
 		"parent" => "sbtab-settings",
 		"grouping" => "sbtab-links",
 		"type" => "text",
-		"std" => $suffusion_sidebar_tabs['links']['title']),
+		"std" => $suffusion_sidebar_tabs['Links']['title']),
 
 	array("name" => "Meta",
 		"desc" => "Control look and feel aspects of the Meta pseudo-widget in the tabbed sidebar here.",

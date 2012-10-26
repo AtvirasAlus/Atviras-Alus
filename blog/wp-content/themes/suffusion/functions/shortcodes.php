@@ -1,7 +1,10 @@
 <?php
 /**
  * Contains a list of all custom shortcodes and corresponding functions defined for Suffusion.
- * This file is included in functions.php
+ * This file is included in framework.php
+ *
+ * With effect from Suffusion 4.3.2 this code is being deprecated in favour of the "Suffusion Shortcodes" plugin.
+ * This file is only included if the "Suffusion Shortcodes" plugin is not present.
  *
  * @package Suffusion
  * @subpackage Functions
@@ -21,29 +24,40 @@ add_shortcode('suffusion-tag-cloud', 'suffusion_sc_tag_cloud');
 add_shortcode('suffusion-widgets', 'suffusion_sc_widget_area');
 add_shortcode('suffusion-multic', 'suffusion_sc_multi_column');
 add_shortcode('suffusion-column', 'suffusion_sc_column');
+add_shortcode('suffusion-flickr', 'suffusion_sc_flickr');
+
+global $suf_enable_audio_shortcode;
+
+// Check for the JetPack [audio] shortcode and the WP Audio Player plugin. If neither exist AND the audio shortcode is enabled, only then define our audio shortcode.
+if (!function_exists('audio_shortcode') && !class_exists('AudioPlayer') && isset($suf_enable_audio_shortcode) && $suf_enable_audio_shortcode == 'on') {
+	add_shortcode('audio', 'suffusion_sc_audio');
+}
 
 function suffusion_sc_list_categories($attr) {
-	if ($attr['title_li']) {
+	if (isset($attr['title_li'])) {
 		$attr['title_li'] = suffusion_shortcode_string_to_bool($attr['title_li']);
 	}
-	if ($attr['hierarchical']) {
+	if (isset($attr['hierarchical'])) {
 		$attr['hierarchical'] = suffusion_shortcode_string_to_bool($attr['hierarchical']);
 	}
-	if ($attr['use_desc_for_title']) {
+	if (isset($attr['use_desc_for_title'])) {
 		$attr['use_desc_for_title'] = suffusion_shortcode_string_to_bool($attr['use_desc_for_title']);
 	}
-	if ($attr['hide_empty']) {
+	if (isset($attr['hide_empty'])) {
 		$attr['hide_empty'] = suffusion_shortcode_string_to_bool($attr['hide_empty']);
 	}
-	if ($attr['show_count']) {
+	if (isset($attr['show_count'])) {
 		$attr['show_count'] = suffusion_shortcode_string_to_bool($attr['show_count']);
 	}
-	if ($attr['show_last_update']) {
+	if (isset($attr['show_last_update'])) {
 		$attr['show_last_update'] = suffusion_shortcode_string_to_bool($attr['show_last_update']);
 	}
-
-	$attr['child_of'] = (int)$attr['child_of'];
-	$attr['depth'] = (int)$attr['depth'];
+	if (isset($attr['child_of'])) {
+		$attr['child_of'] = (int)$attr['child_of'];
+	}
+	if (isset($attr['depth'])) {
+		$attr['depth'] = (int)$attr['depth'];
+	}
 	$attr['echo'] = false;
 
 	$output = wp_list_categories( $attr );
@@ -52,64 +66,64 @@ function suffusion_sc_list_categories($attr) {
 }
 
 function suffusion_sc_the_year() {
-    return date('Y');
+	return date('Y');
 }
 
 function suffusion_sc_site_link() {
-    return '<a class="site-link" href="'.get_bloginfo('url').'" title="'.esc_attr(get_bloginfo('name')).'" rel="home">'.get_bloginfo('name').'</a>';
+	return '<a class="site-link" href="'.get_bloginfo('url').'" title="'.esc_attr(get_bloginfo('name')).'" rel="home">'.get_bloginfo('name').'</a>';
 }
 
 function suffusion_sc_the_author($attr) {
-    global $suffusion_social_networks;
-    $id = get_the_author_meta('ID');
-    if ($id) {
-	    if (isset($attr['display'])) {
-		    $display = $attr['display'];
-		    switch ($display) {
-		        case 'author':
-		            return get_the_author();
-		        case 'modified-author':
-		            return get_the_modified_author();
-		        case 'description':
-		            return get_the_author_meta('description', $id);
-		        case 'login':
-		            return get_the_author_meta('user_login', $id);
-		        case 'first-name':
-		            return get_the_author_meta('first_name', $id);
-		        case 'last-name':
-		            return get_the_author_meta('last_name', $id);
-		        case 'nickname':
-		            return get_the_author_meta('nickname', $id);
-		        case 'id':
-		            return $id;
-		        case 'url':
-		            return get_the_author_meta('user_url', $id);
-		        case 'email':
-		            return get_the_author_meta('user_email', $id);
-		        case 'link':
-		            if (get_the_author_meta('user_url', $id)) {
-		                return '<a href="'.get_the_author_meta('user_url', $id).'" title="'.esc_attr(get_the_author()).'" rel="external">'.get_the_author().'</a>';
-		            }
-		            else {
-		                return get_the_author();
-		            }
-		        case 'aim':
-		            return get_the_author_meta('aim', $id);
-		        case 'yim':
-		            return get_the_author_meta('yim', $id);
-		        case 'posts':
-		            return get_the_author_posts();
-		        case 'posts-url':
-		            return get_author_posts_url(get_the_author_meta('ID'));
-		    }
-		    if ($suffusion_social_networks[$display]) {
-		        return get_the_author_meta($display, $id);
-		    }
-	    }
-        else {
-            return get_the_author();
-        }
-    }
+	global $suffusion_social_networks;
+	$id = get_the_author_meta('ID');
+	if ($id) {
+		if (isset($attr['display'])) {
+			$display = $attr['display'];
+			switch ($display) {
+				case 'author':
+					return get_the_author();
+				case 'modified-author':
+					return get_the_modified_author();
+				case 'description':
+					return get_the_author_meta('description', $id);
+				case 'login':
+					return get_the_author_meta('user_login', $id);
+				case 'first-name':
+					return get_the_author_meta('first_name', $id);
+				case 'last-name':
+					return get_the_author_meta('last_name', $id);
+				case 'nickname':
+					return get_the_author_meta('nickname', $id);
+				case 'id':
+					return $id;
+				case 'url':
+					return get_the_author_meta('user_url', $id);
+				case 'email':
+					return get_the_author_meta('user_email', $id);
+				case 'link':
+					if (get_the_author_meta('user_url', $id)) {
+						return '<a href="'.get_the_author_meta('user_url', $id).'" title="'.esc_attr(get_the_author()).'" rel="external">'.get_the_author().'</a>';
+					}
+					else {
+						return get_the_author();
+					}
+				case 'aim':
+					return get_the_author_meta('aim', $id);
+				case 'yim':
+					return get_the_author_meta('yim', $id);
+				case 'posts':
+					return get_the_author_posts();
+				case 'posts-url':
+					return get_author_posts_url(get_the_author_meta('ID'));
+			}
+			if (isset($suffusion_social_networks) && isset($suffusion_social_networks[$display]) && $suffusion_social_networks[$display]) {
+				return get_the_author_meta($display, $id);
+			}
+		}
+		else {
+			return get_the_author();
+		}
+	}
 }
 
 function suffusion_sc_the_post($attr) {
@@ -211,7 +225,7 @@ function suffusion_sc_widget_area($attr) {
 	}
 	$container = isset($attr['container']) ? (bool)$attr['container'] : true;
 	$sidebar_class = isset($attr['container-class']) ? $attr['container-class'] : "";
-	ob_start();
+	ob_start(); // Output buffering is needed here otherwise there is no way to get the dynamic_sidebar output added to existing text
 	if ($container) echo "<div id='ad-hoc-$id' class='$sidebar_class warea'>\n";
 	dynamic_sidebar("Ad Hoc Widgets $id");
 	if ($container) echo "</div>\n";
@@ -296,15 +310,63 @@ function suffusion_sc_column($attr, $content = null) {
 }
 
 function suffusion_shortcode_string_to_bool($value) {
-	if ($value == 'true' || $value == 'TRUE' || $value == '1') {
-        return true;
-    }
-	else if ($value == 'false' || $value == 'FALSE' || $value == '0') {
-        return false;
-    }
+	if ($value == true || $value == 'true' || $value == 'TRUE' || $value == '1') {
+		return true;
+	}
+	else if ($value == false || $value == 'false' || $value == 'FALSE' || $value == '0') {
+		return false;
+	}
 	else {
-        return $value;
-    }
+		return $value;
+	}
 }
 
-?>
+/**
+ * Prints a Flickr stream. The short code takes the following arguments:
+ *  - id: Mandatory, can be obtained from http://idgettr.com using your photo stream's URL
+ *  - type: Mandatory. Legitimate values: user, group.
+ *  - size: Optional. Values: s (square), t (thumbnail), m (mid-size). Default: s
+ *  - number: Optional. Default: 10
+ *  - order: Optional. Values: latest, random. Default: latest
+ *  - layout: Optional. Values: h (horizontal), v (vertical), x (no layout - user-styled). Default: x
+ *
+ * @param  $attr
+ * @return string
+ */
+function suffusion_sc_flickr($attr) {
+	if (!isset($attr['id']) || !isset($attr['type'])) {
+		return "";
+	}
+	$id = $attr['id'];
+	$type = $attr['type'];
+	$size = isset($attr['size']) ? $attr['size'] : 's';
+	$number = isset($attr['number']) ? $attr['number'] : 10;
+	$order = isset($attr['order']) ? $attr['order'] : 'latest';
+	$layout = isset($attr['layout']) ? $attr['layout'] : 'x';
+
+	return "<div class='suf-flickr-stream'><script type=\"text/javascript\" src=\"http://www.flickr.com/badge_code_v2.gne?count=$number&amp;display=$order&amp;size=$size&amp;layout=$layout&amp;source=$type&amp;$type=$id\"></script></div>";
+}
+
+function suffusion_sc_audio($atts) {
+	global $suffusion_audio_instance;
+	if (!isset($suffusion_audio_instance)) {
+		$suffusion_audio_instance = 1;
+	}
+	else {
+		$suffusion_audio_instance++;
+	}
+
+	if (!isset($atts[0]))
+		return '';
+
+	if (count($atts))
+		$atts[0] = join(' ', $atts);
+
+	$src = rtrim($atts[0], '=');
+	$src = trim($src, ' "');
+	$data = preg_split("/[\|]/", $src);
+
+	$sound_file = $data[0];
+
+	return "<p id=\"audioplayer_$suffusion_audio_instance\"></p><script type=\"text/javascript\">AudioPlayer.embed(\"audioplayer_$suffusion_audio_instance\", {soundFile: \"$sound_file\", width: 300, initialvolume: 100, transparentpagebg: 'yes', left: '000000', lefticon: 'FFFFFF' });</script>";
+}

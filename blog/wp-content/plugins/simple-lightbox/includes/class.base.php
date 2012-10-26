@@ -17,10 +17,31 @@ class SLB_Base {
 	var $base = 'slb';
 	
 	/**
-	 * Prefix for Cornerstone-related data (attributes, DB tables, etc.)
+	 * Prefix for plugin-related data (attributes, DB tables, etc.)
 	 * @var string
 	 */
 	var $prefix = 'slb';
+
+	/**
+	 * Client files
+	 * @var array
+	 * Structure
+	 * > Key: unique file ID
+	 * > Properties
+	 *   > file (string) File path (Relative to plugin base)
+	 *   > deps (array) Script dependencies
+	 * 		> Internal dependencies are wrapped in square brackets ([])
+	 *   > context (string|array)
+	 * 		> Context in which the script should be included
+	 *   > in_footer (bool) optional [Default: FALSE]
+	 * 		> If TRUE, file will be included in footer of page, otherwise it will be included in the header
+	 * 
+	 * Array is processed and converted to an object on init
+	 */
+	var $client_files = array(
+		'scripts'	=> array(),
+		'styles'	=> array()
+	);
 	
 	/**
 	 * Utilities
@@ -39,20 +60,27 @@ class SLB_Base {
 	 * Constructor
 	 */
 	function __construct() {
-		$this->util =& new SLB_Utilities($this);
+		$this->util = new SLB_Utilities($this);
 	}
 	
 	/*-** Init **-*/
 	
 	/**
 	 * Default initialization method
-	 * To be overriden by child classes
+	 * To be overridden by child classes
 	 */
 	function init() {
-		$func = 'register_hooks';
-		if ( isset($this) && method_exists($this, $func) ) {
-			call_user_func($this->m($func));
-		}
+		if ( !isset($this) )
+			return false;
+		
+		/* Client files */
+		$this->init_client_files();
+		
+		/* Hook */
+		$this->register_hooks();
+		
+		/* Environment */
+		add_action('init', $this->m('init_env'), 1);
 	}
 	
 	function register_hooks() {
@@ -66,6 +94,85 @@ class SLB_Base {
 			register_deactivation_hook($this->util->get_plugin_base_file(), $this->m($func_deactivate));
 	}
 	
+	/**
+	 * Initialize environment (Localization, etc.)
+	 * To be overriden by child class
+	 * @uses `init` Action hook as trigger
+	 */
+	function init_env() {}
+	
+	function init_client_files() {
+		foreach ( $this->client_files as $key => $val ) {
+			if ( empty($val) && isset($this->{$key}) )
+				$this->client_files[$key] =& $this->{$key};
+			$g =& $this->client_files[$key];
+			if ( is_array($g) && !empty($g) ) {
+				$g = $this->util->parse_client_files($g, $key);
+			}
+		}
+
+		//Register
+		add_action('init', $this->m('register_client_files'));
+		
+		//Enqueue
+		$hook_enqueue = ( ( is_admin() ) ? 'admin' : 'wp' ) . '_enqueue_scripts' ;
+		add_action($hook_enqueue, $this->m('enqueue_client_files'));
+	}
+	
+	function register_client_files() {
+		//Scripts
+		foreach ( $this->client_files as $type => $files ) {
+			if ( !empty($files) ) {
+				$func = $this->get_client_files_handler($type, 'register');
+				if ( !$func )
+					continue;
+				foreach ( $files as $f ) {
+					$params = array($f->id, $this->util->get_file_url($f->file), $f->deps, $this->util->get_plugin_version());
+					switch ( $type ) {
+						case 'scripts':
+							$params[] = $f->in_footer;
+							break;
+						case 'styles':
+							$params[] = $f->media;
+							break;
+					}
+					call_user_func_array($func, $params);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Enqueues files for client output (scripts/styles)
+	 * Called by appropriate `enqueue_scripts` hook depending on context (admin or frontend)
+	 * @return void
+	 */
+	function enqueue_client_files() {
+		//Enqueue files
+		foreach ( $this->client_files as $type => $files ) {
+			if ( !empty($files) ) {
+				$func = $this->get_client_files_handler($type, 'enqueue');
+				if ( !$func )
+					continue;
+				foreach ( $files as $f ) {
+					if ( empty($f->context) || $this->util->is_context($f->context) ) {
+						$func($f->id);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Build function name for handling client operations
+	 */
+	function get_client_files_handler($type, $action) {
+		$func = 'wp_' . $action . '_' . substr($type, 0, -1);
+		if ( !function_exists($func) )
+			$func = false;
+		return $func;
+	}
+	
 	/*-** Reflection **-*/
 	
 	/**
@@ -73,7 +180,10 @@ class SLB_Base {
 	 * @return object|bool Base object (FALSE if object does not exist)
 	 */
 	function &get_base() {
-		return ( isset($GLOBALS[$this->base]) ) ? $GLOBALS[$this->base] : false;
+		$base = false;
+		if ( isset($GLOBALS[$this->base]) )
+			$base =& $GLOBALS[$this->base]; 
+		return $base;
 	}
 	
 	/*-** Method/Function calling **-*/

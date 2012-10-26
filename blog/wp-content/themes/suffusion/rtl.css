@@ -11,7 +11,7 @@ body {
 }
 
 p,.p {
-	text-align: justify;
+	text-align: right;
 }
 
 ul {
@@ -79,11 +79,11 @@ blockquote{
 }
 
 /* search form */
-.searchform .searchfield {
+.searchfield {
 	padding: 4px 5px 2px 7px;
 }
 
-.searchform input[type="submit"].searchsubmit {
+input[type="submit"].searchsubmit {
 	background-position: 0 0;
 	text-indent: 999%;
 }
@@ -105,9 +105,11 @@ blockquote{
 	float: right;
 }
 
+.float-ptr {
+	background: url("images/arrows.gif") no-repeat scroll -24px 0 transparent
+}
 /* remove all the bullets, borders and padding from the default list styling */
-#nav { float: right; }
-
+#nav .col-control.right ul.sf-menu, #nav-top .col-control.right ul.sf-menu { float: left; }
 #nav ul {
 	float: right;
 }
@@ -129,6 +131,8 @@ blockquote{
 /* style the second level background */
 #nav .float-ptr {
 	float: left;
+	right: auto;
+	left: 3px;
 }
 
 /* hide the sub levels and give them a positon absolute so that they take up no room */
@@ -141,12 +145,6 @@ blockquote{
 #nav ul ul ul {
 	left: auto;
 	right: 145px;
-}
-
-/* style the table so that it takes no part in the layout - required for IE to work */
-#nav table {
-	left: auto;
-	right: 0;
 }
 
 /* style the second level links */
@@ -177,6 +175,8 @@ blockquote{
 /* style the second level background */
 #nav-top .float-ptr {
 	float: left;
+	right: auto;
+	left: 3px;
 }
 
 /* hide the sub levels and give them a positon absolute so that they take up no room */
@@ -317,7 +317,7 @@ div.reply {
 	text-align: left;
 }
 
-a.comment-response-types, span.comment-response-types {
+.comment-response-type, .response-type {
 	float: right;
 }
 
@@ -357,18 +357,16 @@ a.openid_link {
 	background-position: 100% 1px;
 }
 
-.tab-box div.sidebar-tab-content ul li ul li,
-.suf-widget ul li ul li {
+.tab-box div.sidebar-tab-content ul ul li,
+.suf-widget ul ul li {
 	padding-left: 0;
 	padding-right: 22px;
 }
 
 .tab-box div.sbtab-content-categories ul li,
-.tab-box div.sbtab-content-categories ul li ul li,
-.tab-box div.sbtab-content-categories ul li ul li ul li,
+.tab-box div.sbtab-content-categories ul ul li,
 .suf-widget .widget_categories ul li,
-.suf-widget .widget_categories ul li ul li,
-.suf-widget .widget_categories ul li ul li ul li {
+.suf-widget .widget_categories ul ul li {
 	background-position: 100% 2px;
 	padding-left: 0;
 	padding-right: 20px;
@@ -393,6 +391,7 @@ a.openid_link {
 
 .suf-horizontal-widget {
 	float: right;
+	text-align: right;
 }
 
 /* Settings for Twitter widget */
@@ -458,14 +457,6 @@ a.openid_link {
 .sliderControl,
 #sliderControl {
 	float: right;
-}
-
-#categories ul li,
-#categories ul li ul li,
-#categories ul li ul li ul li {
-	background-position: 100% 2px;
-	padding-left: 0;
-	padding-right: 20px;
 }
 
 /* alignments */
@@ -600,6 +591,9 @@ img[align="right"] {
 #horizontal-outer-widgets-2 a.suf-mag-category-all-posts,
 #horizontal-outer-widgets-2 a.suf-mag-category-all-posts:hover,
 #horizontal-outer-widgets-2 a.suf-mag-category-all-posts:visited,
+a.excerpt-more-append,
+a.excerpt-more-append:hover,
+a.excerpt-more-append:visited,
 a.suf-mag-excerpt-full-story,
 a.suf-mag-excerpt-full-story:hover,
 a.suf-mag-excerpt-full-story:visited,
@@ -650,8 +644,9 @@ a.suf-mag-category-all-posts:visited {
 	padding: 0 10px 0 0;
 }
 
-* html .post .date {
+#ie6 .post .date {
 	left: auto;
-	righ\t: 0;
+	right: 0;
 }
 
+.entry th, .comment-body th { text-align: right; }

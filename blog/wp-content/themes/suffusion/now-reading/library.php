@@ -7,10 +7,9 @@
  */
 
 get_header();
-global $nr_book_query, $suffusion_unified_options;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
+global $nr_book_query, $suf_nr_lib_order, $suf_nr_lib_title, $suf_nr_lib_curr_show, $suf_nr_lib_curr_title, $suf_nr_lib_curr_text, $suf_nr_lib_unread_show, $suf_nr_lib_unread_title;
+global $suf_nr_lib_unread_text, $suf_nr_lib_completed_show, $suf_nr_lib_completed_title, $suf_nr_lib_completed_text;
+
 $lib_order = suffusion_get_entity_order($suf_nr_lib_order, 'nr');
 $lib_order = explode(',', $lib_order);
 ?>
@@ -19,13 +18,16 @@ $lib_order = explode(',', $lib_order);
 <?php suffusion_before_begin_content(); ?>
 	<div id="content">
 <?php suffusion_after_begin_content(); ?>
-		<div class="post fix nr-post">
-			<h1 class="posttitle"><?php echo stripslashes($suf_nr_lib_title); ?></h1>
+		<article <?php post_class('post nr-post'); ?>>
+			<header class="post-header">
+				<h1 class="posttitle"><?php echo stripslashes($suf_nr_lib_title); ?></h1>
+			</header>
 			<div class="bookdata fix">
 <?php
 		if( can_now_reading_admin()) {
 ?>
 				<div class="manage">
+					<span class="icon">&nbsp;</span>
 					<a href="<?php manage_library_url(); ?>"><?php _e('Manage Books', 'suffusion');?></a>
 				</div>
 <?php
@@ -33,7 +35,6 @@ $lib_order = explode(',', $lib_order);
 ?>
 			</div>
 			<div class="entry">
-<!--				There are <?php total_books() ?> books listed, of which <?php books_read_since('1 year') ?> have been read in the last year, <?php books_read_since('1 month') ?> read in the last month. That's a current average of <?php average_books('month'); ?>.-->
 <?php
 		foreach ($lib_order as $entity) {
 			if ($entity == 'current' && $suf_nr_lib_curr_show == 'show') {
@@ -81,7 +82,7 @@ $lib_order = explode(',', $lib_order);
 		}
 ?>
 			</div>
-		</div>
+		</article>
 	</div><!-- /#content -->
 </div><!-- /#main-col -->
 <?php

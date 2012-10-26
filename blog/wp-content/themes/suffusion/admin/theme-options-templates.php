@@ -12,74 +12,6 @@ $suffusion_templates_options = array(
 	array("name" => "Templates",
 		"type" => "sub-section-2",
 		"category" => "templates",
-		"help" => "Configure how you want to use the templates bundled with Suffusion. Suffusion is packaged with the following templates:
-			<table>
-				<tr>
-					<th>Automatic Templates</th>
-				</tr>
-				<tr>
-					<td>These get attached to content automatically and cannot be assigned manually.</td>
-				</tr>
-				<tr>
-					<td><em>Single Category</em> - Assigned whenever you are viewing a category</td>
-				</tr>
-				<tr>
-					<td><em>Single Tag</em> - Assigned whenever you are viewing a tag</td>
-				</tr>
-				<tr>
-					<td><em>Single Author</em> - Assigned whenever you are viewing an author</td>
-				</tr>
-				<tr>
-					<td><em>Search</em> - Assigned whenever you are viewing a search page</td>
-				</tr>
-				<tr>
-					<td><em>Attachments</em> - Assigned whenever you are viewing an attachment</td>
-				</tr>
-				<tr>
-					<td><em>404</em> - Assigned whenever you are viewing a 404 (not found) page</td>
-				</tr>
-				<tr>
-					<td><em>Now Reading</em> - Assigned if you have the \"Now Reading\" or \"Now Reading Reloaded\" plugin</td>
-				</tr>
-
-				<tr>
-					<th>Manual Templates</th>
-				</tr>
-				<tr>
-					<td>These can be assigned to a page from the \"Templates\" section of the \"Edit Page\" screen. You cannot use these templates
-					for dynamic pages like the posts page assigned through <i>Settings &rarr; Reading</i>.</td>
-				</tr>
-				<tr>
-					<td><em>Magazine</em> - Builds a magazine-styled page</td>
-				</tr>
-				<tr>
-					<td><em>Page of Posts</em> - Shows a list of all your posts</td>
-				</tr>
-				<tr>
-					<td><em>All Categories</em> - Shows all your categories</td>
-				</tr>
-				<tr>
-					<td><em>Sitemap</em> - Creates an HTML sitemap for your site</td>
-				</tr>
-				<tr>
-					<td><em>No Sidebars</em></td>
-				</tr>
-				<tr>
-					<td><em>Single Left Sidebar</em></td>
-				</tr>
-				<tr>
-					<td><em>Single Right Sidebar</em></td>
-				</tr>
-				<tr>
-					<td><em>Single Left, Single Right Sidebar</em></td>
-				</tr>
-				<tr>
-					<td><em>Double Left Sidebars</em></td>
-				</tr>
-				<tr>
-					<td><em>Double Right Sidebars</em></td>
-				</tr>
-			</table>",
 		"parent" => "root"
 	),
 
@@ -152,7 +84,7 @@ $suffusion_templates_options = array(
 		"parent" => "magazine-template",
 		"type" => "radio",
 		"options" => array("left" => "Left", "center" => "Center", "right" => "Right"),
-		"std" => "left"),
+		"std" => "center"),
 
 	array("name" => "Magazine template - Height of headline section",
 		"desc" => "You can set the height of the headline section here. Choose a larger number if you have more headlines: ",
@@ -213,7 +145,7 @@ $suffusion_templates_options = array(
 		"grouping" => "mag-head",
 		"parent" => "magazine-template",
 		"type" => "radio",
-		"options" => array("default" => "Inherit setting from thumbnail (<em>Other Graphical Elements &rarr; Layout: Excerpt / List / Tile / Full &rarr; Thumbnail settings</em>)",
+		"options" => array("default" => "Inherit setting from thumbnail (<em>Layouts &rarr; Layout: Excerpt / List / Tile / Full &rarr; Thumbnail settings</em>)",
 			"0" => "Preserve original proportions (final size might be different from desired size)",
 			"1" => "Transform to desired proportions (image might get cropped)"),
 		"std" => "default"),
@@ -226,7 +158,7 @@ $suffusion_templates_options = array(
 		"parent" => "magazine-template",
 		"export" => "ne",
 		"type" => "multi-select",
-		"options" => suffusion_get_formatted_category_array("suf_mag_headline_categories")),
+		"options" => suffusion_get_formatted_category_array()),
 
 	array("name" => "Number of headlines",
 		"desc" => "Enter the maximum number of headlines: ",
@@ -268,7 +200,7 @@ $suffusion_templates_options = array(
 		"parent" => "magazine-template",
 		"type" => "radio",
 		"options" => array("left" => "Left", "center" => "Center", "right" => "Right"),
-		"std" => "left"),
+		"std" => "center"),
 
 	array("name" => "Magazine Template - Maximum number of excerpts",
 		"desc" => "You can set the maximum number of excerpts to show: ",
@@ -284,7 +216,7 @@ $suffusion_templates_options = array(
 		"id" => "suf_mag_excerpts_per_row",
 		"grouping" => "mag-excerpt",
 		"parent" => "magazine-template",
-		"type" => "radio",
+		"type" => "select",
 		"options" => array("1" => "1 (One)", "2" => "2 (Two)", "3" => "3 (Three)", "4" => "4 (Four)", "5" => "5 (Five)", "6" => "6 (Six)", "7" => "7 (Seven)",
 			"8" => "8 (Eight)", "9" => "9 (Nine)", "10" => "10 (Ten)"),
 		"std" => "3"),
@@ -297,7 +229,7 @@ $suffusion_templates_options = array(
 		"parent" => "magazine-template",
 		"export" => "ne",
 		"type" => "multi-select",
-		"options" => suffusion_get_formatted_category_array("suf_mag_excerpt_categories")),
+		"options" => suffusion_get_formatted_category_array()),
 
 	array("name" => "Magazine Template - Thumbnail container for excerpts",
 		"desc" => "You can show thumbnails for excerpts in the magazine template: ",
@@ -359,7 +291,7 @@ $suffusion_templates_options = array(
 		"grouping" => "mag-excerpt",
 		"parent" => "magazine-template",
 		"type" => "radio",
-		"options" => array("default" => "Inherit setting from thumbnail (<em>Other Graphical Elements &rarr; Layout: Excerpt / List / Tile / Full &rarr; Thumbnail settings</em>)",
+		"options" => array("default" => "Inherit setting from thumbnail (<em>Layouts &rarr; Layout: Excerpt / List / Tile / Full &rarr; Thumbnail settings</em>)",
 			"0" => "Preserve original proportions (final size might be different from desired size)",
 			"1" => "Transform to desired proportions (image might get cropped)"),
 		"std" => "default"),
@@ -371,7 +303,7 @@ $suffusion_templates_options = array(
 		"parent" => "magazine-template",
 		"type" => "radio",
 		"options" => array("left" => "Left", "center" => "Center", "right" => "Right"),
-		"std" => "left"),
+		"std" => "center"),
 
 	array("name" => "Magazine Template - Text for \"Full story\" in excerpts",
 		"desc" => "You can set the text to show for the \"Full story\" link in excerpts: ",
@@ -381,6 +313,69 @@ $suffusion_templates_options = array(
 		"type" => "text",
 		"hint" => "Enter the text here (leave blank for no link)",
 		"std" => 'Full Story'),
+
+	array("name" => "Excerpt Bylines",
+		"desc" => "Control how bylines are displayed for excerpts",
+		"category" => "mag-excerpt-bylines",
+		"parent" => "magazine-template",
+		"type" => "sub-section-4",),
+
+	array("name" => "Show bylines for magazine excerpts",
+		"desc" => "You can show bylines for magazine excerpts: ",
+		"id" => "suf_mag_excerpt_bylines_enabled",
+		"grouping" => "mag-excerpt-bylines",
+		"parent" => "magazine-template",
+		"type" => "radio",
+		"options" => array("show" => "Show", "hide" => "Hide"),
+		"std" => "show"),
+
+	array("name" => "Show post date",
+		"id" => "suf_mag_excerpt_bylines_post_date",
+		"grouping" => "mag-excerpt-bylines",
+		"parent" => "magazine-template",
+		"type" => "radio",
+		"options" => array("show" => "Show", "hide" => "Hide"),
+		"std" => "show"),
+
+	array("name" => "Show \"Posted by\"",
+		"id" => "suf_mag_excerpt_bylines_posted_by",
+		"grouping" => "mag-excerpt-bylines",
+		"parent" => "magazine-template",
+		"type" => "radio",
+		"options" => array("show" => "Show", "hide" => "Hide"),
+		"std" => "show"),
+
+	array("name" => "Show \"Categories\"",
+		"id" => "suf_mag_excerpt_bylines_categories",
+		"grouping" => "mag-excerpt-bylines",
+		"parent" => "magazine-template",
+		"type" => "radio",
+		"options" => array("show" => "Show", "hide" => "Hide"),
+		"std" => "show"),
+
+	array("name" => "Show \"Tags\"",
+		"id" => "suf_mag_excerpt_bylines_tags",
+		"grouping" => "mag-excerpt-bylines",
+		"parent" => "magazine-template",
+		"type" => "radio",
+		"options" => array("show" => "Show", "hide" => "Hide"),
+		"std" => "show"),
+
+	array("name" => "Show \"Comments\"",
+		"id" => "suf_mag_excerpt_bylines_comments",
+		"grouping" => "mag-excerpt-bylines",
+		"parent" => "magazine-template",
+		"type" => "radio",
+		"options" => array("show" => "Show", "hide" => "Hide"),
+		"std" => "show"),
+
+	array("name" => "Show \"Permalinks\"",
+		"id" => "suf_mag_excerpt_bylines_permalinks",
+		"grouping" => "mag-excerpt-bylines",
+		"parent" => "magazine-template",
+		"type" => "radio",
+		"options" => array("show" => "Show", "hide" => "Hide"),
+		"std" => "show"),
 
 	array("name" => "Category Blocks",
 		"desc" => "Control the category blocks in the magazine layout",
@@ -413,7 +408,7 @@ $suffusion_templates_options = array(
 		"parent" => "magazine-template",
 		"type" => "radio",
 		"options" => array("left" => "Left", "center" => "Center", "right" => "Right"),
-		"std" => "left"),
+		"std" => "center"),
 
 	array("name" => "Magazine template - Select category blocks to show",
 		"desc" => "You can also show specific catagory blocks on the magazine template. A category block can include a category icon, the category description and some post titles.
@@ -423,7 +418,7 @@ $suffusion_templates_options = array(
 		"parent" => "magazine-template",
 		"export" => "ne",
 		"type" => "multi-select",
-		"options" => suffusion_get_formatted_category_array("suf_mag_catblock_categories")),
+		"options" => suffusion_get_formatted_category_array()),
 
 	array("name" => "Magazine Template - Maximum Number of category blocks per row",
 		"desc" => "You can define how many category blocks you want to show per row: ",
@@ -442,7 +437,7 @@ $suffusion_templates_options = array(
 		"parent" => "magazine-template",
 		"type" => "radio",
 		"options" => array("left" => "Left", "center" => "Center", "right" => "Right"),
-		"std" => "left"),
+		"std" => "center"),
 
 	array("name" => "Magazine Template - Images for category blocks",
 		"desc" => "If  you have the <a href='http://wordpress.org/extend/plugins/category-icons/'>\"Category Icons\" plugin by Brahim Machkouri</a> you can include an image at the top of each category block: ",
@@ -505,8 +500,46 @@ $suffusion_templates_options = array(
 		"grouping" => "mag-cat",
 		"parent" => "magazine-template",
 		"type" => "radio",
-		"options" => array("magazine" => "Magazine Style (posts highlight with a box around them when you hover)", "sidebar" => "Sidebar Style (posts are underlined when you hover over them)"),
-		"std" => 'magazine'),
+		"options" => array(
+			"magazine" => "Magazine Style (posts highlight with a box around them when you hover)",
+			"sidebar" => "Sidebar Style (posts are underlined when you hover over them)",
+			"thumbnail" => "Thumbnail and post title",
+			"thumbnail-excerpt" => "Thumbnail, post title and excerpt",
+		),
+		"std" => 'thumbnail-excerpt'),
+
+	array("name" => "Magazine Template - Thumbnail size in category blocks",
+		"desc" => "Set the thumbnail size in category blocks (applicable only if thumbnails are being displayed): ",
+		"id" => "suf_mag_catblocks_thumbnail_size",
+		"grouping" => "mag-cat",
+		"parent" => "magazine-template",
+		"type" => "select",
+		"options" => array(
+			'24' => '24px',
+			'32' => '32px',
+			'48' => '48px',
+			'64' => '64px',
+			'96' => '96px',
+		),
+		"std" => '32'),
+
+	array("name" => "Magazine Template - Excerpt length for category blocks",
+		"desc" => "Set the length for excerpts in category blocks (applicable only if excerpts are being displayed): ",
+		"id" => "suf_mag_catblocks_excerpt_length",
+		"grouping" => "mag-cat",
+		"parent" => "magazine-template",
+		"type" => "text",
+		"hint" => "Enter positive integers only",
+		"std" => '15'),
+
+	array("name" => "Magazine Template - Button position",
+		"desc" => "Where do you want the \"Full Story\", \"All Posts\" etc. buttons to appear? This will also affect the tile layout.",
+		"id" => "suf_mag_excerpt_full_story_position",
+		"parent" => "magazine-template",
+		"type" => "radio",
+		"options" => array("below" => "Just below excerpt (all buttons might not be in the same row)",
+			"bottom" => "At the bottom of the excerpt box (buttons are aligned, but there may be a gap with the bottom of the excerpt)",),
+		"std" => 'below'),
 
 	array("name" => "Page of Posts",
 		"type" => "sub-section-3",
@@ -515,7 +548,7 @@ $suffusion_templates_options = array(
 	),
 
 	array("name" => "The \"Page of Posts\" template",
-		"desc" => "This template can be used to create a page of posts. This will follow the default sidebar layout for the theme.",
+		"desc" => "This template can be used to create a page of posts. This will follow the default sidebar layout for the theme. To control whether the 'Full content posts' should appear on the second/third pages etc, go to <em>Layouts &rarr; Layout: Excerpt / List / Tile / Mosaic / Full</em>",
 		"category" => "pop-settings",
 		"parent" => "pop-template",
 		"type" => "sub-section-4"
@@ -527,7 +560,7 @@ $suffusion_templates_options = array(
 		"parent" => "pop-template",
 		"grouping" => "pop-settings",
 		"type" => "radio",
-		"options" => array("content" => "Display full content", "excerpt" => "Display excerpt", "list" => "Display list", "tiles" => 'Display tiles'),
+		"options" => array("content" => "Display full content", "excerpt" => "Display excerpt", "list" => "Display list", "tiles" => 'Display tiles', "mosaic" => 'Display mosaic'),
 		"std" => "content"),
 
 	array("name" => "Number of Full content posts on \"Page of Posts\" template",
@@ -548,8 +581,9 @@ $suffusion_templates_options = array(
 
 	array("name" => "The \"Category\" template",
 		"desc" => "The category template is applied whenever you open a category. It displays all posts associated with a category.
-				Suffusion natively supports the <a href='http://wordpress.org/extend/plugins/category-icons/'>\"Category Icons\" plugin by Brahim Machkouri</a>.
-				So if you have the plugin installed, the icon for the category will be automatically displayed. ",
+				Suffusion natively supports the <a href='http://wordpress.org/extend/plugins/category-icons/'>\"Category Icons\" plugin</a>.
+				So if you have the plugin installed, the icon for the category will be automatically displayed. <br/>
+				<b>This template is automatically assigned to every category &ndash; you cannot manually assign it.</b>",
 		"parent" => "category-template",
 		"type" => "blurb"
 	),
@@ -560,7 +594,7 @@ $suffusion_templates_options = array(
 		"parent" => "category-template",
 		"type" => "radio",
 		"options" => array("enabled" => "Category Information enabled",
-			"not-enabled" => "Category Information not enabled (default)"),
+			"not-enabled" => "Category Information not enabled"),
 		"std" => "not-enabled"),
 
 	array("name" => "All Categories",
@@ -610,7 +644,8 @@ $suffusion_templates_options = array(
 	),
 
 	array("name" => "The \"Tag\" template",
-		"desc" => "The tag template is applied whenever you open a tag. It displays all posts with a particular tag. ",
+		"desc" => "The tag template is <b>automatically</b> applied whenever you open a tag &ndash; <b>you cannot manually assign it</b>.
+		It displays all posts with a particular tag. ",
 		"parent" => "tag-template",
 		"type" => "blurb"
 	),
@@ -621,7 +656,7 @@ $suffusion_templates_options = array(
 		"parent" => "tag-template",
 		"type" => "radio",
 		"options" => array("enabled" => "Tag Description enabled",
-			"not-enabled" => "Tag Description not enabled (default)"),
+			"not-enabled" => "Tag Description not enabled"),
 		"std" => "not-enabled"),
 
 	array("name" => "Single Author",
@@ -631,7 +666,8 @@ $suffusion_templates_options = array(
 	),
 
 	array("name" => "The single \"Author\" template",
-		"desc" => "The author template is applied whenever you open an author page. It displays all posts associated with a category.",
+		"desc" => "The author template is <b>automatically</b> applied whenever you open an author page &ndash; <b>you cannot manually assign it</b>.
+		It displays all posts associated with an author.",
 		"parent" => "author-template",
 		"type" => "blurb"
 	),
@@ -641,7 +677,7 @@ $suffusion_templates_options = array(
 		"id" => "suf_author_info_enabled",
 		"parent" => "author-template",
 		"type" => "radio",
-		"options" => array("enabled" => "Author Information enabled (default)",
+		"options" => array("enabled" => "Author Information enabled",
 			"not-enabled" => "Author Information not enabled"),
 		"std" => "enabled"),
 
@@ -663,7 +699,7 @@ $suffusion_templates_options = array(
 		"id" => "suf_search_info_enabled",
 		"parent" => "search-template",
 		"type" => "radio",
-		"options" => array("enabled" => "Search Information enabled (default)",
+		"options" => array("enabled" => "Search Information enabled",
 			"not-enabled" => "Search Information not enabled"),
 		"std" => "enabled"),
 
@@ -679,6 +715,23 @@ $suffusion_templates_options = array(
 		"parent" => "att-template",
 		"type" => "sub-section-4"
 	),
+
+	array("name" => "Comments",
+		"desc" => "Disable comments on image attachments",
+		"id" => "suf_image_comments",
+		"parent" => "att-template",
+		"grouping" => "image-settings",
+		"type" => "checkbox",
+		"std" => ""),
+
+	array("name" => "Display Image Sizes?",
+		"desc" => "You can display all image sizes for image attachments",
+		"id" => "suf_image_show_sizes",
+		"parent" => "att-template",
+		"grouping" => "image-settings",
+		"type" => "select",
+		"options" => array("show" => "Display sizes", "hide" => "Hide sizes"),
+		"std" => "hide"),
 
 	array("name" => "Display EXIF data?",
 		"desc" => "You can display the EXIF data for your images",
@@ -718,6 +771,14 @@ $suffusion_templates_options = array(
 		"type" => "sub-section-4"
 	),
 
+	array("name" => "Comments",
+		"desc" => "Disable comments on audio attachments",
+		"id" => "suf_audio_comments",
+		"parent" => "att-template",
+		"grouping" => "audio-settings",
+		"type" => "checkbox",
+		"std" => ""),
+
 	array("name" => "Audio template",
 		"desc" => "How do you want the template to show an audio attachment?",
 		"id" => "suf_audio_att_type",
@@ -752,6 +813,14 @@ $suffusion_templates_options = array(
 		"type" => "sub-section-4"
 	),
 
+	array("name" => "Comments",
+		"desc" => "Disable comments on application attachments",
+		"id" => "suf_application_comments",
+		"parent" => "att-template",
+		"grouping" => "app-settings",
+		"type" => "checkbox",
+		"std" => ""),
+
 	array("name" => "Application template",
 		"desc" => "How do you want the template to show an application attachment?",
 		"id" => "suf_application_att_type",
@@ -777,6 +846,14 @@ $suffusion_templates_options = array(
 		"type" => "sub-section-4"
 	),
 
+	array("name" => "Comments",
+		"desc" => "Disable comments on text attachments",
+		"id" => "suf_text_comments",
+		"parent" => "att-template",
+		"grouping" => "text-settings",
+		"type" => "checkbox",
+		"std" => ""),
+
 	array("name" => "Text template",
 		"desc" => "How do you want the template to show an text attachment?",
 		"id" => "suf_text_att_type",
@@ -801,6 +878,14 @@ $suffusion_templates_options = array(
 		"parent" => "att-template",
 		"type" => "sub-section-4"
 	),
+
+	array("name" => "Comments",
+		"desc" => "Disable comments on video attachments",
+		"id" => "suf_video_comments",
+		"parent" => "att-template",
+		"grouping" => "video-settings",
+		"type" => "checkbox",
+		"std" => ""),
 
 	array("name" => "Video template",
 		"desc" => "How do you want the template to show an video attachment?",
@@ -847,7 +932,7 @@ $suffusion_templates_options = array(
 		"parent" => "sitemap-template",
 		"type" => "multi-select",
 		"options" => $suffusion_sitemap_entities,
-		'std' => $suffusion_all_sitemap_entities,
+		'std' => '',
 	),
 
 	array("name" => "Label for Pages",
@@ -911,601 +996,6 @@ $suffusion_templates_options = array(
 		"type" => "sortable-list",
 		"std" => suffusion_entity_prepositions('sitemap'),),
 
-	array("name" => "No Sidebars",
-		"type" => "sub-section-3",
-		"category" => "no-sidebars",
-		"parent" => "templates"
-	),
-
-	array("name" => "The \"No Sidebars\" template",
-		"desc" => "You can use the \"No Sidebars\" template if you have a page where you don't want sidebars to show up, but the rest of your blog has sidebars enabled.
-				To set up pages with this template, select the \"No Sidebars\" template while creating or updating a page.",
-		"parent" => "no-sidebars",
-		"type" => "blurb"
-	),
-
-	array("name" => "Enable Widget Area Below Header?",
-		"desc" => "By default the \"Widget Area Below Header\" is enabled in the \"No Sidebars\" template. You can change it: ",
-		"id" => "suf_ns_wabh_enabled",
-		"parent" => "no-sidebars",
-		"type" => "radio",
-		"options" => array("enabled" => "Widget Area below Header enabled (default)",
-			"not-enabled" => "Widget Area below Header not enabled"),
-		"std" => "enabled"),
-
-	array("name" => "Enable Widget Area Above Footer?",
-		"desc" => "By default the \"Widget Area Above Footer\" is enabled in the \"No Sidebars\" template. You can change it: ",
-		"id" => "suf_ns_waaf_enabled",
-		"parent" => "no-sidebars",
-		"type" => "radio",
-		"options" => array("enabled" => "Widget Area above Footer enabled (default)",
-			"not-enabled" => "Widget Area above Footer not enabled"),
-		"std" => "enabled"),
-
-	array("name" => "Single Left Sidebar",
-		"type" => "sub-section-3",
-		"category" => "1l-sidebar",
-		"parent" => "templates"
-	),
-
-	array("name" => "The \"Single Left Sidebar\" template",
-		"desc" => "You can use this template if you have a page where you want a single sidebar to show up on the left.
-				To set up pages with this template, select the \"Single Left Sidebar\" template while creating or updating a page.",
-		"parent" => "1l-sidebar",
-		"type" => "blurb"
-	),
-
-	array("name" => "Page Width Type",
-		"desc" => "Your page can be fixed width or fluid/elastic width",
-		"id" => "suf_1l_wrapper_width_type",
-		"parent" => "1l-sidebar",
-		"type" => "radio",
-		"options" => array("fixed" => "Fixed width", "fluid" => "Fluid/Flexible width"),
-		"std" => "fixed"),
-
-	array("name" => "Fluid width settings",
-		"desc" => "In the fluid width layout your sidebars have a fixed width, while the overall width of your page is a percentage of the browser window's width.",
-		"category" => "1l-size-flexible",
-		"parent" => "1l-sidebar",
-		"type" => "sub-section-4",),
-
-	array("name" => "Width of page",
-		"id" => "suf_1l_wrapper_width_flex",
-		"parent" => "1l-sidebar",
-		"grouping" => "1l-size-flexible",
-		"type" => "slider",
-		"options" => array("range" => "min", "min" => 25, "max" => 100, "step" => 1, "size" => "400px", "unit" => "%"),
-		"std" => 75),
-
-	array("name" => "Maximum width",
-		"desc" => "Set this value so that your typography stays consistent on large screens.",
-		"id" => "suf_1l_wrapper_width_flex_max",
-		"parent" => "1l-sidebar",
-		"grouping" => "1l-size-flexible",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Value will be set to a default if blank or incompatible.",
-		"std" => "1200"),
-
-	array("name" => "Minimum width",
-		"desc" => "Set this value so that your typography stays consistent on small screens.",
-		"id" => "suf_1l_wrapper_width_flex_min",
-		"parent" => "1l-sidebar",
-		"grouping" => "1l-size-flexible",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Value will be set to a default if blank or incompatible.",
-		"std" => "600"),
-
-	array("name" => "Fixed width settings",
-		"desc" => "In the fixed width layout the components of your page have widths fixed in pixels, irrespective of the size of your browser window.",
-		"category" => "1l-size-fixed",
-		"parent" => "1l-sidebar",
-		"type" => "sub-section-4",),
-
-	array("name" => "Overall Page Width",
-		"desc" => "Suffusion comes with 3 preset page width options: 800px, 1000px and 1200px. You can also define a custom width if you please, or allow the width of the page to be determined by the width of its main components like the sidebars and the main content column.
-				Due to difficulties with fitting things on the page, the minimum size allowed is 600px. If you enter something less than 600, it is considered to be 600.",
-		"id" => "suf_1l_wrapper_width_preset",
-		"parent" => "1l-sidebar",
-		"grouping" => "1l-size-fixed",
-		"type" => "radio",
-		"options" => array("800" => "800px", "1000" => "1000px (Default)", "1200" => "1200px",
-			"custom" => "Custom width (defined below)", "custom-components" => "Custom width, but constructed from individual components (defined below)"),
-		"std" => "1000"),
-
-	array("name" => "Custom value for page width",
-		"desc" => "If you have selected \"Custom width\" above, you can set the width here. Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 600 will be treated as 600. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"80%\" as the width.
-				Also note that if you are setting a width over here with the \"Custom width\" selection in place, the widths of the individual components like the main column, the sidebars etc. are auto-calculated",
-		"id" => "suf_1l_wrapper_width",
-		"parent" => "1l-sidebar",
-		"grouping" => "1l-size-fixed",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 1000",
-		"std" => "1000"),
-
-	array("name" => "Custom component width - Custom value for main column width",
-		"desc" => "If you have selected \"Custom width, but constructed from individual components\" above, you can set the width here for the main column.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 380 will be treated as 380. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"80%\" as the width. ",
-		"id" => "suf_1l_main_col_width",
-		"parent" => "1l-sidebar",
-		"grouping" => "1l-size-fixed",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 725",
-		"std" => "725"),
-
-	array("name" => "Custom component width - Custom value for width of sidebar",
-		"desc" => "If you have selected \"Fluid width\" or \"Custom width, but constructed from individual components\" above, you can set the width here for the first sidebar.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 95 will be treated as 95. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"10%\" as the width. ",
-		"id" => "suf_1l_sb_1_width",
-		"parent" => "1l-sidebar",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 260",
-		"std" => "260"),
-
-	array("name" => "Single Right Sidebar",
-		"type" => "sub-section-3",
-		"category" => "1r-sidebar",
-		"parent" => "templates"
-	),
-
-	array("name" => "The \"Single Right Sidebar\" template",
-		"desc" => "You can use this template if you have a page where you want a single sidebar to show up on the right.
-				To set up pages with this template, select the \"Single Right Sidebar\" template while creating or updating a page.",
-		"parent" => "1r-sidebar",
-		"type" => "blurb"
-	),
-
-	array("name" => "Page Width Type",
-		"desc" => "Your page can be fixed width or fluid/elastic width",
-		"id" => "suf_1r_wrapper_width_type",
-		"parent" => "1r-sidebar",
-		"type" => "radio",
-		"options" => array("fixed" => "Fixed width", "fluid" => "Fluid/Flexible width"),
-		"std" => "fixed"),
-
-	array("name" => "Fluid width settings",
-		"desc" => "In the fluid width layout your sidebars have a fixed width, while the overall width of your page is a percentage of the browser window's width.",
-		"category" => "1r-size-flexible",
-		"parent" => "1r-sidebar",
-		"type" => "sub-section-4",),
-
-	array("name" => "Width of page",
-		"id" => "suf_1r_wrapper_width_flex",
-		"parent" => "1r-sidebar",
-		"grouping" => "1r-size-flexible",
-		"type" => "slider",
-		"options" => array("range" => "min", "min" => 25, "max" => 100, "step" => 1, "size" => "400px", "unit" => "%"),
-		"std" => 75),
-
-	array("name" => "Maximum width",
-		"desc" => "Set this value so that your typography stays consistent on large screens.",
-		"id" => "suf_1r_wrapper_width_flex_max",
-		"parent" => "1r-sidebar",
-		"grouping" => "1r-size-flexible",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Value will be set to a default if blank or incompatible.",
-		"std" => "1200"),
-
-	array("name" => "Minimum width",
-		"desc" => "Set this value so that your typography stays consistent on small screens.",
-		"id" => "suf_1r_wrapper_width_flex_min",
-		"parent" => "1r-sidebar",
-		"grouping" => "1r-size-flexible",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Value will be set to a default if blank or incompatible.",
-		"std" => "600"),
-
-	array("name" => "Fixed width settings",
-		"desc" => "In the fixed width layout the components of your page have widths fixed in pixels, irrespective of the size of your browser window.",
-		"category" => "1r-size-fixed",
-		"parent" => "1r-sidebar",
-		"type" => "sub-section-4",),
-
-	array("name" => "Overall Page Width",
-		"desc" => "Suffusion comes with 3 preset page width options: 800px, 1000px and 1200px. You can also define a custom width if you please, or allow the width of the page to be determined by the width of its main components like the sidebars and the main content column.
-				Due to difficulties with fitting things on the page, the minimum size allowed is 600px. If you enter something less than 600, it is considered to be 600.",
-		"id" => "suf_1r_wrapper_width_preset",
-		"parent" => "1r-sidebar",
-		"grouping" => "1r-size-fixed",
-		"type" => "radio",
-		"options" => array("800" => "800px", "1000" => "1000px (Default)", "1200" => "1200px",
-			"custom" => "Custom width (defined below)", "custom-components" => "Custom width, but constructed from individual components (defined below)"),
-		"std" => "1000"),
-
-	array("name" => "Custom value for page width",
-		"desc" => "If you have selected \"Custom width\" above, you can set the width here. Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 600 will be treated as 600. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"80%\" as the width.
-				Also note that if you are setting a width over here with the \"Custom width\" selection in place, the widths of the individual components like the main column, the sidebars etc. are auto-calculated",
-		"id" => "suf_1r_wrapper_width",
-		"parent" => "1r-sidebar",
-		"grouping" => "1r-size-fixed",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 1000",
-		"std" => "1000"),
-
-	array("name" => "Custom component width - Custom value for main column width",
-		"desc" => "If you have selected \"Custom width, but constructed from individual components\" above, you can set the width here for the main column.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 380 will be treated as 380. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"80%\" as the width. ",
-		"id" => "suf_1r_main_col_width",
-		"parent" => "1r-sidebar",
-		"grouping" => "1r-size-fixed",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 725",
-		"std" => "725"),
-
-	array("name" => "Custom component width - Custom value for width of sidebar",
-		"desc" => "If you have selected \"Fluid width\" or \"Custom width, but constructed from individual components\" above, you can set the width here for the first sidebar.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 95 will be treated as 95. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"10%\" as the width. ",
-		"id" => "suf_1r_sb_1_width",
-		"parent" => "1r-sidebar",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 260",
-		"std" => "260"),
-
-	array("name" => "Single Left, Single Right Sidebar",
-		"type" => "sub-section-3",
-		"category" => "1l1r-sidebar",
-		"parent" => "templates"
-	),
-
-	array("name" => "The \"Single Left and Single Right Sidebar\" template",
-		"desc" => "You can use this template if you have a page where you want a single sidebar to show up on the left and right sides.
-				To set up pages with this template, select the \"Single Left and Single Right Sidebar\" template while creating or updating a page.",
-		"parent" => "1l1r-sidebar",
-		"type" => "blurb"
-	),
-
-	array("name" => "Page Width Type",
-		"desc" => "Your page can be fixed width or fluid/elastic width",
-		"id" => "suf_1l1r_wrapper_width_type",
-		"parent" => "1l1r-sidebar",
-		"type" => "radio",
-		"options" => array("fixed" => "Fixed width", "fluid" => "Fluid/Flexible width"),
-		"std" => "fixed"),
-
-	array("name" => "Fluid width settings",
-		"desc" => "In the fluid width layout your sidebars have a fixed width, while the overall width of your page is a percentage of the browser window's width.",
-		"category" => "1l1r-size-flexible",
-		"parent" => "1l1r-sidebar",
-		"type" => "sub-section-4",),
-
-	array("name" => "Width of page",
-		"id" => "suf_1l1r_wrapper_width_flex",
-		"parent" => "1l1r-sidebar",
-		"grouping" => "1l1r-size-flexible",
-		"type" => "slider",
-		"options" => array("range" => "min", "min" => 25, "max" => 100, "step" => 1, "size" => "400px", "unit" => "%"),
-		"std" => 75),
-
-	array("name" => "Maximum width",
-		"desc" => "Set this value so that your typography stays consistent on large screens.",
-		"id" => "suf_1r_wrapper_width_flex_max",
-		"parent" => "1l1r-sidebar",
-		"grouping" => "1l1r-size-flexible",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Value will be set to a default if blank or incompatible.",
-		"std" => "1200"),
-
-	array("name" => "Minimum width",
-		"desc" => "Set this value so that your typography stays consistent on small screens.",
-		"id" => "suf_1l1r_wrapper_width_flex_min",
-		"parent" => "1l1r-sidebar",
-		"grouping" => "1l1r-size-flexible",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Value will be set to a default if blank or incompatible.",
-		"std" => "600"),
-
-	array("name" => "Fixed width settings",
-		"desc" => "In the fixed width layout the components of your page have widths fixed in pixels, irrespective of the size of your browser window.",
-		"category" => "1l1r-size-fixed",
-		"parent" => "1l1r-sidebar",
-		"type" => "sub-section-4",),
-
-	array("name" => "Overall Page Width",
-		"desc" => "Suffusion comes with 3 preset page width options: 800px, 1000px and 1200px. You can also define a custom width if you please, or allow the width of the page to be determined by the width of its main components like the sidebars and the main content column.
-				Due to difficulties with fitting things on the page, the minimum size allowed is 600px. If you enter something less than 600, it is considered to be 600.",
-		"id" => "suf_1l1r_wrapper_width_preset",
-		"parent" => "1l1r-sidebar",
-		"grouping" => "1l1r-size-fixed",
-		"type" => "radio",
-		"options" => array("800" => "800px", "1000" => "1000px (Default)", "1200" => "1200px",
-			"custom" => "Custom width (defined below)", "custom-components" => "Custom width, but constructed from individual components (defined below)"),
-		"std" => "1000"),
-
-	array("name" => "Custom value for page width",
-		"desc" => "If you have selected \"Custom width\" above, you can set the width here. Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 600 will be treated as 600. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"80%\" as the width.
-				Also note that if you are setting a width over here with the \"Custom width\" selection in place, the widths of the individual components like the main column, the sidebars etc. are auto-calculated",
-		"id" => "suf_1l1r_wrapper_width",
-		"parent" => "1l1r-sidebar",
-		"grouping" => "1l1r-size-fixed",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 1000",
-		"std" => "1000"),
-
-	array("name" => "Custom component width - Custom value for main column width",
-		"desc" => "If you have selected \"Custom width, but constructed from individual components\" above, you can set the width here for the main column.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 380 will be treated as 380. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"80%\" as the width. ",
-		"id" => "suf_1l1r_main_col_width",
-		"parent" => "1l1r-sidebar",
-		"grouping" => "1l1r-size-fixed",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 725",
-		"std" => "725"),
-
-	array("name" => "Sidebar width settings",
-		"desc" => "Sidebar widths are relevant in the fluid width layout and in the fixed width layout with the \"Custom width, but constructed from individual components\" selection.",
-		"category" => "1l1r-size-sb",
-		"parent" => "1l1r-sidebar",
-		"type" => "sub-section-4",),
-
-	array("name" => "Custom component width - Custom value for width of left sidebar",
-		"desc" => "If you have selected \"Custom width, but constructed from individual components\" above, you can set the width here for the first sidebar.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 95 will be treated as 95. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"10%\" as the width. ",
-		"id" => "suf_1l1r_sb_1_width",
-		"parent" => "1l1r-sidebar",
-		"grouping" => "1l1r-size-sb",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 260",
-		"std" => "260"),
-
-	array("name" => "Custom component width - Custom value for width of right sidebar",
-		"desc" => "If you have selected \"Custom width, but constructed from individual components\" above, you can set the width here for the second sidebar.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 95 will be treated as 95. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"10%\" as the width. ",
-		"id" => "suf_1l1r_sb_2_width",
-		"parent" => "1l1r-sidebar",
-		"grouping" => "1l1r-size-sb",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 260",
-		"std" => "260"),
-
-	array("name" => "Double Left Sidebars",
-		"type" => "sub-section-3",
-		"category" => "2l-sidebars",
-		"parent" => "templates"
-	),
-
-	array("name" => "The \"Double Left Sidebars\" template",
-		"desc" => "You can use this template if you have a page where you want two sidebars to show up on the left.
-				To set up pages with this template, select the \"Double Left Sidebars\" template while creating or updating a page.",
-		"parent" => "2l-sidebars",
-		"type" => "blurb"
-	),
-
-	array("name" => "Page Width Type",
-		"desc" => "Your page can be fixed width or fluid/elastic width",
-		"id" => "suf_2l_wrapper_width_type",
-		"parent" => "2l-sidebars",
-		"type" => "radio",
-		"options" => array("fixed" => "Fixed width", "fluid" => "Fluid/Flexible width"),
-		"std" => "fixed"),
-
-	array("name" => "Fluid width settings",
-		"desc" => "In the fluid width layout your sidebars have a fixed width, while the overall width of your page is a percentage of the browser window's width.",
-		"category" => "2l-size-flexible",
-		"parent" => "2l-sidebars",
-		"type" => "sub-section-4",),
-
-	array("name" => "Width of page",
-		"id" => "suf_2l_wrapper_width_flex",
-		"parent" => "2l-sidebars",
-		"grouping" => "2l-size-flexible",
-		"type" => "slider",
-		"options" => array("range" => "min", "min" => 25, "max" => 100, "step" => 1, "size" => "400px", "unit" => "%"),
-		"std" => 75),
-
-	array("name" => "Maximum width",
-		"desc" => "Set this value so that your typography stays consistent on large screens.",
-		"id" => "suf_2l_wrapper_width_flex_max",
-		"parent" => "2l-sidebars",
-		"grouping" => "2l-size-flexible",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Value will be set to a default if blank or incompatible.",
-		"std" => "1200"),
-
-	array("name" => "Minimum width",
-		"desc" => "Set this value so that your typography stays consistent on small screens.",
-		"id" => "suf_2l_wrapper_width_flex_min",
-		"parent" => "2l-sidebars",
-		"grouping" => "2l-size-flexible",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Value will be set to a default if blank or incompatible.",
-		"std" => "600"),
-
-	array("name" => "Fixed width settings",
-		"desc" => "In the fixed width layout the components of your page have widths fixed in pixels, irrespective of the size of your browser window.",
-		"category" => "2l-size-fixed",
-		"parent" => "2l-sidebars",
-		"type" => "sub-section-4",),
-
-	array("name" => "Overall Page Width",
-		"desc" => "Suffusion comes with 3 preset page width options: 800px, 1000px and 1200px. You can also define a custom width if you please, or allow the width of the page to be determined by the width of its main components like the sidebars and the main content column.
-				Due to difficulties with fitting things on the page, the minimum size allowed is 600px. If you enter something less than 600, it is considered to be 600.",
-		"id" => "suf_2l_wrapper_width_preset",
-		"parent" => "2l-sidebars",
-		"grouping" => "2l-size-fixed",
-		"type" => "radio",
-		"options" => array("800" => "800px", "1000" => "1000px (Default)", "1200" => "1200px",
-			"custom" => "Custom width (defined below)", "custom-components" => "Custom width, but constructed from individual components (defined below)"),
-		"std" => "1000"),
-
-	array("name" => "Custom value for page width",
-		"desc" => "If you have selected \"Custom width\" above, you can set the width here. Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 600 will be treated as 600. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"80%\" as the width.
-				Also note that if you are setting a width over here with the \"Custom width\" selection in place, the widths of the individual components like the main column, the sidebars etc. are auto-calculated",
-		"id" => "suf_2l_wrapper_width",
-		"parent" => "2l-sidebars",
-		"grouping" => "2l-size-fixed",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 1000",
-		"std" => "1000"),
-
-	array("name" => "Custom component width - Custom value for main column width",
-		"desc" => "If you have selected \"Custom width, but constructed from individual components\" above, you can set the width here for the main column.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 380 will be treated as 380. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"80%\" as the width. ",
-		"id" => "suf_2l_main_col_width",
-		"parent" => "2l-sidebars",
-		"grouping" => "2l-size-fixed",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 725",
-		"std" => "725"),
-
-	array("name" => "Sidebar width settings",
-		"desc" => "Sidebar widths are relevant in the fluid width layout and in the fixed width layout with the \"Custom width, but constructed from individual components\" selection.",
-		"category" => "2l-size-sb",
-		"parent" => "2l-sidebars",
-		"type" => "sub-section-4",),
-
-	array("name" => "Custom component width - Custom value for width of first sidebar",
-		"desc" => "If you have selected \"Fluid width\" or \"Custom width, but constructed from individual components\" above, you can set the width here for the first sidebar.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 95 will be treated as 95. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"10%\" as the width. ",
-		"id" => "suf_2l_sb_1_width",
-		"parent" => "2l-sidebars",
-		"grouping" => "2l-size-sb",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 260",
-		"std" => "260"),
-
-	array("name" => "Custom component width - Custom value for width of second sidebar",
-		"desc" => "If you have selected \"Fluid width\" or \"Custom width, but constructed from individual components\" above, you can set the width here for the second sidebar.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 95 will be treated as 95. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"10%\" as the width. ",
-		"id" => "suf_2l_sb_2_width",
-		"parent" => "2l-sidebars",
-		"grouping" => "2l-size-sb",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 260",
-		"std" => "260"),
-
-	array("name" => "Double Right Sidebars",
-		"type" => "sub-section-3",
-		"category" => "2r-sidebars",
-		"parent" => "templates"
-	),
-
-	array("name" => "The \"Double Right Sidebars\" template",
-		"desc" => "You can use this template if you have a page where you want two sidebars to show up on the right.
-				To set up pages with this template, select the \"Double Right Sidebars\" template while creating or updating a page.",
-		"parent" => "2r-sidebars",
-		"type" => "blurb"
-	),
-
-	array("name" => "Page Width Type",
-		"desc" => "Your page can be fixed width or fluid/elastic width",
-		"id" => "suf_2r_wrapper_width_type",
-		"parent" => "2r-sidebars",
-		"type" => "radio",
-		"options" => array("fixed" => "Fixed width", "fluid" => "Fluid/Flexible width"),
-		"std" => "fixed"),
-
-	array("name" => "Fluid width settings",
-		"desc" => "In the fluid width layout your sidebars have a fixed width, while the overall width of your page is a percentage of the browser window's width.",
-		"category" => "2r-size-flexible",
-		"parent" => "2r-sidebars",
-		"type" => "sub-section-4",),
-
-	array("name" => "Width of page",
-		"id" => "suf_2r_wrapper_width_flex",
-		"parent" => "2r-sidebars",
-		"grouping" => "2r-size-flexible",
-		"type" => "slider",
-		"options" => array("range" => "min", "min" => 25, "max" => 100, "step" => 1, "size" => "400px", "unit" => "%"),
-		"std" => 75),
-
-	array("name" => "Maximum width",
-		"desc" => "Set this value so that your typography stays consistent on large screens.",
-		"id" => "suf_2r_wrapper_width_flex_max",
-		"parent" => "2r-sidebars",
-		"grouping" => "2r-size-flexible",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Value will be set to a default if blank or incompatible.",
-		"std" => "1200"),
-
-	array("name" => "Minimum width",
-		"desc" => "Set this value so that your typography stays consistent on small screens.",
-		"id" => "suf_2r_wrapper_width_flex_min",
-		"parent" => "2r-sidebars",
-		"grouping" => "2r-size-flexible",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Value will be set to a default if blank or incompatible.",
-		"std" => "600"),
-
-	array("name" => "Fixed width settings",
-		"desc" => "In the fixed width layout the components of your page have widths fixed in pixels, irrespective of the size of your browser window.",
-		"category" => "2r-size-fixed",
-		"parent" => "2r-sidebars",
-		"type" => "sub-section-4",),
-
-	array("name" => "Overall Page Width",
-		"desc" => "Suffusion comes with 3 preset page width options: 800px, 1000px and 1200px. You can also define a custom width if you please, or allow the width of the page to be determined by the width of its main components like the sidebars and the main content column.
-				Due to difficulties with fitting things on the page, the minimum size allowed is 600px. If you enter something less than 600, it is considered to be 600.",
-		"id" => "suf_2r_wrapper_width_preset",
-		"parent" => "2r-sidebars",
-		"grouping" => "2r-size-fixed",
-		"type" => "radio",
-		"options" => array("800" => "800px", "1000" => "1000px (Default)", "1200" => "1200px",
-			"custom" => "Custom width (defined below)", "custom-components" => "Custom width, but constructed from individual components (defined below)"),
-		"std" => "1000"),
-
-	array("name" => "Custom value for page width",
-		"desc" => "If you have selected \"Custom width\" above, you can set the width here. Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 600 will be treated as 600. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"80%\" as the width.
-				Also note that if you are setting a width over here with the \"Custom width\" selection in place, the widths of the individual components like the main column, the sidebars etc. are auto-calculated",
-		"id" => "suf_2r_wrapper_width",
-		"parent" => "2r-sidebars",
-		"grouping" => "2r-size-fixed",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 1000",
-		"std" => "1000"),
-
-	array("name" => "Custom component width - Custom value for main column width",
-		"desc" => "If you have selected \"Custom width, but constructed from individual components\" above, you can set the width here for the main column.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 380 will be treated as 380. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"80%\" as the width. ",
-		"id" => "suf_2r_main_col_width",
-		"parent" => "2r-sidebars",
-		"grouping" => "2r-size-fixed",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 725",
-		"std" => "725"),
-
-	array("name" => "Sidebar width settings",
-		"desc" => "Sidebar widths are relevant in the fluid width layout and in the fixed width layout with the \"Custom width, but constructed from individual components\" selection.",
-		"category" => "2r-size-sb",
-		"parent" => "2r-sidebars",
-		"type" => "sub-section-4",),
-
-	array("name" => "Custom component width - Custom value for width of first sidebar",
-		"desc" => "If you have selected \"Fluid width\" or \"Custom width, but constructed from individual components\" above, you can set the width here for the first sidebar.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 95 will be treated as 95. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"10%\" as the width. ",
-		"id" => "suf_2r_sb_1_width",
-		"parent" => "2r-sidebars",
-		"grouping" => "2r-size-sb",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 260",
-		"std" => "260"),
-
-	array("name" => "Custom component width - Custom value for width of second sidebar",
-		"desc" => "If you have selected \"Fluid width\" or \"Custom width, but constructed from individual components\" above, you can set the width here for the second sidebar.
-				Please enter the width in pixels. <b>Do not enter \"px\".</b>
-				Anything below 95 will be treated as 95. Note that this is a fixed width theme, not a fluid theme. What this means is that you cannot specify things like \"10%\" as the width. ",
-		"id" => "suf_2r_sb_2_width",
-		"parent" => "2r-sidebars",
-		"grouping" => "2r-size-sb",
-		"type" => "text",
-		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored. Incompatible values will be treated as 260",
-		"std" => "260"),
-
 	array("name" => "Now Reading",
 		"type" => "sub-section-3",
 		"category" => "nr-template",
@@ -1513,7 +1003,7 @@ $suffusion_templates_options = array(
 	),
 
 	array("name" => "The \"Now Reading\" plugin templates",
-		"desc" => "If you have a site for book reviews the <a href='http://robm.me.uk/projects/plugins/wordpress/now-reading'>Now Reading plugin</a> is a gerat one to use.
+		"desc" => "If you have a site for book reviews the <a href='http://wordpress.org/extend/plugins/now-reading-reloaded/'>Now Reading Reloaded plugin</a> is a gerat one to use.
 		 	Suffusion has templates that support this plugin, which you can control here",
 		"parent" => "nr-template",
 		"type" => "blurb"
@@ -1815,5 +1305,316 @@ $suffusion_templates_options = array(
 		"parent" => "404-page",
 		"type" => "textarea",
 		"std" => $suffusion_404_content),
+
+	array("name" => "Custom Layout template",
+		"type" => "sub-section-3",
+		"category" => "custom-layout",
+		"parent" => "templates"
+	),
+
+	array("name" => "The \"Custom Layout\" template",
+		"desc" => "The \"Custom Layout\" template offers you <b>5 special widget areas</b> that you can use to build pretty much any layout that you wish.
+			Each widget area can be defined with a different number of columns. The heights of the widgets in each such widget area can be further controlled
+			so as to maximize your look and feel effects. Define your defaults here, then use this template while creating a page.<br/>
+			The following is an example layout using this template:
+				<div class='central-image'><img src=\"" . get_template_directory_uri() . "/admin/images/custom-layout.jpg\" alt='Widgets'/></div>
+			<em>Tip: If you want to use this template and override the defaults from this page, save a draft of your page. That will activate the Custom Layout options</em><br/>
+			<strong>Note:</strong>
+				<ul class='margin-40'>
+					<li>This template will not display the post content - only the widget areas.</li>
+					<li>To get different widgets on different pages, use this capability with a plugin like Widget Logic.</li>
+					<li>You can pick a specific sidebar layout for a page with this template.</li>
+				</ul>
+			For each page you can override the defaults that you have set here by changing the settings under <em>Additional Options for Suffusion &rarr; Custom Layout</em>,
+			while editing the page. The <em>Custom Layout</em> tab will be visible when you have saved a draft of the page or published it.",
+		"parent" => "custom-layout",
+		"type" => "blurb"
+	),
+
+	array("name" => "Widget Area 1",
+		"category" => "clt-wa1",
+		"parent" => "custom-layout",
+		"type" => "sub-section-4",),
+
+	array("name" => "Number of columns",
+		"id" => "suf_clt_wa1_cols",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa1",
+		"type" => "select",
+		"options" => array("1" => "1", "2" => "2", "3" => "3", "4" => "4", "5" => "5"),
+		"std" => "1"),
+
+	array("name" => "Height adjustment for widgets",
+		"id" => "suf_clt_wa1_widget_height",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa1",
+		"type" => "radio",
+		"options" => array(
+			"all-row" => "All widgets in the same row in this widget area have the same height",
+			"all" => "All widgets in this widget area have the same height",
+			"original" => "No height adjustment",
+			"masonry" => "All widgets have their original heights, but use JQuery Masonry to position them",
+		),
+		"std" => "all-row"),
+
+	array("name" => "Default or custom skinning?",
+		"desc" => "Override skin defaults",
+		"id" => "suf_clt_wa1_skin_setting",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa1",
+		"type" => "checkbox",
+		"std" => ""),
+
+	array("name" => "Widget Background",
+		"id" => "suf_clt_wa1_skin_settings_bg",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa1",
+		"type" => "background",
+		"options" => array(),
+		"std" => array("color" => '#ffffff', "image" => "", "trans" => "0",
+			"position" => "top left", "repeat" => "repeat", "attachment" => "scroll", "colortype" => "custom")),
+
+	array("name" => "Widget Border",
+		"id" => "suf_clt_wa1_skin_settings_bg_border",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa1",
+		"type" => "border",
+		"options" => array(),
+		"std" => array(
+			'top' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+			'right' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+			'bottom' => array('colortype' => 'custom', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 1, 'border-width-type' => 'px'),
+			'left' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+		),
+	),
+
+	array("name" => "Widget Area 2",
+		"category" => "clt-wa2",
+		"parent" => "custom-layout",
+		"type" => "sub-section-4",),
+
+	array("name" => "Number of columns",
+		"id" => "suf_clt_wa2_cols",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa2",
+		"type" => "select",
+		"options" => array("1" => "1", "2" => "2", "3" => "3", "4" => "4", "5" => "5"),
+		"std" => "1"),
+
+	array("name" => "Height adjustment for widgets",
+		"id" => "suf_clt_wa2_widget_height",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa2",
+		"type" => "radio",
+		"options" => array(
+			"all-row" => "All widgets in the same row in this widget area have the same height",
+			"all" => "All widgets in this widget area have the same height",
+			"original" => "No height adjustment",
+			"masonry" => "All widgets have their original heights, but use JQuery Masonry to position them",
+		),
+		"std" => "all-row"),
+
+	array("name" => "Default or custom skinning?",
+		"desc" => "Override skin defaults",
+		"id" => "suf_clt_wa2_skin_setting",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa2",
+		"type" => "checkbox",
+		"std" => ""),
+
+	array("name" => "Widget Background",
+		"id" => "suf_clt_wa2_skin_settings_bg",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa2",
+		"type" => "background",
+		"options" => array(),
+		"std" => array("color" => '#ffffff', "image" => "", "trans" => "0",
+			"position" => "top left", "repeat" => "repeat", "attachment" => "scroll", "colortype" => "custom")),
+
+	array("name" => "Widget Border",
+		"id" => "suf_clt_wa2_skin_settings_bg_border",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa2",
+		"type" => "border",
+		"options" => array(),
+		"std" => array(
+			'top' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+			'right' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+			'bottom' => array('colortype' => 'custom', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 1, 'border-width-type' => 'px'),
+			'left' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+		),
+	),
+
+	array("name" => "Widget Area 3",
+		"category" => "clt-wa3",
+		"parent" => "custom-layout",
+		"type" => "sub-section-4",),
+
+	array("name" => "Number of columns",
+		"id" => "suf_clt_wa3_cols",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa3",
+		"type" => "select",
+		"options" => array("1" => "1", "2" => "2", "3" => "3", "4" => "4", "5" => "5"),
+		"std" => "1"),
+
+	array("name" => "Height adjustment for widgets",
+		"id" => "suf_clt_wa3_widget_height",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa3",
+		"type" => "radio",
+		"options" => array(
+			"all-row" => "All widgets in the same row in this widget area have the same height",
+			"all" => "All widgets in this widget area have the same height",
+			"original" => "No height adjustment",
+			"masonry" => "All widgets have their original heights, but use JQuery Masonry to position them",
+		),
+		"std" => "all-row"),
+
+	array("name" => "Default or custom skinning?",
+		"desc" => "Override skin defaults",
+		"id" => "suf_clt_wa3_skin_setting",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa3",
+		"type" => "checkbox",
+		"std" => ""),
+
+	array("name" => "Widget Background",
+		"id" => "suf_clt_wa3_skin_settings_bg",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa3",
+		"type" => "background",
+		"options" => array(),
+		"std" => array("color" => '#ffffff', "image" => "", "trans" => "0",
+			"position" => "top left", "repeat" => "repeat", "attachment" => "scroll", "colortype" => "custom")),
+
+	array("name" => "Widget Border",
+		"id" => "suf_clt_wa3_skin_settings_bg_border",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa3",
+		"type" => "border",
+		"options" => array(),
+		"std" => array(
+			'top' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+			'right' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+			'bottom' => array('colortype' => 'custom', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 1, 'border-width-type' => 'px'),
+			'left' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+		),
+	),
+
+	array("name" => "Widget Area 4",
+		"category" => "clt-wa4",
+		"parent" => "custom-layout",
+		"type" => "sub-section-4",),
+
+	array("name" => "Number of columns",
+		"id" => "suf_clt_wa4_cols",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa4",
+		"type" => "select",
+		"options" => array("1" => "1", "2" => "2", "3" => "3", "4" => "4", "5" => "5"),
+		"std" => "1"),
+
+	array("name" => "Height adjustment for widgets",
+		"id" => "suf_clt_wa4_widget_height",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa4",
+		"type" => "radio",
+		"options" => array(
+			"all-row" => "All widgets in the same row in this widget area have the same height",
+			"all" => "All widgets in this widget area have the same height",
+			"original" => "No height adjustment",
+			"masonry" => "All widgets have their original heights, but use JQuery Masonry to position them",
+		),
+		"std" => "all-row"),
+
+	array("name" => "Default or custom skinning?",
+		"desc" => "Override skin defaults",
+		"id" => "suf_clt_wa4_skin_setting",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa4",
+		"type" => "checkbox",
+		"std" => ""),
+
+	array("name" => "Widget Background",
+		"id" => "suf_clt_wa4_skin_settings_bg",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa4",
+		"type" => "background",
+		"options" => array(),
+		"std" => array("color" => '#ffffff', "image" => "", "trans" => "0",
+			"position" => "top left", "repeat" => "repeat", "attachment" => "scroll", "colortype" => "custom")),
+
+	array("name" => "Widget Border",
+		"id" => "suf_clt_wa4_skin_settings_bg_border",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa4",
+		"type" => "border",
+		"options" => array(),
+		"std" => array(
+			'top' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+			'right' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+			'bottom' => array('colortype' => 'custom', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 1, 'border-width-type' => 'px'),
+			'left' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+		),
+	),
+
+	array("name" => "Widget Area 5",
+		"category" => "clt-wa5",
+		"parent" => "custom-layout",
+		"type" => "sub-section-4",),
+
+	array("name" => "Number of columns",
+		"id" => "suf_clt_wa5_cols",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa5",
+		"type" => "select",
+		"options" => array("1" => "1", "2" => "2", "3" => "3", "4" => "4", "5" => "5"),
+		"std" => "1"),
+
+	array("name" => "Height adjustment for widgets",
+		"id" => "suf_clt_wa5_widget_height",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa5",
+		"type" => "radio",
+		"options" => array(
+			"all-row" => "All widgets in the same row in this widget area have the same height",
+			"all" => "All widgets in this widget area have the same height",
+			"original" => "No height adjustment",
+			"masonry" => "All widgets have their original heights, but use JQuery Masonry to position them",
+		),
+		"std" => "all-row"),
+
+	array("name" => "Default or custom skinning?",
+		"desc" => "Override skin defaults",
+		"id" => "suf_clt_wa5_skin_setting",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa5",
+		"type" => "checkbox",
+		"std" => ""),
+
+	array("name" => "Widget Background",
+		"id" => "suf_clt_wa5_skin_settings_bg",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa5",
+		"type" => "background",
+		"options" => array(),
+		"std" => array("color" => '#ffffff', "image" => "", "trans" => "0",
+			"position" => "top left", "repeat" => "repeat", "attachment" => "scroll", "colortype" => "custom")),
+
+	array("name" => "Widget Border",
+		"id" => "suf_clt_wa5_skin_settings_bg_border",
+		"parent" => "custom-layout",
+		"grouping" => "clt-wa5",
+		"type" => "border",
+		"options" => array(),
+		"std" => array(
+			'top' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+			'right' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+			'bottom' => array('colortype' => 'custom', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 1, 'border-width-type' => 'px'),
+			'left' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
+		),
+	),
+
 );
 ?>

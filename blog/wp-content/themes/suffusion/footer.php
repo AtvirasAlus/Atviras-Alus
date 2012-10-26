@@ -6,10 +6,7 @@
  * @subpackage Templates
  */
 
-global $suffusion_unified_options;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
+global $suf_footer_layout_style;
 
 // Invoke hook - this creates the bottom widget area, the right sidebars etc.
 suffusion_before_end_container();

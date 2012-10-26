@@ -1,8 +1,5 @@
 <?php
-global $suffusion_unified_options, $sidebar_2_alignment;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
+global $sidebar_2_alignment, $suf_sidebar_alignment, $suf_sidebar_2_alignment, $suf_wa_sb2_style;
 
 if (is_page_template('1l-sidebar.php') || is_page_template('2l-sidebars.php') || (is_page_template('1l1r-sidebar.php') && $suf_sidebar_alignment == 'right')) {
 	$sidebar_2_alignment = 'left';

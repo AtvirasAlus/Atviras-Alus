@@ -1,0 +1,33 @@
+<div class="index_block">
+	<div class="block_header">
+		<?=($widget['limit'] == 1) ? "Atsitiktinis receptas" : "Atsitiktiniai receptai";?>
+	</div>
+	<div class="block_content">
+		<?php
+		foreach($widget['items'] as $item){
+			?>
+			<div class="wg_random_recipe">
+				<div class="wg_random_recipe_image">
+					<img src="/public/images/glass_thumb.png" alt="" style="background-color: <?=$this->colorHex($item['recipe_ebc'])?>;" />
+				</div>
+				<div class="wg_random_recipe_content">
+					<div class="wg_random_recipe_name">
+						<a href="/alus/receptas/<?=$item['recipe_id']?>-<?=$this->urlMaker($item['recipe_name'])?>"><?=$item['recipe_name']?></a>
+					</div>
+					<div class="wg_random_recipe_style">
+						<div><?=$item['style_name']?></div>
+						<div>
+							<a href="/brewers/<?=$item['brewer_id']?>"><?=$item['user_name']?></a>
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<?
+		}
+		?>
+		<div class="wg_more">
+			<a href="/recipes">Visi receptai</a>
+		</div>
+	</div>
+</div>

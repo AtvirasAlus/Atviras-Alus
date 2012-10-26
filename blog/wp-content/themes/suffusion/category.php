@@ -6,12 +6,9 @@
  * @subpackage Templates
  */
 
-global $suffusion_unified_options;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
-
+global $suf_cat_info_enabled, $suf_category_excerpt, $suffusion;
 get_header();
+$suffusion->set_content_layout($suf_category_excerpt);
 suffusion_query_posts();
 ?>
 
@@ -27,6 +24,10 @@ if ($suf_category_excerpt == 'list') {
 else if ($suf_category_excerpt == 'tiles') {
 	suffusion_after_begin_content();
 	get_template_part('layouts/layout-tiles');
+}
+else if ($suf_category_excerpt == 'mosaic') {
+	//suffusion_after_begin_content();
+	get_template_part('layouts/layout-mosaic');
 }
 else {
 	suffusion_after_begin_content();

@@ -11,12 +11,9 @@ global $suffusion_theme_name, $suffusion_safe_font_faces;
 
 $suffusion_theme_skinning_options = array(
 	// Main category for Look and Feel settings
-	array("name" => "Theme Skinning",
+	array("name" => "Skinning",
 		"type" => "sub-section-2",
 		"category" => "skinning",
-		"help" => "This is where you start your customization. The first step is easy - select a skin from \"Theme Selection\".
-			You can visit each of the individual sections and pick and choose the colors you want for each.
-			<br /><b>Version Info: </b> In version 3.7.3 and earlier, \"Theme Skinning\" was a sub-section under \"Visual Effects\".",
 		"parent" => "root"
 	),
 
@@ -33,12 +30,12 @@ $suffusion_theme_skinning_options = array(
 		"type" => "radio",
 		"options" => array(
 			"light-theme-green" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Light-theme-green.jpg' alt='Green on a light theme'/><p>Green on a light theme</p></div>",
-			"dark-theme-green" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Dark-theme-green.jpg' alt='Green on a dark theme'/><p>Green on a dark theme (Default)</p></div>",
+			"dark-theme-green" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Dark-theme-green.jpg' alt='Green on a dark theme'/><p>Green on a dark theme</p></div>",
 			"light-theme-pale-blue" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Light-theme-pale-blue.jpg' alt='Pale Blue on a light theme'/><p>Pale Blue on a light theme</p></div>",
 			"dark-theme-pale-blue" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Dark-theme-pale-blue.jpg' alt='Pale Blue on a dark theme'/><p>Pale Blue on a dark theme</p></div>",
 			"light-theme-royal-blue" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Light-theme-royal-blue.jpg' alt='Royal Blue on a light theme'/><p>Royal Blue on a light theme</p></div>",
 			"dark-theme-royal-blue" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Dark-theme-royal-blue.jpg' alt='Royal Blue on a dark theme'/><p>Royal Blue on a dark theme</p></div>",
-			"light-theme-gray-1" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Light-theme-gray-1.jpg' alt='Gray Shade 1 on a light theme'/><p>Gray Shade 1 on a light theme</p></div>",
+			"light-theme-gray-1" => "<div class='picture'><img src='" . get_template_directory_uri() . "/screenshot.png' alt='Gray Shade 1 on a light theme'/><p>Gray Shade 1 on a light theme</p></div>",
 			"dark-theme-gray-1" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Dark-theme-gray-1.jpg' alt='Gray Shade 1 on a dark theme'/><p>Gray Shade 1 on a dark theme</p></div>",
 			"light-theme-gray-2" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Light-theme-gray-2.jpg' alt='Gray Shade 2 on a light theme'/><p>Gray Shade 2 on a light theme</p></div>",
 			"dark-theme-gray-2" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Dark-theme-gray-2.jpg' alt='Gray Shade 2 on a dark theme'/><p>Gray Shade 2 on a dark theme</p></div>",
@@ -48,12 +45,54 @@ $suffusion_theme_skinning_options = array(
 			"dark-theme-orange" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Dark-theme-orange.jpg' alt='Orange on a dark theme'/><p>Orange on a dark theme</p></div>",
 			"light-theme-purple" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Light-theme-purple.jpg' alt='Purple on a light theme'/><p>Purple on a light theme</p></div>",
 			"dark-theme-purple" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/Dark-theme-purple.jpg' alt='Purple on a dark theme'/><p>Purple on a dark theme</p></div>",
-			"minima" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/minima.jpg' alt='Purple on a dark theme'/><p>Minima</p></div>",
+			"minima" => "<div class='picture'><img src='" . get_template_directory_uri() . "/admin/images/minima.jpg' alt='Minima'/><p>Minima</p></div>",
+			"photonique" => "<div class='picture'><img src='" . get_template_directory_uri() . "/screenshot-2.png' alt='Photonique'/><p>Photonique</p></div>",
+			"scribbles" => "<div class='picture'><img src='" . get_template_directory_uri() . "/screenshot-1.png' alt='Scribbles'/><p>Scribbles</p></div>",
 		),
 		"std" => "light-theme-gray-1"),
 
-	array("name" => "Top Navigation Menu",
-		"desc" => "Control the settings for the Top Navigation Bar",
+	array("name" => "Icon Sets",
+		"type" => "sub-section-3",
+		"category" => "icon-sets",
+		"parent" => "skinning"
+	),
+
+	array("name" => "Icon Sets",
+		"desc" => "Choose from one of the pre-defined icon sets. These apply mostly to byline, page navigation and comment form elements. A lot of these icons are from a <a href='http://www.studiopress.com/graphics/icon-set-bloggers.htm'>set generously released under GPL by StudioPress</a>.",
+		"id" => "suf_iconset",
+		"parent" => "icon-sets",
+		"type" => "radio",
+		"options" => array(
+			"iconset-0" => "<div class='picture'><img src='" . get_template_directory_uri() . "/images/iconset-0.png' alt='Set 1'/><p>Set 1</p></div>",
+			"iconset-1" => "<div class='picture'><img src='" . get_template_directory_uri() . "/images/iconset-1.png' alt='Set 2'/><p>Set 2</p></div>",
+			"iconset-2" => "<div class='picture'><img src='" . get_template_directory_uri() . "/images/iconset-2.png' alt='Set 3'/><p>Set 3</p></div>",
+			"iconset-3" => "<div class='picture'><img src='" . get_template_directory_uri() . "/images/iconset-3.png' alt='Set 4'/><p>Set 4</p></div>",
+			"iconset-4" => "<div class='picture'><img src='" . get_template_directory_uri() . "/images/iconset-4.png' alt='Set 5'/><p>Set 5</p></div>",
+			"iconset-5" => "<div class='picture'><img src='" . get_template_directory_uri() . "/images/iconset-5.png' alt='Set 6'/><p>Set 6</p></div>",
+			"iconset-6" => "<div class='picture'><img src='" . get_template_directory_uri() . "/images/iconset-6.png' alt='Set 6'/><p>Set 7</p></div>",
+			"theme" => "Theme Default",
+		),
+		"std" => "theme"),
+
+	array("name" => "Show icons",
+		"desc" => "Show icons for the following (applicable to the blog layout only):",
+		"id" => "suf_little_icons_enabled",
+		"parent" => "icon-sets",
+		"type" => "multi-select",
+		"options" => suffusion_get_formatted_options_array("suf_little_icons_enabled",
+			array(
+				'author' => 'Post/page author',
+				'date' => 'Post/page date',
+				'category' => 'Post category',
+				'tags' => 'Post tag',
+				'permalink' => 'Post permalink',
+				'comments' => 'Post/page comments',
+				'edit' => 'Post/page edit (seen by a logged in author only)'
+			)),
+		"std" => "author,date,category,tags,permalink,comments,edit"),
+
+	array("name" => "Navigation Bar Above Header",
+		"desc" => "Control the settings for the Navigation Bar Above Header",
 		"category" => "navt-skin-settings",
 		"parent" => "skinning",
 		"type" => "sub-section-3",),
@@ -62,7 +101,7 @@ $suffusion_theme_skinning_options = array(
 		"id" => "suf_navt_skin_def_cust",
 		"type" => "radio",
 		"parent" => "navt-skin-settings",
-		"options" => array("theme" => "Theme styles (default)",
+		"options" => array("theme" => "Theme styles",
 			"custom" => "Custom styles"),
 		"std" => "theme"),
 
@@ -240,27 +279,16 @@ $suffusion_theme_skinning_options = array(
 		"parent" => "header-styles",
 		"type" => "radio",
 		"note" => "Please set this option to \"Custom styles\" if you want to override the theme's settings for the header.",
-		"options" => array("theme" => "Theme styles (default)",
+		"options" => array("theme" => "Theme styles",
 			"custom" => "Custom styles"),
 		"std" => "theme"),
 
-	array("name" => "Header Layout Style",
-		"desc" => "You can choose different header styles - full width or page width:",
-		"id" => "suf_header_layout_style",
-		"parent" => "header-styles",
-		"type" => "radio",
-		"options" => array("out-hcfull" => "Header is outside the main wrapper, its background and contents are as wide as your browser window",
-			"out-hcalign" => "Header is outside the main wrapper, its background and contents are aligned with the main wrapper",
-			"out-cfull-halign" => "Header is outside the main wrapper, its background is as wide as your browser window, but header contents are aligned with the main wrapper",
-			"in-align" => "Header is inside the main wrapper", "theme" => "Theme Default"),
-		"std" => "theme"),
-
 	array("name" => "Header Background Image Type",
-		"desc" => "You can set an image to use for the header. You can either use a predefined image (default) or a custom gradient or nothing at all.",
+		"desc" => "You can set an image to use for the header. You can either use a predefined image or a custom gradient or nothing at all.",
 		"id" => "suf_header_image_type",
 		"parent" => "header-styles",
 		"type" => "radio",
-		"options" => array("image" => "Use a predefined image (default)",
+		"options" => array("image" => "Use a predefined image",
 			"gradient" => "Use a custom gradient", "rot-image" => "Use a rotating set of images from a folder",
 			"none" => "No image"),
 		"std" => "image"),
@@ -280,7 +308,7 @@ $suffusion_theme_skinning_options = array(
 		"id" => "suf_header_background_repeat",
 		"parent" => "header-styles",
 		"type" => "radio",
-		"options" => array("repeat" => "Repeat both horizontally and vertically (default)",
+		"options" => array("repeat" => "Repeat both horizontally and vertically",
 			"repeat-x" => "Repeat horizontally only",
 			"repeat-y" => "Repeat vertically only",
 			"no-repeat" => "Do not repeat - show background once only"),
@@ -292,7 +320,7 @@ $suffusion_theme_skinning_options = array(
 		"id" => "suf_header_background_position",
 		"parent" => "header-styles",
 		"type" => "radio",
-		"options" => array("top left" => "Top left (default)",
+		"options" => array("top left" => "Top left",
 			"top center" => "Top center",
 			"top right" => "Top right",
 			"center left" => "Center left",
@@ -346,7 +374,7 @@ $suffusion_theme_skinning_options = array(
 		"parent" => "header-styles",
 		"type" => "radio",
 		"options" => array("image" => "Use a predefined image or logo",
-			"text" => "Use text (default)"),
+			"text" => "Use text"),
 		"std" => "text"),
 
 	array("name" => "Header Foreground Image",
@@ -403,30 +431,6 @@ $suffusion_theme_skinning_options = array(
 		"type" => "color-picker",
 		"std" => suffusion_evaluate_style("suf_blog_description_color", $suffusion_theme_name)),
 
-	array("name" => "Blog Title / Header Alignment",
-		"desc" => "Which side would you like your header?",
-		"id" => "suf_header_alignment",
-		"parent" => "header-styles",
-		"type" => "radio",
-		"options" => array("left" => "Left", "right" => "Right", "center" => "Center", "hidden" => "Hidden"),
-		"std" => "left"),
-
-	array("name" => "Description / Sub-Header Alignment",
-		"desc" => "Which side would you like your sub-header?",
-		"id" => "suf_sub_header_alignment",
-		"parent" => "header-styles",
-		"type" => "radio",
-		"options" => array("left" => "Left", "right" => "Right", "center" => "Center", "hidden" => "Hidden"),
-		"std" => "right"),
-
-	array("name" => "Description / Sub-Header Vertical Alignment, relative to header",
-		"desc" => "Which line would you like your sub-header relative to the header?",
-		"id" => "suf_sub_header_vertical_alignment",
-		"parent" => "header-styles",
-		"type" => "radio",
-		"options" => array("above" => "Above the header text", "below" => "Below the header text", "same-line" => "Same line as the header"),
-		"std" => "same-line"),
-
 	array("name" => "Empty Space Between Top of Page and Header",
 		"desc" => "There is a gap of 20px between the top of the page and the header. You can change it here. " .
 				"If you have chosen default styles above then this setting will be ignored.",
@@ -436,17 +440,17 @@ $suffusion_theme_skinning_options = array(
 		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored.",
 		"std" => "20"),
 
-	array("name" => "Height of the Header image",
-		"desc" => "The header is 55px high by default. You can change this setting if you have a header image needs to fit.
-			Note that both above and below the header is 15px of padding, making the effective height of the header 85px.",
+	array("name" => "Minimum Height of the Header image",
+		"desc" => "The minimum header is 55px high by default. You can change this setting if you have a header image needs to fit.
+			Note that both above and below the header is 15px of padding, making the effective minimum height of the header 85px.",
 		"id" => "suf_header_height",
 		"parent" => "header-styles",
 		"type" => "text",
 		"hint" => "Enter the number of pixels here (don't enter 'px'). Non-integers will be ignored.",
 		"std" => "55"),
 
-	array("name" => "Main Navigation Menu",
-		"desc" => "Control the settings for the Main Navigation Bar",
+	array("name" => "Navigation Bar Below Header",
+		"desc" => "Control the settings for the Navigation Bar Below Header",
 		"category" => "nav-skin-settings",
 		"parent" => "skinning",
 		"type" => "sub-section-3",),
@@ -455,7 +459,7 @@ $suffusion_theme_skinning_options = array(
 		"id" => "suf_nav_skin_def_cust",
 		"type" => "radio",
 		"parent" => "nav-skin-settings",
-		"options" => array("theme" => "Theme styles (default)",
+		"options" => array("theme" => "Theme styles",
 			"custom" => "Custom styles"),
 		"std" => "theme"),
 
@@ -477,7 +481,7 @@ $suffusion_theme_skinning_options = array(
 		"std" => array(
 			'top' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
 			'right' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
-			'bottom' => array('colortype' => 'custom', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 1, 'border-width-type' => 'px'),
+			'bottom' => array('colortype' => 'custom', 'color' => '#ffffff', 'style' => 'none', 'border-width' => 1, 'border-width-type' => 'px'),
 			'left' => array('colortype' => 'transparent', 'color' => '#cccccc', 'style' => 'none', 'border-width' => 0, 'border-width-type' => 'px'),
 		),
 	),
@@ -620,20 +624,23 @@ $suffusion_theme_skinning_options = array(
 			"font-style" => "normal", "font-variant" => "normal", "font-size" => "14", "font-size-type" => "px")),
 
 	array("name" => "Body Background",
-		"desc" => "Control the settings for the background of the main body",
+		"desc" => "Control the settings for the background of the main body.",
 		"category" => "body-bg-settings",
 		"parent" => "skinning",
 		"type" => "sub-section-3",),
 
 	array("name" => "Default or custom backgrounds for main body?",
-		"desc" => "You can decide to go with the colors / text styles of the theme you are using, or choose your own. " .
-				"If you choose default colors / text styles here then the rest of your settings in this section will be ignored. " .
-				"If you choose custom styles then the settings you make here will override the theme's settings.",
+		"desc" => "<b>If you are using WP's native background features:</b>
+			<ul class='margin-20'>
+				<li>If <em>Appearance &rarr; Background</em> has a background image, that image will be shown as your site's background (no change in this behaviour).</li>
+				<li>If <em>Appearance &rarr; Background</em> has no background image, there will be no background image for your site.</li>
+				<li>If <em>Appearance &rarr; Background</em> has the default background image, only then will the settings from this page will take effect. If you have left this section to have &ldquo;Theme Styles&rdquo;, then everything will stay as default.</li>
+			</ul>",
 		"id" => "suf_body_style_setting",
 		"parent" => "body-bg-settings",
 		"note" => "Please set this option to \"Custom styles\" if you want to override the theme's settings for the body.",
 		"type" => "radio",
-		"options" => array("theme" => "Theme styles (default)",
+		"options" => array("theme" => "Theme styles",
 			"custom" => "Custom styles"),
 		"std" => "theme"),
 
@@ -653,7 +660,7 @@ $suffusion_theme_skinning_options = array(
 		"parent" => "body-bg-settings",
 		"type" => "upload",
 		"hint" => "Enter the full URL here (including http://), or click on \"Upload Image\"",
-		"std" => ""),
+		"std" => suffusion_evaluate_style("suf_body_background_image", $suffusion_theme_name)),
 
 	array("name" => "Body Background Image Tiling",
 		"desc" => "Set how the background image should be tiled. This will define how the image will repeat on the background. " .
@@ -661,7 +668,7 @@ $suffusion_theme_skinning_options = array(
 		"id" => "suf_body_background_repeat",
 		"parent" => "body-bg-settings",
 		"type" => "radio",
-		"options" => array("repeat" => "Repeat both horizontally and vertically (default)",
+		"options" => array("repeat" => "Repeat both horizontally and vertically",
 			"repeat-x" => "Repeat horizontally only",
 			"repeat-y" => "Repeat vertically only",
 			"no-repeat" => "Do not repeat - show background once only"),
@@ -673,7 +680,7 @@ $suffusion_theme_skinning_options = array(
 		"id" => "suf_body_background_attachment",
 		"parent" => "body-bg-settings",
 		"type" => "radio",
-		"options" => array("scroll" => "Let the background scroll with the rest of the page (default)",
+		"options" => array("scroll" => "Let the background scroll with the rest of the page",
 			"fixed" => "Keep the background fixed"),
 		"std" => "scroll"),
 
@@ -683,7 +690,7 @@ $suffusion_theme_skinning_options = array(
 		"id" => "suf_body_background_position",
 		"parent" => "body-bg-settings",
 		"type" => "radio",
-		"options" => array("top left" => "Top left (default)",
+		"options" => array("top left" => "Top left",
 			"top center" => "Top center",
 			"top right" => "Top right",
 			"center left" => "Center left",
@@ -704,7 +711,7 @@ $suffusion_theme_skinning_options = array(
 		"id" => "suf_wrapper_settings_def_cust",
 		"type" => "radio",
 		"parent" => "wrapper-bg-settings",
-		"options" => array("theme" => "Theme styles (default)",
+		"options" => array("theme" => "Theme styles",
 			"custom" => "Custom styles"),
 		"std" => "theme"),
 
@@ -736,7 +743,7 @@ $suffusion_theme_skinning_options = array(
 		"id" => "suf_post_bg_settings_def_cust",
 		"type" => "radio",
 		"parent" => "post-bg-settings",
-		"options" => array("theme" => "Theme styles (default)",
+		"options" => array("theme" => "Theme styles",
 			"custom" => "Custom styles"),
 		"std" => "theme"),
 
@@ -748,98 +755,6 @@ $suffusion_theme_skinning_options = array(
 		"options" => array(),
 		"std" => array("color" => suffusion_evaluate_style("suf_post_background_color", $suffusion_theme_name), "image" => "", "trans" => "0",
 			"position" => "top left", "repeat" => "repeat", "attachment" => "scroll", "colortype" => "custom")),
-
-	array("name" => "Body Fonts",
-		"type" => "sub-section-3",
-		"category" => "body-font-styles",
-		"parent" => "skinning"
-	),
-
-	array("name" => "Default or custom font styles?",
-		"desc" => "You can decide to go with the colors / text styles of the theme you are using, or choose your own. " .
-				"If you choose default colors / text styles here then the rest of your settings in this section will be ignored. " .
-				"If you choose custom styles then the settings you make here will override the theme's settings.",
-		"id" => "suf_body_font_style_setting",
-		"parent" => "body-font-styles",
-		"note" => "Please set this option to \"Custom styles\" if you want to override the theme's settings for the fonts.",
-		"type" => "radio",
-		"options" => array("theme" => "Theme styles (default)",
-			"custom" => "Custom styles"),
-		"std" => "theme"),
-
-	array("name" => "Font Face",
-		"desc" => "You can choose the fonts that you want to use. If the font you pick cannot be rendered by the browser / OS, " .
-				"the default sequence of fonts is attempted (Trebuchet, Trebuchet MS, Tahoma, Lucida Grande, Lucida Sans Unicode, Arial, Verdana, sans-serif). " .
-				"The following is a list of \"browser-safe\" fonts, <a href='http://www.ampsoft.net/webdesign-l/WindowsMacFonts.html'>from here</a>." .
-				"The fonts in <span class='mac'>blue</span> are the Mac equivalents of the Windows fonts. The <i>italicized</i> text represents the generic font family. " .
-				"If you have chosen default styles above then this setting will be ignored.",
-		"id" => "suf_body_font_family",
-		"parent" => "body-font-styles",
-		"note" => "Note that the fonts may not render correctly in the following, depending on your OS / browser.",
-		"type" => "radio",
-		"options" => $suffusion_safe_font_faces,
-		"std" => "Arial, Helvetica, sans-serif"),
-
-	array("name" => "Font Color",
-		"desc" => "Set the color of the fonts being used. " .
-				"Make sure that your font color goes well enough with the theme. " .
-				"If you have chosen default styles above then this setting will be ignored.",
-		"id" => "suf_font_color",
-		"parent" => "body-font-styles",
-		"type" => "color-picker",
-		"std" => suffusion_evaluate_style("suf_font_color", $suffusion_theme_name)),
-
-	array("name" => "Link Color",
-		"desc" => "Set the color of the links in the main content. Font colors in the sidebar are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
-				"If you have chosen default styles above then this setting will be ignored.",
-		"id" => "suf_link_color",
-		"parent" => "body-font-styles",
-		"type" => "color-picker",
-		"std" => suffusion_evaluate_style("suf_link_color", $suffusion_theme_name)),
-
-	array("name" => "Link Decoration",
-		"desc" => "Set the effects for the link text. If you have chosen default styles above then this setting will be ignored.",
-		"id" => "suf_link_style",
-		"parent" => "body-font-styles",
-		"type" => "radio",
-		"options" => array("underline" => "Underlined", "none" => "None"),
-		"std" => "none"),
-
-	array("name" => "Visited Link Color",
-		"desc" => "Set the color of the visited links in the main content. Font colors in the sidebar are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
-				"If you have chosen default styles above then this setting will be ignored.",
-		"id" => "suf_visited_link_color",
-		"parent" => "body-font-styles",
-		"type" => "color-picker",
-		"std" => suffusion_evaluate_style("suf_visited_link_color", $suffusion_theme_name)),
-
-	array("name" => "Visited Link Decoration",
-		"desc" => "Set the effects for the visited link text. If you have chosen default styles above then this setting will be ignored.",
-		"id" => "suf_visited_link_style",
-		"parent" => "body-font-styles",
-		"type" => "radio",
-		"options" => array("underline" => "Underlined", "none" => "None"),
-		"std" => "none"),
-
-	array("name" => "Link Hover Color",
-		"desc" => "Set the color that the links should become when you hover over them in the main content. Font colors in the sidebar are unaffected" .
-				"Make sure that your font color goes well enough with the theme. " .
-				"If you have chosen default styles above then this setting will be ignored.",
-		"id" => "suf_link_hover_color",
-		"parent" => "body-font-styles",
-		"type" => "color-picker",
-		"std" => suffusion_evaluate_style("suf_link_hover_color", $suffusion_theme_name)),
-
-	array("name" => "Link Hover Decoration",
-		"desc" => "Set the effects for the link text on which you are hovering. " .
-				"If you have chosen default styles above then this setting will be ignored.",
-		"id" => "suf_link_hover_style",
-		"parent" => "body-font-styles",
-		"type" => "radio",
-		"options" => array("underline" => "Underlined", "none" => "None"),
-		"std" => "underline"),
 
 	array("name" => "Date Box",
 		"desc" => "Control the settings for the date box on posts",
@@ -861,7 +776,7 @@ $suffusion_theme_skinning_options = array(
 		"id" => "suf_date_box_settings_def_cust",
 		"type" => "radio",
 		"parent" => "date-box-settings",
-		"options" => array("theme" => "Theme styles (default)",
+		"options" => array("theme" => "Theme styles",
 			"custom" => "Custom styles"),
 		"std" => "theme"),
 
@@ -933,7 +848,7 @@ $suffusion_theme_skinning_options = array(
 		"id" => "suf_emphasis_customization",
 		"parent" => "emphasis-setup",
 		"type" => "radio",
-		"note" => "Please set this option to \"Custom styles\" if you want to override the theme's settings for the emphasis eelements.",
+		"note" => "Please set this option to \"Custom styles\" if you want to override the theme's settings for the emphasis elements.",
 		"options" => array("theme" => "Theme styles",
 			"custom" => "Custom styles"),
 		"std" => "theme"),

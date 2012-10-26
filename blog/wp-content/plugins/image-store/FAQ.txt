@@ -1,0 +1,33 @@
+FAQ
+
+1. I can't upload images using flash.
+this could be cause by a windows server this plugin has not been tested on windows servers.
+
+2. I wat at the requirement to run the plugin
+MySQL 5.1.26+, Apache 2.2.11+, Linux/Unix, WP3.0.0+
+
+3. When I stall the plugin I get the following error "unexpected T_CONST, expecting T_OLD_FUNCTION or T_FUNCTION or T_VAR or ‘}’"
+This is because your using PHP4 and this plugin only works with PHP5
+
+4. The "add to favorites", "add to cart", and  "colorbox/lighbox" links don't work.
+make sure that you theme have the function this loads the javascript to the frontend of the site.
+
+5. How do I change the thumbnail size on the frotend for the photo page?
+- Before installing the plugin set the "Thumbnail size" setting under Wordpress admin > settings > media to the decired size.
+- After the plugin was installed set the "Thumbnail size" and rescan the gallery folder.
+
+6. How can I make donation to continue the plugin development?
+With the plugin installed navigate to Image Store > settings and click on the donate button.
+
+7. Google Checkou is not accepting payment. 
+There are a few settings that you have to change in you google account.
+Google checkout account:
+- Go to settings > integrations 
+- "API callback URL" use your site homepage url
+- Check "Notification as HTML"
+
+8. Can I use the plugin only to manage my images not a store?
+Yes, under settings > gallery settings check "Disable store features"
+
+9. Can I use this plugin with "NextGen Gallery".
+NO, there is no integration at the moment.

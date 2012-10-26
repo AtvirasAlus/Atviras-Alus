@@ -1,16 +1,11 @@
 <?php
 /**
- * Constructs a tabbed box in the sidebar with different pseudo-widgets.
- * This is only shown when you have at least one sidebar displayed on the page.
- * Currently the standard WordPress widgets are supported here.
- * There are plans to add support for some popular widgets later
+ * Constructs a tabbed box in the sidebar with different pseudo-widgets. This is only shown when you have at least one sidebar displayed on the page.
+ * Currently the standard WordPress widgets are supported here. There are plans to add support for some popular widgets later.
+ * This can be extended by a child theme.
  */
 
-global $suffusion_sidebar_tabs, $suffusion_tabs_alignment;
-global $suffusion_unified_options;
-foreach ($suffusion_unified_options as $id => $value) {
-	$$id = $value;
-}
+global $suffusion_sidebar_tabs, $suffusion_tabs_alignment, $suf_sbtab_widgets, $suf_sbtab_widget_order, $selected_tab_array;
 
 function suffusion_sbtab_archives() {
 	global $suf_sbtab_archives_type, $suf_sbtab_archives_post_count, $suf_sbtab_archives_list_type;
@@ -80,7 +75,7 @@ function suffusion_sbtab_recent_comments() {
 	$comments = get_comments(array('status' => 'approve', 'number' => 10));
 	if ($comments) {
 		foreach ((array) $comments as $comment) {
-			echo  '<li>' . sprintf(_x('%1$s on %2$s', 'widgets'), get_comment_author_link(), '<a href="' . esc_url( get_comment_link($comment->comment_ID) ) . '">' . get_the_title($comment->comment_post_ID) . '</a>') . '</li>';
+			echo  '<li>' . sprintf(_x('%1$s on %2$s', 'widgets', 'suffusion'), get_comment_author_link(), '<a href="' . esc_url( get_comment_link($comment->comment_ID) ) . '">' . get_the_title($comment->comment_post_ID) . '</a>') . '</li>';
 		}
 	}
 	echo '</ul>';
@@ -143,6 +138,7 @@ if ($selected_tabs && is_array($selected_tabs)) {
 			$first_class = 'sbtab-first';
 		}
 		$title_field = 'suf_sbtab_'.$sidebar_tab.'_title';
+		global $$title_field;
 		if (isset($$title_field)) {
 			$title_value = $$title_field;
 			$title_value = stripslashes($title_value);
@@ -183,5 +179,3 @@ if ($selected_tab_array && is_array($selected_tab_array)) {
 }
 ?>
 </div><!-- tab-box -->
-
-

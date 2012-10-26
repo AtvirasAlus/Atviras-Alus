@@ -10,13 +10,8 @@ $_SERVER['PHP_SELF'] = "/wp-admin/sales-csv.php";
 require_once '../../../../wp-admin/admin.php';
 
 //check that a user is logged in
-if ( !is_user_logged_in() )
-	die();
-
-//check that a user is logged in
 if ( !current_user_can( 'ims_read_sales' ) )
 	die( );
-
 
 //dont cache file
 $enco = get_bloginfo( 'charset' );
@@ -31,9 +26,6 @@ header( 'Content-Description:File Transfer' );
 header( 'Content-Transfer-Encoding: binary' ); 
 header( 'Content-type: application/csv;  charset=' . "$enco; encoding=$enco" );
 header( 'Content-Disposition:attachment; filename=image-store-sales.csv' );
-
-set_time_limit( 5000 );
-ini_set( 'memory_limit', '215M' );
 
 $query = apply_filters( 'ims_sales_csv_query', 
 	"SELECT ID, post_title, 
@@ -55,20 +47,20 @@ if( empty( $results ) )
 	die( );
 
 $columns = apply_filters( 'ims_sales_csv_columns', array(
-	'txn_id'		=> __( 'Order number', $ImStore->domain ), 
-	'post_date'		=> __( 'Date', $ImStore->domain ), 
-	'payment_gross' => __( 'Amount', $ImStore->domain ), 
-	'tax' 			=> __( 'Tax', $ImStore->domain ), 
-	'first_name' 	=> __( 'Firstname', $ImStore->domain ),
-	'last_name' 	=> __( 'Lastname', $ImStore->domain ), 
-	'num_cart_items'=> __( 'Images', $ImStore->domain ), 
-	'payment_status'=> __( 'Payment status', $ImStore->domain),
-	'post_status' 	=> __( 'Order Status', $ImStore->domain),
-	'address_street'=> __( 'Address', $ImStore->domain ),
-	'address_city'	=> __( 'City', $ImStore->domain ),
-	'address_state'	=> __( 'State', $ImStore->domain ),
-	'address_zip'	=> __( 'Zip', $ImStore->domain ),
-	'address_country'=> __( 'Country', $ImStore->domain ), 
+	'txn_id'		=> __( 'Order number', 'ims'), 
+	'post_date'		=> __( 'Date', 'ims'), 
+	'payment_gross' => __( 'Amount', 'ims'), 
+	'tax' 			=> __( 'Tax', 'ims'), 
+	'first_name' 	=> __( 'Firstname', 'ims'),
+	'last_name' 	=> __( 'Lastname', 'ims'), 
+	'num_cart_items'=> __( 'Images', 'ims'), 
+	'payment_status'=> __( 'Payment status', 'ims'),
+	'post_status' 	=> __( 'Order Status', 'ims'),
+	'address_street'=> __( 'Address', 'ims'),
+	'address_city'	=> __( 'City', 'ims'),
+	'address_state'	=> __( 'State', 'ims'),
+	'address_zip'	=> __( 'Zip', 'ims'),
+	'address_country'=> __( 'Country', 'ims'), 
 ));
 
 $str = '';
@@ -82,7 +74,7 @@ foreach( $results as $result ){
 			$str .= isset( $data[$key] ) ? str_replace( ',', '', $data[$key] ) . "\t" : "\t";
 		}
 	}
-	echo  chr(255) . chr(254) . mb_convert_encoding( $str . "\n",  'UTF-16LE', $enco ) ;
+	$str .= "\n";
 }	
-
+echo  chr(255) . chr(254) . mb_convert_encoding( $str,  'UTF-16LE', $enco ) ;
 die( );

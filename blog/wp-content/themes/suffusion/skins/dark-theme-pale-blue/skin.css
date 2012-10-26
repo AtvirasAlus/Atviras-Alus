@@ -1,153 +1,14 @@
 /* Standard Styles */
-a {
-	color:#97cafe;
-}
-a:visited {
+a, a:visited {
 	color: #97cafe;
-}
-
-/* main menu */
-#nav .current_page_item a, #nav .current_page_item a:hover,#nav li a:active {
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-	color: #555;
-}
-
-#nav li a:hover{
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-#nav li a:active{
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-/* Styling for navigation menus */
-#nav ul ul li a:hover{
-	color: #555;
-}
-
-/* style the links for the top level */
-#nav a:active {
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-/* style the second level hover */
-#nav ul ul.children a:hover {
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-	color: #555;
-}
-
-#nav ul ul.children :hover > a {
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-/* style the second level hover */
-#nav ul ul a.drop:hover {
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-	color: #555;
-}
-
-#nav ul ul :hover > a.drop {
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-/* style the third level hover */
-#nav ul ul ul a:hover {
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-	color: #555;
-}
-
-/* style the top level hover */
-#nav a:hover,
-#nav ul ul a:hover {
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-#nav :hover > a,
-#nav ul ul :hover > a {
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-/* main menu */
-#nav-top .current_page_item a, #nav-top .current_page_item a:hover,#nav-top li a:active {
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-	color: #555;
-}
-
-#nav-top li a:hover{
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-#nav-top li a:active{
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-/* Styling for navigation menus */
-#nav-top ul ul li a:hover{
-	color: #555;
-}
-
-/* style the links for the top level */
-#nav-top a:active {
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-/* style the second level hover */
-#nav-top ul ul a.drop:hover {
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-	color: #555;
-}
-
-#nav-top ul ul :hover > a.drop {
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-/* style the third level hover */
-#nav-top ul ul ul a:hover {
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-	color: #555;
-}
-
-/* style the top level hover */
-#nav-top a:hover,
-#nav-top ul ul a:hover {
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
-}
-
-#nav-top :hover > a,
-#nav-top ul ul :hover > a {
-	color: #555;
-	background: #97caff url(../../images/menu-light.jpg) repeat-x top left;
 }
 
 /* sub menu */
-#subnav .current_page_item a,
-#subnav .current_page_item a:visited,
-#subnav .current_page_parent a,
-#subnav .current_page_parent a:visited {
-	color: #97cafe;
-}
-
 #subnav li a:hover {
 	color: #97cafe;
 }
 
 /* Level 3 */
-.hier-nav .current_page_item a, .hier-nav .current_page_item a:visited {
-	color: #97cafe;
-}
-
 .hier-nav li a:hover {
 	color: #97cafe;
 }
@@ -195,16 +56,9 @@ h2.posttitle a:hover {
 	color: #97cafe;
 }
 
-.suf-widget h3.scheme,
-.suf-widget h3.scheme:hover,
-.suf-widget h3.scheme a,
-.suf-widget h3.scheme a:visited {
-	color: #555;
-}
-
-div.tab-box div.sidebar-tab-content a:hover,
-div.tab-box div.sidebar-tab-content a:focus,
-div.tab-box div.sidebar-tab-content a:active,
+.tab-box div.sidebar-tab-content a:hover,
+.tab-box div.sidebar-tab-content a:focus,
+.tab-box div.sidebar-tab-content a:active,
 .suf-widget a:hover,
 .suf-widget a:focus,
 .suf-widget a:active,

@@ -45,7 +45,6 @@ class Suffusion_Options_Renderer {
 				if (isset($this->hidden_options[$option['id']])) unset($this->hidden_options[$option['id']]);
 			}
 		}
-		add_action('wp_ajax_suffusion_admin_upload_file', array(&$this, 'admin_upload_file'));
 	}
 
 	/**
@@ -97,7 +96,7 @@ class Suffusion_Options_Renderer {
 		if (isset($value['name'])) {
 			echo "<h3>" . $value['name'] . "</h3>\n";
 		}
-		if (isset($value['desc'])) {
+		if (isset($value['desc']) && !(isset($value['type']) && $value['type'] == 'checkbox')) {
 			echo $value['desc']."<br />";
 		}
 		if (isset($value['note'])) {
@@ -127,13 +126,6 @@ class Suffusion_Options_Renderer {
 		echo "<div class='{$value['category']}-grouping suf-section grouping fix'>\n";
 		echo "<h3 class='suf-group-handler'>".$value['name']."</h3>\n";
 		if (isset($value['desc'])) echo $value['desc']."<br />";
-/*		echo "<div class='{$value['category']}-body fix'>\n";
-		echo "<div class='{$value['category']}-lhs suf-grouping-lhs'>\n";
-		if (isset($value['desc'])) echo $value['desc']."<br />";
-		echo "</div>\n";
-		echo "<div id='{$value['category']}-rhs' class='{$value['category']}-rhs suf-grouping-rhs'>\n";
-		echo "</div>\n";
-		echo "</div>\n";*/
 		echo "</div>\n";
 	}
 
@@ -146,7 +138,6 @@ class Suffusion_Options_Renderer {
 	function create_section_for_text($value) {
 		global $suffusion_options;
 		$this->create_opening_tag($value);
-		$text = "";
 		if (!isset($suffusion_options[$value['id']])) {
 			$text = $value['std'];
 		}
@@ -197,16 +188,21 @@ class Suffusion_Options_Renderer {
 	function create_section_for_select($value) {
 		global $suffusion_options;
 		$this->create_opening_tag($value);
+		$option_list = apply_filters('suffusion_admin_modify_option_list', $value['options'], $value['id']);
 		echo '<select name="suffusion_options['.$value['id'].']">'."\n";
-		foreach ($value['options'] as $option_value => $option_text) {
+		foreach ($option_list as $option_value => $option_text) {
+			$option_value = stripslashes($option_value);
 			echo "<option ";
-			if (isset($suffusion_options[$value['id']]) && $suffusion_options[$value['id']] == $option_value) {
-				echo ' selected="selected"';
+			if (isset($suffusion_options[$value['id']])) {
+				selected(stripslashes($suffusion_options[$value['id']]), $option_value);
 			}
-			elseif (!isset($suffusion_options[$value['id']])&& $option_value == $value['std']) {
-				echo ' selected="selected"';
+			else {
+				selected($value['std'], $option_value);
 			}
-			echo " value='$option_value' >".$option_text."</option>\n";
+			if ($option_value == $value['std']) {
+				$option_text .= ' (Default)';
+			}
+			echo " value=\"$option_value\" >".$option_text."</option>\n";
 		}
 		echo "</select>\n";
 		$this->create_closing_tag($value);
@@ -240,9 +236,9 @@ class Suffusion_Options_Renderer {
 		foreach ($value['options'] as $option_value => $option_list) {
 			$checked = " ";
 			if ($consolidated_value) {
-				foreach ($exploded as $idx => $checked_value) {
-					if ($checked_value == $option_value) {
-						$checked = " checked='checked' ";
+				foreach ($exploded as $checked_value) {
+					$checked = checked($checked_value, $option_value, false);
+					if (trim($checked) != '') {
 						break;
 					}
 				}
@@ -252,7 +248,7 @@ class Suffusion_Options_Renderer {
 			if (isset($option_list['depth'])) {
 				$depth = $option_list['depth'];
 			}
-			echo '<input type="checkbox" name="'.$value['id']."_".$option_value.'" value="true" '.$checked.' class="depth-'.($depth+1).' suf-options-checkbox-'.$value['id'].'" />'.$option_list['title']."\n";
+			echo '<label><input type="checkbox" name="'.$value['id']."_".$option_value.'" value="true" '.$checked.' class="depth-'.($depth+1).' suf-options-checkbox-'.$value['id'].'" />'.$option_list['title']."</label>\n";
 			echo "</li>\n";
 		}
 		echo "</ul>\n";
@@ -262,6 +258,9 @@ class Suffusion_Options_Renderer {
 		echo "</div>\n";
 		if (isset($suffusion_options[$value['id']])) {
 			$set_value = $suffusion_options[$value['id']];
+		}
+		else if (isset($value['std'])) {
+			$set_value = $value['std'];
 		}
 		else {
 			$set_value = "";
@@ -280,19 +279,20 @@ class Suffusion_Options_Renderer {
 	function create_section_for_radio($value) {
 		global $suffusion_options;
 		$this->create_opening_tag($value);
-		foreach ($value['options'] as $option_value => $option_text) {
+		$option_list = apply_filters('suffusion_admin_modify_option_list', $value['options'], $value['id']);
+		foreach ($option_list as $option_value => $option_text) {
 			$option_value = stripslashes($option_value);
-			$checked = ' ';
-			if (isset($suffusion_options[$value['id']]) && stripslashes($suffusion_options[$value['id']]) == $option_value) {
-				$checked = ' checked="checked" ';
-			}
-			else if (!isset($suffusion_options[$value['id']]) && $value['std'] == $option_value){
-				$checked = ' checked="checked" ';
+			if (isset($suffusion_options[$value['id']])) {
+				$checked = checked(stripslashes($suffusion_options[$value['id']]), $option_value, false);
 			}
 			else {
-				$checked = ' ';
+				$checked = checked($value['std'], $option_value, false);
 			}
-			echo '<div class="suf-radio"><input type="radio" name="suffusion_options['.$value['id'].']" value="'.$option_value.'" '.$checked."/>".$option_text."</div>\n";
+			$option_class = '';
+			if ($option_value == $value['std']) {
+				$option_class = 'default-value';
+			}
+			echo '<div class="suf-radio '.$option_class.'"><label><input type="radio" name="suffusion_options['.$value['id'].']" value="'.$option_value.'" '.$checked."/>".$option_text."</label></div>\n";
 		}
 		$this->create_closing_tag($value);
 	}
@@ -305,14 +305,12 @@ class Suffusion_Options_Renderer {
 	 */
 	function create_section_for_checkbox($value) {
 		global $suffusion_options;
+		$checked = '';
+		if (isset($suffusion_options[$value['id']])) {
+			$checked = checked(stripslashes($suffusion_options[$value['id']]), 'on', false);
+		}
 		$this->create_opening_tag($value);
-		if($suffusion_options[$value['id']]) {
-			$checked = "checked=\"checked\"";
-		}
-		else {
-			$checked = "";
-		}
-		echo '<input type="checkbox" name="suffusion_options['.$value['id'].']" value="true" '.$checked."/>\n";
+		echo '<label><input type="checkbox" name="suffusion_options['.$value['id'].']" '.$checked."/>{$value['desc']}</label>\n";
 		$this->create_closing_tag($value);
 	}
 
@@ -371,6 +369,7 @@ class Suffusion_Options_Renderer {
 	 *
 	 * @param  $upload
 	 * @param  $id
+	 * @param  $name
 	 * @param  $hint
 	 * @return void
 	 */
@@ -513,6 +512,7 @@ class Suffusion_Options_Renderer {
 	function create_section_for_background($value) {
 		global $suffusion_options;
 		$this->create_opening_tag($value);
+		$original = $value['std'];
 		if (!isset($suffusion_options[$value['id']])) {
 			$default = $value['std'];
 			$default_txt = "";
@@ -522,6 +522,13 @@ class Suffusion_Options_Renderer {
 		}
 		else {
 			$default_txt = $suffusion_options[$value['id']];
+			if (is_array($default_txt)) {
+				$default = $default_txt;
+				$default_txt = "";
+				foreach ($default as $opt => $opt_val) {
+					$default_txt .= $opt."=".$opt_val.";";
+				}
+			}
 			$default = $default_txt;
 			$vals = explode(";", $default);
 			$default = array();
@@ -551,14 +558,11 @@ class Suffusion_Options_Renderer {
 			"bottom right" => "Bottom right");
 
 		foreach ($value['options'] as $option_value => $option_text) {
-			if ($suffusion_options[$value['id']] == $option_value) {
-				$checked = ' checked="checked" ';
-			}
-			else if (!isset($suffusion_options[$value['id']]) && $value['std'] == $option_value){
-				$checked = ' checked="checked" ';
+			if (isset($suffusion_options[$value['id']])) {
+				$checked = checked($suffusion_options[$value['id']], $option_value, false);
 			}
 			else {
-				$checked = ' ';
+				$checked = checked($value['std'], $option_value, false);
 			}
 			echo '<div class="suf-radio"><input type="radio" name="'.$value['id'].'" value="'.$option_value.'" '.$checked."/>".$option_text."</div>\n";
 		}
@@ -571,10 +575,10 @@ class Suffusion_Options_Renderer {
 				<td valign='top'>
 					<div class="color-picker-group">
 						<strong>Background Color:</strong><br />
-						<input type="radio" name="<?php echo $value['id']; ?>-colortype" value="transparent" <?php if ($default['colortype'] == 'transparent') { echo ' checked="checked" ';} ?>/> Transparent / No color<br/>
-						<input type="radio" name="<?php echo $value['id']; ?>-colortype" value="custom" <?php if ($default['colortype'] == 'custom') { echo ' checked="checked" ';} ?>/> Custom
+						<input type="radio" name="<?php echo $value['id']; ?>-colortype" value="transparent" <?php checked($default['colortype'], 'transparent'); ?> /> Transparent / No color<br/>
+						<input type="radio" name="<?php echo $value['id']; ?>-colortype" value="custom" <?php checked($default['colortype'], 'custom'); ?>/> Custom
 						<input type="text" id="<?php echo $value['id']; ?>-bgcolor" name="<?php echo $value['id']; ?>-bgcolor" value="<?php echo $default['color']; ?>" class="color" /><br />
-						Default: <span color='<?php echo $default['color']; ?>"'> <?php echo $default['color']; ?> </span>
+						Default: <span> <?php echo $original['color']; ?> </span>
 					</div>
 				</td>
 				<td valign='top'>
@@ -590,9 +594,7 @@ class Suffusion_Options_Renderer {
 				<?php
 					foreach ($positions as $option_value => $option_text) {
 						echo "<option ";
-						if ($default['position'] == $option_value) {
-							echo ' selected="selected"';
-						}
+						selected($default['position'], $option_value);
 						echo " value='$option_value' >".$option_text."</option>\n";
 					}
 				?>
@@ -605,9 +607,7 @@ class Suffusion_Options_Renderer {
 				<?php
 					foreach ($repeats as $option_value => $option_text) {
 						echo "<option ";
-						if ($default['repeat'] == $option_value) {
-							echo ' selected="selected"';
-						}
+						selected($default['repeat'], $option_value);
 						echo " value='$option_value' >".$option_text."</option>\n";
 					}
 				?>
@@ -664,6 +664,7 @@ class Suffusion_Options_Renderer {
 	function create_section_for_border($value) {
 		global $suffusion_options;
 		$this->create_opening_tag($value);
+		$original = $value['std'];
 		if (!isset($suffusion_options[$value['id']])) {
 			$default = $value['std'];
 			$default_txt = "";
@@ -677,6 +678,17 @@ class Suffusion_Options_Renderer {
 		}
 		else {
 			$default_txt = $suffusion_options[$value['id']];
+			if (is_array($default_txt)) {
+				$default = $default_txt;
+				$default_txt = "";
+				foreach ($default as $edge => $edge_val) {
+					$default_txt .= $edge.'::';
+					foreach ($edge_val as $opt => $opt_val) {
+						$default_txt .= $opt . "=" . $opt_val . ";";
+					}
+					$default_txt .= "||";
+				}
+			}
 			$default = $default_txt;
 			$edge_array = explode('||', $default);
 			$default = array();
@@ -716,15 +728,11 @@ class Suffusion_Options_Renderer {
 		$border_width_units = array("px" => "Pixels (px)", "em" => "Em");
 
 		foreach ($value['options'] as $option_value => $option_text) {
-			$checked = ' ';
-			if ($suffusion_options[$value['id']] == $option_value) {
-				$checked = ' checked="checked" ';
-			}
-			else if (!isset($suffusion_options[$value['id']]) && $value['std'] == $option_value){
-				$checked = ' checked="checked" ';
+			if (isset($suffusion_options[$value['id']])) {
+				$checked = checked($suffusion_options[$value['id']], $option_value, false);
 			}
 			else {
-				$checked = ' ';
+				$checked = checked($value['std'], $option_value, false);
 			}
 			echo '<div class="suf-radio"><input type="radio" name="'.$value['id'].'" value="'.$option_value.'" '.$checked."/>".$option_text."</div>\n";
 		}
@@ -756,8 +764,8 @@ class Suffusion_Options_Renderer {
 				<?php
 					foreach ($styles as $option_value => $option_text) {
 						echo "<option ";
-						if (isset($default[$edge]) && isset($default[$edge]['style']) && $default[$edge]['style'] == $option_value) {
-							echo ' selected="selected"';
+						if (isset($default[$edge]) && isset($default[$edge]['style'])) {
+							selected($default[$edge]['style'], $option_value);
 						}
 						echo " value='$option_value' >".$option_text."</option>\n";
 					}
@@ -767,10 +775,10 @@ class Suffusion_Options_Renderer {
 
 				<td valign='top'>
 					<div class="color-picker-group">
-						<input type="radio" name="<?php echo $value['id'].'-'.$edge; ?>-colortype" value="transparent" <?php if ($default[$edge]['colortype'] == 'transparent') { echo ' checked="checked" ';} ?>/> Transparent / No color<br/>
-						<input type="radio" name="<?php echo $value['id'].'-'.$edge; ?>-colortype" value="custom" <?php if ($default[$edge]['colortype'] == 'custom') { echo ' checked="checked" ';} ?>/> Custom
+						<input type="radio" name="<?php echo $value['id'].'-'.$edge; ?>-colortype" value="transparent" <?php checked($default[$edge]['colortype'], 'transparent'); ?> /> Transparent / No color<br/>
+						<input type="radio" name="<?php echo $value['id'].'-'.$edge; ?>-colortype" value="custom" <?php checked($default[$edge]['colortype'], 'custom'); ?>/> Custom
 						<input type="text" id="<?php echo $value['id'].'-'.$edge; ?>-color" name="<?php echo $value['id']; ?>-color" value="<?php echo $default[$edge]['color']; ?>" class="color" /><br />
-						Default: <span color='<?php echo $default[$edge]['color']; ?>"'> <?php echo $default[$edge]['color']; ?> </span>
+						Default: <span> <?php echo $original[$edge]['color']; ?> </span>
 					</div>
 				</td>
 
@@ -783,9 +791,7 @@ class Suffusion_Options_Renderer {
 				<?php
 					foreach ($border_width_units as $option_value => $option_text) {
 						echo "<option ";
-						if ($default[$edge]['border-width-type'] == $option_value) {
-							echo ' selected="selected"';
-						}
+						selected($default[$edge]['border-width-type'], $option_value);
 						echo " value='$option_value' >".$option_text."</option>\n";
 					}
 				?>
@@ -811,6 +817,7 @@ class Suffusion_Options_Renderer {
 	function create_section_for_font($value) {
 		global $suffusion_options, $suffusion_safe_font_faces;
 		$this->create_opening_tag($value);
+		$original = $value['std'];
 		if (!isset($suffusion_options[$value['id']])) {
 			$default = $value['std'];
 			$default_txt = "";
@@ -820,7 +827,16 @@ class Suffusion_Options_Renderer {
 		}
 		else {
 			$default_txt = $suffusion_options[$value['id']];
+			if (is_array($default_txt)) {
+				$default = $default_txt;
+				$default_txt = "";
+				foreach ($default as $opt => $opt_val) {
+					$default_txt .= $opt."=".stripslashes($opt_val).";";
+				}
+			}
 			$default = $default_txt;
+			$default = stripslashes($default);
+			$default = wp_specialchars_decode($default, ENT_QUOTES);
 			$vals = explode(";", $default);
 			$default = array();
 			foreach ($vals as $val) {
@@ -833,6 +849,14 @@ class Suffusion_Options_Renderer {
 				}
 			}
 		}
+
+		if (!isset($value['exclude'])) {
+			$exclude = array();
+		}
+		else {
+			$exclude = $value['exclude'];
+		}
+
 		$font_size_types = array("pt" => "Points (pt)", "px" => "Pixels (px)", "%" => "Percentages (%)", "em" => "Em");
 		$font_styles = array("normal" => "Normal", "italic" => "Italic", "oblique" => "Oblique", "inherit" => "Inherit");
 		$font_variants = array("normal" => "Normal", "small-caps" => "Small Caps", "inherit" => "Inherit");
@@ -843,29 +867,40 @@ class Suffusion_Options_Renderer {
 	        <col class='opt-sub-table-cols'/>
 	        <col class='opt-sub-table-cols'/>
 			<tr>
+	<?php
+		if (!in_array('font-color', $exclude)) {
+	?>
 				<td valign='top'>
 					<div class="color-picker-group">
 						<strong>Font Color:</strong><br />
 						<input type="text" id="<?php echo $value['id']; ?>-color" name="<?php echo $value['id']; ?>-color" value="<?php echo $default['color']; ?>" class="color" /><br />
-						Default: <span color='<?php echo $default['color']; ?>"'> <?php echo $default['color']; ?> </span>
+						Default: <span> <?php echo $original['color']; ?> </span>
 					</div>
 				</td>
+	<?php
+		}
+		if (!in_array('font-face', $exclude)) {
+	?>
 				<td valign='top'>
 					<strong>Font Face:</strong><br />
 					<select name="<?php echo $value['id']; ?>-font-face" id="<?php echo $value['id']; ?>-font-face" >
 				<?php
 					foreach ($suffusion_safe_font_faces as $option_value => $option_text) {
 						echo "<option ";
-						if (stripslashes($default['font-face']) == stripslashes($option_value)) {
-							echo ' selected="selected"';
-						}
+						selected(stripslashes($default['font-face']), stripslashes($option_value));
 						echo " value=\"".stripslashes($option_value)."\" >".$option_value."</option>\n";
 					}
 				?>
 					</select>
 				</td>
+	<?php
+		}
+	?>
 			</tr>
 
+	<?php
+		if (!in_array('font-size', $exclude)) {
+	?>
 			<tr>
 				<td valign='top'>
 					<strong>Font Size:</strong><br />
@@ -877,47 +912,57 @@ class Suffusion_Options_Renderer {
 				<?php
 					foreach ($font_size_types as $option_value => $option_text) {
 						echo "<option ";
-						if ($default['font-size-type'] == $option_value) {
-							echo ' selected="selected"';
-						}
+						selected($default['font-size-type'], $option_value);
 						echo " value='$option_value' >".$option_text."</option>\n";
 					}
 				?>
 					</select>
 				</td>
 			</tr>
+	<?php
+		}
+	?>
 
 			<tr>
+	<?php
+		if (!in_array('font-style', $exclude)) {
+	?>
 				<td valign='top'>
 					<strong>Font Style:</strong><br />
 					<select name="<?php echo $value['id']; ?>-font-style" id="<?php echo $value['id']; ?>-font-style" >
 				<?php
 					foreach ($font_styles as $option_value => $option_text) {
 						echo "<option ";
-						if ($default['font-style'] == $option_value) {
-							echo ' selected="selected"';
-						}
+						selected($default['font-style'], $option_value);
 						echo " value='$option_value' >".$option_text."</option>\n";
 					}
 				?>
 					</select>
 				</td>
+	<?php
+		}
+		if (!in_array('font-variant', $exclude)) {
+	?>
 				<td valign='top'>
 					<strong>Font Variant:</strong><br />
 					<select name="<?php echo $value['id']; ?>-font-variant" id="<?php echo $value['id']; ?>-font-variant" >
 				<?php
 					foreach ($font_variants as $option_value => $option_text) {
 						echo "<option ";
-						if ($default['font-variant'] == $option_value) {
-							echo ' selected="selected"';
-						}
+						selected($default['font-variant'], $option_value);
 						echo " value='$option_value' >".$option_text."</option>\n";
 					}
 				?>
 					</select>
 				</td>
+	<?php
+		}
+	?>
 			</tr>
 
+	<?php
+		if (!in_array('font-weight', $exclude)) {
+	?>
 			<tr>
 				<td valign='top' colspan='2'>
 					<strong>Font Weight:</strong><br />
@@ -925,19 +970,128 @@ class Suffusion_Options_Renderer {
 				<?php
 					foreach ($font_weights as $option_value => $option_text) {
 						echo "<option ";
-						if ($default['font-weight'] == $option_value) {
-							echo ' selected="selected"';
-						}
+						selected($default['font-weight'], $option_value);
 						echo " value='$option_value' >".$option_text."</option>\n";
 					}
 				?>
 					</select>
 				</td>
 			</tr>
+	<?php
+		}
+	?>
 		</table>
 		<input type='hidden' id="<?php echo $value['id']; ?>" name="suffusion_options[<?php echo $value['id']; ?>]" value="<?php echo stripslashes($default_txt); ?>" />
 		</div>
 	<?php
+		$this->create_closing_tag($value);
+	}
+
+	/**
+	 * Renders an option whose type is "sortable-list". Invoked by add_settings_field.
+	 *
+	 * @param  $value
+	 * @return void
+	 */
+	function create_section_for_associative_array($value) {
+		global $suffusion_options;
+		$this->create_opening_tag($value);
+
+		if (!isset($suffusion_options[$value['id']])) {
+			$stored_value = $value['std'];
+		}
+		else {
+			$stored_value = $suffusion_options[$value['id']];
+		}
+
+		$stored_value = suffusion_get_associative_array($stored_value);
+
+		if (isset($value['options']) && is_array($value['options'])) {
+			$associative_array = $value['options'];
+			$counter = 0;
+			$total = count($associative_array);
+			if ($total > 0) {
+				echo "<table class='suf-associative-array-options opt-sub-table opt-sub-table-".($total + 1)."'>\n";
+				echo "<col class='opt-sub-table-col-".($total + 1)."1'/>";
+				for ($i=1; $i<$total+1; $i++) {
+					echo "<col class='opt-sub-table-col-".($total + 1)."'/>";
+				}
+				$key_values = array();
+				$associations = array();
+				$column_keys = array();
+				echo "<tr>\n";
+				echo "<th>#</th>\n";
+				foreach ($associative_array as $header => $details) {
+					$counter++;
+					echo "<th>$header</th>\n";
+					if ($counter == 1) {
+						$key_values = $details;
+					}
+					else {
+						$associations[] = $details;
+						$column_keys[] = $details['name'];
+					}
+				}
+				echo "</tr>\n";
+				$counter = 0;
+				$key_value_list = array();
+
+				foreach ($key_values as $key => $key_value) {
+					$counter++;
+					if (isset($stored_value[$key])) {
+						$stored_associations = $stored_value[$key];
+					}
+					else {
+						$stored_associations = array();
+					}
+					echo "<tr>\n";
+					echo "<td valign='top'>$counter</td>\n";
+					echo "<td valign='top'>$key_value</td>\n";
+					$assoc_list = array();
+					foreach ($associations as $association) {
+						echo "<td valign='top'>\n";
+						if (isset($stored_associations[$association['name']])) {
+							$to_check = $stored_associations[$association['name']];
+						}
+						else {
+							$to_check = '';
+						}
+						switch ($association['type']) {
+							case 'select':
+								$option_list = apply_filters('suffusion_admin_modify_option_list', $association['options'], $value['id'], $association['name']);
+								echo "<select name='{$value['id']}-$key-{$association['name']}' id='{$value['id']}-$key-{$association['name']}' >\n";
+								foreach ($option_list as $choice_key => $choice_text) {
+									echo "<option value='$choice_key' ".selected($to_check, $choice_key, false).">$choice_text</option>";
+								}
+								echo "</select>\n";
+								break;
+
+							case 'text':
+								echo "<input name='{$value['id']}-$key-{$association['name']}' id='{$value['id']}-$key-{$association['name']}' type='text' value='$to_check'/>\n";
+								break;
+
+							case 'multi-select':
+								$checkboxes = explode(',', $to_check);
+								foreach ($association['options'] as $choice_key => $choice_text) {
+									echo "<label><input type='checkbox' name='{$value['id']}-$key-{$association['name']}[$choice_key]' id='{$value['id']}-$key-{$association['name']}[$choice_key]' ".checked(in_array($choice_key, $checkboxes), true, false).">$choice_text</option></label><br/>\n";
+								}
+								break;
+
+						}
+						echo "</td>\n";
+						$assoc_list[] = $association['name'].'='.$to_check;
+					}
+					$assoc_str = implode(';', $assoc_list);
+					$key_value_list[] = $key.'::'.$assoc_str;
+					echo "</tr>\n";
+				}
+				echo "</table>\n";
+				$key_value_str = implode('||', $key_value_list);
+				echo "<input type='hidden' id='{$value['id']}-rows' value='".implode(',', array_keys($key_values))."'/>";
+				echo "<input type='hidden' id='{$value['id']}-columns' value='".implode(',', $column_keys)."'/>";
+				echo "<input type='hidden' id='{$value['id']}' value='$key_value_str' name='suffusion_options[{$value['id']}]' />";
+			}
+		}
 		$this->create_closing_tag($value);
 	}
 
@@ -966,6 +1120,35 @@ class Suffusion_Options_Renderer {
 		$this->create_closing_tag($value);
 	}
 
+	function get_template_element_universe() {
+		$universe = array(
+			'nav-top' => array(
+				'name' => 'Navigation Bar Above Header',
+			),
+			'header' => array(
+				'name' => 'Header',
+			),
+			'nav-below' => array(
+				'name' => 'Navigation Bar Below Header',
+			),
+			'featured-content' => array(
+				'name' => 'Featured Content',
+			),
+			'page-content' => array(
+				'name' => 'Page Content',
+			),
+			'posts' => array(
+				'name' => 'All Posts',
+			),
+			'breadcrumb' => array(
+				'name' => 'Breadcrumbs',
+			),
+			'post-pagination' => array(
+				'name' => 'Post Pagination',
+			),
+		);
+		return $universe;
+	}
 	/**
 	 * Takes the flat options array and converts it into a hierarchical array, with the root level, and subsequent nested levels.
 	 *
@@ -1030,17 +1213,14 @@ class Suffusion_Options_Renderer {
 				foreach ($l1['children'] as $l2slug => $l2name) {
 					if ($group == $l2slug) {
 						echo "<h1>$l2name</h1>\n";
-						if (isset($option_structure[$l2slug]) && isset($option_structure[$l2slug]['help'])) {
-							echo "<a href='#' class='suf-help-anchor-$l2slug suf-help-anchor' title='What is this section?'><img src='".get_template_directory_uri()."/admin/images/help.png' alt='Help'/></a>";
-							echo "<div class='suf-help-$l2slug suf-help' title='$l2name'>".$option_structure[$l2slug]['help']."</div>";
-						}
+						echo "<div id='search-area'><label for='quick-search'>Quick Search: </label><input type='text' id='quick-search' /><div id='search-match'></div></div>\n";
 					}
 				}
 			}
 		}
 		echo "</div><!-- suf-options-page-header -->\n";
 
-		echo "<ul class='suf-section-tabs'>";
+		echo "<ul id='suf-section-tabs-$group' class='suf-section-tabs'>";
 		foreach ($option_structure as $l1) {
 			if (!isset($l1['parent']) || $l1['parent'] == null) {
 				foreach ($l1['children'] as $l2slug => $l2name) {
@@ -1057,16 +1237,8 @@ class Suffusion_Options_Renderer {
 		foreach ($option_structure as $option) {
 			if (isset($option['parent']) && $option['parent'] == 'root' && $option['slug'] == $group) {
 				do_settings_sections($this->file);
-//				$last_key = array_keys($option['children']);
-//				$last_key = $last_key[count($last_key) - 1];
-//				echo "<div id='suffusion-color-picker-{$last_key}' class='suffusion-color-picker'></div>";
 				echo "</form>\n";
 				echo "</div><!-- main-content -->\n";
-//				echo "</form>\n";
-//				foreach ($option['children'] as $l2slug => $l2name) {
-//					echo "<div id='suffusion-color-picker-$l2slug' class='suffusion-color-picker'></div>";
-//					echo "</form>\n";
-//				}
 			}
 		}
 
@@ -1096,13 +1268,25 @@ class Suffusion_Options_Renderer {
 	/**
 	 * Makes calls to add_settings_field for different types of options.
 	 *
-	 * @param string $section
+	 * @param $section
+	 * @param $parent
 	 * @return void
 	 */
 	function add_settings_fields($section, $parent) {
 		$filtered_options = $this->get_sections_for_submenu($section);
 		$ctr = 0;
 		foreach ($filtered_options as $value) {
+			if (isset($value['conditional']) && true === $value['conditional']) {
+				$show = true;
+				if (isset($value['conditions'])) {
+					$conditions = $value['conditions'];
+					$show = $this->evaluate_conditions($conditions);
+				}
+				if (!$show) {
+					continue;
+				}
+			}
+
 			$ctr++;
 			switch ($value['type']) {
 				case "title":
@@ -1173,6 +1357,10 @@ class Suffusion_Options_Renderer {
 					add_settings_field($value['id'], '', array(&$this, "create_section_for_font"), $parent, $section, $value);
 					break;
 
+				case "associative-array":
+					add_settings_field($value['id'], '', array(&$this, 'create_section_for_associative_array'), $parent, $section, $value);
+					break;
+
 				case "blurb":
 					add_settings_field($section.'-'.$ctr, '', array(&$this, "create_section_for_blurb"), $parent, $section, $value);
 					break;
@@ -1180,6 +1368,68 @@ class Suffusion_Options_Renderer {
 				case "button":
 					add_settings_field($value['id'], '', array(&$this, "create_section_for_button"), $parent, $section, $value);
 					break;
+			}
+		}
+	}
+
+	/**
+	 * Controls the display of conditional fields.
+	 *
+	 * @param $conditions
+	 * @return bool
+	 */
+	function evaluate_conditions($conditions) {
+		// Operators: NOT, OR, AND, NOR, NAND. XOR is too complex
+		if (isset($conditions['operator'])) {
+			$operator = $conditions['operator'];
+		}
+		else {
+			$operator = 'OR';
+		}
+		$nested_conditions = $conditions['conditions'];
+		if (isset($nested_conditions['operator'])) {
+			return $this->evaluate_conditions($nested_conditions);
+		}
+		else {
+			$evals = array();
+			foreach ($nested_conditions as $variable => $check_value) {
+				$suf_variable = 'suf_'.$variable;
+				global $$suf_variable;
+				$actual_value = $$suf_variable;
+
+				if ($operator == 'NOT') {
+					return $actual_value != $check_value;
+				}
+				else {
+					$evals[] = $actual_value == $check_value ? 1 : 0;
+				}
+			}
+			return $this->array_join_boolean($evals, $operator);
+		}
+	}
+
+	function array_join_boolean($conditions, $operator) {
+		if (count($conditions) == 1) {
+			return $conditions[0];
+		}
+		else {
+			$first = $conditions[0];
+			$rest = array_slice($conditions, 1);
+			if ($operator == 'AND') {
+				$result =  $first * $this->array_join_boolean($rest, $operator);
+				return $result != 0;
+			}
+			else if ($operator == 'NOR') {
+				$result = $first + $this->array_join_boolean($rest, $operator);
+				return $result == 0;
+			}
+			else if ($operator == 'NAND') {
+				$result = $first * $this->array_join_boolean($rest, $operator);
+				return $result == 0;
+			}
+			else { // Everything else is treated as OR
+				$result = $first + $this->array_join_boolean($rest, $operator);
+				return $result != 0;
 			}
 		}
 	}
@@ -1199,12 +1449,7 @@ class Suffusion_Options_Renderer {
 		foreach ($option_structure as $l1) {
 			if (!isset($l1['parent']) || $l1['parent'] == null) {
 				foreach ($l1['children'] as $l2slug => $l2name) {
-					if ($l2slug != 'custom-types') {
-						$this->get_options_html_for_group($option_structure, $l2slug);
-					}
-					else {
-						$this->render_custom_types($l2slug);
-					}
+					$this->get_options_html_for_group($option_structure, $l2slug);
 				}
 			}
 		}
@@ -1226,11 +1471,6 @@ class Suffusion_Options_Renderer {
 		if (is_null($structure)) {
 			$structure = $this->get_option_structure($options);
 		}
-
-//		$white_list = array('intro-pages', 'skinning', 'visual-effects', 'sidebar-setup', 'blog-features', 'templates');
-//		foreach ($white_list as $allow) {
-//			register_setting('suffusion-options-'.$allow, 'suffusion_options', array(&$this, "validate_options"));
-//		}
 
 		foreach ($structure as $option_entity) {
 			if (!isset($option_entity['parent'])) {
@@ -1256,8 +1496,8 @@ class Suffusion_Options_Renderer {
 	 *  2. Radio buttons/select items are checked for presence in a master list defined by the 'options' key in the inbuilt options array
 	 *  3. Each item in Multi-select and sortable-list fields is checked against a master list defined by the 'options' key in the options array
 	 *
-	 * @param  $options
-	 * @return void
+	 * @param $options
+	 * @return array|void
 	 */
 	function validate_options($options) {
 		foreach ($options as $option => $option_value) {
@@ -1273,6 +1513,8 @@ class Suffusion_Options_Renderer {
 					case "border":
 					case "font":
 					case "upload":
+					case "template":
+					case "associative-array":
 						$options[$option] = esc_attr($option_value);
 						break;
 
@@ -1286,7 +1528,12 @@ class Suffusion_Options_Renderer {
 				        break;
 
 					case "multi-select":
-						$selections = explode(',', $option_value);
+						if (is_array($option_value)) {
+							$selections = $option_value;
+						}
+						else {
+							$selections = explode(',', $option_value);
+						}
 						$final_selections = array();
 						foreach ($selections as $selection) {
 							if (array_key_exists($selection, $this->allowed_values[$option])) {
@@ -1297,7 +1544,12 @@ class Suffusion_Options_Renderer {
 						break;
 
 					case "sortable-list":
-						$selections = explode(',', $option_value);
+						if (is_array($option_value)) {
+							$selections = $option_value;
+						}
+						else {
+							$selections = explode(',', $option_value);
+						}
 						$final_selections = array();
 						$master_list = $this->option_defaults[$option]; // Sortable lists don't have their values in ['options']
 						foreach ($selections as $selection) {
@@ -1331,6 +1583,7 @@ class Suffusion_Options_Renderer {
 				$options[$hidden_option] = esc_attr($hidden_value);
 			}
 		}
+		$options['pre-navt'] = $options['suf_navt_entity_order'];
 
 		foreach ($this->nested_options as $section => $children) {
 			if (isset($options['submit-'.$section])) {
@@ -1379,8 +1632,11 @@ class Suffusion_Options_Renderer {
 					unset($options['submit-'.$section]);
 					$options = $this->migrate_from_v343($options);
 				}
-				else if ($options['submit-'.$section] == 'Export to a file') {
-					$this->export_settings();
+				else if ($options['submit-'.$section] == 'Export core options to a file') {
+					$this->export_settings('core');
+				}
+				else if ($options['submit-'.$section] == 'Export all options to a file') {
+					$this->export_settings('all');
 				}
 				else if ($options['submit-'.$section] == 'Import options') {
 					$options = $this->import_settings($options);
@@ -1388,6 +1644,9 @@ class Suffusion_Options_Renderer {
 				break;
 			}
 		}
+		$options['theme-version'] = SUFFUSION_THEME_VERSION;
+		$options['option-date'] = date(get_option('date_format').' '.get_option('time_format'));
+		$options = array_merge(suffusion_default_options(), $options);
 		return $options;
 	}
 
@@ -1445,8 +1704,9 @@ class Suffusion_Options_Renderer {
 					$group_name = $desc;
 				}
 			}
-			echo "<div class=\"suf-button-bar\">\n";
-			echo "<h2>Save / Reset</h2>\n";
+			echo "<div class=\"suf-button-toggler fix\"><a href='#' class='suf-button-toggler-{$section['id']}'><span class='suf-button-toggler-{$section['id']}'>Save / Reset</span></a></div>\n";
+			echo "<div class=\"suf-button-bar suf-button-bar-{$section['id']}\" title='Save / Reset'>\n";
+			echo "<h2 class='fix'><a href='#'><img src='".get_template_directory_uri()."/admin/images/remove.png' alt='Close' /></a>Save / Reset</h2>\n";
 			echo "<input name=\"suffusion_options[submit-{$section['id']}]\" type='submit' value=\"Save page '{$option_structure[$section['id']]['name']}'\" class=\"button suf-button-section\" />\n";
 			echo "<input name=\"suffusion_options[submit-{$section['id']}]\" type='submit' value=\"Reset page '{$option_structure[$section['id']]['name']}'\" class=\"button suf-button-section\" />\n";
 			//echo "<input name=\"suffusion_options[submit-{$section['id']}]\" type='submit' value=\"Save changes for '$group_name'\" class=\"button suf-button-sub-menu\" />\n";
@@ -1468,6 +1728,9 @@ class Suffusion_Options_Renderer {
 	 */
 	function migrate_from_v302($options) {
 		global $suffusion_inbuilt_options;
+		if (!isset($suffusion_inbuilt_options) || !is_array($suffusion_inbuilt_options)) {
+			require_once(get_template_directory().'/admin/theme-options.php');
+		}
 
 		foreach ($suffusion_inbuilt_options as $option => $value) {
 			if (isset($value['type']) && $value['type'] == 'multi-select') {
@@ -1524,10 +1787,14 @@ class Suffusion_Options_Renderer {
 	 * any later version.
 	 *
 	 * @param  $options
-	 * @return
+	 * @return array
 	 */
 	function migrate_from_v343($options) {
 		global $suffusion_inbuilt_options;
+		if (!isset($suffusion_inbuilt_options) || !is_array($suffusion_inbuilt_options)) {
+			require_once(get_template_directory().'/admin/theme-options.php');
+		}
+
 		foreach ($suffusion_inbuilt_options as $value) {
 			if (isset($value['id'])) {
 				if (get_option($value['id']) === FALSE) {
@@ -1544,23 +1811,28 @@ class Suffusion_Options_Renderer {
 
 	/**
 	 * Exports your current settings as a PHP file. You can re-import these settings to other implementations.
-	 * Only options with an id and without "export" set to "ne" (no export) are exported. Fields with id settings are not
-	 * exported. So settings in the featured content section or the navigation bar setup are not exported.
+	 * Only options with an id and without "export" set to "ne" (no export) are exported if $what == 'core'.
+	 * So settings in the featured content section or the navigation bar setup are not exported.
+	 * Fields with id settings are exported only if $what == 'all'.
 	 *
+	 * @param string $what
 	 * @return void
 	 */
-	function export_settings() {
-		global $suffusion_inbuilt_options, $suffusion_options;
+	function export_settings($what = 'all') {
+		global $suffusion_inbuilt_options, $suffusion_unified_options;
 		$export = array();
+		if (!isset($suffusion_inbuilt_options) || !is_array($suffusion_inbuilt_options)) {
+			require_once(get_template_directory().'/admin/theme-options.php');
+		}
 		foreach ($suffusion_inbuilt_options as $value) {
-			if ((isset($value['export']) && $value['export'] == 'ne') || !isset($value['id']) || $value['type'] == 'button') {
+			if ((isset($value['export']) && $value['export'] == 'ne' && $what != 'all') || !isset($value['id']) || $value['type'] == 'button') {
 				continue;
 			}
-			if (!isset($suffusion_options[$value['id']]) && isset($value['std'])) {
+			if (!isset($suffusion_unified_options[$value['id']]) && isset($value['std'])) {
 				$export[$value['id']] = $value['std'];
 			}
 			else {
-				$export[$value['id']] = $suffusion_options[$value['id']];
+				$export[$value['id']] = $suffusion_unified_options[$value['id']];
 			}
 		}
 		header('Content-Type: text/plain');
@@ -1578,113 +1850,19 @@ class Suffusion_Options_Renderer {
 	 * in your "suffusion" directory.
 	 *
 	 * @param  $options
-	 * @return
+	 * @return array
 	 */
 	function import_settings($options) {
-		global $suffusion_reevaluate_styles, $suffusion_unified_options, $suffusion_exported_options;
+		global $suffusion_exported_options;
+		$template_path = get_template_directory();
 
-		if (file_exists(TEMPLATEPATH."/admin/import/suffusion-options.php")) {
-			include (TEMPLATEPATH."/admin/import/suffusion-options.php");
+		if (file_exists($template_path."/admin/import/suffusion-options.php")) {
+			include ($template_path."/admin/import/suffusion-options.php");
 			foreach ($suffusion_exported_options as $option => $option_value) {
 				$options[$option] = $option_value;
 			}
-			$suffusion_reevaluate_styles = true;
 		}
 		return $options;
-	}
-
-	/**
-	 * Called when you upload a file for option type "upload". This is an AJAX call
-	 * @return void
-	 */
-	function admin_upload_file() {
-		$save_type = $_POST['type'];
-		if ($save_type == 'upload') {
-			$data = $_POST['data']; // Acts as the name
-			$filename = $_FILES[$data];
-			$filename['name'] = preg_replace('/[^a-zA-Z0-9._\-]/', '', $filename['name']);
-
-			$override['test_form'] = false;
-			$override['action'] = 'wp_handle_upload';
-			$uploaded_file = wp_handle_upload($filename, $override);
-
-			$image_id = substr($data, 7);
-
-			if (!empty($uploaded_file['error'])) {
-				echo 'Upload Error: ' . $uploaded_file['error'];
-			}
-			else {
-				$this->options[$image_id] = $uploaded_file['url'];
-				echo $uploaded_file['url'];
-			}
-		}
-		elseif ($save_type == 'image_reset') {
-			$data = $_POST['data'];
-			$image_id = substr($data, 6);
-			if (isset($this->options[$image_id])) unset($this->options[$image_id]);
-		}
-		die();
-	}
-
-	/**
-	 * Creates a page for custom post types. This is treated differently from the rest of the options, as these are special cases.
-	 * @param  $group
-	 * @return void
-	 */
-	function render_custom_types($group) {
-		?>
-		<div class='suf-loader'><img src='<?php echo get_template_directory_uri(); ?>/admin/images/ajax-loader-large.gif' alt='Processing'></div>
-		<div class='suf-options suf-options-$group suf-custom-type-settings' id='suf-options'>
-			<div class='suf-options-page-header fix'>
-				<h1>Custom Types for Suffusion</h1>
-			</div><!-- suf-options-page-header -->
-
-			<div class="suf-loader"><img src='<?php echo get_template_directory_uri(); ?>/admin/images/ajax-loader-large.gif' alt='Processing'></div>
-				<ul class='suf-section-tabs'>
-					<li><a href="#custom-post-types">Existing Post Types</a></li>
-					<li><a href="#add-edit-post-type">Add / Edit Post Type</a></li>
-					<li><a href="#custom-taxonomies">Existing Taxonomies</a></li>
-					<li><a href="#add-edit-taxonomy">Add / Edit Taxonomy</a></li>
-				</ul>
-
-				<div class='custom-post-types main-content' id='custom-post-types'>
-					<h3 class='suf-header-2'>Existing Post Types</h3>
-					<form method="post" name="form-custom-post-types" id="form-custom-post-types" action="options.php">
-					<?php
-						suffusion_display_all_custom_post_types();
-					?>
-					</form>
-				</div><!-- .custom-post-types -->
-
-				<div class='add-edit-post-type main-content' id='add-edit-post-type'>
-					<h3 class='suf-header-2'>Add / Edit Post Type</h3>
-					<form method="post" name="form-add-edit-post-type" id="form-add-edit-post-type" action="options.php">
-					<?php
-						suffusion_display_custom_post_type(-1);
-					?>
-					</form>
-
-				</div><!-- .add-edit-post-type -->
-
-				<div class='custom-taxonomies main-content' id='custom-taxonomies'>
-					<h3 class='suf-header-2'>Existing Taxonomies</h3>
-					<form method="post" name="form-custom-taxonomies" id="form-custom-taxonomies" action="options.php">
-					<?php
-						suffusion_display_all_custom_taxonomies();
-					?>
-					</form>
-				</div><!-- .custom-taxonomies -->
-
-				<div class='add-edit-taxonomy main-content' id='add-edit-taxonomy'>
-					<h3 class='suf-header-2'>Add / Edit Taxonomy</h3>
-					<form method="post" name="form-add-edit-taxonomy" id="form-add-edit-taxonomy" action="options.php">
-					<?php
-						suffusion_display_custom_taxonomy(-1);
-					?>
-					</form>
-				</div><!-- .add-edit-taxonomies -->
-			</div><!-- .suf-options-post-types -->
-	<?php
 	}
 }
 ?>

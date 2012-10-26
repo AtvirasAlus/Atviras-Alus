@@ -1,5 +1,5 @@
 body {/* Default styling for everything that is un-styled and doesn't inherit*/
-	color:#cfcfcf;
+	color:#b8b8b8;
 }
 
 code, pre {
@@ -25,7 +25,7 @@ fieldset {
 	background-color: #222;
 }
 
-div.suf-widget {
+.suf-widget {
 	background-color: #000;
 	border: 1px solid #555;
 }
@@ -40,7 +40,7 @@ div.suf-widget {
 }
 
 /* search form */
-.searchform .searchfield{
+.searchfield{
 	background-color: #444;
 }
 
@@ -48,44 +48,32 @@ div.suf-widget {
 	border-bottom: 1px solid #555;
 }
 
-#nav ul li{
+#nav ul li, #nav ul ul li {
 	border: 1px solid #555;
 }
 
-#nav ul li a{
-	color: #eee;
-	background-color: #000;
-
+#nav ul li a {
+	color: #b8b8b8;
+	background: #000;
 }
 
-#nav ul ul li {
+#nav-top {
+	border: 1px solid #555;
+	border-top: none;
+	background-color: #222;
+}
+
+#nav-top ul li{
 	border: 1px solid #555;
 }
 
-/* style the links for the top level */
-#nav a,
-#nav a:visited {
-	color: #eee;
-}
-
-#nav ul ul li a,
-#nav ul ul li a:visited {
-	color: #eee;
-}
-
-/* style the second level links */
-#nav ul ul a.drop,
-#nav ul ul a.drop:visited {
+#nav-top ul li a {
+	color: #b8b8b8;
 	background-color: #000;
 }
 
-#nav ul ul a,
-#nav ul ul a:visited,
-#nav li.current_page_item li a,
-#nav li.current-cat li a,
-#nav li.current-menu-item li a {
-	background-color: #000;
-	color:#eee;
+#nav-top ul ul li {
+	border: 1px solid #555;
 }
 
 /* sub menu */
@@ -126,64 +114,15 @@ div.suf-widget {
 }
 
 
-#nav-top {
-	border: 1px solid #555;
-	border-top: none;
-	background-color: #222;
-}
-
-#nav-top ul li{
-	border: 1px solid #555;
-}
-
-#nav-top ul li a{
-	color: #eee;
-	background-color: #000;
-
-}
-
-#nav-top ul ul li {
-	border: 1px solid #555;
-}
-
-/* style the links for the top level */
-#nav-top a,
-#nav-top a:visited {
-	color: #eee;
-}
-
-#nav-top ul ul a.drop,
-#nav-top ul ul a.drop:visited {
-	background-color: #000;
-}
-
-#nav-top ul ul li a,
-#nav-top ul ul li a:visited {
-	color: #eee;
-}
-
-/* style the second level links */
-#nav-top ul ul a,
-#nav-top ul ul a:visited,
-#nav-top li.current_page_item li a,
-#nav-top li.current-cat li a,
-#nav-top li.current-menu-item li a {
-	background-color: #000;
-	color:#eee;
-}
-
 #top-bar-right-spanel-tab .toggle {
 	border: 1px solid #555;
 }
 
-.post, div.page {
+.post, article.page {
 	background-color: #000;
 	border: 1px solid #555;
 }
-.postdata {
-	color: #999999;
-}
-.postdata a, .postdata a:visited {
+.postdata, .postdata a, .postdata a:visited {
 	color: #999999;
 }
 
@@ -214,7 +153,7 @@ h2.posttitle {
 	color: #999;
 }
 
-div.page-links span {
+.page-links span {
 	border-color: #222222;
 }
 
@@ -248,16 +187,11 @@ div.navigation .suf-page-nav a.page-numbers:hover {
 	color: #999999;
 }
 
-.post-nav .previous a {
-	background: url(images/older-post.png) no-repeat left center;
-}
-
-.post-nav .next a {
-	background: url(images/newer-post.png) no-repeat right center;
-}
+.post-nav .previous .icon { width: 16px; height: 16px; background-position: -16px -160px; float: left; margin-right: 4px;}
+.post-nav .next .icon { width: 16px; height: 16px; background-position: 0 -160px; float: right; margin-left: 4px;}
 
 /* commentform */
-#commentform label {
+#commentform label.suf-comment-label {
 	color:#ffffff;
 	border: solid 1px #222;
 }
@@ -273,23 +207,19 @@ div.navigation .suf-page-nav a.page-numbers:hover {
 #commentform textarea:focus, #commentform input[type="text"]:focus {
 	border: solid 1px #999;
 }
-.commentlist li.comment {
-	border: 1px solid #222;
-}
-.commentlist li.alt {
-	border: 1px solid #333;
-}
-.commentlist small a, .commentlist small a:visited {
-	color: #999999;
-}
+.commentlist li.comment, .commentlist li.pingback, .commentlist li.trackback { border: 1px solid #222; background-color: #080808; }
+.commentlist li.alt { border: 1px solid #333; background-color: #202020; }
+.commentlist small a, .commentlist small a:visited { color: #999999; }
 .comment-author {
 	border-bottom: 1px dotted #444;
 }
-a.comment-reply-link {
+.author-below .comment-body, .author-above .comment-body { background-color: #222; }
+.author-below .arrow, .author-above .arrow { border-left-color: #222; }
+a.comment-reply-link, a.comment-reply-login {
 	border: solid 1px #222222;
 }
 
-a.comment-response-types, span.comment-response-types {
+.comment-response-type, .response-type {
 	border: solid 1px #222222;
 }
 
@@ -301,14 +231,6 @@ h3.comments {
 
 h3#respond, h3.respond, #reply-title {
 	background-color: #333;
-}
-
-.commentlist li{
-	background-color: #080808;
-}
-
-.commentlist .alt{
-	background-color: #202020;
 }
 
 #page-footer, #cred {
@@ -352,7 +274,6 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, #postbox
 
 /* sidebar */
 .suf-widget h3,
-.suf-widget h3:hover,
 .suf-widget h3 a,
 .suf-widget h3 a:visited {
 	color: #999;
@@ -360,8 +281,8 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, #postbox
 
 div.tab-box div.sidebar-tab-content a:hover,
 div.tab-box div.sidebar-tab-content a:active,
-div.suf-widget a:hover,
-div.suf-widget a:active {
+.suf-widget a:hover,
+.suf-widget a:active {
 	text-decoration: underline;
 }
 
@@ -404,6 +325,9 @@ div.sidebar-tab-content a:visited,
 	border-color: #222222;
 }
 
+.index-overlaid #sliderIndex a, .index-overlaid .sliderIndex a { background-color: #000; }
+.pager-bullets.index-overlaid #sliderPager a, .pager-bullets.index-overlaid .sliderPager a { background-color: transparent; }
+
 /* These settings are for common plugins */
 .wp-pagenavi a,
 .wp-pagenavi a:visited,
@@ -425,9 +349,9 @@ div.sidebar-tab-content {
 
 /* Magazine */
 .suf-mag-headlines,
-.suf-mag-excerpts td,
-.suf-tiles td,
-.suf-mag-categories td {
+.suf-mag-excerpt,
+.suf-tile,
+.suf-mag-category {
 	background-color: #000;
 	border: 1px solid #555;
 }
@@ -454,9 +378,9 @@ h2.suf-tile-title a:active {
 }
 
 h2.suf-mag-headlines-title,
-.suf-mag-excerpts th,
+.suf-mag-excerpts-header,
 .suf-tiles th,
-.suf-mag-categories th {
+.suf-mag-categories-header {
 	border-color: #555;
 	background-color: #000;
 	color: #ddd;
@@ -499,51 +423,28 @@ div.bookentry img {
 	border: 1px solid #444;
 }
 
-/* BuddyPress */
-#item-nav div.item-list-tabs ul li {
-	border: 1px solid #555;
-	border-bottom: none;
-}
-
-#item-nav div.item-list-tabs, #group-create-tabs {
-	border-bottom: 1px solid #555;
-}
-
-.post form#whats-new-form textarea, .post .standard-form textarea {
-	border: solid 1px #555;
-	background-color: #333;
-}
-
-form#whats-new-form select, #item-nav select, #item-body select, .post .standard-form select {
-	border: solid 1px #555;
-	background-color: #333;
-	color: #999;
-}
-
-.bp-header { border-bottom: dotted 1px #555; }
-
-.post form#whats-new-form, ul.item-list .activity, ul.item-list .groups, ul.item-list .blog, ul.item-list li div.activity-comments ul li, .standard-form, ul.item-list .member {
-	background-color: #222;
-	border: 1px solid #555;
-}
-
-.activity-meta a { border-color: #333; }
-.editfield p.description { color: #666; }
-.generic-button { border: 1px solid #333; }
-
-#message-threads { border-top: 1px solid #222; }
-#message-threads td { border-bottom: 1px solid #222; }
-#message-threads .odd { background: #111; }
-#message-threads .unread { background: #444; }
-
-.standard-form div#link-url-embed div#link-url-embed-content, .standard-form div#link-url-embed div#link-url-embed-avatar,
-.links div.link-vote-panel div.vote-count, #link-details-form.standard-form fieldset, #link-details-form.standard-form fieldset legend { 
-	border: 1px solid #444;
-}
-
 .meta-left-pullout ul { border-right: 1px dotted #555; }
 .meta-right-pullout ul { border-left: 1px dotted #555; }
 .meta-pullout li { border-bottom: 1px dotted #555; }
 
 .attachment object.text { color: #999; border: solid 1px #555; background-color: #666; }
 table.exif td { border-bottom: 1px dotted #222; }
+.flickr_badge_image img { border-color: #333; }
+.suf-twitter-avatar { border-color: #333; }
+
+.warea ul.suf-posts-thumbnail li { border-bottom: 1px dotted #333; }
+img.suf-widget-thumb { border-color: #333; }
+.suf-mosaic-img { border-color: #333; }
+
+.entry th, .comment-body th { border-bottom: 1px dotted #222; }
+.entry td, .comment-body td { border-bottom: 1px dotted #222; }
+.exif-button, .navigation-attachment { border-color: #222; }
+
+.mm-warea { background: #000; border-color: #333; color: #b8b8b8; }
+#nav .mm-warea .mm-widget ul li, #nav-top .mm-warea .mm-widget ul li { color: #b8b8b8; }
+
+.cl-widget { background: #000; border: 1px solid #333; }
+.outer-pullout-container .meta-pullout {
+	background: #000;
+	border: 1px solid #555;
+}
