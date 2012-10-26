@@ -35,7 +35,7 @@ class IndexController extends Zend_Controller_Action {
 		$user_info = $storage->read();
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$db = Zend_Registry::get("db");
-			$db->update("users", array("last_action_time" => date("Y-m-d H:i:s"), "ping_time" => date("Y-m-d H:i:s")), array("user_id = '" . $user_info->user_id . "'"));
+			$db->update("users", array("last_url" => $_SERVER['HTTP_REFERER'], "last_action_time" => date("Y-m-d H:i:s"), "ping_time" => date("Y-m-d H:i:s")), array("user_id = '" . $user_info->user_id . "'"));
 		}
 	}
 	public function enablebetaAction(){
