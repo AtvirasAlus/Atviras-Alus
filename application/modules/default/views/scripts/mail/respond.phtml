@@ -29,7 +29,24 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 			</dl>
 			<dl>
 				<dt>Tema:</dt>
-				<dd><input type="text" name="mail_subject" id="mail_subject" value="Ats:<?= $this->mail['mail_subject']; ?>"  /></dd>
+				<?php
+					$sbj = $this->mail['mail_subject'];
+					$exp = "@^Ats\[?([^/]+)\]@i";
+					preg_match($exp, $sbj, $matches);
+					if (isset($matches[1]) && !empty($matches[1])){
+						$old = $matches[1];
+						$sbj = str_replace("Ats[".$old."]:", "Ats[".($old+1)."]:", $sbj);
+					} else {
+						$exp2 = "@^Ats:@i";
+						preg_match($exp2, $sbj, $matches2);
+						if (isset($matches2[0]) && !empty($matches2[0])){
+							$sbj = str_replace("Ats:", "Ats[2]:", $sbj);
+						} else {
+							$sbj = "Ats: ".$sbj;
+						}
+					}
+				?>
+				<dd><input type="text" name="mail_subject" id="mail_subject" value="<?= $sbj; ?>"  /></dd>
 				<div class="clear"></div>
 			</dl>
 			<dl>

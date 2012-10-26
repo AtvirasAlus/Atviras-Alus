@@ -10,6 +10,31 @@ class CronController extends Zend_Controller_Action {
 		
 	}
 	
+	public function fixmailsubjectsAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("mail", array("mail_id", "mail_subject"))
+				->order("mail_id DESC");
+		$result = $db->fetchAll($select);
+		foreach($result as $key=>$val){
+			$count = $result[$key]['count'] = substr_count($val['mail_subject'], 'Ats:');
+			$plain = $result[$key]['plain'] = trim(str_replace("Ats:", "", $val['mail_subject']));
+			if ($count > 0){
+				if ($count == 1){
+					$new_subject = $result[$key]['new_subject'] = "Ats: ".$plain;
+				} else {
+					$new_subject = $result[$key]['new_subject'] = "Ats[".$count."]: ".$plain;
+				}
+			} else {
+				$new_subject = $result[$key]['new_subject'] = $plain;
+			}
+			$db->update("mail", array("mail_subject" => $new_subject), "mail_id = '".$val['mail_id']."'");
+		}
+		echo "done.";
+	}
+	
 	public function populatemwusersAction(){
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
