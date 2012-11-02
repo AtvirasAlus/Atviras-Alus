@@ -2823,3 +2823,25 @@ html ul.topnav li ul.subnav li a:hover {
 	text-align: center;
 	margin-top: 10px;
 }
+.brewer_search {
+	float: left;
+	margin-bottom: 20px;
+}
+.brewer_search input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 200px;
+	padding: 2px;
+	margin: 0px;
+	float: left;
+}
+.brewer_search input[type="submit"] {
+	padding: 6px 15px 6px 15px !important;
+	float: left;
+	margin: 0px;
+	margin-left: 10px;
+	cursor: pointer;
+}

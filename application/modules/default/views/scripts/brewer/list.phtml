@@ -1,5 +1,21 @@
+<script type="text/javascript">
+	$(function() {
+		$("#brewer_search_form").submit(function(){
+			window.location.href = "/brewer/list/"+$("#brewer_search").val();
+			return false;
+		});
+	})
+</script>
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Aludariai</div>
+	<div class="brewer_search">
+		<form action="" id="brewer_search_form">
+			<input type="text" value="<?=$this->search?>" id="brewer_search" name="brewer_search" />
+			<input type="submit" value="Ieškoti" class="ui-button" />
+			<div class="clear"></div>
+		</form>
+	</div>
+	<div class="clear"></div>
 	<div class="users_avatars">
 		<?
 		$z = 0;

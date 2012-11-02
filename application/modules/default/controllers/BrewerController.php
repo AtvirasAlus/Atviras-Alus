@@ -170,6 +170,16 @@ class BrewerController extends Zend_Controller_Action {
 				->order("count DESC")
 				->order("recipe_created DESC")
 				->order("user_name ASC");
+		$search = $this->_getParam("brewer_search");
+		$this->view->search = "";
+		if (isset($search) && !empty ($search)){
+			$this->view->search = $search;
+			$select->where("users.user_name LIKE '%".$search."%'");
+		}
+		$result = $db->FetchAll($select);
+		if (sizeof($result) == 1){
+			header("location: /brewers/".$result[0]['user_id']);
+		}
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($this->_getParam('page'));

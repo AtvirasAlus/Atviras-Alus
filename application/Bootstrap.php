@@ -97,7 +97,7 @@ function _initAutoLoad() {
 		$router->addRoute("brewer",new Zend_Controller_Router_Route("/brewers/:brewer",array("module"=>"default","controller" => "brewer","action" => "info","brewer"=>0)));
 		$router->addRoute("brewer_recipes",new Zend_Controller_Router_Route("/brewer/recipes/:brewer/:page",array("module"=>"default","controller" => "brewer","action" => "recipes","brewer"=>0,"page"=>0)));
 		$router->addRoute("brewer_sessions",new Zend_Controller_Router_Route("/brewer/sessions/:brewer",array("module"=>"default","controller" => "brewer","action" => "sessions","brewer"=>0)));
-		$router->addRoute("brewer_list",new Zend_Controller_Router_Route("/brewer/list/:page",array("module"=>"default","controller" => "brewer","action" => "list","page"=>0)));
+		$router->addRoute("brewer_list",new Zend_Controller_Router_Route("/brewer/list/:brewer_search/:page",array("module"=>"default","controller" => "brewer","action" => "list", "brewer_search" => "","page"=>0)));
 		$router->addRoute("style",new Zend_Controller_Router_Route("/style/:style/:page",array("module"=>"default","controller" => "recipes","action" => "styles","style"=>0,"page"=>0)));
 		$router->addRoute("pagalba",new Zend_Controller_Router_Route("/pagalba",array("module"=>"default","controller" => "content","action" => "read","category"=>"help","page"=>0)));
 		$router->addRoute("parama",new Zend_Controller_Router_Route("/parama",array("module"=>"default","controller" => "content","action" => "parama","category"=>"help","page"=>0)));
