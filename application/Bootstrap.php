@@ -112,8 +112,8 @@ function _initAutoLoad() {
 		$router->addRoute("skaitykla",new Zend_Controller_Router_Route("/skaitykla",array("module"=>"default","controller" => "content","action" => "list","cat_page"=>1)));
 		$router->addRoute("stilius",new Zend_Controller_Router_Route("/stilius/:style/:page",array("module"=>"default","controller" => "styles","action" => "styles","style"=>0,"page"=>0)));
 		$router->addRoute("search",new Zend_Controller_Router_Route("/search/:params/:page",array("module"=>"default","controller" => "recipes","action" => "search","params"=>0,"page"=>0)));
-		$router->addRoute("mail_in",new Zend_Controller_Router_Route("/mail/inbox/:page",array("module"=>"default","controller" => "mail","action" => "inbox","page"=>0)));
-		$router->addRoute("mail_out",new Zend_Controller_Router_Route("/mail/outbox/:page",array("module"=>"default","controller" => "mail","action" => "outbox","page"=>0)));
+		$router->addRoute("mail_in",new Zend_Controller_Router_Route("/mail/inbox/:mail_search/:page",array("module"=>"default","controller" => "mail","action" => "inbox","mail_search" => "", "page"=>0)));
+		$router->addRoute("mail_out",new Zend_Controller_Router_Route("/mail/outbox/:mail_search/:page",array("module"=>"default","controller" => "mail","action" => "outbox", "mail_search" => "", "page"=>0)));
 		$router->addRoute("events",new Zend_Controller_Router_Route("/ivykiai/:page",array("module"=>"default","controller" => "events","action" => "index","page"=>0)));
 		$router->addRoute("event",new Zend_Controller_Router_Route("/ivykis/:event",array("module"=>"default","controller" => "events","action" => "view","event"=>0)));
 		$router->addRoute("sitemap",new Zend_Controller_Router_Route("/sitemap",array("module"=>"default","controller" => "index","action" => "sitemap")));

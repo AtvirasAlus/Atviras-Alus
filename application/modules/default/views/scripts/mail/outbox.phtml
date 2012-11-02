@@ -1,8 +1,16 @@
+<script type="text/javascript">
+	$(function() {
+		$("#mail_search_form").submit(function(){
+			window.location.href = "/mail/outbox/"+$("#mail_search").val();
+			return false;
+		});
+	})
+</script>
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Išsiųsti laiškai</div>
 	<div class="mail_tools">
 		<div class="mail_search">
-			<form action="" method="get">
+			<form action="" id="mail_search_form">
 				<input type="text" value="<?=$this->search?>" id="mail_search" name="mail_search" />
 				<input type="submit" value="Ieškoti" class="ui-button" />
 				<div class="clear"></div>
