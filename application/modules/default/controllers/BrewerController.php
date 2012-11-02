@@ -166,10 +166,10 @@ class BrewerController extends Zend_Controller_Action {
 				->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.brewer_id=users.user_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
 				->where("users.user_active = ?", '1')
 				->group("users.user_id")
-				->order("user_lastlogin DESC")
-				->order("count DESC")
-				->order("recipe_created DESC")
-				->order("user_name ASC");
+//				->order("user_lastlogin DESC")
+//				->order("count DESC")
+//				->order("recipe_created DESC")
+				->order("TRIM(user_name) ASC");
 		$search = $this->_getParam("brewer_search");
 		$this->view->search = "";
 		if (isset($search) && !empty ($search)){
