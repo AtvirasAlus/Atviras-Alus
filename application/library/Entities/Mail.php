@@ -160,8 +160,8 @@ class Entities_Mail extends Zend_Db_Table {
 		}
 	}
 	public static function mail($to=array(),$subject="",$body="") {
-		$config = array('auth' => 'login', 'username' => 'noreply@atvirasalus.lt','password' => 'povelniu');
-		$tr = new Zend_Mail_Transport_Smtp('mail.atvirasalus.lt',$config);
+		$config = array('ssl'=>'ssl', 'port'=>465,'auth' => 'login', 'username' => 'atvirasalus.lt@gmail.com','password' => 'povelniu');
+		$tr = new Zend_Mail_Transport_Smtp('smtp.gmail.com',$config);
 		$mail = new Zend_Mail('UTF-8');
 		$mail->setFrom('noreply@atvirasalus.lt', 'Atviras alus');
 		for ($i=0;$i<count($to);$i++) {
