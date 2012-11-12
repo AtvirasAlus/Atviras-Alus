@@ -76,6 +76,11 @@ if (bb_is_profile()) {
 									</a>
 								</li>
 								<li>
+									<a href="/paieska">
+										Paieška pagal parametrus
+									</a>
+								</li>
+								<li>
 									<a href="/recipes/favorites">
 										Įdomiausi receptai													
 									</a>
