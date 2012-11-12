@@ -18,6 +18,22 @@ class RecipesController extends Zend_Controller_Action {
 			}
 		}
 	}
+	
+	public function showemptyrecipesonAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$back = $_SERVER['HTTP_REFERER'];
+		setcookie("show_empty_recipes", 1, time()+3600*24*360);
+		header("location: ".$back);
+	}
+
+	public function showemptyrecipesoffAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$back = $_SERVER['HTTP_REFERER'];
+		setcookie("show_empty_recipes", 0, time()+3600*24*360);
+		header("location: ".$back);
+	}
 
 	public function indexAction() {
 		$ord = $this->_getParam('recipe_order');
@@ -66,8 +82,13 @@ class RecipesController extends Zend_Controller_Action {
 			break;
 				
 		}
-
-
+		$select_new = clone $select;
+		if (!isset($_COOKIE['show_empty_recipes']) || $_COOKIE['show_empty_recipes'] != "1"){
+			$select->where("recipe_total_sessions > 0");
+		}
+		$select_new->where("recipe_total_sessions = 0");
+		$result = $db->fetchAll($select_new);
+		$this->view->hidden_recipes = sizeof($result);
 		//$this->view->recipes=$db->fetchAll($select);
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 
@@ -144,6 +165,13 @@ class RecipesController extends Zend_Controller_Action {
 			break;
 				
 		}
+		$select_new = clone $select;
+		if (!isset($_COOKIE['show_empty_recipes']) || $_COOKIE['show_empty_recipes'] != "1"){
+			$select->where("recipe_total_sessions > 0");
+		}
+		$select_new->where("recipe_total_sessions = 0");
+		$result = $db->fetchAll($select_new);
+		$this->view->hidden_recipes = sizeof($result);
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($this->_getParam('page'));
@@ -281,6 +309,13 @@ class RecipesController extends Zend_Controller_Action {
 			$select->where("recipe_publish = ?", '1');
 			$select->group("beer_recipes.recipe_id");
 			$select->order("beer_recipes.recipe_name");
+			$select_new = clone $select;
+			if (!isset($_COOKIE['show_empty_recipes']) || $_COOKIE['show_empty_recipes'] != "1"){
+				$select->where("recipe_total_sessions > 0");
+			}
+			$select_new->where("recipe_total_sessions = 0");
+			$result = $db->fetchAll($select_new);
+			$this->view->hidden_recipes = sizeof($result);
 			$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 			$this->view->content = new Zend_Paginator($adapter);
 			$this->view->content->setCurrentPageNumber($this->_getParam('page'));

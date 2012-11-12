@@ -139,10 +139,17 @@ class PickerController extends Zend_Controller_Action {
 				$select->where("recipe_type = 'partial'");
 				break;
 		}
+		$select_new = clone $select;
+		if (!isset($_COOKIE['show_empty_recipes']) || $_COOKIE['show_empty_recipes'] != "1"){
+			$select->where("recipe_total_sessions > 0");
+		}
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($this->_getParam('page'));
 		$this->view->content->setItemCountPerPage(15);
+		$select_new->where("recipe_total_sessions = 0");
+		$result = $db->fetchAll($select_new);
+		$this->view->hidden_recipes = sizeof($result);
 		$select = $db->select()
 				->from("beer_awards")
 				->order("posted DESC");

@@ -1,3 +1,14 @@
+<script>
+	$(function() {
+		$("#show_empty_recipes").change(function(){
+			if ($("#show_empty_recipes").attr("checked") == true){
+				window.location.href = "/show_empty_recipes_on";
+			} else {
+				window.location.href = "/show_empty_recipes_off";
+			}
+		});
+	});
+</script>
 <div id="brewer_info_container" class="inner_container">
 	<div class="inner_header"><?=$this->user_info['user_name'];?></div>
 	<div class="brewer_info_container">
@@ -44,6 +55,15 @@ if (sizeof($this->user_info['recipes']) > 0){
 	?>
 	<div id="brewer_info_recipe_container" class="inner_container">
 		<div class="inner_header">Alaus receptai (<?=$this->user_info['total_recipes'];?>) <a style="font-size: 12px" href="/brewer/recipes/<?=$this->user_info['user_id'];?>"> peržiūrėti</a></div>
+		<?php
+		if ($this->hidden_recipes >0):
+			?>
+			<div style="margin-bottom: 10px;">
+				<label><input type="checkbox" value="1" name="show_empty_recipes" id="show_empty_recipes" <?=(isset($_COOKIE['show_empty_recipes']) && $_COOKIE['show_empty_recipes'] == "1") ? 'checked="checked"' : ''; ?>> Rodyti receptus be užregistruotų virimų (<?=$this->hidden_recipes?> <?=$this->plurify($this->hidden_recipes, "receptas", "receptai", "receptų")?>)</label>
+			</div>
+			<?php
+		endif;
+		?>
 		<div id="tags">
 			<ul>
 				<?

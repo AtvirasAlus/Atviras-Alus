@@ -1,5 +1,12 @@
 <script>
 	$(function() {
+		$("#show_empty_recipes").change(function(){
+			if ($("#show_empty_recipes").attr("checked") == true){
+				window.location.href = "/show_empty_recipes_on";
+			} else {
+				window.location.href = "/show_empty_recipes_off";
+			}
+		});
 	})
 </script>
 <?php
@@ -9,6 +16,14 @@ if (isset($this->content)) {
 		<div class="inner_header">
 			Paieškos rezultatai
 		</div>
+		<?php
+		if ($this->hidden_recipes > 0):?>
+			<div style="float: left; line-height: 36px;">
+				<label><input type="checkbox" value="1" name="show_empty_recipes" id="show_empty_recipes" <?=(isset($_COOKIE['show_empty_recipes']) && $_COOKIE['show_empty_recipes'] == "1") ? 'checked="checked"' : ''; ?>> Rodyti receptus be užregistruotų virimų (<?=$this->hidden_recipes?> <?=$this->plurify($this->hidden_recipes, "receptas", "receptai", "receptų")?>)</label>
+			</div>
+		<?php
+		endif;
+		?>
 		<div style="text-align: right; margin-right: 6px; margin-bottom: 15px;">
 			<a href="<?=$this->back_url?>" class="ui-button">Patikslinti parametrus</a>
 		</div>

@@ -3,6 +3,13 @@
 		$("#recipe_order").change(function(){
 			$("#recipe_order_form").submit();
 		});
+		$("#show_empty_recipes").change(function(){
+			if ($("#show_empty_recipes").attr("checked") == true){
+				window.location.href = "/show_empty_recipes_on";
+			} else {
+				window.location.href = "/show_empty_recipes_off";
+			}
+		});
 	});
 </script>
 <?php
@@ -38,6 +45,15 @@ if (isset($this->content)) {
 		}
 		?>
 		<div class="recipe_order_block">
+			<?php
+				if ($this->hidden_recipes > 0):
+					?>
+					<div style="float: left; line-height: 28px;">
+						<label><input type="checkbox" value="1" name="show_empty_recipes" id="show_empty_recipes" <?=(isset($_COOKIE['show_empty_recipes']) && $_COOKIE['show_empty_recipes'] == "1") ? 'checked="checked"' : ''; ?>> Rodyti receptus be užregistruotų virimų (<?=$this->hidden_recipes?> <?=$this->plurify($this->hidden_recipes, "receptas", "receptai", "receptų")?>)</label>
+					</div>
+					<?php
+				endif;
+				?>
 			<form id="recipe_order_form" method="post" action="">
 				Rikiuoti receptus pagal
 				<select name="recipe_order" id="recipe_order">

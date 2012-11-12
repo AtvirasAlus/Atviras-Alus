@@ -17,6 +17,13 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 		return split( term ).pop();
 	}
 	$(function() {
+		$("#show_empty_recipes").change(function(){
+			if ($("#show_empty_recipes").attr("checked") == true){
+				window.location.href = "/show_empty_recipes_on";
+			} else {
+				window.location.href = "/show_empty_recipes_off";
+			}
+		});
 		// don't navigate away from the field on tab when selecting an item
 		$("#hops").bind("keydown", function (event) {
 			if (event.keyCode === 9 && $(this).data("autocomplete").menu.active) {
@@ -319,6 +326,13 @@ if (isset($this->content)) {
 			Paieškos rezultatai
 		</div>
 		<?php
+		if ($this->hidden_recipes > 0):
+			?>
+			<div style="margin-bottom: 10px;">
+				<label><input type="checkbox" value="1" name="show_empty_recipes" id="show_empty_recipes" <?=(isset($_COOKIE['show_empty_recipes']) && $_COOKIE['show_empty_recipes'] == "1") ? 'checked="checked"' : ''; ?>> Rodyti receptus be užregistruotų virimų (<?=$this->hidden_recipes?> <?=$this->plurify($this->hidden_recipes, "receptas", "receptai", "receptų")?>)</label>
+			</div>
+			<?php
+		endif;
 		if (isset($this->filter_values['tag_text']) && !empty($this->filter_values['tag_text'])){
 			?>
 			<div style="height: 0px; overflow: hidden;">

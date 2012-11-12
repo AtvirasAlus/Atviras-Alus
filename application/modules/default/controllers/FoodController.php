@@ -95,7 +95,9 @@ class FoodController extends Zend_Controller_Action {
 						->from("beer_recipes")
 						->join("users", "users.user_id = beer_recipes.brewer_id", array("user_name"))
 						->joinLeft("beer_styles", "beer_recipes.recipe_style = beer_styles.style_id", array("style_name"));
-				$select->where("beer_recipes.recipe_id = ?", $recipe['recipe_id']);
+				$select->where("recipe_style IN (".implode(",", $arr).")");
+				$select->where("recipe_total_sessions > 0");
+				$select->order("RAND()");
 				$rec = $db->FetchRow($select);
 				$this->view->recipes[] = $rec;
 			}

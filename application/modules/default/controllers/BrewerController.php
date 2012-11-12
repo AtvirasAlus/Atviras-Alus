@@ -85,9 +85,19 @@ class BrewerController extends Zend_Controller_Action {
 					$this->view->user_info["total_sessions"] = $row["count"];
 				}
 				$select = $db->select()
+						->from("beer_recipes", array("count" => "count(*)"))
+						->where("beer_recipes.recipe_publish = ?", '1')
+						->where("beer_recipes.recipe_total_sessions = ?", '0')
+						->where("beer_recipes.brewer_id= ?", $brewer);
+				$row = $db->fetchRow($select);
+				echo $this->view->hidden_recipes = $row["count"];
+				$select = $db->select()
 						->from("beer_recipes")
 						->where("beer_recipes.recipe_publish = ?", '1')
 						->where("beer_recipes.brewer_id= ?", $brewer);
+				if (!isset($_COOKIE['show_empty_recipes']) || $_COOKIE['show_empty_recipes'] != "1"){
+					$select->where("recipe_total_sessions > 0");
+				}
 				$this->view->user_info["recipes"] = array();
 				if ($rows = $db->fetchAll($select)) {
 					$this->view->user_info["recipes"] = $rows;
