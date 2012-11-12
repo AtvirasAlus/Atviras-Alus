@@ -9,6 +9,9 @@ if (isset($this->content)) {
 		<div class="inner_header">
 			Paieškos rezultatai
 		</div>
+		<div style="text-align: right; margin-right: 6px; margin-bottom: 15px;">
+			<a href="<?=$this->back_url?>" class="ui-button">Patikslinti parametrus</a>
+		</div>
 		<?php
 		if (isset($this->filter_values['tag_text']) && !empty($this->filter_values['tag_text'])){
 			?>

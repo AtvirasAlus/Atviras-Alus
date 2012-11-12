@@ -51,18 +51,28 @@
 			}
 		}
 		function getpreview(){
+			var style_val = $('input[name=style_val]:checked').val();
+			var type_val = $('input[name=type_val]:checked').val();
 			$(".picker_results div").html($("#loader_block").html());
-			$(".picker_results div").load("/paieska/preview/"+$("#slider-ibu").slider("values", 0)+"/"+$("#slider-ibu").slider("values", 1)+"/"+$("#slider-ebc").slider("values", 0)+"/"+$("#slider-ebc").slider("values", 1)+"/"+$("#slider-abv").slider("values", 0)+"/"+$("#slider-abv").slider("values", 1));
+			$(".picker_results div").load("/paieska/preview/"+$("#slider-ibu").slider("values", 0)+"/"+$("#slider-ibu").slider("values", 1)+"/"+$("#slider-ebc").slider("values", 0)+"/"+$("#slider-ebc").slider("values", 1)+"/"+$("#slider-abv").slider("values", 0)+"/"+$("#slider-abv").slider("values", 1)+"/"+style_val+"/"+type_val);
 		}
+		$(".type_val").change(function(){
+			getpreview();
+		});
+		$(".style_val").change(function(){
+			getpreview();
+		});
 		$("#picker_submit").click(function(){
-			window.location.href = "/paieska/rezultatai/"+$("#slider-ibu").slider("values", 0)+"/"+$("#slider-ibu").slider("values", 1)+"/"+$("#slider-ebc").slider("values", 0)+"/"+$("#slider-ebc").slider("values", 1)+"/"+$("#slider-abv").slider("values", 0)+"/"+$("#slider-abv").slider("values", 1);
+			var style_val = $('input[name=style_val]:checked').val();
+			var type_val = $('input[name=type_val]:checked').val();
+			window.location.href = "/paieska/rezultatai/"+$("#slider-ibu").slider("values", 0)+"/"+$("#slider-ibu").slider("values", 1)+"/"+$("#slider-ebc").slider("values", 0)+"/"+$("#slider-ebc").slider("values", 1)+"/"+$("#slider-abv").slider("values", 0)+"/"+$("#slider-abv").slider("values", 1)+"/"+style_val+"/"+type_val;
 		});
 		$( "#slider-ebc" ).slider({
 			range: true,
 			step: 1,
 			min: <?=$this->params['min_ebc']?>,
 			max: <?=$this->params['max_ebc']?>,
-			values: [ <?=$this->params['min_ebc']?>, <?=$this->params['max_ebc']?> ],
+			values: [ <?=$this->sel_vals['min_ebc']?>, <?=$this->sel_vals['max_ebc']?> ],
 			slide: function(event, ui) {
 				$("#ebc_min").html(ui.values[0]);
 				$("#ebc_min_color").css("background-color", colorHex(ui.values[0]));
@@ -78,7 +88,7 @@
 			step: 0.1,
 			min: <?=$this->params['min_abv']?>,
 			max: <?=$this->params['max_abv']?>,
-			values: [ <?=$this->params['min_abv']?>, <?=$this->params['max_abv']?> ],
+			values: [ <?=$this->sel_vals['min_abv']?>, <?=$this->sel_vals['max_abv']?> ],
 			slide: function( event, ui ) {
 				$("#abv_min").html(ui.values[0].toFixed(1));
 				$("#abv_max").html(ui.values[1].toFixed(1));
@@ -92,7 +102,7 @@
 			step: 1,
 			min: <?=$this->params['min_ibu']?>,
 			max: <?=$this->params['max_ibu']?>,
-			values: [ <?=$this->params['min_ibu']?>, <?=$this->params['max_ibu']?> ],
+			values: [ <?=$this->sel_vals['min_ibu']?>, <?=$this->sel_vals['max_ibu']?> ],
 			slide: function( event, ui ) {
 				$("#ibu_min").html(ui.values[0]);
 				$("#ibu_max").html(ui.values[1]);
@@ -103,46 +113,69 @@
 		});
 		$("#ebc_min_color").css("background-color", colorHex($("#slider-ebc").slider("values", 0)));
 		$("#ebc_max_color").css("background-color", colorHex($("#slider-ebc").slider("values", 1)));
+		getpreview();
 	});
 </script>
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Receptų paieška pagal parametrus</div>
 	<div>
+		<div class="picker_title">Alaus tipas</div>
+		<div class="picker_item">
+			<div class="picker_row picker_options">
+				<label><input class="style_val" type="radio" name="style_val" value="all" <?=($this->sel_vals['style_val'] == "all") ? 'checked="checked"' : ''?> /> Visi</label>
+				<?php
+				foreach($this->styles as $key=>$val):
+					?>
+					<label><input class="style_val" type="radio" name="style_val" value="<?=$val['yeast_cat_id']?>" <?=($this->sel_vals['style_val'] == $val['yeast_cat_id']) ? 'checked="checked"' : ''?> /> <?=$val['yeast_cat_name']?></label>
+					<?php
+				endforeach;
+				?>
+				<label><input class="style_val" type="radio" name="style_val" value="0" <?=($this->sel_vals['style_val'] == "0") ? 'checked="checked"' : ''?> /> Kiti</label>
+			</div>
+		</div>
+		<div class="picker_title">Recepto tipas</div>
+		<div class="picker_item">
+			<div class="picker_row picker_options">
+				<label><input class="type_val" type="radio" name="type_val" value="all" <?=($this->sel_vals['type_val'] == "all") ? 'checked="checked"' : ''?> /> Visi</label>
+				<label><input class="type_val" type="radio" name="type_val" value="allgrain" <?=($this->sel_vals['type_val'] == "allgrain") ? 'checked="checked"' : ''?> /> Iš salyklo</label>
+				<label><input class="type_val" type="radio" name="type_val" value="extract" <?=($this->sel_vals['type_val'] == "extract") ? 'checked="checked"' : ''?> /> Iš ekstrakto</label>
+			</div>
+		</div>
 		<div class="picker_title">Spalva (EBC)</div>
 		<div class="picker_item">
 			<div class="picker_row">
 				<div class="picker_min_block" id="ebc_min_color"></div>
-				<div class="picker_min_val" id="ebc_min"><?=$this->params['min_ebc']?></div>
+				<div class="picker_min_val" id="ebc_min"><?=$this->sel_vals['min_ebc']?></div>
 				<div class="picker_slider">
 					<div id="slider-ebc"></div>
 				</div>
-				<div class="picker_max_val" id="ebc_max"><?=$this->params['max_ebc']?></div>
+				<div class="picker_max_val" id="ebc_max"><?=$this->sel_vals['max_ebc']?></div>
 				<div class="picker_max_block" id="ebc_max_color"></div>
 			</div>
 		</div>
 		<div class="picker_title">Alkoholio kiekis (ABV)</div>
 		<div class="picker_item">
 			<div class="picker_row">
-				<div class="picker_min_val" id="abv_min"><?=$this->params['min_abv']?></div>
+				<div class="picker_min_val" id="abv_min"><?=$this->sel_vals['min_abv']?></div>
 				<div class="picker_slider">
 					<div id="slider-abv"></div>
 				</div>
-				<div class="picker_max_val" id="abv_max"><?=$this->params['max_abv']?></div>
+				<div class="picker_max_val" id="abv_max"><?=$this->sel_vals['max_abv']?></div>
 			</div>
 		</div>
 		<div class="picker_title">Kartumas (IBU)</div>
 		<div class="picker_item">
 			<div class="picker_row">
-				<div class="picker_min_val" id="ibu_min"><?=$this->params['min_ibu']?></div>
+				<div class="picker_min_val" id="ibu_min"><?=$this->sel_vals['min_ibu']?></div>
 				<div class="picker_slider">
 					<div id="slider-ibu"></div>
 				</div>
-				<div class="picker_max_val" id="ibu_max"><?=$this->params['max_ibu']?></div>
+				<div class="picker_max_val" id="ibu_max"><?=$this->sel_vals['max_ibu']?></div>
 			</div>
 		</div>
 		<div class="picker_title" style="text-align: center">Receptų kiekis</div>
 		<div class="picker_results">
-			<div><?=$this->params['kiekis']?></div>
+			<div><img src="/public/images/picker-loader.gif" width="54" height="55" alt="" /></div>
 		</div>
 		<div class="picker_submit">
 			<input type="button" name="picker_submit" value="Peržiūrėti receptų sąrašą" class="ui-button" id="picker_submit" />

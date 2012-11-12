@@ -30,6 +30,13 @@
 					<action>search</action>
 					<route>search</route>
 				</men-recipe-search>
+				<men-recipe-picker>
+					<label>Paieška pagal parametrus</label>
+					<module>default</module>
+					<controller>picker</controller>
+					<action>index</action>
+					<route>picker</route>
+				</men-recipe-picker>
 				<men-recipe-comments>
 					<label>Komentarai</label>
 					<module>default</module>
