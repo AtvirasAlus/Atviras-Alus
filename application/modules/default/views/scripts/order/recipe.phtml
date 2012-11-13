@@ -1,0 +1,123 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("input[name='delivery']").change(function(){
+			var val = $("input[name='delivery']:checked").val();
+			if (val == "1"){
+				$(".terminal_block").hide();
+				$(".address_block").hide();
+				$("#pay2").show();
+			}
+			if (val == "2"){
+				$(".terminal_block").show();
+				$(".address_block").hide();
+				$("#pay2").hide();
+				$("#pay1 input").attr("checked", "checked");
+			}
+			if (val == "3"){
+				$(".terminal_block").hide();
+				$(".address_block").show();
+				$("#pay2").hide();
+				$("#pay1 input").attr("checked", "checked");
+			}
+		});
+		$("#sbmt").click(function(){
+			var answer = confirm("Ar tikrai norite išsiųsti užsakymą?")
+			if (answer){
+				$("#order_form").submit();
+			}
+		});
+	});
+</script>
+<?php
+$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+?>
+<div class="inner_container">
+	<form method="post" action="" id="order_form">
+		<div class="inner_header">Ingridientų užsakymas el. parduotuvėje "Savas Alus"</div>
+		<div style="font-size: 16px;">Pasirinktas receptas: <a href="/alus/receptas/<?=$this->recipe['recipe_id']?>-<?=$this->urlMaker($this->recipe['recipe_name'])?>"><?=$this->recipe['recipe_name']?></a></div>
+		<div class="order_title">Užsakomos prekės:</div>
+		<div class="as-table">
+			<div class="as-row">
+				<div class="as-cell"><b>Prekė</b></div>
+				<div class="as-cell"><b>Kiekis</b></div>
+			</div>
+			<?php
+			foreach($this->malts as $name=>$weight):
+				?>
+				<div class="as-row">
+					<div class="as-cell"><?=$name;?></div>
+					<div class="as-cell" style="text-align: right;"><?=number_format($weight, 0, ',', ' ');?> g</div>
+				</div>
+				<?php
+			endforeach;
+			foreach($this->hops as $name=>$weight):
+				?>
+				<div class="as-row">
+					<div class="as-cell"><?=$name;?></div>
+					<div class="as-cell" style="text-align: right;"><?=number_format($weight, 0, ',', ' ');?> g</div>
+				</div>
+				<?php
+			endforeach;
+			foreach($this->yeasts as $name=>$weight):
+				?>
+				<div class="as-row">
+					<div class="as-cell"><?=$name;?></div>
+					<div class="as-cell" style="text-align: right;"><?=number_format($weight, 0, ',', ' ');?> g</div>
+				</div>
+				<?php
+			endforeach;
+			?>
+		</div>
+		<div class="order_title">
+			Pastabos:
+			<div style="color: #999; font-size: 12px; font-weight: normal">Nurodykite jei kažkurie recepto ingridientai Jums nėra reikalingi, yra reikalingas kitoks nei nurodytas kiekis arba pageidaujate kitų, recepte nenurodytų, prekių</div>
+		</div>
+		<div>
+			<textarea name="comments" id="order_comments"></textarea>
+		</div>
+		<div class="order_title">
+			Nuolaidos kodas:
+			<div style="color: #999; font-size: 12px; font-weight: normal">Įrašykite nuolaidos kodą (jei turite)</div>
+		</div>
+		<div>
+			<input name="discount" id="order_discount" type="text" />
+		</div>
+		<div class="order_title">
+			Pristatymo būdas:
+		</div>
+		<div>
+			<div><label><input name="delivery" type="radio" value="1" checked="checked" />Atsiėmimas "Savas alus" biure</label></div>
+			<div><label><input name="delivery" type="radio" value="2" />Atsiėmimas LPEXPRESS.lt terminale</label></div>
+			<div><label><input name="delivery" type="radio" value="3" />DPD Lietuva pristatymas Jūsų pasirinktu adresu</label></div>
+		</div>
+		<div class="terminal_block" style="display: none;">
+			<div class="order_title">
+				LPEXPRESS.lt terminalas:
+				<div style="color: #999; font-size: 12px; font-weight: normal">Nurodykite norimo terminalo miestą ir adresą. Terminalų sąrašą galite <a href="http://www.lpexpress.lt/LP-Express-24/Vietu-sarasas.html" target="_blank">peržiūrėti čia</a></div>
+			</div>
+			<div>
+				<input name="terminal" id="order_terminal" type="text" />
+			</div>
+		</div>
+		<div class="address_block" style="display: none;">
+			<div class="order_title">
+				Pristatymo adresas:
+				<div style="color: #999; font-size: 12px; font-weight: normal">Nurodykite pristatymo adresą: miestą, gatvę, namo numerį, buto numerį, pašto kodą, telefoną bei kitus svarbius kontaktinius duomenis</div>
+			</div>
+			<div>
+				<textarea name="address" id="order_address"></textarea>
+			</div>
+		</div>	
+		<div class="order_title">
+			Mokėjimo būdas:
+		</div>
+		<div>
+			<div id="pay1"><label><input name="payment" type="radio" value="1" checked="checked" />Pavedimu į banko sąskaitą (Sąskaitos į kurią pervesti pinigus rekvizitus gausite el. paštu)</label></div>
+			<div id="pay2"><label><input name="payment" type="radio" value="2" />Grynaisiais mūsų biure atsiimant prekes</label></div>
+		</div>
+		<div style="margin-top: 15px; text-align: right;">
+			<input type="hidden" name="sbmt" value="1" />
+			<input type="button" value="Užsakyti prekes" id="sbmt" class="ui-button" />
+		</div>
+	</form>
+</div>

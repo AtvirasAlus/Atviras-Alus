@@ -177,6 +177,11 @@ function i_bu($ibu,$og) {
                         <a href="/index/print-recipe/?recipe_id=<?=$this->data['recipe']['recipe_id'];?>" target="_blank">Spausdinti receptą</a>
 			<?php
 			if (isset($this->user_info)) {
+				 /*
+				?>
+				<a href="/order/savasalus/<?=$this->data['recipe']['recipe_id']?>">Užsakyti ingridientus</a>
+				<?php
+				 */
 				if ($this->recipe_votes["user_vote"]) {
 					?>
 					<a href='javascript:void(0);' id='vote_up_button' style="display:none">Patinka</a>
