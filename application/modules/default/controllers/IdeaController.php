@@ -5,6 +5,7 @@ class IdeaController extends Zend_Controller_Action {
 	public function init() {
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
+		$this->user_info = $user_info;
 		$this->show_beta = false;
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$db = Zend_Registry::get("db");
@@ -24,6 +25,45 @@ class IdeaController extends Zend_Controller_Action {
 		
 	}
 
+	public function makenewAction(){
+		$db = Zend_Registry::get("db");
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$idea_id = $this->getRequest()->getParam('idea_id');
+		if ($this->user_info->user_type != "admin"){
+			exit;
+		} else {
+			$db->update("idea_items", array("idea_status" => "0", "idea_finishdate" => date("Y-m-d H:i:s")), array("idea_id = '" . $idea_id . "'"));
+		}
+		$this->_redirect('/ideja/'.$idea_id);
+	}
+	
+	public function makecompletedAction(){
+		$db = Zend_Registry::get("db");
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$idea_id = $this->getRequest()->getParam('idea_id');
+		if ($this->user_info->user_type != "admin"){
+			exit;
+		} else {
+			$db->update("idea_items", array("idea_status" => "1", "idea_finishdate" => date("Y-m-d H:i:s")), array("idea_id = '" . $idea_id . "'"));
+		}
+		$this->_redirect('/ideja/'.$idea_id);
+	}
+	
+	public function makerejectedAction(){
+		$db = Zend_Registry::get("db");
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$idea_id = $this->getRequest()->getParam('idea_id');
+		if ($this->user_info->user_type != "admin"){
+			exit;
+		} else {
+			$db->update("idea_items", array("idea_status" => "2", "idea_finishdate" => date("Y-m-d H:i:s")), array("idea_id = '" . $idea_id . "'"));
+		}
+		$this->_redirect('/ideja/'.$idea_id);
+	}
+	
 	public function getfileAction() {
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -307,8 +347,27 @@ class IdeaController extends Zend_Controller_Action {
 		$result = $db->fetchRow($select);
 		$select = $db->select()
 				->from("idea_votes")
-				->where("idea_votes.idea_id = ?", $idea_id);
+				->join("users", "users.user_id=idea_votes.user_id", array("user_name"))
+				->where("idea_votes.idea_id = ?", $idea_id)
+				->order("vote_id DESC");
 		$votes = $db->fetchAll($select);
+		$vlist['yes'] = array();
+		$vlist['no'] = array();
+		$vlist['neutral'] = array();
+		foreach($votes as $k=>$v){
+			switch($v['vote_value']){
+				case "-1":
+					$vlist['no'][] = $v;
+					break;
+				case "1":
+					$vlist['yes'][] = $v;
+					break;
+				default:
+					$vlist['neutral'][] = $v;
+					break;
+			}
+		}
+		$this->view->vlist = $vlist;
 		$result['total_votes'] = sizeof($votes);
 		if ($votes == 0) {
 			$result['up_size'] = 0;

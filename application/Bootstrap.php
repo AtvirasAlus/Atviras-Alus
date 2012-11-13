@@ -99,6 +99,9 @@ function _initAutoLoad() {
 		$router->addRoute("idejos_view",new Zend_Controller_Router_Route("/ideja/:idea",array("module"=>"default","controller" => "idea","action" => "view", "idea" => 0)));
 		$router->addRoute("idejos_create",new Zend_Controller_Router_Route("/idejos/nauja",array("module"=>"default","controller" => "idea","action" => "create")));
 		$router->addRoute("idejos_comments",new Zend_Controller_Router_Route("/idejos/komentarai",array("module"=>"default","controller" => "idea","action" => "comments")));
+		$router->addRoute("idea_make_new",new Zend_Controller_Router_Route("/idea/makenew/:idea_id",array("module"=>"default","controller" => "idea","action" => "makenew", "idea_id"=>0)));
+		$router->addRoute("idea_make_rejected",new Zend_Controller_Router_Route("/idea/makerejected/:idea_id",array("module"=>"default","controller" => "idea","action" => "makerejected", "idea_id"=>0)));
+		$router->addRoute("idea_make_completed",new Zend_Controller_Router_Route("/idea/makecompleted/:idea_id",array("module"=>"default","controller" => "idea","action" => "makecompleted", "idea_id"=>0)));
 		$router->addRoute("brewer",new Zend_Controller_Router_Route("/brewers/:brewer",array("module"=>"default","controller" => "brewer","action" => "info","brewer"=>0)));
 		$router->addRoute("brewer_recipes",new Zend_Controller_Router_Route("/brewer/recipes/:brewer/:page",array("module"=>"default","controller" => "brewer","action" => "recipes","brewer"=>0,"page"=>0)));
 		$router->addRoute("brewer_sessions",new Zend_Controller_Router_Route("/brewer/sessions/:brewer",array("module"=>"default","controller" => "brewer","action" => "sessions","brewer"=>0)));

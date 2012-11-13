@@ -2876,3 +2876,30 @@ html ul.topnav li ul.subnav li a:hover {
 	width: 830px;
 	padding: 2px;
 }
+.idea_admin_tools h1 {
+	font-weight: bold;
+	font-size: 14px;
+	display: block;
+	margin-bottom: 8px;
+}
+.idea_admin_tools a {
+	display: inline-block;
+	margin-right: 10px;
+	padding: 5px;
+	border: 1px solid #ccc;
+}
+.idea_admin_info {
+	margin-top: 15px;
+}
+.idea_admin_info div {
+	margin-bottom: 10px;
+}
+.idea_admin_info span {
+	display: inline-block;
+	margin-left: 4px;
+}
+.idea_admin {
+	background-color: #fff;
+	padding: 10px;
+	margin-top: 10px;
+}

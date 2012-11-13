@@ -24,6 +24,7 @@
 </script>
 <?php
 $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+$user_info = isset($this->user_info->user_id) ? $this->user_info : 0;
 ?>
 <div id="loader_ph" style="display: none;">
 	<img src="/public/images/new/ajax-loader.gif" alt="" />
@@ -117,6 +118,64 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 						}
 						?>
 					</ul>
+				</div>
+				<?php
+			}
+			if ($user_info !== 0 && $user_info->user_type == "admin"){
+				?>
+				<div class="idea_admin">
+					<div class="idea_admin_tools">
+						<h1>Administratoriaus įrankiai</h1>
+						<?php
+						if ($idea['idea_status'] != 0){
+							?>
+							<a href="/idea/makenew/<?=$idea['idea_id']?>">Neįgyvendintą</a>
+							<?php
+						}
+						if ($idea['idea_status'] != 1){
+							?>
+							<a href="/idea/makecompleted/<?=$idea['idea_id']?>">Įgyvendinta</a>
+							<?php
+						}
+						if ($idea['idea_status'] != 2){
+							?>
+							<a href="/idea/makerejected/<?=$idea['idea_id']?>">Atmesta</a>
+							<?php
+						}
+						?>
+					</div>
+					<div class="idea_admin_info">
+						<div>
+							<b>Už: </b>
+							<?php
+							foreach($this->vlist['yes'] as $v){
+								?>
+								<span><?=$v['user_name']?></span>
+								<?php
+							}
+							?>
+						</div>
+						<div>
+							<b>Susilaikė: </b>
+							<?php
+							foreach($this->vlist['neutral'] as $v){
+								?>
+								<span><?=$v['user_name']?></span>
+								<?php
+							}
+							?>
+						</div>
+						<div>
+							<b>Prieš: </b>
+							<?php
+							foreach($this->vlist['no'] as $v){
+								?>
+								<span><?=$v['user_name']?></span>
+								<?php
+							}
+							?>
+						</div>
+					</div>
 				</div>
 				<?php
 			}
