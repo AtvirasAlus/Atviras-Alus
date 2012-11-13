@@ -3,7 +3,7 @@ class OrderController extends Zend_Controller_Action {
 	private $shops;
 	public function init() {
 		
-		$this->shops['savasalus']['email'] = "tomas@tomaszeimys.lt";
+		$this->shops['savasalus']['email'] = "info@savasalus.lt";
 		
 		$storage = new Zend_Auth_Storage_Session();
 		$this->user = $storage->read();
