@@ -1,3 +1,8 @@
+<?php
+function sg_pl($sg){
+	return -668.962 + 1262.45 * $sg - 776.43 * $sg * $sg + 182.94 * $sg * $sg * $sg;	
+}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="lt" lang="lt">
     <head>
@@ -17,18 +22,18 @@
 			<div style="margin-top: 40px; width: 800px;">
 				<div style="font-weight: bold; text-align: center; font-size: 16px; margin-bottom: 10px;"><?= $this->print_data['beer_name']; ?></div>
 				<div style="padding-bottom: 4px;">
-					Alaus kiekis: <?= round($this->print_data['bash_size'], 1); ?><br />
-					Virimo laikas: <?= round($this->print_data['boil_time'], 1); ?><br />
+					Alaus kiekis: <?= round($this->print_data['bash_size'], 1); ?> ltr.<br />
+					Virimo laikas: <?= round($this->print_data['boil_time'], 1); ?> min.<br />
 					Efektyvumas: <?= number_format(round($this->print_data['efficiency'], 2), 2, ".", ""); ?><br />
 					Atenuacija: <?= number_format(round($this->print_data['attenuation'], 2), 2, ".", ""); ?><br />
 					Stilius: <?= $this->print_data['beer_style']; ?>
 				</div>
 				<div style="margin-bottom: 20px; padding-bottom: 4px;">
-					SG: <?= number_format($this->print_data['recipe_sg'], 3, ".", ""); ?><br />
-					FG: <?= number_format($this->print_data['recipe_fg'], 3, ".", ""); ?><br />
-					ABV: <?= number_format($this->print_data['recipe_abv'], 1, ".", ""); ?><br />
-					IBU: <?= $this->print_data['recipe_ibu']; ?><br />
-					EBC: <?= $this->print_data['recipe_ebc']; ?>
+					Pradinis tankis (SG): <?= number_format($this->print_data['recipe_sg'], 3, ".", ""); ?> (<?=  number_format(sg_pl($this->print_data['recipe_sg']), 1, ".", "")?> °P)<br />
+					Galutinis tankis (FG): <?= number_format($this->print_data['recipe_fg'], 3, ".", ""); ?> (<?=  number_format(sg_pl($this->print_data['recipe_fg']), 1, ".", "")?> °P)<br />
+					Alkoholio kiekis (ABV): <?= number_format($this->print_data['recipe_abv'], 1, ".", ""); ?> %<br />
+					Kartumas (IBU): <?= $this->print_data['recipe_ibu']; ?><br />
+					Spalva (EBC): <?= $this->print_data['recipe_ebc']; ?>
 				</div>
 				<?php
 				if (isset($this->print_data['malt_list'])) {
@@ -79,7 +84,7 @@
 						<div style="float: left; width: 360px;">Apynys</div>
 						<div style="float: left; width: 160px;">Kartumas (AA%)</div>
 						<div style="float: left; width: 145px;">Kiekis (g)</div>
-						<div style="float: left; width: 115px;">Laikas</div>
+						<div style="float: left; width: 115px;">Laikas (min)</div>
 						<div style="clear: both;"></div>
 					</div>
 					<?
