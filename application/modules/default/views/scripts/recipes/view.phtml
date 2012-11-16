@@ -479,12 +479,12 @@ function i_bu($ibu,$og) {
 		<div class="recipe_result">
 			<div class="recipe_result_block">
 				<div class="recipe_result_label"><span class="ttip ttip_og"><b>OG:</b></span></div>
-				<div class="recipe_result_text"><?=$this->data['recipe']['recipe_sg'];?></div>
+				<div class="recipe_result_text"><?=$this->usePlato($this->data['recipe']['recipe_sg'], true);?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_result_block">
 				<div class="recipe_result_label"><span class="ttip ttip_fg"><b>FG:</b></span></div>
-				<div class="recipe_result_text"><?=$this->data['recipe']['recipe_fg'];?></div>
+				<div class="recipe_result_text"><?=$this->usePlato($this->data['recipe']['recipe_fg'], true);?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_result_block">

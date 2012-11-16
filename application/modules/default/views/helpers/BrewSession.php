@@ -6,7 +6,23 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 		return $this;
 	}
 
-	function editableRow($session = array(), $add = true) {
+	function usePlato($sg, $show_symbol = false, $use = false) {
+		if ($sg === "") return "";
+		if ($use === true){
+			$plato = -668.962 + 1262.45 * $sg - 776.43 * $sg * $sg + 182.94 * $sg * $sg * $sg;
+			$plato = round($plato, 1);
+			if ($plato < 0) $plato = 0;
+			if ($show_symbol === true){
+				return number_format($plato, 1, ".", "")." °P";
+			} else {
+				return number_format($plato, 1, ".", "");
+			}
+		} else {
+			return number_format($sg, 3, ".", "");
+		}
+	}
+
+	function editableRow($session = array(), $add = true, $use_plato = false) {
 		$fields = array("session_name" => "Virimo pavadinimas", "user_name" => "Aludaris", "recipe_name" => "Receptas", "session_size" => "Alaus kiekis (l.)", "session_og" => "OG", "session_fg" => "FG", "session_primarydate" => "Pirminė fermentacija", "session_secondarydate" => "Antrinė fermentacija", "session_caskingdate" => "Išpilstyta", "session_comments" => "Pastabos");
 		if (!isset($session["redirect"])) {
 			$session["redirect"] = "brew-session/brewer";
@@ -84,19 +100,19 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 				</dl>
 				<dl>
 					<dt>
-						' . $fields['session_og'] . ':
+						' . $fields['session_og'] . (($use_plato === true) ? " (<span style='color: red;'>Plato</span>)" : "") . ':
 					</dt>
 					<dd>
-						<input type="text" name="session_og" style="width:55" value="' . $session["session_og"] . '" />
+						<input type="text" name="session_og" style="width:55" value="' . $this->usePlato($session["session_og"], false, $use_plato) . '" />
 					</dd>
 					<div class="clear"></div>
 				</dl>
 				<dl>
 					<dt>
-						' . $fields['session_fg'] . ':
+						' . $fields['session_fg'] . (($use_plato === true) ? " (<span style='color: red;'>Plato</span>)" : "") . ':
 					</dt>
 					<dd>
-						<input type="text" name="session_fg" style="width:55" value="' . $session["session_fg"] . '" />
+						<input type="text" name="session_fg" style="width:55" value="' . $this->usePlato($session["session_fg"], false, $use_plato) . '" />
 					</dd>
 					<div class="clear"></div>
 				</dl>
@@ -141,7 +157,7 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 			';
 	}
 
-	function infoRow($session, $edit = false, $id = 0) {
+	function infoRow($session, $edit = false, $id = 0, $use_plato = false) {
 		$icons = "";
 		$icons = '<a href="/brew-session/detail/' . $session['session_id'] . '" alt="Detaliau" title="Detaliau" rel="nofollow" class="list_icon"><span class="ui-icon ui-icon-search"></span></a>';
 		if ($edit) {
@@ -169,10 +185,10 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 					' . $session['session_size'] . '
 				</div>
 				<div class="as-cell">
-					' . $session['session_og'] . '
+					' . $this->usePlato($session['session_og'], true, $use_plato) . '
 				</div>
 				<div class="as-cell">
-					' . $session['session_fg'] . '
+					' . $this->usePlato($session['session_fg'], true, $use_plato) . '
 				</div>
 				<div class="as-cell" style="white-space:nowrap;">
 					' . $session['session_primarydate'] . '
@@ -191,7 +207,7 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 		return $out;
 	}
 
-	function infoColumn($session, $owner = false) {
+	function infoColumn($session, $owner = false, $use_plato = false) {
 		$fields = array("session_name" => "Virimo pavadinimas", "user_name" => "Aludaris", "recipe_name" => "Receptas", "session_size" => "Alaus kiekis (l.)", "session_og" => "OG", "session_fg" => "FG", "session_primarydate" => "Pirminė fermentacija", "session_secondarydate" => "Antrinė fermentacija", "session_caskingdate" => "Išpilstyta", "session_comments" => "Pastabos");
 		$str = "";
 		foreach ($fields as $key => $value) {
@@ -207,6 +223,20 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 					<div class="session_block">
 						<div class="session_label">' . $value . ':</div>
 						<div class="session_data"><a href="/alus/receptas/' . $session['recipe_id'] . '">' . $session[$key] . '</a></div>
+						<div class="clear"></div>
+					</div>';
+			} else if ($key == "session_og") {
+				$str.='
+					<div class="session_block">
+						<div class="session_label">' . $value . ':</div>
+						<div class="session_data">' . $this->usePlato($session[$key], true, $use_plato) . '</div>
+						<div class="clear"></div>
+					</div>';
+			} else if ($key == "session_fg") {
+				$str.='
+					<div class="session_block">
+						<div class="session_label">' . $value . ':</div>
+						<div class="session_data">' . $this->usePlato($session[$key], true, $use_plato) . '</div>
 						<div class="clear"></div>
 					</div>';
 			} else {

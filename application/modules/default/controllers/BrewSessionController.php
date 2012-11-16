@@ -5,6 +5,7 @@ class BrewsessionController extends Zend_Controller_Action {
 	public function init() {
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
+		$this->use_plato = false;
 		$this->show_beta = false;
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$db = Zend_Registry::get("db");
@@ -16,7 +17,11 @@ class BrewsessionController extends Zend_Controller_Action {
 			if ($u_atribs['beta_tester'] == 1) {
 				$this->show_beta = true;
 			}
+			if ($u_atribs['plato'] == 1) {
+				$this->use_plato = true;
+			}
 		}
+		$this->view->use_plato = $this->use_plato;
 	}
 
 	public function indexAction() {
@@ -172,6 +177,9 @@ class BrewsessionController extends Zend_Controller_Action {
 			$db = Zend_Registry::get('db');
 			$fields_session = array("session_name" => "session_name", "session_size" => "session_size", "session_og" => "session_og", "session_fg" => "session_fg", "session_comments" => "session_comments", "session_caskingdate" => "session_caskingdate", "session_secondarydate" => "session_secondarydate", "session_primarydate" => "session_primarydate");
 			foreach ($fields_session as $key => $value) {
+				if (($key == "session_og" || $key == "session_fg") && $this->use_plato === true){
+					$_POST[$value] = $this->pl2sg($_POST[$value]);
+				}
 				$ins[$key] = $_POST[$value];
 			}
 
@@ -193,6 +201,10 @@ class BrewsessionController extends Zend_Controller_Action {
 			print Zend_Json::encode(array("status" => 1, "errors" => array(array("message" => "Neregistruotas nautotojas", "type" => "authentication"))));
 		}
 	}
+	
+	private function pl2sg($p){
+		return 1.00001 + 3.8661E-3 * $p + 1.3488E-5 * $p * $p + 4.3074E-8 * $p * $p * $p;
+	}
 
 	public function addAction() {
 		$storage = new Zend_Auth_Storage_Session();
@@ -201,6 +213,9 @@ class BrewsessionController extends Zend_Controller_Action {
 			$db = Zend_Registry::get('db');
 			$fields_session = array("session_brewer" => "session_brewer", "session_recipe" => "session_recipe", "session_name" => "session_name", "session_size" => "session_size", "session_og" => "session_og", "session_fg" => "session_fg", "session_comments" => "session_comments", "session_caskingdate" => "session_caskingdate", "session_secondarydate" => "session_secondarydate", "session_primarydate" => "session_primarydate");
 			foreach ($fields_session as $key => $value) {
+				if (($key == "session_og" || $key == "session_fg") && $this->use_plato === true){
+					$_POST[$value] = $this->pl2sg($_POST[$value]);
+				}
 				$ins[$key] = $_POST[$value];
 			}
 

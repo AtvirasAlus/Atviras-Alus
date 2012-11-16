@@ -19,7 +19,7 @@
 		$skip_add = false;
 		if ($this->user_id == $this->brew_sessions['user_id']) {
 			$this->brew_sessions["redirect"] = $this->backLink("/brew-session/brewer");
-			echo $this->brewSession()->editableRow($this->brew_sessions, false);
+			echo $this->brewSession()->editableRow($this->brew_sessions, false, $this->use_plato);
 			$skip_add = true;
 		} else {
 			?>

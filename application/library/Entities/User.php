@@ -80,7 +80,7 @@ class Entities_User {
         $this->db->delete("users_attributes", $where);
         $stripTags = new Zend_Filter_StripTags(array('p', 'b', 'br', 'strong'), array());
         $user_about = $stripTags->filter($att["user_about"]);
-        return $this->db->insert("users_attributes", array("user_id" => $this->user_id, "user_location" => $att["user_location"], "user_about" => $user_about,'user_mail_comments'=>$att["user_mail_comments"],'beta_tester'=>$att['beta_tester']));
+        return $this->db->insert("users_attributes", array("user_id" => $this->user_id, "user_location" => $att["user_location"], "user_about" => $user_about,'user_mail_comments'=>$att["user_mail_comments"],'beta_tester'=>$att['beta_tester'],'plato'=>$att['plato']));
       }else{
         return false;
       }

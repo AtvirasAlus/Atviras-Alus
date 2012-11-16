@@ -113,12 +113,12 @@ foreach ($dfields as $dfield) {
 	<div id="style_params">
 		<div class="params_block">
 			<div class="params_title"><span class="ttip ttip_og"><b>OG:</b></span></div>
-			<div class="params_content"><?= $this->current_style["style_oglow"]; ?> - <?= $this->current_style["style_oghigh"]; ?></div>
+			<div class="params_content"><?= $this->usePlato($this->current_style["style_oglow"]); ?> - <?= $this->usePlato($this->current_style["style_oghigh"], true); ?></div>
 			<div class="clear"></div>
 		</div>
 		<div class="params_block">
 			<div class="params_title"><span class="ttip ttip_fg"><b>FG:</b></span></div>
-			<div class="params_content"><?= $this->current_style["style_fglow"]; ?> - <?= $this->current_style["style_fghigh"]; ?></div>
+			<div class="params_content"><?= $this->usePlato($this->current_style["style_fglow"]); ?> - <?= $this->usePlato($this->current_style["style_fghigh"], true); ?></div>
 			<div class="clear"></div>
 		</div>
 		<div class="params_block">

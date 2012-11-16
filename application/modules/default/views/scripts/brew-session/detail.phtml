@@ -5,7 +5,7 @@
 		$this->headLink()->appendStylesheet("/public/css/bs.css");
 		$this->brew_sessions['session_comments']=nl2br($this->brew_sessions['session_comments']);
 		?>
-		<div><?=$this->brewSession()->infoColumn($this->brew_sessions,($this->user_id==$this->brew_sessions['session_brewer']));?></div>
+		<div><?=$this->brewSession()->infoColumn($this->brew_sessions,($this->user_id==$this->brew_sessions['session_brewer']), $this->use_plato);?></div>
 		<?php
 	} else {
 		?>

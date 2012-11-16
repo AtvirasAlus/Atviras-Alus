@@ -38,6 +38,9 @@ class Form_Attributes extends Zend_Form {
 		$this->addElement('checkbox', 'beta_tester');
 		$this->getElement('beta_tester')
 				->setLabel('Tituliniame puslapyje vietoj informacinių blokų rodyti naujienų srautą');
+		$this->addElement('checkbox', 'plato');
+		$this->getElement('plato')
+				->setLabel('Receptuose tankį rodyti Plato sistemos vienetais');
 		$this->addElement('submit', 'attributes_action', array('type' => 'submit', 'class' => 'ui-button'));
 		$this->getElement('attributes_action')
 				->setLabel('Saugoti')

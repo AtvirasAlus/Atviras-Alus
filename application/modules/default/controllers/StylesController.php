@@ -5,6 +5,7 @@ class StylesController extends Zend_Controller_Action {
 	function init() {
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
+		$this->use_plato = false;
 		$this->show_beta = false;
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$db = Zend_Registry::get("db");
@@ -16,7 +17,11 @@ class StylesController extends Zend_Controller_Action {
 			if ($u_atribs['beta_tester'] == 1) {
 				$this->show_beta = true;
 			}
+			if ($u_atribs['plato'] == 1) {
+				$this->use_plato = true;
+			}
 		}
+		$this->view->use_plato = $this->use_plato;
 	}
 
 	public function stylesAction() {

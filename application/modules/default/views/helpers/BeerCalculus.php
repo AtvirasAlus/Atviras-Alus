@@ -2,6 +2,21 @@
 class Zend_View_Helper_BeerCalculus {
 public function  beerCalculus($data=array()) {
 		$view = new Zend_View();
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		$this->use_plato = false;
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$db = Zend_Registry::get("db");
+			$select = $db->select()
+					->from("users_attributes")
+					->where("users_attributes.user_id = ?", $user_info->user_id)
+					->limit(1);
+			$u_atribs= $db->fetchRow($select);
+			if ($u_atribs['plato'] == 1) {
+				$this->use_plato = true;
+			}
+		}
+		$view->use_plato = $this->use_plato;
 		
 		$view->addScriptPath(APPLICATION_PATH."/modules/default/views/helpers/");
 		$db = Zend_Registry::get("db");

@@ -781,8 +781,8 @@
 			<div class="calc_info_block smaller_block">
 				<div class="calc_info_label"><span class="ttip ttip_matavimosistema">Matavimo sistema</span>:</div>
 				<div class="calc_info_data">
-					<input type="radio" name="extract_m" value="plato" id="extract_m_plato"> <label for="extract_m_plato">Plato</label>
-					<input type="radio" name="extract_m" value="sg" id="extract_m_sg" checked> <label for="extract_m_sg">SG</label>
+					<input type="radio" name="extract_m" value="plato" id="extract_m_plato" <?=($this->use_plato === true) ? 'checked="checked"' : '';?>> <label for="extract_m_plato">Plato</label>
+					<input type="radio" name="extract_m" value="sg" id="extract_m_sg" <?=($this->use_plato !== true) ? 'checked="checked"' : '';?>> <label for="extract_m_sg">SG</label>
 				</div>
 				<div class="calc_info_label">Alaus kiekis:</div>
 				<div class="calc_info_data"><input type="text" id="bash_size" value="20" /></div>

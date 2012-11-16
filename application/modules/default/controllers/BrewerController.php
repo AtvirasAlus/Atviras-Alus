@@ -253,7 +253,7 @@ class BrewerController extends Zend_Controller_Action {
 						}
 
 						$user = new Entities_User($u->user_id);
-						if ($user->updateAttributes(array('user_location' => $location, 'user_about' => $_POST['user_about'], 'user_mail_comments' => $_POST['user_mail_comments'], 'beta_tester' => $_POST['beta_tester']))) {
+						if ($user->updateAttributes(array('user_location' => $location, 'user_about' => $_POST['user_about'], 'user_mail_comments' => $_POST['user_mail_comments'], 'beta_tester' => $_POST['beta_tester'], 'plato' => $_POST['plato']))) {
 							$this->_redirect("/brewer/profile");
 						} else {
 							$this->view->errors[] = array("type" => "system", "message" => "Išsaugoti informacijos nepavyko");

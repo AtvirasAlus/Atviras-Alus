@@ -33,9 +33,9 @@
 		if (count($this->brew_sessions)) {
 			for ($i = 0; $i < count($this->brew_sessions); $i++) {
 				if ($this->user_id == $this->brew_sessions[$i]['user_id']) {
-					echo $this->brewSession()->infoRow($this->brew_sessions[$i], true, $i);
+					echo $this->brewSession()->infoRow($this->brew_sessions[$i], true, $i, $this->use_plato);
 				} else {
-					echo $this->brewSession()->infoRow($this->brew_sessions[$i], false, $i);
+					echo $this->brewSession()->infoRow($this->brew_sessions[$i], false, $i, $this->use_plato);
 				}
 			}
 		} else {
