@@ -5,6 +5,7 @@ class TweetController extends Zend_Controller_Action {
 	public function init() {
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
+		$this->view->user_info = $user_info;
 		$this->show_beta = false;
 		if (isset($user_info->user_id) && !empty($user_info->user_id)) {
 			$db = Zend_Registry::get("db");
@@ -367,6 +368,17 @@ class TweetController extends Zend_Controller_Action {
 		$url .= $path;
 
 		return $url;
+	}
+	
+	public function viewAction(){
+		$tweet_id = $this->getRequest()->getParam('tweet_id');
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("beer_tweets")
+				->join("users", "beer_tweets.tweet_owner=users.user_id", array("user_name", "user_email", "MD5(user_email) as email_hash"))
+				->where("tweet_id = '".$tweet_id."'");
+		$tweet = $db->fetchRow($select);
+		$this->view->tweet = $tweet;
 	}
 
 }

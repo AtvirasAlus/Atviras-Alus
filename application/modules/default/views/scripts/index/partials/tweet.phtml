@@ -51,6 +51,7 @@
 				?>
 			</div>
 			<div class="post_stamp">
+				<a href="/tweet/view/<?=$item['item_id']?>" class="tweet_comments_link">Komentarai (<?=$item['tweet_comments']?>)</a>
 				<?php
 				if ($item['user_id'] == $this->user_id || $this->is_admin == "1") {
 					?>

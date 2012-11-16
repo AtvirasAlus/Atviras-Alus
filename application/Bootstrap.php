@@ -69,6 +69,7 @@ function _initAutoLoad() {
 		$router->addRoute("picker_change",new Zend_Controller_Router_Route("/paieska/parametrai/:ibu_min/:ibu_max/:ebc_min/:ebc_max/:abv_min/:abv_max/:style_val/:type_val",array("module"=>"default","controller" => "picker","action" => "index", "ibu_min" => 0, "ebc_min" => 0, "abv_min" => 0, "ibu_max" => 0, "ebc_max" => 0, "abv_max" => 0, "style_val" => "", "type_val" => "")));
 		$router->addRoute("show_empty_recipes_on",new Zend_Controller_Router_Route("/show_empty_recipes_on",array("module"=>"default","controller" => "recipes","action" => "show_empty_recipes_on")));
 		$router->addRoute("show_empty_recipes_off",new Zend_Controller_Router_Route("/show_empty_recipes_off",array("module"=>"default","controller" => "recipes","action" => "show_empty_recipes_off")));
+		$router->addRoute("tweet_view",new Zend_Controller_Router_Route("/tweet/view/:tweet_id",array("module"=>"default","controller" => "tweet","action" => "view", "tweet_id"=>0)));
 		
 		$router->addRoute("rate",new Zend_Controller_Router_Route("vertinimas/:page",array("module"=>"default","controller" => "rate","action" => "index","page"=>0)));
 		$router->addRoute("rate_brewery",new Zend_Controller_Router_Route("vertinimas/bravoras/:bid/:page",array("module"=>"default","controller" => "rate","action" => "brewery","bid"=>0, "page"=>0)));

@@ -1,0 +1,133 @@
+<?$this->headScript()->appendFile("/public/ui/ui/jquery.jeditable.js");?>
+<div style="width: 600px;">
+	<?php
+	$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+	if ($this->comments) {
+		for ($i=0;$i<count($this->comments);$i++) {
+			?>
+			<div class="recipe_comment" id="comment-<?=$this->comments[$i]['comment_id']?>">
+				<div class="recipe_comment_avatar">
+					<a href="/brewers/<?=$this->comments[$i]['user_id'];?>">
+						<img src="http://www.gravatar.com/avatar/<?=md5($this->comments[$i]['user_email']);?>?rating=G&size=40&default=mm" border="0"/>
+						<span><?=$this->comments[$i]['user_name'];?></span>
+					</a>
+				</div>
+				<div class="recipe_comment_content">
+					<div style="min-height: 40px;" id="comment-content-<?=$this->comments[$i]['comment_id']?>">
+						<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $this->comments[$i]["comment_text"]));?>
+					</div>
+					<div class="recipe_comment_date">
+						<?=$this->comments[$i]["comment_date"];?>
+                                            <div  class="recipe_comment_moddate" id="recipe_comment_moddate-<?=$this->comments[$i]['comment_id']?>">
+                                                 <? if ($this->comments[$i]["comment_moddate"]!="0000-00-00 00:00:00") {?>
+                                                Redaguotas: <?=$this->comments[$i]["comment_moddate"];?>
+                                                    <?}?>
+                                            </div>
+						<?php
+						if ($user_id == $this->comments[$i]['user_id']) {
+							?>
+							<a href='javascript:deleteComment(<?=$this->comments[$i]['comment_id'];?>)' alt="Trinti" title="Trinti">
+								<span class="ui-icon ui-icon-trash"></span>
+							</a>
+                                             <a href='javascript:editComment(<?=$this->comments[$i]['comment_id'];?>)' alt="Redaguoti" title="Redaguoti">
+                                                         <span class="ui-icon ui-icon-pencil"></span>
+                                                      </a>
+							<?
+						}
+						?>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<?php
+		}
+	}
+	if ($user_id) {
+		?>
+		<div class="recipe_comment_form">
+			<div class="recipe_comment_form_avatar">
+				<a href="/brewers/<?=$user_id;?>">
+					<img src="http://www.gravatar.com/avatar/<?=md5($this->user_info->user_email);?>?rating=G&size=40&default=mm" border="0"/>
+					<span><?=$this->user_info->user_name;?></span>
+				</a>
+			</div>
+			<div class="recipe_comment_form_content">
+				<form action="/comments/submit" method="POST">
+					<div>
+						<input type="hidden" name="tweet_id" value="<?=$this->tweet_id;?>"/>
+						<input type="hidden" name="brewer_id" value="<?=$user_id;?>"/>
+						<textarea name="comment"></textarea>
+					</div>
+					<div style="text-align: right;">
+						<input type="submit" value="Komentuoti" class="ui-button" />
+					</div>
+				</form>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<?php
+	} else {
+		?>
+		<div>Norėdami komentuoti straipsnį turite <a href="javascript:showLogin()">prisijungti</a></div>
+		<?php
+	}
+	?>
+</div>
+<script>
+	function editComment(id) {
+		
+		$('#comment-content-'+id).editable('/comments/update', {
+			submitdata : {comment_id: id,tweet:true,old_comment: $('#comment-content-'+id).text()},
+			loadurl  : '/comments/text/?part=tweet&comment_id='+id,
+			type      : 'textarea',
+			ajaxoptions:{dataType:'json'},
+			cancel    : 'Atšaukti',
+			onblur:function() {
+				return true; 
+			},
+			rows:8,
+			cssclass:'commentsEdit',
+			submit    : 'Saugoti',
+			indicator : '<img src="/public/images/spinner.gif">',
+			name : 'comment_text',
+			callback:function(data) {
+				
+				if (data.status=='1') {
+					
+					$('#comment-content-'+id).html(data.old_comment);
+					alert('Klaida atnaujinant komentarą.')
+				}else{ 
+					$('#recipe_comment_moddate-'+id).html("Redaguotas: "+data.comment_moddate);
+					$('#comment-content-'+id).html(data.comment_text);
+				}
+				$('#comment-content-'+id).editable('destroy')},
+			onreset:function() {$('#comment-content-'+id).editable('destroy')}
+		});
+		$('#comment-content-'+id).trigger('click')
+	}
+	function deleteComment(id) {
+		if (confirm("Ar norite ištrinti savo komentarą ?")) {
+			var surl="/comments/delete/";
+			$.ajax({
+				type: 'POST',
+				url: surl,
+				data: "comment_id=" + id+"&tweet=1",
+				success: function (d) {
+					var data = jQuery.parseJSON(d);
+					if (data) {
+						if (data.status == "1") {
+							if (data.errors[0].type == "authentication") {
+								showLogin();
+								return
+							}
+						} else {
+							location.reload()
+						}
+					} else {
+						alert("Klaida")
+					}
+				}
+			})
+		}
+	}
+</script>

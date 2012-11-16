@@ -52,12 +52,17 @@ class CommentsController extends Zend_Controller_Action {
 						$db->insert("food_comments", array("food_id" => $_POST['food_id'], "user_id" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
 						$this->_redirect("/patiekalas/" . $_POST['food_id']);
 					} else {
-					if (isset($_POST['event_id'])) {
-						$db->insert("beer_events_comments", array("comment_event" => $_POST['event_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
-						$this->_redirect("/ivykis/" . $_POST['event_id']);
-						}else{
-							$db->insert("beer_articles_comments", array("comment_article" => $_POST['article_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
-              $this->_redirect("/content/read/1/" . $_POST['article_id']);
+						if (isset($_POST['event_id'])) {
+							$db->insert("beer_events_comments", array("comment_event" => $_POST['event_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
+							$this->_redirect("/ivykis/" . $_POST['event_id']);
+						} else {
+							if (isset($_POST['tweet_id'])) {
+								$db->insert("beer_tweets_comments", array("comment_tweet" => $_POST['tweet_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
+								$this->_redirect("/tweet/view/" . $_POST['tweet_id']);
+							} else {
+								$db->insert("beer_articles_comments", array("comment_article" => $_POST['article_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
+								$this->_redirect("/content/read/1/" . $_POST['article_id']);
+							}
 						}
 					}
 				}
@@ -81,6 +86,9 @@ class CommentsController extends Zend_Controller_Action {
 					break;
 				case 'idea':
 					$table = "idea_comments";
+					break;
+				case 'tweet':
+					$table = "beer_tweets_comments";
 					break;
 				case 'food':
 					$table = "food_comments";
@@ -110,6 +118,8 @@ class CommentsController extends Zend_Controller_Action {
 				$table = "beer_recipes_comments";
 			} else if (isset($_POST["idea"])) {
 				$table = "idea_comments";
+			} else if (isset($_POST["tweet"])) {
+				$table = "beer_tweets_comments";
 			} else if (isset($_POST["food"])) {
 				$table = "food_comments";
 			} else if (isset($_POST["article"])) {
@@ -146,6 +156,8 @@ class CommentsController extends Zend_Controller_Action {
 						$db->delete("food_comments", array("comment_id = " . $_POST['comment_id']));
 					} else if (isset($_POST["event"])) {
 						$db->delete("beer_events_comments", array("comment_id = " . $_POST['comment_id']));
+					} else if (isset($_POST["tweet"])) {
+						$db->delete("beer_tweets_comments", array("comment_id = " . $_POST['comment_id']));
 					}else{
 						$db->delete("beer_recipes_comments", array("comment_id = " . $_POST['comment_id']));
 						Entities_Events::trigger("delete_recipe_comment", array("comment_id" => $_POST['comment_id']));

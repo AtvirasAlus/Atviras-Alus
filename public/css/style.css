@@ -2903,3 +2903,52 @@ html ul.topnav li ul.subnav li a:hover {
 	padding: 10px;
 	margin-top: 10px;
 }
+.tweet_comments_link {
+	color: #666;
+	display: inline-block;
+	margin-right: 20px;
+}
+.tweet_view_avatar {
+	float: left;
+	width: 50px;
+	padding-top: 3px;
+	overflow: hidden;
+}
+.tweet_view_post {
+	float: left;
+	margin-left: 20px;
+	width: 765px;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+.tweet_view_post_action {
+	margin-bottom: 5px;
+	font-size: 13px;
+}
+.tweet_view_post_action a {
+	font-weight: bold;
+}
+.tweet_view_attachment {
+	margin-top: 15px;
+}
+.tweet_view_link_image {
+	float: left;
+	width: 70px;
+	overflow: hidden;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.tweet_view_link_text {
+	float: left;
+}
+.tweet_view_link_text span {
+	font-weight: bold;
+	display: block;
+	margin-bottom: 10px;
+}
+.tweet_view_wi_310 {
+	width: 762px;
+}
+.tweet_view_wi_240 {
+	width: 672px;
+}

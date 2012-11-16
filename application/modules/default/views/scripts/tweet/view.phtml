@@ -1,0 +1,71 @@
+<script>
+	$(function(){
+	});
+</script>
+<?php
+$item = $this->tweet;
+?>
+<div class="inner_container">
+	<div class="inner_header"><h1>Aludario pranešimas</h1></div>
+	<div>
+		<div class="tweet_view">
+			<div>
+				<div class="tweet_view_avatar">
+					<a href="/brewers/<?= $item['tweet_owner']; ?>">
+						<img  src="http://www.gravatar.com/avatar/<?= $item['email_hash']; ?>?rating=G&size=50&default=mm" border="0"/>
+					</a>
+				</div>
+				<div class="tweet_view_post">
+					<div class="tweet_view_post_action">
+						<a href="/brewers/<?= $item['tweet_owner']; ?>">
+							<?= $item["user_name"] ?>
+						</a>
+					</div>
+					<div class="tweet_view_post_content">
+						<div>
+							<?= preg_replace('/((?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i', '<a href="$1" rel="nofollow" target="blank">$1</a>', $item['tweet_message']); ?>
+						</div>
+						<?php
+						if (strlen($item['tweet_link_url']) > 0) { 
+							?>
+							<a href="<?= $item['tweet_link_url']; ?>" target="_blank" style="color: #666">
+								<div class="tweet_view_attachment">
+									<div class="tweet_view_link_image" style="max-height: 100px; overflow: hidden;">
+										<?
+										$img_width = 310;
+										if (isset($item['tweet_link_image']) && !empty($item['tweet_link_image'])) {
+											$img_width = 240;
+											?>
+											<img src='<?=$item['tweet_link_image']?>' width='70' />
+											<?php
+										}
+										?>
+									</div>
+									<div class="tweet_view_link_text tweet_view_wi_<?=$img_width;?>">
+										<span>
+											<?= trim($item['tweet_link_title']); ?>
+										</span>
+										<div class="tweet_view_attachment_desc">
+											<? 
+											if (isset($item['tweet_link_description'])) {
+												print $item['tweet_link_description'];
+											}
+											?>
+										</div>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</a>
+							<? 
+						}
+						?>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="comments_title">Komentarai</div>
+		<?=$this->tweetComments($item['tweet_id']); ?>
+	</div>
+</div>
