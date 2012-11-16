@@ -10,6 +10,10 @@
         $( "#event_registration_end" ).datetimepicker();
         $( "#event_registration_end" ).datetimepicker( "option", "dateFormat", "yy-mm-dd");
         $( "#event_registration_end" ).datetimepicker( "option", "timeFormat: 'hh:mm'");
+		$("#event_del").click(function(){
+			var url = "/events/delete/<?= $this->event['event_id']; ?>/<?=$this->event["group_id"]?>";
+			window.location.href = url;
+		});
     });
 </script>
 <div class="inner_container">			
@@ -104,8 +108,8 @@
 				<dl>
 					<dt>&nbsp;</dt>
 					<dd>
-						<input type="submit" name="attributes_action" id="attributes_action" value="Saugoti" type="submit" class="ui-button">
-						<input type="submit" id="attributes_action" value="Trinti" type="submit" class="ui-button">
+						<input name="attributes_action" id="attributes_action" value="Saugoti" type="submit" class="ui-button">
+						<input id="event_del" value="Trinti" type="button" class="ui-button">
 					</dd>
 					<div class="clear"></div>
 				</dl>

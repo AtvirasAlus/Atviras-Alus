@@ -62,6 +62,7 @@ function _initAutoLoad() {
 		$router->addRoute("recipes_view_0",new Zend_Controller_Router_Route("recipes/view/:recipe",array("module"=>"default","controller" => "recipes","action" => "view","recipe"=>0)));
 		$router->addRoute("recipes_view",new Zend_Controller_Router_Route("alus/receptas/:recipe",array("module"=>"default","controller" => "recipes","action" => "view","recipe"=>0)));
 		$router->addRoute("recipes_del_image",new Zend_Controller_Router_Route("/alus/trinti_nuotrauka/:image_id",array("module"=>"default","controller" => "recipes","action" => "delete_image","image_id"=>0)));
+		$router->addRoute("event_delete",new Zend_Controller_Router_Route("/events/delete/:event_id/:group_id", array("module"=>"default","controller" => "events","action" => "delete","event_id"=>0, "group_id"=>0)));
 	
 		$router->addRoute("picker",new Zend_Controller_Router_Route("/paieska",array("module"=>"default","controller" => "picker","action" => "index")));
 		$router->addRoute("picker_results",new Zend_Controller_Router_Route("/paieska/rezultatai/:ibu_min/:ibu_max/:ebc_min/:ebc_max/:abv_min/:abv_max/:style_val/:type_val/:page",array("module"=>"default","controller" => "picker","action" => "results", "ibu_min" => 0, "ebc_min" => 0, "abv_min" => 0, "ibu_max" => 0, "ebc_max" => 0, "abv_max" => 0, "style_val" => "", "type_val" => "", "page" => 0)));

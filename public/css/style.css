@@ -1183,6 +1183,25 @@ div.as-row:hover {
 .event_block_future:hover {
 	background-color: #eaeaea;
 }
+.deleted_event {
+	float: left;
+	width: 265px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	background-color: #ffffff;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	min-height: 170px;
+	cursor: pointer;
+}
+.deleted_event * {
+	color: #ccc !important;
+}
+.deleted_event:hover {
+	background-color: #fafafa;
+}
 .event_title {
 	margin: 10px;
 	font-size: 16px;
