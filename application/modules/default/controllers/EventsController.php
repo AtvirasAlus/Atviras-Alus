@@ -265,7 +265,7 @@ class EventsController extends Zend_Controller_Action {
                                 $where[] = $this->db->quoteInto('event_id = ?', $event_id);
                                 if ($this->canEdit($group_id)) {
                                     $this->db->update("beer_events", array(
-                                        "event_name" => strip_tags($_POST['event_name']),
+                                        "event_name" => htmlentities(stripslashes(strip_tags($_POST['event_name']))),
                                         "event_resume" => trim(strip_tags($_POST['event_resume'])),
                                         "event_description" => $_POST['event_description'],
                                         "event_start" => $_POST['event_start'],
@@ -321,7 +321,7 @@ class EventsController extends Zend_Controller_Action {
                             $group_id = isset($_POST['group_id']) ? $_POST['group_id'] : 0;
                             if ($this->canEdit($group_id)) {
                                 $this->db->insert("beer_events", array(
-                                    "event_name" => strip_tags($_POST['event_name']),
+                                    "event_name" => htmlentities(stripslashes(strip_tags($_POST['event_name']))),
                                     "event_resume" => trim(strip_tags($_POST['event_resume'])),
                                     "event_description" => $_POST['event_description'],
                                     "event_start" => $_POST['event_start'],
