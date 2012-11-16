@@ -58,6 +58,14 @@ class CommentsController extends Zend_Controller_Action {
 						} else {
 							if (isset($_POST['tweet_id'])) {
 								$db->insert("beer_tweets_comments", array("comment_tweet" => $_POST['tweet_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
+								$frontendOptions = array(
+									'lifetime' => 7200, // cache lifetime of 2 hours
+									'automatic_serialization' => true);
+								$backendOptions = array(
+									'cache_dir' => './cache/' // Directory where to put the cache files
+								);
+								$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+								$cache->remove('tweet_latest');
 								$this->_redirect("/tweet/view/" . $_POST['tweet_id']);
 							} else {
 								$db->insert("beer_articles_comments", array("comment_article" => $_POST['article_id'], "comment_brewer" => $_POST['brewer_id'], "comment_text" => strip_tags($_POST['comment'], '<a>')));
@@ -158,6 +166,14 @@ class CommentsController extends Zend_Controller_Action {
 						$db->delete("beer_events_comments", array("comment_id = " . $_POST['comment_id']));
 					} else if (isset($_POST["tweet"])) {
 						$db->delete("beer_tweets_comments", array("comment_id = " . $_POST['comment_id']));
+						$frontendOptions = array(
+							'lifetime' => 7200, // cache lifetime of 2 hours
+							'automatic_serialization' => true);
+						$backendOptions = array(
+							'cache_dir' => './cache/' // Directory where to put the cache files
+						);
+						$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+						$cache->remove('tweet_latest');
 					}else{
 						$db->delete("beer_recipes_comments", array("comment_id = " . $_POST['comment_id']));
 						Entities_Events::trigger("delete_recipe_comment", array("comment_id" => $_POST['comment_id']));
