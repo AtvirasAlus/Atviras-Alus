@@ -22,7 +22,7 @@ class Form_Profile extends Zend_Form {
 			->setRequired(true);
 		$this->addElement('submit', 'profile_action',array('type'=>'submit', 'class'=>'ui-button'));
 		$this->getElement('profile_action')
-			->setLabel('Keisti')
+			->setLabel('Keisti slaptažodį')
 			->setIgnore(true);
 		
 	}

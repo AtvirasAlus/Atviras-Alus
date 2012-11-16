@@ -43,7 +43,7 @@ class Form_Attributes extends Zend_Form {
 				->setLabel('Receptuose tankį rodyti Plato sistemos vienetais');
 		$this->addElement('submit', 'attributes_action', array('type' => 'submit', 'class' => 'ui-button'));
 		$this->getElement('attributes_action')
-				->setLabel('Saugoti')
+				->setLabel('išsaugoti paskyros nustatymus')
 				->setIgnore(true);
 		$this->addElement('hidden', 'action', array('value' => 'attributes'));
 	}
