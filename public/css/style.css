@@ -2105,6 +2105,15 @@ ul.statuses li {
 	background-repeat: no-repeat;
 	margin-right: 10px;
 }
+.total_sessions {
+	display: inline-block;
+	height: 16px;
+	line-height: 16px;
+	background-image: url("/public/images/sessions.gif");
+	padding-left: 18px;
+	background-repeat: no-repeat;
+	margin-right: 10px;
+}
 .total_likes {
 	display: inline-block;
 	height: 16px;

@@ -76,6 +76,7 @@ if (!isset($this->options['plain'])) {
 		<div>
 			<span class="total_comments"><?=$this->item['recipe_total_comments']?></span>
 			<span class="total_likes"><?=$this->item['recipe_total_likes']?></span>
+			<span class="total_sessions"><?=$this->item['recipe_total_sessions']?></span>
 		</div>
 		<? if ($this->item['recipe_total_awards'] > 0 && !isset($this->options['without_awards'])) : ?>
 			<div style="padding-top: 5px;">
