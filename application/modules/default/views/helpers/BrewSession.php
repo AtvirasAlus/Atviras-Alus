@@ -121,7 +121,7 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 						' . $fields['session_primarydate'] . ':
 					</dt>
 					<dd>
-						<input type="text" name="session_primarydate" style="width:120" id="session_primarydate" value="' . $session["session_primarydate"] . '" />
+						<input type="text" name="session_primarydate" style="width:120" id="session_primarydate" value="' . (($session["session_primarydate"] == "0000-00-00") ? "" : $session["session_primarydate"]) . '" />
 					</dd>
 					<div class="clear"></div>
 				</dl>
@@ -130,7 +130,7 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 						' . $fields['session_secondarydate'] . ':
 					</dt>
 					<dd>
-						<input type="text" name="session_secondarydate" style="width:120" id="session_secondarydate" value="' . $session["session_secondarydate"] . '" />
+						<input type="text" name="session_secondarydate" style="width:120" id="session_secondarydate" value="' . (($session["session_secondarydate"] == "0000-00-00") ? "" : $session["session_secondarydate"]) . '" />
 					</dd>
 					<div class="clear"></div>
 				</dl>
@@ -139,7 +139,7 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 						' . $fields['session_caskingdate'] . ':
 					</dt>
 					<dd>
-						<input type="text" name="session_caskingdate" style="width:120" id="session_caskingdate" value="' . $session["session_caskingdate"] . '" />
+						<input type="text" name="session_caskingdate" style="width:120" id="session_caskingdate" value="' . (($session["session_caskingdate"] == "0000-00-00") ? "" : $session["session_caskingdate"]) . '" />
 					</dd>
 					<div class="clear"></div>
 				</dl>
