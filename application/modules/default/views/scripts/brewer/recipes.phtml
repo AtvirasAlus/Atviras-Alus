@@ -18,11 +18,6 @@
 		<div>Jūs nesate sukūrę receptų. <a href="/index/calculus">Kurti naują receptą</a></div>
 		<?
 	} else {
-		?>
-		<div style="margin-bottom: 15px;">
-			<?=$this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');?>
-		</div>
-		<?php
 		if ($this->show_list === true){
 			?>
 			<div style="margin-bottom: 20px;">
@@ -43,7 +38,7 @@
 						$recipe_status = ($item["recipe_publish"] == 1) ? '0' : '1';
 						?>
 						<div class="as-row">
-							<div class="as-cell"><?=$item['recipe_id']?></div>
+							<div class="as-cell" <?=($recipe_status == '0') ? "" : 'style="color: #999;"';?>><?=$item['recipe_id']?></div>
 							<div class="as-cell"><a href="/alus/receptas/<?=$item['recipe_id']?>-<?=$this->urlMaker($item['recipe_name'])?>"><?=$item['recipe_name']?></a></div>
 							<div class="as-cell"><a href="/stilius/<?=$item['recipe_style']?>-<?=$this->urlMaker($item['style_name'])?>"><?=$item['style_name']?></a></div>
 							<div class="as-cell" style="text-align: right;"><?=$item['recipe_abv']?>&nbsp;%</div>
@@ -80,6 +75,9 @@
 			<?php
 		} else {
 			?>
+			<div style="margin-bottom: 15px;">
+				<?=$this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');?>
+			</div>
 			<div class="style_recipes">
 				<?php
 				$i = 0;
@@ -113,13 +111,11 @@
 				?>
 				<div class="clear"></div>
 			</div>
+			<div>
+				<?=$this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');?>
+			</div>
 			<?php
 		}
-		?>
-		<div>
-			<?=$this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');?>
-		</div>
-		<?
 	}
 	?>
 </div>

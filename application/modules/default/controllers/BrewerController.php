@@ -335,11 +335,14 @@ class BrewerController extends Zend_Controller_Action {
 			$select->where("beer_recipes.brewer_id= ?", $brewer["user_id"]);
 			$select->order("beer_recipes.recipe_created DESC");
 
-			//$this->view->recipes=$db->fetchAll($select);
-			$adapter = new Zend_Paginator_Adapter_DbSelect($select);
-			$this->view->content = new Zend_Paginator($adapter);
-			$this->view->content->setCurrentPageNumber($this->_getParam('page'));
-			$this->view->content->setItemCountPerPage(15);
+			if ($this->show_list === true){
+				$this->view->content = $db->fetchAll($select);
+			} else {
+				$adapter = new Zend_Paginator_Adapter_DbSelect($select);
+				$this->view->content = new Zend_Paginator($adapter);
+				$this->view->content->setCurrentPageNumber($this->_getParam('page'));
+				$this->view->content->setItemCountPerPage(15);
+			}
 			$this->view->brewer = $brewer;
 			$this->view->brewer["total"] = $total["count"];
 		}
@@ -351,7 +354,7 @@ class BrewerController extends Zend_Controller_Action {
 			$db = Zend_Registry::get("db");
 			$db->update("users_attributes", array("recipe_list" => "0"), array("user_id = '" . $user_info->user_id . "'"));
 		}
-		$this->_redirect($_SERVER['HTTP_REFERER']);
+		$this->_redirect("/brewer/recipes");
 	}
 	public function enablelistAction(){
 		$storage = new Zend_Auth_Storage_Session();
@@ -360,7 +363,7 @@ class BrewerController extends Zend_Controller_Action {
 			$db = Zend_Registry::get("db");
 			$db->update("users_attributes", array("recipe_list" => "1"), array("user_id = '" . $user_info->user_id . "'"));
 		}
-		$this->_redirect($_SERVER['HTTP_REFERER']);
+		$this->_redirect("/brewer/recipes");
 	}
 
 }
