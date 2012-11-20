@@ -3,6 +3,14 @@
 	<div style="margin: 0px 0px 20px 8px;">
 		<input type="button" onclick="window.location.href='/index/calculus'" value="Sukurti naują receptą" class="ui-button" />
 		<input type="button" onclick="window.location.href='/brew-session/brewer'" value="Mano virimai" class="ui-button" />
+		<div style="float: right;">
+			<a href="/brewer/show_blocks" alt="Blokai" title="Blokai" class="ui-button">
+				<span class="display_blocks"></span>
+			</a>
+			<a href="/brewer/show_list" alt="Sąrašas" title="Sąrašas" class="ui-button">
+				<span class="display_list"></span>
+			</a>
+		</div>
 	</div>
 	<? 
 	if (!count($this->content)) { 
@@ -14,39 +22,100 @@
 		<div style="margin-bottom: 15px;">
 			<?=$this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');?>
 		</div>
-		<div class="style_recipes">
-			<?php
-			$i = 0;
-			foreach ($this->content as $item):
-				$i++;
+		<?php
+		if ($this->show_list === true){
 			?>
-				<div class="style_recipe">
-					<?= $this->recipeItem($item); ?>
-					<div class="recipe_edit_tools">
-						<a href="/index/calculus/<?= $item['recipe_id']; ?>" alt="Redaguoti" title="Redaguoti">
-							<span class="ui-icon ui-icon-wrench">Redaguoti</span>
-						</a>
-						<? $ico_name = ($item["recipe_publish"] == 1) ? 'unlocked' : 'locked'; ?>
-						<? $recipe_status = ($item["recipe_publish"] == 1) ? '0' : '1'; ?>
-						<a href='javascript:setRecipeStatus(<?= $item['recipe_id']; ?>,"<?= $recipe_status; ?>",unescape("<?= urlencode($item['recipe_name']); ?>"))' alt="Viešumas" title="Viešumas">
-							<span class="ui-icon ui-icon-<?= $ico_name ?>">Viešas</span>
-						</a>
-						<a href='javascript:deleteRecipe(<?= $item['recipe_id']; ?>,unescape("<?= urlencode($item['recipe_name']); ?>"))' alt="Trinti" title="Trinti">
-							<span class="ui-icon ui-icon-trash">Trinti</span>
-						</a>
+			<div style="margin-bottom: 20px;">
+				<div class="as-table">
+					<div class="as-row">
+						<div class="as-cell"><b>ID</b></div>
+						<div class="as-cell"><b>Pavadinimas</b></div>
+						<div class="as-cell"><b>Stilius</b></div>
+						<div class="as-cell"><b>ABV</b></div>
+						<div class="as-cell"><b>EBC</b></div>
+						<div class="as-cell"><b>IBU</b></div>
+						<div class="as-cell"><b>Pastabos</b></div>
+						<div class="as-cell"><b>&nbsp;</b></div>
 					</div>
-				</div>
-			<?php
-				if ($i == 3){
-					$i = 0;
-					?>
-					<div class="clear"></div>
 					<?php
-				}
-			endforeach;
+					foreach ($this->content as $item):
+						$ico_name = ($item["recipe_publish"] == 1) ? 'unlocked' : 'locked';
+						$recipe_status = ($item["recipe_publish"] == 1) ? '0' : '1';
+						?>
+						<div class="as-row">
+							<div class="as-cell"><?=$item['recipe_id']?></div>
+							<div class="as-cell"><a href="/alus/receptas/<?=$item['recipe_id']?>-<?=$this->urlMaker($item['recipe_name'])?>"><?=$item['recipe_name']?></a></div>
+							<div class="as-cell"><a href="/stilius/<?=$item['recipe_style']?>-<?=$this->urlMaker($item['style_name'])?>"><?=$item['style_name']?></a></div>
+							<div class="as-cell" style="text-align: right;"><?=$item['recipe_abv']?>&nbsp;%</div>
+							<div class="as-cell" style="text-align: right;"><?=$item['recipe_ebc']?></div>
+							<div class="as-cell" style="text-align: right;"><?=$item['recipe_ibu']?></div>
+							<div class="as-cell" style="width: 200px;">
+								<?php
+								if (strlen($item['recipe_comments']) > 30){
+									echo mb_substr($item['recipe_comments'], 0, 30, 'UTF-8')."...";
+								} else {
+									echo $item['recipe_comments'];
+								}
+								?>
+							</div>
+							<div class="as-cell" style="width: 80px;">
+								<div class="recipe_edit_tools_list">
+									<a href="/index/calculus/<?= $item['recipe_id']; ?>" alt="Redaguoti" title="Redaguoti">
+										<span class="ui-icon ui-icon-wrench">Redaguoti</span>
+									</a>
+									<a href='javascript:setRecipeStatus(<?= $item['recipe_id']; ?>,"<?= $recipe_status; ?>",unescape("<?= urlencode($item['recipe_name']); ?>"))' alt="Viešumas" title="Viešumas">
+										<span class="ui-icon ui-icon-<?= $ico_name ?>">Viešas</span>
+									</a>
+									<a href='javascript:deleteRecipe(<?= $item['recipe_id']; ?>,unescape("<?= urlencode($item['recipe_name']); ?>"))' alt="Trinti" title="Trinti">
+										<span class="ui-icon ui-icon-trash">Trinti</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<?php
+					endforeach;
+					?>
+				</div>
+			</div>
+			<?php
+		} else {
 			?>
-			<div class="clear"></div>
-		</div>
+			<div class="style_recipes">
+				<?php
+				$i = 0;
+				foreach ($this->content as $item):
+					$i++;
+				?>
+					<div class="style_recipe">
+						<?= $this->recipeItem($item); ?>
+						<div class="recipe_edit_tools">
+							<a href="/index/calculus/<?= $item['recipe_id']; ?>" alt="Redaguoti" title="Redaguoti">
+								<span class="ui-icon ui-icon-wrench">Redaguoti</span>
+							</a>
+							<? $ico_name = ($item["recipe_publish"] == 1) ? 'unlocked' : 'locked'; ?>
+							<? $recipe_status = ($item["recipe_publish"] == 1) ? '0' : '1'; ?>
+							<a href='javascript:setRecipeStatus(<?= $item['recipe_id']; ?>,"<?= $recipe_status; ?>",unescape("<?= urlencode($item['recipe_name']); ?>"))' alt="Viešumas" title="Viešumas">
+								<span class="ui-icon ui-icon-<?= $ico_name ?>">Viešas</span>
+							</a>
+							<a href='javascript:deleteRecipe(<?= $item['recipe_id']; ?>,unescape("<?= urlencode($item['recipe_name']); ?>"))' alt="Trinti" title="Trinti">
+								<span class="ui-icon ui-icon-trash">Trinti</span>
+							</a>
+						</div>
+					</div>
+				<?php
+					if ($i == 3){
+						$i = 0;
+						?>
+						<div class="clear"></div>
+						<?php
+					}
+				endforeach;
+				?>
+				<div class="clear"></div>
+			</div>
+			<?php
+		}
+		?>
 		<div>
 			<?=$this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml');?>
 		</div>

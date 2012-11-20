@@ -6,6 +6,7 @@ class BrewerController extends Zend_Controller_Action {
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
 		$this->show_beta = false;
+		$this->show_list = false;
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$db = Zend_Registry::get("db");
 			$select = $db->select()
@@ -15,6 +16,9 @@ class BrewerController extends Zend_Controller_Action {
 			$u_atribs= $db->fetchRow($select);
 			if ($u_atribs['beta_tester'] == 1) {
 				$this->show_beta = true;
+			}
+			if ($u_atribs['recipe_list'] == 1) {
+				$this->show_list = true;
 			}
 		}
 		
@@ -285,6 +289,7 @@ class BrewerController extends Zend_Controller_Action {
 	}
 
 	public function recipesAction() {
+		$this->view->show_list = $this->show_list;
 		$storage = new Zend_Auth_Storage_Session();
 		$u = $storage->read();
 		$db = Zend_Registry::get('db');
@@ -338,6 +343,24 @@ class BrewerController extends Zend_Controller_Action {
 			$this->view->brewer = $brewer;
 			$this->view->brewer["total"] = $total["count"];
 		}
+	}
+	public function enableblocksAction(){
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$db = Zend_Registry::get("db");
+			$db->update("users_attributes", array("recipe_list" => "0"), array("user_id = '" . $user_info->user_id . "'"));
+		}
+		$this->_redirect($_SERVER['HTTP_REFERER']);
+	}
+	public function enablelistAction(){
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$db = Zend_Registry::get("db");
+			$db->update("users_attributes", array("recipe_list" => "1"), array("user_id = '" . $user_info->user_id . "'"));
+		}
+		$this->_redirect($_SERVER['HTTP_REFERER']);
 	}
 
 }

@@ -1082,6 +1082,14 @@ div.as-row:hover {
 	border: 1px solid #ccc;
 	padding: 5px;
 }
+.recipe_edit_tools_list a {
+	display: inline-block;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 3px;
+}
 #__profileForm dl {
 	clear: left;
 	margin-bottom: 5px;
@@ -2979,4 +2987,18 @@ html ul.topnav li ul.subnav li a:hover {
 }
 .tweet_view_wi_240 {
 	width: 672px;
+}
+.display_blocks {
+	width: 13px;
+	height: 13px;
+	background-image: url("/public/images/list.gif");
+	background-repeat: no-repeat;
+	display: block;
+}
+.display_list {
+	width: 13px;
+	height: 13px;
+	background-image: url("/public/images/list_list.gif");
+	background-repeat: no-repeat;
+	display: block;
 }

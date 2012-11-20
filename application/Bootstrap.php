@@ -53,6 +53,8 @@ function _initAutoLoad() {
 		$router = $this->fc->getRouter();
 		$router->addRoute("beta_enable",new Zend_Controller_Router_Route("/beta_on",array("module"=>"default","controller" => "index","action" => "enablebeta")));
 		$router->addRoute("beta_disable",new Zend_Controller_Router_Route("/beta_off",array("module"=>"default","controller" => "index","action" => "disablebeta")));
+		$router->addRoute("enable_blocks",new Zend_Controller_Router_Route("/brewer/show_blocks",array("module"=>"default","controller" => "brewer","action" => "enableblocks")));
+		$router->addRoute("enable_list",new Zend_Controller_Router_Route("/brewer/show_list",array("module"=>"default","controller" => "brewer","action" => "enablelist")));
 		$router->addRoute("activate",new Zend_Controller_Router_Route("auth/activate/:emailhash",array("module"=>"default","controller" => "auth","action" => "activate","emailhash"=>0)));
 		
 		$router->addRoute("orders",new Zend_Controller_Router_Route("/order/:shop/:recipe",array("module"=>"default","controller" => "order", "action" => "recipe", "shop" => "savasalus", "recipe" => 0)));

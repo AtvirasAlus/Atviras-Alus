@@ -42,7 +42,7 @@ class EventsController extends Zend_Controller_Action {
 		$this->view->content->setItemCountPerPage(21);
 	}
 
-	function deleteAction() {
+	function deleteAction() {	
 		$db = Zend_Registry::get("db");
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
