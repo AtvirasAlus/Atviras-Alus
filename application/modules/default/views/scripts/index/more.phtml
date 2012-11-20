@@ -10,6 +10,9 @@ foreach ($this->items as $item):
 	$old_time = $item['posted'];
 	$last_id = $item['id'];
 	switch($item['type']){
+		case "yeastbank":
+			include("partials/yeastbank.phtml");
+		break;
 		case "idea_comment":
 			include("partials/idea_comment.phtml");
 		break;

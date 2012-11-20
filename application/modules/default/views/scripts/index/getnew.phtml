@@ -2,6 +2,9 @@
 	<?php
 	foreach ($this->items as $item):
 		switch($item['type']){
+			case "yeastbank":
+				include("partials/yeastbank.phtml");
+			break;
 			case "idea_comment":
 				include("partials/idea_comment.phtml");
 			break;
