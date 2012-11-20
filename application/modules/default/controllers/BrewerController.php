@@ -63,7 +63,7 @@ class BrewerController extends Zend_Controller_Action {
 	public function infoAction() {
 
 		$db = Zend_Registry::get('db');
-		$this->view->user_info = array("total_sessions" => 0, "total_brewed" => 0, "total_recipes" => 0, "user_lastlogin" => 0, "user_created" => 0, "user_name" => '');
+		$this->view->user_info = array("total_brewed_mead" => 0, "total_brewed_kvass" => 0, "total_brewed_cider" => 0, "total_sessions" => 0, "total_brewed" => 0, "total_recipes" => 0, "user_lastlogin" => 0, "user_created" => 0, "user_name" => '');
 		if ($this->_getParam('brewer') > 0) {
 			$brewer = $this->_getParam('brewer');
 			$select = $db->select()
@@ -83,10 +83,41 @@ class BrewerController extends Zend_Controller_Action {
 				}
 				$select = $db->select()
 						->from("beer_brew_sessions", array("count" => "count(*)", "total" => "COALESCE(sum(session_size),0)"))
+						->joinLeft("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe")
+						->where("beer_recipes.recipe_style != ?", 82) //kvass
+						->where("beer_recipes.recipe_style != ?", 84) //cider
+						->where("beer_recipes.recipe_style != ?", 85) //mead
 						->where("session_brewer =?", $brewer);
 				if ($row = $db->fetchRow($select)) {
 					$this->view->user_info["total_brewed"] = $row["total"];
 					$this->view->user_info["total_sessions"] = $row["count"];
+				}
+				$select = $db->select()
+						->from("beer_brew_sessions", array("count" => "count(*)", "total" => "COALESCE(sum(session_size),0)"))
+						->joinLeft("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe")
+						->where("beer_recipes.recipe_style = ?", 82)
+						->where("session_brewer =?", $brewer);
+				if ($row = $db->fetchRow($select)) {
+					$this->view->user_info["total_brewed_kvass"] = $row["total"];
+					$this->view->user_info["total_sessions"] += $row["count"];
+				}
+				$select = $db->select()
+						->from("beer_brew_sessions", array("count" => "count(*)", "total" => "COALESCE(sum(session_size),0)"))
+						->joinLeft("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe")
+						->where("beer_recipes.recipe_style = ?", 84)
+						->where("session_brewer =?", $brewer);
+				if ($row = $db->fetchRow($select)) {
+					$this->view->user_info["total_brewed_cider"] = $row["total"];
+					$this->view->user_info["total_sessions"] += $row["count"];
+				}
+				$select = $db->select()
+						->from("beer_brew_sessions", array("count" => "count(*)", "total" => "COALESCE(sum(session_size),0)"))
+						->joinLeft("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe")
+						->where("beer_recipes.recipe_style = ?", 85)
+						->where("session_brewer =?", $brewer);
+				if ($row = $db->fetchRow($select)) {
+					$this->view->user_info["total_brewed_mead"] = $row["total"];
+					$this->view->user_info["total_sessions"] += $row["count"];
 				}
 				$select = $db->select()
 						->from("beer_recipes", array("count" => "count(*)"))

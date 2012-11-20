@@ -33,6 +33,39 @@
 				<div class="brewer_info_text"><?=$this->user_info['total_brewed'];?> l.</div>
 				<div class="clear"></div>
 			</div>
+			<?php
+			if ($this->user_info['total_brewed_kvass'] != 0){
+				?>
+				<div class="brewer_info_block">
+					<div class="brewer_info_label">Išvirė giros:</div>
+					<div class="brewer_info_text"><?=$this->user_info['total_brewed_kvass'];?> l.</div>
+					<div class="clear"></div>
+				</div>
+				<?php
+			}
+			?>
+			<?php
+			if ($this->user_info['total_brewed_cider'] != 0){
+				?>
+				<div class="brewer_info_block">
+					<div class="brewer_info_label">Išvirė sidro:</div>
+					<div class="brewer_info_text"><?=$this->user_info['total_brewed_cider'];?> l.</div>
+					<div class="clear"></div>
+				</div>
+				<?php
+			}
+			?>
+			<?php
+			if ($this->user_info['total_brewed_mead'] != 0){
+				?>
+				<div class="brewer_info_block">
+					<div class="brewer_info_label">Išvirė midaus:</div>
+					<div class="brewer_info_text"><?=$this->user_info['total_brewed_mead'];?> l.</div>
+					<div class="clear"></div>
+				</div>
+				<?php
+			}
+			?>
 			<div class="brewer_info_block">
 				<div class="brewer_info_label">Papildoma informacija:</div>
 				<div class="brewer_info_text"><?= preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-]*(\?\S+)?)?)?)@','<a href="$1" rel="nofollow" target="blank">$1</a>',nl2br($this->user_info['user_about']));?></div>
