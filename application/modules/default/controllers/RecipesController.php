@@ -7,7 +7,9 @@ class RecipesController extends Zend_Controller_Action {
 		$user_info = $storage->read();
 		$this->use_plato = false;
 		$this->show_beta = false;
+		$this->uid = 0;
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$this->uid = $user_info->user_id;
 			$db = Zend_Registry::get("db");
 			$select = $db->select()
 					->from("users_attributes")
@@ -22,6 +24,7 @@ class RecipesController extends Zend_Controller_Action {
 			}
 		}
 		$this->view->use_plato = $this->use_plato;
+		$this->view->uid = $this->uid;
 	}
 	
 	public function showemptyrecipesonAction(){
@@ -200,7 +203,7 @@ class RecipesController extends Zend_Controller_Action {
 	public function searchAction() {
 		$db = Zend_Registry::get("db");
 		$params = explode("|", $this->getRequest()->getParam("params"));
-		$mask = array("type" => "recipe_type", "style" => "recipe_style", "medals" => "medals", "name" => "recipe_name", "hops" => "hop_name", "malts" => "malt_name", "yeasts" => "yeast_name", "brewer" => "user_name", "tags" => "tag_text");
+		$mask = array("type" => "recipe_type", "style" => "recipe_style", "medals" => "medals", "name" => "recipe_name", "hops" => "hop_name", "malts" => "malt_name", "yeasts" => "yeast_name", "brewer" => "user_name", "tags" => "tag_text", "mine" => 'mine');
 		$select = $db->select()
 				->from("beer_styles", array("style_name", "style_id", "style_cat"))
 				->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.recipe_style=beer_styles.style_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
@@ -264,6 +267,17 @@ class RecipesController extends Zend_Controller_Action {
 			} else {
 				$filter["medals"] = "";
 			}
+			if (isset($filter["mine"]) && $filter["mine"] == "1" && $this->uid != 0) {
+				$select->where("brewer_id = ?", $this->uid);
+				$filter["user_name"] = "";
+			} else {
+				$filter["mine"] = "0";
+				if (isset($filter["user_name"])) {
+					$select->where("user_name LIKE '%" . $filter["user_name"] . "%'");
+				} else {
+					$filter["user_name"] = "";
+				}
+			}
 
 			if (isset($filter["hop_name"])) {
 				$hops = explode(",", $filter["hop_name"]);
@@ -305,13 +319,11 @@ class RecipesController extends Zend_Controller_Action {
 			} else {
 				$filter["yeast_name"] = "";
 			}
-			if (isset($filter["user_name"])) {
-
-				$select->where("user_name LIKE '%" . $filter["user_name"] . "%'");
+			if (isset($filter["mine"]) && $filter["mine"] == "1" && $this->uid != 0) {
+				//$select->where("recipe_publish = ?", '1');
 			} else {
-				$filter["user_name"] = "";
+				$select->where("recipe_publish = ?", '1');
 			}
-			$select->where("recipe_publish = ?", '1');
 			$select->group("beer_recipes.recipe_id");
 			$select->order("beer_recipes.recipe_name");
 			$select_new = clone $select;

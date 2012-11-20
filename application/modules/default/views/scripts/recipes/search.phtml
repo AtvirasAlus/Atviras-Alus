@@ -17,6 +17,10 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 		return split( term ).pop();
 	}
 	$(function() {
+		$("#search_mine_buttn").click(function(){
+			$("#search_mine").val("1");
+			submitForm();
+		});
 		$("#show_empty_recipes").change(function(){
 			if ($("#show_empty_recipes").attr("checked") == true){
 				window.location.href = "/show_empty_recipes_on";
@@ -219,6 +223,10 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 		if (hp.length) {
 			filter.push("brewer:"+encodeURIComponent(hp));
 		}
+
+		if ($("#search_mine").val() == "1") {
+			filter.push("mine:1");
+		}
 		
 		if ($("#medals").attr("checked")) {
 			filter.push("medals:1");
@@ -312,7 +320,17 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 		</dl>
 		<dl>
 			<dt>&nbsp;</dt>
-			<dd style="text-align: right;"><input type="submit" value="Ieškot" class="ui-button" /></dd>
+			<dd style="text-align: right;">
+				<input type="submit" value="Ieškoti" class="ui-button" />
+				<?php
+				if ($this->uid != 0):
+					?>
+					<input type="hidden" value="search_mine" value="0" id="search_mine" />
+					<input type="button" value="Ieškoti tarp mano receptų" class="ui-button" id="search_mine_buttn" />
+					<?php
+				endif;
+				?>
+			</dd>
 			<div class="clear"></div>
 		</dl>
 	</form>
