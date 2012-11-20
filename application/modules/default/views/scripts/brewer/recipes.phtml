@@ -47,9 +47,9 @@
 							<div class="as-cell" style="width: 200px;">
 								<?php
 								if (strlen($item['recipe_comments']) > 30){
-									echo mb_substr($item['recipe_comments'], 0, 30, 'UTF-8')."...";
+									echo mb_substr(strip_tags($item['recipe_comments']), 0, 30, 'UTF-8')."...";
 								} else {
-									echo $item['recipe_comments'];
+									echo strip_tags($item['recipe_comments']);
 								}
 								?>
 							</div>
