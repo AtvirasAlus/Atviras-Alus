@@ -1,0 +1,190 @@
+<?php
+$this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
+$this->headScript()->appendFile("/public/js/ui.datepicker-lt.js");
+?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#yb_from").datepicker();
+		$("#yb_till").datepicker();
+		$("#yb_sell_type").change(function(){
+			if ($(this).val() == "give"){
+				$("#yb_sell_price_block").hide();
+				$("#yb_sell_item_block").hide();
+			}
+			if ($(this).val() == "swap"){
+				$("#yb_sell_price_block").hide();
+				$("#yb_sell_item_block").show();
+			}
+			if ($(this).val() == "sell"){
+				$("#yb_sell_price_block").show();
+				$("#yb_sell_item_block").hide();
+			}
+		});
+		$("#yb_type").change(function(){
+			var sel = $(this).val();
+			if (sel == "sell"){
+				$("#yb_from_block").show();
+				$("#yb_sell_type_block").show();
+				var sel2 = $("#yb_sell_type_block").val();
+				if (sel2 == "give"){
+					$("#yb_sell_price_block").hide();
+					$("#yb_sell_item_block").hide();
+				}
+				if (sel2 == "swap"){
+					$("#yb_sell_price_block").hide();
+					$("#yb_sell_item_block").show();
+				}
+				if (sel2 == "sell"){
+					$("#yb_sell_price_block").show();
+					$("#yb_sell_item_block").hide();
+				}
+			} else {
+				$("#yb_from_block").hide();
+				$("#yb_sell_type_block").hide();
+				$("#yb_sell_price_block").hide();
+				$("#yb_sell_item_block").hide();
+			}
+		});
+		$("#yb_form").submit(function(){
+			if ($("#yb_title").val().trim() == ""){
+				alert("Įveskite mielių pavadinimą");
+				return false;
+			}
+			if ($("#yb_type").val() == "sell"){
+				if ($("#yb_from").val().trim() == ""){
+					alert("Įveskite nuo kada bus prieinamos mielės");
+					return false;
+				}
+			}
+			if ($("#yb_till").val().trim() == ""){
+				alert("Įveskite iki kada galios skelbimas");
+				return false;
+			}
+			if ($("#yb_city").val().trim() == ""){
+				alert("Įveskite miestą");
+				return false;
+			}
+			if ($("#yb_type").val() == "sell"){
+				if ($("#yb_sell_type").val() == "sell"){
+					if ($("#yb_sell_price").val().trim() == ""){
+						alert("Įveskite pardavimo kainą");
+						return false;
+					}
+				}
+				if ($("#yb_sell_type").val() == "swap"){
+					if ($("#yb_sell_item").val().trim() == ""){
+						alert("Įveskite į ką norite mainyti mieles");
+						return false;
+					}
+				}
+			}
+			return true;
+		});
+	});
+</script>
+<?php
+$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+?>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Mielių bankas</div>
+	<div class="ideas_actions">
+		<a href="/mieliu-bankas/siulo" <?=($this->type == "sell") ? 'style="font-weight: bold;"' : ""?>>Siūlo</a>
+		<a href="/mieliu-bankas/iesko" <?=($this->type == "buy") ? 'style="font-weight: bold;"' : ""?>>Ieško</a>
+		<?php
+		if ($user_id){
+			?>
+			<a href="/mieliu-bankas/mano" <?=($this->type == "my") ? 'style="font-weight: bold;"' : ""?>>Mano skelbimai</a>
+			<a href="/mieliu-bankas/naujas" <?=($this->type == "new") ? 'style="font-weight: bold;"' : ""?>>Naujas skelbimas</a>
+			<?
+		}
+		?>
+	</div>
+	<div>
+		<form action="" method="post" id="yb_form">
+			<dl id="yb_type_block">
+				<dt>Veiksmas:</dt>
+				<dd>
+					<select name="yb_type" id="yb_type">
+						<option value="sell" <?=($this->item['yb_type'] == "sell") ? 'selected="selected"' : '';?>>Siūlau</option>
+						<option value="buy" <?=($this->item['yb_type'] == "buy") ? 'selected="selected"' : '';?>>Ieškau</option>
+					</select>
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl id="yb_title_block">
+				<dt>Mielių pavadinimas:</dt>
+				<dd>
+					<input type="text" name="yb_title" id="yb_title" value="<?=$this->item['yb_title']?>" />
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl id="yb_from_block" <?=($this->item['yb_type'] == "buy") ? 'style="display: none;"' : '';?>>
+				<dt>Mielės bus prieinamos nuo:</dt>
+				<dd>
+					<input type="text" name="yb_from" id="yb_from" value="<?=$this->item['yb_from']?>" />
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl id="yb_till_block">
+				<dt>Skelbimas galioja iki:</dt>
+				<dd>
+					<input type="text" name="yb_till" id="yb_till" value="<?=$this->item['yb_till']?>" />
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl id="yb_city_block">
+				<dt>Miestas:</dt>
+				<dd>
+					<input type="text" name="yb_city" id="yb_city" value="<?=$this->item['yb_city']?>" />
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl id="yb_phone_block">
+				<dt>Telefono numeris (neprivaloma):</dt>
+				<dd>
+					<input type="text" name="yb_phone" id="yb_phone" value="<?=$this->item['yb_phone']?>" />
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl id="yb_text_block">
+				<dt>Komentarai, pastabos:</dt>
+				<dd>
+					<textarea name="yb_text" id="yb_text"><?=$this->item['yb_text']?></textarea>
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl id="yb_sell_type_block" <?=($this->item['yb_type'] == "buy") ? 'style="display: none;"' : '';?>>
+				<dt>Atlygis:</dt>
+				<dd>
+					<select name="yb_sell_type" id="yb_sell_type">
+						<option value="give" <?=($this->item['yb_sell_type'] == "give") ? 'selected="selected"' : '';?>>Dovanoju</option>
+						<option value="swap" <?=($this->item['yb_sell_type'] == "swap") ? 'selected="selected"' : '';?>>Keičiu</option>
+						<option value="sell" <?=($this->item['yb_sell_type'] == "sell") ? 'selected="selected"' : '';?>>Parduodu</option>
+					</select>
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl id="yb_sell_price_block" <?=($this->item['yb_type'] == "buy" || ($this->item['yb_type'] == "sell" && $this->item['yb_sell_type'] != "sell")) ? 'style="display: none;"' : '';?>>
+				<dt>Pardavimo kaina:</dt>
+				<dd>
+					<input type="text" name="yb_sell_price" id="yb_sell_price" value="<?=$this->item['yb_sell_price']?>" /> <span>Lt</span>
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl id="yb_sell_item_block" <?=($this->item['yb_type'] == "buy" || ($this->item['yb_type'] == "sell" && $this->item['yb_sell_type'] != "swap")) ? 'style="display: none;"' : '';?>>
+				<dt>Mainai į:</dt>
+				<dd>
+					<input type="text" name="yb_sell_item" id="yb_sell_item" value="<?=$this->item['yb_sell_item']?>" />
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl id="yb_submit">
+				<dt>&nbsp;</dt>
+				<dd>
+					<input type="submit" name="yb_submit" id="yb_submit" value="Išsaugoti" class="ui-button" />
+				</dd>
+				<div class="clear"></div>
+			</dl>
+		</form>
+	</div>
+</div>

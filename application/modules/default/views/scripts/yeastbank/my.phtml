@@ -1,0 +1,138 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".doconfirm").click(function(){
+			var answer = confirm("Ar tikrai norite ištrinti skelbimą?")
+			if (answer){
+				return true;
+			} else {
+				return false;
+			}			
+		});
+	});
+</script>
+<?php
+$user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
+?>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Mielių bankas</div>
+	<div class="ideas_actions">
+		<a href="/mieliu-bankas/siulo" <?=($this->type == "sell") ? 'style="font-weight: bold;"' : ""?>>Siūlo</a>
+		<a href="/mieliu-bankas/iesko" <?=($this->type == "buy") ? 'style="font-weight: bold;"' : ""?>>Ieško</a>
+		<?php
+		if ($user_id){
+			?>
+			<a href="/mieliu-bankas/mano" <?=($this->type == "my") ? 'style="font-weight: bold;"' : ""?>>Mano skelbimai</a>
+			<a href="/mieliu-bankas/naujas" <?=($this->type == "new") ? 'style="font-weight: bold;"' : ""?>>Naujas skelbimas</a>
+			<?
+		}
+		?>
+	</div>
+	<div>
+		<?php
+		foreach ($this->items as $item){
+			?>
+			<div class="yb_item">
+				<div class="yb_user">
+					<a href="/brewers/<?=$item['yb_user']?>">
+						<img src="http://www.gravatar.com/avatar/<?= md5($item['user_email']); ?>?rating=G&size=50&default=mm" border="0" />
+						<span><?=$item['user_name']?></span>
+					</a>
+					<div class="yb_posted">
+						<?=str_replace(" ", "<br />", $item['yb_posted'])?>
+					</div>
+				</div>
+				<div class="yb_info">
+					<h1><?=($item['yb_type'] == "sell") ? "[Siūloma] " : "[Ieškoma] ";?><?=$item['yb_title']?></h1>
+					<?php
+					if (trim($item['yb_text']) != ""){
+						?>
+						<div class="yb_text">
+							<?= preg_replace('@((?:[^"\'])(http|ftp)+(s)?:(//)((\w|\.|\-|_)+)(/)?(\S+)?)@',' <a href="$1" rel="nofollow" target="blank">$1</a>',str_replace(array("\n"), "\n<br />\n", $item['yb_text']));?>
+						</div>
+						<?php
+					}
+					if ($item['yb_type'] == "buy"){
+						?>
+						<div class="yb_info_block">
+							<div class="yb_info_block_left">Mielės reikalingos iki: </div>
+							<div class="yb_info_block_right"><?=$item['yb_till']?></div>
+							<div class="clear"></div>
+						</div>
+						<div class="yb_info_block">
+							<div class="yb_info_block_left">Miestas: </div>
+							<div class="yb_info_block_right"><?=$item['yb_city']?></div>
+							<div class="clear"></div>
+						</div>
+						<?php
+						if (trim($item['yb_phone']) != "") {
+							?>
+							<div class="yb_info_block">
+								<div class="yb_info_block_left">Kontaktinis telefonas: </div>
+								<div class="yb_info_block_right"><?=$item['yb_phone']?></div>
+								<div class="clear"></div>
+							</div>
+							<?php
+						}
+					} else {
+						?>
+						<div class="yb_info_block">
+							<div class="yb_info_block_left"><?=($item['yb_from'] > date("Y-m-d")) ? "Mielės bus nuo" : "Mielės yra nuo";?>: </div>
+							<div class="yb_info_block_right"><?=$item['yb_from']?></div>
+							<div class="clear"></div>
+						</div>
+						<div class="yb_info_block">
+							<div class="yb_info_block_left">Pasiūlymas galioja iki: </div>
+							<div class="yb_info_block_right"><?=$item['yb_till']?></div>
+							<div class="clear"></div>
+						</div>
+						<div class="yb_info_block">
+							<div class="yb_info_block_left">Miestas: </div>
+							<div class="yb_info_block_right"><?=$item['yb_city']?></div>
+							<div class="clear"></div>
+						</div>
+						<?php
+						if (trim($item['yb_phone']) != "") {
+							?>
+							<div class="yb_info_block">
+								<div class="yb_info_block_left">Kontaktinis telefonas: </div>
+								<div class="yb_info_block_right"><?=$item['yb_phone']?></div>
+								<div class="clear"></div>
+							</div>
+							<?php
+						}
+						switch($item['yb_sell_type']){
+							case "sell":
+								?>
+								<div class="yb_status_sell"><span>Parduodu</span>, kaina <?=$item['yb_sell_price']?> Lt.</div>
+								<?php
+								break;
+							case "swap":
+								?>
+								<div class="yb_status_swap"><span>Keičiu</span> į <?=$item['yb_sell_item']?></div>
+								<?php
+								break;
+							case "give":
+								?>
+								<div class="yb_status_give"><span>Dovanoju</span></div>
+								<?php
+								break;
+						}
+					}
+					?>
+					<div class="yb_tools">
+						<a href="/mieliu-bankas/redaguoti/<?=$item['yb_id']?>">Redaguoti</a>
+						<a href="/mieliu-bankas/trinti/<?=$item['yb_id']?>" class="doconfirm">Trinti</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<?php
+		}
+		if (sizeof($this->items) == 0){
+			?>
+			<div>Jūs nesate sukurę nei vieno skelbimo</div>
+			<?
+		}
+		?>
+	</div>
+</div>

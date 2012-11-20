@@ -58,6 +58,13 @@
 	background-repeat: no-repeat;
 	background-position: 4px 22px;
 }
+.ico_yeastbank {
+	background-color: #eee;
+	padding-left: 40px;
+	background-image: url("/public/images/new/ico_yb.png");
+	background-repeat: no-repeat;
+	background-position: 4px 22px;
+}
 .ico_idea {
 	background-color: #eee;
 	padding-left: 40px;
@@ -521,6 +528,9 @@ input, select, .editable-select-options, .ui-autocomplete {
 						<optgroup label="Aludariai">
 							<option value="user" <?=($this->filter_type == "user") ? 'selected="selected"' : ''?>>Nauji aludariai</option>
 						</optgroup>
+						<optgroup label="Mielių bankas">
+							<option value="yeastbank" <?=($this->filter_type == "yeastbank") ? 'selected="selected"' : ''?>>Mielių skelbimai</option>
+						</optgroup>
 					</select>
 					<div class="clear"></div>
 				</div>
@@ -575,6 +585,9 @@ input, select, .editable-select-options, .ui-autocomplete {
 					}
 					$last_id = $item['id'];
 					switch($item['type']){
+						case "yeastbank":
+							include("partials/yeastbank.phtml");
+						break;
 						case "idea_comment":
 							include("partials/idea_comment.phtml");
 						break;

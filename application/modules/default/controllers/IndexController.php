@@ -81,6 +81,9 @@ class IndexController extends Zend_Controller_Action {
 					->order("id DESC")
 					->where("id > '".$out['last']."'");
 			switch($filter_type){
+				case "yeastbank":
+					$select->where("type = 'yeastbank'");
+				break;
 				case "idea":
 					$select->where("type = 'idea'");
 				break;
@@ -170,6 +173,9 @@ class IndexController extends Zend_Controller_Action {
 					->where("posted < '".$last_stamp."'")
 					->limit(30);
 			switch($filter_type){
+				case "yeastbank":
+					$select->where("type = 'yeastbank'");
+				break;
 				case "idea":
 					$select->where("type = 'idea'");
 				break;
@@ -297,6 +303,9 @@ class IndexController extends Zend_Controller_Action {
 					->order("id DESC")
 					->limit(30);
 			switch($filter_type){
+				case "yeastbank":
+					$select->where("type = 'yeastbank'");
+				break;
 				case "idea":
 					$select->where("type = 'idea'");
 				break;

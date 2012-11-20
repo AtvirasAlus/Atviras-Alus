@@ -56,6 +56,8 @@ function _initAutoLoad() {
 		$router->addRoute("enable_blocks",new Zend_Controller_Router_Route("/brewer/show_blocks",array("module"=>"default","controller" => "brewer","action" => "enableblocks")));
 		$router->addRoute("enable_list",new Zend_Controller_Router_Route("/brewer/show_list",array("module"=>"default","controller" => "brewer","action" => "enablelist")));
 		$router->addRoute("activate",new Zend_Controller_Router_Route("auth/activate/:emailhash",array("module"=>"default","controller" => "auth","action" => "activate","emailhash"=>0)));
+		$router->addRoute("show_empty_recipes_on",new Zend_Controller_Router_Route("/show_empty_recipes_on",array("module"=>"default","controller" => "recipes","action" => "show_empty_recipes_on")));
+		$router->addRoute("show_empty_recipes_off",new Zend_Controller_Router_Route("/show_empty_recipes_off",array("module"=>"default","controller" => "recipes","action" => "show_empty_recipes_off")));
 		
 		$router->addRoute("orders",new Zend_Controller_Router_Route("/order/:shop/:recipe",array("module"=>"default","controller" => "order", "action" => "recipe", "shop" => "savasalus", "recipe" => 0)));
 		
@@ -64,14 +66,14 @@ function _initAutoLoad() {
 		$router->addRoute("recipes_view_0",new Zend_Controller_Router_Route("recipes/view/:recipe",array("module"=>"default","controller" => "recipes","action" => "view","recipe"=>0)));
 		$router->addRoute("recipes_view",new Zend_Controller_Router_Route("alus/receptas/:recipe",array("module"=>"default","controller" => "recipes","action" => "view","recipe"=>0)));
 		$router->addRoute("recipes_del_image",new Zend_Controller_Router_Route("/alus/trinti_nuotrauka/:image_id",array("module"=>"default","controller" => "recipes","action" => "delete_image","image_id"=>0)));
+
 		$router->addRoute("event_delete",new Zend_Controller_Router_Route("/events/delete/:event_id/:group_id", array("module"=>"default","controller" => "events","action" => "delete","event_id"=>0, "group_id"=>0)));
 	
 		$router->addRoute("picker",new Zend_Controller_Router_Route("/paieska",array("module"=>"default","controller" => "picker","action" => "index")));
 		$router->addRoute("picker_results",new Zend_Controller_Router_Route("/paieska/rezultatai/:ibu_min/:ibu_max/:ebc_min/:ebc_max/:abv_min/:abv_max/:style_val/:type_val/:page",array("module"=>"default","controller" => "picker","action" => "results", "ibu_min" => 0, "ebc_min" => 0, "abv_min" => 0, "ibu_max" => 0, "ebc_max" => 0, "abv_max" => 0, "style_val" => "", "type_val" => "", "page" => 0)));
 		$router->addRoute("picker_preview",new Zend_Controller_Router_Route("/paieska/preview/:ibu_min/:ibu_max/:ebc_min/:ebc_max/:abv_min/:abv_max/:style_val/:type_val",array("module"=>"default","controller" => "picker","action" => "preview", "ibu_min" => 0, "ebc_min" => 0, "abv_min" => 0, "ibu_max" => 0, "ebc_max" => 0, "abv_max" => 0, "style_val" => "", "type_val" => "")));
 		$router->addRoute("picker_change",new Zend_Controller_Router_Route("/paieska/parametrai/:ibu_min/:ibu_max/:ebc_min/:ebc_max/:abv_min/:abv_max/:style_val/:type_val",array("module"=>"default","controller" => "picker","action" => "index", "ibu_min" => 0, "ebc_min" => 0, "abv_min" => 0, "ibu_max" => 0, "ebc_max" => 0, "abv_max" => 0, "style_val" => "", "type_val" => "")));
-		$router->addRoute("show_empty_recipes_on",new Zend_Controller_Router_Route("/show_empty_recipes_on",array("module"=>"default","controller" => "recipes","action" => "show_empty_recipes_on")));
-		$router->addRoute("show_empty_recipes_off",new Zend_Controller_Router_Route("/show_empty_recipes_off",array("module"=>"default","controller" => "recipes","action" => "show_empty_recipes_off")));
+
 		$router->addRoute("tweet_view",new Zend_Controller_Router_Route("/tweet/view/:tweet_id",array("module"=>"default","controller" => "tweet","action" => "view", "tweet_id"=>0)));
 		
 		$router->addRoute("rate",new Zend_Controller_Router_Route("vertinimas/:page",array("module"=>"default","controller" => "rate","action" => "index","page"=>0)));
@@ -80,10 +82,11 @@ function _initAutoLoad() {
 		$router->addRoute("rate_beer",new Zend_Controller_Router_Route("vertinimas/alus/:bid",array("module"=>"default","controller" => "rate","action" => "beer","bid"=>0)));
 
 		$router->addRoute("calculus_recipe",new Zend_Controller_Router_Route("index/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
-		//$router->addRoute("calculus",new Zend_Controller_Router_Route("/calculus/:recipe",array("module"=>"default","controller" => "index","action" => "calculus","recipe"=>0)));
 		$router->addRoute("group",new Zend_Controller_Router_Route("/groups/view/:group_id",array("module"=>"default","controller" => "groups","action" => "view","group_id"=>0)));
 		$router->addRoute("index_filter",new Zend_Controller_Router_Route("/filter/:type",array("module"=>"default","controller" => "index","action" => "index", "type"=>'all')));
+
 		$router->addRoute("gallery",new Zend_Controller_Router_Route("/gallery/:page",array("module"=>"default","controller" => "recipes","action" => "gallery", "page"=>0)));
+		
 		$router->addRoute("food_list",new Zend_Controller_Router_Route("/maistas/:category",array("module"=>"default","controller" => "food","action" => "list", "category"=>0)));
 		$router->addRoute("food_item",new Zend_Controller_Router_Route("/patiekalas/:item",array("module"=>"default","controller" => "food","action" => "item", "item"=>0)));
 		$router->addRoute("food_my",new Zend_Controller_Router_Route("/maistas/mano",array("module"=>"default","controller" => "food","action" => "my")));
@@ -93,6 +96,14 @@ function _initAutoLoad() {
 		$router->addRoute("food1",new Zend_Controller_Router_Route("/maistas/receptai-su-alumi",array("module"=>"default","controller" => "food","action" => "list", "category"=>3)));
 		$router->addRoute("food2",new Zend_Controller_Router_Route("/maistas/pagrindiniai-patiekalai",array("module"=>"default","controller" => "food","action" => "list", "category"=>2)));
 		$router->addRoute("food3",new Zend_Controller_Router_Route("/maistas/uzkandziai-prie-alaus",array("module"=>"default","controller" => "food","action" => "list", "category"=>1)));
+		
+		$router->addRoute("mieliu_bankas_siulo",new Zend_Controller_Router_Route("/mieliu-bankas/siulo", array("module"=>"default", "controller" => "yeastbank", "action" => "sell")));
+		$router->addRoute("mieliu_bankas_iesko",new Zend_Controller_Router_Route("/mieliu-bankas/iesko", array("module"=>"default", "controller" => "yeastbank", "action" => "buy")));
+		$router->addRoute("mieliu_bankas_mano",new Zend_Controller_Router_Route("/mieliu-bankas/mano", array("module"=>"default", "controller" => "yeastbank", "action" => "my")));
+		$router->addRoute("mieliu_bankas_naujas",new Zend_Controller_Router_Route("/mieliu-bankas/naujas", array("module"=>"default", "controller" => "yeastbank", "action" => "new")));
+		$router->addRoute("mieliu_bankas_redaguoti",new Zend_Controller_Router_Route("/mieliu-bankas/redaguoti/:yb_id", array("module"=>"default", "controller" => "yeastbank", "action" => "edit", "yb_id" => 0)));
+		$router->addRoute("mieliu_bankas_trinti",new Zend_Controller_Router_Route("/mieliu-bankas/trinti/:yb_id", array("module"=>"default", "controller" => "yeastbank", "action" => "delete", "yb_id" => 0)));
+		
 		$router->addRoute("idejos",new Zend_Controller_Router_Route("/idejos/:page",array("module"=>"default","controller" => "idea","action" => "list","page"=>0)));
 		$router->addRoute("idejos_my",new Zend_Controller_Router_Route("/idejos/mano/:page",array("module"=>"default","controller" => "idea","action" => "list_my","page"=>0)));
 		$router->addRoute("idejos_unvoted",new Zend_Controller_Router_Route("/idejos/balsavimas/:page",array("module"=>"default","controller" => "idea","action" => "list_unvoted","page"=>0)));
@@ -103,25 +114,33 @@ function _initAutoLoad() {
 		$router->addRoute("idejos_view",new Zend_Controller_Router_Route("/ideja/:idea",array("module"=>"default","controller" => "idea","action" => "view", "idea" => 0)));
 		$router->addRoute("idejos_create",new Zend_Controller_Router_Route("/idejos/nauja",array("module"=>"default","controller" => "idea","action" => "create")));
 		$router->addRoute("idejos_comments",new Zend_Controller_Router_Route("/idejos/komentarai",array("module"=>"default","controller" => "idea","action" => "comments")));
+		
 		$router->addRoute("idea_make_new",new Zend_Controller_Router_Route("/idea/makenew/:idea_id",array("module"=>"default","controller" => "idea","action" => "makenew", "idea_id"=>0)));
 		$router->addRoute("idea_make_rejected",new Zend_Controller_Router_Route("/idea/makerejected/:idea_id",array("module"=>"default","controller" => "idea","action" => "makerejected", "idea_id"=>0)));
 		$router->addRoute("idea_make_completed",new Zend_Controller_Router_Route("/idea/makecompleted/:idea_id",array("module"=>"default","controller" => "idea","action" => "makecompleted", "idea_id"=>0)));
+		
 		$router->addRoute("brewer",new Zend_Controller_Router_Route("/brewers/:brewer",array("module"=>"default","controller" => "brewer","action" => "info","brewer"=>0)));
 		$router->addRoute("brewer_recipes",new Zend_Controller_Router_Route("/brewer/recipes/:brewer/:page",array("module"=>"default","controller" => "brewer","action" => "recipes","brewer"=>0,"page"=>0)));
 		$router->addRoute("brewer_sessions",new Zend_Controller_Router_Route("/brewer/sessions/:brewer",array("module"=>"default","controller" => "brewer","action" => "sessions","brewer"=>0)));
 		$router->addRoute("brewer_list",new Zend_Controller_Router_Route("/brewer/list/:brewer_search/:page",array("module"=>"default","controller" => "brewer","action" => "list", "brewer_search" => "","page"=>0)));
+		
 		$router->addRoute("style",new Zend_Controller_Router_Route("/style/:style/:page",array("module"=>"default","controller" => "recipes","action" => "styles","style"=>0,"page"=>0)));
+		
 		$router->addRoute("pagalba",new Zend_Controller_Router_Route("/pagalba",array("module"=>"default","controller" => "content","action" => "read","category"=>"help","page"=>0)));
+		
 		$router->addRoute("parama",new Zend_Controller_Router_Route("/parama",array("module"=>"default","controller" => "content","action" => "parama","category"=>"help","page"=>0)));
+		
 		$router->addRoute("recipes_brew_session",new Zend_Controller_Router_Route("/brew-session/recipe/:recipe",array("module"=>"default","controller" => "brew-session","action" => "recipe","recipe"=>0)));
 		$router->addRoute("brewer_brew_session",new Zend_Controller_Router_Route("/brew-session/brewer/:brewer",array("module"=>"default","controller" => "brew-session","action" => "brewer","brewer"=>0)));
 		$router->addRoute("edit_brew_session",new Zend_Controller_Router_Route("/brew-session/edit/:session",array("module"=>"default","controller" => "brew-session","action" => "edit","session"=>0)));
 		$router->addRoute("new_brew_session",new Zend_Controller_Router_Route("/brew-session/new/:recipe",array("module"=>"default","controller" => "brew-session","action" => "new","recipe"=>0)));
 		$router->addRoute("history_brew_session",new Zend_Controller_Router_Route("/brew-session/history/:page",array("module"=>"default","controller" => "brew-session","action" => "history","page"=>0)));
 		$router->addRoute("detail_brew_session",new Zend_Controller_Router_Route("/brew-session/detail/:session",array("module"=>"default","controller" => "brew-session","action" => "detail","session"=>0)));
+		
 		$router->addRoute("articles_list",new Zend_Controller_Router_Route("/content/list/:cat_page",array("module"=>"default","controller" => "content","action" => "list","cat_page"=>'0-0')));
 		$router->addRoute("articles_read",new Zend_Controller_Router_Route("/content/read/:cat/:article",array("module"=>"default","controller" => "content","action" => "read","cat"=>0,'article'=>0)));
 		$router->addRoute("skaitykla",new Zend_Controller_Router_Route("/skaitykla",array("module"=>"default","controller" => "content","action" => "list","cat_page"=>1)));
+		
 		$router->addRoute("stilius",new Zend_Controller_Router_Route("/stilius/:style/:page",array("module"=>"default","controller" => "styles","action" => "styles","style"=>0,"page"=>0)));
 		$router->addRoute("search",new Zend_Controller_Router_Route("/search/:params/:page",array("module"=>"default","controller" => "recipes","action" => "search","params"=>0,"page"=>0)));
 		$router->addRoute("mail_in",new Zend_Controller_Router_Route("/mail/inbox/:mail_search/:page",array("module"=>"default","controller" => "mail","action" => "inbox","mail_search" => "", "page"=>0)));
