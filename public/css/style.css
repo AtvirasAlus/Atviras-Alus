@@ -1605,6 +1605,25 @@ label, input[type="checkbox"], input[type="radio"] {
 	background-color: #fff;
 	font-size: 11px;
 }
+#other-table input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 40px;
+	padding-left: 4px;
+	font-size: 11px;
+}
+#other-table select {
+	height: 26px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	font-size: 11px;
+}
 .calc_notes textarea {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -1621,6 +1640,18 @@ select.hop_list {
 	width: 430px;
 }
 select.yeast_list {
+	width: 690px;
+}
+select.other_list {
+	width: 690px;
+}
+.storage_calc select.malt_list {
+	width: 560px;
+}
+.storage_calc select.hop_list {
+	width: 560px;
+}
+.storage_calc select.yeast_list {
 	width: 690px;
 }
 ul.ui-autocomplete {
@@ -3131,4 +3162,10 @@ html ul.topnav li ul.subnav li a:hover {
 	padding: 10px;
 	width: 530px;
 	height: 60px;
+}
+.storage_title {
+	display: block;
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom: 10px;
 }

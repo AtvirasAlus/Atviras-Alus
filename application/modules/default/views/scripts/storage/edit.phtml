@@ -1,0 +1,401 @@
+<? $this->headLink()->appendStylesheet("/public/ui/external/jquery.editable-select.css"); ?>
+<? $this->headScript()->appendFile("/public/ui/external/ui.core.js"); ?>
+<? $this->headScript()->appendFile("/public/ui/external/ui.spinner.js"); ?>
+<? $this->headScript()->appendFile("/public/ui/external/jquery.editable-select.js"); ?>
+<script type="text/javascript">
+	function getMalts() {
+		var malts = '<option malt_id="0" type="malt" ebc="3" extract="1.036">Bazinis salyklas</option>';
+		<?
+		for ($i = 0; $i < count($this->malts); $i++) {
+			?>
+			malts+='<option malt_id="<?= trim($this->malts[$i]['malt_id']); ?>" type="<?= trim($this->malts[$i]['malt_type']); ?>" ebc="<?= trim($this->malts[$i]['malt_ebc']); ?>" extract="<?= $this->malts[$i]['malt_extract'] ?>"><?= addslashes($this->malts[$i]['malt_name']); ?></option>';
+			<?
+		}
+		?>
+		return malts;
+	}
+	function getHops() {
+		var hops = '';
+		<?
+		for ($i = 0; $i < count($this->hops); $i++) {
+			?>
+			hops+='<option hop_id="<?= trim($this->hops[$i]['hop_id']); ?>" alpha="<?= trim($this->hops[$i]['hop_alpham']); ?>"><?= addslashes($this->hops[$i]['hop_name']); ?></option>';
+			<?
+		}
+		?>
+		return hops;
+	}
+	function getYeasts() {
+		var yeasts = '';
+		<? 
+		for ($i = 0; $i < count($this->yeasts); $i++) { 
+			?>
+			yeasts+='<option yeast_id="<?= trim($this->yeasts[$i]['yeast_id']); ?>" yeast_attenuation="<?= $this->yeasts[$i]['yeast_attenuation']; ?>"><?= $this->yeasts[$i]['yeast_name']; ?></option>';
+			<? 
+		} 
+		?>
+		return yeasts;
+	}
+	function getOthers() {
+		var others = '';
+		<? 
+		for ($i = 0; $i < count($this->others); $i++) { 
+			?>
+			others+='<option other_id="<?= trim($this->others[$i]['other_id']); ?>"><?= $this->others[$i]['other_name']; ?></option>';
+			<? 
+		} 
+		?>
+		return others;
+	}
+	function createMaltList(id) {
+		$('#malt-list_' + id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
+				selectMalt(id);
+			}, onFocus:function () {
+				$('#malt_tr_' + id).click();
+			}});
+	}
+	function selectMalt(id) {
+		var sItem = $('#malt-list_' + id).editableSelect("getSelectedItem");
+		$('#malt_color_' + id).attr('value', sItem.ebc);
+	}
+	function createMaltTr(values) {
+		var rid = $('#malt-table').data('last_tr');
+		if (!rid) {
+			var rid = 0;
+		}
+		
+		$("#malts_template .malt_tr").attr("id", "malt_tr_" + rid);
+		$("#malts_template .malt_list").attr("id", "malt-list_" + rid);
+		$("#malts_template .malt_weight").attr("id", "malt_weight_" + rid);
+		$("#malts_template .malt_color").attr("id", "malt_color_" + rid);
+		$("#malts_template .malt_list").html(getMalts());
+		$('#malt-table').append($("#malts_template").html());
+
+		$("#malt_weight_" + rid).spinner({min:0, stepping:0.05});
+		$("#malt_color_" + rid).spinner({min:0});
+		$('#malt_tr_' + rid).click(function () {
+			var prev = $('#malt-table').data('selected_tr');
+			if (prev) {
+				$('#' + prev).css("backgroundColor", "");
+			}
+			$('#' + this.id).css("backgroundColor", "#dddddd");
+			$('#malt-table').data('selected_tr', this.id);
+		});
+		createMaltList(rid);
+		$('#malt-table').data('last_tr', rid + 1);
+		if (values) {
+			$("#malt_weight_" + rid).val(values["malt_weight"]);
+			$("#malt_extract_" + rid).val(values["malt_extract"]);
+			$("#malt_color_" + rid).val(values["malt_ebc"]);
+			$("#malt_type_" + rid).val(values["malt_type"]);
+			$("#malt-list_" + rid).val(values["malt_name"]);
+		}
+		return rid;
+	}
+	function createHopList(id) {
+		$('#hop-list_' + id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
+			var sItem = $('#hop-list_' + id).editableSelect("getSelectedItem");
+			$('#hop_alpha_' + id).attr('value', sItem.alpha);
+		}, onFocus:function () {
+			$('#hop_tr_' + id).click();
+		}});
+	}
+	function createHopTr(values) {
+		var rid = $('#hop-table').data('last_tr');
+		if (!rid) {
+			var rid = 0;
+		}
+
+		$("#hops_template .hop_tr").attr("id", "hop_tr_" + rid);
+		$("#hops_template .hop_weight").attr("id", "hop_weight_" + rid);
+		$("#hops_template .hop_alpha").attr("id", "hop_alpha_" + rid);
+		$("#hops_template .hop_time").attr("id", "hop_time_" + rid);
+		$("#hops_template .hop_list").attr("id", "hop-list_" + rid);
+		$("#hops_template .hop_list").html(getHops());
+		$('#hop-table').append($("#hops_template").html());
+		
+		$("#hop_weight_" + rid).spinner({min:0});
+		$("#hop_alpha_" + rid).spinner({min:0, max:30, stepping:0.1});
+		$("#hop_time_" + rid).spinner({min:0, max:300});
+		$('#hop_tr_' + rid).click(function () {
+			var prev = $('#hop-table').data('selected_tr');
+			if (prev) {
+				$('#' + prev).css("backgroundColor", "");
+			}
+			$('#' + this.id).css("backgroundColor", "#dddddd");
+			$('#hop-table').data('selected_tr', this.id);
+		});
+		$('#hop-table').data('last_tr', rid + 1);
+		createHopList(rid);
+		if (values) {
+			$("#hop_weight_" + rid).val(values["hop_weight"]);
+			$("#hop_alpha_" + rid).val(values["hop_alpha"]);
+			$("#hop_time_" + rid).val(values["hop_time"]);
+			$("#hop-list_" + rid).val(values["hop_name"]);
+		}
+	}
+	function createYeastList(id) {
+		$('#yeast-list_' + id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
+			var sItem = $('#yeast-list_' + id).editableSelect("getSelectedItem");
+			if (sItem.yeast_attenuation) {
+				$('#attenuation').attr('value',sItem.yeast_attenuation);
+			}
+		}, onFocus:function () {
+			$('#yeast_tr_' + id).click();
+		}});
+	}
+	function createOtherList(id) {
+		$('#other-list_' + id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
+			var sItem = $('#other-list_' + id).editableSelect("getSelectedItem");
+		}, onFocus:function () {
+			$('#other_tr_' + id).click();
+		}});
+	}
+	function createYeastsTr(values) {
+		var rid = $('#yeast-table').data('last_tr');
+		if (!rid) {
+			var rid = 0;
+		}
+		$("#yeasts_template .yeast_tr").attr("id", "yeast_tr_" + rid);
+		$("#yeasts_template .yeast_weight").attr("id", "yeast_weight_" + rid);
+		$("#yeasts_template .yeast_list").attr("id", "yeast-list_" + rid);
+		$("#yeasts_template .yeast_list").html(getYeasts());
+		$('#yeast-table').append($("#yeasts_template").html());
+
+		$("#yeast_weight_" + rid).spinner({min:0});
+		$('#yeast_tr_' + rid).click(function () {
+			var prev = $('#yeast-table').data('selected_tr');
+			if (prev) {
+				$('#' + prev).css("backgroundColor", "");
+			}
+			$('#' + this.id).css("backgroundColor", "#dddddd");
+			$('#yeast-table').data('selected_tr', this.id);
+		});
+		$('#yeast-table').data('last_tr', rid + 1);
+		createYeastList(rid);
+		if (values) {
+			$("#yeast_weight_" + rid).val(values["yeast_weight"]);
+			$("#yeast-list_" + rid).val(values["yeast_name"]);
+		}
+	}
+	function createOthersTr(values) {
+		var rid = $('#other-table').data('last_tr');
+		if (!rid) {
+			var rid = 0;
+		}
+		$("#others_template .other_tr").attr("id", "other_tr_" + rid);
+		$("#others_template .other_weight").attr("id", "other_weight_" + rid);
+		$("#others_template .other_list").attr("id", "other-list_" + rid);
+		$("#others_template .other_list").html(getOthers());
+		$('#other-table').append($("#others_template").html());
+		$("#other_weight_" + rid).spinner({min:0, stepping:0.005});
+		$('#other_tr_' + rid).click(function () {
+			var prev = $('#other-table').data('selected_tr');
+			if (prev) {
+				$('#' + prev).css("backgroundColor", "");
+			}
+			$('#' + this.id).css("backgroundColor", "#dddddd");
+			$('#other-table').data('selected_tr', this.id);
+		});
+		$('#other-table').data('last_tr', rid + 1);
+		createOtherList(rid);
+		if (values) {
+			$("#other_weight_" + rid).val(values["other_weight"]);
+			$("#other-list_" + rid).val(values["other_name"]);
+		}
+	}
+	
+	$(document).ready(function () {
+		$("#add-malt-btn").bind('click', function (event, ui) {
+			selectMalt(createMaltTr());
+		});
+		$("#rem-malt-btn").bind('click', function (event, ui) {
+			var selItem = $('#malt-table').data('selected_tr');
+			$('#' + selItem).remove();
+		});
+		$("#add-hop-btn").bind('click', function (event, ui) {
+			createHopTr();
+		});
+		$("#rem-hop-btn").bind('click', function (event, ui) {
+			var selItem = $('#hop-table').data('selected_tr');
+			$('#' + selItem).remove();
+		});
+		$("#add-yeast-btn").bind('click', function (event, ui) {
+			createYeastsTr();
+		});
+		$("#rem-yeast-btn").bind('click', function (event, ui) {
+			var selItem = $('#yeast-table').data('selected_tr');
+			$('#' + selItem).remove();
+		});
+		$("#add-other-btn").bind('click', function (event, ui) {
+			createOthersTr();
+		});
+		$("#rem-other-btn").bind('click', function (event, ui) {
+			var selItem = $('#other-table').data('selected_tr');
+			$('#' + selItem).remove();
+		});
+		<?
+		if (isset($this->data)) {
+			if (isset($this->data["malt"])) {
+				for ($i = 0; $i < count($this->data["malt"]); $i++) {
+					?>
+					createMaltTr(<?= Zend_Json::encode($this->data["malt"][$i]); ?>);
+					<?
+				}
+			}
+			if (isset($this->data["hops"])) {
+				for ($i = 0; $i < count($this->data["hops"]); $i++) {
+					?>
+					createHopTr(<?= Zend_Json::encode($this->data["hops"][$i]); ?>);
+					<?
+				}
+			}
+			if (isset($this->data["yeast"])) {
+				for ($i = 0; $i < count($this->data["yeast"]); $i++) {
+					?>
+					createYeastsTr(<?= Zend_Json::encode($this->data["yeast"][$i]); ?>);
+					<?
+				}
+			}
+			if (isset($this->data["other"])) {
+				for ($i = 0; $i < count($this->data["other"]); $i++) {
+					?>
+					createOthersTr(<?= Zend_Json::encode($this->data["other"][$i]); ?>);
+					<?
+				}
+			}
+		} 
+		?>
+	});
+</script>
+<form action="" method="post">
+	<div id="calculus_container" class="inner_container">
+		<div class="inner_header">
+			Atsargos
+		</div>
+		<div>
+			<div class="calc_info_container storage_calc">
+				<div class="ing_block">
+					<div class="ing_title">Salyklas</div>
+					<div class="clear"></div>
+				</div>
+				<div class="calc_malts">
+					<div id="malt-table" class="as-table">
+						<div class="as-row">
+							<div class="as-cell"><b>Salyklas</b></div>
+							<div class="as-cell" style="width: 120px"><b>Kiekis (kg)</b></div>
+							<div class="as-cell" style="width: 120px"><span class="ttip ttip_ebc"><b>Spalva (EBC)</b></span></div>
+						</div>
+					</div>
+					<div class="ing_actions">
+						<input type="button" class="ui-button" id="add-malt-btn" value="Pridėti salyklą" />
+						<input type="button" class="ui-button" id="rem-malt-btn" value="Pašalinti pažymėtą" />
+					</div>
+				</div>
+				<div class="ing_block">
+					<div class="ing_title">Apyniai</div>
+					<div class="clear"></div>
+				</div>
+				<div class="calc_hops">
+					<div id="hop-table" class="as-table">
+						<div class="as-row">
+							<div class="as-cell"><b>Apyniai</b></div>
+							<div class="as-cell" style="width: 120px"><b>Kiekis (gr.)</b></div>
+							<div class="as-cell" style="width: 120px"><span class="ttip ttip_alfa"><b>Alfa (%)</b></span></div>
+						</div>
+					</div>
+					<div class="ing_actions">
+						<input type="button" class="ui-button" id="add-hop-btn" value="Pridėti apynius" />
+						<input type="button" class="ui-button" id="rem-hop-btn" value="Pašalinti pažymėtą" />
+					</div>
+				</div>
+				<div class="ing_block">
+					<div class="ing_title">Mielės</div>
+					<div class="clear"></div>
+				</div>
+				<div class="calc_yeasts">
+					<div id="yeast-table" class="as-table">
+						<div class="as-row">
+							<div class="as-cell"><b>Mielės</b></div>
+							<div class="as-cell" style="width: 120px;"><b>Kiekis (gr.)</b></div>
+						</div>
+					</div>
+					<div class="ing_actions">
+						<input type="button" class="ui-button" id="add-yeast-btn" value="Pridėti mieles" />
+						<input type="button" class="ui-button" id="rem-yeast-btn" value="Pašalinti pažymėtą" />
+					</div>
+				</div>
+				<div class="ing_block">
+					<div class="ing_title">Kitos medžiagos</div>
+					<div class="clear"></div>
+				</div>
+				<div class="calc_others">
+					<div id="other-table" class="as-table">
+						<div class="as-row">
+							<div class="as-cell"><b>Medžiaga</b></div>
+							<div class="as-cell" style="width: 120px;"><b>Kiekis (kg.)</b></div>
+						</div>
+					</div>
+					<div class="ing_actions">
+						<input type="button" class="ui-button" id="add-other-btn" value="Pridėti medžiagą" />
+						<input type="button" class="ui-button" id="rem-other-btn" value="Pašalinti pažymėtą" />
+					</div>
+				</div>
+			</div>
+
+
+			<div id="malts_template" style="display: none">
+				<div class="malt_tr as-row">
+					<div class="as-cell">
+						<select name="malt_list[]" class="editable-select malt_list"></select>
+					</div>
+					<div class="as-cell">
+						<input type="text" value="1" name="malt_weight[]" class="malt_weight" />
+					</div>
+					<div class="as-cell">
+						<input type="text" name="malt_color[]" value="3" class="malt_color" />
+					</div>
+				</div>	
+			</div>
+			<div id="hops_template" style="display: none">
+				<div class="hop_tr as-row">
+					<div class="as-cell">
+						<select name="hop_list[]" class="editable-select hop_list"></select>
+					</div>
+					<div class="as-cell">
+						<input type="text" name="hop_weight[]" class="hop_weight" value="1" />
+					</div>
+					<div class="as-cell">
+						<input type="text" name="hop_alpha[]" class="hop_alpha" value="1" />
+					</div>
+				</div>
+			</div>
+			<div id="yeasts_template" style="display: none">
+				<div class="yeast_tr as-row">
+					<div class="as-cell">
+						<select name="yeast_list[]" class="editable-select yeast_list"></select>
+					</div>
+					<div class="as-cell">
+						<input type="text" name="yeast_weight[]" class="yeast_weight" value="12">
+					</div>
+				</div>
+			</div>
+			<div id="others_template" style="display: none">
+				<div class="other_tr as-row">
+					<div class="as-cell">
+						<select name="other_list[]" class="editable-select other_list"></select>
+					</div>
+					<div class="as-cell">
+						<input type="text" name="other_weight[]" class="other_weight" value="0">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			<div class="calc_actions">
+				<input type="submit" id="save" value="Saugoti" class="ui-button" />
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,113 @@
+<script type="text/javascript">
+	$(document).ready(function () {
+	});
+</script>
+<?php
+$empty = true;
+?>
+<div id="calculus_container" class="inner_container">
+	<div class="inner_header">
+		Atsargos
+		<a href="/storage/edit" class="ui-button" style="color: #333; float: right; font-weight: normal">Redaguoti</a>
+		<div class="clear"></div>
+	</div>
+	<?php
+	if (sizeof($this->data['malt']) > 0){
+		$empty = false;
+		?>
+		<h1 class="storage_title">Salyklas</h1>
+		<div class="as-table">
+			<div class="as-row">
+				<div class="as-cell"><b>Pavadinimas</b></div>
+				<div class="as-cell" style="width: 120px;"><b>Spalva (EBC)</b></div>
+				<div class="as-cell" style="width: 120px;"><b>Kiekis (kg)</b></div>
+			</div>
+			<?php
+			foreach($this->data['malt'] as $item){
+				?>
+				<div class="as-row">
+					<div class="as-cell"><?=$item['malt_name']?></div>
+					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['malt_ebc']?></div>
+					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['malt_weight']?></div>
+				</div>
+				<?php
+			}
+			?>
+		</div>
+		<?php
+	}
+	if (sizeof($this->data['hops']) > 0){
+		$empty = false;
+		?>
+		<h1 class="storage_title" style="margin-top: 20px;">Apyniai</h1>
+		<div class="as-table">
+			<div class="as-row">
+				<div class="as-cell"><b>Pavadinimas</b></div>
+				<div class="as-cell" style="width: 120px;"><b>Alpha (%)</b></div>
+				<div class="as-cell" style="width: 120px;"><b>Kiekis (g)</b></div>
+			</div>
+			<?php
+			foreach($this->data['hops'] as $item){
+				?>
+				<div class="as-row">
+					<div class="as-cell"><?=$item['hop_name']?></div>
+					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['hop_alpha']?></div>
+					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['hop_weight']?></div>
+				</div>
+				<?php
+			}
+			?>
+		</div>
+		<?php
+	}
+	if (sizeof($this->data['yeast']) > 0){
+		$empty = false;
+		?>
+		<h1 class="storage_title" style="margin-top: 20px;">Mielės</h1>
+		<div class="as-table">
+			<div class="as-row">
+				<div class="as-cell"><b>Pavadinimas</b></div>
+				<div class="as-cell" style="width: 120px;"><b>Kiekis (g)</b></div>
+			</div>
+			<?php
+			foreach($this->data['yeast'] as $item){
+				?>
+				<div class="as-row">
+					<div class="as-cell"><?=$item['yeast_name']?></div>
+					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['yeast_weight']?></div>
+				</div>
+				<?php
+			}
+			?>
+		</div>
+		<?php
+	}
+	if (sizeof($this->data['other']) > 0){
+		$empty = false;
+		?>
+		<h1 class="storage_title" style="margin-top: 20px;">Kitos medžiagos</h1>
+		<div class="as-table">
+			<div class="as-row">
+				<div class="as-cell"><b>Pavadinimas</b></div>
+				<div class="as-cell" style="width: 120px;"><b>Kiekis (kg)</b></div>
+			</div>
+			<?php
+			foreach($this->data['other'] as $item){
+				?>
+				<div class="as-row">
+					<div class="as-cell"><?=$item['other_name']?></div>
+					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['other_weight']?></div>
+				</div>
+				<?php
+			}
+			?>
+		</div>
+		<?php
+	}
+	if ($empty === true){
+		?>
+		<div style="line-height: 40px;">Jūsų atsargų sąrašas tuščias</div>
+		<?php
+	}
+	?>
+</div>

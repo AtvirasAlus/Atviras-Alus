@@ -54,6 +54,7 @@ if ($beta_tester === "change me"){
 		<div class="clear"></div>
 		<ul style="list-style-type:none;" id="user_info_submenu"> 
 			<li><a href="/brewer/recipes" rel="nofollow">Receptai</a></li> 
+			<li><a href="/storage" rel="nofollow">Atsargos</a></li> 
 			<li><a href="/brewer/favorites" rel="nofollow">Mėgstamiausi receptai</a></li> 
 			<li><a href="/mail/inbox" rel="nofollow">Paštas</a></li> 
 			<li><a href="/brew-session/brewer" rel="nofollow">Virimų istorija</a></li>
