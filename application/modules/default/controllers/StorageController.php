@@ -35,7 +35,47 @@ class StorageController extends Zend_Controller_Action {
 				->order("other_name ASC");
 		$this->view->data["other"] = $db->fetchAll($select);
 		
-		
+		$select = $db->select()
+				->from("users_groups", array("group_id"))
+				->join("groups", "groups.group_id = users_groups.group_id", array("group_name", "group_description"))
+				->where("users_groups.user_id = ?", $user_id)
+				->where("groups.group_brewcrew = ?", '1');
+		$result = $db->fetchAll($select);
+		if (sizeof($result) > 0){
+			foreach($result as $key=>$val){
+				$select = $db->select()
+						->from("users_groups", array("user_id"))
+						->join("users", "users.user_id = users_groups.user_id", array("user_name", "user_email"))
+						->where("users_groups.group_id = ?", $val['group_id'])
+						->where("users_groups.user_id != ?", $user_id);
+				$result[$key]['users'] = $db->fetchAll($select);
+				if (sizeof($result[$key]['users']) > 0){
+					foreach($result[$key]['users'] as $k=>$v){
+						$select = $db->select()
+								->from("storage_malt")
+								->where("user_id = ?", $v['user_id'])
+								->order("malt_name ASC");
+						$result[$key]['users'][$k]["malt"] = $db->fetchAll($select);
+						$select = $db->select()
+								->from("storage_hops")
+								->where("user_id = ?", $v['user_id'])
+								->order("hop_name ASC");
+						$result[$key]['users'][$k]["hops"] = $db->fetchAll($select);
+						$select = $db->select()
+								->from("storage_yeast")
+								->where("user_id = ?", $v['user_id'])
+								->order("yeast_name ASC");
+						$result[$key]['users'][$k]["yeast"] = $db->fetchAll($select);
+						$select = $db->select()
+								->from("storage_other")
+								->where("user_id = ?", $v['user_id'])
+								->order("other_name ASC");
+						$result[$key]['users'][$k]["other"] = $db->fetchAll($select);
+					}
+				}
+			}
+			$this->view->bc = $result;
+		}
 	}
 
 	public function editAction() {
