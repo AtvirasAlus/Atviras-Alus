@@ -366,7 +366,7 @@ class BrewerController extends Zend_Controller_Action {
 			$select->where("beer_recipes.brewer_id= ?", $brewer["user_id"]);
 			$select->order("beer_recipes.recipe_created DESC");
 
-			if ($this->show_list === true){
+			if ($this->show_list === true && $this->_getParam('brewer') == 0){
 				$this->view->content = $db->fetchAll($select);
 			} else {
 				$adapter = new Zend_Paginator_Adapter_DbSelect($select);
