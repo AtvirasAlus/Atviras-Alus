@@ -27,6 +27,13 @@ $empty = true;
 				<div class="as-cell"><b>Pavadinimas</b></div>
 				<div class="as-cell" style="width: 120px;"><b>Spalva (EBC)</b></div>
 				<div class="as-cell" style="width: 120px;"><b>Kiekis (kg)</b></div>
+				<?php
+				if ($this->in_bc === true){
+					?>
+					<div class="as-cell" style="width: 60px;"><b>Viešas</b></div>
+					<?php
+				}
+				?>
 			</div>
 			<?php
 			foreach($this->data['malt'] as $item){
@@ -35,6 +42,13 @@ $empty = true;
 					<div class="as-cell"><?=$item['malt_name']?></div>
 					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['malt_ebc']?></div>
 					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['malt_weight']?></div>
+					<?php
+					if ($this->in_bc === true){
+						?>
+						<div class="as-cell" style="width: 60px; text-align: right;"><?=($item['malt_brewcrew_public'] == "1") ? "Taip" : "Ne";?></div>
+						<?php
+					}
+					?>
 				</div>
 				<?php
 			}
@@ -51,6 +65,13 @@ $empty = true;
 				<div class="as-cell"><b>Pavadinimas</b></div>
 				<div class="as-cell" style="width: 120px;"><b>Alpha (%)</b></div>
 				<div class="as-cell" style="width: 120px;"><b>Kiekis (g)</b></div>
+				<?php
+				if ($this->in_bc === true){
+					?>
+					<div class="as-cell" style="width: 60px;"><b>Viešas</b></div>
+					<?php
+				}
+				?>
 			</div>
 			<?php
 			foreach($this->data['hops'] as $item){
@@ -59,6 +80,13 @@ $empty = true;
 					<div class="as-cell"><?=$item['hop_name']?></div>
 					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['hop_alpha']?></div>
 					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['hop_weight']?></div>
+					<?php
+					if ($this->in_bc === true){
+						?>
+						<div class="as-cell" style="width: 60px; text-align: right;"><?=($item['hop_brewcrew_public'] == "1") ? "Taip" : "Ne";?></div>
+						<?php
+					}
+					?>
 				</div>
 				<?php
 			}
@@ -74,6 +102,13 @@ $empty = true;
 			<div class="as-row">
 				<div class="as-cell"><b>Pavadinimas</b></div>
 				<div class="as-cell" style="width: 120px;"><b>Kiekis (g)</b></div>
+				<?php
+				if ($this->in_bc === true){
+					?>
+					<div class="as-cell" style="width: 60px;"><b>Viešas</b></div>
+					<?php
+				}
+				?>
 			</div>
 			<?php
 			foreach($this->data['yeast'] as $item){
@@ -81,6 +116,13 @@ $empty = true;
 				<div class="as-row">
 					<div class="as-cell"><?=$item['yeast_name']?></div>
 					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['yeast_weight']?></div>
+					<?php
+					if ($this->in_bc === true){
+						?>
+						<div class="as-cell" style="width: 60px; text-align: right;"><?=($item['yeast_brewcrew_public'] == "1") ? "Taip" : "Ne";?></div>
+						<?php
+					}
+					?>
 				</div>
 				<?php
 			}
@@ -96,6 +138,13 @@ $empty = true;
 			<div class="as-row">
 				<div class="as-cell"><b>Pavadinimas</b></div>
 				<div class="as-cell" style="width: 120px;"><b>Kiekis (kg)</b></div>
+				<?php
+				if ($this->in_bc === true){
+					?>
+					<div class="as-cell" style="width: 60px;"><b>Viešas</b></div>
+					<?php
+				}
+				?>
 			</div>
 			<?php
 			foreach($this->data['other'] as $item){
@@ -103,6 +152,13 @@ $empty = true;
 				<div class="as-row">
 					<div class="as-cell"><?=$item['other_name']?></div>
 					<div class="as-cell" style="width: 120px; text-align: right;"><?=$item['other_weight']?></div>
+					<?php
+					if ($this->in_bc === true){
+						?>
+						<div class="as-cell" style="width: 60px; text-align: right;"><?=($item['other_brewcrew_public'] == "1") ? "Taip" : "Ne";?></div>
+						<?php
+					}
+					?>
 				</div>
 				<?php
 			}

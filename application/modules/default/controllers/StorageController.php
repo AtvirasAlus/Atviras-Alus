@@ -12,6 +12,15 @@ class StorageController extends Zend_Controller_Action {
 			$this->_redirect("/");
 		}
 		$user_id = $this->user_info->user_id;
+		$select = $db->select()
+				->from("users_groups", array("group_id"))
+				->join("groups", "groups.group_id = users_groups.group_id", array("group_name", "group_description"))
+				->where("users_groups.user_id = ?", $user_id)
+				->where("groups.group_brewcrew = ?", '1');
+		$result = $db->fetchAll($select);
+		$this->view->in_bc = false;
+		if (sizeof($result)>0) $this->view->in_bc = true;
+
 		$this->view->data = array();
 		$select = $db->select();
 		$select = $db->select();
@@ -54,21 +63,25 @@ class StorageController extends Zend_Controller_Action {
 						$select = $db->select()
 								->from("storage_malt")
 								->where("user_id = ?", $v['user_id'])
+								->where("malt_brewcrew_public = 1")
 								->order("malt_name ASC");
 						$result[$key]['users'][$k]["malt"] = $db->fetchAll($select);
 						$select = $db->select()
 								->from("storage_hops")
 								->where("user_id = ?", $v['user_id'])
+								->where("hop_brewcrew_public = 1")
 								->order("hop_name ASC");
 						$result[$key]['users'][$k]["hops"] = $db->fetchAll($select);
 						$select = $db->select()
 								->from("storage_yeast")
 								->where("user_id = ?", $v['user_id'])
+								->where("yeast_brewcrew_public = 1")
 								->order("yeast_name ASC");
 						$result[$key]['users'][$k]["yeast"] = $db->fetchAll($select);
 						$select = $db->select()
 								->from("storage_other")
 								->where("user_id = ?", $v['user_id'])
+								->where("other_brewcrew_public = 1")
 								->order("other_name ASC");
 						$result[$key]['users'][$k]["other"] = $db->fetchAll($select);
 					}
@@ -84,6 +97,15 @@ class StorageController extends Zend_Controller_Action {
 			$this->_redirect("/");
 		}
 		$user_id = $this->user_info->user_id;
+		
+		$select = $db->select()
+				->from("users_groups", array("group_id"))
+				->join("groups", "groups.group_id = users_groups.group_id", array("group_name", "group_description"))
+				->where("users_groups.user_id = ?", $user_id)
+				->where("groups.group_brewcrew = ?", '1');
+		$result = $db->fetchAll($select);
+		$this->view->in_bc = false;
+		if (sizeof($result)>0) $this->view->in_bc = true;
 
 		if (isset($_POST) && !empty($_POST)){
 			$data['malt'] = array();
@@ -95,6 +117,7 @@ class StorageController extends Zend_Controller_Action {
 				$temp['name'] = $val;
 				$temp['weight'] = $_POST['malt_weight'][$key];
 				$temp['ebc'] = $_POST['malt_color'][$key];
+				$temp['public'] = $_POST['malt_bc'][$key];
 				if ($malt_size-1 > $key)
 					$data['malt'][] = $temp;
 			}
@@ -104,6 +127,7 @@ class StorageController extends Zend_Controller_Action {
 				$temp['name'] = $val;
 				$temp['weight'] = $_POST['hop_weight'][$key];
 				$temp['alpha'] = $_POST['hop_alpha'][$key];
+				$temp['public'] = $_POST['hop_bc'][$key];
 				if ($hops_size-1 > $key)
 					$data['hops'][] = $temp;
 			}
@@ -112,6 +136,7 @@ class StorageController extends Zend_Controller_Action {
 				$temp = array();
 				$temp['name'] = $val;
 				$temp['weight'] = $_POST['yeast_weight'][$key];
+				$temp['public'] = $_POST['yeast_bc'][$key];
 				if ($yeast_size-1 > $key)
 					$data['yeast'][] = $temp;
 			}
@@ -120,6 +145,7 @@ class StorageController extends Zend_Controller_Action {
 				$temp = array();
 				$temp['name'] = $val;
 				$temp['weight'] = $_POST['other_weight'][$key];
+				$temp['public'] = $_POST['other_bc'][$key];
 				if ($other_size-1 > $key)
 					$data['other'][] = $temp;
 			}
@@ -132,6 +158,7 @@ class StorageController extends Zend_Controller_Action {
 					"user_id" => $user_id,
 					"malt_name" => $val['name'],
 					"malt_ebc" => $val['ebc'],
+					"malt_brewcrew_public" => $val['public'],
 					"malt_weight" => $val['weight']
 				));
 			}
@@ -140,6 +167,7 @@ class StorageController extends Zend_Controller_Action {
 					"user_id" => $user_id,
 					"hop_name" => $val['name'],
 					"hop_alpha" => $val['alpha'],
+					"hop_brewcrew_public" => $val['public'],
 					"hop_weight" => $val['weight']
 				));
 			}
@@ -147,6 +175,7 @@ class StorageController extends Zend_Controller_Action {
 				$insert = $db->insert("storage_yeast", array(
 					"user_id" => $user_id,
 					"yeast_name" => $val['name'],
+					"yeast_brewcrew_public" => $val['public'],
 					"yeast_weight" => $val['weight']
 				));
 			}
@@ -154,6 +183,7 @@ class StorageController extends Zend_Controller_Action {
 				$insert = $db->insert("storage_other", array(
 					"user_id" => $user_id,
 					"other_name" => $val['name'],
+					"other_brewcrew_public" => $val['public'],
 					"other_weight" => $val['weight']
 				));
 			}

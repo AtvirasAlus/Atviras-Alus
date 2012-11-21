@@ -68,6 +68,7 @@
 		$("#malts_template .malt_list").attr("id", "malt-list_" + rid);
 		$("#malts_template .malt_weight").attr("id", "malt_weight_" + rid);
 		$("#malts_template .malt_color").attr("id", "malt_color_" + rid);
+		$("#malts_template .malt_public").attr("id", "malt_public_" + rid);
 		$("#malts_template .malt_list").html(getMalts());
 		$('#malt-table').append($("#malts_template").html());
 
@@ -85,6 +86,9 @@
 		$('#malt-table').data('last_tr', rid + 1);
 		if (values) {
 			$("#malt_weight_" + rid).val(values["malt_weight"]);
+			if (values["malt_brewcrew_public"] == "1"){
+				$("#malt_public_" + rid).attr("checked", "checked");
+			}
 			$("#malt_extract_" + rid).val(values["malt_extract"]);
 			$("#malt_color_" + rid).val(values["malt_ebc"]);
 			$("#malt_type_" + rid).val(values["malt_type"]);
@@ -107,6 +111,7 @@
 		}
 
 		$("#hops_template .hop_tr").attr("id", "hop_tr_" + rid);
+		$("#hops_template .hop_public").attr("id", "hop_public_" + rid);
 		$("#hops_template .hop_weight").attr("id", "hop_weight_" + rid);
 		$("#hops_template .hop_alpha").attr("id", "hop_alpha_" + rid);
 		$("#hops_template .hop_time").attr("id", "hop_time_" + rid);
@@ -128,6 +133,9 @@
 		$('#hop-table').data('last_tr', rid + 1);
 		createHopList(rid);
 		if (values) {
+			if (values["hop_brewcrew_public"] == "1"){
+				$("#hop_public_" + rid).attr("checked", "checked");
+			}
 			$("#hop_weight_" + rid).val(values["hop_weight"]);
 			$("#hop_alpha_" + rid).val(values["hop_alpha"]);
 			$("#hop_time_" + rid).val(values["hop_time"]);
@@ -157,6 +165,7 @@
 			var rid = 0;
 		}
 		$("#yeasts_template .yeast_tr").attr("id", "yeast_tr_" + rid);
+		$("#yeasts_template .yeast_public").attr("id", "yeast_public_" + rid);
 		$("#yeasts_template .yeast_weight").attr("id", "yeast_weight_" + rid);
 		$("#yeasts_template .yeast_list").attr("id", "yeast-list_" + rid);
 		$("#yeasts_template .yeast_list").html(getYeasts());
@@ -174,6 +183,9 @@
 		$('#yeast-table').data('last_tr', rid + 1);
 		createYeastList(rid);
 		if (values) {
+			if (values["yeast_brewcrew_public"] == "1"){
+				$("#yeast_public_" + rid).attr("checked", "checked");
+			}
 			$("#yeast_weight_" + rid).val(values["yeast_weight"]);
 			$("#yeast-list_" + rid).val(values["yeast_name"]);
 		}
@@ -184,6 +196,7 @@
 			var rid = 0;
 		}
 		$("#others_template .other_tr").attr("id", "other_tr_" + rid);
+		$("#others_template .other_public").attr("id", "other_public_" + rid);
 		$("#others_template .other_weight").attr("id", "other_weight_" + rid);
 		$("#others_template .other_list").attr("id", "other-list_" + rid);
 		$("#others_template .other_list").html(getOthers());
@@ -200,12 +213,43 @@
 		$('#other-table').data('last_tr', rid + 1);
 		createOtherList(rid);
 		if (values) {
+			if (values["other_brewcrew_public"] == "1"){
+				$("#other_public_" + rid).attr("checked", "checked");
+			}
 			$("#other_weight_" + rid).val(values["other_weight"]);
 			$("#other-list_" + rid).val(values["other_name"]);
 		}
 	}
 	
 	$(document).ready(function () {
+		$(".malt_bc_all").change(function(){
+			if ($(this).attr("checked") == true){
+				$("#malt-table .malt_public").attr("checked", "checked");
+			} else {
+				$("#malt-table .malt_public").attr("checked", "");
+			}
+		});
+		$(".hop_bc_all").change(function(){
+			if ($(this).attr("checked") == true){
+				$("#hop-table .hop_public").attr("checked", "checked");
+			} else {
+				$("#hop-table .hop_public").attr("checked", "");
+			}
+		});
+		$(".yeast_bc_all").change(function(){
+			if ($(this).attr("checked") == true){
+				$("#yeast-table .yeast_public").attr("checked", "checked");
+			} else {
+				$("#yeast-table .yeast_public").attr("checked", "");
+			}
+		});
+		$(".other_bc_all").change(function(){
+			if ($(this).attr("checked") == true){
+				$("#other-table .other_public").attr("checked", "checked");
+			} else {
+				$("#other-table .other_public").attr("checked", "");
+			}
+		});
 		$("#add-malt-btn").bind('click', function (event, ui) {
 			selectMalt(createMaltTr());
 		});
@@ -265,10 +309,41 @@
 				}
 			}
 		} 
+		if ($this->in_bc === true){
+			?>
+			$("#storage_edit_form").submit(function(){
+				$("#malt-table .malt_public").each(function(){
+					if ($(this).attr("checked") == false){
+						$(this).val("0");
+						$(this).attr("checked", "checked");
+					}
+				});
+				$("#hop-table .hop_public").each(function(){
+					if ($(this).attr("checked") == false){
+						$(this).val("0");
+						$(this).attr("checked", "checked");
+					}
+				});
+				$("#yeast-table .yeast_public").each(function(){
+					if ($(this).attr("checked") == false){
+						$(this).val("0");
+						$(this).attr("checked", "checked");
+					}
+				});
+				$("#other-table .other_public").each(function(){
+					if ($(this).attr("checked") == false){
+						$(this).val("0");
+						$(this).attr("checked", "checked");
+					}
+				});
+				return true;
+			})
+			<?php
+		}
 		?>
 	});
 </script>
-<form action="" method="post">
+<form action="" method="post" id="storage_edit_form">
 	<div id="calculus_container" class="inner_container">
 		<div class="inner_header">
 			Atsargos
@@ -285,6 +360,15 @@
 							<div class="as-cell"><b>Salyklas</b></div>
 							<div class="as-cell" style="width: 120px"><b>Kiekis (kg)</b></div>
 							<div class="as-cell" style="width: 120px"><span class="ttip ttip_ebc"><b>Spalva (EBC)</b></span></div>
+							<?php
+							if ($this->in_bc === true){
+								?>
+								<div class="as-cell" style="width: 30px; text-align: center">
+									<input type="checkbox" name="malt_bc_all" value="1" class="malt_bc_all" />
+								</div>
+								<?php
+							}
+							?>
 						</div>
 					</div>
 					<div class="ing_actions">
@@ -302,6 +386,15 @@
 							<div class="as-cell"><b>Apyniai</b></div>
 							<div class="as-cell" style="width: 120px"><b>Kiekis (gr.)</b></div>
 							<div class="as-cell" style="width: 120px"><span class="ttip ttip_alfa"><b>Alfa (%)</b></span></div>
+							<?php
+							if ($this->in_bc === true){
+								?>
+								<div class="as-cell" style="width: 30px; text-align: center">
+									<input type="checkbox" name="hop_bc_all" value="1" class="hop_bc_all" />
+								</div>
+								<?php
+							}
+							?>
 						</div>
 					</div>
 					<div class="ing_actions">
@@ -318,6 +411,15 @@
 						<div class="as-row">
 							<div class="as-cell"><b>Mielės</b></div>
 							<div class="as-cell" style="width: 120px;"><b>Kiekis (gr.)</b></div>
+							<?php
+							if ($this->in_bc === true){
+								?>
+								<div class="as-cell" style="width: 30px; text-align: center">
+									<input type="checkbox" name="yeast_bc_all" value="1" class="yeast_bc_all" />
+								</div>
+								<?php
+							}
+							?>
 						</div>
 					</div>
 					<div class="ing_actions">
@@ -334,6 +436,15 @@
 						<div class="as-row">
 							<div class="as-cell"><b>Medžiaga</b></div>
 							<div class="as-cell" style="width: 120px;"><b>Kiekis (kg.)</b></div>
+							<?php
+							if ($this->in_bc === true){
+								?>
+								<div class="as-cell" style="width: 30px; text-align: center">
+									<input type="checkbox" name="other_bc_all" value="1" class="other_bc_all" />
+								</div>
+								<?php
+							}
+							?>
 						</div>
 					</div>
 					<div class="ing_actions">
@@ -355,6 +466,15 @@
 					<div class="as-cell">
 						<input type="text" name="malt_color[]" value="3" class="malt_color" />
 					</div>
+					<?php
+					if ($this->in_bc === true){
+						?>
+						<div class="as-cell" style="text-align: center">
+							<input type="checkbox" name="malt_bc[]" value="1" class="malt_public" />
+						</div>
+						<?php
+					}
+					?>
 				</div>	
 			</div>
 			<div id="hops_template" style="display: none">
@@ -368,6 +488,15 @@
 					<div class="as-cell">
 						<input type="text" name="hop_alpha[]" class="hop_alpha" value="1" />
 					</div>
+					<?php
+					if ($this->in_bc === true){
+						?>
+						<div class="as-cell" style="text-align: center">
+							<input type="checkbox" name="hop_bc[]" value="1" class="hop_public" />
+						</div>
+						<?php
+					}
+					?>
 				</div>
 			</div>
 			<div id="yeasts_template" style="display: none">
@@ -378,6 +507,15 @@
 					<div class="as-cell">
 						<input type="text" name="yeast_weight[]" class="yeast_weight" value="12">
 					</div>
+					<?php
+					if ($this->in_bc === true){
+						?>
+						<div class="as-cell" style="text-align: center">
+							<input type="checkbox" name="yeast_bc[]" value="1" class="yeast_public" />
+						</div>
+						<?php
+					}
+					?>
 				</div>
 			</div>
 			<div id="others_template" style="display: none">
@@ -388,6 +526,15 @@
 					<div class="as-cell">
 						<input type="text" name="other_weight[]" class="other_weight" value="0">
 					</div>
+					<?php
+					if ($this->in_bc === true){
+						?>
+						<div class="as-cell" style="text-align: center">
+							<input type="checkbox" name="other_bc[]" value="1" class="other_public" />
+						</div>
+						<?php
+					}
+					?>
 				</div>
 			</div>
 		</div>
