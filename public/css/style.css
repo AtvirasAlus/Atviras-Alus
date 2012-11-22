@@ -3169,3 +3169,8 @@ html ul.topnav li ul.subnav li a:hover {
 	font-size: 16px;
 	margin-bottom: 10px;
 }
+.formloader {
+	background-image: url("/public/images/formloader.gif") !important;
+	background-repeat: no-repeat !important;
+	background-position: 430px 5px !important;
+}

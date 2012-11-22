@@ -1,5 +1,5 @@
 <? $this->headLink()->appendStylesheet("/public/ui/external/jquery.editable-select.css"); ?>
-<? //$this->headLink()->appendStylesheet("/public/ui/external/ui.spinner.css"); ?>
+<? //$this->headLink()->appendStylesheet("/public/ui/external/ui.spinner.css");  ?>
 <? $this->headScript()->appendFile("/public/ui/external/ui.core.js"); ?>
 <? $this->headScript()->appendFile("/public/ui/external/ui.spinner.js"); ?>
 <? $this->headScript()->appendFile("/public/ui/external/jquery.editable-select.js"); ?>
@@ -10,7 +10,7 @@
 		<?
 		for ($i = 0; $i < count($this->malts); $i++) {
 			?>
-			malts+='<option malt_id="<?= trim($this->malts[$i]['malt_id']); ?>" type="<?= trim($this->malts[$i]['malt_type']); ?>" ebc="<?= trim($this->malts[$i]['malt_ebc']); ?>" extract="<?= $this->malts[$i]['malt_extract'] ?>"><?= addslashes($this->malts[$i]['malt_name']); ?></option>';
+				malts+='<option malt_id="<?= trim($this->malts[$i]['malt_id']); ?>" type="<?= trim($this->malts[$i]['malt_type']); ?>" ebc="<?= trim($this->malts[$i]['malt_ebc']); ?>" extract="<?= $this->malts[$i]['malt_extract'] ?>"><?= addslashes($this->malts[$i]['malt_name']); ?></option>';
 			<?
 		}
 		?>
@@ -21,7 +21,7 @@
 		<?
 		for ($i = 0; $i < count($this->hops); $i++) {
 			?>
-			hops+='<option hop_id="<?= trim($this->hops[$i]['hop_id']); ?>" alpha="<?= trim($this->hops[$i]['hop_alpham']); ?>"><?= addslashes($this->hops[$i]['hop_name']); ?></option>';
+				hops+='<option hop_id="<?= trim($this->hops[$i]['hop_id']); ?>" alpha="<?= trim($this->hops[$i]['hop_alpham']); ?>"><?= addslashes($this->hops[$i]['hop_name']); ?></option>';
 			<?
 		}
 		?>
@@ -29,9 +29,13 @@
 	}
 	function getYeasts() {
 		var yeasts = '';
-		<? for ($i = 0; $i < count($this->yeasts); $i++) { ?>
+		<? 
+		for ($i = 0; $i < count($this->yeasts); $i++) { 
+			?>
 			yeasts+='<option yeast_id="<?= trim($this->yeasts[$i]['yeast_id']); ?>" yeast_attenuation="<?= $this->yeasts[$i]['yeast_attenuation']; ?>"><?= $this->yeasts[$i]['yeast_name']; ?></option>';
-		<? } ?>
+			<? 
+		}
+		?>
 		return yeasts;
 	}
 	function addNull(_s) {
@@ -299,7 +303,7 @@
 		if (!rid) {
 			var rid = 0;
 		}
-		
+
 		$("#malts_template .malt_tr").attr("id", "malt_tr_" + rid);
 		$("#malts_template .malt_perc").attr("id", "malt_perc_" + rid);
 		$("#malts_template .malt_list").attr("id", "malt-list_" + rid);
@@ -364,7 +368,7 @@
 		$("#hops_template .hop_list").attr("id", "hop-list_" + rid);
 		$("#hops_template .hop_list").html(getHops());
 		$('#hop-table').append($("#hops_template").html());
-		
+
 		$("#hop_weight_" + rid).spinner({min:0});
 		$("#hop_weight_" + rid).bind('spinchange', function (event, ui) {
 			calc();
@@ -549,18 +553,36 @@
 			$('#' + selItem).remove();
 			calc();
 		});
-                $("#beer_name").bind('change', function (event, ui) {
-                    var dis =($("#beer_name").val().length>0) ? '' : 'disabled';
-                    $("#save").attr("disabled",dis);
-                    if (dis.length>0) {
-                     $("#beer_name").css('background','#FF9175');
-                    }else{
-                     $("#beer_name").css('background','');
-                    }
+		$("#beer_name").bind('change', function (event, ui) {
+			$("#beer_name").addClass("formloader");
+			var dis = ($("#beer_name").val().length > 0) ? '' : 'disabled';
+			$("#save").attr("disabled",dis);
+			if (dis.length>0) {
+				$("#beer_name").css('border-color','#FF0000');
+			} else {
+				$("#beer_name").css('border-color','#CCCCCC');
+			}
+			$.ajax({
+				type:	'POST', 
+				url:	'/checkname', 
+				data: {
+					recipe_name: $("#beer_name").val(),
+					recipe_id: <?=(isset($this->data["recipe"]["recipe_id"])) ? $this->data["recipe"]["recipe_id"] : '0'; ?>
+				}, 
+				success:function (data) {
+					$("#beer_name").removeClass("formloader");
+					if (data != "0") {
+						$("#unique_ph").show();
+					} else {
+						$("#unique_ph").hide();
+					}
+				}
+			});
+			
 		});
-                $("#beer_name").bind('keyup', function (event, ui) {
-                    $("#beer_name").trigger('change');
-                });
+		$("#beer_name").bind('keyup', function (event, ui) {
+			$("#beer_name").trigger('change');
+		});
 		$('#duplicate').click(function () {
 			if ($("#duplicate").attr("disabled")) {
 				return false;
@@ -569,24 +591,24 @@
 				var surl = "/recipes/save/";
 				$("#status_div")[0].innerHTML = "<img src='/public/images/preload.gif'/>";
 				$.ajax({type:'POST', url:surl, data:calc_out("").serialize() + "&style_id=" + $("#beer_style option:selected").attr("style_id") + "&duplicate=true", success:function (d) {
-						// alert(d)
-						var data = jQuery.parseJSON(d);
-						if (data) {
-							if (data.status == "1") {
-								if (data.errors[0].type == "authentication") {
-									$("#status_div")[0].innerHTML = "Norėdami sukurti recepto kopiją turite  prisijungti";
-									showLogin();
-									return;
-								}
-							} else {
-								if (data.data.recipe_id) {
-									$("#recipe_id").attr("value", data.data.recipe_id);
-									$("#status_div")[0].innerHTML = "<i>" + now() + "</i>  - '<a href='/recipes/view/" + data.data.recipe_id + "'>" + $("#beer_name").val() + "'</a> sukurta recepto kopija <a href='/brewer/recipes'>Mano receptuose</a>";
-								}
+					// alert(d)
+					var data = jQuery.parseJSON(d);
+					if (data) {
+						if (data.status == "1") {
+							if (data.errors[0].type == "authentication") {
+								$("#status_div")[0].innerHTML = "Norėdami sukurti recepto kopiją turite  prisijungti";
+								showLogin();
+								return;
 							}
 						} else {
+							if (data.data.recipe_id) {
+								$("#recipe_id").attr("value", data.data.recipe_id);
+								$("#status_div")[0].innerHTML = "<i>" + now() + "</i>  - '<a href='/recipes/view/" + data.data.recipe_id + "'>" + $("#beer_name").val() + "'</a> sukurta recepto kopija <a href='/brewer/recipes'>Mano receptuose</a>";
+							}
 						}
-					}});
+					} else {
+					}
+				}});
 			}
 		});
 		$('#save').click(function () {
@@ -622,23 +644,22 @@
 			fitTo($('#recalc').val())
 		})
 		$("#beer_style").trigger('change');
-                $("#beer_name").trigger('change');
+		$("#beer_name").trigger('change');
 		//fill form
 		$("#duplicate").attr("disabled", "disabled");
 		<?
 		if (isset($this->data)) {
 			if (isset($this->data["recipe"])) {
 				?>
-
-						setTimeout(function() {$("#duplicate").removeAttr("disabled")},500)
-						$("#attenuation").val(<?= $this->data["recipe"]["recipe_attenuation"]; ?>);
-						$("#efficiency").val(<?= $this->data["recipe"]["recipe_efficiency"]; ?>);
-						$("#beer_name").val("<?= addslashes($this->data["recipe"]["recipe_name"]); ?>");
-						$("#bash_size").val(<?= $this->data["recipe"]["recipe_batch"]; ?>);
-						$("#boil_time").val(<?= $this->data["recipe"]["recipe_boiltime"]; ?>);
-						$("#beer_style option[style_id='<?= $this->data["recipe"]["recipe_style"]; ?>']").attr("selected","selected");
-						$("#recipe_id").val(<?= $this->data["recipe"]["recipe_id"]; ?>);
-						$("#comments").val(decodeURIComponent('<?= (str_replace("\n", "\\n", addslashes(rawurlencode($this->data["recipe"]["recipe_comments"])))); ?>'));
+				setTimeout(function() {$("#duplicate").removeAttr("disabled")},500)
+				$("#attenuation").val(<?= $this->data["recipe"]["recipe_attenuation"]; ?>);
+				$("#efficiency").val(<?= $this->data["recipe"]["recipe_efficiency"]; ?>);
+				$("#beer_name").val("<?= addslashes($this->data["recipe"]["recipe_name"]); ?>");
+				$("#bash_size").val(<?= $this->data["recipe"]["recipe_batch"]; ?>);
+				$("#boil_time").val(<?= $this->data["recipe"]["recipe_boiltime"]; ?>);
+				$("#beer_style option[style_id='<?= $this->data["recipe"]["recipe_style"]; ?>']").attr("selected","selected");
+				$("#recipe_id").val(<?= $this->data["recipe"]["recipe_id"]; ?>);
+				$("#comments").val(decodeURIComponent('<?= (str_replace("\n", "\\n", addslashes(rawurlencode($this->data["recipe"]["recipe_comments"])))); ?>'));
 				<?
 				if (isset($this->data["malt"])) {
 					for ($i = 0; $i < count($this->data["malt"]); $i++) {
@@ -669,11 +690,10 @@
 				$("#status_div")[0].innerHTML = "<i>"+now()+"</i>  -  naujas receptas";
 				<?
 			}
-			?>
-		<? } ?>
+		} ?>
 		setTimeout(calc,500)
 		setTimeout(beer_style_change,500)
-                $("#beer_name").trigger('change');
+		$("#beer_name").trigger('change');
 	});
 
 	function calc_out(url) {
@@ -734,7 +754,7 @@
 	<input type="hidden" name="recipe_ibu" id="recipe_ibu" />
 	<input type="hidden" name="recipe_ebc" id="recipe_ebc" />
 	<input type="hidden" name="recipe_id" id="recipe_id" value="" />
-	
+
 	<div style="margin-bottom: 20px;">
 		<div id="status_div"></div>
 		<div class="calc_actions">
@@ -757,23 +777,28 @@
 				<div class="calc_info_data"><input type="text" id="beer_name" value="" /></div>
 				<div class="clear"></div>
 			</div>
+			<div class="calc_info_block" id="unique_ph" style="display: none;">
+				<div class="calc_info_label">&nbsp;</div>
+				<div class="calc_info_data" style="color: #ff0000">Receptas tokiu pavadinimu jau egzistuoja</div>
+				<div class="clear"></div>
+			</div>
 			<div class="calc_info_block" style="margin-bottom: 10px;">
 				<div class="calc_info_label">Stilius:</div>
 				<div class="calc_info_data">
 					<select name="beer_style" id="beer_style" class="editable-select">
-					<?
-					for ($i = 0; $i < count($this->styles); $i++) {
-						if ($this->styles[$i]['style_id'] == 41) {
-							?>
-							<option selected style_id="<?= $this->styles[$i]['style_id']; ?>" style_oglow="<?= $this->styles[$i]['style_oglow']; ?>" style_oghigh="<?= $this->styles[$i]['style_oghigh']; ?>"  style_fglow="<?= $this->styles[$i]['style_fglow']; ?>" style_fghigh="<?= $this->styles[$i]['style_fghigh']; ?>" style_ibulow="<?= $this->styles[$i]['style_ibulow']; ?>" style_ibuhigh="<?= $this->styles[$i]['style_ibuhigh']; ?>" style_srmlow="<?= $this->styles[$i]['style_srmlow']; ?>" style_srmhigh="<?= $this->styles[$i]['style_srmhigh']; ?>"><?= $this->styles[$i]['style_name']; ?></option>
-							<?
-						} else {
-							?>
-							<option style_id="<?= $this->styles[$i]['style_id']; ?>" style_oglow="<?= $this->styles[$i]['style_oglow']; ?>"	style_oghigh="<?= $this->styles[$i]['style_oghigh']; ?>"  style_fglow="<?= $this->styles[$i]['style_fglow']; ?>" style_fghigh="<?= $this->styles[$i]['style_fghigh']; ?>" style_ibulow="<?= $this->styles[$i]['style_ibulow']; ?>" style_ibuhigh="<?= $this->styles[$i]['style_ibuhigh']; ?>" style_srmlow="<?= $this->styles[$i]['style_srmlow']; ?>" style_srmhigh="<?= $this->styles[$i]['style_srmhigh']; ?>"><?= $this->styles[$i]['style_name']; ?></option>
-							<?
+						<?
+						for ($i = 0; $i < count($this->styles); $i++) {
+							if ($this->styles[$i]['style_id'] == 41) {
+								?>
+								<option selected style_id="<?= $this->styles[$i]['style_id']; ?>" style_oglow="<?= $this->styles[$i]['style_oglow']; ?>" style_oghigh="<?= $this->styles[$i]['style_oghigh']; ?>"  style_fglow="<?= $this->styles[$i]['style_fglow']; ?>" style_fghigh="<?= $this->styles[$i]['style_fghigh']; ?>" style_ibulow="<?= $this->styles[$i]['style_ibulow']; ?>" style_ibuhigh="<?= $this->styles[$i]['style_ibuhigh']; ?>" style_srmlow="<?= $this->styles[$i]['style_srmlow']; ?>" style_srmhigh="<?= $this->styles[$i]['style_srmhigh']; ?>"><?= $this->styles[$i]['style_name']; ?></option>
+								<?
+							} else {
+								?>
+								<option style_id="<?= $this->styles[$i]['style_id']; ?>" style_oglow="<?= $this->styles[$i]['style_oglow']; ?>"	style_oghigh="<?= $this->styles[$i]['style_oghigh']; ?>"  style_fglow="<?= $this->styles[$i]['style_fglow']; ?>" style_fghigh="<?= $this->styles[$i]['style_fghigh']; ?>" style_ibulow="<?= $this->styles[$i]['style_ibulow']; ?>" style_ibuhigh="<?= $this->styles[$i]['style_ibuhigh']; ?>" style_srmlow="<?= $this->styles[$i]['style_srmlow']; ?>" style_srmhigh="<?= $this->styles[$i]['style_srmhigh']; ?>"><?= $this->styles[$i]['style_name']; ?></option>
+								<?
+							}
 						}
-					}
-					?>
+						?>
 					</select>
 				</div>
 				<div class="clear"></div>
@@ -781,8 +806,8 @@
 			<div class="calc_info_block smaller_block">
 				<div class="calc_info_label"><span class="ttip ttip_matavimosistema">Matavimo sistema</span>:</div>
 				<div class="calc_info_data">
-					<input type="radio" name="extract_m" value="plato" id="extract_m_plato" <?=($this->use_plato === true) ? 'checked="checked"' : '';?>> <label for="extract_m_plato">Plato</label>
-					<input type="radio" name="extract_m" value="sg" id="extract_m_sg" <?=($this->use_plato !== true) ? 'checked="checked"' : '';?>> <label for="extract_m_sg">SG</label>
+					<input type="radio" name="extract_m" value="plato" id="extract_m_plato" <?= ($this->use_plato === true) ? 'checked="checked"' : ''; ?>> <label for="extract_m_plato">Plato</label>
+					<input type="radio" name="extract_m" value="sg" id="extract_m_sg" <?= ($this->use_plato !== true) ? 'checked="checked"' : ''; ?>> <label for="extract_m_sg">SG</label>
 				</div>
 				<div class="calc_info_label">Alaus kiekis:</div>
 				<div class="calc_info_data"><input type="text" id="bash_size" value="20" /></div>

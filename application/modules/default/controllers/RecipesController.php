@@ -27,6 +27,28 @@ class RecipesController extends Zend_Controller_Action {
 		$this->view->uid = $this->uid;
 	}
 	
+	public function checkuniquenameAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$recipe_id = $this->_getParam('recipe_id');
+		$recipe_name = trim($this->_getParam('recipe_name'));
+		if ($recipe_name == ""){
+			echo "0";
+			exit;
+		} else {
+			$db = Zend_Registry::get('db');
+			$select = $db->select()
+					->from("beer_recipes")
+					->where("recipe_name = ?", $recipe_name);
+			if ($recipe_id != 0){
+				$select->where("recipe_id != ?", $recipe_id);
+			}
+			$result = $db->fetchAll($select);
+			echo sizeof($result);
+			exit;
+		}
+	}
+
 	public function showemptyrecipesonAction(){
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
