@@ -3174,3 +3174,25 @@ html ul.topnav li ul.subnav li a:hover {
 	background-repeat: no-repeat !important;
 	background-position: 430px 5px !important;
 }
+.special_descripotion {
+	float: left;
+	width: 530px;
+	margin-left: 20px;
+}
+.special_descripotion p {
+	margin: 0px;
+	padding: 0px;
+	padding-bottom: 12px;
+}
+.special_block {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 20px;
+}
+.special_footer {
+	font-style: italic;
+	color: #999;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 10px;
+}

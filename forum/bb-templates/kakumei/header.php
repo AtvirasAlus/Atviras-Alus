@@ -81,13 +81,18 @@ if (bb_is_profile()) {
 									</a>
 								</li>
 								<li>
-									<a href="/recipes/favorites">
-										Įdomiausi receptai													
+									<a href="/comments">
+										Komentarai													
 									</a>
 								</li>
 								<li>
-									<a href="/comments">
-										Komentarai													
+									<a href="/gallery">
+										Atviro alaus galerija													
+									</a>
+								</li>
+								<li>
+									<a href="/recipes/special">
+										Išskirtiniai receptai										
 									</a>
 								</li>
 								<li class="menuspacer"></li>

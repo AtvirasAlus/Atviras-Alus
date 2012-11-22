@@ -51,6 +51,13 @@
 					<action>gallery</action>
 					<route>gallery</route>
 				</men-gallery>
+				<men-special>
+					<label>Išskirtiniai receptai</label>
+					<module>default</module>
+					<controller>recipes</controller>
+					<action>special</action>
+					<route>default</route>
+				</men-special>
 				<men-spacer-2>
 					<label>spacer</label>
 					<route>default</route>

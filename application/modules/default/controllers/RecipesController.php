@@ -26,6 +26,17 @@ class RecipesController extends Zend_Controller_Action {
 		$this->view->use_plato = $this->use_plato;
 		$this->view->uid = $this->uid;
 	}
+	public function specialAction(){
+		$db = Zend_Registry::get('db');
+		$select = $db->select()
+				->from("beer_recipes")
+				->join("beer_styles", "beer_styles.style_id = beer_recipes.recipe_style")
+				->join("users", "users.user_id = beer_recipes.brewer_id")
+				->where("recipe_special = ?", 1)
+				->order("recipe_special_date DESC");
+		$result = $db->fetchAll($select);
+		$this->view->items = $result;
+	}
 	
 	public function checkuniquenameAction(){
 		$this->_helper->layout->disableLayout();

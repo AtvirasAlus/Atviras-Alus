@@ -1,0 +1,29 @@
+<div id="style_recipes_container" class="inner_container">
+	<div class="inner_header">Išskirtiniai alaus receptai</div>
+	<div class="style_recipes">
+		<?php
+		foreach ($this->items as $item):
+			?>
+			<div class="special_block">
+				<div class="style_recipe">
+					<?= $this->recipeItem($item); ?>
+				</div>
+				<div class="special_descripotion">
+					<?=$item['recipe_special_text']?>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<?php
+		endforeach;
+		?>
+		<div class="special_footer">
+			Maloniai prašome siūlyti receptus į šią kategoriją. Siūlomas 
+			receptas privalo būti išskirtinis - naudojama kitokia gamybos 
+			technologija, receptas turi istorinę/kultūros paveldo reikšmę ir 
+			pan. Receptus galite siūlyti 
+			<a href="/mail/compose?token=QUFBIChhdHZpcmFzYWx1cy5sdCAgYWRtaW5pc3RyYXRvcmlhaSk%3D">rašydami žinutę administratoriams</a>.
+			(Tuo atveju, jei receptą pripažinsime išskirtiniu, pareiškėjo 
+			prašysime parengti recepto aprašymą)
+		</div>
+	</div>
+</div>
