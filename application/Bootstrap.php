@@ -59,6 +59,7 @@ function _initAutoLoad() {
 		$router->addRoute("show_empty_recipes_on",new Zend_Controller_Router_Route("/show_empty_recipes_on",array("module"=>"default","controller" => "recipes","action" => "show_empty_recipes_on")));
 		$router->addRoute("show_empty_recipes_off",new Zend_Controller_Router_Route("/show_empty_recipes_off",array("module"=>"default","controller" => "recipes","action" => "show_empty_recipes_off")));
 		$router->addRoute("check_unique_name",new Zend_Controller_Router_Route("/checkname",array("module"=>"default","controller" => "recipes","action" => "check_unique_name")));
+		$router->addRoute("policy",new Zend_Controller_Router_Route("/salygos",array("module"=>"default","controller" => "content","action" => "policy")));
 		
 		$router->addRoute("orders",new Zend_Controller_Router_Route("/order/:shop/:recipe",array("module"=>"default","controller" => "order", "action" => "recipe", "shop" => "savasalus", "recipe" => 0)));
 		
