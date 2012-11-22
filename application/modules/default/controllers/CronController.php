@@ -10,6 +10,37 @@ class CronController extends Zend_Controller_Action {
 		
 	}
 	
+	private function plato2sg($p){
+		return 1.00001 + 3.8661E-3 * $p + 1.3488E-5 * $p * $p + 4.3074E-8 * $p * $p * $p;
+	}
+	
+	public function fixplatoAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("beer_brew_sessions")
+				->where("session_og > 1.610");
+		$result = $db->fetchAll($select);
+		foreach($result as $key=>$val){
+			$update = $db->update("beer_brew_sessions", array(
+				"session_og" => $this->plato2sg($val['session_og'])
+			), "session_id = '".$val['session_id']."'");
+		}
+		$select = $db->select()
+				->from("beer_brew_sessions")
+				->where("session_fg > 1.160");
+		$result = $db->fetchAll($select);
+		foreach($result as $key=>$val){
+			$update = $db->update("beer_brew_sessions", array(
+				"session_fg" => $this->plato2sg($val['session_fg'])
+			), "session_id = '".$val['session_id']."'");
+		}
+		echo "done";exit;
+	}
+	
+	
+	
 	public function fixmailsubjectsAction(){
 		exit;
 		$this->_helper->layout->disableLayout();
