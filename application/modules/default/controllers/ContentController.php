@@ -18,6 +18,10 @@ class ContentController extends Zend_Controller_Action {
 			}
 		}
 	}
+	
+	public function policyAction(){
+		
+	}
 
 	public function readAction() {
 		$storage = new Zend_Auth_Storage_Session();
