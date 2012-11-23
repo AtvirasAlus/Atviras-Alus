@@ -442,48 +442,71 @@ class RecipesController extends Zend_Controller_Action {
 		$this->view->data = array();
 		if ($recipe_id > 0) {
 			$db = Zend_Registry::get("db");
-			$recipe = new Entities_Recipe($recipe_id);
-			$this->view->data["recipe"] = $recipe->getProperties();
-			$this->view->data["malt"] = $recipe->getMalts();
-			$this->view->data["hops"] = $recipe->getHops();
-			$this->view->data["yeast"] = $recipe->getYeasts();
-			$this->view->user_info = $storage->read();
-			$select = $db->select();
-			$select->from("beer_brew_sessions", array("count" => "count(*)"))
-					->where("session_recipe =?", $recipe_id);
-			$this->view->data["brew_session"] = $db->fetchRow($select);
-			$this->view->tags = "";
-			$select = $db->select();
-			$select->from("beer_recipes_tags", array("tags" => "group_concat(tag_text)"))
-					->where("tag_recipe_id =?", $recipe_id);
-
-			if ($tags = $db->fetchRow($select)) {
-				$this->view->tags = $tags['tags'];
-			}
-
-			$user_id = 0;
-			if ($this->view->user_info) {
-				$user_id = $this->view->user_info->user_id;
-			}
-			$this->view->recipe_votes = array("total" => $this->getVotes($recipe_id), "user_vote" => $this->getUserVotes($recipe_id, $user_id));
-			$select = $db->select()
-					->from("beer_awards")
-					->order("posted DESC")
-					->where("recipe_id = ?", $recipe_id);
-			$result = $db->FetchAll($select);
-			$aw = array();
-			foreach ($result as $key=>$val){
-				$aw[$val['recipe_id']][] = $val;
-			}
-			$this->view->awards = $aw;
 			
 			$select = $db->select()
-					->from("beer_images", array("*", "DATE_FORMAT(posted, '%Y-%m-%d') as postedf"))
-					->join("users", "users.user_id=beer_images.user_id", "user_name")
-					->where("recipe_id = ?", array($recipe_id))
-					->order("posted ASC");
-			$images = $db->FetchAll($select);
-			$this->view->images = $images;
+					->from("beer_recipes", array("recipe_id", "recipe_publish", "recipe_created", "brewer_id"))
+					->join("users", "users.user_id = beer_recipes.brewer_id", array("user_name"))
+					->where("recipe_id = ?", $recipe_id);
+			$rcp = $db->fetchRow($select);
+			$doshow = true;
+			if ($rcp['recipe_publish'] == 0 && $rcp['brewer_id'] != $this->uid){
+				$doshow = false;
+				if (isset($_GET['auth_key']) && !empty($_GET['auth_key'])){
+					$auth_key = $_GET['auth_key'];
+					$hash = md5($rcp['recipe_id'].$rcp['recipe_created']);
+					if ($hash == $auth_key){
+						$doshow = true;
+					}
+				}
+			}
+			if ($doshow === true){
+				$recipe = new Entities_Recipe($recipe_id);
+				$this->view->data["recipe"] = $recipe->getProperties();
+				$this->view->data["malt"] = $recipe->getMalts();
+				$this->view->data["hops"] = $recipe->getHops();
+				$this->view->data["yeast"] = $recipe->getYeasts();
+				$this->view->user_info = $storage->read();
+				$select = $db->select();
+				$select->from("beer_brew_sessions", array("count" => "count(*)"))
+						->where("session_recipe =?", $recipe_id);
+				$this->view->data["brew_session"] = $db->fetchRow($select);
+				$this->view->tags = "";
+				$select = $db->select();
+				$select->from("beer_recipes_tags", array("tags" => "group_concat(tag_text)"))
+						->where("tag_recipe_id =?", $recipe_id);
+
+				if ($tags = $db->fetchRow($select)) {
+					$this->view->tags = $tags['tags'];
+				}
+
+				$user_id = 0;
+				if ($this->view->user_info) {
+					$user_id = $this->view->user_info->user_id;
+				}
+				$this->view->recipe_votes = array("total" => $this->getVotes($recipe_id), "user_vote" => $this->getUserVotes($recipe_id, $user_id));
+				$select = $db->select()
+						->from("beer_awards")
+						->order("posted DESC")
+						->where("recipe_id = ?", $recipe_id);
+				$result = $db->FetchAll($select);
+				$aw = array();
+				foreach ($result as $key=>$val){
+					$aw[$val['recipe_id']][] = $val;
+				}
+				$this->view->awards = $aw;
+
+				$select = $db->select()
+						->from("beer_images", array("*", "DATE_FORMAT(posted, '%Y-%m-%d') as postedf"))
+						->join("users", "users.user_id=beer_images.user_id", "user_name")
+						->where("recipe_id = ?", array($recipe_id))
+						->order("posted ASC");
+				$images = $db->FetchAll($select);
+				$this->view->images = $images;
+			} else {
+				$this->view->rcp = $rcp;
+				$this->_helper->viewRenderer('private');
+				//$this->view->render('recipes/private_recipe.phtml');
+			}
 		}
 	}
 

@@ -6,6 +6,11 @@ $this->headMeta()->setName('keywords', 'apyniai, mielės, salyklas,alaus gamyba,
 ?>
 <script>
 	$(function(){
+		$("#recipe_share").click(function(){
+			$("#recipe_share_dialog").dialog({ modal: true, width: 430, title: "Nuoroda į receptą", buttons: { "Uždaryti": function() { $(this).dialog("close"); } } });
+			$("#recipe_share_dialog textarea").select();
+			return false;
+		});
 		$("#recipe_image_form").submit(function(){
 			if ($("#recipe_image").val() != ""){
 				var ext = $('#recipe_image').val().split('.').pop().toLowerCase();
@@ -163,6 +168,16 @@ function i_bu($ibu,$og) {
 			</div>
 		<? endif; ?>
 		<div class="recipe_tools">
+			<?php
+			if (isset($this->user_info->user_id) && $this->user_info->user_id == $this->data['recipe']['brewer_id']){
+				?>
+				<a href="#" id="recipe_share">Dalintis nuoroda</a>
+				<div id="recipe_share_dialog" style="display: none;">
+					<textarea style="width: 400px; height: 50px;">http://<?=$_SERVER['SERVER_NAME']?>/recipes/view/<?=$this->data['recipe']['recipe_id']?>-<?=$this->urlMaker($this->data['recipe']['recipe_name']);?>?auth_key=<?=md5($this->data['recipe']['recipe_id'].$this->data['recipe']['recipe_created'])?></textarea>
+				</div>
+				<?php
+			}
+			?>
 			<a href="/recipes/print-label/?recipe_id=<?=$this->data['recipe']['recipe_id'];?>" target="_blank">Spausdinti etiketę</a>
 			<a href="/brew-session/recipe/<?=$this->data['recipe']['recipe_id'];?>">Virimai (<?=$this->data['brew_session']['count'];?>)</a>
 			<a href="/index/calculus/<?=$this->data['recipe']['recipe_id'];?>">
@@ -174,7 +189,7 @@ function i_bu($ibu,$og) {
 				}
 				?>
 			</a>
-                        <a href="/index/print-recipe/?recipe_id=<?=$this->data['recipe']['recipe_id'];?>" target="_blank">Spausdinti receptą</a>
+			<a href="/index/print-recipe/?recipe_id=<?=$this->data['recipe']['recipe_id'];?>" target="_blank">Spausdinti receptą</a>
 			<?php
 			if (isset($this->user_info)) {
 				 /*
