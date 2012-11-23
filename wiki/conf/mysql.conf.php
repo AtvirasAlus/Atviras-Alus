@@ -24,8 +24,8 @@
  * database.
  */
 $conf['auth']['mysql']['server']   = 'localhost';
-$conf['auth']['mysql']['user']     = 'root';
-$conf['auth']['mysql']['password'] = 'root';
+$conf['auth']['mysql']['user']     = 'atvirasalus';
+$conf['auth']['mysql']['password'] = 'sxFU9S5atLC4FrXx';
 $conf['auth']['mysql']['database'] = 'atvirasalus';
 
 /* This option enables debug messages in the mysql module. It is
