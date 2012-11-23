@@ -328,7 +328,7 @@ class RecipesController extends Zend_Controller_Action {
 				$tags = explode(",", $filter["tag_text"]);
 				for ($i = 0; $i < count($tags); $i++) {
 					if (strlen(trim($tags[$i])) > 0) {
-						$select->where("tag_text LIKE '%" . trim($tags[$i]) . "%'");
+						$select->where("tag_text LIKE '%" . addslashes(trim($tags[$i])) . "%'");
 					}
 				}
 			} else {
