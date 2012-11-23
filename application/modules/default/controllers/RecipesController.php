@@ -8,8 +8,10 @@ class RecipesController extends Zend_Controller_Action {
 		$this->use_plato = false;
 		$this->show_beta = false;
 		$this->uid = 0;
+		$this->ugroup = 'brewer';
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$this->uid = $user_info->user_id;
+			$this->ugroup = $user_info->user_type;
 			$db = Zend_Registry::get("db");
 			$select = $db->select()
 					->from("users_attributes")
@@ -449,7 +451,7 @@ class RecipesController extends Zend_Controller_Action {
 					->where("recipe_id = ?", $recipe_id);
 			$rcp = $db->fetchRow($select);
 			$doshow = true;
-			if ($rcp['recipe_publish'] == 0 && $rcp['brewer_id'] != $this->uid){
+			if ($rcp['recipe_publish'] == 0 && $rcp['brewer_id'] != $this->uid && $this->ugroup != "admin"){
 				$doshow = false;
 				if (isset($_GET['auth_key']) && !empty($_GET['auth_key'])){
 					$auth_key = $_GET['auth_key'];
