@@ -505,7 +505,6 @@ class RecipesController extends Zend_Controller_Action {
 			} else {
 				$this->view->rcp = $rcp;
 				$this->_helper->viewRenderer('private');
-				//$this->view->render('recipes/private_recipe.phtml');
 			}
 		}
 	}

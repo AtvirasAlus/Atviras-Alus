@@ -180,7 +180,7 @@ function i_bu($ibu,$og) {
 			?>
 			<a href="/recipes/print-label/?recipe_id=<?=$this->data['recipe']['recipe_id'];?>" target="_blank">Spausdinti etiketę</a>
 			<a href="/brew-session/recipe/<?=$this->data['recipe']['recipe_id'];?>">Virimai (<?=$this->data['brew_session']['count'];?>)</a>
-			<a href="/index/calculus/<?=$this->data['recipe']['recipe_id'];?>">
+			<a href="/index/calculus/<?=$this->data['recipe']['recipe_id'];?><?=(isset($_GET['auth_key'])) ? "?auth_key=".$_GET['auth_key'] : ""; ?>">
 				<?php
 				if (isset($this->user_info->user_id) && $this->user_info->user_id == $this->data['recipe']['brewer_id']){
 					echo "Redaguoti";
@@ -189,7 +189,7 @@ function i_bu($ibu,$og) {
 				}
 				?>
 			</a>
-			<a href="/index/print-recipe/?recipe_id=<?=$this->data['recipe']['recipe_id'];?>" target="_blank">Spausdinti receptą</a>
+			<a href="/index/print-recipe/?recipe_id=<?=$this->data['recipe']['recipe_id'];?><?=(isset($_GET['auth_key'])) ? "&auth_key=".$_GET['auth_key'] : ""; ?>" target="_blank">Spausdinti receptą</a>
 			<?php
 			if (isset($this->user_info)) {
 				 /*

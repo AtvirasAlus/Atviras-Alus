@@ -7,7 +7,9 @@ class IndexController extends Zend_Controller_Action {
 		$user_info = $storage->read();
 		$this->use_plato = false;
 		$this->show_beta = false;
+		$this->uid = 0;
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+			$this->uid = $user_info->user_id;
 			$db = Zend_Registry::get("db");
 			$select = $db->select()
 					->from("users_attributes")
@@ -651,52 +653,75 @@ class IndexController extends Zend_Controller_Action {
 		$this->_helper->layout->setLayout('empty');
 
 		if (isset($_GET['recipe_id'])) {
-			$recipe = new Entities_Recipe(intval($_GET['recipe_id']));
-			$this->view->print_data = array();
-			if ($recipe_data = $recipe->getProperties()) {
-				$data_mask = array('recipe_boiltime' => 'boil_time', 'recipe_comments' => 'comments', 'recipe_name' => 'beer_name', 'recipe_batch' => 'bash_size', 'recipe_efficiency' => 'efficiency', 'recipe_attenuation' => 'attenuation', 'style_name' => 'beer_style');
-				foreach ($recipe_data as $key => $data) {
-					if (isset($data_mask[$key])) {
-						$this->view->print_data[$data_mask[$key]] = $data;
-					} else {
-						$this->view->print_data[$key] = $data;
+			$recipe_id = $_GET['recipe_id'];
+			$db = Zend_Registry::get("db");
+			
+			$select = $db->select()
+					->from("beer_recipes", array("recipe_id", "recipe_publish", "recipe_created", "brewer_id"))
+					->join("users", "users.user_id = beer_recipes.brewer_id", array("user_name"))
+					->where("recipe_id = ?", $recipe_id);
+			$rcp = $db->fetchRow($select);
+			$doshow = true;
+			if ($rcp['recipe_publish'] == 0 && $rcp['brewer_id'] != $this->uid){
+				$doshow = false;
+				if (isset($_GET['auth_key']) && !empty($_GET['auth_key'])){
+					$auth_key = $_GET['auth_key'];
+					$hash = md5($rcp['recipe_id'].$rcp['recipe_created']);
+					if ($hash == $auth_key){
+						$doshow = true;
 					}
 				}
+			}
+			if ($doshow === true){
+				$recipe = new Entities_Recipe(intval($_GET['recipe_id']));
+				$this->view->print_data = array();
+				if ($recipe_data = $recipe->getProperties()) {
+					$data_mask = array('recipe_boiltime' => 'boil_time', 'recipe_comments' => 'comments', 'recipe_name' => 'beer_name', 'recipe_batch' => 'bash_size', 'recipe_efficiency' => 'efficiency', 'recipe_attenuation' => 'attenuation', 'style_name' => 'beer_style');
+					foreach ($recipe_data as $key => $data) {
+						if (isset($data_mask[$key])) {
+							$this->view->print_data[$data_mask[$key]] = $data;
+						} else {
+							$this->view->print_data[$key] = $data;
+						}
+					}
 
-				$malt_list = $recipe->getMalts();
-				if (count($malt_list) > 0) {
-					$this->view->print_data['malt_list'] = array();
-					$this->view->print_data['malt_color'] = array();
-					$this->view->print_data['malt_weight'] = array();
-					foreach ($malt_list as $malt) {
-						$this->view->print_data['malt_list'][] = $malt['malt_name'];
-						$this->view->print_data['malt_color'][] = $malt['malt_ebc'];
-						$this->view->print_data['malt_weight'][] = $malt['malt_weight'];
+					$malt_list = $recipe->getMalts();
+					if (count($malt_list) > 0) {
+						$this->view->print_data['malt_list'] = array();
+						$this->view->print_data['malt_color'] = array();
+						$this->view->print_data['malt_weight'] = array();
+						foreach ($malt_list as $malt) {
+							$this->view->print_data['malt_list'][] = $malt['malt_name'];
+							$this->view->print_data['malt_color'][] = $malt['malt_ebc'];
+							$this->view->print_data['malt_weight'][] = $malt['malt_weight'];
+						}
 					}
-				}
-				$hop_list = $recipe->getHops();
-				if (count($hop_list) > 0) {
-					$this->view->print_data['hop_list'] = array();
-					$this->view->print_data['hop_alpha'] = array();
-					$this->view->print_data['hop_weight'] = array();
-					$this->view->print_data['hop_time'] = array();
-					foreach ($hop_list as $hop) {
-						$this->view->print_data['hop_list'][] = $hop['hop_name'];
-						$this->view->print_data['hop_alpha'][] = $hop['hop_alpha'];
-						$this->view->print_data['hop_weight'][] = $hop['hop_weight'];
-						$this->view->print_data['hop_time'][] = $hop['hop_time'];
+					$hop_list = $recipe->getHops();
+					if (count($hop_list) > 0) {
+						$this->view->print_data['hop_list'] = array();
+						$this->view->print_data['hop_alpha'] = array();
+						$this->view->print_data['hop_weight'] = array();
+						$this->view->print_data['hop_time'] = array();
+						foreach ($hop_list as $hop) {
+							$this->view->print_data['hop_list'][] = $hop['hop_name'];
+							$this->view->print_data['hop_alpha'][] = $hop['hop_alpha'];
+							$this->view->print_data['hop_weight'][] = $hop['hop_weight'];
+							$this->view->print_data['hop_time'][] = $hop['hop_time'];
+						}
 					}
-				}
-				$yeast_list = $recipe->getYeasts();
-				if (count($yeast_list) > 0) {
-					$this->view->print_data['yeast_list'] = array();
-					$this->view->print_data['yeast_weight'] = array();
+					$yeast_list = $recipe->getYeasts();
+					if (count($yeast_list) > 0) {
+						$this->view->print_data['yeast_list'] = array();
+						$this->view->print_data['yeast_weight'] = array();
 
-					foreach ($yeast_list as $yeast) {
-						$this->view->print_data['yeast_list'][] = $yeast['yeast_name'];
-						$this->view->print_data['yeast_weight'][] = $yeast['yeast_weight'];
+						foreach ($yeast_list as $yeast) {
+							$this->view->print_data['yeast_list'][] = $yeast['yeast_name'];
+							$this->view->print_data['yeast_weight'][] = $yeast['yeast_weight'];
+						}
 					}
 				}
+			} else {
+				
 			}
 		} else {
 			$this->view->print_data = $_POST;
@@ -710,23 +735,40 @@ class IndexController extends Zend_Controller_Action {
 			$db = Zend_Registry::get("db");
 			$select = $db->select();
 			$select->from("beer_recipes")
+					->join("users", "users.user_id = beer_recipes.brewer_id", "user_name")
 					->where("recipe_id = ?", $recipe_id);
-			$this->view->data["recipe"] = $db->fetchRow($select);
-			$select = $db->select();
-			$select->from("beer_recipes_malt")
-					->where("recipe_id = ?", $recipe_id)
-					->order("malt_weight DESC");
+			$rcp = $this->view->data["recipe"] = $db->fetchRow($select);
+			$doshow = true;
+			if ($rcp['recipe_publish'] == 0 && $rcp['brewer_id'] != $this->uid){
+				$doshow = false;
+				if (isset($_GET['auth_key']) && !empty($_GET['auth_key'])){
+					$auth_key = $_GET['auth_key'];
+					$hash = md5($rcp['recipe_id'].$rcp['recipe_created']);
+					if ($hash == $auth_key){
+						$doshow = true;
+					}
+				}
+			}
+			if ($doshow === true){
+				$select = $db->select();
+				$select->from("beer_recipes_malt")
+						->where("recipe_id = ?", $recipe_id)
+						->order("malt_weight DESC");
 
-			$this->view->data["malt"] = $db->fetchAll($select);
-			$select = $db->select();
-			$select->from("beer_recipes_hops")
-					->where("recipe_id = ?", $recipe_id)
-					->order("hop_time DESC");
-			$this->view->data["hops"] = $db->fetchAll($select);
-			$select = $db->select();
-			$select->from("beer_recipes_yeast")
-					->where("recipe_id = ?", $recipe_id);
-			$this->view->data["yeast"] = $db->fetchAll($select);
+				$this->view->data["malt"] = $db->fetchAll($select);
+				$select = $db->select();
+				$select->from("beer_recipes_hops")
+						->where("recipe_id = ?", $recipe_id)
+						->order("hop_time DESC");
+				$this->view->data["hops"] = $db->fetchAll($select);
+				$select = $db->select();
+				$select->from("beer_recipes_yeast")
+						->where("recipe_id = ?", $recipe_id);
+				$this->view->data["yeast"] = $db->fetchAll($select);
+			} else {
+				$this->view->rcp = $rcp;
+				$this->_helper->viewRenderer('private');
+			}
 		}
 	}
 
