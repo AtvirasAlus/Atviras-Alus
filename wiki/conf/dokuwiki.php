@@ -61,7 +61,7 @@ $conf['superuser']   = '@admin';    //The admin can be user or @group or comma s
 $conf['manager']     = '';    //The manager can be user or @group or comma separated list user1,@group1,user2
 $conf['profileconfirm'] = 1;             //Require current password to confirm changes to user profile
 $conf['rememberme'] = 1;                 //Enable/disable remember me on login
-$conf['disableactions'] = 'register,resendpwd,profile,media';            //comma separated list of actions to disable
+$conf['disableactions'] = 'register,resendpwd,profile';            //comma separated list of actions to disable
 $conf['auth_security_timeout'] = 900;    //time (seconds) auth data is considered valid, set to 0 to recheck on every page view
 $conf['securecookie'] = 1;               //never send HTTPS cookies via HTTP
 $conf['remote']      = 0;                //Enable/disable remote interfaces
@@ -80,7 +80,7 @@ $conf['iexssprotect']= 1;                // check for JavaScript and HTML in upl
 
 /* Editing Settings */
 $conf['usedraft']    = 1;                //automatically save a draft while editing (0|1)
-$conf['htmlok']      = 0;                //may raw HTML be embedded? This may break layout and XHTML validity 0|1
+$conf['htmlok']      = 1;                //may raw HTML be embedded? This may break layout and XHTML validity 0|1
 $conf['phpok']       = 0;                //may PHP code be embedded? Never do this on the internet! 0|1
 $conf['locktime']    = 15*60;            //maximum age for lockfiles (defaults to 15 minutes)
 $conf['cachetime']   = 60*60*24;         //maximum age for cachefile in seconds (defaults to a day)
