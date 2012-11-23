@@ -1,0 +1,7 @@
+div.dokuwiki div.youtube_icon
+{
+  background-image:url('img/youtube.png');
+  background-repeat:no-repeat;
+  min-height:16px;
+  padding-left:45px;
+}
