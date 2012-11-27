@@ -16,7 +16,7 @@
 $conf['title']       = 'DokuWiki';        //what to show in the title
 $conf['start']       = 'Titulinis';           //name of start page
 $conf['lang']        = 'lt';              //your language
-$conf['template']    = 'dokuwiki';         //see lib/tpl directory
+$conf['template']    = 'atvirasalus';         //see lib/tpl directory
 $conf['tagline']     = '';                //tagline in header (if template supports it)
 $conf['sidebar']     = 'sidebar';         //name of sidebar in root namespace (if template supports it)
 $conf['license']     = 'cc-by-nc-sa';     //see conf/license.php
@@ -64,8 +64,8 @@ $conf['rememberme'] = 1;                 //Enable/disable remember me on login
 $conf['disableactions'] = 'register,resendpwd,profile';            //comma separated list of actions to disable
 $conf['auth_security_timeout'] = 900;    //time (seconds) auth data is considered valid, set to 0 to recheck on every page view
 $conf['securecookie'] = 1;               //never send HTTPS cookies via HTTP
-$conf['remote']      = 0;                //Enable/disable remote interfaces
-$conf['remoteuser']  = '!!not set !!';   //user/groups that have access to remote interface (comma separated)
+$conf['remote']      = 1;                //Enable/disable remote interfaces
+$conf['remoteuser']  = '@user';   //user/groups that have access to remote interface (comma separated)
 
 /* Antispam Features */
 $conf['usewordblock']= 1;                //block spam based on words? 0|1
@@ -89,7 +89,7 @@ $conf['cachetime']   = 60*60*24;         //maximum age for cachefile in seconds 
 // Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';
 $conf['target']['interwiki'] = '';
-$conf['target']['extern']    = '';
+$conf['target']['extern']    = '_blank';
 $conf['target']['media']     = '';
 $conf['target']['windows']   = '';
 

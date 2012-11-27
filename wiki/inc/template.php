@@ -872,14 +872,22 @@ function tpl_youarehere($sep = ' » ') {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @return bool
  */
-function tpl_userinfo() {
+function tpl_userinfo($return = false) {
     global $lang;
     global $INFO;
+    if($return === true) {
+		return hsc($INFO['userinfo']['name']);
+	}
     if(isset($_SERVER['REMOTE_USER'])) {
-        print $lang['loggedinas'].': '.hsc($INFO['userinfo']['name']).' ('.hsc($_SERVER['REMOTE_USER']).')';
+        print hsc($INFO['userinfo']['name']);
         return true;
     }
     return false;
+}
+function tpl_usermail() {
+    global $lang;
+    global $INFO;
+	return $INFO['userinfo']['mail'];
 }
 
 /**

@@ -1,4 +1,5 @@
 <?php
+//echo "<pre>";print_r($_COOKIE);exit;
 /**
  * DokuWiki mainscript
  *

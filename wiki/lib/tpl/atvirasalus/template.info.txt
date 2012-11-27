@@ -1,0 +1,7 @@
+base     atvirasalus
+author   Tomas Žeimys
+email    tomas@tomaszeimys.lt
+date     2012-11-23
+name     Atviras Alus Template
+desc     Atviras Alus Template
+url      http://www.atvirasalus.lt
