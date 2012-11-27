@@ -25,6 +25,9 @@ if (!defined('DOKU_INC')) die();
 			{lang: 'lt'}
 		</script>
 		<title>Atviras Alus - <?php tpl_pagetitle()?></title>
+		<link type="text/css" href="lib/tpl/atvirasalus/design.css" rel="stylesheet" />	
+		<link type="text/css" href="lib/tpl/atvirasalus/layout.css" rel="stylesheet" />	
+		<link type="text/css" href="lib/tpl/atvirasalus/media.css" rel="stylesheet" />	
 	</head>
 	<body>
 		<?php html_msgarea()?>
@@ -330,7 +333,7 @@ if (!defined('DOKU_INC')) die();
 						<?php tpl_actionlink('media')?>
 				        <?php tpl_searchform()?>&#160;
 					</div>
-					<div>
+					<div class="dokuwiki">
 						<?php tpl_content()?>
 					</div>
 				</div>

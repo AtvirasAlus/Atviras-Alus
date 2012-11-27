@@ -1,21 +1,10 @@
-/**
- * Design elements for default Template
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Anika Henke <anika@selfthinker.org>
- */
-
-/* -------------- general elements --------------- */
-
-* { padding: 0; margin: 0; }
-
-body {
-  font: 80% "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;
-  background-color: __background__;
-  color: __text__;
+div.dokuwiki h1,
+div.dokuwiki h2,
+div.dokuwiki h3,
+div.dokuwiki h4,
+div.dokuwiki h5 {
+	display: block;
 }
-
-/* the document */
 div.dokuwiki div.page {
   margin: 4px 2em 0 1em;
   text-align: justify;
@@ -43,7 +32,7 @@ div.dokuwiki pre {
 
 div.dokuwiki hr {
   border: 0px;
-  border-top: 1px solid __border__;
+  border-top: 1px solid #8cacbb;
   text-align: center;
   height: 0px;
 }
@@ -79,7 +68,7 @@ div.dokuwiki label.block input.edit {
 div.dokuwiki fieldset {
   width: 300px;
   text-align: center;
-  border: 1px solid __border__;
+  border: 1px solid #8cacbb;
   padding: 0.5em;
   margin: auto;
 }
@@ -89,9 +78,9 @@ div.dokuwiki textarea.edit {
   /* second generic font fixes problem with font-size, see
      http://meyerweb.com/eric/thoughts/2010/02/12/fixed-monospace-sizing/ */
   font-size: 100%;
-  color: __text__;
-  background-color: __background__;
-  border: 1px solid __border__;
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #8cacbb;
   padding: 0.3em 0 0 0.3em;
   /* should just be "width: 100%", but IE8 doesn't like it, see FS#1910 + FS#1667 */
   width: 700px;
@@ -101,15 +90,15 @@ div.dokuwiki textarea.edit {
 
 /* nice alphatransparency background except for IE <7 */
 html>body div.dokuwiki textarea.edit {
-  background:  __background__ url(images/inputshadow.png) repeat-x top;
+  background:  #fff url(images/inputshadow.png) repeat-x top;
 }
 
 div.dokuwiki input.edit,
 div.dokuwiki select.edit {
   font-size: 100%;
-  border: 1px solid __border__;
-  color: __text__;
-  background-color: __background__;
+  border: 1px solid #8cacbb;
+  color: #000;
+  background-color: #fff;
   vertical-align: middle;
   margin: 1px;
   padding: 0.20em 0.3em;
@@ -119,7 +108,7 @@ div.dokuwiki select.edit {
 /* nice alphatransparency background except for IE <7 */
 html>body div.dokuwiki input.edit,
 html>body div.dokuwiki select.edit {
-  background:  __background__ url(images/inputshadow.png) repeat-x top;
+  background:  #fff url(images/inputshadow.png) repeat-x top;
 }
 
 div.dokuwiki select.edit {
@@ -128,8 +117,8 @@ div.dokuwiki select.edit {
 
 div.dokuwiki input.missing {
   font-size: 100%;
-  border: 1px solid __border__;
-  color: __text__;
+  border: 1px solid #8cacbb;
+  color: #000;
   background-color: #ffcccc;
   vertical-align: middle;
   margin: 1px;
@@ -144,8 +133,8 @@ div.dokuwiki input.edit[disabled],
 div.dokuwiki input.edit[readonly],
 div.dokuwiki input.button[disabled],
 div.dokuwiki select.edit[disabled] {
-  background-color: __background_neu__!important;
-  color: __text_neu__!important;
+  background-color: #f5f5f5!important;
+  color: #666!important;
 }
 
 /* edit form */
@@ -174,7 +163,7 @@ div.dokuwiki .nowrap {
 }
 div.dokuwiki div#draft__status {
   float: right;
-  color: __text_alt__;
+  color: #638c9c;
 }
 
 div.dokuwiki div.license {
@@ -192,9 +181,9 @@ div.dokuwiki form#dw__editform div.license {
 
 div.dokuwiki input.button,
 div.dokuwiki button.button {
-  border: 1px solid __border__;
-  color: __text__;
-  background-color: __background__;
+  border: 1px solid #8cacbb;
+  color: #000;
+  background-color: #fff;
   vertical-align: middle;
   text-decoration: none;
   font-size: 100%;
@@ -206,7 +195,7 @@ div.dokuwiki button.button {
 /* nice alphatransparency background except for IE <7 */
 html>body div.dokuwiki input.button,
 html>body div.dokuwiki button.button {
-  background:  __background__ url(images/buttonshadow.png) repeat-x bottom;
+  background:  #fff url(images/buttonshadow.png) repeat-x bottom;
 }
 
 * html div.dokuwiki input.button,
@@ -215,9 +204,9 @@ html>body div.dokuwiki button.button {
 }
 
 div.dokuwiki div.secedit input.button {
-  border: 1px solid __border__;
-  color: __text__;
-  background-color: __background__;
+  border: 1px solid #8cacbb;
+  color: #000;
+  background-color: #fff;
   vertical-align: middle;
   text-decoration: none;
   margin: 0;
@@ -256,17 +245,17 @@ div.dokuwiki form#dw__recent select {
 
 div.dokuwiki a:link,
 div.dokuwiki a:visited {
-  color: __extern__;
+  color: #436976;
   text-decoration: none;
 }
 div.dokuwiki a:hover,
 div.dokuwiki a:active {
-  color: __text__;
+  color: #000;
   text-decoration: underline;
 }
 
 div.dokuwiki a.nolink {
-  color: __text__ !important;
+  color: #000 !important;
   text-decoration: none !important;
 }
 
@@ -293,7 +282,7 @@ div.dokuwiki a.media {
 div.dokuwiki a.urlextern:link,
 div.dokuwiki a.windows:link,
 div.dokuwiki a.interwiki:link {
-  color: __extern__;
+  color: #436976;
 }
 
 div.dokuwiki a.urlextern:visited,
@@ -307,7 +296,7 @@ div.dokuwiki a.windows:hover,
 div.dokuwiki a.windows:active,
 div.dokuwiki a.interwiki:hover,
 div.dokuwiki a.interwiki:active {
-  color: __text__;
+  color: #000;
 }
 
 /* email link */
@@ -318,39 +307,39 @@ div.dokuwiki a.mail {
 
 /* existing wikipage */
 div.dokuwiki a.wikilink1 {
-  color: __existing__ !important;
+  color: #090 !important;
 }
 
 /* not existing wikipage */
 div.dokuwiki a.wikilink2 {
-  color: __missing__ !important;
+  color: #f30 !important;
   text-decoration: none !important;
-  border-bottom: dashed 1px __missing__ !important;
+  border-bottom: dashed 1px #f30 !important;
 }
 
 /* ------------- Page elements ----------------- */
 
 div.dokuwiki div.preview {
-  background-color: __background_neu__;
+  background-color: #f5f5f5;
   margin: 0 0 0 2em;
   padding: 4px;
-  border: 1px dashed __text__;
+  border: 1px dashed #000;
 }
 
 div.dokuwiki div.breadcrumbs {
-  background-color: __background_neu__;
-  color: __text_neu__;
+  background-color: #f5f5f5;
+  color: #666;
   font-size: 80%;
   padding: 0 0 0 4px;
 }
 
 div.dokuwiki span.user {
-  color: __text_other__;
+  color: #ccc;
   font-size: 90%;
 }
 
 div.dokuwiki li.minor {
-  color: __text_neu__;
+  color: #666;
   font-style: italic;
 }
 
@@ -384,7 +373,7 @@ div.dokuwiki img.icon {
 
 div.dokuwiki abbr {
   cursor: help;
-  border-bottom: 1px dotted __text__;
+  border-bottom: 1px dotted #000;
 }
 
 /* general headline setup */
@@ -393,13 +382,13 @@ div.dokuwiki h2,
 div.dokuwiki h3,
 div.dokuwiki h4,
 div.dokuwiki h5 {
-    color: __text__;
+    color: #000;
     background-color: inherit;
     font-size: 100%;
     font-weight: normal;
     margin: 0 0 1em 0;
     padding: 0.5em 0 0 0;
-    border-bottom: 1px solid __border__;
+    border-bottom: 1px solid #8cacbb;
     clear: left;
 }
 
@@ -423,7 +412,7 @@ div.dokuwiki ul {
   list-style-type: square;
   list-style-image: none;
   margin: 0 0 1em 3.5em;
-  color: __text_alt__;
+  color: #638c9c;
 }
 
 /* ordered lists */
@@ -431,7 +420,7 @@ div.dokuwiki ol {
   line-height: 1.5em;
   list-style-image: none;
   margin: 0 0 1em 3.5em;
-  color: __text_alt__;
+  color: #638c9c;
   font-weight: bold;
 }
 
@@ -443,7 +432,7 @@ div.dokuwiki li ol {
 
 /* the list items overriding the ul/ol definition */
 div.dokuwiki .li {
-  color: __text__;
+  color: #000;
   font-weight: normal;
 }
 
@@ -463,7 +452,7 @@ div.dokuwiki li.closed {
 }
 
 div.dokuwiki blockquote {
-  border-left: 2px solid __border__;
+  border-left: 2px solid #8cacbb;
   padding-left: 3px;
 }
 
@@ -476,24 +465,24 @@ div.dokuwiki code {
 }
 div.dokuwiki pre {
   padding: 0.5em;
-  border: 1px dashed __border__;
-  color: __text__;
+  border: 1px dashed #8cacbb;
+  color: #000;
   overflow: auto;
 }
 
 /* code blocks by indention */
 div.dokuwiki pre.pre {
-  background-color: __background_other__;
+  background-color: #f7f9fa;
 }
 
 /* code blocks by code tag */
 div.dokuwiki pre.code {
-  background-color: __background_other__;
+  background-color: #f7f9fa;
 }
 
 /* code blocks by file tag */
 div.dokuwiki pre.file {
-  background-color: __background_alt__;
+  background-color: #dee7ec;
 }
 
 /* filenames for file and code blocks */
@@ -505,7 +494,7 @@ div.dokuwiki dl.code {
 
 div.dokuwiki dl.file dt,
 div.dokuwiki dl.code dt {
-    border: 1px dashed __border__;
+    border: 1px dashed #8cacbb;
     display: inline;
     padding: 0.1em 1em;
     margin-left: 2em;
@@ -513,36 +502,36 @@ div.dokuwiki dl.code dt {
 
 div.dokuwiki dl.code dt a,
 div.dokuwiki dl.file dt a {
-    color: __text__;
+    color: #000;
 }
 
 div.dokuwiki dl.code dt {
-    background-color: __background_other__;
-    border-bottom: 1px solid __background_other__;
+    background-color: #f7f9fa;
+    border-bottom: 1px solid #f7f9fa;
 }
 
 div.dokuwiki dl.file dt {
-    background-color: __background_alt__;
-    border-bottom: 1px solid __background_alt__;
+    background-color: #dee7ec;
+    border-bottom: 1px solid #dee7ec;
 }
 
 
 /* inline tables */
 div.dokuwiki table.inline {
-  background-color: __background__;
+  background-color: #fff;
   border-spacing: 0px;
   border-collapse: collapse;
 }
 
 div.dokuwiki table.inline th {
   padding: 3px;
-  border: 1px solid __border__;
-  background-color: __background_alt__;
+  border: 1px solid #8cacbb;
+  background-color: #dee7ec;
 }
 
 div.dokuwiki table.inline td {
   padding: 3px;
-  border: 1px solid __border__;
+  border: 1px solid #8cacbb;
 }
 
 /* ---------- table of contents ------------------- */
@@ -556,8 +545,8 @@ div.dokuwiki #dw__toc {
 }
 
 div.dokuwiki #dw__toc h3 {
-  border: 1px solid __border__;
-  background-color: __background_alt__;
+  border: 1px solid #8cacbb;
+  background-color: #dee7ec;
   text-align: left;
   font-weight: bold;
   padding: 3px;
@@ -566,7 +555,7 @@ div.dokuwiki #dw__toc h3 {
 }
 
 div.dokuwiki .toggle strong {
-    border: 0.4em solid __background_alt__;
+    border: 0.4em solid #dee7ec;
     float: right;
     display: block;
     margin: 0.4em 3px 0 0;
@@ -578,17 +567,17 @@ div.dokuwiki .toggle span {
 
 div.dokuwiki .toggle.closed strong {
     margin-top: 0.4em;
-    border-top: 0.4em solid __text__;
+    border-top: 0.4em solid #000;
 }
 
 div.dokuwiki .toggle.open strong {
     margin-top: 0;
-    border-bottom: 0.4em solid __text__;
+    border-bottom: 0.4em solid #000;
 }
 
 div.dokuwiki #dw__toc > div {
-  border: 1px solid __border__;
-  background-color: __background__;
+  border: 1px solid #8cacbb;
+  background-color: #fff;
   text-align: left;
   padding: 0.5em 0 0.7em 0;
 }
@@ -613,24 +602,24 @@ div.dokuwiki #dw__toc ul li.clear {
 
 div.dokuwiki #dw__toc a:link,
 div.dokuwiki #dw__toc a:visited {
-  color: __extern__;
+  color: #436976;
 }
 
 div.dokuwiki #dw__toc a:hover,
 div.dokuwiki #dw__toc a:active {
-  color: __text__;
+  color: #000;
 }
 
 /* ---------------------------- Diff rendering --------------------------*/
 div.dokuwiki table.diff {
-  background-color: __background__;
+  background-color: #fff;
   width: 100%;
 }
 div.dokuwiki td.diff-blockheader {
   font-weight: bold;
 }
 div.dokuwiki table.diff th {
-  border-bottom: 1px solid __border__;
+  border-bottom: 1px solid #8cacbb;
   font-size: 110%;
   width: 50%;
   font-weight: normal;
@@ -640,7 +629,7 @@ div.dokuwiki table.diff th a {
     font-weight: bold;
 }
 div.dokuwiki table.diff th span.user {
-    color: __text__;
+    color: #000;
     font-size: 80%;
 }
 div.dokuwiki table.diff th span.sum {
@@ -663,7 +652,7 @@ div.dokuwiki span.diff-deletedline {
     background-color: #ffffbb;
 }
 div.dokuwiki td.diff-context {
-    background-color: __background_neu__;
+    background-color: #f5f5f5;
 }
 div.dokuwiki table.diff td.diff-addedline strong,
 div.dokuwiki table.diff td.diff-deletedline strong {
@@ -674,7 +663,7 @@ div.dokuwiki table.diff td.diff-deletedline strong {
 
 div.dokuwiki div.footnotes {
   clear: both;
-  border-top: 1px solid __border__;
+  border-top: 1px solid #8cacbb;
   padding-left: 1em;
   margin-top: 1em;
 }
@@ -691,8 +680,8 @@ div.dokuwiki a.fn_bot {
 div.insitu-footnote {
   font-size: 80%;
   line-height: 1.2em;
-  border: 1px solid __border__;
-  background-color: __background_other__;
+  border: 1px solid #8cacbb;
+  background-color: #f7f9fa;
   text-align: left;
   padding: 4px;
   max-width: 40%;    /* IE's width is handled in javascript */
@@ -720,18 +709,18 @@ div.dokuwiki .search_results dt {
 }
 div.dokuwiki .search_results dd {
   margin-bottom: 6px;
-  color: __text_other__;
+  color: #ccc;
   font-size: 12px;
   margin-left: 20px;
 }
 
 div.dokuwiki .search_sep {
-  color: __text__;
+  color: #000;
 }
 
 div.dokuwiki .search_hit {
-  color: __text__;
-  background-color: __highlight__;
+  color: #000;
+  background-color: #ff9;
 }
 div.dokuwiki strong.search_hit {
   font-weight: normal;
@@ -740,7 +729,7 @@ div.dokuwiki strong.search_hit {
 div.dokuwiki div.search_quickresult {
   margin: 0 0 15px 30px;
   padding: 0 10px 10px 0;
-  border-bottom: 1px dashed __border__;
+  border-bottom: 1px dashed #8cacbb;
 }
 div.dokuwiki div.search_quickresult h3 {
   margin: 0 0 1.0em 0;
@@ -759,7 +748,7 @@ div.dokuwiki ul.search_quickhits li {
 }
 
 div.dokuwiki .section_highlight {
-  background-color: __background_alt__ !important;
+  background-color: #dee7ec !important;
 }
 
 /* ------------------ Additional ---------------------- */
@@ -786,30 +775,30 @@ div.dokuwiki div.ajax_qsearch {
   display: none;
   font-size: 80%;
   line-height: 1.2em;
-  border: 1px solid __border__;
-  background-color: __background_other__;
+  border: 1px solid #8cacbb;
+  background-color: #f7f9fa;
   text-align: left;
   padding: 4px;
 }
 
 /* --------- Toolbar -------------------- */
 button.toolbutton {
-  background-color: __background__;
+  background-color: #fff;
   padding: 0px;
   margin: 0 1px 0 0;
-  border: 1px solid __border__;
+  border: 1px solid #8cacbb;
   cursor: pointer;
 }
 
 /* nice alphatransparency background except for IE <7 */
 html>body button.toolbutton {
-  background:  __background__ url(images/buttonshadow.png) repeat-x bottom;
+  background:  #fff url(images/buttonshadow.png) repeat-x bottom;
 }
 
 div.picker {
   width: 250px;
-  border: 1px solid __border__;
-  background-color: __background_alt__;
+  border: 1px solid #8cacbb;
+  background-color: #dee7ec;
 }
 
 div.pk_hl {
@@ -834,14 +823,14 @@ div.dokuwiki div.img_big {
 
 div.dokuwiki dl.img_tags dt {
   font-weight: bold;
-  background-color: __background_alt__;
+  background-color: #dee7ec;
 }
 div.dokuwiki dl.img_tags dd {
-  background-color: __background_neu__;
+  background-color: #f5f5f5;
 }
 
 div.dokuwiki div.imagemeta {
-  color: __text_neu__;
+  color: #666;
   font-size: 70%;
   line-height: 95%;
 }

@@ -9,7 +9,7 @@
 
 #media__left {
     width: 30%;
-    border-right: solid 1px __border__;
+    border-right: solid 1px #8cacbb;
 
     height: 100%;
     overflow: auto;
@@ -67,7 +67,7 @@
 }
 *+html #media__tree li,
 * html #media__tree li {
-    border: 1px solid __background__;
+    border: 1px solid #fff;
 }/* I don't understand this, but this fixes a style bug in IE;
 it's dirty, so any "real" fixes are welcome */
 
@@ -111,11 +111,11 @@ it's dirty, so any "real" fixes are welcome */
 }
 
 #media__content #scroll__here {
-    border: 1px dashed __border__;
+    border: 1px dashed #8cacbb;
 }
 
 #media__content .odd {
-    background-color: __background_other__;
+    background-color: #f7f9fa;
     padding: 0.4em;
 }
 
@@ -158,7 +158,7 @@ it's dirty, so any "real" fixes are welcome */
 
 #media__content #mediamanager__uploader {
     display: block;
-    border-bottom: solid 1px __border__;
+    border-bottom: solid 1px #8cacbb;
     padding: 0 0.5em 1em 0.5em;
 }
 
