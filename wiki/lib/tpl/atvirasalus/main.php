@@ -228,8 +228,8 @@ if (!defined('DOKU_INC')) die();
 							</a>
 							<ul class="subnav" style="display: none; ">
 								<li>
-									<a href="/skaitykla">
-										Straipsniai													
+									<a href="/wiki">
+										Vikis
 									</a>
 								</li>
 								<li>
@@ -320,9 +320,10 @@ if (!defined('DOKU_INC')) die();
 			</div>
 			<div id="main_content">
 				<div class="inner_container">
-					<div class="inner_header">assa</div>
+					<div class="inner_header"><?php tpl_pagetitle(); ?></div>
 					<div class="wiki_bc">
-							<?php tpl_breadcrumbs()?>
+							<?php tpl_youarehere()?>
+						
 					</div>						
 					<div class="wiki_tools">
 						<?php tpl_actionlink('edit')?>
@@ -332,6 +333,7 @@ if (!defined('DOKU_INC')) die();
 						<?php //tpl_actionlink('subscribe')?>
 						<?php tpl_actionlink('media')?>
 				        <?php tpl_searchform()?>&#160;
+						<div class="clear"></div>
 					</div>
 					<div class="dokuwiki">
 						<?php tpl_content()?>

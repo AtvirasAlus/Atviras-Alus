@@ -90,7 +90,6 @@ div.dokuwiki textarea.edit {
 
 /* nice alphatransparency background except for IE <7 */
 html>body div.dokuwiki textarea.edit {
-  background:  #fff url(images/inputshadow.png) repeat-x top;
 }
 
 div.dokuwiki input.edit,
@@ -108,7 +107,6 @@ div.dokuwiki select.edit {
 /* nice alphatransparency background except for IE <7 */
 html>body div.dokuwiki input.edit,
 html>body div.dokuwiki select.edit {
-  background:  #fff url(images/inputshadow.png) repeat-x top;
 }
 
 div.dokuwiki select.edit {
@@ -195,7 +193,6 @@ div.dokuwiki button.button {
 /* nice alphatransparency background except for IE <7 */
 html>body div.dokuwiki input.button,
 html>body div.dokuwiki button.button {
-  background:  #fff url(images/buttonshadow.png) repeat-x bottom;
 }
 
 * html div.dokuwiki input.button,
@@ -792,7 +789,6 @@ button.toolbutton {
 
 /* nice alphatransparency background except for IE <7 */
 html>body button.toolbutton {
-  background:  #fff url(images/buttonshadow.png) repeat-x bottom;
 }
 
 div.picker {
@@ -840,3 +836,22 @@ div.dokuwiki div.imagemeta img.thumb {
   margin-right: 0.1em;
 }
 
+.wiki_bc {
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+}
+.wiki_tools {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #ccc;
+}
+.wiki_tools a {
+	float: left;
+	line-height: 26px;
+	display: inline-block;
+	margin-right: 10px;
+	font-size: 14px;
+}
+.wiki_tools form {
+	float: right;
+}

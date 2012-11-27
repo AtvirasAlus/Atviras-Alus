@@ -161,31 +161,18 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 		<div class="index_block index_articles">
 			<div class="block_header">Pradedantiesiems:</div>
 			<div class="block_content">
-			<div >
-			<h1><i><a href="http://www.atvirasalus.lt/content/read/1/17">Kaip išsivirti naminio alaus iš salyklo ekstrakto</a></i></h1><br/>
-			<div align="center">
-			<iframe width="300" height="169" src="http://www.youtube.com/embed/wEUmlHuLweA?wmode=opaque" frameborder="0" allowfullscreen></iframe></div>
-			</div>
-			<div>
-			<h1><i><a href="http://www.atvirasalus.lt/content/read/1/18">Naminio alaus gamyba iš salyklo</a></i></h1><br/>
-			<div align="center">
-			<iframe width="300" height="169" src="http://www.youtube.com/embed/UBRHnZ8rArw?wmode=opaque" frameborder="0" allowfullscreen></iframe></div>
-			</div>
-				<?php
-				
-				$this->articles = array(); //padisablinai laikinai
-				foreach ($this->articles as $article):
-				?>
-					<div>
-						<a href="/content/read/<?= $article['article_cat']; ?>/<?= $article['article_id']; ?>-<?= $article['article_title']; ?>">
-							<?=$article['article_title']; ?>
-						</a>
-						(<?=intval($article['total']); ?>)
-						<img src="/public/images/comments_icon.png" />
+				<div>
+					<h1><i><a href="/wiki/straipsniai:mokomasis_klipas_pradedantiems_aludariams">Kaip išsivirti naminio alaus iš salyklo ekstrakto</a></i></h1><br/>
+					<div align="center">
+						<iframe width="300" height="169" src="http://www.youtube.com/embed/wEUmlHuLweA?wmode=opaque" frameborder="0" allowfullscreen></iframe>
 					</div>
-				<?php
-				endforeach;
-				?>
+				</div>
+				<div>
+					<h1><i><a href="/wiki/straipsniai:mokomasis_klipas_alaus_gamyba_is_salyklo_salinimas_misos_tekinimas">Naminio alaus gamyba iš salyklo</a></i></h1><br/>
+					<div align="center">
+						<iframe width="300" height="169" src="http://www.youtube.com/embed/UBRHnZ8rArw?wmode=opaque" frameborder="0" allowfullscreen></iframe>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- ĮVYKIAI -->

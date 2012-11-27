@@ -187,8 +187,8 @@ if (bb_is_profile()) {
 							</a>
 							<ul class="subnav" style="display: none; ">
 								<li>
-									<a href="/skaitykla">
-										Straipsniai													
+									<a href="/wiki">
+										Vikis													
 									</a>
 								</li>
 								<li>

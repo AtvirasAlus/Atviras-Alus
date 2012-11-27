@@ -170,11 +170,9 @@
 			<route>default</route>
 			<pages>
 				<men-articles>
-					<label>Straipsniai</label>
-					<module>default</module>
-					<controller>content</controller>
-					<action>list</action>
-					<route>skaitykla</route>
+					<label>Vikis</label>
+					<module>wiki</module>
+					<route>default</route>
 				</men-articles>
 				<men-blogs>
 					<label>Dienoraščiai</label>

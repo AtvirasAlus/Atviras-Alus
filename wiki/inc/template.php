@@ -831,7 +831,7 @@ function tpl_youarehere($sep = ' » ') {
     global $lang;
 
     // check if enabled
-    if(!$conf['youarehere']) return false;
+    //if(!$conf['youarehere']) return false;
 
     $parts = explode(':', $ID);
     $count = count($parts);
