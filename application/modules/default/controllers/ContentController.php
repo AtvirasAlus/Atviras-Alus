@@ -29,7 +29,7 @@ class ContentController extends Zend_Controller_Action {
 		$cat = $this->_getParam('cat');
 		if ($cat != 0) {
 			$article = explode("-", $this->_getParam('article'));
-			switch($article){
+			switch($article[0]){
 				case "18":
 					$this->_redirect("/wiki/straipsniai:mokomasis_klipas_alaus_gamyba_is_salyklo_salinimas_misos_tekinimas");
 					break;
