@@ -29,6 +29,50 @@ class ContentController extends Zend_Controller_Action {
 		$cat = $this->_getParam('cat');
 		if ($cat != 0) {
 			$article = explode("-", $this->_getParam('article'));
+			switch($article){
+				case "18":
+					$this->_redirect("/wiki/straipsniai:mokomasis_klipas_alaus_gamyba_is_salyklo_salinimas_misos_tekinimas");
+					break;
+				case "17":
+					$this->_redirect("/wiki/straipsniai:mokomasis_klipas_pradedantiems_aludariams");
+					break;
+				case "16":
+					$this->_redirect("/wiki/straipsniai:salutiniai_skoniai_aluje");
+					break;
+				case "15":
+					$this->_redirect("/wiki/straipsniai:sausas_apyniavimas");
+					break;
+				case "13":
+					$this->_redirect("/wiki/straipsniai:salinimo_moksliniai_pagrindai_ii_dalis_krakmolo_skaidymas");
+					break;
+				case "12":
+					$this->_redirect("/wiki/straipsniai:salinimo_moksliniai_pagrindai_i_dalis");
+					break;
+				case "8":
+					$this->_redirect("/wiki/straipsniai:paprastai_apie_temperaturos_itaka_alaus_gamybai");
+					break;
+				case "9":
+					$this->_redirect("/wiki/straipsniai:apie_vandeni");
+					break;
+				case "11":
+					$this->_redirect("/wiki/straipsniai:ar_zinote_kuo_skiriasi_kristalinis_ir_karamelinis_salyklai");
+					break;
+				case "5":
+					$this->_redirect("/wiki/straipsniai:vieno_alaus_istorija_arba_kaip_pasigaminti_salyklini_alu_bute");
+					break;
+				case "6":
+					$this->_redirect("/wiki/straipsniai:kaip_isrukyti_salykla");
+					break;
+				case "4":
+					$this->_redirect("/wiki/straipsniai:salyklo_gamyba");
+					break;
+				case "3":
+					$this->_redirect("/wiki/straipsniai:alaus_darymas_is_misos_ekstrakto");
+					break;
+				case "1":
+					$this->_redirect("/wiki/straipsniai:misos_tekinimo_filtras_naudojant_cpvc_vamzdeliu_sistema");
+					break;
+			}
 			$db = Zend_Registry::get("db");
 			$select = $db->select()
 					->from("beer_articles")
