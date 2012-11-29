@@ -3,7 +3,6 @@ if (!defined('DOKU_INC')) die();
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="lt" lang="lt">
 	<head>
-		<?php tpl_metaheaders()?>
 		<meta name="description" content="Atviras alus - naminio alaus aludarių bendruomenė. Alaus receptai. Stiliaus aprašymai. Alaus skaičiuoklė" />
 		<meta name="alexaVerifyID" content="flj8CxyyfEenq5UbyH5vpBlz7DA" />
 		<meta name="y_key" content="9421766f5e8b266a" />
@@ -29,17 +28,18 @@ if (!defined('DOKU_INC')) die();
 		<link type="text/css" href="lib/tpl/atvirasalus/design.css" rel="stylesheet" />	
 		<link type="text/css" href="lib/tpl/atvirasalus/layout.css" rel="stylesheet" />	
 		<link type="text/css" href="lib/tpl/atvirasalus/media.css" rel="stylesheet" />	
+		<?php tpl_metaheaders()?>
 		<style>
-			.picker {
+			#picker2 {
 				background-color: #ffffff !important;
 			}
-			.picker button {
+			#picker2 button {
 				display: inline-block;
 				width: 14px;
 				height: 14px;
 				background-color: #ffffff;
 			}
-			.picker button:hover {
+			#picker2 button:hover {
 				background-color: #eee;
 			}
 		</style>
