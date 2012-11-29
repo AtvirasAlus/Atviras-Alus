@@ -352,6 +352,7 @@ if (!defined('DOKU_INC')) die();
 					</div>
 					<div class="dokuwiki">
 						<?php tpl_content()?>
+						<div class="clear"></div>
 					</div>
 				</div>
 			</div>
