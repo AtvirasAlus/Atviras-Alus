@@ -21,7 +21,7 @@
 				$f = new Entities_Filter_Excerpt();
 				$item['event_comment_text'] = str_replace("\n", "<br />", $item['event_comment_text']);
 				?>
-				<a href="/ivykis/<?= $item['event_comment_event_id']; ?>-<?= $this->urlMaker($item["event_comment_event_name"])?>" style="color: #666">
+				<a href="/ivykis/<?= $item['event_comment_event_id']; ?>-<?= $this->urlMaker($item["event_comment_event_title"])?>" style="color: #666">
 					<?=$f->filter($fhtml->filter($item['event_comment_text']), 30); ?>
 				</a>
 			</div>
