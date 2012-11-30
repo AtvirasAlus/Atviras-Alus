@@ -8,19 +8,10 @@ if (!defined('DOKU_INC')) die();
 		<meta name="y_key" content="9421766f5e8b266a" />
 		<meta name="google-site-verification" content="Q15UyxPCIq_du9gHO4mr1INQh_KzSx8YaB6XytiaO4M" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
-		<script type="text/javascript" src="/public/ui/ui/jquery-ui-1.8.7.custom.js"></script>
 		<link type="text/css" href="/public/css/pepper-grinder/jquery-ui-1.8.7.custom.css" rel="stylesheet" />	
 		<link type="text/css" href="/public/css/style.css?ver=<?=filemtime("../public/css/style.css")?>" rel="stylesheet" media="all" />
 		<link type="text/css" href="/public/css/print.css" rel="stylesheet" media="print" />
 		<link href="/public/css/userScreen.css" media="screen, projection" rel="stylesheet" type="text/css">
-		<script type="text/javascript" src="/public/ui/ui/jquery.ui.widget.js"></script>
-		<script type="text/javascript" src="/public/ui/ui/jquery.ui.dialog.js"></script>
-		<script type="text/javascript" src="/public/ui/ui/jquery.ui.position.js"></script>
-		<script type="text/javascript" src="/public/js/website.js?ver=<?=filemtime("../public/js/website.js")?>"></script>
-	    <script type="text/javascript" src="/public/lightbox/js/jquery.lightbox-0.5.js"></script>
-	    <script type="text/javascript" src="/public/js/jquery.simpletip-1.3.1.min.js"></script>
-	    <script type="text/javascript" src="/public/js/jquery.timer.js"></script>
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
 			{lang: 'lt'}
 		</script>
@@ -29,6 +20,15 @@ if (!defined('DOKU_INC')) die();
 		<link type="text/css" href="lib/tpl/atvirasalus/layout.css" rel="stylesheet" />	
 		<link type="text/css" href="lib/tpl/atvirasalus/media.css" rel="stylesheet" />	
 		<?php tpl_metaheaders()?>
+		<script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="/public/ui/ui/jquery-ui-1.8.7.custom.js"></script>
+		<script type="text/javascript" src="/public/ui/ui/jquery.ui.widget.js"></script>
+		<script type="text/javascript" src="/public/ui/ui/jquery.ui.dialog.js"></script>
+		<script type="text/javascript" src="/public/ui/ui/jquery.ui.position.js"></script>
+	    <script type="text/javascript" src="/public/lightbox/js/jquery.lightbox-0.5.js"></script>
+	    <script type="text/javascript" src="/public/js/jquery.simpletip-1.3.1.min.js"></script>
+	    <script type="text/javascript" src="/public/js/jquery.timer.js"></script>
+		<script type="text/javascript" src="/public/js/website.js?ver=<?=filemtime("../public/js/website.js")?>"></script>
 		<style>
 			#picker2 {
 				background-color: #ffffff !important;
