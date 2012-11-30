@@ -169,9 +169,8 @@ class auth_basic {
 
 		if ($user == false){
 			if (isset($_COOKIE['user_email']) && !empty($_COOKIE['user_email'])){
-				$cfg = parse_ini_file("../application/configs/application.ini");
-				$con = mysql_connect($cfg['resources.db.params.host'], $cfg['resources.db.params.username'], $cfg['resources.db.params.password']) or die(mysql_error());
-				$db = mysql_select_db($cfg['resources.db.params.dbname']);
+				$con = mysql_connect("localhost", "atvirasalus", "sxFU9S5atLC4FrXx") or die(mysql_error());
+				$db = mysql_select_db("atvirasalus");
 				$sql = "SELECT * FROM users WHERE user_email='".$_COOKIE['user_email']."'";
 				$result = mysql_query($sql) or die(mysql_error());
 				if (mysql_num_rows($result) > 0){
