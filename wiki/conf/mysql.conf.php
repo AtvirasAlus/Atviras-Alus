@@ -23,10 +23,13 @@
  * options carefully, otherwise you won't be able to access you
  * database.
  */
-$conf['auth']['mysql']['server']   = 'localhost';
-$conf['auth']['mysql']['user']     = 'atvirasalus';
-$conf['auth']['mysql']['password'] = 'sxFU9S5atLC4FrXx';
-$conf['auth']['mysql']['database'] = 'atvirasalus';
+
+$cfg = parse_ini_file("../application/configs/application.ini");
+
+$conf['auth']['mysql']['server']   = $cfg['resources.db.params.host'];
+$conf['auth']['mysql']['user']     = $cfg['resources.db.params.username'];
+$conf['auth']['mysql']['password'] = $cfg['resources.db.params.password'];
+$conf['auth']['mysql']['database'] = $cfg['resources.db.params.dbname'];
 
 /* This option enables debug messages in the mysql module. It is
  * mostly usefull for system admins.

@@ -27,7 +27,7 @@ class auth_basic {
         'getUsers'    => false, // can a (filtered) list of users be retrieved?
         'getUserCount'=> false, // can the number of users be retrieved?
         'getGroups'   => false, // can a list of available groups be retrieved?
-        'external'    => false, // does the module do external auth checking?
+        'external'    => true, // does the module do external auth checking?
         'logout'      => true,  // can the user logout again? (eg. not possible with HTTP auth)
     );
 
@@ -162,23 +162,42 @@ class auth_basic {
      * @param   bool    $sticky  Cookie should not expire
      * @return  bool             true on successful auth
      */
-    function trustExternal($user,$pass,$sticky=false){
-        /* some example:
-
+    function trustExternal($user, $pass, $sticky = false){
         global $USERINFO;
         global $conf;
         $sticky ? $sticky = true : $sticky = false; //sanity check
 
+		if ($user == false){
+			if (isset($_COOKIE['user_email']) && !empty($_COOKIE['user_email'])){
+				$cfg = parse_ini_file("../application/configs/application.ini");
+				$con = mysql_connect($cfg['resources.db.params.host'], $cfg['resources.db.params.username'], $cfg['resources.db.params.password']) or die(mysql_error());
+				$db = mysql_select_db($cfg['resources.db.params.dbname']);
+				$sql = "SELECT * FROM users WHERE user_email='".$_COOKIE['user_email']."'";
+				$result = mysql_query($sql) or die(mysql_error());
+				if (mysql_num_rows($result) > 0){
+					$user = mysql_fetch_assoc($result);
+					$USERINFO['name'] = $user['user_name'];
+					$USERINFO['mail'] = $user['user_email'];
+					if ($user['user_type'] == "admin"){
+						$USERINFO['grps'] = array('user', "admin");
+					} else {
+						$USERINFO['grps'] = array('user');
+					}
+					$_SERVER['REMOTE_USER'] =  $user['user_email'];
+					$_SESSION[DOKU_COOKIE]['auth']['user'] =  $user['user_email'];
+					$_SESSION[DOKU_COOKIE]['auth']['pass'] =  $user['user_password'];
+					$_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
+					return true;
+				}
+			}
+		}
+		return false;
+        /* some example:
+
+
         // do the checking here
 
         // set the globals if authed
-        $USERINFO['name'] = 'FIXME';
-        $USERINFO['mail'] = 'FIXME';
-        $USERINFO['grps'] = array('FIXME');
-        $_SERVER['REMOTE_USER'] = $user;
-        $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
-        $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
-        $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
         return true;
 
         */
