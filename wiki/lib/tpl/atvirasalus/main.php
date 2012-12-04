@@ -369,7 +369,7 @@ if (!defined('DOKU_INC')) die();
 				        <?php tpl_actionlink('history')?>
 				        <?php tpl_actionlink('revert')?>
 				        <?php tpl_actionlink('recent')?>
-						<?php //tpl_actionlink('subscribe')?>
+						<?php tpl_actionlink('subscribe')?>
 						<?php tpl_actionlink('media')?>
 				        <?php tpl_searchform()?>&#160;
 						<div class="clear"></div>
