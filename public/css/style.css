@@ -2161,7 +2161,7 @@ ul.statuses li {
 	background-image: url("/public/images/comments.gif");
 	padding-left: 18px;
 	background-repeat: no-repeat;
-	margin-right: 10px;
+	margin-right: 8px;
 }
 .total_sessions {
 	display: inline-block;
@@ -2170,7 +2170,16 @@ ul.statuses li {
 	background-image: url("/public/images/sessions.gif");
 	padding-left: 18px;
 	background-repeat: no-repeat;
-	margin-right: 10px;
+	margin-right: 8px;
+}
+.total_viewed {
+	display: inline-block;
+	height: 16px;
+	line-height: 16px;
+	background-image: url("/public/images/viewed.png");
+	padding-left: 18px;
+	background-repeat: no-repeat;
+	margin-right: 8px;
 }
 .total_likes {
 	display: inline-block;
@@ -2179,7 +2188,7 @@ ul.statuses li {
 	background-image: url("/public/images/likes.gif");
 	padding-left: 18px;
 	background-repeat: no-repeat;
-	margin-right: 10px;
+	margin-right: 8px;
 }
 .recipe_order_block {
 	margin-bottom: 10px;

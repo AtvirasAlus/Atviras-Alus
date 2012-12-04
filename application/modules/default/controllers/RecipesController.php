@@ -446,10 +446,15 @@ class RecipesController extends Zend_Controller_Action {
 			$db = Zend_Registry::get("db");
 			
 			$select = $db->select()
-					->from("beer_recipes", array("recipe_id", "recipe_publish", "recipe_created", "brewer_id"))
+					->from("beer_recipes", array("recipe_id", "recipe_publish", "recipe_created", "brewer_id", "recipe_viewed"))
 					->join("users", "users.user_id = beer_recipes.brewer_id", array("user_name"))
 					->where("recipe_id = ?", $recipe_id);
 			$rcp = $db->fetchRow($select);
+			if ($this->uid != $rcp['brewer_id']){
+				$update = $db->update("beer_recipes", array(
+						'recipe_viewed' => $rcp['recipe_viewed'] + 1
+					), "recipe_id = '".$rcp['recipe_id']."'");
+			}
 			$doshow = true;
 			if ($rcp['recipe_publish'] == 0 && $rcp['brewer_id'] != $this->uid && $this->ugroup != "admin"){
 				$doshow = false;
