@@ -103,13 +103,13 @@ $conf['jpg_quality'] = '70';             //quality of compression when scaling j
 $conf['fetchsize']   = 0;                //maximum size (bytes) fetch.php may download from extern, disabled by default
 
 /* Notification Settings */
-$conf['subscribers'] = 0;                //enable change notice subscription support
+$conf['subscribers'] = 1;                //enable change notice subscription support
 $conf['subscribe_time'] = 24*60*60;      //Time after which digests / lists are sent (in sec, default 1 day)
                                          //Should be smaller than the time specified in recent_days
 $conf['notify']      = '';               //send change info to this email (leave blank for nobody)
 $conf['registernotify'] = '';            //send info about newly registered users to this email (leave blank for nobody)
-$conf['mailfrom']    = '';               //use this email when sending mails
-$conf['mailprefix']  = '';               //use this as prefix of outgoing mails
+$conf['mailfrom']    = 'noreply@atvirasalus.lt';               //use this email when sending mails
+$conf['mailprefix']  = '[Atviras Alus Vikis] ';               //use this as prefix of outgoing mails
 $conf['htmlmail']    = 1;                //send HTML multipart mails
 
 /* Syndication Settings */
@@ -125,7 +125,7 @@ $conf['rss_linkto'] = 'diff';            //what page RSS entries link to:
                                          //  'page'    - the revised page itself
                                          //  'rev'     - page showing all revisions
                                          //  'current' - most recent revision of page
-$conf['rss_content'] = 'abstract';       //what to put in the items by default?
+$conf['rss_content'] = 'htmldiff';       //what to put in the items by default?
                                          //  'abstract' - plain text, first paragraph or so
                                          //  'diff'     - plain text unified diff wrapped in <pre> tags
                                          //  'htmldiff' - diff as HTML table
