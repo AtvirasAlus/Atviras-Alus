@@ -262,6 +262,15 @@ function i_bu($ibu,$og) {
 				</div>
 				<?php
 			endif;
+			if ($this->data['recipe']['recipe_publish'] != "1"):
+				?>
+				<div class="recipe_info_block">
+					<div class="recipe_info_label">&nbsp;</div>
+					<div class="recipe_info_text" style="margin-top: 5px; font-weight: bold; color: #ee0000">Receptas nėra viešas!</div>
+					<div class="clear"></div>
+				</div>
+				<?php
+			endif;
 			?>
 		</div>
 		<div class="recipe_image">
