@@ -120,6 +120,9 @@ class RecipesController extends Zend_Controller_Action {
 			case "comments":
 				$select->order("beer_recipes.recipe_total_comments DESC");
 			break;
+			case "views":
+				$select->order("beer_recipes.recipe_viewed DESC");
+			break;
 			default:
 				$select->order("beer_recipes.recipe_created DESC");
 			break;
@@ -202,6 +205,9 @@ class RecipesController extends Zend_Controller_Action {
 			break;
 			case "comments":
 				$select->order("beer_recipes.recipe_total_comments DESC");
+			break;
+			case "views":
+				$select->order("beer_recipes.recipe_viewed DESC");
 			break;
 			default:
 				$select->order("beer_recipes.recipe_created DESC");
