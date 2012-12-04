@@ -40,7 +40,7 @@ jQuery.fn.dw_tree = function(overrides) {
 
             // if already open, close by hiding the sublist
             if (!opening) {
-                $sublist.dw_hide();
+                $sublist.hide();
                 return;
             }
 
@@ -52,7 +52,7 @@ jQuery.fn.dw_tree = function(overrides) {
                 if ($listitem.hasClass('open')) {
                     // Only show if user didn’t close the list since starting
                     // to load the content
-                    $sublist.dw_show();
+                    $sublist.show();
                 }
             };
 
