@@ -37,6 +37,30 @@ class IndexController extends Zend_Controller_Action {
 			$db->update("users", array("ping_time" => date("Y-m-d H:i:s")), array("user_id = '" . $user_info->user_id . "'"));
 		}
 	}
+	public function onlineAction(){
+		if ($this->ugroup != "admin"){
+			$this->_redirect("/");
+			exit;
+		}
+		$db = Zend_Registry::get("db");
+		if (isset($this->uid) && !empty($this->uid)){
+			$me = $this->uid;
+		} else {
+			$me = -1;
+		}
+		$this->view->me = $me;
+		$select = $db->select()
+					->from("users", array("IF (user_id='".$me."', 2, IF (TIMESTAMPDIFF(SECOND, ping_time, NOW()) < 40, IF (TIMESTAMPDIFF(MINUTE, last_action_time, NOW()) < 10, 2, 1), 0)) AS online_status", "user_name", "user_id", "user_email", "ping_time", "last_action_time", "IF (user_id= '".$me."', '0', '1') as me", "last_url"))
+					->where("users.user_active = ?", '1')
+					->group("users.user_id")
+					->order("me ASC")
+					->order("online_status DESC")
+					->order("ping_time DESC")
+					->order("last_action_time DESC")
+					->order("user_lastlogin DESC")
+					->limit(50);
+		$this->view->users = $db->fetchAll($select);
+	}
 	public function pingstartAction(){
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
