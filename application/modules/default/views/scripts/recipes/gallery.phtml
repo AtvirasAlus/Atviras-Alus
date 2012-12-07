@@ -18,7 +18,7 @@
 			?>
 			<div class="beer_image">
 				<div>
-					<a title="<?=  addslashes($img['recipe_name'])?>, <?=$img['user_name']?>, <?=$img['postedf']?>" rel="gallery" class="fancybox" href="/recipe_images/<?=$img['recipe_id']?>/<?=$img['file_name']?>.jpg"><img src="/recipe_images/<?=$img['recipe_id']?>/t_<?=$img['file_name']?>.jpg" alt="" /></a>
+					<a title="<?= htmlentities($img['recipe_name'])?>, <?=$img['user_name']?>, <?=$img['postedf']?>" rel="gallery" class="fancybox" href="/recipe_images/<?=$img['recipe_id']?>/<?=$img['file_name']?>.jpg"><img src="/recipe_images/<?=$img['recipe_id']?>/t_<?=$img['file_name']?>.jpg" alt="" /></a>
 				</div>
 			</div>
 			<?
