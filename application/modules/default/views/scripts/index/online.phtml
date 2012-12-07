@@ -22,7 +22,7 @@
 						<img src="http://www.gravatar.com/avatar/<?= md5($user['user_email']); ?>?rating=G&size=30&default=mm" />
 					</div>
 					<div class="as-cell">
-						<?=$user['user_name']?>
+						<a href="/brewers/<?=$user['user_id']?>"><?=$user['user_name']?></a>
 					</div>
 					<div class="as-cell">
 						<?php
