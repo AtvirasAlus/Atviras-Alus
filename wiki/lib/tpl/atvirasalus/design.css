@@ -391,24 +391,35 @@ div.dokuwiki h5 {
 
 /* special headlines */
 div.dokuwiki h1 {font-size: 160%; margin-left: 0px; font-weight: bold;}
+div.dokuwiki h2 {font-size: 150%; margin-left: 0px;}
+div.dokuwiki h3 {font-size: 140%; margin-left: 0px; border-bottom: none; font-weight: bold;}
+div.dokuwiki h4 {font-size: 120%; margin-left: 0px; border-bottom: none; font-weight: bold;}
+div.dokuwiki h5 {font-size: 100%; margin-left: 0px; border-bottom: none; font-weight: bold;}
+
+/*
 div.dokuwiki h2 {font-size: 150%; margin-left: 20px;}
 div.dokuwiki h3 {font-size: 140%; margin-left: 40px; border-bottom: none; font-weight: bold;}
 div.dokuwiki h4 {font-size: 120%; margin-left: 60px; border-bottom: none; font-weight: bold;}
 div.dokuwiki h5 {font-size: 100%; margin-left: 80px; border-bottom: none; font-weight: bold;}
+*/
 
 /* indent different sections */
-div.dokuwiki div.level1 { margin-left: 3px; }
+div.dokuwiki div.level1 { margin-left: 10px; }
+div.dokuwiki div.level2 { margin-left: 10px; }
+div.dokuwiki div.level3 { margin-left: 10px; }
+div.dokuwiki div.level4 { margin-left: 10px; }
+div.dokuwiki div.level5 { margin-left: 10px; }
+/*
 div.dokuwiki div.level2 { margin-left: 23px; }
 div.dokuwiki div.level3 { margin-left: 43px; }
 div.dokuwiki div.level4 { margin-left: 63px; }
 div.dokuwiki div.level5 { margin-left: 83px; }
-
+*/
 /* unordered lists */
 div.dokuwiki ul {
   line-height: 1.5em;
   list-style-type: square;
   list-style-image: none;
-  margin: 0 0 1em 3.5em;
   color: #638c9c;
 }
 
@@ -416,7 +427,6 @@ div.dokuwiki ul {
 div.dokuwiki ol {
   line-height: 1.5em;
   list-style-image: none;
-  margin: 0 0 1em 3.5em;
   color: #638c9c;
   font-weight: bold;
 }
@@ -424,7 +434,6 @@ div.dokuwiki ol {
 /* no bottom gap in between and smaller left margin for nested lists */
 div.dokuwiki li ul,
 div.dokuwiki li ol {
-  margin: 0 0 0 1.5em;
 }
 
 /* the list items overriding the ul/ol definition */
