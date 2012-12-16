@@ -24,21 +24,23 @@
 			if ($this->item['recipe_total_awards'] > 0) : ?>
 				<?
 				$awards = $this->awards[$this->item['recipe_id']];
-				foreach ($awards as $key=>$val):
-					$title = $val['event_name'];
-					if (!empty($val['category'])){
-						$title .= ", ".$val['category'];
-					}
-					if (!empty($val['place'])){
-						$title .= ", ".$val['place']." vieta";
-					}
-					if (!empty($val['points']) && $val['points'] != "0"){
-						$title .= " (".$val['points']." tšk.)";
-					}
-					?>
-					<img src="/public/images/<?= trim($val['icon']) ?>-32_grey.gif" width="32" title="<?= trim($title) ?>" style="float: right;" />
-					<?
-				endforeach;
+				if (isset($awards) && is_array($awards) && sizeof($awards) > 0){
+					foreach ($awards as $key=>$val):
+						$title = $val['event_name'];
+						if (!empty($val['category'])){
+							$title .= ", ".$val['category'];
+						}
+						if (!empty($val['place'])){
+							$title .= ", ".$val['place']." vieta";
+						}
+						if (!empty($val['points']) && $val['points'] != "0"){
+							$title .= " (".$val['points']." tšk.)";
+						}
+						?>
+						<img src="/public/images/<?= trim($val['icon']) ?>-32_grey.gif" width="32" title="<?= trim($title) ?>" style="float: right;" />
+						<?
+					endforeach;
+				}
 			endif; ?>
 		</div>
 		<div style="margin-top: 10px;">
