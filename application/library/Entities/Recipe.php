@@ -39,7 +39,8 @@ class Entities_Recipe {
 			$select = $this->db->select();
 			$select->from("beer_recipes_hops")
 					->where("recipe_id = ?", $this->recipe_id)
-					->order("hop_time DESC, hop_name ASC");
+					->order("hop_time DESC")
+					->order("hop_name ASC");
 			return $this->db->fetchAll($select);
 		}
 	}
