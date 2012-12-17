@@ -622,7 +622,7 @@ class IndexController extends Zend_Controller_Action {
 		$feed->setFeedLink('http://www.atvirasalus.lt/index/rss', 'rss');
 		$feed->addAuthor(array(
 			'name' => 'atvirasalus.lt',
-			'email' => 'info@atvirasalus.lt',
+			'email' => 'atvirasalus.lt@gmail.com',
 			'uri' => 'http://www.atvirasalus.lt',
 		));
 		$feed->setId('http://www.atvirasalus.lt/index/rss');
@@ -639,7 +639,7 @@ class IndexController extends Zend_Controller_Action {
 				$entry->setTitle($articles[$i]['article_title']);
 				$entry->setLink('http://www.atvirasalus.lt/content/read/1/' . $articles[$i]['article_id'] . urlencode($articles[$i]['article_title']));
 				$entry->setId('http://www.atvirasalus.lt/content/read/1/' . $articles[$i]['article_id'] . urlencode($articles[$i]['article_title']));
-				$entry->addAuthor(array('name' => 'Atviras Alus', 'email' => 'info@atvirasalus.lt', 'uri' => 'http://www.atvirasalus.lt'));
+				$entry->addAuthor(array('name' => 'Atviras Alus', 'email' => 'atvirasalus.lt@gmail.com', 'uri' => 'http://www.atvirasalus.lt'));
 				$entry->setDateCreated(new Zend_Date($articles[$i]['article_created'], Zend_Date::ISO_8601));
 				$entry->setDescription($articles[$i]['article_resume']);
 				$entry->setContent($articles[$i]['article_text']);
@@ -661,7 +661,7 @@ class IndexController extends Zend_Controller_Action {
 				$entry->setTitle($blogs[$i]['post_title']);
 				$entry->setLink($blogs[$i]['guid']);
 				$entry->setId($blogs[$i]['guid']);
-				$entry->addAuthor(array('name' => $blogs[$i]['user_name'], 'email' => 'info@atvirasalus.lt', 'uri' => 'http://www.atvirasalus.lt'));
+				$entry->addAuthor(array('name' => $blogs[$i]['user_name'], 'email' => 'atvirasalus.lt@gmail.com', 'uri' => 'http://www.atvirasalus.lt'));
 				// $entry->setDateModified($blogs[$i]['post_modified']);
 				// $entry->setDateCreated($blogs[$i]['post_modified']);
 				// $entry->setDateModified(new Zend_Date($blogs[$i]['post_modified'], Zend_Date::ISO_8601));
