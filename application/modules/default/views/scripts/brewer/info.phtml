@@ -11,6 +11,35 @@
 </script>
 <div id="brewer_info_container" class="inner_container">
 	<div class="inner_header"><?=$this->user_info['user_name'];?></div>
+	<?php
+	if (isset($this->awards) && is_array($this->awards) && sizeof($this->awards) > 0){
+		?>
+		<div class="brewer_awards2" style="margin-bottom: 10px;">
+			<?php
+			foreach($this->awards as $key=>$val){
+				$title = "";
+				if (!empty($val['recipe_name'])){
+					$title .= $val['recipe_name'].", ";
+				}
+				$title .= $val['event_name'];
+				if (!empty($val['category'])){
+					$title .= ", ".$val['category'];
+				}
+				if (!empty($val['place'])){
+					$title .= ", ".$val['place']." vieta";
+				}
+				if (!empty($val['points']) && $val['points'] != "0"){
+					$title .= " (".$val['points']." tšk.)";
+				}
+				?>
+				<img src="/public/images/<?= trim($val['icon']) ?>-32.gif" width="32" title="<?= trim($title) ?>" />
+				<?php
+			}
+			?>
+		</div>
+		<?php
+	}
+	?>
 	<div class="brewer_info_container">
 		<div class="brewer_info_left">
 			<div class="brewer_info_block">

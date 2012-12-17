@@ -61,11 +61,16 @@ class BrewerController extends Zend_Controller_Action {
 	}
 
 	public function infoAction() {
-
 		$db = Zend_Registry::get('db');
 		$this->view->user_info = array("total_brewed_mead" => 0, "total_brewed_kvass" => 0, "total_brewed_cider" => 0, "total_sessions" => 0, "total_brewed" => 0, "total_recipes" => 0, "user_lastlogin" => 0, "user_created" => 0, "user_name" => '');
 		if ($this->_getParam('brewer') > 0) {
 			$brewer = $this->_getParam('brewer');
+			$select = $db->select()
+					->from("beer_awards")
+					->join("beer_recipes", "beer_recipes.recipe_id=beer_awards.recipe_id", array("recipe_name"))
+					->where("beer_recipes.brewer_id = ?", $brewer);
+			$awards = $db->fetchAll($select);
+			$this->view->awards = $awards;
 			$select = $db->select()
 					->from("users")
 					->joinLeft("users_attributes", "users_attributes.user_id=users.user_id")
