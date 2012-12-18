@@ -81,12 +81,26 @@ $(document).ready(function () {
 	});
 	var timer = $.timer(function(){
 		$.ajax({
-			url: "/index/ping"
+			url: "/index/ping",
+			success: function(data){
+				if (data != "0"){
+					$(document).attr('title', 'Atviras alus ('+data+')');
+				} else {
+					$(document).attr('title', 'Atviras alus');
+				}
+			}
 		});
 	});
 	timer.set({ time : 1000*30, autostart : true });
 	$.ajax({
-		url: "/index/pingstart"
+		url: "/index/pingstart",
+		success: function(data){
+			if (data != "0"){
+				$(document).attr('title', 'Atviras alus ('+data+')');
+			} else {
+				$(document).attr('title', 'Atviras alus');
+			}
+		}
 	});
 
 	$("ul.topnav li a").click(function() {

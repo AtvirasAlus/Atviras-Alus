@@ -35,6 +35,14 @@ class IndexController extends Zend_Controller_Action {
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$db = Zend_Registry::get("db");
 			$db->update("users", array("ping_time" => date("Y-m-d H:i:s")), array("user_id = '" . $user_info->user_id . "'"));
+			$select = $db->select()
+					->from("mail_users", array("mail_id"))
+					->where("user_id = ?", $user_info->user_id)
+					->where("mail_read = ?", "0");
+			$result = $db->fetchAll($select);
+			echo sizeof($result);
+		} else {
+			echo "0";
 		}
 	}
 	public function onlineAction(){
@@ -69,6 +77,14 @@ class IndexController extends Zend_Controller_Action {
 		if (isset($user_info->user_id) && !empty($user_info->user_id)){
 			$db = Zend_Registry::get("db");
 			$db->update("users", array("last_url" => $_SERVER['HTTP_REFERER'], "last_action_time" => date("Y-m-d H:i:s"), "ping_time" => date("Y-m-d H:i:s")), array("user_id = '" . $user_info->user_id . "'"));
+			$select = $db->select()
+					->from("mail_users", array("mail_id"))
+					->where("user_id = ?", $user_info->user_id)
+					->where("mail_read = ?", "0");
+			$result = $db->fetchAll($select);
+			echo sizeof($result);
+		} else {
+			echo 0;
 		}
 	}
 	public function enablebetaAction(){
