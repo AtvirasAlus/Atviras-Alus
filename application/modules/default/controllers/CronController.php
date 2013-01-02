@@ -35,6 +35,7 @@ class CronController extends Zend_Controller_Action {
 	}
 
 	public function gentokensAction(){
+		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
