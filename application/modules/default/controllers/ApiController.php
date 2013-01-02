@@ -24,7 +24,7 @@ class ApiController extends Zend_Controller_Action {
 				$response['token'] = $result[0]['api_token'];
 			}
 		}
-		echo json_encode($response);
+		echo $_GET['callback'] . '(' . json_encode($response) . ")";
 	}
 
 	public function validateAction() {
@@ -46,7 +46,7 @@ class ApiController extends Zend_Controller_Action {
 				$response['token'] = $result[0]['api_token'];
 			}
 		}
-		echo json_encode($response);
+		echo $_GET['callback'] . '(' . json_encode($response) . ")";
 	}
 
 	public function getuserinfoAction() {
@@ -67,7 +67,7 @@ class ApiController extends Zend_Controller_Action {
 				$response['userinfo'] = $result[0];
 			}
 		}
-		echo json_encode($response);
+		echo $_GET['callback'] . '(' . json_encode($response) . ")";
 	}
 	
 	public function getuserrecipesAction(){
@@ -93,7 +93,7 @@ class ApiController extends Zend_Controller_Action {
 		$response['status'] = "1";
 		$response['count'] = sizeof($result);
 		$response['items'] = $result;
-		echo json_encode($response);
+		echo $_GET['callback'] . '(' . json_encode($response) . ")";
 	}
 	
 	private function getuserid($token){
@@ -120,7 +120,7 @@ class ApiController extends Zend_Controller_Action {
 		$uid = $this->getuserid($token);
 		if ($uid === false){
 			$response['status'] = 999;
-			echo json_encode($response);
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
 			exit;
 		}
 		if (!empty($recipe)){
@@ -184,6 +184,6 @@ class ApiController extends Zend_Controller_Action {
 				$response['yeasts'] = $db->FetchAll($select);
 			}
 		}
-		echo json_encode($response);
+		echo $_GET['callback'] . '(' . json_encode($response) . ")";
 	}
 }
