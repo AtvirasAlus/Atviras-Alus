@@ -132,6 +132,25 @@ class AuthController extends Zend_Controller_Action {
 		}
 		$this->view->form = $form;
 	}
+	private function genuid(){
+		$db = Zend_Registry::get("db");
+		$uid = sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+			mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+			mt_rand( 0, 0xffff ),
+			mt_rand( 0, 0x0fff ) | 0x4000,
+			mt_rand( 0, 0x3fff ) | 0x8000,
+			mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+		);
+		$select = $db->select()
+				->from("users")
+				->where("api_token = '".$uid."'");
+		$result = $db->FetchAll($select);
+		if (sizeof($result) == 0){
+			return $uid;
+		} else {
+			return $this->genuid();
+		}
+	}
 
 	public function registerAction() {
 		//$this->_helper->layout->setLayout('auth');
@@ -148,7 +167,7 @@ class AuthController extends Zend_Controller_Action {
 					//throw error email allready registered
 					$this->view->errors[] = array("type" => "system", "message" => 'Nautotojas tokiu vardu arba tokiu e. pašto adresu jau egzistuoja');
 				} else {
-					$user_data = array('user_name' => $_rq->getPost('user_name'), 'user_email' => strtolower($_rq->getPost('user_email')));
+					$user_data = array('user_name' => $_rq->getPost('user_name'), 'user_email' => strtolower($_rq->getPost('user_email')), 'api_token' => $this->genuid());
 
 
 					if ($this->sendInvitationEmail($user_data)) {

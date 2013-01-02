@@ -14,6 +14,42 @@ class CronController extends Zend_Controller_Action {
 		return 1.00001 + 3.8661E-3 * $p + 1.3488E-5 * $p * $p + 4.3074E-8 * $p * $p * $p;
 	}
 	
+	private function genuid(){
+		$db = Zend_Registry::get("db");
+		$uid = sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+			mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+			mt_rand( 0, 0xffff ),
+			mt_rand( 0, 0x0fff ) | 0x4000,
+			mt_rand( 0, 0x3fff ) | 0x8000,
+			mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+		);
+		$select = $db->select()
+				->from("users")
+				->where("api_token = '".$uid."'");
+		$result = $db->FetchAll($select);
+		if (sizeof($result) == 0){
+			return $uid;
+		} else {
+			return $this->genuid();
+		}
+	}
+
+	public function gentokensAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("users")
+				->order("user_id ASC");
+		$result = $db->FetchAll($select);
+		foreach($result as $key=>$val){
+			$uuid = $this->genuid();
+			$update = $db->update("users", array(
+				"api_token" => $uuid
+			), "user_id = '".$val['user_id']."'");
+		}
+		echo "done";
+	}
 	public function fixplatoAction(){
 		exit;
 		$this->_helper->layout->disableLayout();
