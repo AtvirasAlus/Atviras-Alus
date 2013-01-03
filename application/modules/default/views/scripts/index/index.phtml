@@ -298,42 +298,6 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 		
 		
 		
-		<!-- DIENORAŠČIAI -->
-		<div class="index_block index_blogs">
-			<div class="block_header">Iš aludarių dienoraščio:</div>
-			<div class="block_content">
-				<?php
-				foreach ($this->blogs as $blog):
-				?>
-					<div>
-						<a href="/brewers/<?= $blog['post_author'];?>">
-							<?= $blog['user_name'];?>
-						</a>
-						-
-						<a class="article_name" href="<?=$blog['guid'];?>">
-							<?=$blog['post_title'];?>
-						</a>
-						(<?=intval($blog['comment_count']);?>)
-						<img src="/public/images/comments_icon.png" border=0/>
-					</div>
-					<div class="article_summary">
-						<a href="<?=$blog['guid'];?>">
-							<?
-							$fhtml = new Zend_Filter_StripTags();
-							$f = new Entities_Filter_Excerpt();
-							echo $f->filter($fhtml->filter($blog['post_content']), 30);
-							?>
-						</a>
-					</div>
-				<?php
-				endforeach;
-				?>
-			</div>
-			<div class="block_footer">
-				<a href="/blog" >Visi dienoraščiai</a>
-			</div>
-		</div>
-		
 		<!-- ALAUS NAUJIENOS -->
 		<div class="index_block index_news">
 			<div class="block_header">Alaus naujienos:</div>

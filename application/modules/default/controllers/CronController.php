@@ -369,26 +369,6 @@ class CronController extends Zend_Controller_Action {
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
 		
-		$blog_ids = array(2, 3, 4, 5, 6, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20);
-		foreach($blog_ids as $blog_id){
-			$select_ar[$blog_id] = $db->select()
-					->from("wp_".$blog_id."_posts", array("post_date", "ID", "post_author", "post_title", "guid", "post_content"))
-					->where("wp_".$blog_id."_posts.post_status = 'publish' AND wp_".$blog_id."_posts.post_type = 'post'");
-		}
-		$select = $db->select()->union($select_ar)->order("post_date DESC");
-		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
-			$temp = $tpl;
-			$temp['type'] = "blog";
-			$temp['user_id'] = $val['post_author'];
-			$temp['item_id'] = $val['ID'];
-			$temp['posted'] = $val['post_date'];
-			$temp['blog_title'] = $val['post_title'];
-			$temp['blog_content'] = $val['post_content'];
-			$temp['blog_link'] = $val['guid'];
-			$activity[] = $temp;
-		}
-		
 		$url = "http://pipes.yahoo.com/pipes/pipe.run?_id=210aea0f65d951e98dc682a8136c4ee9&_render=rss";
 		$feed = Zend_Feed::import($url);
 

@@ -238,11 +238,6 @@
 					<action>read</action>
 					<visible>0</visible>
 				</read>
-				<blog>
-					<label>Dienoraščiai</label>
-					<module>blog</module>
-					<route>default</route>
-				</blog>
 				<tweets>
 					<label>Aludarių pranešimai</label>
 					<module>default</module>

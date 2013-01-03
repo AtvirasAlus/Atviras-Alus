@@ -520,7 +520,6 @@ input, select, .editable-select-options, .ui-autocomplete {
 						</optgroup>
 						<optgroup label="Skaitykla">
 							<option value="tweet" <?=($this->filter_type == "tweet") ? 'selected="selected"' : ''?>>Aludarių pranešimai</option>
-							<option value="blog" <?=($this->filter_type == "blog") ? 'selected="selected"' : ''?>>Dienoraščiai</option>
 							<option value="rss" <?=($this->filter_type == "rss") ? 'selected="selected"' : ''?>>Naujienos iš kitų svetainių</option>
 							<option value="article" <?=($this->filter_type == "article") ? 'selected="selected"' : ''?>>Straipsniai</option>
 							<option value="article_comment" <?=($this->filter_type == "article_comment") ? 'selected="selected"' : ''?>>Straipsnių komentarai</option>
@@ -635,9 +634,6 @@ input, select, .editable-select-options, .ui-autocomplete {
 						break;
 						case "rss":
 							include("partials/rss.phtml");
-						break;
-						case "blog":
-							include("partials/blog.phtml");
 						break;
 					}
 				endforeach;

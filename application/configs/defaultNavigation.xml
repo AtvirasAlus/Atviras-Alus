@@ -174,11 +174,6 @@
 					<module>wiki</module>
 					<route>default</route>
 				</men-articles>
-				<men-blogs>
-					<label>Dienoraščiai</label>
-					<module>blog</module>
-					<route>default</route>
-				</men-blogs>
 				<men-tweets>
 					<label>Aludarių pranešimai</label>
 					<module>default</module>

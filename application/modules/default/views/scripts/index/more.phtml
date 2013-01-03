@@ -61,9 +61,6 @@ foreach ($this->items as $item):
 		case "rss":
 			include("partials/rss.phtml");
 		break;
-		case "blog":
-			include("partials/blog.phtml");
-		break;
 	}
 endforeach;
 if (sizeof($this->items) == 0){

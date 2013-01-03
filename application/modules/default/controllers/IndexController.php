@@ -173,9 +173,6 @@ class IndexController extends Zend_Controller_Action {
 				case "rss":
 					$select->where("type = 'rss'");
 				break;
-				case "blog":
-					$select->where("type = 'blog'");
-				break;
 			}
 			$result = $db->fetchAll($select);
 			if (sizeof($result) > 0){
@@ -264,9 +261,6 @@ class IndexController extends Zend_Controller_Action {
 				break;
 				case "rss":
 					$select->where("type = 'rss'");
-				break;
-				case "blog":
-					$select->where("type = 'blog'");
 				break;
 			}
 			$result = $db->fetchAll($select);
@@ -394,9 +388,6 @@ class IndexController extends Zend_Controller_Action {
 				break;
 				case "rss":
 					$select->where("type = 'rss'");
-				break;
-				case "blog":
-					$select->where("type = 'blog'");
 				break;
 			}
 			$result = $db->fetchAll($select);
@@ -589,20 +580,6 @@ class IndexController extends Zend_Controller_Action {
 					->limit(7);
 			;
 			$this->view->posts = $db->fetchAll($select);
-			if ($this->view->blogs = $cache->load('blog_latest')) {
-
-			} else {
-				$blog_ids = array(20, 19, 16, 18, 17, 15, 7, 11, 10, 8, 9, 2, 3, 4, 5, 6);
-				foreach($blog_ids as $blog_id){
-					$select_ar[$blog_id] = $db->select()
-							->from("wp_".$blog_id."_posts", array("post_date", "post_modified", "ID", "post_author", "post_title", "comment_count", "guid", "post_content"))
-							->join("users", "users.user_id=wp_".$blog_id."_posts.post_author", array("user_name"))
-							->where("wp_".$blog_id."_posts.post_status = 'publish' AND wp_".$blog_id."_posts.post_type = 'post'");
-				}
-				$select = $db->select()->union($select_ar)->order("post_date DESC")->limit(5);
-				$this->view->blogs = $db->fetchAll($select);
-				$cache->save($this->view->blogs, 'blog_latest');
-			}
 			$select = $db->select()
 					->from("beer_events", array("*", "DATE_FORMAT(event_start, '%Y-%m-%d %H:%i') as event_start"))
 					->where("event_registration_end >= CURDATE( )")
@@ -659,31 +636,6 @@ class IndexController extends Zend_Controller_Action {
 				$entry->setDateCreated(new Zend_Date($articles[$i]['article_created'], Zend_Date::ISO_8601));
 				$entry->setDescription($articles[$i]['article_resume']);
 				$entry->setContent($articles[$i]['article_text']);
-				$feed->addEntry($entry);
-			}
-		}
-		if (!isset($_GET['articles_only'])) {
-			$blog_ids = array(20, 19, 16, 18, 17, 15, 7, 11, 10, 8, 9, 2, 3, 4, 5, 6);
-			foreach($blog_ids as $blog_id){
-				$select_ar[$blog_id] = $db->select()
-						->from("wp_".$blog_id."_posts", array("post_date", "post_modified", "ID", "post_author", "post_title", "comment_count", "guid", "post_content"))
-						->join("users", "users.user_id=wp_".$blog_id."_posts.post_author", array("user_name"))
-						->where("wp_".$blog_id."_posts.post_status = 'publish' AND wp_".$blog_id."_posts.post_type = 'post'");
-			}
-			$select = $db->select()->union($select_ar)->order("post_date DESC")->limit(5);
-			$blogs = $db->fetchAll($select);
-			for ($i = 0; $i < count($blogs); $i++) {
-				$entry = $feed->createEntry();
-				$entry->setTitle($blogs[$i]['post_title']);
-				$entry->setLink($blogs[$i]['guid']);
-				$entry->setId($blogs[$i]['guid']);
-				$entry->addAuthor(array('name' => $blogs[$i]['user_name'], 'email' => 'atvirasalus.lt@gmail.com', 'uri' => 'http://www.atvirasalus.lt'));
-				// $entry->setDateModified($blogs[$i]['post_modified']);
-				// $entry->setDateCreated($blogs[$i]['post_modified']);
-				// $entry->setDateModified(new Zend_Date($blogs[$i]['post_modified'], Zend_Date::ISO_8601));
-				$entry->setDateCreated(new Zend_Date($blogs[$i]['post_date'], Zend_Date::ISO_8601));
-				$entry->setDescription($blogs[$i]['post_title']);
-				$entry->setContent($blogs[$i]['post_content']);
 				$feed->addEntry($entry);
 			}
 		}

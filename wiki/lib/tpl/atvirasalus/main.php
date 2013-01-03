@@ -272,11 +272,6 @@ if (!defined('DOKU_INC')) die();
 									</a>
 								</li>
 								<li>
-									<a href="/blog">
-										Dienoraščiai													
-									</a>
-								</li>
-								<li>
 									<a href="/tweet/all">
 										Aludarių pranešimai													
 									</a>
