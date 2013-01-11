@@ -186,4 +186,65 @@ class ApiController extends Zend_Controller_Action {
 		}
 		echo $_GET['callback'] . '(' . json_encode($response) . ")";
 	}
+
+	
+	
+	public function getalluserrecipesAction(){
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$response = array();
+		$response['status'] = "0";
+		$db = Zend_Registry::get("db");
+		$token = trim($this->_getParam('token'));
+		$uid = $this->getuserid($token);
+		if ($uid === false){
+			$response['status'] = 999;
+			echo json_encode($response);
+			exit;
+		}
+		$response['status'] = "1";
+		$select = $db->select()
+				->from("beer_recipes")
+				->where("brewer_id = ?", $uid)
+				->join("beer_styles", "beer_styles.style_id = beer_recipes.recipe_style", array("style_name"))
+				->join("users", "users.user_id = beer_recipes.brewer_id", array("user_name"))
+				->order("recipe_name ASC");
+		$result = $db->FetchAll($select);
+		$response['recipes_count'] = sizeof($result);
+		$response['recipes'] = $result;
+		$rids = array();
+		foreach($result as $key=>$val){
+			$rids[] = $val['recipe_id'];
+		}
+		$rsize = sizeof($rids);
+		$rids = implode(", ", $rids);
+		if ($rsize > 0){
+			$select = $db->select()
+					->from("beer_awards")
+					->where("recipe_id IN (".$rids.")");
+			$result = $db->FetchAll($select);
+			$response['awards_count'] = sizeof($result);
+			$response['awards'] = $result;
+			$select = $db->select()
+					->from("beer_recipes_hops")
+					->where("recipe_id IN (".$rids.")");
+			$result = $db->FetchAll($select);
+			$response['hops_count'] = sizeof($result);
+			$response['hops'] = $result;
+			$select = $db->select()
+					->from("beer_recipes_malt")
+					->where("recipe_id IN (".$rids.")");
+			$result = $db->FetchAll($select);
+			$response['malts_count'] = sizeof($result);
+			$response['malts'] = $result;
+			$select = $db->select()
+					->from("beer_recipes_yeast")
+					->where("recipe_id IN (".$rids.")");
+			$result = $db->FetchAll($select);
+			$response['yeasts_count'] = sizeof($result);
+			$response['yeasts'] = $result;
+		}
+		echo $_GET['callback'] . '(' . json_encode($response) . ")";
+	}
+	
 }
