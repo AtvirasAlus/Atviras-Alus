@@ -3,6 +3,17 @@ class ApiController extends Zend_Controller_Action {
 	public function init() {
 	}
 
+	private function prep_array($array){
+		$out = array();
+		foreach($array as $key=>$val){
+			if (is_array($val)){
+				$out[$key] = $this->prep_array($val);
+			} else {
+				$out[$key] = htmlentities($val);
+			}
+		}
+		return $out;
+	}
 	public function loginAction() {
 		$this->_helper->layout->setLayout('empty');
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -231,7 +242,7 @@ class ApiController extends Zend_Controller_Action {
 				->order("recipe_name ASC");
 		$result = $db->FetchAll($select);
 		$response['recipes_count'] = sizeof($result);
-		$response['recipes'] = $result;
+		$response['recipes'] = $this->prep_array($result);
 		$rids = array();
 		foreach($result as $key=>$val){
 			$rids[] = $val['recipe_id'];
@@ -244,25 +255,25 @@ class ApiController extends Zend_Controller_Action {
 					->where("recipe_id IN (".$rids.")");
 			$result = $db->FetchAll($select);
 			$response['awards_count'] = sizeof($result);
-			$response['awards'] = $result;
+			$response['awards'] = $this->prep_array($result);
 			$select = $db->select()
 					->from("beer_recipes_hops")
 					->where("recipe_id IN (".$rids.")");
 			$result = $db->FetchAll($select);
 			$response['hops_count'] = sizeof($result);
-			$response['hops'] = $result;
+			$response['hops'] = $this->prep_array($result);
 			$select = $db->select()
 					->from("beer_recipes_malt")
 					->where("recipe_id IN (".$rids.")");
 			$result = $db->FetchAll($select);
 			$response['malts_count'] = sizeof($result);
-			$response['malts'] = $result;
+			$response['malts'] = $this->prep_array($result);
 			$select = $db->select()
 					->from("beer_recipes_yeast")
 					->where("recipe_id IN (".$rids.")");
 			$result = $db->FetchAll($select);
 			$response['yeasts_count'] = sizeof($result);
-			$response['yeasts'] = $result;
+			$response['yeasts'] = $this->prep_array($result);
 		}
 		if (isset($_GET['testmode'])){
 			echo "<pre>";print_r($response);exit;
@@ -294,7 +305,7 @@ class ApiController extends Zend_Controller_Action {
 				->order("beer_recipes.recipe_name ASC");
 		$result = $db->FetchAll($select);
 		$response['recipes_count'] = sizeof($result);
-		$response['recipes'] = $result;
+		$response['recipes'] = $this->prep_array($result);
 		$rids = array();
 		foreach($result as $key=>$val){
 			$rids[] = $val['recipe_id'];
@@ -307,25 +318,25 @@ class ApiController extends Zend_Controller_Action {
 					->where("recipe_id IN (".$rids.")");
 			$result = $db->FetchAll($select);
 			$response['awards_count'] = sizeof($result);
-			$response['awards'] = $result;
+			$response['awards'] = $this->prep_array($result);
 			$select = $db->select()
 					->from("beer_recipes_hops")
 					->where("recipe_id IN (".$rids.")");
 			$result = $db->FetchAll($select);
 			$response['hops_count'] = sizeof($result);
-			$response['hops'] = $result;
+			$response['hops'] = $this->prep_array($result);
 			$select = $db->select()
 					->from("beer_recipes_malt")
 					->where("recipe_id IN (".$rids.")");
 			$result = $db->FetchAll($select);
 			$response['malts_count'] = sizeof($result);
-			$response['malts'] = $result;
+			$response['malts'] = $this->prep_array($result);
 			$select = $db->select()
 					->from("beer_recipes_yeast")
 					->where("recipe_id IN (".$rids.")");
 			$result = $db->FetchAll($select);
 			$response['yeasts_count'] = sizeof($result);
-			$response['yeasts'] = $result;
+			$response['yeasts'] = $this->prep_array($result);
 		}
 		if (isset($_GET['testmode'])){
 			echo "<pre>";print_r($response);exit;
