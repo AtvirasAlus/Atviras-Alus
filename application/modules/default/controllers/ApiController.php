@@ -9,7 +9,7 @@ class ApiController extends Zend_Controller_Action {
 			if (is_array($val)){
 				$out[$key] = $this->prep_array($val);
 			} else {
-				$out[$key] = htmlentities($val);
+				$out[$key] = str_replace('"', "&quot;", $val);
 			}
 		}
 		return $out;
