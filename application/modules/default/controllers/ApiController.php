@@ -228,8 +228,7 @@ class ApiController extends Zend_Controller_Action {
 				->where("brewer_id = ?", $uid)
 				->join("beer_styles", "beer_styles.style_id = beer_recipes.recipe_style", array("style_name"))
 				->join("users", "users.user_id = beer_recipes.brewer_id", array("user_name"))
-				->order("recipe_name ASC")
-				->limit(1);
+				->order("recipe_name ASC");
 		$result = $db->FetchAll($select);
 		$response['recipes_count'] = sizeof($result);
 		$response['recipes'] = $result;
