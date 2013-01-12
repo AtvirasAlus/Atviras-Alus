@@ -384,7 +384,7 @@ class ApiController extends Zend_Controller_Action {
 					->where("beer_recipes_comments.comment_recipe IN (".$rids.")");
 			$result = $db->FetchAll($select);
 			$response['items_size'] = sizeof($result);
-			$response['items'] = $result;
+			$response['items'] = $this->prep_array($result);
 		}
 		if (isset($_GET['testmode'])){
 			echo "<pre>";print_r($response);exit;
@@ -412,7 +412,7 @@ class ApiController extends Zend_Controller_Action {
 				->where("beer_brew_sessions.session_brewer = ?", $uid);
 		$result = $db->FetchAll($select);
 		$response['items_size'] = sizeof($result);
-		$response['items'] = $result;
+		$response['items'] = $this->prep_array($result);
 		if (isset($_GET['testmode'])){
 			echo "<pre>";print_r($response);exit;
 		} else {
@@ -439,28 +439,28 @@ class ApiController extends Zend_Controller_Action {
 				->order("hop_name");
 		$result = $db->FetchAll($select);
 		$response['hops_size'] = sizeof($result);
-		$response['hops'] = $result;
+		$response['hops'] = $this->prep_array($result);
 		$select = $db->select()
 				->from("storage_malt")
 				->where("user_id = ?", $uid)
 				->order("malt_name");
 		$result = $db->FetchAll($select);
 		$response['malt_size'] = sizeof($result);
-		$response['malt'] = $result;
+		$response['malt'] = $this->prep_array($result);
 		$select = $db->select()
 				->from("storage_other")
 				->where("user_id = ?", $uid)
 				->order("other_name");
 		$result = $db->FetchAll($select);
 		$response['other_size'] = sizeof($result);
-		$response['other'] = $result;
+		$response['other'] = $this->prep_array($result);
 		$select = $db->select()
 				->from("storage_yeast")
 				->where("user_id = ?", $uid)
 				->order("yeast_name");
 		$result = $db->FetchAll($select);
 		$response['yeast_size'] = sizeof($result);
-		$response['yeast'] = $result;
+		$response['yeast'] = $this->prep_array($result);
 		if (isset($_GET['testmode'])){
 			echo "<pre>";print_r($response);exit;
 		} else {
