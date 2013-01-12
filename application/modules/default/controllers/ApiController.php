@@ -24,7 +24,11 @@ class ApiController extends Zend_Controller_Action {
 				$response['token'] = $result[0]['api_token'];
 			}
 		}
-		echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
 	}
 
 	public function validateAction() {
@@ -46,7 +50,11 @@ class ApiController extends Zend_Controller_Action {
 				$response['token'] = $result[0]['api_token'];
 			}
 		}
-		echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
 	}
 
 	public function getuserinfoAction() {
@@ -67,7 +75,11 @@ class ApiController extends Zend_Controller_Action {
 				$response['userinfo'] = $result[0];
 			}
 		}
-		echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
 	}
 	
 	public function getuserrecipesAction(){
@@ -93,7 +105,11 @@ class ApiController extends Zend_Controller_Action {
 		$response['status'] = "1";
 		$response['count'] = sizeof($result);
 		$response['items'] = $result;
-		echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
 	}
 	
 	private function getuserid($token){
@@ -184,7 +200,11 @@ class ApiController extends Zend_Controller_Action {
 				$response['yeasts'] = $db->FetchAll($select);
 			}
 		}
-		echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
 	}
 
 	// API 2.0
@@ -244,7 +264,11 @@ class ApiController extends Zend_Controller_Action {
 			$response['yeasts_count'] = sizeof($result);
 			$response['yeasts'] = $result;
 		}
-		echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
 	}
 	
 	public function getalluserfavoriterecipesAction(){
@@ -303,7 +327,11 @@ class ApiController extends Zend_Controller_Action {
 			$response['yeasts_count'] = sizeof($result);
 			$response['yeasts'] = $result;
 		}
-		echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
 	}
 	public function getalluserrecipecommentsAction(){
 		$this->_helper->layout->setLayout('empty');
@@ -347,7 +375,11 @@ class ApiController extends Zend_Controller_Action {
 			$response['items_size'] = sizeof($result);
 			$response['items'] = $result;
 		}
-		echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
 	}
 	public function getallusersessionsAction(){
 		$this->_helper->layout->setLayout('empty');
@@ -370,7 +402,11 @@ class ApiController extends Zend_Controller_Action {
 		$result = $db->FetchAll($select);
 		$response['items_size'] = sizeof($result);
 		$response['items'] = $result;
-		echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
 	}
 	public function getalluserstorageAction(){
 		$this->_helper->layout->setLayout('empty');
@@ -414,6 +450,10 @@ class ApiController extends Zend_Controller_Action {
 		$result = $db->FetchAll($select);
 		$response['yeast_size'] = sizeof($result);
 		$response['yeast'] = $result;
-		echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
 	}
 }
