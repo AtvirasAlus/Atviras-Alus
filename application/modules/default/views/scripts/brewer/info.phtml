@@ -94,6 +94,15 @@
 				</div>
 				<?php
 			}
+			if ($this->user_info['total_brewed_unknown'] != 0){
+				?>
+				<div class="brewer_info_block">
+					<div class="brewer_info_label">Pagamino kitų gėrimų:<br />(pagal pašalintus receptus)</div>
+					<div class="brewer_info_text"><?=$this->user_info['total_brewed_unknown'];?> l.</div>
+					<div class="clear"></div>
+				</div>
+				<?php
+			}
 			?>
 			<div class="brewer_info_block">
 				<div class="brewer_info_label">Papildoma informacija:</div>
@@ -182,11 +191,19 @@ if (sizeof($this->user_info['sessions']) > 0){
 							<?
 						}
 					} else {
-						?>
-						<div class="as-cell">-</div>
-						<div class="as-cell">Receptas nėra viešas</div>
-						<div class="as-cell">-</div>
-						<?php
+						if ($session['recipe_publish'] === "0"){
+							?>
+							<div class="as-cell">-</div>
+							<div class="as-cell">Receptas nėra viešas</div>
+							<div class="as-cell">-</div>
+							<?php
+						} else {
+							?>
+							<div class="as-cell">-</div>
+							<div class="as-cell">Receptas ištrintas</div>
+							<div class="as-cell">-</div>
+							<?php
+						}
 					}
 					?>
 					<div class="as-cell"><?=$session['session_size']?></div>

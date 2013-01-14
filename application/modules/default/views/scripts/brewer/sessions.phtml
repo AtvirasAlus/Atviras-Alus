@@ -41,11 +41,19 @@
 								<?
 							}
 						} else {
-							?>
-							<div class="as-cell">-</div>
-							<div class="as-cell">Receptas nėra viešas</div>
-							<div class="as-cell">-</div>
-							<?php
+							if ($session['recipe_publish'] === "0"){
+								?>
+								<div class="as-cell">-</div>
+								<div class="as-cell">Receptas nėra viešas</div>
+								<div class="as-cell">-</div>
+								<?php
+							} else {
+								?>
+								<div class="as-cell">-</div>
+								<div class="as-cell">Receptas ištrintas</div>
+								<div class="as-cell">-</div>
+								<?php
+							}
 						}
 						?>
 						<div class="as-cell"><?=$session['session_size']?></div>
