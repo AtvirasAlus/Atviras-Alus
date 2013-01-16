@@ -103,7 +103,7 @@ class ApiController extends Zend_Controller_Action {
 		$uid = $this->getuserid($token);
 		if ($uid === false){
 			$response['status'] = 999;
-			echo json_encode($response);
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
 			exit;
 		}
 		$select = $db->select()
@@ -230,7 +230,7 @@ class ApiController extends Zend_Controller_Action {
 		$uid = $this->getuserid($token);
 		if ($uid === false){
 			$response['status'] = 999;
-			echo json_encode($response);
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
 			exit;
 		}
 		$response['status'] = "1";
@@ -292,7 +292,7 @@ class ApiController extends Zend_Controller_Action {
 		$uid = $this->getuserid($token);
 		if ($uid === false){
 			$response['status'] = 999;
-			echo json_encode($response);
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
 			exit;
 		}
 		$response['status'] = "1";
@@ -354,7 +354,7 @@ class ApiController extends Zend_Controller_Action {
 		$uid = $this->getuserid($token);
 		if ($uid === false){
 			$response['status'] = 999;
-			echo json_encode($response);
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
 			exit;
 		}
 		$response['status'] = "1";
@@ -402,7 +402,7 @@ class ApiController extends Zend_Controller_Action {
 		$uid = $this->getuserid($token);
 		if ($uid === false){
 			$response['status'] = 999;
-			echo json_encode($response);
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
 			exit;
 		}
 		$response['status'] = "1";
@@ -429,7 +429,7 @@ class ApiController extends Zend_Controller_Action {
 		$uid = $this->getuserid($token);
 		if ($uid === false){
 			$response['status'] = 999;
-			echo json_encode($response);
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
 			exit;
 		}
 		$response['status'] = "1";
@@ -461,6 +461,69 @@ class ApiController extends Zend_Controller_Action {
 		$result = $db->FetchAll($select);
 		$response['yeast_size'] = sizeof($result);
 		$response['yeast'] = $this->prep_array($result);
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
+	}
+	public function updatestorageAction() {
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$token = trim($this->_getParam('token'));
+		$uid = $this->getuserid($token);
+		if ($uid === false){
+			$response['status'] = 999;
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+			exit;
+		}
+		$table = trim($this->_getParam('i_table'));
+		$item = trim($this->_getParam('i_item'));
+		$response = array();
+		$response['status'] = "0";
+		switch($table){
+			case "malt":
+				$name = trim($this->_getParam('i_name'));
+				$weight = trim($this->_getParam('i_weight'));
+				$ebc = trim($this->_getParam('i_ebc'));
+				$db->update("storage_malt", array(
+					"malt_name" => $name,
+					"malt_weight" => $weight,
+					"malt_ebc" => $ebc
+					), "storage_malt_id = '".$item."' AND user_id='".$uid."'");
+				$response['status'] = "1";
+			break;
+			case "hop":
+				$name = trim($this->_getParam('i_name'));
+				$weight = trim($this->_getParam('i_weight'));
+				$alpha = trim($this->_getParam('i_alpha'));
+				$db->update("storage_hops", array(
+					"hop_name" => $name,
+					"hop_weight" => $weight,
+					"hop_alpha" => $alpha
+					), "id = '".$item."' AND user_id='".$uid."'");
+				$response['status'] = "1";
+			break;
+			case "yeast":
+				$name = trim($this->_getParam('i_name'));
+				$weight = trim($this->_getParam('i_weight'));
+				$db->update("storage_yeast", array(
+					"yeast_name" => $name,
+					"yeast_weight" => $weight
+					), "storage_yeast_id = '".$item."' AND user_id='".$uid."'");
+				$response['status'] = "1";
+			break;
+			case "other":
+				$name = trim($this->_getParam('i_name'));
+				$weight = trim($this->_getParam('i_weight'));
+				$db->update("storage_other", array(
+					"other_name" => $name,
+					"other_weight" => $weight
+					), "storage_other_id = '".$item."' AND user_id='".$uid."'");
+				$response['status'] = "1";
+			break;
+		}
 		if (isset($_GET['testmode'])){
 			echo "<pre>";print_r($response);exit;
 		} else {
