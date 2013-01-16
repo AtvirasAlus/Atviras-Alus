@@ -589,44 +589,48 @@ class ApiController extends Zend_Controller_Action {
 				$name = trim($this->_getParam('i_name'));
 				$weight = trim($this->_getParam('i_weight'));
 				$ebc = trim($this->_getParam('i_ebc'));
-				$response['last_id'] = $db->insert("storage_malt", array(
+				$db->insert("storage_malt", array(
 					"malt_name" => $name,
 					"malt_weight" => $weight,
 					"malt_ebc" => $ebc,
 					"user_id" => $uid
 					));
+				$response['last_id'] = $db->lastInsertId();
 				$response['status'] = "1";
 			break;
 			case "hop":
 				$name = trim($this->_getParam('i_name'));
 				$weight = trim($this->_getParam('i_weight'));
 				$alpha = trim($this->_getParam('i_alpha'));
-				$response['last_id'] = $db->insert("storage_hops", array(
+				$db->insert("storage_hops", array(
 					"hop_name" => $name,
 					"hop_weight" => $weight,
 					"hop_alpha" => $alpha,
 					"user_id" => $uid
 					));
+				$response['last_id'] = $db->lastInsertId();
 				$response['status'] = "1";
 			break;
 			case "yeast":
 				$name = trim($this->_getParam('i_name'));
 				$weight = trim($this->_getParam('i_weight'));
-				$response['last_id'] = $db->insert("storage_yeast", array(
+				$db->insert("storage_yeast", array(
 					"yeast_name" => $name,
 					"yeast_weight" => $weight,
 					"user_id" => $uid
 					));
+				$response['last_id'] = $db->lastInsertId();
 				$response['status'] = "1";
 			break;
 			case "other":
 				$name = trim($this->_getParam('i_name'));
 				$weight = trim($this->_getParam('i_weight'));
-				$response['last_id'] = $db->insert("storage_other", array(
+				$db->insert("storage_other", array(
 					"other_name" => $name,
 					"other_weight" => $weight,
 					"user_id" => $uid
 					));
+				$response['last_id'] = $db->lastInsertId();
 				$response['status'] = "1";
 			break;
 		}
