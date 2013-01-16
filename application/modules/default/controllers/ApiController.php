@@ -4,6 +4,7 @@ class ApiController extends Zend_Controller_Action {
 	}
 
 	private function prep_array($array){
+		/*
 		$out = array();
 		foreach($array as $key=>$val){
 			if (is_array($val)){
@@ -13,6 +14,8 @@ class ApiController extends Zend_Controller_Action {
 			}
 		}
 		return $out;
+		 */
+		return $array;
 	}
 	public function loginAction() {
 		$this->_helper->layout->setLayout('empty');
