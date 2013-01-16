@@ -530,4 +530,110 @@ class ApiController extends Zend_Controller_Action {
 			echo $_GET['callback'] . '(' . json_encode($response) . ")";
 		}
 	}
+	public function deletestorageAction() {
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$token = trim($this->_getParam('token'));
+		$uid = $this->getuserid($token);
+		if ($uid === false){
+			$response['status'] = 999;
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+			exit;
+		}
+		$table = trim($this->_getParam('i_table'));
+		$item = trim($this->_getParam('i_item'));
+		$response = array();
+		$response['status'] = "0";
+		switch($table){
+			case "malt":
+				$db->delete("storage_malt", "storage_malt_id = '".$item."' AND user_id='".$uid."'");
+				$response['status'] = "1";
+			break;
+			case "hop":
+				$db->delete("storage_hops", "id = '".$item."' AND user_id='".$uid."'");
+				$response['status'] = "1";
+			break;
+			case "yeast":
+				$db->delete("storage_yeast", "storage_yeast_id = '".$item."' AND user_id='".$uid."'");
+				$response['status'] = "1";
+			break;
+			case "other":
+				$db->delete("storage_other", "storage_other_id = '".$item."' AND user_id='".$uid."'");
+				$response['status'] = "1";
+			break;
+		}
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
+	}
+	public function insertstorageAction() {
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$token = trim($this->_getParam('token'));
+		$uid = $this->getuserid($token);
+		if ($uid === false){
+			$response['status'] = 999;
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+			exit;
+		}
+		$table = trim($this->_getParam('i_table'));
+		$item = trim($this->_getParam('i_item'));
+		$response = array();
+		$response['status'] = "0";
+		switch($table){
+			case "malt":
+				$name = trim($this->_getParam('i_name'));
+				$weight = trim($this->_getParam('i_weight'));
+				$ebc = trim($this->_getParam('i_ebc'));
+				$response['last_id'] = $db->insert("storage_malt", array(
+					"malt_name" => $name,
+					"malt_weight" => $weight,
+					"malt_ebc" => $ebc,
+					"user_id" => $uid
+					));
+				$response['status'] = "1";
+			break;
+			case "hop":
+				$name = trim($this->_getParam('i_name'));
+				$weight = trim($this->_getParam('i_weight'));
+				$alpha = trim($this->_getParam('i_alpha'));
+				$response['last_id'] = $db->insert("storage_hops", array(
+					"hop_name" => $name,
+					"hop_weight" => $weight,
+					"hop_alpha" => $alpha,
+					"user_id" => $uid
+					));
+				$response['status'] = "1";
+			break;
+			case "yeast":
+				$name = trim($this->_getParam('i_name'));
+				$weight = trim($this->_getParam('i_weight'));
+				$response['last_id'] = $db->insert("storage_yeast", array(
+					"yeast_name" => $name,
+					"yeast_weight" => $weight,
+					"user_id" => $uid
+					));
+				$response['status'] = "1";
+			break;
+			case "other":
+				$name = trim($this->_getParam('i_name'));
+				$weight = trim($this->_getParam('i_weight'));
+				$response['last_id'] = $db->insert("storage_other", array(
+					"other_name" => $name,
+					"other_weight" => $weight,
+					"user_id" => $uid
+					));
+				$response['status'] = "1";
+			break;
+		}
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
+	}
 }
