@@ -557,7 +557,6 @@ class ApiController extends Zend_Controller_Action {
 			case "yeast":
 				$db->delete("storage_yeast", "storage_yeast_id = '".$item."' AND user_id='".$uid."'");
 				$response['status'] = "1";
-				$response['sql'] = "DELETE FROM storage_yeast WHERE storage_yeast_id = '".$item."' AND user_id='".$uid."'";
 			break;
 			case "other":
 				$db->delete("storage_other", "storage_other_id = '".$item."' AND user_id='".$uid."'");
