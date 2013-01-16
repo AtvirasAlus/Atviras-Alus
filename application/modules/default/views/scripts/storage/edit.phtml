@@ -8,7 +8,7 @@
 		<?
 		for ($i = 0; $i < count($this->malts); $i++) {
 			?>
-			malts+='<option malt_id="<?= trim($this->malts[$i]['malt_id']); ?>" type="<?= trim($this->malts[$i]['malt_type']); ?>" ebc="<?= trim($this->malts[$i]['malt_ebc']); ?>" extract="<?= $this->malts[$i]['malt_extract'] ?>"><?= addslashes($this->malts[$i]['malt_name']); ?></option>';
+					malts+='<option malt_id="<?= trim($this->malts[$i]['malt_id']); ?>" type="<?= trim($this->malts[$i]['malt_type']); ?>" ebc="<?= trim($this->malts[$i]['malt_ebc']); ?>" extract="<?= $this->malts[$i]['malt_extract'] ?>"><?= html_entity_decode(addslashes($this->malts[$i]['malt_name'])); ?></option>';
 			<?
 		}
 		?>
