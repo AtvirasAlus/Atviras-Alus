@@ -196,26 +196,38 @@ class StorageController extends Zend_Controller_Action {
 		$select->from("storage_malt")
 				->where("user_id = ?", $user_id)
 				->order("malt_name ASC");
-		$mlts = $db->fetchAll($select);
-		foreach($mlts as $key=>$val){
-			$mlts[$key]['malt_name'] = html_entity_decode($val['malt_name']);
+		$malts = $db->fetchAll($select);
+		foreach($malts as $key=>$val){
+			$malts[$key]['malt_name'] = html_entity_decode($val['malt_name']);
 		}
-		$this->view->data["malt"] = $mlts;
+		$this->view->data["malt"] = $malts;
 		$select = $db->select();
 		$select->from("storage_hops")
 				->where("user_id = ?", $user_id)
 				->order("hop_name ASC");
-		$this->view->data["hops"] = $db->fetchAll($select);
+		$hops = $db->fetchAll($select);
+		foreach($hops as $key=>$val){
+			$hops[$key]['hop_name'] = html_entity_decode($val['hop_name']);
+		}
+		$this->view->data["hops"] = $hops;
 		$select = $db->select();
 		$select->from("storage_yeast")
 				->where("user_id = ?", $user_id)
 				->order("yeast_name ASC");
-		$this->view->data["yeast"] = $db->fetchAll($select);
+		$yeasts = $db->fetchAll($select);
+		foreach($yeasts as $key=>$val){
+			$yeasts[$key]['yeast_name'] = html_entity_decode($val['yeast_name']);
+		}
+		$this->view->data["yeast"] = $yeasts;
 		$select = $db->select();
 		$select->from("storage_other")
 				->where("user_id = ?", $user_id)
 				->order("other_name ASC");
-		$this->view->data["other"] = $db->fetchAll($select);
+		$others = $db->fetchAll($select);
+		foreach($others as $key=>$val){
+			$others[$key]['other_name'] = html_entity_decode($val['other_name']);
+		}
+		$this->view->data["other"] = $others;
 		
 		$select = $db->select()
 			->from("beer_malt")
