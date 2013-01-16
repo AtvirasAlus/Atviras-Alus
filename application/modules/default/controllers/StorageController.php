@@ -196,7 +196,11 @@ class StorageController extends Zend_Controller_Action {
 		$select->from("storage_malt")
 				->where("user_id = ?", $user_id)
 				->order("malt_name ASC");
-		$this->view->data["malt"] = $db->fetchAll($select);
+		$mlts = $db->fetchAll($select);
+		foreach($mlts as $key=>$val){
+			$mlts[$key]['malt_name'] = html_entity_decode($val['malt_name']);
+		}
+		$this->view->data["malt"] = $mlts;
 		$select = $db->select();
 		$select->from("storage_hops")
 				->where("user_id = ?", $user_id)
