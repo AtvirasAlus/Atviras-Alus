@@ -159,7 +159,8 @@ class StorageController extends Zend_Controller_Action {
 					"malt_name" => $val['name'],
 					"malt_ebc" => $val['ebc'],
 					"malt_brewcrew_public" => $val['public'],
-					"malt_weight" => $val['weight']
+					"malt_weight" => $val['weight'],
+					"moddate" => date("Y-m-d H:i:s")
 				));
 			}
 			foreach($data['hops'] as $key=>$val){
@@ -168,7 +169,8 @@ class StorageController extends Zend_Controller_Action {
 					"hop_name" => $val['name'],
 					"hop_alpha" => $val['alpha'],
 					"hop_brewcrew_public" => $val['public'],
-					"hop_weight" => $val['weight']
+					"hop_weight" => $val['weight'],
+					"moddate" => date("Y-m-d H:i:s")
 				));
 			}
 			foreach($data['yeast'] as $key=>$val){
@@ -176,7 +178,8 @@ class StorageController extends Zend_Controller_Action {
 					"user_id" => $user_id,
 					"yeast_name" => $val['name'],
 					"yeast_brewcrew_public" => $val['public'],
-					"yeast_weight" => $val['weight']
+					"yeast_weight" => $val['weight'],
+					"moddate" => date("Y-m-d H:i:s")
 				));
 			}
 			foreach($data['other'] as $key=>$val){
@@ -184,7 +187,8 @@ class StorageController extends Zend_Controller_Action {
 					"user_id" => $user_id,
 					"other_name" => $val['name'],
 					"other_brewcrew_public" => $val['public'],
-					"other_weight" => $val['weight']
+					"other_weight" => $val['weight'],
+					"moddate" => date("Y-m-d H:i:s")
 				));
 			}
 			$this->_redirect("/storage");
