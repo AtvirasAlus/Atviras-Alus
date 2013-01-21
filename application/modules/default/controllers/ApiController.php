@@ -643,4 +643,117 @@ class ApiController extends Zend_Controller_Action {
 			echo $_GET['callback'] . '(' . json_encode($response) . ")";
 		}
 	}
+	public function getmoddateAction(){
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$response = array();
+		$response['status'] = "0";
+		$db = Zend_Registry::get("db");
+		$token = trim($this->_getParam('token'));
+		$type = trim($this->_getParam('type'));
+		$uid = $this->getuserid($token);
+		if ($uid === false){
+			$response['status'] = 999;
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+			exit;
+		}
+		$response['status'] = "1";
+		switch($type){
+			case "storage":
+				$s1 = $db->select()
+					->from("storage_hops", array("moddate"))
+					->where("user_id = ?", $uid)
+					->order("moddate DESC")
+					->limit(1);
+				$s2 = $db->select()
+					->from("storage_malt", array("moddate"))
+					->where("user_id = ?", $uid)
+					->order("moddate DESC")
+					->limit(1);
+				$s3 = $db->select()
+					->from("storage_yeast", array("moddate"))
+					->where("user_id = ?", $uid)
+					->order("moddate DESC")
+					->limit(1);
+				$s4 = $db->select()
+					->from("storage_other", array("moddate"))
+					->where("user_id = ?", $uid)
+					->order("moddate DESC")
+					->limit(1);
+				$select = $db->select()->union(array("(".$s1.")", "(".$s2.")", "(".$s3.")", "(".$s4.")"))
+					->order("moddate DESC")
+					->limit(1);
+				$result = $db->fetchAll($select);
+				if (sizeof($result) == 0){
+					$response['moddate'] = "0000-00-00 00:00:00";
+				} else {
+					$response['moddate'] = $result[0]['moddate'];
+				}
+			break;
+		}
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
+	}
+	public function checkmoddateAction(){
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$response = array();
+		$response['status'] = "0";
+		$db = Zend_Registry::get("db");
+		$token = trim($this->_getParam('token'));
+		$type = trim($this->_getParam('type'));
+		$moddate = trim($this->_getParam('moddate'));
+		$uid = $this->getuserid($token);
+		if ($uid === false){
+			$response['status'] = 999;
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+			exit;
+		}
+		$response['status'] = "1";
+		switch($type){
+			case "storage":
+				$s1 = $db->select()
+					->from("storage_hops", array("moddate"))
+					->where("user_id = ?", $uid)
+					->order("moddate DESC")
+					->where("moddate > ?", $moddate)
+					->limit(1);
+				$s2 = $db->select()
+					->from("storage_malt", array("moddate"))
+					->where("user_id = ?", $uid)
+					->order("moddate DESC")
+					->where("moddate > ?", $moddate)
+					->limit(1);
+				$s3 = $db->select()
+					->from("storage_yeast", array("moddate"))
+					->where("user_id = ?", $uid)
+					->order("moddate DESC")
+					->where("moddate > ?", $moddate)
+					->limit(1);
+				$s4 = $db->select()
+					->from("storage_other", array("moddate"))
+					->where("user_id = ?", $uid)
+					->order("moddate DESC")
+					->where("moddate > ?", $moddate)
+					->limit(1);
+				$select = $db->select()->union(array("(".$s1.")", "(".$s2.")", "(".$s3.")", "(".$s4.")"))
+					->order("moddate DESC")
+					->limit(1);
+				$result = $db->fetchAll($select);
+				if (sizeof($result) == 0){
+					$response['foundnewer'] = "0";
+				} else {
+					$response['foundnewer'] = "1";
+				}
+			break;
+		}
+		if (isset($_GET['testmode'])){
+			echo "<pre>";print_r($response);exit;
+		} else {
+			echo $_GET['callback'] . '(' . json_encode($response) . ")";
+		}
+	}
 }
