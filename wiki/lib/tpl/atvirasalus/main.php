@@ -82,11 +82,11 @@ if (!defined('DOKU_INC')) die();
 								</div>
 								<div class="clear"></div>
 								<ul style="list-style-type:none;" id="user_info_submenu"> 
-									<li><a href="/brewer/recipes" rel="nofollow">Receptai</a></li> 
+									<li><a href="/brewer/recipes" rel="nofollow" accesskey="r">Receptai</a></li> 
 									<li><a href="/storage" rel="nofollow">Atsargos</a></li> 
 									<li><a href="/brewer/favorites" rel="nofollow">Mėgstamiausi receptai</a></li> 
-									<li><a href="/mail/inbox" rel="nofollow">Paštas</a></li> 
-									<li><a href="/brew-session/brewer" rel="nofollow">Virimų istorija</a></li>
+									<li><a href="/mail/inbox" rel="nofollow" accesskey="p">Paštas</a></li> 
+									<li><a href="/brew-session/brewer" rel="nofollow" accesskey="v">Virimų istorija</a></li>
 									<li><a href="/maistas/mano" rel="nofollow">Patiekalai</a></li>
 									<li><a href="/brewer/profile" rel="nofollow">Paskyra</a></li>
 									<?php tpl_actionlink('admin', "<li>", "</li>")?>
