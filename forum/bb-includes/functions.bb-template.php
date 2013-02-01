@@ -502,7 +502,7 @@ function bb_title( $args = '' ) {
 
 function bb_get_title( $args = '' ) {
 	$defaults = array(
-		'separator' => ' &laquo; ',
+		'separator' => ' - ',
 		'order' => 'normal',
 		'front' => ''
 	);

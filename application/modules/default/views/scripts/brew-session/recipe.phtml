@@ -1,3 +1,6 @@
+<?php
+$this->headTitle()->headTitle("Recepto ".$this->recipe["recipe_name"]." virimų istorija");
+?>
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Recepto <a href="/recipes/view/<?= $this->recipe["recipe_id"] ?>">"<?= $this->recipe["recipe_name"] ?>"</a> virimų istorija</div>
 	<?

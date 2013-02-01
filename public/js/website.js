@@ -69,6 +69,8 @@ function showLogin() {
 	$("#login-dialog").displayError([]);
 }
 $(document).ready(function () {
+	var original_title;
+	original_title = $(document).attr("title");
 	$("#login-button").button();
 	$("#login-button").bind('click', function (e) {
 		login();
@@ -84,9 +86,9 @@ $(document).ready(function () {
 			url: "/index/ping",
 			success: function(data){
 				if (data != "0"){
-					$(document).attr('title', 'Atviras alus ('+data+')');
+					$(document).attr('title', '('+data+') '+original_title);
 				} else {
-					$(document).attr('title', 'Atviras alus');
+					$(document).attr('title', original_title);
 				}
 			}
 		});
@@ -96,9 +98,9 @@ $(document).ready(function () {
 		url: "/index/pingstart",
 		success: function(data){
 			if (data != "0"){
-				$(document).attr('title', 'Atviras alus ('+data+')');
+				$(document).attr('title', '('+data+') '+original_title);
 			} else {
-				$(document).attr('title', 'Atviras alus');
+				$(document).attr('title', original_title);
 			}
 		}
 	});

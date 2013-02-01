@@ -1,3 +1,6 @@
+<?php
+$this->headTitle()->headTitle("Aludarių pranešimai");
+?>
 <script type="text/javascript">
 ROWS_COUNT=15;
 REM_TWEET_URL = "/tweet/removetweet/";
@@ -17,7 +20,7 @@ $.post(REM_TWEET_URL,{id:id}, function(msg){
 }
 </script>
 <div class="inner_container" id="bubl_container">
-	<div class="inner_header">Burbuliatorius</div>
+	<div class="inner_header">Aludarių pranešimai</div>
 	<?php
 	if (count($this->content)): 
 		?>

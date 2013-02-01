@@ -1,5 +1,8 @@
+<?php
+$this->headTitle()->headTitle("Recepto ".$this->brew_sessions['recipe_name']." virimo  informacija");
+?>
 <div id="brewer_session_container" class="inner_container">
-	<div class="inner_header">Recepto virimo "<?=$this->brew_sessions['recipe_name'];?>" informacija</div>
+	<div class="inner_header">Recepto "<?=$this->brew_sessions['recipe_name'];?>" virimo  informacija</div>
 	<?php
 	if (isset($this->brew_sessions['session_id'])) {
 		$this->headLink()->appendStylesheet("/public/css/bs.css");

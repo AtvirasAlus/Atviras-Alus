@@ -1,4 +1,7 @@
-﻿<?
+<?php
+$this->headTitle()->headTitle("Statistika");
+?>
+<?
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.js");
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");
 $id = isset($_GET['id']) ? $_GET['id'] : "";

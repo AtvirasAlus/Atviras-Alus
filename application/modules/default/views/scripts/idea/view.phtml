@@ -1,3 +1,9 @@
+<?php
+$idea = $this->idea;
+?>
+<?php
+$this->headTitle()->headTitle("Idėja #".$idea['idea_id'].": ".$idea['idea_title']);
+?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".votelink").live('click', function(){
@@ -53,9 +59,6 @@ $user_info = isset($this->user_info->user_id) ? $this->user_info : 0;
 		}
 		?>
 	</div>
-	<?php
-	$idea = $this->idea;
-	?>
 	<div class="idea_item">
 		<div class="idea_user">
 			<a href="/brewers/<?=$idea['user_id']?>">

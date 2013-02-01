@@ -18,6 +18,11 @@
 			<dd><input type="checkbox" name="remember" id="remember"/><label for="remember">prisiminti mane:</label></dd>
 			<div class="clear"></div>
 		</dl>
+		<dl style="padding: 0px; margin: 0px;">
+			<dt style="padding: 0px; margin: 0px; padding-left: 30px;">&nbsp;</dt>
+			<dd style="padding: 0px; margin: 0px;"><a href="http://www.atvirasalus.loc/auth/remember">Pamiršau slaptažodį...</a></dd>
+			<div class="clear"></div>
+		</dl>
 		<dl>
 			<dt>&nbsp;</dt>
 			<dd><button id="login-button">Jungtis</button></dd>

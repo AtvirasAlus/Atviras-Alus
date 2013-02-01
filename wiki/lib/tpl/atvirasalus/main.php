@@ -15,7 +15,7 @@ if (!defined('DOKU_INC')) die();
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
 			{lang: 'lt'}
 		</script>
-		<title>Atviras Alus - <?php tpl_pagetitle()?></title>
+		<title>Vikis - <?php tpl_pagetitle()?> - Atviras Alus</title>
 		<link type="text/css" href="lib/tpl/atvirasalus/design.css" rel="stylesheet" />	
 		<link type="text/css" href="lib/tpl/atvirasalus/layout.css" rel="stylesheet" />	
 		<link type="text/css" href="lib/tpl/atvirasalus/media.css" rel="stylesheet" />	
@@ -114,6 +114,11 @@ if (!defined('DOKU_INC')) die();
 									<dl>
 										<dt>&nbsp;</dt>
 										<dd><input type="checkbox" name="remember" id="remember"/><label for="remember">prisiminti mane:</label></dd>
+										<div class="clear"></div>
+									</dl>
+									<dl style="padding: 0px; margin: 0px;">
+										<dt style="padding: 0px; margin: 0px; padding-left: 30px;">&nbsp;</dt>
+										<dd style="padding: 0px; margin: 0px;"><a href="http://www.atvirasalus.loc/auth/remember">Pamiršau slaptažodį...</a></dd>
 										<div class="clear"></div>
 									</dl>
 									<dl>

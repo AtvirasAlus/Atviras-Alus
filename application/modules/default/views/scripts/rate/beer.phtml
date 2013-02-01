@@ -1,4 +1,7 @@
 <?php
+$this->headTitle()->headTitle("Alaus ".$this->beer['beer_display']." vertinimas");
+?>
+<?php
 if ($this->beer['beer_votes_count'] < 1) {
 	$offset = 130;
 	$votes_avg = "";
