@@ -3205,3 +3205,50 @@ html ul.topnav li ul.subnav li a:hover {
 	margin-right: 20px;
 	margin-bottom: 10px;
 }
+.rate_results {
+	margin-top: 15px;
+}
+.rate_avatar {
+	float: left;
+	text-align: center;
+	width: 80px;
+	overflow: hidden;
+}
+.rate_avatar span {
+	display: block;
+}
+.rate_result {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.rate_info {
+	float: left;
+	width: 660px;
+	margin-left: 20px;
+}
+.rate_score {
+	float: left;
+	font-size: 28px;
+	width: 50px;
+	text-align: center;
+}
+.rate_text {
+	float: left;
+	width: 130px;
+}
+.rate_value {
+	float: left;
+	margin-left: 17px;
+}
+.rate_comment {
+	margin-left: 130px;
+	margin-bottom: 5px;
+}
+.rate_row {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}

@@ -35,18 +35,15 @@ $this->headTitle()->headTitle("Bravoro ".$this->brewery['brewery_title']." alaus
 		<?php
 		$i = 1;
 		foreach($this->beers as $beer){
-			if ($beer['beer_votes_count'] < 1){
-				$offset = 130;
-				$votes_avg = "";
-			} else {
-				$votes_avg = round($beer['beer_votes_value'] / $beer['beer_votes_count']/10, 1);
-				$offset = 130-$votes_avg*10;
-				$offset = $offset - (floor($votes_avg)*3+1);
-			}
+			$votes_avg = $this->Rate($beer['beer_id']);
+			$offset = 130-$votes_avg*10;
+			$offset = $offset - (floor($votes_avg)*3+1);
 			?>
 			<div class="brewery_item" data-id="<?=$beer['beer_id']?>">
 				<div class="brewery_image">
-					<img src="/rate_images/beers/<?=$beer['beer_id']?>.jpg" width="180" />
+					<a href="/vertinimas/alus/<?=$beer['beer_id']?>-<?=$this->urlMaker($beer['beer_display'])?>">
+						<img src="/rate_images/beers/<?=$beer['beer_id']?>.jpg" width="180" />
+					</a>
 				</div>
 				<div class="brewery_title">
 					<a href="/vertinimas/alus/<?=$beer['beer_id']?>-<?=$this->urlMaker($beer['beer_display'])?>">
@@ -56,7 +53,7 @@ $this->headTitle()->headTitle("Bravoro ".$this->brewery['brewery_title']." alaus
 				<div class="brewery_info" style="margin-bottom: 2px;">
 					<div><span>Alkoholio kiekis:</span> <?=$beer['beer_abv']?>%</div>
 					<div><span>Stilius:</span> <a href="/vertinimas/stilius/<?=$beer['style_id']?>-<?=$this->urlMaker($beer['style_name'])?>"><?=$beer['style_name']?></a></div>
-					<div><span>Įvertinimų kiekis:</span> <?=$beer['beer_votes_count']?></div>
+					<div><span>Įvertinimų kiekis:</span> <?=$this->RateCount($beer['beer_id']);?></div>
 				</div>
 				<div class="brewery_rate_block">
 					<div class="brewery_rate_bar" style="background-position: -<?=$offset?>px 0px;"><img src="/public/images/rate.png" /></div>

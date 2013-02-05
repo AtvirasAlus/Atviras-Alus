@@ -2,14 +2,9 @@
 $this->headTitle()->headTitle("Alaus ".$this->beer['beer_display']." vertinimas");
 ?>
 <?php
-if ($this->beer['beer_votes_count'] < 1) {
-	$offset = 130;
-	$votes_avg = "";
-} else {
-	$votes_avg = round($this->beer['beer_votes_value'] / $this->beer['beer_votes_count'] / 10, 1);
-	$offset = 130 - $votes_avg * 10;
-	$offset = $offset - (floor($votes_avg) * 3 + 1);
-}
+$votes_avg = $this->total_score;
+$offset = 130 - $votes_avg * 10;
+$offset = $offset - (floor($votes_avg) * 3 + 1);
 ?>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -21,6 +16,66 @@ if ($this->beer['beer_votes_count'] < 1) {
 				$(".rate_simple_form").hide();
 				$(".rate_advanced_form").show();
 			}
+		});
+		$("#rate_form").submit(function(){
+			if ($("#system_type").val() == "simple"){
+				if ($("select[name='rate_simple_val']").val() == ""){
+					alert("Pasirinkite įvertinimą");
+					return false;
+				}
+			} else {
+				<?php
+				if ($this->system['system_aroma_use'] == "1"){
+					?>
+					if ($("select[name='rate_aroma']").val() == ""){
+						alert("Pasirinkite įvertinimą");
+						return false;
+					}
+					<?php
+				}
+				if ($this->system['system_appearance_use'] == "1"){
+					?>
+					if ($("select[name='rate_appearance']").val() == ""){
+						alert("Pasirinkite įvertinimą");
+						return false;
+					}
+					<?php
+				}
+				if ($this->system['system_taste_use'] == "1"){
+					?>
+					if ($("select[name='rate_taste']").val() == ""){
+						alert("Pasirinkite įvertinimą");
+						return false;
+					}
+					<?php
+				}
+				if ($this->system['system_body_use'] == "1"){
+					?>
+					if ($("select[name='rate_body']").val() == ""){
+						alert("Pasirinkite įvertinimą");
+						return false;
+					}
+					<?php
+				}
+				if ($this->system['system_style_use'] == "1"){
+					?>
+					if ($("select[name='rate_style']").val() == ""){
+						alert("Pasirinkite įvertinimą");
+						return false;
+					}
+					<?php
+				}
+				if ($this->system['system_overall_use'] == "1"){
+					?>
+					if ($("select[name='rate_overall']").val() == ""){
+						alert("Pasirinkite įvertinimą");
+						return false;
+					}
+					<?php
+				}
+				?>
+			}
+			return true;
 		});
 	});
 </script>
@@ -38,8 +93,8 @@ if ($this->beer['beer_votes_count'] < 1) {
 		<div class="ibrewery_info">
 			<h1><?= $this->beer['beer_display'] ?></h1>
 			<div><span>Alkoholio kiekis:</span> <?= $this->beer['beer_abv'] ?>%</div>
-			<div><span>Stilius:</span> <a href="/vertinimas/stilius/<?= $this->beer['style_id'] ?>-<?= $this->urlMaker($this->beer['style_name']) ?>"><?= $this->beer['style_name'] ?></a></div>
-			<div><span>Įvertinimų kiekis:</span> <?= $this->beer['beer_votes_count'] ?></div>
+			<div><span>Stilius:</span> <a href="/vertinimas/stilius/<?= $this->beer['style_id'] ?>-<?= $this->urlMaker($this->beer['style_name']) ?>"><?= $this->beer['style_name'] ?></a> (<a href="/stilius/<?= $this->beer['style_id'] ?>-<?= $this->urlMaker($this->beer['style_name']) ?>" target="_blank">?</a>)</div>
+			<div><span>Įvertinimų kiekis:</span> <?= $this->RateCount($this->beer['beer_id']) ?></div>
 			<div class="brewery_rate_block" style="padding-left: 0px;">
 				<div class="brewery_rate_bar" style="background-position: -<?= $offset ?>px 0px;"><img src="/public/images/rate.png" /></div>
 				<div class="brewery_rate_text"><?= $votes_avg ?></div>
@@ -50,292 +105,519 @@ if ($this->beer['beer_votes_count'] < 1) {
 	</div>
 	<div class="rate_form">
 		<h1>Įvertinkite šį alų:</h1>
-		<form action="/vertinimas/vertinti" method="post" id="rate_form">
+		<?php
+		if (!isset($this->user_info->user_id) || $this->user_info->user_id == 0){
+			?>
+			Norėdami įvertinti šį alų <a href="/auth/register">užsiregistruokite</a> ir prisijungite prie sistemos.
 			<?php
-			$hide_simple = true;
-			$hide_advanced = true;
-			switch($this->system['system_type']){
-				case "simple":
-					$hide_simple = false;
+		} else {
+			?>
+			<form action="/vertinimas/vertinti" method="post" id="rate_form">
+				<input type="hidden" name="beer_id" value="<?=$this->beer['beer_id']?>" />
+				<?php
+				$hide_simple = true;
+				$hide_advanced = true;
+				switch($this->system['system_type']){
+					case "simple":
+						$hide_simple = false;
+						?>
+						<input type="hidden" name="system_type" value="simple" />
+						<?php
+					break;
+					case "advanced":
+						$hide_advanced = false;
+						?>
+						<input type="hidden" name="system_type" value="advanced" />
+						<?php
+					break;
+					case "combined":
+						$hide_simple = false;
+						$hide_advanced = false;
+						?>
+						<dl style="margin-bottom: 20px;">
+							<dt>&nbsp;</dt>
+							<dd>
+								<select name="system_type" style="width: 575px;" id="system_type">
+									<option value="simple">Supaprastinta vertinimo forma</option>
+									<option value="advanced">Pilna vertinimo forma</option>
+								</select>
+							</dd>
+							<div class="clear"></div>
+						</dl>
+						<?php
+					break;
+				}
+				if ($hide_simple === false){
 					?>
-					<input type="hidden" name="system_type" value="simple" />
-					<?php
-				break;
-				case "advanced":
-					$hide_advanced = false;
-					?>
-					<input type="hidden" name="system_type" value="advanced" />
-					<?php
-				break;
-				case "combined":
-					$hide_simple = false;
-					$hide_advanced = false;
-					?>
-					<dl style="margin-bottom: 20px;">
-						<dt>&nbsp;</dt>
-						<dd>
-							<select name="system_type" style="width: 575px;" id="system_type">
-								<option value="simple">Supaprastinta vertinimo forma</option>
-								<option value="advanced">Pilna vertinimo forma</option>
-							</select>
-						</dd>
-						<div class="clear"></div>
-					</dl>
-					<?php
-				break;
-			}
-			if ($hide_simple === false){
-				?>
-				<div class="rate_simple_form">
-					<dl>
-						<dt>Bendras įvertinimas: </dt>
-						<dd>
-							<select name="rate_simple_val">
-								<option value="">---</option>
-								<?php
-								for ($i=0; $i<=$this->system['system_simple_max']; $i++){
+					<div class="rate_simple_form">
+						<dl>
+							<dt>Bendras įvertinimas: </dt>
+							<dd>
+								<select name="rate_simple_val">
+									<option value="">---</option>
+									<?php
+									for ($i=0; $i<=$this->system['system_simple_max']; $i++){
+										?>
+										<option value="<?=$i?>"><?=$i?></option>
+										<?php
+									}
 									?>
-									<option value="<?=$i?>"><?=$i?></option>
+								</select>
+							</dd>
+							<?php
+							if ($this->system['system_simple_comment'] == "1"){
+								?>
+								<dd>
+									<textarea name="rate_simple_comment"></textarea>
+								</dd>
+								<?php
+							}
+							?>
+							<div class="clear"></div>
+						</dl>
+						<dl>
+							<dt>&nbsp;</dl>
+							<dd>
+								<input type="submit" name="submit" value="Vertinti" class="ui-button" />
+							</dd>
+							<div class="clear"></div>
+						</dl>
+					</div>
+					<?php
+				}
+				if ($hide_advanced === false){
+					?>
+					<div class="rate_advanced_form" <?=($this->system['system_type'] == "combined") ? 'style="display: none;"' : '';?>>
+						<?php
+						if ($this->system['system_aroma_use'] == "1"){
+							?>
+							<dl>
+								<dt>
+									Aromatas: 
+									<span>(0-<?=$this->system['system_aroma_max']?>)</span>
+									<span>salyklas, apyniai, esteriai ir kt. aromatai</span>
+								</dt>
+								<dd>
+									<select name="rate_aroma">
+										<option value="">---</option>
+										<?php
+										for ($i=0; $i<=$this->system['system_aroma_max']; $i++){
+											?>
+											<option value="<?=$i?>"><?=$i?></option>
+											<?php
+										}
+										?>
+									</select>
+								</dd>
+								<?php
+								if ($this->system['system_aroma_comment'] == "1"){
+									?>
+									<dd>
+										<textarea name="rate_aroma_comment"></textarea>
+									</dd>
 									<?php
 								}
 								?>
-							</select>
-						</dd>
-						<?php
-						if ($this->system['system_simple_comment'] == "1"){
+								<div class="clear"></div>
+							</dl>
+							<?php
+						}
+						if ($this->system['system_appearance_use'] == "1"){
 							?>
-							<dd>
-								<textarea name="rate_simple_comment"></textarea>
-							</dd>
+							<dl>
+								<dt>
+									Išvaizda: 
+									<span>(0-<?=$this->system['system_appearance_max']?>)</span>
+									<span>spalva, skaidrumas, puta</span>
+								</dt>
+								<dd>
+									<select name="rate_appearance">
+										<option value="">---</option>
+										<?php
+										for ($i=0; $i<=$this->system['system_appearance_max']; $i++){
+											?>
+											<option value="<?=$i?>"><?=$i?></option>
+											<?php
+										}
+										?>
+									</select>
+								</dd>
+								<?php
+								if ($this->system['system_appearance_comment'] == "1"){
+									?>
+									<dd>
+										<textarea name="rate_appearance_comment"></textarea>
+									</dd>
+									<?php
+								}
+								?>
+								<div class="clear"></div>
+							</dl>
+							<?php
+						}
+						if ($this->system['system_taste_use'] == "1"){
+							?>
+							<dl>
+								<dt>
+									Skonis: 
+									<span>(0-<?=$this->system['system_taste_max']?>)</span>
+									<span>salyklas, apyniai, ferment. charakteris, balansas, finišas/poskonis ir kt.</span>
+								</dt>
+								<dd>
+									<select name="rate_taste">
+										<option value="">---</option>
+										<?php
+										for ($i=0; $i<=$this->system['system_taste_max']; $i++){
+											?>
+											<option value="<?=$i?>"><?=$i?></option>
+											<?php
+										}
+										?>
+									</select>
+								</dd>
+								<?php
+								if ($this->system['system_taste_comment'] == "1"){
+									?>
+									<dd>
+										<textarea name="rate_taste_comment"></textarea>
+									</dd>
+									<?php
+								}
+								?>
+								<div class="clear"></div>
+							</dl>
+							<?php
+						}
+						if ($this->system['system_body_use'] == "1"){
+							?>
+							<dl>
+								<dt>
+									Gomurys: 
+									<span>(0-<?=$this->system['system_body_max']?>)</span>
+									<span>kūnas, karbonizacija, šiluma, kreminis, kt.</span>
+								</dt>
+								<dd>
+									<select name="rate_body">
+										<option value="">---</option>
+										<?php
+										for ($i=0; $i<=$this->system['system_body_max']; $i++){
+											?>
+											<option value="<?=$i?>"><?=$i?></option>
+											<?php
+										}
+										?>
+									</select>
+								</dd>
+								<?php
+								if ($this->system['system_body_comment'] == "1"){
+									?>
+									<dd>
+										<textarea name="rate_body_comment"></textarea>
+									</dd>
+									<?php
+								}
+								?>
+								<div class="clear"></div>
+							</dl>
+							<?php
+						}
+						if ($this->system['system_style_use'] == "1"){
+							?>
+							<dl>
+								<dt>
+									Atitikimas stiliui: 
+									<span>(0-<?=$this->system['system_style_max']?>)</span>
+									<span>ar atskleistos pagrindinės stiliaus savybės?</span>
+								</dt>
+								<dd>
+									<select name="rate_style">
+										<option value="">---</option>
+										<?php
+										for ($i=0; $i<=$this->system['system_style_max']; $i++){
+											?>
+											<option value="<?=$i?>"><?=$i?></option>
+											<?php
+										}
+										?>
+									</select>
+								</dd>
+								<?php
+								if ($this->system['system_style_comment'] == "1"){
+									?>
+									<dd>
+										<textarea name="rate_style_comment"></textarea>
+									</dd>
+									<?php
+								}
+								?>
+								<div class="clear"></div>
+							</dl>
+							<?php
+						}
+						if ($this->system['system_overall_use'] == "1"){
+							?>
+							<dl>
+								<dt>
+									Bendras įspūdis: 
+									<span>(0-<?=$this->system['system_overall_max']?>)</span>
+									<span>bendras gėrimo malonumas</span>
+								</dt>
+								<dd>
+									<select name="rate_overall">
+										<option value="">---</option>
+										<?php
+										for ($i=0; $i<=$this->system['system_overall_max']; $i++){
+											?>
+											<option value="<?=$i?>"><?=$i?></option>
+											<?php
+										}
+										?>
+									</select>
+								</dd>
+								<?php
+								if ($this->system['system_overall_comment'] == "1"){
+									?>
+									<dd>
+										<textarea name="rate_overall_comment"></textarea>
+									</dd>
+									<?php
+								}
+								?>
+								<div class="clear"></div>
+							</dl>
 							<?php
 						}
 						?>
-						<div class="clear"></div>
-					</dl>
-					<dl>
-						<dt>&nbsp;</dl>
-						<dd>
-							<input type="submit" name="submit" value="Vertinti" class="ui-button" />
-						</dd>
-						<div class="clear"></div>
-					</dl>
-				</div>
-				<?php
-			}
-			if ($hide_advanced === false){
-				?>
-				<div class="rate_advanced_form" <?=($this->system['system_type'] == "combined") ? 'style="display: none;"' : '';?>>
+						<dl>
+							<dt>&nbsp;</dl>
+							<dd>
+								<input type="submit" name="submit" value="Vertinti" class="ui-button" />
+							</dd>
+							<div class="clear"></div>
+						</dl>
+					</div>
 					<?php
-					if ($this->system['system_aroma_use'] == "1"){
-						?>
-						<dl>
-							<dt>
-								Aromatas: 
-								<span>(0-<?=$this->system['system_aroma_max']?>)</span>
-								<span>salyklas, apyniai, esteriai ir kt. aromatai</span>
-							</dt>
-							<dd>
-								<select name="rate_aroma">
-									<option value="">---</option>
+				}
+				?>
+			</form>
+			<?php
+		}
+		?>
+	</div>
+	<div class="rate_results">
+		<?php
+		if (sizeof($this->votes) > 0){
+			foreach($this->votes as $item){
+				?>
+				<div class="rate_result">
+					<div class="rate_avatar">
+						<a href="/brewers/<?=$item['user_id'];?>">
+							<img src="http://www.gravatar.com/avatar/<?=md5($item['user_email']);?>?rating=G&size=40&default=mm" border="0"/>
+							<span><?=$item['user_name'];?></span>
+						</a>
+					</div>
+					<div class="rate_info">
+						<?php
+						switch($item['rate_type']){
+							case "simple":
+								?>
+								<div class="rate_row">
+									<div class="rate_text"><b>Bendras įvertinimas</b>: </div>
 									<?php
-									for ($i=0; $i<=$this->system['system_aroma_max']; $i++){
+									$prop = $item['system_simple_max'] / 10;
+									$votes_avg = $item['simple_vote'] / $prop;
+									$offset = 130 - $votes_avg * 10;
+									$offset = $offset - (floor($votes_avg) * 3 + 1);
+									?>
+									<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+									<div class="rate_value"><b><?=$item['simple_vote']?> / <?=$item['system_simple_max']?></b></div>
+									<div class="clear"></div>
+								</div>
+								<?php
+								$item['simple_comment'] = trim($item['simple_comment']);
+								if (isset($item['simple_comment']) && !empty($item['simple_comment'])){
+									?>
+									<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['simple_comment'])?></div>
+									<?php
+								}
+							break;
+							case "advanced":
+								$total = 0;
+								$total_system = 0;
+								if ($item['system_aroma_use'] == "1"){
+									?>
+									<div class="rate_row">
+										<div class="rate_text">Aromatas: </div>
+										<?php
+										$total += $item['aroma_vote'];
+										$total_system += $item['system_aroma_max'];
+										$prop = $item['system_aroma_max'] / 10;
+										$votes_avg = $item['aroma_vote'] / $prop;
+										$offset = 130 - $votes_avg * 10;
+										$offset = $offset - (floor($votes_avg) * 3 + 1);
 										?>
-										<option value="<?=$i?>"><?=$i?></option>
+										<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+										<div class="rate_value"><?=$item['aroma_vote']?> / <?=$item['system_aroma_max']?></div>
+										<div class="clear"></div>
+									</div>
+									<?php
+									$item['aroma_comment'] = trim($item['aroma_comment']);
+									if (isset($item['aroma_comment']) && !empty($item['aroma_comment'])){
+										?>
+										<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['aroma_comment'])?></div>
 										<?php
 									}
+								}
+								if ($item['system_appearance_use'] == "1"){
 									?>
-								</select>
-							</dd>
-							<?php
-							if ($this->system['system_aroma_comment'] == "1"){
-								?>
-								<dd>
-									<textarea name="rate_aroma_comment"></textarea>
-								</dd>
-								<?php
-							}
-							?>
-							<div class="clear"></div>
-						</dl>
-						<?php
-					}
-					if ($this->system['system_appearance_use'] == "1"){
-						?>
-						<dl>
-							<dt>
-								Išvaizda: 
-								<span>(0-<?=$this->system['system_appearance_max']?>)</span>
-								<span>spalva, skaidrumas, puta</span>
-							</dt>
-							<dd>
-								<select name="rate_appearance">
-									<option value="">---</option>
-									<?php
-									for ($i=0; $i<=$this->system['system_appearance_max']; $i++){
+									<div class="rate_row">
+										<div class="rate_text">Išvaizda: </div>
+										<?php
+										$total += $item['appearance_vote'];
+										$total_system += $item['system_appearance_max'];
+										$prop = $item['system_appearance_max'] / 10;
+										$votes_avg = $item['appearance_vote'] / $prop;
+										$offset = 130 - $votes_avg * 10;
+										$offset = $offset - (floor($votes_avg) * 3 + 1);
 										?>
-										<option value="<?=$i?>"><?=$i?></option>
+										<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+										<div class="rate_value"><?=$item['appearance_vote']?> / <?=$item['system_appearance_max']?></div>
+										<div class="clear"></div>
+									</div>
+									<?php
+									$item['appearance_comment'] = trim($item['appearance_comment']);
+									if (isset($item['appearance_comment']) && !empty($item['appearance_comment'])){
+										?>
+										<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['appearance_comment'])?></div>
 										<?php
 									}
+								}
+								if ($item['system_taste_use'] == "1"){
 									?>
-								</select>
-							</dd>
-							<?php
-							if ($this->system['system_appearance_comment'] == "1"){
-								?>
-								<dd>
-									<textarea name="rate_appearance_comment"></textarea>
-								</dd>
-								<?php
-							}
-							?>
-							<div class="clear"></div>
-						</dl>
-						<?php
-					}
-					if ($this->system['system_taste_use'] == "1"){
-						?>
-						<dl>
-							<dt>
-								Skonis: 
-								<span>(0-<?=$this->system['system_taste_max']?>)</span>
-								<span>salyklas, apyniai, ferment. charakteris, balansas, finišas/poskonis ir kt.</span>
-							</dt>
-							<dd>
-								<select name="rate_taste">
-									<option value="">---</option>
-									<?php
-									for ($i=0; $i<=$this->system['system_taste_max']; $i++){
+									<div class="rate_row">
+										<div class="rate_text">Skonis: </div>
+										<?php
+										$total += $item['taste_vote'];
+										$total_system += $item['system_taste_max'];
+										$prop = $item['system_taste_max'] / 10;
+										$votes_avg = $item['taste_vote'] / $prop;
+										$offset = 130 - $votes_avg * 10;
+										$offset = $offset - (floor($votes_avg) * 3 + 1);
 										?>
-										<option value="<?=$i?>"><?=$i?></option>
+										<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+										<div class="rate_value"><?=$item['taste_vote']?> / <?=$item['system_taste_max']?></div>
+										<div class="clear"></div>
+									</div>
+									<?php
+									$item['taste_comment'] = trim($item['taste_comment']);
+									if (isset($item['taste_comment']) && !empty($item['taste_comment'])){
+										?>
+										<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['taste_comment'])?></div>
 										<?php
 									}
+								}
+								if ($item['system_body_use'] == "1"){
 									?>
-								</select>
-							</dd>
-							<?php
-							if ($this->system['system_taste_comment'] == "1"){
-								?>
-								<dd>
-									<textarea name="rate_taste_comment"></textarea>
-								</dd>
-								<?php
-							}
-							?>
-							<div class="clear"></div>
-						</dl>
-						<?php
-					}
-					if ($this->system['system_body_use'] == "1"){
-						?>
-						<dl>
-							<dt>
-								Konsistencija: 
-								<span>(0-<?=$this->system['system_body_max']?>)</span>
-								<span>kūnas, karbonizacija, šiluma, kreminis, kt.</span>
-							</dt>
-							<dd>
-								<select name="rate_body">
-									<option value="">---</option>
-									<?php
-									for ($i=0; $i<=$this->system['system_body_max']; $i++){
+									<div class="rate_row">
+										<div class="rate_text">Gomurys: </div>
+										<?php
+										$total += $item['body_vote'];
+										$total_system += $item['system_body_max'];
+										$prop = $item['system_body_max'] / 10;
+										$votes_avg = $item['body_vote'] / $prop;
+										$offset = 130 - $votes_avg * 10;
+										$offset = $offset - (floor($votes_avg) * 3 + 1);
 										?>
-										<option value="<?=$i?>"><?=$i?></option>
+										<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+										<div class="rate_value"><?=$item['body_vote']?> / <?=$item['system_body_max']?></div>
+										<div class="clear"></div>
+									</div>
+									<?php
+									$item['body_comment'] = trim($item['body_comment']);
+									if (isset($item['body_comment']) && !empty($item['body_comment'])){
+										?>
+										<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['body_comment'])?></div>
 										<?php
 									}
+								}
+								if ($item['system_style_use'] == "1"){
 									?>
-								</select>
-							</dd>
-							<?php
-							if ($this->system['system_body_comment'] == "1"){
-								?>
-								<dd>
-									<textarea name="rate_body_comment"></textarea>
-								</dd>
-								<?php
-							}
-							?>
-							<div class="clear"></div>
-						</dl>
-						<?php
-					}
-					if ($this->system['system_style_use'] == "1"){
-						?>
-						<dl>
-							<dt>
-								Atitikimas stiliui: 
-								<span>(0-<?=$this->system['system_style_max']?>)</span>
-								<span>ar atskleistos pagrindinės stiliaus savybės?</span>
-							</dt>
-							<dd>
-								<select name="rate_style">
-									<option value="">---</option>
-									<?php
-									for ($i=0; $i<=$this->system['system_style_max']; $i++){
+									<div class="rate_row">
+										<div class="rate_text">Atitikimas stiliui: </div>
+										<?php
+										$total += $item['style_vote'];
+										$total_system += $item['system_style_max'];
+										$prop = $item['system_style_max'] / 10;
+										$votes_avg = $item['style_vote'] / $prop;
+										$offset = 130 - $votes_avg * 10;
+										$offset = $offset - (floor($votes_avg) * 3 + 1);
 										?>
-										<option value="<?=$i?>"><?=$i?></option>
+										<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+										<div class="rate_value"><?=$item['style_vote']?> / <?=$item['system_style_max']?></div>
+										<div class="clear"></div>
+									</div>
+									<?php
+									$item['style_comment'] = trim($item['style_comment']);
+									if (isset($item['style_comment']) && !empty($item['style_comment'])){
+										?>
+										<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['style_comment'])?></div>
 										<?php
 									}
+								}
+								if ($item['system_overall_use'] == "1"){
 									?>
-								</select>
-							</dd>
-							<?php
-							if ($this->system['system_style_comment'] == "1"){
-								?>
-								<dd>
-									<textarea name="rate_style_comment"></textarea>
-								</dd>
-								<?php
-							}
-							?>
-							<div class="clear"></div>
-						</dl>
-						<?php
-					}
-					if ($this->system['system_overall_use'] == "1"){
-						?>
-						<dl>
-							<dt>
-								Bendras įspūdis: 
-								<span>(0-<?=$this->system['system_overall_max']?>)</span>
-								<span>bendras gėrimo malonumas</span>
-							</dt>
-							<dd>
-								<select name="rate_overall">
-									<option value="">---</option>
-									<?php
-									for ($i=0; $i<=$this->system['system_overall_max']; $i++){
+									<div class="rate_row">
+										<div class="rate_text">Bendras įspūdis: </div>
+										<?php
+										$total += $item['overall_vote'];
+										$total_system += $item['system_overall_max'];
+										$prop = $item['system_overall_max'] / 10;
+										$votes_avg = $item['overall_vote'] / $prop;
+										$offset = 130 - $votes_avg * 10;
+										$offset = $offset - (floor($votes_avg) * 3 + 1);
 										?>
-										<option value="<?=$i?>"><?=$i?></option>
+										<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+										<div class="rate_value"><?=$item['overall_vote']?> / <?=$item['system_overall_max']?></div>
+										<div class="clear"></div>
+									</div>
+									<?php
+									$item['overall_comment'] = trim($item['overall_comment']);
+									if (isset($item['overall_comment']) && !empty($item['overall_comment'])){
+										?>
+										<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['overall_comment'])?></div>
 										<?php
 									}
-									?>
-								</select>
-							</dd>
-							<?php
-							if ($this->system['system_overall_comment'] == "1"){
+								}
 								?>
-								<dd>
-									<textarea name="rate_overall_comment"></textarea>
-								</dd>
-								<?php
-							}
-							?>
-							<div class="clear"></div>
-						</dl>
-						<?php
-					}
-					?>
-					<dl>
-						<dt>&nbsp;</dl>
-						<dd>
-							<input type="submit" name="submit" value="Vertinti" class="ui-button" />
-						</dd>
-						<div class="clear"></div>
-					</dl>
+								<div class="rate_row">
+									<div class="rate_text"><b>Bendras įvertinimas</b>: </div>
+									<?php
+									$prop = $total_system / 10;
+									$votes_avg = $total / $prop;
+									$offset = 130 - $votes_avg * 10;
+									$offset = $offset - (floor($votes_avg) * 3 + 1);
+									?>
+									<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+									<div class="rate_value"><b><?=$total?> / <?=$total_system?></b></div>
+									<div class="clear"></div>
+								</div>
+								<?
+							break;
+						}
+						?>
+					</div>
+					<div class="rate_score">
+						<?=number_format($votes_avg, 1, ".", "")?>
+					</div>
+					<div class="clear"></div>
 				</div>
-				<?php
+				<?
 			}
+		} else {
 			?>
-		</form>
+			Kol kas šis alus dar nebuvo įvertintas
+			<?php
+		}
+		?>
 	</div>
 </div>

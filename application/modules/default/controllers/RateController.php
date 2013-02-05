@@ -89,5 +89,71 @@ class RateController extends Zend_Controller_Action {
 				->where("system_purpose = ?", array("brewery"));
 		$system = $db->FetchRow($select);
 		$this->view->system = $system;
+		$this->view->user_info = $this->user_info;
+		$select = $db->select()
+				->from("rate_votes")
+				->join("users", "users.user_id = rate_votes.user_id", array("user_name", "user_email"))
+				->join("rate_systems", "rate_systems.system_id = rate_votes.system_id")
+				->where("rate_votes.beer_id = ?", $bid)
+				->order("rate_votes.posted DESC");
+		$result = $db->fetchAll($select);
+		$this->view->votes = $result;
+		$this->view->total_score = $this->view->Rate($bid);
+	}
+	
+	public function rateAction(){
+		if (!isset($this->user_info->user_id) || $this->user_info->user_id == 0){
+			$this->_redirect("/");
+			exit;
+		}
+		$db = Zend_Registry::get('db');
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$system_type = $this->_getParam('system_type');
+		$select = $db->select()
+				->from("rate_systems")
+				->where("system_purpose = ?", array("brewery"));
+		$system = $db->FetchRow($select);
+		$system_id = $system['system_id'];
+		$select = $db->select()
+			->from("rate_beers")
+			->where("beer_id = ?", $this->_getParam("beer_id"));
+		$beer = $db->fetchRow($select);
+		$db->delete("rate_votes", "user_id = '".$this->user_info->user_id."' AND beer_id = '".$beer['beer_id']."'");
+		switch($system_type){
+			case "simple":
+				$db->insert("rate_votes", array(
+					"rate_type" => "simple",
+					"beer_id" => $beer["beer_id"], 
+					"user_id" => $this->user_info->user_id, 
+					"posted" => date("Y-m-d H:i:s"),
+					"system_id" => $system_id,
+					"simple_vote" => $this->_getParam('rate_simple_val'),
+					"simple_comment" => strip_tags($this->_getParam('rate_simple_comment'), '<a>')
+				));
+			break;
+			case "advanced":
+				$db->insert("rate_votes", array(
+					"rate_type" => "advanced",
+					"beer_id" => $beer["beer_id"], 
+					"user_id" => $this->user_info->user_id, 
+					"posted" => date("Y-m-d H:i:s"),
+					"system_id" => $system_id,
+					"aroma_vote" => $this->_getParam('rate_aroma'),
+					"aroma_comment" => strip_tags($this->_getParam('rate_aroma_comment'), '<a>'),
+					"appearance_vote" => $this->_getParam('rate_appearance'),
+					"appearance_comment" => strip_tags($this->_getParam('rate_appearance_comment'), '<a>'),
+					"taste_vote" => $this->_getParam('rate_taste'),
+					"taste_comment" => strip_tags($this->_getParam('rate_taste_comment'), '<a>'),
+					"body_vote" => $this->_getParam('rate_body'),
+					"body_comment" => strip_tags($this->_getParam('rate_body_comment'), '<a>'),
+					"style_vote" => $this->_getParam('rate_style'),
+					"style_comment" => strip_tags($this->_getParam('rate_style_comment'), '<a>'),
+					"overall_vote" => $this->_getParam('rate_overall'),
+					"overall_comment" => strip_tags($this->_getParam('rate_overall_comment'), '<a>'),
+				));
+			break;
+		}
+		$this->_redirect("/vertinimas/alus/".$beer['beer_id']."-".$this->view->urlMaker($beer['beer_display']));
 	}
 }

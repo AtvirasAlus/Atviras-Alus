@@ -14,7 +14,9 @@ $this->headTitle()->headTitle("Bravorų vertinimo sistema");
 			?>
 			<div class="brewery_item" data-id="<?=$brewery['brewery_id']?>">
 				<div class="brewery_image">
-					<img src="/rate_images/breweries/<?=$brewery['brewery_id']?>.jpg" />
+					<a href="/vertinimas/bravoras/<?=$brewery['brewery_id']?>-<?=$this->urlMaker($brewery['brewery_title'])?>">
+						<img src="/rate_images/breweries/<?=$brewery['brewery_id']?>.jpg" />
+					</a>
 				</div>
 				<div class="brewery_title">
 					<a href="/vertinimas/bravoras/<?=$brewery['brewery_id']?>-<?=$this->urlMaker($brewery['brewery_title'])?>">
