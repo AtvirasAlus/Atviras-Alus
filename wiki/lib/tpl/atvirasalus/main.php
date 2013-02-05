@@ -118,7 +118,7 @@ if (!defined('DOKU_INC')) die();
 									</dl>
 									<dl style="padding: 0px; margin: 0px;">
 										<dt style="padding: 0px; margin: 0px; padding-left: 30px;">&nbsp;</dt>
-										<dd style="padding: 0px; margin: 0px;"><a href="http://www.atvirasalus.loc/auth/remember">Pamiršau slaptažodį...</a></dd>
+										<dd style="padding: 0px; margin: 0px;"><a href="http://www.atvirasalus.lt/auth/remember">Pamiršau slaptažodį...</a></dd>
 										<div class="clear"></div>
 									</dl>
 									<dl>
