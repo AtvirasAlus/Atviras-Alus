@@ -156,12 +156,22 @@
 			<div class="clear"></div>
 		</div>
 		<div id="bugreport_link"><input type="button" id="bugreport_button" class="ui-button" value="Praneškite apie svetainėje pastebėtas klaidas" /></div>
-	<div id="verification-dialog" style="display:none" title="Prisijungti">
-		<form onsubmit="return false">
-	    	<div></div>
-		<div><p align='center'>Patvirtinkite, kad Jums yra 18 metų !</p><p align="center"><button  style="width:100px" id="valid_btn">Taip</button><button  style="width:100px;margin-left:50px" id="invalid_btn">Ne </button></p></div>
-		</form>
-	</div>
+		<div id="verification-dialog" style="display:none" title="Įspėjimas">
+			<form onsubmit="return false">
+				<div></div>
+				<div>
+					<p align='center'>
+						Svetainėje esantis turinys netinkamas jaunesniems negu 18 metų asmenims.
+						<br />
+						Patvirtinkite, kad Jums yra 18 metų !
+					</p>
+					<p align="center">
+						<button  style="width:100px; cursor: pointer;" id="valid_btn">Taip</button>
+						<button  style="width:100px;margin-left:50px; cursor: pointer;" id="invalid_btn">Ne</button>
+					</p>
+				</div>
+			</form>
+		</div>
 		<script type="text/javascript">
 			var u_in = <?=$user_id;?>;
 			u_in=(u_in > 0 ? "1" : "0")
