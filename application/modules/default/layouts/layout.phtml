@@ -158,8 +158,9 @@
 		<div id="bugreport_link"><input type="button" id="bugreport_button" class="ui-button" value="Praneškite apie svetainėje pastebėtas klaidas" /></div>
 		<script type="text/javascript">
 			var u_in = <?=$user_id;?>;
-			setCookie('user_logged_in',(u_in>0 ? "1" : "0"),null);
-			if (u_in > 0) {
+			u_in=(u_in > 0 ? "1" : "0")
+			setCookie('user_logged_in',u_in,null);
+			if (u_in > '1') {
 				setCookie('is_valid_age', '1', 1);
 			}
 			var _gaq = _gaq || [];
