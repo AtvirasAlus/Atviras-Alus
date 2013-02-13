@@ -156,11 +156,15 @@
 			<div class="clear"></div>
 		</div>
 		<div id="bugreport_link"><input type="button" id="bugreport_button" class="ui-button" value="Praneškite apie svetainėje pastebėtas klaidas" /></div>
+	<div id="verification-dialog" style="visibility:hidden">
+	    	<div style="margin:20px"><h1>Patvirtinkite, kad Jums yra 18 metų !</h1></div>
+		<div  style="width:100%" ><p align="center"><button class="btn" style="width:100px" id="valid_btn">Taip</button><button class="btn" style="width:100px;margin-left:50px" id="invalid_btn">Ne </button></p></div>
+	</div>
 		<script type="text/javascript">
 			var u_in = <?=$user_id;?>;
 			u_in=(u_in > 0 ? "1" : "0")
-			setCookie('user_logged_in',u_in,null);
-			if (u_in > '1') {
+			setCookie('user_logged_in',u_in, null);
+			if (u_in == '1') {
 				setCookie('is_valid_age', '1', 1);
 			}
 			var _gaq = _gaq || [];
