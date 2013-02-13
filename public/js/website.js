@@ -1,3 +1,4 @@
+
 $.fn.displayError = function(errors) {
 	var e_div = this.find('#error-content');
 	if (e_div) {
@@ -68,6 +69,49 @@ function showLogin() {
 	$('#login-form')[0].reset();
 	$("#login-dialog").displayError([]);
 }
+   function setCookie(c_name, value, exdays) {
+       var exdate = new Date();
+       exdate.setDate(exdate.getDate() + exdays);
+       var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
+       document.cookie = c_name + "=" + c_value;
+   }
+
+   function getCookie(c_name) {
+       var i, x, y, ARRcookies = document.cookie.split(";");
+       for (i = 0; i < ARRcookies.length; i++) {
+           x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
+           y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
+           x = x.replace(/^\s+|\s+$/g, "");
+           if (x == c_name) {
+               return unescape(y);
+           }
+       }
+       return false;
+   }
+
+   function isValdidAge() {
+if (getCookie('user_logged_in')!='1') {
+       if (getCookie('is_valid_age')!='1') {
+           $("#verification-dialog").css('visibility', 'visible');
+
+           $("#verification-dialog").dialog({
+               disabled: false,
+               modal: true,
+               autoOpen: true
+           });
+
+
+       }
+}
+   }
+   jQuery.fn.vcenter = function () {
+       this.css("position", "absolute");
+       var top = Math.max(0, (($(window).height() - this.outerHeight()) / 2) + $(window).scrollTop())
+
+       this.css("top", top * 0.5 + "px");
+    
+       return this;
+   }
 $(document).ready(function () {
 	var original_title;
 	original_title = $(document).attr("title");
@@ -75,6 +119,18 @@ $(document).ready(function () {
 	$("#login-button").bind('click', function (e) {
 		login();
 	});
+	if ($("#verification-dialog").length>0) {
+		$("#verification-dialog").vcenter();
+		isValdidAge();
+	    $('#valid_btn').bind('click', function () {
+		setCookie('is_valid_age', '1', 1);
+		$("#verification-dialog").dialog("destroy");
+		$("#verification-dialog").css('visibility', 'hidden');
+	    })
+	}
+    $('#invalid_btn').bind('click', function () {
+        window.location.replace('http://www3.lrs.lt/pls/inter3/dokpaieska.showdoc_l?p_id=289912');
+    });
 	createUserMenu();
 
 	$("#bugreport_button").click(function() {
