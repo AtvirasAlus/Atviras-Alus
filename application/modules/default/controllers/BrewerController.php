@@ -79,6 +79,9 @@ class BrewerController extends Zend_Controller_Action {
 					->where("users.user_active = ?", '1')
 					->where("users.user_id = ?", $brewer);
 			$this->view->user_info = $db->fetchRow($select);
+			if (!isset($this->view->user_info['user_id'])){
+				$this->_redirect("/");
+			}
 			$this->view->user_info['user_id'] = $brewer;
 			if ($this->view->user_info) {
 				$select = $db->select()
