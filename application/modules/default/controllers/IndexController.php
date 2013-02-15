@@ -26,6 +26,7 @@ class IndexController extends Zend_Controller_Action {
 			}
 		}
 		$this->view->use_plato = $this->use_plato;
+		$this->view->uid = $this->uid;
 	}
 	public function pingAction(){
 		$this->_helper->layout->disableLayout();
