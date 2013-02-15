@@ -98,7 +98,7 @@ if (($this->event['event_type'] == 'competition' || $this->event['event_type'] =
 			foreach ($this->beer_recipes as $key => $value) {
 				$z++;
 				?>
-				<div class="style_recipe <?= (!empty($value['event_id'])) ? "recipe_selected" : ""; ?>" data-recipe="<?= $value['recipe_id'] ?>" data-style="<?= $value['style_id'] ?>" data-eventuser="<?= $this->user_id; ?>" data-event="<?= $this->event['event_id']; ?>">
+				<div class="style_recipe <?= (!empty($value['event_id'])) ? "recipe_selected" : ""; ?>" data-recipe="<?= $value['recipe_id'] ?>" data-style="<?= $value['style_id'] ?>" data-eventuser="<?= $this->user_id; ?>" data-event="<?= $this->event['event_id']; ?>" style="margin: 0px; margin-right: 7px; margin-bottom: 10px;">
 					<?php echo $this->recipeItem($value, "large", array('without_brewer' => true, 'without_awards' => true, 'plain' => true)); ?>
 				</div>
 				<?php
