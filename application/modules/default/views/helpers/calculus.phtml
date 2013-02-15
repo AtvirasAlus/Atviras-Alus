@@ -190,8 +190,11 @@
 		}
 	}
 	//
-	function beer_style_change() {
-
+	function beer_style_change(trigger_changes) {
+		trigger_changes = typeof trigger_changes !== 'undefined' ? trigger_changes : true;
+		if (trigger_changes == true){
+			there_are_changes = true;
+		}
 		var style_recom = $($("#beer_style")[0].options[$("#beer_style")[0].selectedIndex]);
 		$('#style_sg')[0].innerHTML = " ";
 		$('#style_fg')[0].innerHTML = " ";
@@ -291,6 +294,7 @@
 	//
 	function createMaltList(id) {
 		$('#malt-list_' + id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
+				there_are_changes = true;
 				selectMalt(id);
 				calc();
 			}, onFocus:function () {
@@ -316,14 +320,17 @@
 
 		$("#malt_weight_" + rid).spinner({min:0, stepping:0.05});
 		$("#malt_weight_" + rid).bind('spinchange', function (event, ui) {
+			there_are_changes = true;
 			calc();
 		});
 		$("#malt_extract_" + rid).spinner({min:0, stepping:0.001});
 		$("#malt_extract_" + rid).bind('spinchange', function (event, ui) {
+			there_are_changes = true;
 			calc();
 		});
 		$("#malt_color_" + rid).spinner({min:0});
 		$("#malt_color_" + rid).bind('spinchange', function (event, ui) {
+			there_are_changes = true;
 			calc();
 		});
 		$('#malt_tr_' + rid).click(function () {
@@ -349,6 +356,7 @@
 		$('#hop-list_' + id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
 				var sItem = $('#hop-list_' + id).editableSelect("getSelectedItem");
 				$('#hop_alpha_' + id).attr('value', sItem.alpha);
+				there_are_changes = true;
 				calc();
 			}, onFocus:function () {
 				$('#hop_tr_' + id).click();
@@ -371,14 +379,17 @@
 
 		$("#hop_weight_" + rid).spinner({min:0});
 		$("#hop_weight_" + rid).bind('spinchange', function (event, ui) {
+			there_are_changes = true;
 			calc();
 		});
 		$("#hop_alpha_" + rid).spinner({min:0, max:30, stepping:0.1});
 		$("#hop_alpha_" + rid).bind('spinchange', function (event, ui) {
+			there_are_changes = true;
 			calc();
 		});
 		$("#hop_time_" + rid).spinner({min:0, max:300});
 		$("#hop_time_" + rid).bind('spinchange', function (event, ui) {
+			there_are_changes = true;
 			calc();
 		});
 		$('#hop_tr_' + rid).click(function () {
@@ -402,6 +413,7 @@
 		$('#yeast-list_' + id).editableSelect({bg_iframe:false, onSelect:function (list_item) {
 				var sItem = $('#yeast-list_' + id).editableSelect("getSelectedItem");
 				if (sItem.yeast_attenuation) {
+					there_are_changes = true;
 					$('#attenuation').attr('value',sItem.yeast_attenuation);
 					calc();
 				}
@@ -424,6 +436,7 @@
 
 		$("#yeast_weight_" + rid).spinner({min:0});
 		$("#yeast_weight_" + rid).bind('spinchange', function (event, ui) {
+			there_are_changes = true;
 			//calc();
 		});
 		$('#yeast_tr_' + rid).click(function () {
@@ -443,6 +456,7 @@
 	}
 	function fitTo(l) {
 		if (l * 1 > 0) {
+			there_are_changes = true;
 			var ratio = l / $("#bash_size").val();
 			$('input[name=malt_weight]').each(function (index, value) {
 				var o = $(value);
@@ -457,12 +471,16 @@
 				o.val(Math.round((o.val() * ratio)));
 			});
 			$("#bash_size").val(l);
+			there_are_changes = true;
 			calc();
 		}
 	}
 
 	//
 	$(document).ready(function () {
+		$("#comments").keyup(function(){
+			there_are_changes = true;
+		});
 		$(".ttip_efektyvumas").simpletip({
 			content: '<b>Efektyvumas</b> (angl. <i>Efficiency</i>; <i>Extraction efficiency</i>). Cukringų medžiagų "išplovimo" iš salyklo efektyvumas. Tai yra santykis cukraus, kurį iš tikrųjų "išplovėt" , su teoriškai didžiausiu įmanomu "išplauti" cukraus kiekiu.',
 			fixed: false
@@ -510,50 +528,71 @@
 
 		$("#attenuation").spinner({min:0, stepping:0.01, max:1});
 		$('#attenuation').bind('spinchange', function (event, ui) {
+			there_are_changes = true;
 			calc();
 
 		});
 		$("#efficiency").spinner({min:0, stepping:0.01, max:1});
 		$('#efficiency').bind('spinchange', function (event, ui) {
+			there_are_changes = true;
 			calc();
 		});
 		$("#boil_time").spinner({min:0});
+		$('#boil_time').bind('spinchange', function (event, ui) {
+			there_are_changes = true;
+		});
 		$("#bash_size").spinner({min:0,stepping:0.5});
 		$('#bash_size').bind('spinchange', function (event, ui) {
+			there_are_changes = true;
 			calc();
 		});
-		$("#beer_style").change(beer_style_change);
+		$("#beer_style").change(function(){
+			beer_style_change();
+		});
 		// malt
 		$("#add-malt-btn").bind('click', function (event, ui) {
+			there_are_changes = true;
 			selectMalt(createMaltTr());
 			calc();
 		});
 		$("#rem-malt-btn").bind('click', function (event, ui) {
+			there_are_changes = true;
 			var selItem = $('#malt-table').data('selected_tr');
 			$('#' + selItem).remove();
 			calc();
 		});
 		// hops
 		$("#add-hop-btn").bind('click', function (event, ui) {
+			there_are_changes = true;
 			createHopTr();
 			calc();
 		});
 		$("#rem-hop-btn").bind('click', function (event, ui) {
+			there_are_changes = true;
 			var selItem = $('#hop-table').data('selected_tr');
 			$('#' + selItem).remove();
 			calc();
 		});
 		// yeasts
 		$("#add-yeast-btn").bind('click', function (event, ui) {
+			there_are_changes = true;
 			createYeastsTr();
 			calc();
 		});
 		$("#rem-yeast-btn").bind('click', function (event, ui) {
+			there_are_changes = true;
 			var selItem = $('#yeast-table').data('selected_tr');
 			$('#' + selItem).remove();
 			calc();
 		});
 		$("#beer_name").bind('change', function (event, ui) {
+			beer_name_change();
+		});
+		function beer_name_change(trigger_changes){
+			trigger_changes = typeof trigger_changes !== 'undefined' ? trigger_changes : true;
+			if (trigger_changes == true){
+				there_are_changes = true;
+			}
 			$("#beer_name").addClass("formloader");
 			var dis = ($("#beer_name").val().length > 0) ? '' : 'disabled';
 			$("#save").attr("disabled",dis);
@@ -578,10 +617,9 @@
 					}
 				}
 			});
-			
-		});
+		}
 		$("#beer_name").bind('keyup', function (event, ui) {
-			$("#beer_name").trigger('change');
+			beer_name_change();
 		});
 		$('#duplicate').click(function () {
 			if ($("#duplicate").attr("disabled")) {
@@ -634,18 +672,17 @@
 					} else {
 					}
 				}});
+			there_are_changes = false;
 		});
 		$('#export').click(function () {
 			calc_out("/index/print-recipe")[0].submit();
 		});
-		$('#extract_m_plato').click(function() {calc();beer_style_change();});
-		$('#extract_m_sg').click(function() {calc();beer_style_change();});
+		$('#extract_m_plato').click(function() {there_are_changes = true;calc();beer_style_change();});
+		$('#extract_m_sg').click(function() {there_are_changes = true;calc();beer_style_change();});
 		$('#cnv_recipe_btn').click(function() {
 			fitTo($('#recalc').val())
 		})
-		$("#beer_style").trigger('change');
-		$("#beer_name").trigger('change');
-		//fill form
+		beer_style_change(false);
 		$("#duplicate").attr("disabled", "disabled");
 		<?
 		if (isset($this->data)) {
@@ -692,8 +729,8 @@
 			}
 		} ?>
 		setTimeout(calc,500)
-		setTimeout(beer_style_change,500)
-		$("#beer_name").trigger('change');
+		setTimeout(beer_style_change(false),500)
+		beer_name_change(false);
 	});
 
 	function calc_out(url) {
