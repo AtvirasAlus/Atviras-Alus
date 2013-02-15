@@ -49,7 +49,7 @@
 	<div style="text-align: center; margin-bottom: 10px;"><?php topic_pages(); ?></div>
 	<div id="ajax-response"></div>
 	<div id="thread" class="list:post">
-		<?php foreach ($posts as $bb_post) : $del_class = post_del_class(); ?>
+		<?php foreach ($posts as $bb_post) : $del_class = apply_filters('best_answer_class',post_del_class()); ?>
 			<div id="post-<?php post_id(); ?>"<?php alt_class('post', $del_class); ?>>
 				<?php bb_post_template(); ?>
 			</div>

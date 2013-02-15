@@ -55,7 +55,7 @@ class Zend_View_Helper_Rate extends Zend_View_Helper_Abstract {
 			$votes++;
 		}
 		if ($votes > 0){
-			$total = round($total / $votes, 1);
+			$total = number_format($total / $votes, 1, ".", "");
 		} else {
 			$total = "";
 		}
