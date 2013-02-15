@@ -1,3 +1,19 @@
+<script type="text/javascript">
+	var there_are_changes = false;
+	<?php
+	if ($this->uid != 0){
+		?>
+		window.onbeforeunload = function(){
+			if (there_are_changes == true){
+				return "Neišsaugoti pakeitimai bus prarasti!";
+			} else {
+				return;
+			}
+		};
+		<?php
+	}
+	?>
+</script>
 <?php
 if (isset($this->data['recipe']['recipe_name'])){
 	$this->headTitle()->headTitle($this->data['recipe']['recipe_name']);
