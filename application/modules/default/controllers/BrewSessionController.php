@@ -198,7 +198,7 @@ class BrewsessionController extends Zend_Controller_Action {
 			$db->delete("beer_brew_sessions", array("session_id=" . $_POST["session_id"], "session_brewer =" . $u->user_id));
 			print Zend_Json::encode(array("status" => 0, "data" => array()));
 		} else {
-			print Zend_Json::encode(array("status" => 1, "errors" => array(array("message" => "Neregistruotas nautotojas", "type" => "authentication"))));
+			print Zend_Json::encode(array("status" => 1, "errors" => array(array("message" => "Neregistruotas naudotojas", "type" => "authentication"))));
 		}
 	}
 	

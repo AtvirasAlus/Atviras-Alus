@@ -41,7 +41,7 @@ class AuthController extends Zend_Controller_Action {
 				if ($user_data = Entities_AUTH::dologin($data['user_email'], md5($data['user_password']), isset($_POST['remember']))) {
 					
 				} else {
-					$this->errors[] = array("type" => "system", "message" => "Neteisingas slaptažodis ar nautotojo vardas");
+					$this->errors[] = array("type" => "system", "message" => "Neteisingas slaptažodis ar naudotojo vardas");
 				}
 			} else {
 				$err_codes = new Entities_FormErrors();
@@ -52,7 +52,7 @@ class AuthController extends Zend_Controller_Action {
 				}
 			}
 		} else {
-			$this->errors[] = array("type" => "system", "message" => "Neteisingas slaptažodis ar nautotojo vardas");
+			$this->errors[] = array("type" => "system", "message" => "Neteisingas slaptažodis ar naudotojo vardas");
 		}
 		$this->_helper->layout->setLayout('empty');
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -120,7 +120,7 @@ class AuthController extends Zend_Controller_Action {
 						$this->_helper->viewRenderer->setNoRender();
 					}
 				} else {
-					$this->view->errors[] = array("type" => "form", "message" => "Nurodytu e. pašto adresu registruoto nautotojo sistemoje nėra");
+					$this->view->errors[] = array("type" => "form", "message" => "Nurodytu e. pašto adresu registruoto naudotojo sistemoje nėra");
 				}
 			}
 		}
@@ -165,7 +165,7 @@ class AuthController extends Zend_Controller_Action {
 				if (count($result) > 0) {
 					//exit 
 					//throw error email allready registered
-					$this->view->errors[] = array("type" => "system", "message" => 'Nautotojas tokiu vardu arba tokiu e. pašto adresu jau egzistuoja');
+					$this->view->errors[] = array("type" => "system", "message" => 'Naudotojas tokiu vardu arba tokiu e. pašto adresu jau egzistuoja');
 				} else {
 					$user_data = array('user_name' => $_rq->getPost('user_name'), 'user_email' => strtolower($_rq->getPost('user_email')), 'api_token' => $this->genuid());
 

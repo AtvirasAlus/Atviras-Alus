@@ -151,7 +151,7 @@ class EventsController extends Zend_Controller_Action {
 		} else {
 
 			$this->_helper->viewRenderer->setNoRender(true);
-			print "Neregistruotas nautotojas";
+			print "Neregistruotas naudotojas";
 		}
 	}
 
@@ -260,7 +260,7 @@ class EventsController extends Zend_Controller_Action {
 				}
 			}
 		} else {
-			print Zend_Json::encode(array("status" => 1, "errors" => array(array("message" => "Neregistruotas nautotojas", "type" => "authentication"))));
+			print Zend_Json::encode(array("status" => 1, "errors" => array(array("message" => "Neregistruotas naudotojas", "type" => "authentication"))));
 		}
 	}
 

@@ -79,7 +79,7 @@
 					<resource>admin</resource>
 				</tests>
 				<users>
-					<label>Nautotojai</label>
+					<label>Naudotojai</label>
 					<module>account</module>
 					<controller>users</controller>
 					<action>index</action>

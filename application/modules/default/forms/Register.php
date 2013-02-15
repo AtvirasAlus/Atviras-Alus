@@ -18,7 +18,7 @@ class Form_Register extends Zend_Form {
 		$this->addElement('text', 'user_name', array("required" => true));
 		$this->getElement('user_name')
 				->addFilter(new Zend_Filter_StripTags())
-				->setLabel('Nautotojo vardas:')
+				->setLabel('Naudotojo vardas:')
 				->setRequired(true);
 		$this->addElement('text', 'user_email', array("required" => true));
 		$this->getElement('user_email')
