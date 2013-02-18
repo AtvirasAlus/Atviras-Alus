@@ -75,7 +75,7 @@ class BrewerController extends Zend_Controller_Action {
 			$this->view->awards = $awards;
 			$select = $db->select()
 					->from("users")
-					->joinLeft("users_attributes", "users_attributes.user_id=users.user_id")
+					->joinLeft("users_attributes", "users_attributes.user_id=users.user_id", array("user_location", "user_about"))
 					->where("users.user_active = ?", '1')
 					->where("users.user_id = ?", $brewer);
 			$this->view->user_info = $db->fetchRow($select);
