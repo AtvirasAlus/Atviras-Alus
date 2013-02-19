@@ -105,8 +105,13 @@ class MailController extends Zend_Controller_Action {
 				->from("mail_users", array("mail_read"))
 				->join("mail", "mail_users.mail_id = mail.mail_id")
 				->join("users", "mail.mail_sender=users.user_id", array("mail_from" => "user_name", "user_id"))
-				->where("mail_users.mail_id = ?", $_GET['id']);
+				->where("mail_users.mail_id = ?", $_GET['id'])
+				->where("mail_users.user_id = ?", $this->user->user_id);
 		$this->view->mail = $db->fetchRow($select);
+		if ($this->view->mail === false){
+			$this->_redirect("/");
+			exit;
+		}
 		if (count($this->view->mail) > 0) {
 			//if ($this->view->mail[0]["group_id"] >0) {
 			//}
