@@ -16,7 +16,7 @@ class PickerController extends Zend_Controller_Action {
 				))
 				->where("recipe_ebc <= '100'")
 				->where("recipe_ibu <= '100'")
-				->where("(recipe_abv <= 9.5 AND recipe_style != '85' AND recipe_style != '84') OR (recipe_abv <= 18 AND (recipe_style = '85' OR recipe_style = '84'))")
+				->where("recipe_abv <= '20'")
 				->where("recipe_publish = '1'");
 		$result = $db->fetchRow($select);
 		$this->view->params = $result;
@@ -61,7 +61,7 @@ class PickerController extends Zend_Controller_Action {
 				->where("recipe_abv <= '".$abv_max."'")
 				->where("recipe_ebc <= '100'")
 				->where("recipe_ibu <= '100'")
-				->where("(recipe_abv <= 9.5 AND recipe_style != '85' AND recipe_style != '84') OR (recipe_abv <= 18 AND (recipe_style = '85' OR recipe_style = '84'))")
+				->where("recipe_abv <= '20'")
 				->where("recipe_publish = '1'")
 				;
 		switch($style_val){
@@ -114,7 +114,7 @@ class PickerController extends Zend_Controller_Action {
 				->where("beer_recipes.recipe_publish = '1'")
 				->where("recipe_ebc <= '100'")
 				->where("recipe_ibu <= '100'")
-				->where("(recipe_abv <= 9.5 AND recipe_style != '85' AND recipe_style != '84') OR (recipe_abv <= 18 AND (recipe_style = '85' OR recipe_style = '84'))")
+				->where("recipe_abv <= '20'")
 				->group("beer_recipes.recipe_id")
 				->order("beer_recipes.recipe_name");
 		switch($style_val){

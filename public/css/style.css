@@ -3252,3 +3252,16 @@ html ul.topnav li ul.subnav li a:hover {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
+.legal_warning {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #cd0a0a;
+	margin-top: 20px;
+	margin-left: 90px;
+	padding: 20px;
+	background-color: #fef1ec;
+}
+.legal_warning span {
+	font-weight: bold;
+}

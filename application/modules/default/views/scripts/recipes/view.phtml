@@ -1,5 +1,10 @@
 <?php
 $this->headTitle()->headTitle($this->data['recipe']['recipe_name']);
+if (($this->data['recipe']['style_class'] == "beer" && $this->data['recipe']['recipe_abv'] > 9.5) || ($this->data['recipe']['style_class'] != "beer" && $this->data['recipe']['recipe_abv'] > 18)){
+	$legal = false;
+} else {
+	$legal = true;
+}
 ?>
 <script src="/public/colorbox/colorbox/jquery.colorbox.js"></script>
 <link rel="stylesheet" href="/public/colorbox/colorbox.css" />
@@ -178,7 +183,13 @@ function i_bu($ibu,$og) {
 			}
 			?>
 			<a href="/recipes/print-label/?recipe_id=<?=$this->data['recipe']['recipe_id'];?>" target="_blank">Spausdinti etiketę</a>
-			<a href="/brew-session/recipe/<?=$this->data['recipe']['recipe_id'];?>">Virimai (<?=$this->data['brew_session']['count'];?>)</a>
+			<?php
+			if ($legal === true){
+				?>
+				<a href="/brew-session/recipe/<?=$this->data['recipe']['recipe_id'];?>">Virimai (<?=$this->data['brew_session']['count'];?>)</a>
+				<?php
+			}
+			?>
 			<a href="/index/calculus/<?=$this->data['recipe']['recipe_id'];?><?=(isset($_GET['auth_key'])) ? "?auth_key=".$_GET['auth_key'] : ""; ?>">
 				<?php
 				if (isset($this->user_info->user_id) && $this->user_info->user_id == $this->data['recipe']['brewer_id']){
@@ -270,6 +281,15 @@ function i_bu($ibu,$og) {
 				</div>
 				<?php
 			endif;
+			if ($legal === false){
+				?>
+				<div class="legal_warning">
+					<span>ĮSPĖJIMAS:</span> <a href="http://www3.lrs.lt/pls/inter3/dokpaieska.showdoc_l?p_id=430458#straipsnis10" target="_blank">Lietuvos Respublikos Alkoholio kontrolės Įstatymas</a> griežtai reglamentuoja leistiną alkoholio koncentraciją naminiuose alkoholiniuose gėrimuose.
+					<br /><br />
+					Šiuo receptu naudotis griežtai <b>draudžiama</b> - virdami pagal jį gėrimus pažeistumėte Įstatymo 10-ąjį straipsnį.
+				</div>
+				<?php
+			}
 			?>
 		</div>
 		<div class="recipe_image">

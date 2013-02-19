@@ -16,32 +16,45 @@ $this->headTitle()->headTitle("Aludario ".$this->user_info['user_name']." virima
 				</div>
 				<?
 				foreach ($this->user_info['sessions'] as $session){
+					if (($session['style_class'] == "beer" && $session['recipe_abv'] > 9.5) || ($session['style_class'] != "beer" && $session['recipe_abv'] > 18)){
+						$legal = false;
+					} else {
+						$legal = true;
+					}
 					?>
-					<div class="as-row" style="<?=($session['recipe_publish'] == "1") ? "" : "color: #999999;"; ?>">
+					<div class="as-row" style="<?=($session['recipe_publish'] == "1" && $legal === true) ? "" : "color: #999999;"; ?>">
 						<?php
 						if ($session['recipe_publish'] == "1"){
-							?>
-							<div class="as-cell"><?=$session['session_name']?></div>
-							<div class="as-cell">
-								<a href="/alus/receptas/<?=$session['recipe_id']?>-<?=$this->urlMaker($session['recipe_name'])?>">
-									<?=$session['recipe_name']?>
-								</a>
-							</div>
-							<?php
-							if ($session['recu_id'] == $session['user_id']){
+							if ($legal === false){
 								?>
-								<div class="as-cell">
-									<?=$session['recu_name']?>
-								</div>
-								<?
+								<div class="as-cell">-</div>
+								<div class="as-cell">Receptas nėra viešas</div>
+								<div class="as-cell">-</div>
+								<?php
 							} else {
 								?>
+								<div class="as-cell"><?=$session['session_name']?></div>
 								<div class="as-cell">
-									<a href="/brewers/<?=$session['recu_id']?>">
-										<?=$session['recu_name']?>
+									<a href="/alus/receptas/<?=$session['recipe_id']?>-<?=$this->urlMaker($session['recipe_name'])?>">
+										<?=$session['recipe_name']?>
 									</a>
 								</div>
-								<?
+								<?php
+								if ($session['recu_id'] == $session['user_id']){
+									?>
+									<div class="as-cell">
+										<?=$session['recu_name']?>
+									</div>
+									<?
+								} else {
+									?>
+									<div class="as-cell">
+										<a href="/brewers/<?=$session['recu_id']?>">
+											<?=$session['recu_name']?>
+										</a>
+									</div>
+									<?
+								}
 							}
 						} else {
 							if ($session['recipe_publish'] === "0"){

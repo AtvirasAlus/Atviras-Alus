@@ -163,10 +163,14 @@ class BrewsessionController extends Zend_Controller_Action {
 		$this->view->brew_sessions = $db->fetchAll($select);
 		$select = $db->select()
 				->from("beer_recipes")
+				->join("beer_styles", "beer_styles.style_id = beer_recipes.recipe_style", array("style_class"))
 				->where("recipe_id=?", $this->getRequest()->getParam("recipe"));
-
-
-		$this->view->recipe = $db->fetchRow($select);
+		$rcp = $db->fetchRow($select);
+		if (($rcp['style_class'] == "beer" && $rcp['recipe_abv'] > 9.5) || ($rcp['style_class'] != "beer" && $rcp['recipe_abv'] > 18)){
+			$this->_redirect("/");
+			exit;
+		}
+		$this->view->recipe = $rcp;
 	}
 
 	public function updateAction() {

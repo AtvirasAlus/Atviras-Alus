@@ -15,7 +15,7 @@ class Entities_Recipe {
 			$select = $this->db->select();
 			$select->from("beer_recipes")
 					->join("users", "users.user_id=beer_recipes.brewer_id", array("user_name"))
-					->joinLeft("beer_styles", "beer_styles.style_id=beer_recipes.recipe_style", array("style_name"))
+					->joinLeft("beer_styles", "beer_styles.style_id=beer_recipes.recipe_style", array("style_name", "style_class"))
 					->where("recipe_id = ?", $this->recipe_id);
 			$this->properties = $this->db->fetchRow($select);
 			return $this->properties;
