@@ -114,6 +114,20 @@ $user_id = isset($this->user_info->user_id) ? $this->user_info->user_id : 0;
 					Iš viso balsavo: 
 					<span><?=$idea['total_votes']?></span>
 				</div>
+				<?php
+				switch ($idea['idea_status']){
+					case "1":
+						?>
+						<div class="idea_label_finished">ĮGYVENDINTA</div>
+						<?php
+					break;
+					case "2":
+						?>
+						<div class="idea_label_rejected">ATMESTA</div>
+						<?php
+					break;
+				}
+				?>
 			</div>
 			<div class="clear"></div>
 		</div>
