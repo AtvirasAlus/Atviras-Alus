@@ -402,6 +402,16 @@ input, select, .editable-select-options, .ui-autocomplete {
 			}
 		});
 	}
+		function scrolltolast(){
+			if ($("#pastlogin_line").length > 0){
+				if ($("#pastlogin_line").offset().top - $(window).height() < 220){
+					$('html, body').animate({scrollTop: 220}, 100);
+				} else {
+					$('html, body').animate({scrollTop: $("#pastlogin_line").offset().top - $(window).height()+10}, 100);
+				}	
+			}
+			return false;
+		};
 	$(document).ready(function () {
 		$('#new_tweet_message').bind("paste", preview);
 		$('#new_tweet_message').bind("click", preview);
@@ -572,7 +582,7 @@ input, select, .editable-select-options, .ui-autocomplete {
 				foreach ($this->items as $item):
 					if ($this->past_login < $old_time && $this->past_login > $item['posted']){
 						?>
-						<div class="pastlogin_line"></div>
+						<div class="pastlogin_line" id="pastlogin_line"><a name="lastlogin" accesskey="n" onclick="scrolltolast();"></a></div>
 						<?
 					}
 					$old_time = $item['posted'];
