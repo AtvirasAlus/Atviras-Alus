@@ -209,6 +209,11 @@
 	cursor: pointer;
 	float: right;
 }
+.new_filter button {
+	height: 28px;
+	cursor: pointer;
+	float: right;
+}
 #tweet_form textarea {
 	margin-top: 10px;
 	-webkit-border-radius: 5px;
@@ -402,17 +407,20 @@ input, select, .editable-select-options, .ui-autocomplete {
 			}
 		});
 	}
-		function scrolltolast(){
-			if ($("#pastlogin_line").length > 0){
-				if ($("#pastlogin_line").offset().top - $(window).height() < 220){
-					$('html, body').animate({scrollTop: 220}, 100);
-				} else {
-					$('html, body').animate({scrollTop: $("#pastlogin_line").offset().top - $(window).height()+10}, 100);
-				}	
-			}
-			return false;
-		};
+	function scrolltolast(){
+		if ($("#pastlogin_line").length > 0){
+			if ($("#pastlogin_line").offset().top - $(window).height() < 220){
+				$('html, body').animate({scrollTop: 220}, 100);
+			} else {
+				$('html, body').animate({scrollTop: $("#pastlogin_line").offset().top - $(window).height()+10}, 100);
+			}	
+		}
+		return false;
+	};
 	$(document).ready(function () {
+		if ($("#pastlogin_line").length > 0){
+			$("#scrollbtn").show();
+		}
 		$('#new_tweet_message').bind("paste", preview);
 		$('#new_tweet_message').bind("click", preview);
 		$("#new_tweet").click(function(){
@@ -506,6 +514,7 @@ input, select, .editable-select-options, .ui-autocomplete {
 			<div class="new_filter">
 				<div>
 					<input type="button" name="new_tweet" id="new_tweet" value="Pranešk naujieną arba nuorodą" />
+					<button onclick="scrolltolast();" class="ui-button" style="padding: 0px 5px  !important; display: none;" id="scrollbtn"><span class="ui-icon ui-icon-arrowthickstop-1-s"></span></button>
 					<select id="new_filter_select" name="new_filter_select">
 						<option value="all" <?=($this->filter_type == "all") ? 'selected="selected"' : ''?>>Visi įrašai</option>
 						<optgroup label="Receptai">
