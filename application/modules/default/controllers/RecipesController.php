@@ -604,6 +604,7 @@ class RecipesController extends Zend_Controller_Action {
 				$fullFilePath = $_SERVER['DOCUMENT_ROOT'] . "/recipe_images/".$post['recipe_id']."/".$newname.".jpg";
 				$t_fullFilePath = $_SERVER['DOCUMENT_ROOT'] . "/recipe_images/".$post['recipe_id']."/t_".$newname.".jpg";
 				$extension = end(explode(".", $file["name"]));
+				$extension = strtolower($extension);
 				if ((($file["type"] != "image/gif") && ($file["type"] != "image/jpeg") && ($file["type"] != "image/png")) || !in_array($extension, $allowedExts)){
 				} else {
 					switch(strtolower($file['type'])){
