@@ -185,10 +185,10 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 					' . $session['session_size'] . '
 				</div>
 				<div class="as-cell">
-					' . $this->usePlato($session['session_og'], true, $use_plato) . '
+					' . $this->usePlato($session['session_og'], true, $use_plato) . '&nbsp;/&nbsp;' . $this->usePlato($session['session_fg'], true, $use_plato) . '
 				</div>
-				<div class="as-cell">
-					' . $this->usePlato($session['session_fg'], true, $use_plato) . '
+				<div class="as-cell" style="white-space:nowrap;">
+					' . $session['session_abv'] . '
 				</div>
 				<div class="as-cell" style="white-space:nowrap;">
 					' . $session['session_primarydate'] . '

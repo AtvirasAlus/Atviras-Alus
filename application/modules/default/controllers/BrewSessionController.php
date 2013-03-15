@@ -75,7 +75,16 @@ class BrewsessionController extends Zend_Controller_Action {
 				->joinLeft("beer_recipes", "beer_brew_sessions.session_recipe=beer_recipes.recipe_id", array("recipe_id", "recipe_name"))
 				->where("beer_brew_sessions.session_brewer =?", $owner_id)
 				->order("session_primarydate DESC");
-		$this->view->brew_sessions = $db->fetchAll($select);
+		$result = $db->fetchAll($select);
+		foreach($result as $key=>$val){
+			if ((float)$val['session_og'] != 0 && (float)$val['session_fg']!=0){
+				$result[$key]['session_abv'] = number_format(($val['session_og'] - $val['session_fg']) * 131, 1)."%";
+			} else {
+				$result[$key]['session_abv'] = "-";
+			}
+			
+		}
+		$this->view->brew_sessions = $result;
 	}
 
 	public function historyAction() {
@@ -160,7 +169,16 @@ class BrewsessionController extends Zend_Controller_Action {
 				->joinLeft("beer_recipes", "beer_brew_sessions.session_recipe=beer_recipes.recipe_id", array("recipe_id", "recipe_name"))
 				->where("beer_brew_sessions.session_recipe =?", $this->getRequest()->getParam("recipe"))
 				->order("session_primarydate DESC");
-		$this->view->brew_sessions = $db->fetchAll($select);
+		$result = $db->fetchAll($select);
+		foreach($result as $key=>$val){
+			if ((float)$val['session_og'] != 0 && (float)$val['session_fg']!=0){
+				$result[$key]['session_abv'] = number_format(($val['session_og'] - $val['session_fg']) * 131, 1)."%";
+			} else {
+				$result[$key]['session_abv'] = "-";
+			}
+			
+		}
+		$this->view->brew_sessions = $result;
 		$select = $db->select()
 				->from("beer_recipes")
 				->join("beer_styles", "beer_styles.style_id = beer_recipes.recipe_style", array("style_class"))
