@@ -26,6 +26,8 @@
 						$author = "<b>Tikras Alus</b> svetainėje";
 					} else if (strpos($item['rss_link'], "http://tomas.atvirasalus.lt") !== false){-
 						$author = "<b>\"Tomo nuotykiai alaus šalyje\"</b> svetainėje";
+					} else if (strpos($item['rss_link'], "http://ponasniekas.atvirasalus.lt") !== false){-
+						$author = "<b>Ponasniekas</b> bloge";
 					}
 					?>
 					<?=$author; ?> patalpintas naujas įrašas<a href="<?=$item['rss_link']?>">
