@@ -1,5 +1,23 @@
 <?php
 $this->headTitle()->headTitle("Naujas virimas");
+if ($this->use_plato === false){
+	?>
+	<script type="text/javascript">
+		$(function(){
+			$("form.brewsession_edit").submit(function(){
+				if ($("input[name=session_og]").val() > 1.999){
+					alert("Sistema ant tavęs labai supyko! Panašu, kad į SG vienetams skirtą lauką bandai įvesti Plato vienetus. Jei naudoji Plato hidrometrą, savo paskyros nustatymuose pasirink \"Receptuose tankį rodyti Plato sistemos vienetais\"");
+					return false;
+				}
+				if ($("input[name=session_fg]").val() > 1.999){
+					alert("Sistema ant tavęs labai supyko! Panašu, kad į SG vienetams skirtą lauką bandai įvesti Plato vienetus. Jei naudoji Plato hidrometrą, savo paskyros nustatymuose pasirink \"Receptuose tankį rodyti Plato sistemos vienetais\"");
+					return false;
+				}
+			});
+		});
+	</script>
+	<?php
+}
 ?>
 <div id="brewer_session_container" class="inner_container">
 	<div class="inner_header">Sukurti virimą receptui <a href="/recipes/view/<?=$this->recipe["recipe_id"];?>">"<?=$this->recipe["recipe_name"]?>"</a></div>

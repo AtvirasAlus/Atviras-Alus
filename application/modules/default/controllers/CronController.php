@@ -3,38 +3,33 @@
 class CronController extends Zend_Controller_Action {
 
 	public function init() {
-
+		
 	}
 
 	public function indexAction() {
 		
 	}
-	
-	private function plato2sg($p){
+
+	private function plato2sg($p) {
 		return 1.00001 + 3.8661E-3 * $p + 1.3488E-5 * $p * $p + 4.3074E-8 * $p * $p * $p;
 	}
-	
-	private function genuid(){
+
+	private function genuid() {
 		$db = Zend_Registry::get("db");
-		$uid = sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-			mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-			mt_rand( 0, 0xffff ),
-			mt_rand( 0, 0x0fff ) | 0x4000,
-			mt_rand( 0, 0x3fff ) | 0x8000,
-			mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+		$uid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
 		);
 		$select = $db->select()
 				->from("users")
-				->where("api_token = '".$uid."'");
+				->where("api_token = '" . $uid . "'");
 		$result = $db->FetchAll($select);
-		if (sizeof($result) == 0){
+		if (sizeof($result) == 0) {
 			return $uid;
 		} else {
 			return $this->genuid();
 		}
 	}
 
-	public function gentokensAction(){
+	public function gentokensAction() {
 		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -43,16 +38,16 @@ class CronController extends Zend_Controller_Action {
 				->from("users")
 				->order("user_id ASC");
 		$result = $db->FetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$uuid = $this->genuid();
 			$update = $db->update("users", array(
 				"api_token" => $uuid
-			), "user_id = '".$val['user_id']."'");
+					), "user_id = '" . $val['user_id'] . "'");
 		}
 		echo "done";
 	}
-	public function fixplatoAction(){
-		exit;
+
+	public function fixplatoAction() {
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
@@ -60,26 +55,25 @@ class CronController extends Zend_Controller_Action {
 				->from("beer_brew_sessions")
 				->where("session_og > 1.610");
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$update = $db->update("beer_brew_sessions", array(
 				"session_og" => $this->plato2sg($val['session_og'])
-			), "session_id = '".$val['session_id']."'");
+					), "session_id = '" . $val['session_id'] . "'");
 		}
 		$select = $db->select()
 				->from("beer_brew_sessions")
 				->where("session_fg > 1.160");
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$update = $db->update("beer_brew_sessions", array(
 				"session_fg" => $this->plato2sg($val['session_fg'])
-			), "session_id = '".$val['session_id']."'");
+					), "session_id = '" . $val['session_id'] . "'");
 		}
-		echo "done";exit;
+		echo "done";
+		exit;
 	}
-	
-	
-	
-	public function fixmailsubjectsAction(){
+
+	public function fixmailsubjectsAction() {
 		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -88,51 +82,51 @@ class CronController extends Zend_Controller_Action {
 				->from("mail", array("mail_id", "mail_subject"))
 				->order("mail_id DESC");
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$count = $result[$key]['count'] = substr_count($val['mail_subject'], 'Ats:');
 			$plain = $result[$key]['plain'] = trim(str_replace("Ats:", "", $val['mail_subject']));
-			if ($count > 0){
-				if ($count == 1){
-					$new_subject = $result[$key]['new_subject'] = "Ats: ".$plain;
+			if ($count > 0) {
+				if ($count == 1) {
+					$new_subject = $result[$key]['new_subject'] = "Ats: " . $plain;
 				} else {
-					$new_subject = $result[$key]['new_subject'] = "Ats[".$count."]: ".$plain;
+					$new_subject = $result[$key]['new_subject'] = "Ats[" . $count . "]: " . $plain;
 				}
 			} else {
 				$new_subject = $result[$key]['new_subject'] = $plain;
 			}
-			$db->update("mail", array("mail_subject" => $new_subject), "mail_id = '".$val['mail_id']."'");
+			$db->update("mail", array("mail_subject" => $new_subject), "mail_id = '" . $val['mail_id'] . "'");
 		}
 		echo "done.";
 	}
-	
-	public function populatemwusersAction(){
+
+	public function populatemwusersAction() {
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
 		$select = $db->select()
 				->from("users");
 		$users = $db->FetchAll($select);
-		foreach($users as $user){
+		foreach ($users as $user) {
 			$insert = $db->insert("wiki_user", array(
 				"user_id" => $user['user_id'],
 				"user_name" => $user['user_name'],
 				"user_real_name" => $user['user_name'],
-				"user_password" => ":A:".$user['user_password'],
+				"user_password" => ":A:" . $user['user_password'],
 				"user_newpassword" => "",
 				"user_newpass_time" => null,
 				"user_email" => $user['user_email'],
-				"user_touched" => str_replace(array(" ",  "-", ":"), array("", "", ""), $user['user_lastlogin']),
+				"user_touched" => str_replace(array(" ", "-", ":"), array("", "", ""), $user['user_lastlogin']),
 				"user_token" => $user['user_password'],
 				"user_email_authenticated" => null,
 				"user_email_token" => null,
 				"user_email_token_expires" => null,
-				"user_registration" => str_replace(array(" ",  "-", ":"), array("", "", ""), $user['user_created']),
+				"user_registration" => str_replace(array(" ", "-", ":"), array("", "", ""), $user['user_created']),
 				"user_editcount" => "0"
-			));
+					));
 		}
 	}
-	
-	public function populaterecipecommentsAction(){
+
+	public function populaterecipecommentsAction() {
 		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -140,7 +134,7 @@ class CronController extends Zend_Controller_Action {
 		$select = $db->select()
 				->from("beer_recipes", array("beer_recipes.recipe_id"));
 		$result = $db->fetchAll($select);
-		foreach ($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$last = false;
 			$count = 0;
 			$select2 = $db->select()
@@ -148,19 +142,20 @@ class CronController extends Zend_Controller_Action {
 					->order("comment_date DESC")
 					->where("comment_recipe = ?", $val['recipe_id']);
 			$result2 = $db->FetchAll($select2);
-			foreach($result2 as $k=>$v){
-				if ($last === false) $last = $v['comment_date'];
+			foreach ($result2 as $k => $v) {
+				if ($last === false)
+					$last = $v['comment_date'];
 				$count++;
 			}
 			$db->update("beer_recipes", array(
 				"recipe_total_comments" => $count,
 				"recipe_last_comment_date" => $last,
-			), "beer_recipes.recipe_id = '".$val['recipe_id']."'");
+					), "beer_recipes.recipe_id = '" . $val['recipe_id'] . "'");
 		}
 		echo "done.";
 	}
-	
-	public function populaterecipesessionsAction(){
+
+	public function populaterecipesessionsAction() {
 		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -168,7 +163,7 @@ class CronController extends Zend_Controller_Action {
 		$select = $db->select()
 				->from("beer_recipes", array("beer_recipes.recipe_id"));
 		$result = $db->fetchAll($select);
-		foreach ($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$last = false;
 			$count = 0;
 			$select2 = $db->select()
@@ -176,19 +171,20 @@ class CronController extends Zend_Controller_Action {
 					->order("session_primarydate DESC")
 					->where("session_recipe = ?", $val['recipe_id']);
 			$result2 = $db->FetchAll($select2);
-			foreach($result2 as $k=>$v){
-				if ($last === false) $last = $v['session_primarydate'];
+			foreach ($result2 as $k => $v) {
+				if ($last === false)
+					$last = $v['session_primarydate'];
 				$count++;
 			}
 			$db->update("beer_recipes", array(
 				"recipe_total_sessions" => $count,
 				"recipe_last_session" => $last,
-			), "beer_recipes.recipe_id = '".$val['recipe_id']."'");
+					), "beer_recipes.recipe_id = '" . $val['recipe_id'] . "'");
 		}
 		echo "done.";
 	}
 
-	public function populaterecipelikesAction(){
+	public function populaterecipelikesAction() {
 		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -196,7 +192,7 @@ class CronController extends Zend_Controller_Action {
 		$select = $db->select()
 				->from("beer_recipes", array("beer_recipes.recipe_id"));
 		$result = $db->fetchAll($select);
-		foreach ($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$count = 0;
 			$select2 = $db->select()
 					->from("beer_recipes_favorites", array("COUNT(user_id) AS kiekis"))
@@ -205,12 +201,12 @@ class CronController extends Zend_Controller_Action {
 			$result2 = $db->FetchRow($select2);
 			$db->update("beer_recipes", array(
 				"recipe_total_likes" => $result2['kiekis'],
-			), "beer_recipes.recipe_id = '".$val['recipe_id']."'");
+					), "beer_recipes.recipe_id = '" . $val['recipe_id'] . "'");
 		}
 		echo "done.";
 	}
 
-	public function populaterecipeawardsAction(){
+	public function populaterecipeawardsAction() {
 		exit;
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
@@ -218,42 +214,42 @@ class CronController extends Zend_Controller_Action {
 		$select = $db->select()
 				->from("beer_recipes", array("beer_recipes.recipe_id"));
 		$result = $db->fetchAll($select);
-		foreach ($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$count = 0;
 			$weight = 0;
 			$select2 = $db->select()
 					->from("beer_awards")
 					->where("recipe_id = ?", $val['recipe_id']);
 			$result2 = $db->FetchAll($select2);
-			foreach($result2 as $k=>$v){
+			foreach ($result2 as $k => $v) {
 				$count++;
-				switch($v['icon']){
+				switch ($v['icon']) {
 					case "bronze":
 					case "cbronze":
 						$weight = $weight + 2;
-					break;
+						break;
 					case "silver":
 					case "csilver":
 						$weight = $weight + 4;
-					break;
+						break;
 					case "gold":
 					case "cgold":
 						$weight = $weight + 8;
-					break;
+						break;
 					case "common":
 						$weight = $weight + 1;
-					break;
+						break;
 				}
 			}
 			$db->update("beer_recipes", array(
 				"recipe_total_awards" => $count,
 				"recipe_total_awards_weight" => $weight,
-			), "beer_recipes.recipe_id = '".$val['recipe_id']."'");
+					), "beer_recipes.recipe_id = '" . $val['recipe_id'] . "'");
 		}
 		echo "done.";
 	}
 
-	public function rssnewsAction(){
+	public function rssnewsAction() {
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
@@ -264,9 +260,9 @@ class CronController extends Zend_Controller_Action {
 		foreach ($feed as $item) {
 			$select = $db->select()
 					->from("activity", "id")
-					->where("type = 'rss' AND rss_guid = '".$item->guid()."'");
+					->where("type = 'rss' AND rss_guid = '" . $item->guid() . "'");
 			$result = $db->fetchAll($select);
-			if (sizeof($result) == 0){
+			if (sizeof($result) == 0) {
 				$db->insert("activity", array(
 					"user_id" => "0",
 					"item_id" => "0",
@@ -290,7 +286,7 @@ class CronController extends Zend_Controller_Action {
 		$select = "select count(distinct `beer_recipes_favorites`.`user_id`) AS `votes`,count(distinct `beer_recipes_comments`.`comment_id`) AS `comments`,count(distinct `beer_brew_sessions`.`session_id`) AS `sessions`,`beer_recipes`.`recipe_id` AS `recipe_id`,`beer_recipes`.`recipe_style` AS `recipe_style`,`beer_recipes`.`brewer_id` AS `brewer_id`,`beer_recipes`.`recipe_name` AS `recipe_name`,((count(distinct `beer_recipes_comments`.`comment_id`) + (count(distinct `beer_brew_sessions`.`session_id`) * 3)) + (count(distinct `beer_recipes_favorites`.`user_id`) * 5)) AS `total` from (`beer_recipes_comments` left join ((`beer_recipes` left join `beer_recipes_favorites` on((`beer_recipes_favorites`.`recipe_id` = `beer_recipes`.`recipe_id`))) left join `beer_brew_sessions` on((`beer_brew_sessions`.`session_recipe` = `beer_recipes`.`recipe_id`))) on((`beer_recipes_comments`.`comment_recipe` = `beer_recipes`.`recipe_id`))) where (`beer_recipes`.`recipe_publish` = '1') group by `beer_recipes`.`recipe_id` order by ((count(distinct `beer_recipes_comments`.`comment_id`) + (count(distinct `beer_brew_sessions`.`session_id`) * 3)) + (count(distinct `beer_recipes_favorites`.`user_id`) * 5)) desc";
 		$result = $db->fetchAll($select);
 		$db->query("TRUNCATE TABLE cache_fav_recipes");
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$db->insert("cache_fav_recipes", array(
 				"votes" => $val['votes'],
 				"comments" => $val['comments'],
@@ -304,9 +300,9 @@ class CronController extends Zend_Controller_Action {
 			));
 		}
 		echo "Done.";
-		
 	}
-	public function populateAction(){
+
+	public function populateAction() {
 		exit;
 		set_time_limit(0);
 		$tpl = array();
@@ -360,7 +356,7 @@ class CronController extends Zend_Controller_Action {
 		$tpl['blog_title'] = NULL;
 		$tpl['blog_content'] = NULL;
 		$tpl['blog_link'] = NULL;
-		
+
 		$limit = 100000000000;
 
 		echo "<pre>";
@@ -368,7 +364,7 @@ class CronController extends Zend_Controller_Action {
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
-		
+
 		$url = "http://pipes.yahoo.com/pipes/pipe.run?_id=210aea0f65d951e98dc682a8136c4ee9&_render=rss";
 		$feed = Zend_Feed::import($url);
 
@@ -393,7 +389,7 @@ class CronController extends Zend_Controller_Action {
 				->order("bb_posts.post_time ASC")
 				->limit($limit);
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$temp = $tpl;
 			$temp['type'] = "forum_post";
 			$temp['user_id'] = $val['user_id'];
@@ -405,7 +401,7 @@ class CronController extends Zend_Controller_Action {
 			$temp['forum_post_topic_title'] = $val['topic_title'];
 			$activity[] = $temp;
 		}
-		
+
 		// STRAIPSNIAI
 		$select = $db->select()
 				->from("beer_articles", array("article_id", "article_resume", "article_title", "article_created"))
@@ -413,7 +409,7 @@ class CronController extends Zend_Controller_Action {
 				->where("beer_articles.article_publish = ?", 1)
 				->limit($limit);
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$temp = $tpl;
 			$temp['type'] = "article";
 			$temp['user_id'] = 0;
@@ -432,7 +428,7 @@ class CronController extends Zend_Controller_Action {
 				->where("beer_articles.article_publish = ?", 1)
 				->limit($limit);
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$temp = $tpl;
 			$temp['type'] = "article_comment";
 			$temp['user_id'] = $val['user_id'];
@@ -443,7 +439,7 @@ class CronController extends Zend_Controller_Action {
 			$temp['article_comment_comment_article'] = $val['article_id'];
 			$activity[] = $temp;
 		}
-		
+
 		// VIRIMAI
 		$select = $db->select()
 				->from("beer_brew_sessions", array("session_id", "session_brewer AS user_id", "session_size", "session_primarydate"))
@@ -452,7 +448,7 @@ class CronController extends Zend_Controller_Action {
 				->where("beer_brew_sessions.session_primarydate != '0000-00-00' AND beer_brew_sessions.session_size != '0'")
 				->limit($limit);
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$temp = $tpl;
 			$temp['type'] = "session";
 			$temp['user_id'] = $val['user_id'];
@@ -464,18 +460,19 @@ class CronController extends Zend_Controller_Action {
 			$temp['session_recipe_publish'] = $val['recipe_publish'];
 			$activity[] = $temp;
 		}
-		
+
 		// ĮVYKIAI
 		$select = $db->select()
 				->from("beer_events", array("event_id", "event_name", "event_resume", "event_start", "event_registration_end", "event_type", "event_posted", "event_published"))
 				->limit($limit);
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$temp = $tpl;
 			$temp['type'] = "event";
 			$temp['user_id'] = 0;
 			$temp['item_id'] = $val['event_id'];
-			if ($val['event_posted'] == "0000-00-00 00:00:00") $val['event_posted'] = $val['event_start']; 
+			if ($val['event_posted'] == "0000-00-00 00:00:00")
+				$val['event_posted'] = $val['event_start'];
 			$temp['posted'] = $val['event_posted'];
 			$temp['event_name'] = $val['event_name'];
 			$temp['event_resume'] = $val['event_resume'];
@@ -485,7 +482,7 @@ class CronController extends Zend_Controller_Action {
 			$temp['event_published'] = $val['event_published'];
 			$activity[] = $temp;
 		}
-		
+
 		// RECEPTAI
 		$select = $db->select()
 				->from("beer_recipes", array("recipe_id", "recipe_name", "recipe_style", "brewer_id AS user_id", "recipe_created", "recipe_published"))
@@ -493,19 +490,20 @@ class CronController extends Zend_Controller_Action {
 				->where("beer_recipes.recipe_publish = '1'")
 				->limit($limit);
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$temp = $tpl;
 			$temp['type'] = "recipe";
 			$temp['user_id'] = $val['user_id'];
 			$temp['item_id'] = $val['recipe_id'];
-			if ($val['recipe_published'] == "0000-00-00 00:00:00") $val['recipe_published'] = $val['recipe_created']; 
+			if ($val['recipe_published'] == "0000-00-00 00:00:00")
+				$val['recipe_published'] = $val['recipe_created'];
 			$temp['posted'] = $val['recipe_published'];
 			$temp['recipe_name'] = $val['recipe_name'];
 			$temp['recipe_style_id'] = $val['recipe_style'];
 			$temp['recipe_style_name'] = $val['style_name'];
 			$activity[] = $temp;
 		}
-		
+
 		// RECEPTŲ KOMENTARAI
 		$select = $db->select()
 				->from("beer_recipes_comments", array("comment_id", "comment_text", "comment_brewer AS user_id", "comment_date"))
@@ -513,7 +511,7 @@ class CronController extends Zend_Controller_Action {
 				->where("beer_recipes.recipe_publish = 1")
 				->limit($limit);
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$temp = $tpl;
 			$temp['type'] = "recipe_comment";
 			$temp['user_id'] = $val['user_id'];
@@ -530,7 +528,7 @@ class CronController extends Zend_Controller_Action {
 				->from("beer_tweets", array("tweet_id", "tweet_message", "tweet_owner AS user_id", "tweet_link_url", "tweet_link_description", "tweet_link_title", "tweet_link_image", "tweet_date"))
 				->limit($limit);
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$temp = $tpl;
 			$temp['type'] = "tweet";
 			$temp['user_id'] = $val['user_id'];
@@ -550,7 +548,7 @@ class CronController extends Zend_Controller_Action {
 				->join("idea_items", "idea_comments.idea_id = idea_items.idea_id", array("idea_id", "idea_title"))
 				->limit($limit);
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$temp = $tpl;
 			$temp['type'] = "idea_comment";
 			$temp['user_id'] = $val['user_id'];
@@ -567,7 +565,7 @@ class CronController extends Zend_Controller_Action {
 				->from("idea_items", array("idea_id", "idea_title", "idea_description", "user_id", "idea_posted", "idea_finishdate", "idea_status"))
 				->limit($limit);
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$temp = $tpl;
 			$temp['type'] = "idea";
 			$temp['user_id'] = $val['user_id'];
@@ -586,7 +584,7 @@ class CronController extends Zend_Controller_Action {
 				->where("users.user_active = '1' AND users.user_enabled = '1'")
 				->limit($limit);
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$temp = $tpl;
 			$temp['type'] = "user";
 			$temp['user_id'] = $val['user_id'];
@@ -595,18 +593,18 @@ class CronController extends Zend_Controller_Action {
 			$temp['user_name'] = $val['user_name'];
 			$activity[] = $temp;
 		}
-		
+
 		$sql = "TRUNCATE TABLE activity";
 		$db->query($sql);
 
-		foreach($activity as $key=>$val) {
+		foreach ($activity as $key => $val) {
 			$db->insert("activity", $val);
 		}
 		echo "Done.";
 		//print_r($activity);
 	}
-	
-	public function fixsessionsAction(){
+
+	public function fixsessionsAction() {
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$db = Zend_Registry::get("db");
@@ -614,15 +612,16 @@ class CronController extends Zend_Controller_Action {
 				->from("activity")
 				->where("type = 'session'");
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$select = $db->select()
 					->from("beer_recipes", "recipe_name")
-					->where("recipe_id = '".$val['session_recipe_id']."'");
+					->where("recipe_id = '" . $val['session_recipe_id'] . "'");
 			$row = $db->fetchRow($select);
-			$update = $db->update("activity", array("session_recipe_name" => $row['recipe_name']), "item_id = '".$val['item_id']."'");
+			$update = $db->update("activity", array("session_recipe_name" => $row['recipe_name']), "item_id = '" . $val['item_id'] . "'");
 		}
 		echo "Done";
 	}
+
 	public function fixideasAction() {
 		exit;
 		$this->_helper->layout->disableLayout();
@@ -631,20 +630,20 @@ class CronController extends Zend_Controller_Action {
 		$select = $db->select()
 				->from("idea_items");
 		$result = $db->fetchAll($select);
-		foreach($result as $key=>$val){
-			$db->delete("idea_votes", array("user_id = '" . $val['user_id']. "'", "idea_id = '" . $val['idea_id'] . "'"));
+		foreach ($result as $key => $val) {
+			$db->delete("idea_votes", array("user_id = '" . $val['user_id'] . "'", "idea_id = '" . $val['idea_id'] . "'"));
 		}
-		
-		foreach ($result as $key=>$val){
+
+		foreach ($result as $key => $val) {
 			$select2 = $db->select()
 					->from("idea_votes", "SUM(idea_votes.vote_value) as total")
 					->where("idea_votes.idea_id = ?", $val['idea_id']);
 			$result2 = $db->fetchRow($select2);
 			$db->update("idea_items", array(
 				"idea_vote_sum" => $result2['total']
-			), "idea_items.idea_id = '".$val['idea_id']."'");
+					), "idea_items.idea_id = '" . $val['idea_id'] . "'");
 		}
-		
+
 		echo "Done";
 	}
 
