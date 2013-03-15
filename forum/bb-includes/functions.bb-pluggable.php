@@ -918,6 +918,8 @@ function bb_get_avatar( $id_or_email, $size = 80, $default = '', $alt = false ) 
 			break;
 	}
 
+	//hack:
+	$default = "mm";
 	$src = $host . '/avatar/';
 	$class .= 'avatar avatar-' . $size;
 
