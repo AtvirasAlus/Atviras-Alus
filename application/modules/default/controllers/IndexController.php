@@ -596,6 +596,13 @@ class IndexController extends Zend_Controller_Action {
 					->where("event_registration_end  != '0000-00-00'")
 					->order("event_start");
 			$this->view->events = $db->fetchAll($select);
+			$select = $db->select()
+				->from("yeastbank_items")
+				->join("users", "users.user_id = yeastbank_items.yb_user", array("user_name", "user_id", "user_email"))
+				->where("yb_till >= NOW()")
+				->order("yb_posted DESC")
+				->limit(20);
+			$this->view->bank = $db->fetchAll($select);
 		}
 	}
 
