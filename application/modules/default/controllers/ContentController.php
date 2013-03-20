@@ -29,7 +29,7 @@ class ContentController extends Zend_Controller_Action {
 		require_once(DOKU_INC . 'inc/init.php');
 		require_once(DOKU_INC . 'inc/common.php');
 		require_once(DOKU_INC . 'inc/parserutils.php');
-		$source = file_get_contents("wiki/data/pages/knyga/anglu-lietuviu_aludarystes_terminu_zodynelis.txt");
+		$source = file_get_contents("wiki/data/pages/terminologija.txt");
 		$info = array();
 		$data = p_render('xhtml', p_get_instructions($source), $info);
 		$this->view->data = $data;
