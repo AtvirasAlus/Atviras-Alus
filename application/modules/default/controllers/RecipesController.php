@@ -123,6 +123,9 @@ class RecipesController extends Zend_Controller_Action {
 			case "views":
 				$select->order("beer_recipes.recipe_viewed DESC");
 			break;
+			case "votes":
+				$select->order("(beer_recipes.recipe_votes_value / beer_recipes.recipe_votes_count) DESC");
+			break;
 			default:
 				$select->order("beer_recipes.recipe_created DESC");
 			break;
@@ -208,6 +211,9 @@ class RecipesController extends Zend_Controller_Action {
 			break;
 			case "views":
 				$select->order("beer_recipes.recipe_viewed DESC");
+			break;
+			case "votes":
+				$select->order("(beer_recipes.recipe_votes_value / beer_recipes.recipe_votes_count) DESC");
 			break;
 			default:
 				$select->order("beer_recipes.recipe_created DESC");
@@ -515,6 +521,23 @@ class RecipesController extends Zend_Controller_Action {
 						->order("posted ASC");
 				$images = $db->FetchAll($select);
 				$this->view->images = $images;
+				
+				$select = $db->select()
+						->from("beer_brew_sessions", array("DISTINCT(session_brewer) AS brewer_id"))
+						->join("users", "beer_brew_sessions.session_brewer=users.user_id", "user_name as brewer_name")
+						->where("session_recipe = ?", $recipe_id)
+						->order("session_primarydate DESC");
+				$brewers = $db->fetchAll($select);
+				$this->view->brewers = $brewers;
+				
+				$select = $db->select()
+						->from("beer_votes")
+						->join("users", "users.user_id = beer_votes.user_id", array("user_id", "user_name", "user_email"))
+						->join("users as users2", "users2.user_id = beer_votes.rate_brewer", array("user_id AS brewer_id", "user_name as brewer_name", "user_email as brewer_email"))
+						->where("beer_votes.recipe_id = ?", $recipe_id)
+						->order("beer_votes.posted ASC");
+				$result = $db->fetchAll($select);
+				$this->view->rates = $result;
 			} else {
 				$this->view->rcp = $rcp;
 				$this->_helper->viewRenderer('private');
@@ -948,4 +971,49 @@ class RecipesController extends Zend_Controller_Action {
 		print Zend_Json::encode($u);
 	}
 
+	public function rateAction(){
+		if ($this->uid == 0) $this->_redirect ("/");
+		
+		$db = Zend_Registry::get('db');
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$post = $this->_getAllParams();
+		
+		switch ($post['vote_type']){
+			case "simple":
+				$insert = $db->insert("beer_votes", array(
+					"rate_type" => "simple",
+					"recipe_id" => $post['recipe_id'],
+					"user_id" => $this->uid,
+					"posted" => date("Y-m-d H:i:s"),
+					"simple_vote" => $post['vote_simple_value'],
+					"simple_comment" => $post['vote_simple_comment'],
+					"rate_date" => $post['vote_date'],
+					"rate_brewer" => $post['vote_brewer']
+				));
+			break;
+			case "advanced":
+				$insert = $db->insert("beer_votes", array(
+					"rate_type" => "advanced",
+					"recipe_id" => $post['recipe_id'],
+					"user_id" => $this->uid,
+					"posted" => date("Y-m-d H:i:s"),
+					"aroma_vote" => $post['vote_aroma_value'],
+					"aroma_comment" => $post['vote_aroma_comment'],
+					"appearance_vote" => $post['vote_appearance_value'],
+					"appearance_comment" => $post['vote_appearance_comment'],
+					"taste_vote" => $post['vote_taste_value'],
+					"taste_comment" => $post['vote_taste_comment'],
+					"palate_vote" => $post['vote_palate_value'],
+					"palate_comment" => $post['vote_palate_comment'],
+					"overall_vote" => $post['vote_overall_value'],
+					"overall_comment" => $post['vote_overall_comment'],
+					"rate_date" => $post['vote_date'],
+					"rate_brewer" => $post['vote_brewer']
+				));
+			break;
+		}
+		$this->_redirect("/recipes/view/".$post['recipe_id']);
+		exit;
+	}
 }

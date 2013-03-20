@@ -21,6 +21,11 @@
 				</a>
 				<?php 
 			}
+			if ($this->item['recipe_votes_count'] > 0){
+				?>
+				<div class="list_rate_list"><?=  number_format($this->item['recipe_votes_value']/$this->item['recipe_votes_count']/5, 1)?></div>
+				<?php
+			}
 			if ($this->item['recipe_total_awards'] > 0) : ?>
 				<?
 				$awards = $this->awards[$this->item['recipe_id']];
@@ -41,7 +46,8 @@
 						<?
 					endforeach;
 				}
-			endif; ?>
+			endif; 
+			?>
 		</div>
 		<div style="margin-top: 10px;">
 			ABV:

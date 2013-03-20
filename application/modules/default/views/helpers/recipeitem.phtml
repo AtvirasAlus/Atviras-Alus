@@ -21,6 +21,13 @@ if (!isset($this->options['plain'])) {
 <div class="rc_item">
 	<div style="background-color:<?= $this->hex; ?>" class="rc_image">
 		<img src="/public/images/glass_s.png" alt="<? print $this->item['recipe_name']; ?>" />
+		<?php
+		if ($this->item['recipe_votes_count'] > 0){
+			?>
+			<div class="list_rate"><?=  number_format($this->item['recipe_votes_value']/$this->item['recipe_votes_count']/5, 1)?></div>
+			<?php
+		}
+		?>
 	</div>
 	<div class="rc_info">
 		<div>

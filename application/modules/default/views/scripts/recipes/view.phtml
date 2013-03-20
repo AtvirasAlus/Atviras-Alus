@@ -1,4 +1,6 @@
 <?php
+$this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
+$this->headScript()->appendFile("/public/js/ui.datepicker-lt.js");
 $this->headTitle()->headTitle($this->data['recipe']['recipe_name']);
 if (($this->data['recipe']['style_class'] == "beer" && $this->data['recipe']['recipe_abv'] > 9.5) || ($this->data['recipe']['style_class'] != "beer" && $this->data['recipe']['recipe_abv'] > 18)){
 	$legal = false;
@@ -10,6 +12,20 @@ if (($this->data['recipe']['style_class'] == "beer" && $this->data['recipe']['re
 <link rel="stylesheet" href="/public/colorbox/colorbox.css" />
 <script>
 	$(function(){
+		$("#show_vote_form").click(function(){
+			$("#show_vote_button").hide();
+			$(".recipe_vote_form_div").show("slide", {}, 500);
+		});
+		$("#vote_type").change(function(){
+			if ($(this).val() == "simple"){
+				$("#vote_advanced_form").hide();
+				$("#vote_simple_form").show();
+			} else {
+				$("#vote_simple_form").hide();
+				$("#vote_advanced_form").show();
+			}
+		});
+		$("#vote_date").datepicker();
 		$("#recipe_share").click(function(){
 			$("#recipe_share_dialog").dialog({ modal: true, width: 430, title: "Nuoroda į receptą", buttons: { "Uždaryti": function() { $(this).dialog("close"); } } });
 			$("#recipe_share_dialog textarea").select();
@@ -514,6 +530,396 @@ function i_bu($ibu,$og) {
 				}
 				?>
 			</div>
+			<?php
+			if ($this->data['recipe']['recipe_total_sessions']>0){
+				?>
+				<div class="recipe_votes">
+					<div class="ingridient_category2">Recepto vertinimai</div>
+					<div id="rate_results">
+						<?php
+						if (sizeof($this->rates) > 0){
+							foreach($this->rates as $item){
+								?>
+								<div class="rate_result">
+									<div class="rate_avatar">
+										<a href="/brewers/<?=$item['user_id'];?>">
+											<img src="http://www.gravatar.com/avatar/<?=md5($item['user_email']);?>?rating=G&size=40&default=mm" border="0"/>
+											<span><?=$item['user_name'];?></span>
+										</a>
+									</div>
+									<div class="rate_info">
+										<div class="rate_row">
+											<div class="rate_text"><b>Ragavimo data</b>: </div>
+											<div class="brewery_rate_fixed"><?=$item['rate_date']?></div>
+											<div class="clear"></div>
+										</div>
+										<div class="rate_row">
+											<div class="rate_text"><b>Virimo autorius</b>: </div>
+											<div class="brewery_rate_fixed"><a href="/brewers/<?=$item['brewer_id']?>"><?=$item['brewer_name']?></a></div>
+											<div class="clear"></div>
+										</div>
+										<?php
+										switch($item['rate_type']){
+											case "simple":
+												?>
+												<div class="rate_row">
+													<div class="rate_text"><b>Bendras įvertinimas</b>: </div>
+													<?php
+													$prop = 10 / 10;
+													$votes_avg = $item['simple_vote'] / $prop;
+													$offset = 130 - $votes_avg * 10;
+													$offset = $offset - (floor($votes_avg) * 3 + 1);
+													?>
+													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><b><?=$item['simple_vote']?> / <?=10?></b></div>
+													<div class="clear"></div>
+												</div>
+												<?php
+												$item['simple_comment'] = trim($item['simple_comment']);
+												if (isset($item['simple_comment']) && !empty($item['simple_comment'])){
+													?>
+													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['simple_comment'])?></div>
+													<?php
+												}
+											break;
+											case "advanced":
+												$total = 0;
+												$total_system = 0;
+												?>
+												<div class="rate_row">
+													<div class="rate_text">Aromatas: </div>
+													<?php
+													$total += $item['aroma_vote'];
+													$total_system += 10;
+													$prop = 10 / 10;
+													$votes_avg = $item['aroma_vote'] / $prop;
+													$offset = 130 - $votes_avg * 10;
+													$offset = $offset - (floor($votes_avg) * 3 + 1);
+													?>
+													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><?=$item['aroma_vote']?> / 10</div>
+													<div class="clear"></div>
+												</div>
+												<?php
+												$item['aroma_comment'] = trim($item['aroma_comment']);
+												if (isset($item['aroma_comment']) && !empty($item['aroma_comment'])){
+													?>
+													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['aroma_comment'])?></div>
+													<?php
+												}
+												?>
+												<div class="rate_row">
+													<div class="rate_text">Išvaizda: </div>
+													<?php
+													$total += $item['appearance_vote'];
+													$total_system += 5;
+													$prop = 5 / 10;
+													$votes_avg = $item['appearance_vote'] / $prop;
+													$offset = 130 - $votes_avg * 10;
+													$offset = $offset - (floor($votes_avg) * 3 + 1);
+													?>
+													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><?=$item['appearance_vote']?> / 5</div>
+													<div class="clear"></div>
+												</div>
+												<?php
+												$item['appearance_comment'] = trim($item['appearance_comment']);
+												if (isset($item['appearance_comment']) && !empty($item['appearance_comment'])){
+													?>
+													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['appearance_comment'])?></div>
+													<?php
+												}
+												?>
+												<div class="rate_row">
+													<div class="rate_text">Skonis: </div>
+													<?php
+													$total += $item['taste_vote'];
+													$total_system += 10;
+													$prop = 10 / 10;
+													$votes_avg = $item['taste_vote'] / $prop;
+													$offset = 130 - $votes_avg * 10;
+													$offset = $offset - (floor($votes_avg) * 3 + 1);
+													?>
+													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><?=$item['taste_vote']?> / 10</div>
+													<div class="clear"></div>
+												</div>
+												<?php
+												$item['taste_comment'] = trim($item['taste_comment']);
+												if (isset($item['taste_comment']) && !empty($item['taste_comment'])){
+													?>
+													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['taste_comment'])?></div>
+													<?php
+												}
+												?>
+												<div class="rate_row">
+													<div class="rate_text">Gomurys: </div>
+													<?php
+													$total += $item['palate_vote'];
+													$total_system += 5;
+													$prop = 5 / 10;
+													$votes_avg = $item['palate_vote'] / $prop;
+													$offset = 130 - $votes_avg * 10;
+													$offset = $offset - (floor($votes_avg) * 3 + 1);
+													?>
+													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><?=$item['palate_vote']?> / 5</div>
+													<div class="clear"></div>
+												</div>
+												<?php
+												$item['palate_comment'] = trim($item['palate_comment']);
+												if (isset($item['palate_comment']) && !empty($item['palate_comment'])){
+													?>
+													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['palate_comment'])?></div>
+													<?php
+												}
+												?>
+												<div class="rate_row">
+													<div class="rate_text">Bendras įspūdis: </div>
+													<?php
+													$total += $item['overall_vote'];
+													$total_system += 20;
+													$prop = 20 / 10;
+													$votes_avg = $item['overall_vote'] / $prop;
+													$offset = 130 - $votes_avg * 10;
+													$offset = $offset - (floor($votes_avg) * 3 + 1);
+													?>
+													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><?=$item['overall_vote']?> / 20</div>
+													<div class="clear"></div>
+												</div>
+												<?php
+												$item['overall_comment'] = trim($item['overall_comment']);
+												if (isset($item['overall_comment']) && !empty($item['overall_comment'])){
+													?>
+													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['overall_comment'])?></div>
+													<?php
+												}
+												?>
+												<div class="rate_row">
+													<div class="rate_text"><b>Bendras įvertinimas</b>: </div>
+													<?php
+													$prop = $total_system / 10;
+													$votes_avg = $total / $prop;
+													$offset = 130 - $votes_avg * 10;
+													$offset = $offset - (floor($votes_avg) * 3 + 1);
+													?>
+													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><b><?=$total?> / <?=$total_system?></b></div>
+													<div class="clear"></div>
+												</div>
+												<?
+											break;
+										}
+										?>
+									</div>
+									<div class="rate_score">
+										<?=number_format($votes_avg, 1, ".", "")?>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<?
+							}
+						} else {
+							?>
+							Kol kas šis alus dar nebuvo įvertintas
+							<?php
+						}
+						?>
+						
+					</div>
+					<div id="show_vote_button">
+						<a href="javascript:void(0);" id="show_vote_form" class="ui-button" style="color: #000;">Įvertinti šį alų</a>
+					</div>
+					<div class="recipe_vote_form_div" style="display: none;">
+						<h1>Naujas vertinimas</h1>
+						<form action="/recipes/rate" method="post" id="recipe_vote_form">
+							<dl>
+								<dt>Alaus ragavimo data:</dt>
+								<dd><input name="vote_date" id="vote_date" type="text" value="<?=date("Y-m-d")?>" /></dd>
+								<div class="clear"></div>
+							</dl>
+							<dl>
+								<dt>Ragauto virimo autorius:</dt>
+								<dd>
+									<select name="vote_brewer" id="vote_brewer">
+										<?php
+										foreach($this->brewers as $key=>$val){
+											?>
+											<option value="<?=$val['brewer_id']?>"><?=$val['brewer_name']?></option>
+											<?php
+										}
+										?>
+									</select>
+								</dd>
+								<div class="clear"></div>
+							</dl>
+							<dl>
+								<dt>Vertinimo būdas:</dt>
+								<dd>
+									<select name="vote_type" id="vote_type">
+										<option value="simple" selected="selected">Supaprastnta vertinimo forma</option>
+										<option value="advanced">Pilna vertinimo forma</option>
+									</select>
+								</dd>
+								<div class="clear"></div>
+							</dl>
+							<div id="vote_simple_form">
+								<dl>
+									<dt class="vote_val_label">
+										Bendras įvertinimas:
+										<span>(1-10)</span>
+									</dt>
+									<dd class="vote_val_select">
+										<select name="vote_simple_value" id="vote_simple_value">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+										</select>
+									</dd>
+									<dd class="vote_val_comment">
+										<textarea name="vote_simple_comment" id="vote_simple_comment"></textarea>
+									</dd>
+								</dl>
+							</div>
+							<div id="vote_advanced_form" style="display: none;">
+								<dl>
+									<dt class="vote_val_label">
+										Aromatas:
+										<span>(1-10)<br />salyklas, apyniai, esteriai ir kt. aromatai</span>
+									</dt>
+									<dd class="vote_val_select">
+										<select name="vote_aroma_value" id="vote_aroma_value">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+										</select>
+									</dd>
+									<dd class="vote_val_comment">
+										<textarea name="vote_aroma_comment" id="vote_aroma_comment"></textarea>
+									</dd>
+								</dl>
+								<dl>
+									<dt class="vote_val_label">
+										Išvaizda:
+										<span>(1-5)<br />spalva, skaidrumas, puta</span>
+									</dt>
+									<dd class="vote_val_select">
+										<select name="vote_appearance_value" id="vote_appearance_value">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+										</select>
+									</dd>
+									<dd class="vote_val_comment">
+										<textarea name="vote_appearance_comment" id="vote_appearance_comment"></textarea>
+									</dd>
+								</dl>
+								<dl>
+									<dt class="vote_val_label">
+										Skonis:
+										<span>(1-10)<br />salyklas, apyniai, ferment. charakteris, balansas, finišas/poskonis ir kt.</span>
+									</dt>
+									<dd class="vote_val_select">
+										<select name="vote_taste_value" id="vote_taste_value">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+										</select>
+									</dd>
+									<dd class="vote_val_comment">
+										<textarea name="vote_taste_comment" id="vote_taste_comment"></textarea>
+									</dd>
+								</dl>
+								<dl>
+									<dt class="vote_val_label">
+										Gomurys:
+										<span>(1-5)<br />kūnas, karbonizacija, šiluma, kreminis, kt.</span>
+									</dt>
+									<dd class="vote_val_select">
+										<select name="vote_palate_value" id="vote_palate_value">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+										</select>
+									</dd>
+									<dd class="vote_val_comment">
+										<textarea name="vote_palate_comment" id="vote_palate_comment"></textarea>
+									</dd>
+								</dl>
+								<dl>
+									<dt class="vote_val_label">
+										Bendras įspūdis:
+										<span>(1-20)<br />bendras gėrimo malonumas</span>
+									</dt>
+									<dd class="vote_val_select">
+										<select name="vote_overall_value" id="vote_overall_value">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+											<option value="13">13</option>
+											<option value="14">14</option>
+											<option value="15">15</option>
+											<option value="16">16</option>
+											<option value="17">17</option>
+											<option value="18">18</option>
+											<option value="19">19</option>
+											<option value="20">20</option>
+										</select>
+									</dd>
+									<dd class="vote_val_comment">
+										<textarea name="vote_overall_comment" id="vote_overall_comment"></textarea>
+									</dd>
+								</dl>
+							</div>
+							<dl>
+								<dt>&nbsp;</dt>
+								<dd>
+									<input name="submit" type="submit" value="Įvertinti" class="ui-button" />
+									<input name="recipe_id" type="hidden" value="<?=$this->data['recipe']['recipe_id']?>" />
+								</dd>
+								<div class="clear"></div>
+							</dl>
+						</form>
+					</div>
+				</div>
+				<?php
+			}
+			?>
 			<div class="recipe_comments">
 				<div class="ingridient_category2">Komentarai</div>
 				<div><?=$this->recipeComments($this->data['recipe']['recipe_id']);?></div>
@@ -565,6 +971,17 @@ function i_bu($ibu,$og) {
 			}
 			?>
 		</div>
+		<?php
+		if ($this->data['recipe']['recipe_votes_count'] > 0){
+			?>
+			<div class="eval_block">
+				<div class="eval_label">Įvertinimas</div>
+				<div class="eval_line" style="background-position: -<?=(100 - ($this->data['recipe']['recipe_votes_value']/$this->data['recipe']['recipe_votes_count']/5)*10)?>px 0px;"></div>
+				<div class="eval_val"><span><?=  number_format($this->data['recipe']['recipe_votes_value']/$this->data['recipe']['recipe_votes_count']/5, 1)?></span> (balsai: <?=$this->data['recipe']['recipe_votes_count']?>)</div>
+			</div>
+			<?php
+		}
+		?>
 		<div class="clear"></div>
 	</div>
 </div>
