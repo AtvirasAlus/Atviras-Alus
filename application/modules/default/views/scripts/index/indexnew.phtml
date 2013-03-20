@@ -58,6 +58,13 @@
 	background-repeat: no-repeat;
 	background-position: 4px 22px;
 }
+.ico_vote {
+	background-color: #eee;
+	padding-left: 40px;
+	background-image: url("/public/images/new/ico_vote.png");
+	background-repeat: no-repeat;
+	background-position: 4px 22px;
+}
 .ico_yeastbank {
 	background-color: #eee;
 	padding-left: 40px;
@@ -521,6 +528,7 @@ input, select, .editable-select-options, .ui-autocomplete {
 							<option value="recipe" <?=($this->filter_type == "recipe") ? 'selected="selected"' : ''?>>Receptai</option>
 							<option value="recipe_comment" <?=($this->filter_type == "recipe_comment") ? 'selected="selected"' : ''?>>Receptų komentarai</option>
 							<option style="font-weight: bold;" value="session" <?=($this->filter_type == "session") ? 'selected="selected"' : ''?>>Virimai</option>
+							<option value="vote" <?=($this->filter_type == "vote") ? 'selected="selected"' : ''?>>Receptų vertinimai</option>
 						</optgroup>
 						<optgroup label="Alus ir maistas">
 							<option value="food" <?=($this->filter_type == "food") ? 'selected="selected"' : ''?>>Patiekalai</option>
@@ -603,6 +611,9 @@ input, select, .editable-select-options, .ui-autocomplete {
 					}
 					$last_id = $item['id'];
 					switch($item['type']){
+						case "vote":
+							include("partials/vote.phtml");
+						break;
 						case "yeastbank":
 							include("partials/yeastbank.phtml");
 						break;

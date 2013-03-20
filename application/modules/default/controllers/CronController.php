@@ -648,4 +648,31 @@ class CronController extends Zend_Controller_Action {
 		echo "Done";
 	}
 
+	public function populatevotesAction() {
+		exit;
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->join("beer_recipes", "beer_recipes.recipe_id = beer_votes.recipe_id", array("recipe_name"))
+				->from("beer_votes");
+		$result = $db->fetchAll($select);
+		foreach($result as $key=>$val){
+			if ($val['rate_type'] == "simple"){
+				$rate = $val['simple_vote'];
+			} else {
+				$rate = round(($val['aroma_vote'] + $val['appearance_vote'] + $val['taste_vote'] + $val['palate_vote'] + $val['overall_vote']) / 5, 1);
+			}
+			$db->insert("activity", array(
+				"user_id" => $val['user_id'],
+				"item_id" => $val['rate_id'],
+				"posted" => $val['posted'],
+				"type" => "vote",
+				"vote_recipe_id" => $val['recipe_id'],
+				"vote_recipe_name" => $val['recipe_name'],
+				"vote_value" => $rate
+			));
+		}
+		echo "Done";
+	}
 }
