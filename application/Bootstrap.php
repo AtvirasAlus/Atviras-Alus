@@ -152,6 +152,7 @@ function _initAutoLoad() {
 		$router->addRoute("event",new Zend_Controller_Router_Route("/ivykis/:event",array("module"=>"default","controller" => "events","action" => "view","event"=>0)));
 		$router->addRoute("sitemap",new Zend_Controller_Router_Route("/sitemap",array("module"=>"default","controller" => "index","action" => "sitemap")));
         $router->addRoute("brewer_twitter",new Zend_Controller_Router_Route("/tweet/all/:page",array("module"=>"default","controller" => "tweet","action" => "all","page"=>0)));
+        $router->addRoute("terminologija",new Zend_Controller_Router_Route("/terminologija",array("module"=>"default","controller" => "content","action" => "terms")));
     }
 }
 ?>

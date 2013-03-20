@@ -196,6 +196,11 @@ if (bb_is_profile()) {
 										Aludarių pranešimai													
 									</a>
 								</li>
+								<li>
+									<a href="/terminologija">
+										Terminologija													
+									</a>
+								</li>
 							</ul>								
 						</li>
 						<li>

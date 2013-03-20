@@ -281,6 +281,11 @@ if (!defined('DOKU_INC')) die();
 										Aludarių pranešimai													
 									</a>
 								</li>
+								<li>
+									<a href="/terminologija">
+										Terminologija													
+									</a>
+								</li>
 							</ul>								
 						</li>
 						<li>

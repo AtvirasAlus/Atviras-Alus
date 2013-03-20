@@ -3447,3 +3447,11 @@ html ul.topnav li ul.subnav li a:hover {
 	margin-top: 10px;
 	display: block;
 }
+.wiki_outputas h1, 
+.wiki_outputas h2, 
+.wiki_outputas h3, 
+.wiki_outputas h4, 
+.wiki_outputas h5, 
+.wiki_outputas h6 {
+	display: none;
+}

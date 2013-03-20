@@ -1,26 +1,38 @@
 <?php
 
 class ContentController extends Zend_Controller_Action {
-	
-	public function init(){
+
+	public function init() {
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
 		$this->show_beta = false;
-		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+		if (isset($user_info->user_id) && !empty($user_info->user_id)) {
 			$db = Zend_Registry::get("db");
 			$select = $db->select()
 					->from("users_attributes")
 					->where("users_attributes.user_id = ?", $user_info->user_id)
 					->limit(1);
-			$u_atribs= $db->fetchRow($select);
+			$u_atribs = $db->fetchRow($select);
 			if ($u_atribs['beta_tester'] == 1) {
 				$this->show_beta = true;
 			}
 		}
 	}
-	
-	public function policyAction(){
+
+	public function policyAction() {
 		
+	}
+
+	public function termsAction() {
+		define("DOKU_INC", "wiki/");
+		define('NOSESSION', 1);
+		require_once(DOKU_INC . 'inc/init.php');
+		require_once(DOKU_INC . 'inc/common.php');
+		require_once(DOKU_INC . 'inc/parserutils.php');
+		$source = file_get_contents("wiki/data/pages/knyga/anglu-lietuviu_aludarystes_terminu_zodynelis.txt");
+		$info = array();
+		$data = p_render('xhtml', p_get_instructions($source), $info);
+		$this->view->data = $data;
 	}
 
 	public function readAction() {
@@ -29,7 +41,7 @@ class ContentController extends Zend_Controller_Action {
 		$cat = $this->_getParam('cat');
 		if ($cat != 0) {
 			$article = explode("-", $this->_getParam('article'));
-			switch($article[0]){
+			switch ($article[0]) {
 				case "18":
 					$this->_redirect("/wiki/straipsniai:mokomasis_klipas_alaus_gamyba_is_salyklo_salinimas_misos_tekinimas");
 					break;
@@ -84,15 +96,19 @@ class ContentController extends Zend_Controller_Action {
 	}
 
 	public function aboutAction() {
+		
 	}
 
 	public function helpAction() {
+		
 	}
 
 	public function faqAction() {
+		
 	}
 
 	public function paramaAction() {
+		
 	}
 
 	public function articleAction() {

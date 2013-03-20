@@ -181,6 +181,13 @@
 					<action>all</action>
 					<route>default</route>
 				</men-tweets>
+				<men-terms>
+					<label>Terminologija</label>
+					<module>default</module>
+					<controller>content</controller>
+					<action>terms</action>
+					<route>terminologija</route>
+				</men-terms>
 			</pages>
 		</men-library>
 		<men-community>

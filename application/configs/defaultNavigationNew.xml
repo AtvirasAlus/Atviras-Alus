@@ -245,6 +245,13 @@
 					<action>all</action>
 					<route>default</route>
 				</tweets>
+				<terms>
+					<label>Terminologija</label>
+					<module>default</module>
+					<controller>content</controller>
+					<action>terms</action>
+					<route>terminologija</route>
+				</terms>
 			</pages>
 		</skaitykla>
 		<events>
