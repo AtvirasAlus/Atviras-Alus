@@ -722,200 +722,206 @@ function i_bu($ibu,$og) {
 							}
 						} else {
 							?>
-							Kol kas šis alus dar nebuvo įvertintas
+							<div style="margin-bottom: 10px;">Kol kas šis alus dar nebuvo įvertintas</div>
 							<?php
 						}
 						?>
 						
 					</div>
-					<div id="show_vote_button">
-						<a href="javascript:void(0);" id="show_vote_form" class="ui-button" style="color: #000;">Įvertinti šį alų</a>
-					</div>
-					<div class="recipe_vote_form_div" style="display: none;">
-						<h1>Naujas vertinimas</h1>
-						<form action="/recipes/rate" method="post" id="recipe_vote_form">
-							<dl>
-								<dt>Alaus ragavimo data:</dt>
-								<dd><input name="vote_date" id="vote_date" type="text" value="<?=date("Y-m-d")?>" /></dd>
-								<div class="clear"></div>
-							</dl>
-							<dl>
-								<dt>Ragauto virimo autorius:</dt>
-								<dd>
-									<select name="vote_brewer" id="vote_brewer">
-										<?php
-										foreach($this->brewers as $key=>$val){
-											?>
-											<option value="<?=$val['brewer_id']?>"><?=$val['brewer_name']?></option>
+					<?php
+					if (isset($this->user_info->user_id)){
+						?>
+						<div id="show_vote_button">
+							<a href="javascript:void(0);" id="show_vote_form" class="ui-button" style="color: #000;">Įvertinti šį alų</a>
+						</div>
+						<div class="recipe_vote_form_div" style="display: none;">
+							<h1>Naujas vertinimas</h1>
+							<form action="/recipes/rate" method="post" id="recipe_vote_form">
+								<dl>
+									<dt>Alaus ragavimo data:</dt>
+									<dd><input name="vote_date" id="vote_date" type="text" value="<?=date("Y-m-d")?>" /></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dt>Ragauto virimo autorius:</dt>
+									<dd>
+										<select name="vote_brewer" id="vote_brewer">
 											<?php
-										}
-										?>
-									</select>
-								</dd>
-								<div class="clear"></div>
-							</dl>
-							<dl>
-								<dt>Vertinimo būdas:</dt>
-								<dd>
-									<select name="vote_type" id="vote_type">
-										<option value="simple" selected="selected">Supaprastnta vertinimo forma</option>
-										<option value="advanced">Pilna vertinimo forma</option>
-									</select>
-								</dd>
-								<div class="clear"></div>
-							</dl>
-							<div id="vote_simple_form">
-								<dl>
-									<dt class="vote_val_label">
-										Bendras įvertinimas:
-										<span>(1-10)</span>
-									</dt>
-									<dd class="vote_val_select">
-										<select name="vote_simple_value" id="vote_simple_value">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
+											foreach($this->brewers as $key=>$val){
+												?>
+												<option value="<?=$val['brewer_id']?>"><?=$val['brewer_name']?></option>
+												<?php
+											}
+											?>
 										</select>
 									</dd>
-									<dd class="vote_val_comment">
-										<textarea name="vote_simple_comment" id="vote_simple_comment"></textarea>
-									</dd>
-								</dl>
-							</div>
-							<div id="vote_advanced_form" style="display: none;">
-								<dl>
-									<dt class="vote_val_label">
-										Aromatas:
-										<span>(1-10)<br />salyklas, apyniai, esteriai ir kt. aromatai</span>
-									</dt>
-									<dd class="vote_val_select">
-										<select name="vote_aroma_value" id="vote_aroma_value">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-										</select>
-									</dd>
-									<dd class="vote_val_comment">
-										<textarea name="vote_aroma_comment" id="vote_aroma_comment"></textarea>
-									</dd>
+									<div class="clear"></div>
 								</dl>
 								<dl>
-									<dt class="vote_val_label">
-										Išvaizda:
-										<span>(1-5)<br />spalva, skaidrumas, puta</span>
-									</dt>
-									<dd class="vote_val_select">
-										<select name="vote_appearance_value" id="vote_appearance_value">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
+									<dt>Vertinimo būdas:</dt>
+									<dd>
+										<select name="vote_type" id="vote_type">
+											<option value="simple" selected="selected">Supaprastnta vertinimo forma</option>
+											<option value="advanced">Pilna vertinimo forma</option>
 										</select>
 									</dd>
-									<dd class="vote_val_comment">
-										<textarea name="vote_appearance_comment" id="vote_appearance_comment"></textarea>
-									</dd>
+									<div class="clear"></div>
 								</dl>
+								<div id="vote_simple_form">
+									<dl>
+										<dt class="vote_val_label">
+											Bendras įvertinimas:
+											<span>(1-10)</span>
+										</dt>
+										<dd class="vote_val_select">
+											<select name="vote_simple_value" id="vote_simple_value">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+											</select>
+										</dd>
+										<dd class="vote_val_comment">
+											<textarea name="vote_simple_comment" id="vote_simple_comment"></textarea>
+										</dd>
+									</dl>
+								</div>
+								<div id="vote_advanced_form" style="display: none;">
+									<dl>
+										<dt class="vote_val_label">
+											Aromatas:
+											<span>(1-10)<br />salyklas, apyniai, esteriai ir kt. aromatai</span>
+										</dt>
+										<dd class="vote_val_select">
+											<select name="vote_aroma_value" id="vote_aroma_value">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+											</select>
+										</dd>
+										<dd class="vote_val_comment">
+											<textarea name="vote_aroma_comment" id="vote_aroma_comment"></textarea>
+										</dd>
+									</dl>
+									<dl>
+										<dt class="vote_val_label">
+											Išvaizda:
+											<span>(1-5)<br />spalva, skaidrumas, puta</span>
+										</dt>
+										<dd class="vote_val_select">
+											<select name="vote_appearance_value" id="vote_appearance_value">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</select>
+										</dd>
+										<dd class="vote_val_comment">
+											<textarea name="vote_appearance_comment" id="vote_appearance_comment"></textarea>
+										</dd>
+									</dl>
+									<dl>
+										<dt class="vote_val_label">
+											Skonis:
+											<span>(1-10)<br />salyklas, apyniai, ferment. charakteris, balansas, finišas/poskonis ir kt.</span>
+										</dt>
+										<dd class="vote_val_select">
+											<select name="vote_taste_value" id="vote_taste_value">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+											</select>
+										</dd>
+										<dd class="vote_val_comment">
+											<textarea name="vote_taste_comment" id="vote_taste_comment"></textarea>
+										</dd>
+									</dl>
+									<dl>
+										<dt class="vote_val_label">
+											Gomurys:
+											<span>(1-5)<br />kūnas, karbonizacija, šiluma, kreminis, kt.</span>
+										</dt>
+										<dd class="vote_val_select">
+											<select name="vote_palate_value" id="vote_palate_value">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</select>
+										</dd>
+										<dd class="vote_val_comment">
+											<textarea name="vote_palate_comment" id="vote_palate_comment"></textarea>
+										</dd>
+									</dl>
+									<dl>
+										<dt class="vote_val_label">
+											Bendras įspūdis:
+											<span>(1-20)<br />bendras gėrimo malonumas</span>
+										</dt>
+										<dd class="vote_val_select">
+											<select name="vote_overall_value" id="vote_overall_value">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+												<option value="11">11</option>
+												<option value="12">12</option>
+												<option value="13">13</option>
+												<option value="14">14</option>
+												<option value="15">15</option>
+												<option value="16">16</option>
+												<option value="17">17</option>
+												<option value="18">18</option>
+												<option value="19">19</option>
+												<option value="20">20</option>
+											</select>
+										</dd>
+										<dd class="vote_val_comment">
+											<textarea name="vote_overall_comment" id="vote_overall_comment"></textarea>
+										</dd>
+									</dl>
+								</div>
 								<dl>
-									<dt class="vote_val_label">
-										Skonis:
-										<span>(1-10)<br />salyklas, apyniai, ferment. charakteris, balansas, finišas/poskonis ir kt.</span>
-									</dt>
-									<dd class="vote_val_select">
-										<select name="vote_taste_value" id="vote_taste_value">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-										</select>
+									<dt>&nbsp;</dt>
+									<dd>
+										<input name="submit" type="submit" value="Įvertinti" class="ui-button" />
+										<input name="recipe_id" type="hidden" value="<?=$this->data['recipe']['recipe_id']?>" />
 									</dd>
-									<dd class="vote_val_comment">
-										<textarea name="vote_taste_comment" id="vote_taste_comment"></textarea>
-									</dd>
+									<div class="clear"></div>
 								</dl>
-								<dl>
-									<dt class="vote_val_label">
-										Gomurys:
-										<span>(1-5)<br />kūnas, karbonizacija, šiluma, kreminis, kt.</span>
-									</dt>
-									<dd class="vote_val_select">
-										<select name="vote_palate_value" id="vote_palate_value">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-										</select>
-									</dd>
-									<dd class="vote_val_comment">
-										<textarea name="vote_palate_comment" id="vote_palate_comment"></textarea>
-									</dd>
-								</dl>
-								<dl>
-									<dt class="vote_val_label">
-										Bendras įspūdis:
-										<span>(1-20)<br />bendras gėrimo malonumas</span>
-									</dt>
-									<dd class="vote_val_select">
-										<select name="vote_overall_value" id="vote_overall_value">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-											<option value="11">11</option>
-											<option value="12">12</option>
-											<option value="13">13</option>
-											<option value="14">14</option>
-											<option value="15">15</option>
-											<option value="16">16</option>
-											<option value="17">17</option>
-											<option value="18">18</option>
-											<option value="19">19</option>
-											<option value="20">20</option>
-										</select>
-									</dd>
-									<dd class="vote_val_comment">
-										<textarea name="vote_overall_comment" id="vote_overall_comment"></textarea>
-									</dd>
-								</dl>
-							</div>
-							<dl>
-								<dt>&nbsp;</dt>
-								<dd>
-									<input name="submit" type="submit" value="Įvertinti" class="ui-button" />
-									<input name="recipe_id" type="hidden" value="<?=$this->data['recipe']['recipe_id']?>" />
-								</dd>
-								<div class="clear"></div>
-							</dl>
-						</form>
-					</div>
+							</form>
+						</div>
+						<?php
+					}
+					?>
 				</div>
 				<?php
 			}
