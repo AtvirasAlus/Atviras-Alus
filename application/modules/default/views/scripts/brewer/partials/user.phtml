@@ -1,0 +1,21 @@
+<div class="new_block ico_user">
+	<div class="white">
+		<div class="avatar">
+			<a href="/brewers/<?= $item['user_id']; ?>">
+				<img  src="http://www.gravatar.com/avatar/<?= $item['email_hash']; ?>?rating=G&size=50&default=mm" border="0"/>
+			</a>
+		</div>
+		<div class="post">
+			<div class="post_action">
+				<a href="/brewers/<?= $item['user_id']; ?>">
+					<?= $item["user_name"] ?>
+				</a>
+				prisijungė prie Atviro Alaus bendruomenės
+			</div>
+			<div class="post_stamp">
+				<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

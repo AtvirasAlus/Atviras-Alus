@@ -7,13 +7,13 @@ class BrewerController extends Zend_Controller_Action {
 		$user_info = $storage->read();
 		$this->show_beta = false;
 		$this->show_list = false;
-		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+		if (isset($user_info->user_id) && !empty($user_info->user_id)) {
 			$db = Zend_Registry::get("db");
 			$select = $db->select()
 					->from("users_attributes")
 					->where("users_attributes.user_id = ?", $user_info->user_id)
 					->limit(1);
-			$u_atribs= $db->fetchRow($select);
+			$u_atribs = $db->fetchRow($select);
 			if ($u_atribs['beta_tester'] == 1) {
 				$this->show_beta = true;
 			}
@@ -21,18 +21,18 @@ class BrewerController extends Zend_Controller_Action {
 				$this->show_list = true;
 			}
 		}
-		
 	}
 
 	public function indexAction() {
 		
 	}
-	public function favoritesAction(){
+
+	public function favoritesAction() {
 		$db = Zend_Registry::get('db');
 		$storage = new Zend_Auth_Storage_Session();
 		$this->view->user_info = $storage->read();
 		$u = $this->view->user_info;
-		if (isset($u->user_id) && !empty($u->user_id)){
+		if (isset($u->user_id) && !empty($u->user_id)) {
 			$this->view->pleaselogin = false;
 			$me = $u->user_id;
 			$select = $db->select()
@@ -57,7 +57,6 @@ class BrewerController extends Zend_Controller_Action {
 		} else {
 			$this->view->pleaselogin = true;
 		}
-		
 	}
 
 	public function infoAction() {
@@ -79,7 +78,7 @@ class BrewerController extends Zend_Controller_Action {
 					->where("users.user_active = ?", '1')
 					->where("users.user_id = ?", $brewer);
 			$this->view->user_info = $db->fetchRow($select);
-			if (!isset($this->view->user_info['user_id'])){
+			if (!isset($this->view->user_info['user_id'])) {
 				$this->_redirect("/");
 			}
 			$this->view->user_info['user_id'] = $brewer;
@@ -134,7 +133,7 @@ class BrewerController extends Zend_Controller_Action {
 						->joinLeft("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe")
 						->where("session_brewer =?", $brewer);
 				if ($row = $db->fetchRow($select)) {
-					$this->view->user_info["total_brewed_unknown"] = number_format($row["total"] - 
+					$this->view->user_info["total_brewed_unknown"] = number_format($row["total"] -
 							$this->view->user_info["total_brewed_kvass"] -
 							$this->view->user_info["total_brewed_cider"] -
 							$this->view->user_info["total_brewed_mead"] -
@@ -152,22 +151,12 @@ class BrewerController extends Zend_Controller_Action {
 						->from("beer_recipes")
 						->where("beer_recipes.recipe_publish = ?", '1')
 						->where("beer_recipes.brewer_id= ?", $brewer);
-				if (!isset($_COOKIE['show_empty_recipes']) || $_COOKIE['show_empty_recipes'] != "1"){
+				if (!isset($_COOKIE['show_empty_recipes']) || $_COOKIE['show_empty_recipes'] != "1") {
 					$select->where("recipe_total_sessions > 0");
 				}
 				$this->view->user_info["recipes"] = array();
 				if ($rows = $db->fetchAll($select)) {
 					$this->view->user_info["recipes"] = $rows;
-				}
-				$select = $db->select()
-						->from("beer_recipes_comments", array("comment_text", "comment_date"))
-						->join("beer_recipes", "comment_recipe=recipe_id", array("recipe_name", "recipe_id"))
-						->where("comment_brewer = ?", $brewer)
-						->order("comment_date desc")
-						->limit(10);
-				$this->view->user_info["recipes_comments"] = array();
-				if ($rows = $db->fetchAll($select)) {
-					$this->view->user_info["recipes_comments"] = $rows;
 				}
 				$select = $db->select()
 						->from("beer_recipes_tags", array("weight" => "count(tag_text)", "tag_text" => "tag_text"))
@@ -194,7 +183,159 @@ class BrewerController extends Zend_Controller_Action {
 					$this->view->user_info["sessions_size"] = sizeof($rows);
 					$this->view->user_info["sessions"] = array_slice($rows, 0, 10);
 				}
+
+				$filter_type = $this->getRequest()->getParam("type");
+				if (!isset($filter_type) || empty($filter_type))
+					$filter_type = "all";
+				$this->view->filter_type = $filter_type;
+				$select = $db->select()
+						->from("activity")
+						->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
+						->order("posted DESC")
+						->order("id DESC")
+						->where("activity.user_id = ?", $brewer)
+						->limit(30);
+				switch ($filter_type) {
+					case "vote":
+						$select->where("type = 'vote'");
+						break;
+					case "yeastbank":
+						$select->where("type = 'yeastbank'");
+						break;
+					case "idea":
+						$select->where("type = 'idea'");
+						break;
+					case "idea_comment":
+						$select->where("type = 'idea_comment'");
+						break;
+					case "forum_post":
+						$select->where("type = 'forum_post'");
+						break;
+					case "article":
+						$select->where("type = 'article'");
+						break;
+					case "article_comment":
+						$select->where("type = 'article_comment'");
+						break;
+					case "session":
+						$select->where("type = 'session'");
+						break;
+					case "event":
+						$select->where("type = 'event'");
+						break;
+					case "event_comment":
+						$select->where("type = 'event_comment'");
+						break;
+					case "food":
+						$select->where("type = 'food'");
+						break;
+					case "food_comment":
+						$select->where("type = 'food_comment'");
+						break;
+					case "recipe":
+						$select->where("type = 'recipe'");
+						break;
+					case "recipe_comment":
+						$select->where("type = 'recipe_comment'");
+						break;
+					case "tweet":
+						$select->where("type = 'tweet'");
+						break;
+					case "user":
+						$select->where("type = 'user'");
+						break;
+					case "rss":
+						$select->where("type = 'rss'");
+						break;
+				}
+				$result = $db->fetchAll($select);
+				$this->view->activity = $result;
+				
 			}
+		}
+	}
+
+	public function moreAction() {
+		$this->_helper->layout->disableLayout();
+		$db = Zend_Registry::get("db");
+		$storage = new Zend_Auth_Storage_Session();
+		$user_info = $storage->read();
+		if ($this->show_beta === true) {
+			$filter_type = $this->getRequest()->getParam("type");
+			$last_id = $this->getRequest()->getParam("last");
+			$select = $db->select("posted")
+					->from("activity")
+					->where("id = ?", $last_id)
+					->limit(1);
+			$result = $db->fetchRow($select);
+			$last_stamp = $result['posted'];
+			$this->view->last_stamp = $last_stamp;
+			if (!isset($filter_type) || empty($filter_type))
+				$filter_type = "all";
+			$this->view->filter_type = $filter_type;
+			$select = $db->select()
+					->from("activity")
+					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
+					->order("posted DESC")
+					->order("id DESC")
+					->where("posted < '" . $last_stamp . "'")
+					->where("activity.user_id = ?", $user_info->user_id)
+					->limit(30);
+			switch ($filter_type) {
+				case "vote":
+					$select->where("type = 'vote'");
+					break;
+				case "yeastbank":
+					$select->where("type = 'yeastbank'");
+					break;
+				case "idea":
+					$select->where("type = 'idea'");
+					break;
+				case "idea_comment":
+					$select->where("type = 'idea_comment'");
+					break;
+				case "forum_post":
+					$select->where("type = 'forum_post'");
+					break;
+				case "article":
+					$select->where("type = 'article'");
+					break;
+				case "article_comment":
+					$select->where("type = 'article_comment'");
+					break;
+				case "session":
+					$select->where("type = 'session'");
+					break;
+				case "event":
+					$select->where("type = 'event'");
+					break;
+				case "event_comment":
+					$select->where("type = 'event_comment'");
+					break;
+				case "food":
+					$select->where("type = 'food'");
+					break;
+				case "food_comment":
+					$select->where("type = 'food_comment'");
+					break;
+				case "recipe":
+					$select->where("type = 'recipe'");
+					break;
+				case "recipe_comment":
+					$select->where("type = 'recipe_comment'");
+					break;
+				case "tweet":
+					$select->where("type = 'tweet'");
+					break;
+				case "user":
+					$select->where("type = 'user'");
+					break;
+				case "rss":
+					$select->where("type = 'rss'");
+					break;
+			}
+			$result = $db->fetchAll($select);
+			$this->view->items = $result;
 		}
 	}
 
@@ -241,13 +382,13 @@ class BrewerController extends Zend_Controller_Action {
 				->order("TRIM(user_name) ASC");
 		$search = $this->_getParam("brewer_search");
 		$this->view->search = "";
-		if (isset($search) && !empty ($search)){
+		if (isset($search) && !empty($search)) {
 			$this->view->search = $search;
-			$select->where("users.user_name LIKE '%".$search."%'");
+			$select->where("users.user_name LIKE '%" . $search . "%'");
 		}
 		$result = $db->FetchAll($select);
-		if (sizeof($result) == 1){
-			header("location: /brewers/".$result[0]['user_id']);
+		if (sizeof($result) == 1) {
+			header("location: /brewers/" . $result[0]['user_id']);
 		}
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
@@ -353,7 +494,7 @@ class BrewerController extends Zend_Controller_Action {
 				->order("posted DESC");
 		$result = $db->FetchAll($select);
 		$aw = array();
-		foreach ($result as $key=>$val){
+		foreach ($result as $key => $val) {
 			$aw[$val['recipe_id']][] = $val;
 		}
 		$this->view->awards = $aw;
@@ -390,7 +531,7 @@ class BrewerController extends Zend_Controller_Action {
 			$select->where("beer_recipes.brewer_id= ?", $brewer["user_id"]);
 			$select->order("beer_recipes.recipe_created DESC");
 
-			if ($this->show_list === true && $this->_getParam('brewer') == 0){
+			if ($this->show_list === true && $this->_getParam('brewer') == 0) {
 				$this->view->content = $db->fetchAll($select);
 			} else {
 				$adapter = new Zend_Paginator_Adapter_DbSelect($select);
@@ -402,19 +543,21 @@ class BrewerController extends Zend_Controller_Action {
 			$this->view->brewer["total"] = $total["count"];
 		}
 	}
-	public function enableblocksAction(){
+
+	public function enableblocksAction() {
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
-		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+		if (isset($user_info->user_id) && !empty($user_info->user_id)) {
 			$db = Zend_Registry::get("db");
 			$db->update("users_attributes", array("recipe_list" => "0"), array("user_id = '" . $user_info->user_id . "'"));
 		}
 		$this->_redirect("/brewer/recipes");
 	}
-	public function enablelistAction(){
+
+	public function enablelistAction() {
 		$storage = new Zend_Auth_Storage_Session();
 		$user_info = $storage->read();
-		if (isset($user_info->user_id) && !empty($user_info->user_id)){
+		if (isset($user_info->user_id) && !empty($user_info->user_id)) {
 			$db = Zend_Registry::get("db");
 			$db->update("users_attributes", array("recipe_list" => "1"), array("user_id = '" . $user_info->user_id . "'"));
 		}

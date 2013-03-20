@@ -1,0 +1,79 @@
+<?php
+$old_time = $this->last_stamp;
+$last_id = 0;
+if (isset($this->items) && is_array($this->items)){
+	foreach ($this->items as $item):
+		$old_time = $item['posted'];
+		$last_id = $item['id'];
+		switch($item['type']){
+			case "vote":
+				include("partials/vote.phtml");
+			break;
+			case "yeastbank":
+				include("partials/yeastbank.phtml");
+			break;
+			case "idea_comment":
+				include("partials/idea_comment.phtml");
+			break;
+			case "idea":
+				include("partials/idea.phtml");
+			break;
+			case "food":
+				include("partials/food.phtml");
+			break;
+			case "food_comment":
+				include("partials/food_comment.phtml");
+			break;
+			case "forum_post":
+				include("partials/forum_post.phtml");
+			break;
+			case "article":
+				include("partials/article.phtml");
+			break;
+			case "article_comment":
+				include("partials/article_comment.phtml");
+			break;
+			case "session":
+				$temp_rname = trim($item['session_recipe_name']);
+				if ($item['session_recipe_publish'] == 1 && !empty($temp_rname))
+					include("partials/session.phtml");
+			break;
+			case "event":
+				if ($item['event_published'] == 1)
+					include("partials/event.phtml");
+			break;
+			case "event_comment":
+				include("partials/event_comment.phtml");
+			break;
+			case "recipe":
+				include("partials/recipe.phtml");
+			break;
+			case "recipe_comment":
+				include("partials/recipe_comment.phtml");
+			break;
+			case "tweet":
+				include("partials/tweet.phtml");
+			break;
+			case "user":
+				include("partials/user.phtml");
+			break;
+			case "rss":
+				include("partials/rss.phtml");
+			break;
+		}
+	endforeach;
+}
+if (sizeof($this->items) == 0){
+	?>
+	<div class="home_more">
+		Daugiau įrašų nėra
+	</div>
+	<?php
+} else {
+	?>
+	<div class="home_more">
+		<input type="button" value="Įkelti daugiau įrašų" id="load_more" class="ui-button" data-last="<?=$last_id?>" data-type="<?=$this->filter_type?>"/>
+	</div>
+	<?php
+}
+?>

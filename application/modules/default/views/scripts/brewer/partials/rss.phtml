@@ -1,0 +1,54 @@
+<div class="new_block ico_rss">
+	<div class="white">
+		<div class="avatar">
+			<img  src="/public/images/new/rss.png" border="0"/>
+		</div>
+		<div class="post">
+			<div class="post_action">
+				<div>
+					<?php
+					$author = "Mūsų draugų svetainėje";
+					if (strpos($item['rss_link'], "http://alusalus.lt") !== false){
+						$author = "<b>Alus alus</b> svetainėje";
+					} else if (strpos($item['rss_link'], "http://pingvi.com") !== false){
+						$author = "<b>Pingi.com</b> svetainėje";
+					} else if (strpos($item['rss_link'], "http://mgkolekcija.wordpress.com") !== false){
+						$author = "<b>Modesto bloge apie kolekcijas ir alų</b>";
+					} else if (strpos($item['rss_link'], "http://beergeek.lt") !== false){
+						$author = "<b>BeerGeek.lt</b> svetainėje";
+					} else if (strpos($item['rss_link'], "http://www.fotografuoju.lt") !== false){-
+						$author = "<b>Fotografuoju.lt</b> svetainėje";
+					} else if (strpos($item['rss_link'], "http://aluslt.blogspot.com") !== false){-
+						$author = "<b>\"Alus Lietuvoje ir ne tik ...\"</b> svetainėje";
+					} else if (strpos($item['rss_link'], "http://sirvenosbravoras.lt") !== false){-
+						$author = "<b>Širvenos bravoro</b> svetainėje";
+					} else if (strpos($item['rss_link'], "http://tikrasalus.lt") !== false){-
+						$author = "<b>Tikras Alus</b> svetainėje";
+					} else if (strpos($item['rss_link'], "http://tomas.atvirasalus.lt") !== false){-
+						$author = "<b>\"Tomo nuotykiai alaus šalyje\"</b> svetainėje";
+					} else if (strpos($item['rss_link'], "http://ponasniekas.atvirasalus.lt") !== false){-
+						$author = "<b>Ponasniekas</b> bloge";
+					}
+					?>
+					<?=$author; ?> patalpintas naujas įrašas<a href="<?=$item['rss_link']?>">
+						<?=$item['rss_title']?>
+					</a>
+				</div>
+				<div style="margin-top: 5px;">
+					<?php
+					$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p")));
+					$f = new Entities_Filter_Excerpt();
+					$item['rss_description'] = str_replace("\n", "<br />", $item['rss_description']);
+					?>
+					<a href="<?=$item['rss_link']?>" style="color: #666; font-weight: normal;">
+						<?=$f->filter($fhtml->filter($item['rss_description']), 30); ?>
+					</a>
+				</div>
+			</div>
+			<div class="post_stamp">
+				<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

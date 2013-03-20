@@ -1,6 +1,67 @@
 <?php
 $this->headTitle()->headTitle($this->user_info['user_name']);
+$this->headLink()->appendStylesheet('/public/css/flow.css');
+$this->headLink()->appendStylesheet('/public/css/tabs.css');
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.js");
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.pie.js");
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
 ?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#new_filter_select").change(function(){
+			window.location.href = "/brewers/<?= $this->user_info['user_id']; ?>/filter/"+$(this).val();
+		});
+	});
+</script>
+<script type="text/javascript">
+	var timeOutIdle = null;
+	var currentURL = null;
+	var currentImage = null;
+	var imageSize = null;
+	
+	$(document).ready(function () {
+		rebindlinks2();
+		alreadyloading = false;
+		times_loaded = 0;
+		$(window).scroll(function() {
+			if ($('body').height() <= ($(window).height() + $(window).scrollTop())) {
+				if (alreadyloading == false && times_loaded < 3) {
+					alreadyloading = true;
+					var last_id = $("#load_more").attr("data-last");
+					var type_name = $("#load_more").attr("data-type");
+					$(".home_more").html('<img src="/public/images/load.gif">');
+					$.ajax({
+						url: "/brewers/<?= $this->user_info['user_id']; ?>/more/last/"+last_id+"/type/"+type_name,
+						success: function(data) {
+							alreadyloading = false;
+							times_loaded = times_loaded + 1;
+							$(".home_more").remove();
+							$("#home_items").append(data);
+							rebindlinks2();
+						}
+					});
+				}
+			}
+		});
+	});
+	function rebindlinks2(){
+		$(".home_more input").click(function(){
+			$(".home_more").html('<img src="/public/images/load.gif">');
+			var last_id = $(this).attr("data-last");
+			var type_name = $(this).attr("data-type");
+			$.ajax({
+				url: "/brewers/<?= $this->user_info['user_id']; ?>/more/last/"+last_id+"/type/"+type_name,
+				success: function(data) {
+					$(".home_more").hide();
+					$("#home_items").append(data);
+					rebindlinks2();
+				}
+			});
+		});
+	
+	}
+</script>
 <script>
 	$(function() {
 		$("#show_empty_recipes").change(function(){
@@ -10,29 +71,30 @@ $this->headTitle()->headTitle($this->user_info['user_name']);
 				window.location.href = "/show_empty_recipes_off";
 			}
 		});
+		$( "#tabs" ).tabs();
 	});
 </script>
 <div id="brewer_info_container" class="inner_container">
-	<div class="inner_header"><?=$this->user_info['user_name'];?></div>
+	<div class="inner_header"><?= $this->user_info['user_name']; ?></div>
 	<?php
-	if (isset($this->awards) && is_array($this->awards) && sizeof($this->awards) > 0){
+	if (isset($this->awards) && is_array($this->awards) && sizeof($this->awards) > 0) {
 		?>
 		<div class="brewer_awards2" style="margin-bottom: 10px;">
 			<?php
-			foreach($this->awards as $key=>$val){
+			foreach ($this->awards as $key => $val) {
 				$title = "";
-				if (!empty($val['recipe_name'])){
-					$title .= $val['recipe_name'].", ";
+				if (!empty($val['recipe_name'])) {
+					$title .= $val['recipe_name'] . ", ";
 				}
 				$title .= $val['event_name'];
-				if (!empty($val['category'])){
-					$title .= ", ".$val['category'];
+				if (!empty($val['category'])) {
+					$title .= ", " . $val['category'];
 				}
-				if (!empty($val['place'])){
-					$title .= ", ".$val['place']." vieta";
+				if (!empty($val['place'])) {
+					$title .= ", " . $val['place'] . " vieta";
 				}
-				if (!empty($val['points']) && $val['points'] != "0"){
-					$title .= " (".$val['points']." tšk.)";
+				if (!empty($val['points']) && $val['points'] != "0") {
+					$title .= " (" . $val['points'] . " tšk.)";
 				}
 				?>
 				<img src="/public/images/<?= trim($val['icon']) ?>-32.gif" width="32" title="<?= trim($title) ?>" />
@@ -47,61 +109,61 @@ $this->headTitle()->headTitle($this->user_info['user_name']);
 		<div class="brewer_info_left">
 			<div class="brewer_info_block">
 				<div class="brewer_info_label">Narys nuo:</div>
-				<div class="brewer_info_text"><?=$this->user_info['user_created'];?></div>
+				<div class="brewer_info_text"><?= $this->user_info['user_created']; ?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="brewer_info_block">
 				<div class="brewer_info_label">Paskutinį kartą lankėsi:</div>
-				<div class="brewer_info_text"><?=$this->user_info['user_lastlogin'];?></div>
+				<div class="brewer_info_text"><?= $this->user_info['user_lastlogin']; ?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="brewer_info_block">
 				<div class="brewer_info_label">Vietovė:</div>
-				<div class="brewer_info_text"><?=$this->user_info['user_location'];?></div>
+				<div class="brewer_info_text"><?= $this->user_info['user_location']; ?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="brewer_info_block">
 				<div class="brewer_info_label">Pagamino alaus:</div>
-				<div class="brewer_info_text"><?=$this->user_info['total_brewed'];?> l.</div>
+				<div class="brewer_info_text"><?= $this->user_info['total_brewed']; ?> l.</div>
 				<div class="clear"></div>
 			</div>
 			<?php
-			if ($this->user_info['total_brewed_kvass'] != 0){
+			if ($this->user_info['total_brewed_kvass'] != 0) {
 				?>
 				<div class="brewer_info_block">
 					<div class="brewer_info_label">Pagamino giros:</div>
-					<div class="brewer_info_text"><?=$this->user_info['total_brewed_kvass'];?> l.</div>
+					<div class="brewer_info_text"><?= $this->user_info['total_brewed_kvass']; ?> l.</div>
 					<div class="clear"></div>
 				</div>
 				<?php
 			}
 			?>
 			<?php
-			if ($this->user_info['total_brewed_cider'] != 0){
+			if ($this->user_info['total_brewed_cider'] != 0) {
 				?>
 				<div class="brewer_info_block">
 					<div class="brewer_info_label">Pagamino sidro:</div>
-					<div class="brewer_info_text"><?=$this->user_info['total_brewed_cider'];?> l.</div>
+					<div class="brewer_info_text"><?= $this->user_info['total_brewed_cider']; ?> l.</div>
 					<div class="clear"></div>
 				</div>
 				<?php
 			}
 			?>
 			<?php
-			if ($this->user_info['total_brewed_mead'] != 0){
+			if ($this->user_info['total_brewed_mead'] != 0) {
 				?>
 				<div class="brewer_info_block">
 					<div class="brewer_info_label">Pagamino midaus:</div>
-					<div class="brewer_info_text"><?=$this->user_info['total_brewed_mead'];?> l.</div>
+					<div class="brewer_info_text"><?= $this->user_info['total_brewed_mead']; ?> l.</div>
 					<div class="clear"></div>
 				</div>
 				<?php
 			}
-			if ($this->user_info['total_brewed_unknown'] != 0){
+			if ($this->user_info['total_brewed_unknown'] != 0) {
 				?>
 				<div class="brewer_info_block">
 					<div class="brewer_info_label">Pagamino kitų gėrimų:<br />(pagal pašalintus receptus)</div>
-					<div class="brewer_info_text"><?=$this->user_info['total_brewed_unknown'];?> l.</div>
+					<div class="brewer_info_text"><?= $this->user_info['total_brewed_unknown']; ?> l.</div>
 					<div class="clear"></div>
 				</div>
 				<?php
@@ -109,14 +171,14 @@ $this->headTitle()->headTitle($this->user_info['user_name']);
 			?>
 			<div class="brewer_info_block">
 				<div class="brewer_info_label">Papildoma informacija:</div>
-				<div class="brewer_info_text"><?= preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-]*(\?\S+)?)?)?)@','<a href="$1" rel="nofollow" target="blank">$1</a>',nl2br($this->user_info['user_about']));?></div>
+				<div class="brewer_info_text"><?= preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.%-]*(\?\S+)?)?)?)@', '<a href="$1" rel="nofollow" target="blank">$1</a>', nl2br($this->user_info['user_about'])); ?></div>
 				<div class="clear"></div>
 			</div>
 		</div>
 		<div class="brewer_info_avatar">
-			<img src="http://www.gravatar.com/avatar/<?=md5($this->user_info['user_email']);?>?rating=G&size=80&default=mm" border="0"/>
+			<img src="http://www.gravatar.com/avatar/<?= md5($this->user_info['user_email']); ?>?rating=G&size=80&default=mm" border="0"/>
 			<div class="brewer_info_actions">
-				<a href="/mail/compose?token=<? print urlencode(base64_encode($this->user_info['user_name']));?>" rel="nofollow">
+				<a href="/mail/compose?token=<? print urlencode(base64_encode($this->user_info['user_name'])); ?>" rel="nofollow">
 					Rašyti žinutę
 				</a>
 			</div>
@@ -124,161 +186,284 @@ $this->headTitle()->headTitle($this->user_info['user_name']);
 		<div class="clear"></div>
 	</div>
 </div>
-<?php
-if (sizeof($this->user_info['recipes']) > 0){
-	?>
-	<div id="brewer_info_recipe_container" class="inner_container">
-		<div class="inner_header">Alaus receptai (<?=$this->user_info['total_recipes'];?>) <a style="font-size: 12px" href="/brewer/recipes/<?=$this->user_info['user_id'];?>"> peržiūrėti</a></div>
+<div id="tabs">
+	<ul>
 		<?php
-		if ($this->hidden_recipes >0):
+		if (sizeof($this->user_info['recipes']) > 0) {
 			?>
-			<div style="margin-bottom: 10px;">
-				<label><input type="checkbox" value="1" name="show_empty_recipes" id="show_empty_recipes" <?=(isset($_COOKIE['show_empty_recipes']) && $_COOKIE['show_empty_recipes'] == "1") ? 'checked="checked"' : ''; ?>> Rodyti receptus be užregistruotų virimų (<?=$this->hidden_recipes?> <?=$this->plurify($this->hidden_recipes, "receptas", "receptai", "receptų")?>)</label>
-			</div>
+			<li><a href="#tabs-recipes">Alaus receptai (<?= $this->user_info['total_recipes']; ?>)</a></li>
 			<?php
-		endif;
-		?>
-		<div id="tags">
-			<ul>
-				<?
-				for ($i=0;$i<count($this->user_info['recipes']);$i++) {
-					?>
-					<li class="tag<?=rand(1,10);?>" style="background-color:<?=$this->colorHex($this->user_info['recipes'][$i]['recipe_ebc']);?>"><a href="/alus/receptas/<?=$this->user_info['recipes'][$i]['recipe_id'];?>-<?=$this->urlMaker($this->user_info['recipes'][$i]['recipe_name']);?>"><?=trim($this->user_info['recipes'][$i]['recipe_name']);?></a></li>
-					<?
-				}
-				?>
-			</ul>
-		</div>
-	</div>
-	<?php
-}
-if (sizeof($this->user_info['sessions']) > 0){
-	?>
-	<div id="brewer_info_sessions_container" class="inner_container">
-		<div class="inner_header">Paskutiniai aludario virimai</div>
-		<div class="as-table">
-			<div class="as-row">
-				<div class="as-cell"><b>Pavadinimas</b></div>
-				<div class="as-cell"><b>Receptas</b></div>
-				<div class="as-cell"><b>Recepto autorius</b></div>
-				<div class="as-cell"><b>Kiekis</b></div>
-				<div class="as-cell"><b>Virimo data</b></div>
-			</div>
-			<?
-			foreach ($this->user_info['sessions'] as $session){
-				if (($session['style_class'] == "beer" && $session['recipe_abv'] > 9.5) || ($session['style_class'] != "beer" && $session['recipe_abv'] > 18)){
-					$legal = false;
-				} else {
-					$legal = true;
-				}
-				?>
-				<div class="as-row" style="<?=($session['recipe_publish'] == "1" && $legal === true) ? "" : "color: #999999;"; ?>">
-					<?php
-					if ($session['recipe_publish'] == "1"){
-						if ($legal === false){
-							?>
-							<div class="as-cell">-</div>
-							<div class="as-cell">Receptas nėra viešas</div>
-							<div class="as-cell">-</div>
-							<?php
-						} else {
-							?>
-							<div class="as-cell"><?=$session['session_name']?></div>
-							<div class="as-cell">
-								<a href="/alus/receptas/<?=$session['recipe_id']?>-<?=$this->urlMaker($session['recipe_name'])?>">
-									<?=$session['recipe_name']?>
-								</a>
-							</div>
-							<?php
-							if ($session['recu_id'] == $session['user_id']){
-								?>
-								<div class="as-cell">
-									<?=$session['recu_name']?>
-								</div>
-								<?
-							} else {
-								?>
-								<div class="as-cell">
-									<a href="/brewers/<?=$session['recu_id']?>">
-										<?=$session['recu_name']?>
-									</a>
-								</div>
-								<?
-							}
-						}
-					} else {
-						if ($session['recipe_publish'] === "0"){
-							?>
-							<div class="as-cell">-</div>
-							<div class="as-cell">Receptas nėra viešas</div>
-							<div class="as-cell">-</div>
-							<?php
-						} else {
-							?>
-							<div class="as-cell">-</div>
-							<div class="as-cell">Receptas ištrintas</div>
-							<div class="as-cell">-</div>
-							<?php
-						}
-					}
-					?>
-					<div class="as-cell"><?=$session['session_size']?></div>
-					<div class="as-cell" style="white-space:nowrap;"><?=($session['session_primarydate'] == "0000-00-00") ? "-" : $session['session_primarydate']; ?></div>
-				</div>
-				<?php
-			}
+		}
+		if (sizeof($this->user_info['sessions']) > 0) {
 			?>
-		</div>
-		<?php
-		if ($this->user_info['sessions_size'] > 10){
+			<li><a href="#tabs-sessions">Paskutiniai aludario virimai</a></li>
+			<?php
+		}
+		if (sizeof($this->user_info['tags']) > 0) {
 			?>
-			<div class="inner_footer" style="text-align: right;">
-				<a href="/brewer/sessions/<?=$this->user_info['user_id']?>">Peržiūrėti visus aludario virimus</a>
-			</div>
-			<?
+			<li><a href="#tabs-tags">Žymos</a></li>
+			<?php
 		}
 		?>
-	</div>
-	<?
-}
-if (sizeof($this->user_info['tags']) > 0) {
-	?>
-	<div id="brewer_info_tag_container" class="inner_container">
-		<div class="inner_header">Žymos</div>
-		<div id="tags">
-			<ul>
-				<?
-				for ($i=0;$i<count($this->user_info['tags']);$i++) {
-					?>
-					<li style="font-size:<?=(80+min($this->user_info['tags'][$i]['weight']*20,200));?>%"><a href="/search/brewer:<?=$this->user_info['user_name'];?>|tags:<?=$this->user_info['tags'][$i]['tag_text'];?>" style="color:#333"><?=$this->user_info['tags'][$i]['tag_text'];?></a></li>
+	</ul>
+	<?php
+	if (sizeof($this->user_info['recipes']) > 0) {
+		?>
+		<div id="tabs-recipes" class="inner_container">
+			<?php
+			if ($this->hidden_recipes > 0):
+				?>
+				<div style="margin-bottom: 10px;">
+					<label><input type="checkbox" value="1" name="show_empty_recipes" id="show_empty_recipes" <?= (isset($_COOKIE['show_empty_recipes']) && $_COOKIE['show_empty_recipes'] == "1") ? 'checked="checked"' : ''; ?>> Rodyti receptus be užregistruotų virimų (<?= $this->hidden_recipes ?> <?= $this->plurify($this->hidden_recipes, "receptas", "receptai", "receptų") ?>)</label>
+				</div>
+				<?php
+			endif;
+			?>
+			<div id="tags">
+				<ul>
 					<?
+					for ($i = 0; $i < count($this->user_info['recipes']); $i++) {
+						?>
+						<li class="tag<?= rand(1, 10); ?>" style="background-color:<?= $this->colorHex($this->user_info['recipes'][$i]['recipe_ebc']); ?>"><a href="/alus/receptas/<?= $this->user_info['recipes'][$i]['recipe_id']; ?>-<?= $this->urlMaker($this->user_info['recipes'][$i]['recipe_name']); ?>"><?= trim($this->user_info['recipes'][$i]['recipe_name']); ?></a></li>
+						<?
+					}
+					?>
+				</ul>
+			</div>
+			<div class="inner_footer" style="text-align: right;">
+				<a href="/brewer/recipes/<?= $this->user_info['user_id']; ?>">Peržiūrėti visus aludario receptus</a>
+			</div>
+		</div>
+		<?php
+	}
+	if (sizeof($this->user_info['sessions']) > 0) {
+		?>
+		<div id="tabs-sessions" class="inner_container">
+			<div class="as-table">
+				<div class="as-row">
+					<div class="as-cell"><b>Pavadinimas</b></div>
+					<div class="as-cell"><b>Receptas</b></div>
+					<div class="as-cell"><b>Recepto autorius</b></div>
+					<div class="as-cell"><b>Kiekis</b></div>
+					<div class="as-cell"><b>Virimo data</b></div>
+				</div>
+				<?
+				foreach ($this->user_info['sessions'] as $session) {
+					if (($session['style_class'] == "beer" && $session['recipe_abv'] > 9.5) || ($session['style_class'] != "beer" && $session['recipe_abv'] > 18)) {
+						$legal = false;
+					} else {
+						$legal = true;
+					}
+					?>
+					<div class="as-row" style="<?= ($session['recipe_publish'] == "1" && $legal === true) ? "" : "color: #999999;"; ?>">
+						<?php
+						if ($session['recipe_publish'] == "1") {
+							if ($legal === false) {
+								?>
+								<div class="as-cell">-</div>
+								<div class="as-cell">Receptas nėra viešas</div>
+								<div class="as-cell">-</div>
+								<?php
+							} else {
+								?>
+								<div class="as-cell"><?= $session['session_name'] ?></div>
+								<div class="as-cell">
+									<a href="/alus/receptas/<?= $session['recipe_id'] ?>-<?= $this->urlMaker($session['recipe_name']) ?>">
+										<?= $session['recipe_name'] ?>
+									</a>
+								</div>
+								<?php
+								if ($session['recu_id'] == $session['user_id']) {
+									?>
+									<div class="as-cell">
+										<?= $session['recu_name'] ?>
+									</div>
+									<?
+								} else {
+									?>
+									<div class="as-cell">
+										<a href="/brewers/<?= $session['recu_id'] ?>">
+											<?= $session['recu_name'] ?>
+										</a>
+									</div>
+									<?
+								}
+							}
+						} else {
+							if ($session['recipe_publish'] === "0") {
+								?>
+								<div class="as-cell">-</div>
+								<div class="as-cell">Receptas nėra viešas</div>
+								<div class="as-cell">-</div>
+								<?php
+							} else {
+								?>
+								<div class="as-cell">-</div>
+								<div class="as-cell">Receptas ištrintas</div>
+								<div class="as-cell">-</div>
+								<?php
+							}
+						}
+						?>
+						<div class="as-cell"><?= $session['session_size'] ?></div>
+						<div class="as-cell" style="white-space:nowrap;"><?= ($session['session_primarydate'] == "0000-00-00") ? "-" : $session['session_primarydate']; ?></div>
+					</div>
+					<?php
 				}
 				?>
-			</ul>
-		</div>
-	</div>
-	<?
-}
-if (sizeof($this->user_info['recipes_comments']) > 0){
-	?>
-	<div id="brewer_info_comments_container" class="inner_container">
-		<div class="inner_header">Receptų komentarai</div>
-		<div id="info_comments">
-			<?
-			for ($i=0;$i<count($this->user_info['recipes_comments']);$i++) {
+			</div>
+			<?php
+			if ($this->user_info['sessions_size'] > 10) {
 				?>
-				<div class="info_comment">
-					<a href="/alus/receptas/<?=$this->user_info['recipes_comments'][$i]['recipe_id'];?>-<?=$this->urlMaker($this->user_info['recipes_comments'][$i]['recipe_name']);?>">
-						<?=$this->user_info['recipes_comments'][$i]['recipe_name'];?>
-					</a>
-					<span><?=$this->user_info['recipes_comments'][$i]['comment_date'];?></span>
-					<div><?=$this->user_info['recipes_comments'][$i]['comment_text'];?></div>
+				<div class="inner_footer" style="text-align: right;">
+					<a href="/brewer/sessions/<?= $this->user_info['user_id'] ?>">Peržiūrėti visus aludario virimus</a>
 				</div>
 				<?
 			}
 			?>
 		</div>
+		<?
+	}
+	if (sizeof($this->user_info['tags']) > 0) {
+		?>
+		<div id="tabs-tags" class="inner_container">
+			<div id="tags">
+				<ul>
+					<?
+					for ($i = 0; $i < count($this->user_info['tags']); $i++) {
+						?>
+						<li style="font-size:<?= (80 + min($this->user_info['tags'][$i]['weight'] * 20, 200)); ?>%"><a href="/search/brewer:<?= $this->user_info['user_name']; ?>|tags:<?= $this->user_info['tags'][$i]['tag_text']; ?>" style="color:#333"><?= $this->user_info['tags'][$i]['tag_text']; ?></a></li>
+						<?
+					}
+					?>
+				</ul>
+			</div>
+		</div>
+		<?
+	}
+	?>
+</div>
+
+<div class="new_home">
+	<div class="new_left_user">
+		<div class="inner_container" style="padding-top: 20px;">
+			<div class="new_filter">
+				<div>
+					<select id="new_filter_select" name="new_filter_select">
+						<option value="all" <?= ($this->filter_type == "all") ? 'selected="selected"' : '' ?>>Visi įrašai</option>
+						<optgroup label="Receptai">
+							<option value="recipe" <?= ($this->filter_type == "recipe") ? 'selected="selected"' : '' ?>>Receptai</option>
+							<option value="recipe_comment" <?= ($this->filter_type == "recipe_comment") ? 'selected="selected"' : '' ?>>Receptų komentarai</option>
+							<option style="font-weight: bold;" value="session" <?= ($this->filter_type == "session") ? 'selected="selected"' : '' ?>>Virimai</option>
+							<option value="vote" <?= ($this->filter_type == "vote") ? 'selected="selected"' : '' ?>>Receptų vertinimai</option>
+						</optgroup>
+						<optgroup label="Alus ir maistas">
+							<option value="food" <?= ($this->filter_type == "food") ? 'selected="selected"' : '' ?>>Patiekalai</option>
+							<option value="food_comment" <?= ($this->filter_type == "food_comment") ? 'selected="selected"' : '' ?>>Patiekalų komentarai</option>
+						</optgroup>
+						<optgroup label="Forumas">
+							<option value="forum_post" <?= ($this->filter_type == "forum_post") ? 'selected="selected"' : '' ?>>Forumo žinutės</option>
+						</optgroup>
+						<optgroup label="Įvykiai">
+							<option value="event_comment" <?= ($this->filter_type == "event_comment") ? 'selected="selected"' : '' ?>>Įvykių komentarai</option>
+						</optgroup>
+						<optgroup label="Idėjos">
+							<option value="idea" <?= ($this->filter_type == "idea") ? 'selected="selected"' : '' ?>>Idėjos</option>
+							<option value="idea_comment" <?= ($this->filter_type == "idea_comment") ? 'selected="selected"' : '' ?>>Idėjų komentarai</option>
+						</optgroup>
+						<optgroup label="Skaitykla">
+							<option value="tweet" <?= ($this->filter_type == "tweet") ? 'selected="selected"' : '' ?>>Aludarių pranešimai</option>
+						</optgroup>
+						<optgroup label="Mielių bankas">
+							<option value="yeastbank" <?= ($this->filter_type == "yeastbank") ? 'selected="selected"' : '' ?>>Mielių skelbimai</option>
+						</optgroup>
+					</select>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div style="height: 1px;" id="new_visibility"></div>
+			<div style="margin-top: 10px;" id="home_items">
+				<?php
+				$last_id = 0;
+				$first = true;
+				$old_time = "3000-01-01 01:01:01";
+				foreach ($this->activity as $item):
+					if ($this->past_login < $old_time && $this->past_login > $item['posted']) {
+						?>
+						<div class="pastlogin_line" id="pastlogin_line"><a name="lastlogin" accesskey="n" onclick="scrolltolast();"></a></div>
+						<?
+					}
+					$old_time = $item['posted'];
+					if ($first === true) {
+						$first = false;
+						?>
+						<input type="hidden" id="newest_id" name="newest_id" value="<?= $item['id'] ?>" />
+						<?php
+					}
+					$last_id = $item['id'];
+					switch ($item['type']) {
+						case "vote":
+							include("partials/vote.phtml");
+							break;
+						case "yeastbank":
+							include("partials/yeastbank.phtml");
+							break;
+						case "idea_comment":
+							include("partials/idea_comment.phtml");
+							break;
+						case "idea":
+							include("partials/idea.phtml");
+							break;
+						case "food":
+							include("partials/food.phtml");
+							break;
+						case "food_comment":
+							include("partials/food_comment.phtml");
+							break;
+						case "forum_post":
+							include("partials/forum_post.phtml");
+							break;
+						case "article":
+							include("partials/article.phtml");
+							break;
+						case "article_comment":
+							include("partials/article_comment.phtml");
+							break;
+						case "session":
+							$temp_rname = trim($item['session_recipe_name']);
+							if ($item['session_recipe_publish'] == 1 && !empty($temp_rname))
+								include("partials/session.phtml");
+							break;
+						case "event":
+							if ($item['event_published'] == 1)
+								include("partials/event.phtml");
+							break;
+						case "event_comment":
+							include("partials/event_comment.phtml");
+							break;
+						case "recipe":
+							include("partials/recipe.phtml");
+							break;
+						case "recipe_comment":
+							include("partials/recipe_comment.phtml");
+							break;
+						case "tweet":
+							include("partials/tweet.phtml");
+							break;
+						case "user":
+							include("partials/user.phtml");
+							break;
+						case "rss":
+							include("partials/rss.phtml");
+							break;
+					}
+				endforeach;
+				?>
+				<div class="home_more">
+					<input type="button" value="Įkelti daugiau įrašų" id="load_more" class="ui-button" data-last="<?= $last_id ?>" data-type="<?= $this->filter_type ?>"/>
+				</div>
+			</div>
+		</div>
 	</div>
-	<?
-}
-?>
+	<div class="clear"></div>
+</div>

@@ -1,0 +1,67 @@
+<div class="new_block ico_tweet" id="tweet-<?=$item['item_id']?>">
+	<div class="white">
+		<div class="avatar">
+			<a href="/brewers/<?= $item['user_id']; ?>">
+				<img  src="http://www.gravatar.com/avatar/<?= $item['email_hash']; ?>?rating=G&size=50&default=mm" border="0"/>
+			</a>
+		</div>
+		<div class="post">
+			<div class="post_action">
+				<a href="/brewers/<?= $item['user_id']; ?>">
+					<?= $item["user_name"] ?>
+				</a>
+			</div>
+			<div class="post_content">
+				<div>
+					<?= preg_replace('/((?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i', '<a href="$1" rel="nofollow" target="blank">$1</a>', $item['tweet_message']); ?>
+				</div>
+				<?php
+				if (strlen($item['tweet_link_url']) > 0) { 
+					?>
+					<a href="<?= $item['tweet_link_url']; ?>" target="_blank" style="color: #666">
+						<div class="new_tweet-attachment">
+							<div class="tw_link_image" style="max-height: 100px; overflow: hidden;">
+								<?
+								$img_width = 310;
+								if (isset($item['tweet_link_image']) && !empty($item['tweet_link_image'])) {
+									$img_width = 240;
+									?>
+									<img src='<?=$item['tweet_link_image']?>' width='70' />
+									<?php
+								}
+								?>
+							</div>
+							<div class="tw_link_text wi-<?=$img_width;?>">
+								<span>
+									<?= trim($item['tweet_link_title']); ?>
+								</span>
+								<div class="tweet-attachment-desc">
+									<? 
+									if (isset($item['tweet_link_description'])) {
+										print $item['tweet_link_description'];
+									}
+									?>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</a>
+					<? 
+				}
+				?>
+			</div>
+			<div class="post_stamp">
+				<a href="/tweet/view/<?=$item['item_id']?>" class="tweet_comments_link">Komentarai (<?=$item['tweet_comments']?>)</a>
+				<?php
+				if ($item['user_id'] == $this->user_id || $this->is_admin == "1") {
+					?>
+					<a href="javascript:void(0)" class="tweet_del" data-item="<?=$item['item_id']?>">Trinti</a>
+					<?php
+				}
+				?>
+				<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

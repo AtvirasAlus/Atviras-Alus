@@ -1,0 +1,34 @@
+<div class="new_block ico_recipe">
+	<div class="white">
+		<div class="avatar">
+			<a href="/brewers/<?= $item['user_id']; ?>">
+				<img  src="http://www.gravatar.com/avatar/<?= $item['email_hash']; ?>?rating=G&size=50&default=mm" border="0"/>
+			</a>
+		</div>
+		<div class="post">
+			<div class="post_action">
+				<a href="/brewers/<?= $item['user_id']; ?>">
+					<?= $item["user_name"] ?>
+				</a>
+				sukūrė naują receptą 
+				<a href="/alus/receptas/<?= $item["item_id"] ?>-<?= $this->urlMaker($item["recipe_name"]) ?>">
+					<?= $item["recipe_name"] ?>
+				</a>
+			</div>
+			<div class="post_content">
+				<?php
+				$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p")));
+				$f = new Entities_Filter_Excerpt();
+				$item['recipe_style_name'] = str_replace("\n", "<br />", $item['recipe_style_name']);
+				?>
+				<a href="/alus/receptas/<?= $item["item_id"] ?>-<?= $this->urlMaker($item["recipe_name"]) ?>" style="color: #666">
+					<?=$f->filter($fhtml->filter($item['recipe_style_name']), 30); ?>
+				</a>
+			</div>
+			<div class="post_stamp">
+				<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

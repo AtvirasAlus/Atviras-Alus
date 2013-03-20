@@ -1,0 +1,29 @@
+<div class="new_block ico_food">
+	<div class="white">
+		<div class="avatar">
+			<a href="/brewers/<?= $item['user_id']; ?>">
+				<img  src="http://www.gravatar.com/avatar/<?= $item['email_hash']; ?>?rating=G&size=50&default=mm" border="0"/>
+			</a>
+		</div>
+		<div class="post">
+			<div class="post_action">
+				<a href="/brewers/<?= $item['user_id']; ?>">
+					<?= $item["user_name"] ?>
+				</a>
+				sukūrė naują patiekalą
+				<a href="/patiekalas/<?= $item['item_id']; ?>-<?= $this->urlMaker($item['food_title']); ?>">
+					<?= $item["food_title"] ?>
+				</a>
+			</div>
+			<div class="post_content">
+				<a href="/patiekalas/<?= $item['item_id']; ?>-<?= $this->urlMaker($item['food_title']); ?>" style="color: #666">
+					<?=$item['food_category']; ?>
+				</a>
+			</div>
+			<div class="post_stamp">
+				<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

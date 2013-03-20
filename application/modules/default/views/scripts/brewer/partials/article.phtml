@@ -1,0 +1,29 @@
+<div class="new_block ico_article">
+	<div class="white">
+		<div class="avatar">
+			<img  src="/public/images/new/atvirasalus.png" border="0"/>
+		</div>
+		<div class="post">
+			<div class="post_action">
+				Paskelbtas naujas straipsnis
+				<a href="/content/read/1/<?= $item['item_id']; ?>">
+					<?= $item["article_article_title"] ?>
+				</a>
+			</div>
+			<div class="post_content">
+				<?php
+				$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p")));
+				$f = new Entities_Filter_Excerpt();
+				$item['article_article_resume'] = str_replace("\n", "<br />", $item['article_article_resume']);
+				?>
+				<a href="/content/read/1/<?= $item['item_id']; ?>" style="color: #666">
+					<?=$f->filter($fhtml->filter($item['article_article_resume']), 30); ?>
+				</a>
+			</div>
+			<div class="post_stamp">
+				<span title="<?=$item['posted']?>"><?=$this->prettyStamp($item['posted']);?></span>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
