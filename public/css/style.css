@@ -3453,5 +3453,6 @@ html ul.topnav li ul.subnav li a:hover {
 .wiki_outputas h4, 
 .wiki_outputas h5, 
 .wiki_outputas h6 {
-	display: none;
+	font-size: 18px;
+	font-weight: bold;
 }
