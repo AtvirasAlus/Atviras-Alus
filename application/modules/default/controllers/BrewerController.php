@@ -259,84 +259,82 @@ class BrewerController extends Zend_Controller_Action {
 		$this->_helper->layout->disableLayout();
 		$db = Zend_Registry::get("db");
 		$storage = new Zend_Auth_Storage_Session();
-		$user_info = $storage->read();
-		if ($this->show_beta === true) {
-			$filter_type = $this->getRequest()->getParam("type");
-			$last_id = $this->getRequest()->getParam("last");
-			$select = $db->select("posted")
-					->from("activity")
-					->where("id = ?", $last_id)
-					->limit(1);
-			$result = $db->fetchRow($select);
-			$last_stamp = $result['posted'];
-			$this->view->last_stamp = $last_stamp;
-			if (!isset($filter_type) || empty($filter_type))
-				$filter_type = "all";
-			$this->view->filter_type = $filter_type;
-			$select = $db->select()
-					->from("activity")
-					->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
-					->order("posted DESC")
-					->order("id DESC")
-					->where("posted < '" . $last_stamp . "'")
-					->where("activity.user_id = ?", $user_info->user_id)
-					->limit(30);
-			switch ($filter_type) {
-				case "vote":
-					$select->where("type = 'vote'");
-					break;
-				case "yeastbank":
-					$select->where("type = 'yeastbank'");
-					break;
-				case "idea":
-					$select->where("type = 'idea'");
-					break;
-				case "idea_comment":
-					$select->where("type = 'idea_comment'");
-					break;
-				case "forum_post":
-					$select->where("type = 'forum_post'");
-					break;
-				case "article":
-					$select->where("type = 'article'");
-					break;
-				case "article_comment":
-					$select->where("type = 'article_comment'");
-					break;
-				case "session":
-					$select->where("type = 'session'");
-					break;
-				case "event":
-					$select->where("type = 'event'");
-					break;
-				case "event_comment":
-					$select->where("type = 'event_comment'");
-					break;
-				case "food":
-					$select->where("type = 'food'");
-					break;
-				case "food_comment":
-					$select->where("type = 'food_comment'");
-					break;
-				case "recipe":
-					$select->where("type = 'recipe'");
-					break;
-				case "recipe_comment":
-					$select->where("type = 'recipe_comment'");
-					break;
-				case "tweet":
-					$select->where("type = 'tweet'");
-					break;
-				case "user":
-					$select->where("type = 'user'");
-					break;
-				case "rss":
-					$select->where("type = 'rss'");
-					break;
-			}
-			$result = $db->fetchAll($select);
-			$this->view->items = $result;
+		$brewer = $this->_getParam('brewer');
+		$filter_type = $this->getRequest()->getParam("type");
+		$last_id = $this->getRequest()->getParam("last");
+		$select = $db->select("posted")
+				->from("activity")
+				->where("id = ?", $last_id)
+				->limit(1);
+		$result = $db->fetchRow($select);
+		$last_stamp = $result['posted'];
+		$this->view->last_stamp = $last_stamp;
+		if (!isset($filter_type) || empty($filter_type))
+			$filter_type = "all";
+		$this->view->filter_type = $filter_type;
+		$select = $db->select()
+				->from("activity")
+				->joinLeft("users", "users.user_id = activity.user_id", array("user_name", "MD5 (user_email) as email_hash"))
+				->order("posted DESC")
+				->order("id DESC")
+				->where("posted < '" . $last_stamp . "'")
+				->where("activity.user_id = ?", $brewer)
+				->limit(30);
+		switch ($filter_type) {
+			case "vote":
+				$select->where("type = 'vote'");
+				break;
+			case "yeastbank":
+				$select->where("type = 'yeastbank'");
+				break;
+			case "idea":
+				$select->where("type = 'idea'");
+				break;
+			case "idea_comment":
+				$select->where("type = 'idea_comment'");
+				break;
+			case "forum_post":
+				$select->where("type = 'forum_post'");
+				break;
+			case "article":
+				$select->where("type = 'article'");
+				break;
+			case "article_comment":
+				$select->where("type = 'article_comment'");
+				break;
+			case "session":
+				$select->where("type = 'session'");
+				break;
+			case "event":
+				$select->where("type = 'event'");
+				break;
+			case "event_comment":
+				$select->where("type = 'event_comment'");
+				break;
+			case "food":
+				$select->where("type = 'food'");
+				break;
+			case "food_comment":
+				$select->where("type = 'food_comment'");
+				break;
+			case "recipe":
+				$select->where("type = 'recipe'");
+				break;
+			case "recipe_comment":
+				$select->where("type = 'recipe_comment'");
+				break;
+			case "tweet":
+				$select->where("type = 'tweet'");
+				break;
+			case "user":
+				$select->where("type = 'user'");
+				break;
+			case "rss":
+				$select->where("type = 'rss'");
+				break;
 		}
+		$result = $db->fetchAll($select);
+		$this->view->items = $result;
 	}
 
 	public function sessionsAction() {
