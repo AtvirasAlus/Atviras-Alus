@@ -244,6 +244,13 @@
 					<action>index</action>
 					<route>default</route>
 				</men-stats>
+				<men-policy>
+					<label>Naudojimosi sąlygos</label>
+					<module>default</module>
+					<controller>content</controller>
+					<action>policy</action>
+					<route>policy</route>
+				</men-policy>
 				<men-spacer-4>
 					<label>spacer</label>
 					<route>default</route>

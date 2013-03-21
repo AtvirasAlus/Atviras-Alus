@@ -240,6 +240,11 @@ if (bb_is_profile()) {
 										Statistika													
 									</a>
 								</li>
+								<li>
+									<a href="/salygos">
+										Naudojimosi sąlygos
+									</a>
+								</li>
 								<li class="menuspacer"></li>
 								<li>
 									<a href="/mieliu-bankas/siulo">
