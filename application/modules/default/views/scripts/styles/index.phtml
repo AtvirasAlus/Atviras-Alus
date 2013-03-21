@@ -11,7 +11,7 @@ $this->headTitle()->headTitle("Alaus stiliai");
 	$style_cat = -1;
 	$yeasts_cat = -1;
 	for ($i = 0; $i < count($this->beer_styles); $i++) {
-		if ($yeasts_cat != $this->beer_styles[$i]["yeast_cat"] && $yeasts_cat != -1) {
+		if ($yeasts_cat != $this->beer_styles[$i]["yeast_cat"]) {
 			?>
 			<div class="style_category">
 				<h1>
