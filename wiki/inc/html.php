@@ -1424,10 +1424,9 @@ function html_edit(){
     $form->addElement(form_makeCloseTag('div'));
     if($wr && $conf['license']){
         $form->addElement(form_makeOpenTag('div', array('class'=>'license')));
-        $out  = $lang['licenseok'];
-        $out .= ' <a href="'.$license[$conf['license']]['url'].'" rel="license" class="urlextern"';
-        if($conf['target']['extern']) $out .= ' target="'.$conf['target']['extern'].'"';
-        $out .= '>'.$license[$conf['license']]['name'].'</a>';
+        $out  = "Redaguodami šį puslapį Jūs sutinkate jog Jūsų turiniui bus taikomos licencijavimo sąlygios aprašytos ";
+        $out .= ' <a href="/salygos" rel="license" class="urlextern"';
+        $out .= '>Svetainės naudojimosi sąlygose</a>';
         $form->addElement($out);
         $form->addElement(form_makeCloseTag('div'));
     }
