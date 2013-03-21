@@ -76,35 +76,6 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
 </script>
 <div id="brewer_info_container" class="inner_container">
 	<div class="inner_header"><?= $this->user_info['user_name']; ?></div>
-	<?php
-	if (isset($this->awards) && is_array($this->awards) && sizeof($this->awards) > 0) {
-		?>
-		<div class="brewer_awards2" style="margin-bottom: 10px;">
-			<?php
-			foreach ($this->awards as $key => $val) {
-				$title = "";
-				if (!empty($val['recipe_name'])) {
-					$title .= $val['recipe_name'] . ", ";
-				}
-				$title .= $val['event_name'];
-				if (!empty($val['category'])) {
-					$title .= ", " . $val['category'];
-				}
-				if (!empty($val['place'])) {
-					$title .= ", " . $val['place'] . " vieta";
-				}
-				if (!empty($val['points']) && $val['points'] != "0") {
-					$title .= " (" . $val['points'] . " tšk.)";
-				}
-				?>
-				<img src="/public/images/<?= trim($val['icon']) ?>-32.gif" width="32" title="<?= trim($title) ?>" />
-				<?php
-			}
-			?>
-		</div>
-		<?php
-	}
-	?>
 	<div class="brewer_info_container">
 		<div class="brewer_info_left">
 			<div class="brewer_info_block">
@@ -199,14 +170,64 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
 			<li><a href="#tabs-sessions">Paskutiniai aludario virimai</a></li>
 			<?php
 		}
+		if (sizeof($this->awards) > 0 || sizeof($this->nominations) > 0) {
+			?>
+			<li><a href="#tabs-awards">Apdovanojimai (<?=(sizeof($this->awards) + sizeof($this->nominations));?>)</a></li>
+			<?php
+		}
 		if (sizeof($this->user_info['tags']) > 0) {
 			?>
-			<li><a href="#tabs-tags">Žymos</a></li>
+			<li><a href="#tabs-tags">Žymos (<?=sizeof($this->user_info['tags']);?>)</a></li>
 			<?php
 		}
 		?>
 	</ul>
 	<?php
+	if (sizeof($this->awards) > 0 || sizeof($this->nominations) > 0) {
+		?>
+		<div id="tabs-awards" class="inner_container">
+			<?php
+			if (sizeof($this->awards) > 0){
+				?>
+				<div class="inner_header">Receptų apdovanojimai</div>
+				<div class="aw_table">
+					<?php
+					foreach($this->awards as $key=>$val){
+						?>
+						<div class="aw_row">
+							<div class="aw_col aw_icon"><img src="/public/images/<?=$val['icon']?>-32.gif"/></div>
+							<div class="aw_col aw_recipe"><a href="/alus/receptas/<?=$val['recipe_id']?>-<?=$this->urlMaker($val['recipe_name'])?>"><?=$val['recipe_name']?></a></div>
+							<div class="aw_col aw_place"><?=$val['place']?> <?=($val['place'] == "I" || $val['place'] == "II" || $val['place'] == "III") ? "vieta" : ""; ?> <?=(!empty($val['category']) ? "kategorijoje \"".$val['category']."\"" : "")?> <?=($val['points']!=0) ? " (".$val['points']." tšk.)" : "";?></div>
+							<div class="aw_col aw_event"><?=$val['event_name']?></div>
+						</div>
+						<?php
+					}
+					?>
+				</div>
+				<?php
+			}
+			if (sizeof($this->nominations) > 0){
+				?>
+				<div class="inner_header">Kiti apdovanojimai</div>
+				<div class="aw_table">
+					<?php
+					foreach($this->nominations as $key=>$val){
+						?>
+						<div class="aw_row">
+							<div class="aw_col aw_icon"><img src="/public/images/common-32.gif"/></div>
+							<div class="aw_col aw_nomination"><?=$val['nomination_title']?></div>
+							<div class="aw_col aw_description"><?=$val['nomination_description']?></div>
+						</div>
+						<?php
+					}
+					?>
+				</div>
+				<?php
+			}
+			?>
+		</div>
+		<?php
+	}
 	if (sizeof($this->user_info['recipes']) > 0) {
 		?>
 		<div id="tabs-recipes" class="inner_container">

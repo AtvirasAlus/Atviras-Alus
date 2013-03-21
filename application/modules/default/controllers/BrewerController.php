@@ -68,10 +68,15 @@ class BrewerController extends Zend_Controller_Action {
 					->from("beer_awards")
 					->join("beer_recipes", "beer_recipes.recipe_id=beer_awards.recipe_id", array("recipe_name"))
 					->where("beer_recipes.brewer_id = ?", $brewer)
-					->order("beer_awards.icon ASC")
 					->order("beer_awards.posted DESC");
 			$awards = $db->fetchAll($select);
 			$this->view->awards = $awards;
+			$select = $db->select()
+					->from("users_nominations")
+					->where("users_nominations.user_id = ?", $brewer)
+					->order("users_nominations.posted DESC");
+			$nominations = $db->fetchAll($select);
+			$this->view->nominations = $nominations;
 			$select = $db->select()
 					->from("users")
 					->joinLeft("users_attributes", "users_attributes.user_id=users.user_id", array("user_location", "user_about"))
