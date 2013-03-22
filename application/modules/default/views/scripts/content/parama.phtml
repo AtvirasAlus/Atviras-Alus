@@ -47,3 +47,38 @@ $this->headTitle()->headTitle("Parama");
 		<p>Puslapyje atvaizduojama surinkta paramos suma atnaujinama 10-ies minučių intervalu.</p>
 	</div>
 </div>
+
+<div id="help_container" class="inner_container">
+	<div class="inner_header">Ataskaita</div>
+	<div style="font-size: 14px; line-height: 24px;">
+		Šiuo metu projekto sąskaitioje yra: <span style="font-weight: bold;"><?=$this->kiekis?> Lt</span>.
+	</div>
+	<div style="font-size: 14px; line-height: 24px; margin-bottom: 10px;">
+		Per visą istoriją projekto paramai surinkta suma: <span style="font-weight: bold;"><?=$this->total?> Lt</span>.
+	</div>
+	<div class="as-table">
+		<div class="as-row">
+			<div class="as-cell"><b>ID</b></div>
+			<div class="as-cell"><b>Rėmėjas / panaudojimo paskirtis</b></div>
+			<div class="as-cell" style="text-align: right;"><b>Paramos suma</b></div>
+			<div class="as-cell" style="text-align: right;"><b>Paramos data</b></div>
+			<div class="as-cell" style="text-align: right;"><b>Likutis</b></div>
+		</div>
+		<?php
+		foreach ($this->content as $item){
+			?>
+			<div class="as-row">
+				<div class="as-cell"><?=$item['bo_id'];?></div>
+				<div class="as-cell"><?=$item['bo_description'];?></div>
+				<div class="as-cell" style="text-align: right; <?=($item['bo_amount'] >= 0) ? "color: green;" : "color: red;";?>"><?=$item['bo_amount'];?> Lt</div>
+				<div class="as-cell" style="text-align: right;"><?=$item['bo_created'];?></div>
+				<div class="as-cell" style="text-align: right;"><?=$item['bo_leftover'];?> Lt</div>
+			</div>
+			<?php
+		}
+		?>
+	</div>
+	<div style="padding-top: 10px;">
+		<?php echo $this->paginationControl($this->content, 'Sliding', 'paginator/item.phtml'); ?>
+	</div>
+</div>

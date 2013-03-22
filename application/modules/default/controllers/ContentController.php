@@ -108,7 +108,46 @@ class ContentController extends Zend_Controller_Action {
 	}
 
 	public function paramaAction() {
-		
+		$db = Zend_Registry::get("db");
+		$select = $db->select()
+				->from("bonuses", array("SUM(bo_amount) as kiekis"))
+				->where("bo_amount > 0");
+		$result = $db->fetchRow($select);
+		$total = $result['kiekis'];
+		$this->view->total = number_format($total, 2);
+		$select = $db->select()
+				->from("bonuses", array("SUM(bo_amount) as kiekis"));
+		$result = $db->fetchRow($select);
+		$kiekis = $result['kiekis'];
+		$this->view->kiekis = number_format($kiekis, 2);
+		$select = $db->select()
+				->from("bonuses")
+				->order("bo_created DESC");
+		$result = $db->fetchAll($select);
+		foreach($result as $key=>$val){
+			$result[$key]['bo_leftover'] = $kiekis;
+			if (strpos($val['bo_description'], "Serverio nuoma") !== false){
+				$result[$key]['bo_description'] = "Serverio nuomos paslaugos pratęsimas";
+			} else {
+				if (strpos($val['bo_description'], " - ") !== false){
+					$temp = explode(" - ", $val['bo_description']);
+					$result[$key]['bo_description'] = $temp[1];
+				} else {
+					$temp = $val['bo_description'];
+					$temp = str_replace(array("SMS ", " (styxas)"), array("",""), $temp);
+					//$temp = substr($temp, 0, 4);
+					$temp = substr($temp, 0, 4)."6****".substr($temp, -3);
+					$result[$key]['bo_description'] = $temp;
+				}
+			}
+			$kiekis = $kiekis + (-1 * $val['bo_amount']);
+			$kiekis = number_format($kiekis, 2);
+		}
+		$adapter = new Zend_Paginator_Adapter_Array($result);
+		$page = $this->_getParam('page');
+		$this->view->content = new Zend_Paginator($adapter);
+		$this->view->content->setCurrentPageNumber($page);
+		$this->view->content->setItemCountPerPage(50);
 	}
 
 	public function articleAction() {

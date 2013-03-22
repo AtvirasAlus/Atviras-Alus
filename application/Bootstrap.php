@@ -133,7 +133,7 @@ function _initAutoLoad() {
 		
 		$router->addRoute("pagalba",new Zend_Controller_Router_Route("/pagalba",array("module"=>"default","controller" => "content","action" => "read","category"=>"help","page"=>0)));
 		
-		$router->addRoute("parama",new Zend_Controller_Router_Route("/parama",array("module"=>"default","controller" => "content","action" => "parama","category"=>"help","page"=>0)));
+		$router->addRoute("parama",new Zend_Controller_Router_Route("/parama/:page",array("module"=>"default","controller" => "content","action" => "parama","category"=>"help","page"=>0)));
 		
 		$router->addRoute("recipes_brew_session",new Zend_Controller_Router_Route("/brew-session/recipe/:recipe",array("module"=>"default","controller" => "brew-session","action" => "recipe","recipe"=>0)));
 		$router->addRoute("brewer_brew_session",new Zend_Controller_Router_Route("/brew-session/brewer/:brewer",array("module"=>"default","controller" => "brew-session","action" => "brewer","brewer"=>0)));
