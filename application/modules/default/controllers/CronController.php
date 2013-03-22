@@ -677,12 +677,28 @@ class CronController extends Zend_Controller_Action {
 	}
 	
 	public function getbonusesAction(){
+		$db = Zend_Registry::get("db");
 		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender(true);
 		$nick = "server";
 		$password = "makatukasa";
 		$api_url = "https://api.iv.lt/json.php?nick=$nick&password=$password&command=";
 		$bonuses = json_decode(file_get_contents($api_url."account_bonuses&count=10000"), true);
-		print_r($bonuses);
+		foreach($bonuses as $item){
+			$select = $db->select()
+					->from("bonuses")
+					->where("bo_id = ?", $item['bo_id']);
+			$result = $db->fetchAll($select);
+			if ($result == false){
+				$insert = $db->insert("bonuses", array(
+					"bo_id" => $item['bo_id'],
+					"bo_created" => $item['bo_created'],
+					"bo_amount" => $item['bo_amount'],
+					"bo_description" => $item['bo_description'],
+				));
+			}
+			
+		}
+		echo "done";
 	}
 }
