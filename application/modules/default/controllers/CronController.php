@@ -677,6 +677,8 @@ class CronController extends Zend_Controller_Action {
 	}
 	
 	public function getbonusesAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
 		$nick = "server";
 		$password = "makatukasa";
 		$api_url = "https://api.iv.lt/json.php?nick=$nick&password=$password&command=";
