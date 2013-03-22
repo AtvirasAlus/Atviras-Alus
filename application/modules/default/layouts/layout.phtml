@@ -105,13 +105,8 @@
 						</a>
 					</div>
 					<?php
-					$db = Zend_Registry::get("db");
-					$select = $db->select()
-							->from("donation")
-							->where("id=?", array("1"));
-					$donate = $db->FetchRow($select);
-					$money = $donate['money'];
-					$next = $donate['next'];
+					$money = $this->Bonuses()->getmoney();
+					$next = $this->Bonuses()->getnext();
 					$wid = $money;
 					if ($wid > 97) $wid = 97;
 					if (date("Y-m-d") >= $next){
