@@ -682,7 +682,7 @@ class CronController extends Zend_Controller_Action {
 		$nick = "server";
 		$password = "makatukasa";
 		$api_url = "https://api.iv.lt/json.php?nick=$nick&password=$password&command=";
-		$bonuses = json_decode(file_get_contents($api_url."account_bonuses&count=100"), true);
+		$bonuses = json_decode(file_get_contents($api_url."account_bonuses&count=10000"), true);
 		print_r($bonuses);
 	}
 }
