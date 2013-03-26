@@ -45,11 +45,13 @@ if (isset($this->subcategories) && sizeof($this->subcategories)>0){
 	<?php
 }
 if (isset($this->news) && sizeof($this->news)>0){
+	$i = 0;
 	?>
 	<div id="food_cats_container" class="inner_container">
 		<div class="inner_header">Naujausi patiekalai</div>
 		<?php
 		foreach($this->news as $item):
+			$i++;
 			?>
 			<div class="food_item_info">
 				<div class="food_image">
@@ -92,13 +94,24 @@ if (isset($this->news) && sizeof($this->news)>0){
 				</div>
 			</div>
 			<?php
+			if ($i == 3){
+				$i = 0;
+				?>
+				<div class="clear"></div>
+				<?php
+			}
 		endforeach;
+		if ($i != 0){
+			?>
+			<div class="clear"></div>
+			<?php
+		}
 		?>
-		<div class="clear"></div>
 	</div>
 	<?php
 }
 if (isset($this->items) && sizeof($this->items)>0){
+	$i = 0;
 	?>
 	<div id="food_cats_container" class="inner_container">
 		<div class="inner_header">Patiekalai</div>
