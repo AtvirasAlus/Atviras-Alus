@@ -229,9 +229,6 @@ $this->headLink()->appendStylesheet('/public/css/flow.css')
 						<optgroup label="Aludariai">
 							<option value="user" <?=($this->filter_type == "user") ? 'selected="selected"' : ''?>>Nauji aludariai</option>
 						</optgroup>
-						<optgroup label="Mielių bankas">
-							<option value="yeastbank" <?=($this->filter_type == "yeastbank") ? 'selected="selected"' : ''?>>Mielių skelbimai</option>
-						</optgroup>
 					</select>
 					<div class="clear"></div>
 				</div>
@@ -288,9 +285,6 @@ $this->headLink()->appendStylesheet('/public/css/flow.css')
 					switch($item['type']){
 						case "vote":
 							include("partials/vote.phtml");
-						break;
-						case "yeastbank":
-							include("partials/yeastbank.phtml");
 						break;
 						case "idea_comment":
 							include("partials/idea_comment.phtml");

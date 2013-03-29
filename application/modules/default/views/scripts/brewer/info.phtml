@@ -395,9 +395,6 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
 						<optgroup label="Skaitykla">
 							<option value="tweet" <?= ($this->filter_type == "tweet") ? 'selected="selected"' : '' ?>>Aludarių pranešimai</option>
 						</optgroup>
-						<optgroup label="Mielių bankas">
-							<option value="yeastbank" <?= ($this->filter_type == "yeastbank") ? 'selected="selected"' : '' ?>>Mielių skelbimai</option>
-						</optgroup>
 					</select>
 					<div class="clear"></div>
 				</div>
@@ -425,9 +422,6 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
 					switch ($item['type']) {
 						case "vote":
 							include("partials/vote.phtml");
-							break;
-						case "yeastbank":
-							include("partials/yeastbank.phtml");
 							break;
 						case "idea_comment":
 							include("partials/idea_comment.phtml");

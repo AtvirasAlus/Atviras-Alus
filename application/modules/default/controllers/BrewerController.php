@@ -204,9 +204,6 @@ class BrewerController extends Zend_Controller_Action {
 					case "vote":
 						$select->where("type = 'vote'");
 						break;
-					case "yeastbank":
-						$select->where("type = 'yeastbank'");
-						break;
 					case "idea":
 						$select->where("type = 'idea'");
 						break;
@@ -288,9 +285,6 @@ class BrewerController extends Zend_Controller_Action {
 		switch ($filter_type) {
 			case "vote":
 				$select->where("type = 'vote'");
-				break;
-			case "yeastbank":
-				$select->where("type = 'yeastbank'");
 				break;
 			case "idea":
 				$select->where("type = 'idea'");

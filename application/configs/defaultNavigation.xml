@@ -255,17 +255,6 @@
 					<label>spacer</label>
 					<route>default</route>
 				</men-spacer-4>
-				<men-yeastbank>
-					<label>Mielių bankas</label>
-					<module>default</module>
-					<controller>yeastbank</controller>
-					<action>sell</action>
-					<route>mieliu_bankas_siulo</route>
-				</men-yeastbank>
-				<men-spacer-3>
-					<label>spacer</label>
-					<route>default</route>
-				</men-spacer-3>
 				<men-ideas>
 					<label>Idėjų bankas</label>
 					<module>default</module>

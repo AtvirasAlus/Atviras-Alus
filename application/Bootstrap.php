@@ -100,12 +100,6 @@ function _initAutoLoad() {
 		$router->addRoute("food2",new Zend_Controller_Router_Route("/maistas/pagrindiniai-patiekalai",array("module"=>"default","controller" => "food","action" => "list", "category"=>2)));
 		$router->addRoute("food3",new Zend_Controller_Router_Route("/maistas/uzkandziai-prie-alaus",array("module"=>"default","controller" => "food","action" => "list", "category"=>1)));
 		
-		$router->addRoute("mieliu_bankas_siulo",new Zend_Controller_Router_Route("/mieliu-bankas/siulo", array("module"=>"default", "controller" => "yeastbank", "action" => "sell")));
-		$router->addRoute("mieliu_bankas_iesko",new Zend_Controller_Router_Route("/mieliu-bankas/iesko", array("module"=>"default", "controller" => "yeastbank", "action" => "buy")));
-		$router->addRoute("mieliu_bankas_mano",new Zend_Controller_Router_Route("/mieliu-bankas/mano", array("module"=>"default", "controller" => "yeastbank", "action" => "my")));
-		$router->addRoute("mieliu_bankas_naujas",new Zend_Controller_Router_Route("/mieliu-bankas/naujas", array("module"=>"default", "controller" => "yeastbank", "action" => "new")));
-		$router->addRoute("mieliu_bankas_redaguoti",new Zend_Controller_Router_Route("/mieliu-bankas/redaguoti/:yb_id", array("module"=>"default", "controller" => "yeastbank", "action" => "edit", "yb_id" => 0)));
-		$router->addRoute("mieliu_bankas_trinti",new Zend_Controller_Router_Route("/mieliu-bankas/trinti/:yb_id", array("module"=>"default", "controller" => "yeastbank", "action" => "delete", "yb_id" => 0)));
 		
 		$router->addRoute("idejos",new Zend_Controller_Router_Route("/idejos/:page",array("module"=>"default","controller" => "idea","action" => "list","page"=>0)));
 		$router->addRoute("idejos_my",new Zend_Controller_Router_Route("/idejos/mano/:page",array("module"=>"default","controller" => "idea","action" => "list_my","page"=>0)));

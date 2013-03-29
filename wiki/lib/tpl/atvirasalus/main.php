@@ -332,12 +332,6 @@ if (!defined('DOKU_INC')) die();
 								</li>
 								<li class="menuspacer"></li>
 								<li>
-									<a href="/mieliu-bankas/siulo">
-										Mielių bankas
-									</a>
-								</li>
-								<li class="menuspacer"></li>
-								<li>
 									<a href="/idejos/naujausios">
 										Idėjų bankas													
 									</a>

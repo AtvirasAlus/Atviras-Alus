@@ -274,37 +274,6 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 			</div>
 		</div>
 		
-		<?php
-		if ($this->bank && sizeof($this->bank) > 0){
-			?>
-			<!-- MIELIŲ BANKAS -->
-			<div class="index_block index_sessions">
-				<div class="block_header">Mielių banko skelbimai:</div>
-				<div class="block_content">
-					<?php
-					foreach ($this->bank as $item):
-					?>
-						<div>
-							<a href="/brewers/<?=$item['user_id']; ?>">
-								<?=$item["user_name"] ?>
-							</a>
-							<b><?=($item['yb_type'] == "sell") ? "siūlo" : "ieško"; ?></b>
-							<a href="<?=($item['yb_type'] == "sell") ? "/mieliu-bankas/siulo" : "/mieliu-bankas/iesko"; ?>">
-								<?=$item["yb_title"];?>
-							</a>
-						</div>
-					<?php
-					endforeach;
-					?>
-				</div>
-				<div class="block_footer">
-					<a href="/mieliu-bankas/siulo" >Visi skelbimai</a>
-				</div>
-			</div>
-			<?php
-		}
-		?>
-			
 		<!-- KUBILUOSE GYVENA -->
 		<div class="index_block index_sessions">
 			<div class="block_header">Kubiluose gyvena:</div>
