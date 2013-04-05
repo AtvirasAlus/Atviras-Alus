@@ -220,6 +220,10 @@ $this->headLink()->appendStylesheet('/public/css/flow.css')
 							<option value="idea" <?=($this->filter_type == "idea") ? 'selected="selected"' : ''?>>Idėjos</option>
 							<option value="idea_comment" <?=($this->filter_type == "idea_comment") ? 'selected="selected"' : ''?>>Idėjų komentarai</option>
 						</optgroup>
+						<optgroup label="Virtualus turgus">
+							<option value="market" <?=($this->filter_type == "market") ? 'selected="selected"' : ''?>>Skelbimai</option>
+							<option value="market_comment" <?=($this->filter_type == "market_comment") ? 'selected="selected"' : ''?>>Skelbimų komentarai</option>
+						</optgroup>
 						<optgroup label="Skaitykla">
 							<option value="tweet" <?=($this->filter_type == "tweet") ? 'selected="selected"' : ''?>>Aludarių pranešimai</option>
 							<option value="rss" <?=($this->filter_type == "rss") ? 'selected="selected"' : ''?>>Naujienos iš kitų svetainių</option>
@@ -291,6 +295,12 @@ $this->headLink()->appendStylesheet('/public/css/flow.css')
 						break;
 						case "idea":
 							include("partials/idea.phtml");
+						break;
+						case "market_comment":
+							include("partials/market_comment.phtml");
+						break;
+						case "market":
+							include("partials/market.phtml");
 						break;
 						case "food":
 							include("partials/food.phtml");

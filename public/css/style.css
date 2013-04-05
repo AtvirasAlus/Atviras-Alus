@@ -679,6 +679,7 @@ ul#topmenu li a:hover {
 	padding-top: 10px;
 	text-align: center;
 }
+.market_comment,
 .recipe_comment {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -687,29 +688,35 @@ ul#topmenu li a:hover {
 	padding: 10px;
 	margin-bottom: 10px;
 }
+.market_comment_avatar,
 .recipe_comment_avatar {
 	float: left;
 	text-align: center;
 	width: 80px;
 	overflow: hidden;
 }
+.market_comment_avatar span,
 .recipe_comment_avatar span {
 	display: block;
 }
+.market_comment_content,
 .recipe_comment_content {
 	float: left;
 	width: 470px;
 	margin-left: 20px;
 }
+.market_comment_date,
 .recipe_comment_date {
 	text-align: right;
 	margin-top: 5px;
 	font-style: italic;
 }
+.market_comment_date a,
 .recipe_comment_date a {
 	display: inline-block;
 }
 
+.market_comment_form,
 .recipe_comment_form {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -719,20 +726,24 @@ ul#topmenu li a:hover {
 	margin-bottom: 10px;
 	background-color: #f5f5f5;
 }
+.market_comment_form_avatar,
 .recipe_comment_form_avatar {
 	float: left;
 	text-align: center;
 	width: 50px;
 	overflow: hidden;
 }
+.market_comment_form_avatar span,
 .recipe_comment_form_avatar span {
 	display: block;
 }
+.market_comment_form_content,
 .recipe_comment_form_content {
 	float: left;
 	width: 500px;
 	margin-left: 20px;
 }
+.market_comment_form_content textarea,
 .recipe_comment_form_content textarea {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -3341,4 +3352,174 @@ html ul.topnav li ul.subnav li a:hover {
 	vertical-align: middle;
 	padding-bottom: 10px;
 	padding-top: 5px;
+}
+
+
+.market_item {
+	background-color: #F6F6F6;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding-right: 10px;
+	margin-bottom: 10px;
+	border-left: 15px solid grey;
+}
+.market_item.beer {
+	border-left: 15px solid orange;
+}
+.market_item.yeast {
+	border-left: 15px solid #F78B83;
+}
+.market_item.hop {
+	border-left: 15px solid green;
+}
+.market_item.other {
+	border-left: 15px solid gray;
+}
+.market_item.malt {
+	border-left: 15px solid chocolate;
+}
+.market_avatar {
+	float: left;
+	width: 100px;
+	overflow: hidden;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.market_avatar span {
+	display: block;
+	text-align: center;
+}
+.market_content {
+	float: left;
+	width: 690px;
+	margin-left: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.market_title {
+	font-weight: bold;
+	font-size: 14px;
+	margin-bottom: 5px;
+}
+.market_action_buy {
+	color: #060;
+}
+.market_action_sell {
+	color: #cd0a0a;
+}
+.market_text {
+	min-height: 50px;
+}
+.market_stamp {
+	text-align: right;
+	font-size: 10px;
+	color: #666;
+}
+.market_f1_label {
+	float: left;
+	font-size: 14px;
+	line-height: 28px;
+	margin-right: 5px;
+}
+.market_f1 {
+	float: left;
+}
+.market_f1 select {
+	height: 28px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 2px;
+	background-color: #fff;
+	cursor: pointer;
+}
+.market_f2_label {
+	float: left;
+	font-size: 14px;
+	line-height: 28px;
+	margin-right: 5px;
+	margin-left: 30px;
+}
+.market_f2 {
+	float: left;
+}
+.market_f2 select {
+	height: 28px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 2px;
+	background-color: #fff;
+	cursor: pointer;
+}
+.market_filters {
+	margin-bottom: 20px;
+}
+.market_comments_count {
+	font-weight: normal;
+	font-size: 12px;
+}
+.market_stamp a {
+	margin-right: 10px;
+}
+
+
+#market_form dl {
+	margin-bottom: 5px;
+}
+#market_form dt {
+	float: left;
+	font-size: 14px;
+	text-align: right;
+	width: 200px;
+	line-height: 26px;
+}
+#market_form dt span {
+	color: red;
+	font-weight: bold;
+}
+#market_form dd {
+	margin-left: 10px;
+	float: left;
+	width: 620px;
+}
+#market_form dd input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 610px;
+	padding-left: 4px;
+}
+#market_form dd textarea {
+	height: 100px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 610px;
+	padding-left: 4px;
+}
+#market_form dd select {
+	height: 28px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 616px;
+	padding: 2px;
+	background-color: #fff;
+}
+#market_form dd input[type="submit"] {
+	padding: 6px 15px 6px 15px !important;
+	float: left;
+	margin: 0px;
+	margin-left: 0px;
+	cursor: pointer;
 }

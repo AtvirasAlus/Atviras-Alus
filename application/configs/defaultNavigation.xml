@@ -255,6 +255,17 @@
 					<label>spacer</label>
 					<route>default</route>
 				</men-spacer-4>
+				<men-market>
+					<label>Virtualus turgus</label>
+					<module>default</module>
+					<controller>market</controller>
+					<action>index</action>
+					<route>market</route>
+				</men-market>
+				<men-spacer-3>
+					<label>spacer</label>
+					<route>default</route>
+				</men-spacer-3>
 				<men-ideas>
 					<label>Idėjų bankas</label>
 					<module>default</module>

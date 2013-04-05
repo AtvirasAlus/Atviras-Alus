@@ -1,0 +1,127 @@
+<?php
+$this->headTitle()->headTitle("Skelbimo redagavimas");
+$this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
+$this->headScript()->appendFile("/public/js/ui.datepicker-lt.js");
+?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("input[name='market_till']").datepicker();
+		$('select[name="market_action"]').change(function(){
+			if ($(this).val() == "sell"){
+				$("#sell_options").show();
+			} else {
+				$("#sell_options").hide();
+			}
+		});
+		$("#market_form").submit(function(){
+			if ($("input[name='market_title']").val().trim() == ""){
+				alert("Įveskite produkto pavadinimą")
+				return false;
+			}
+			if ($("input[name='market_till']").val().trim() == ""){
+				alert("Įveskite skelbimo galiojimo pabaigos datą")
+				return false;
+			}
+			if ($("input[name='market_city']").val().trim() == ""){
+				alert("Įveskite miesto pavadinimą")
+				return false;
+			}
+			if ($("textarea[name='market_text']").val().trim() == ""){
+				alert("Įveskite skelbimo tekstą")
+				return false;
+			}
+			if ($("select[name='market_action']").val() == "sell" && $("select[name='market_category']").val() == "beer" && $("select[name='market_sell_option']").val() == "sell"){
+				alert("\"Atviras alus\" svetainėje draudžiama talpinti skelbimus apie parduodamą alų. Tokia veikla prieštarauja Lietuvos Respublikos Alkoholio kontrolės Įstatymo 10 straipsniui.");
+				return false;
+			}
+			return true;
+		});
+	});
+</script>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Naujas skelbimas</div>
+	<div class="ideas_actions" style="line-height: 28px;">
+		<a href="/turgus">Skelbimų sąrašas</a>
+		<?php
+		if ($this->uid != 0) {
+			?>
+			<a href="/turgus/mano">Mano skelbimai</a>
+			<a href="/turgus/naujas"><b>Naujas skelbimas</b></a>
+			<?php
+		}
+		?>
+	</div>
+	<div>
+		<form action="" method="post" id="market_form">
+			<dl>
+				<dt>Veiksmas:</dt>
+				<dd>
+					<select name="market_action">
+						<option value="sell" <?=((string)$this->data['market_action'] == "sell") ? 'selected="selected"' : "";?>>Siūlau</option>
+						<option value="buy" <?=((string)$this->data['market_action'] == "buy") ? 'selected="selected"' : "";?>>Ieškau</option>
+					</select>
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl>
+				<dt>Kategorija:</dt>
+				<dd>
+					<select name="market_category">
+						<option value="beer" <?=((string)$this->data['market_category'] == "beer") ? 'selected="selected"' : "";?>>Alus</option>
+						<option value="hop" <?=((string)$this->data['market_category'] == "hop") ? 'selected="selected"' : "";?>>Apyniai</option>
+						<option value="yeast" <?=((string)$this->data['market_category'] == "yeast") ? 'selected="selected"' : "";?>>Mielės</option>
+						<option value="malt" <?=((string)$this->data['market_category'] == "malt") ? 'selected="selected"' : "";?>>Salyklas</option>
+						<option value="other" <?=((string)$this->data['market_category'] == "other") ? 'selected="selected"' : "";?>>Kita</option>
+					</select>
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl>
+				<dt>Produkto pavadinimas:</dt>
+				<dd>
+					<input type="text" name="market_title" value="<?=$this->data['market_title']?>" />
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl>
+				<dt>Skelbimas galioja iki:</dt>
+				<dd>
+					<input type="text" name="market_till" value="<?=$this->data['market_till']?>"  />
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl>
+				<dt>Miestas:</dt>
+				<dd>
+					<input type="text" name="market_city" value="<?=$this->data['market_city']?>" />
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl>
+				<dt>Skelbimo tekstas, kontaktai:</dt>
+				<dd>
+					<textarea name="market_text"><?=$this->data['market_text']?></textarea>
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl id="sell_options" <?=($this->data['market_action'] == "buy") ? 'style="display: none;"' : "";?>>
+				<dt>Prašomas atlygis:</dt>
+				<dd>
+					<select name="market_sell_option">
+						<option value="give" <?=((string)$this->data['market_sell_option'] == "give") ? 'selected="selected"' : "";?>>Dovanoju</option>
+						<option value="sell" <?=((string)$this->data['market_sell_option'] == "sell") ? 'selected="selected"' : "";?>>Parduodu (skelbimo tekste nurodykite kainą)</option>
+						<option value="exchange" <?=((string)$this->data['market_sell_option'] == "exchange") ? 'selected="selected"' : "";?>>Keičiu (skelbimo tekste nurodykite į ką)</option>
+					</select>
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl>
+				<dt>&nbsp;</dt>
+				<dd>
+					<input type="submit" value="Sukurti" />
+				</dd>
+				<div class="clear"></div>
+			</dl>
+		</form>
+	</div>
+</div>

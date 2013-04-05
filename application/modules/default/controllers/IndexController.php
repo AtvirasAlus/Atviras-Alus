@@ -135,6 +135,12 @@ class IndexController extends Zend_Controller_Action {
 				case "idea_comment":
 					$select->where("type = 'idea_comment'");
 				break;
+				case "market":
+					$select->where("type = 'market'");
+				break;
+				case "market_comment":
+					$select->where("type = 'market_comment'");
+				break;
 				case "forum_post":
 					$select->where("type = 'forum_post'");
 				break;
@@ -217,6 +223,12 @@ class IndexController extends Zend_Controller_Action {
 			switch($filter_type){
 				case "vote":
 					$select->where("type = 'vote'");
+				break;
+				case "market":
+					$select->where("type = 'market'");
+				break;
+				case "market_comment":
+					$select->where("type = 'market_comment'");
 				break;
 				case "idea":
 					$select->where("type = 'idea'");
@@ -350,6 +362,12 @@ class IndexController extends Zend_Controller_Action {
 				break;
 				case "idea_comment":
 					$select->where("type = 'idea_comment'");
+				break;
+				case "market":
+					$select->where("type = 'market'");
+				break;
+				case "market_comment":
+					$select->where("type = 'market_comment'");
 				break;
 				case "forum_post":
 					$select->where("type = 'forum_post'");
@@ -587,6 +605,14 @@ class IndexController extends Zend_Controller_Action {
 					->where("event_registration_end  != '0000-00-00'")
 					->order("event_start");
 			$this->view->events = $db->fetchAll($select);
+			
+			$select = $db->select()
+					->from("market_items")
+					->join("users", "users.user_id = market_items.user_id", array("user_name", "user_email"))
+					->where("market_till >= ?", date("Y-m-d"))
+					->order(array("market_posted DESC", "market_id DESC"))
+					->limit(10);
+			$this->view->market = $db->fetchAll($select);
 		}
 	}
 

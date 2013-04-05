@@ -71,6 +71,14 @@ function _initAutoLoad() {
 
 		$router->addRoute("event_delete",new Zend_Controller_Router_Route("/events/delete/:event_id/:group_id", array("module"=>"default","controller" => "events","action" => "delete","event_id"=>0, "group_id"=>0)));
 	
+		$router->addRoute("market",new Zend_Controller_Router_Route("/turgus/:page",array("module"=>"default","controller" => "market","action" => "index", "cat" => 0, "act" => 0, "page" => 0)));
+		$router->addRoute("market_filter",new Zend_Controller_Router_Route("/turgus/:page/:cat/:act",array("module"=>"default","controller" => "market","action" => "index", "cat" => 0, "act" => 0, "page" => 0)));
+		$router->addRoute("market_new",new Zend_Controller_Router_Route("/turgus/naujas",array("module"=>"default","controller" => "market","action" => "new")));
+		$router->addRoute("market_edit",new Zend_Controller_Router_Route("/turgus/redaguoti/:item_id",array("module"=>"default","controller" => "market","action" => "edit", "item_id" => 0)));
+		$router->addRoute("market_delete",new Zend_Controller_Router_Route("/turgus/trinti/:item_id",array("module"=>"default","controller" => "market","action" => "delete", "item_id" => 0)));
+		$router->addRoute("market_my",new Zend_Controller_Router_Route("/turgus/mano",array("module"=>"default","controller" => "market","action" => "my")));
+		$router->addRoute("market_item",new Zend_Controller_Router_Route("/turgus/skelbimas/:item_id",array("module"=>"default","controller" => "market","action" => "view", "item_id" => 0)));
+		
 		$router->addRoute("picker",new Zend_Controller_Router_Route("/paieska",array("module"=>"default","controller" => "picker","action" => "index")));
 		$router->addRoute("picker_results",new Zend_Controller_Router_Route("/paieska/rezultatai/:ibu_min/:ibu_max/:ebc_min/:ebc_max/:abv_min/:abv_max/:style_val/:type_val/:page",array("module"=>"default","controller" => "picker","action" => "results", "ibu_min" => 0, "ebc_min" => 0, "abv_min" => 0, "ibu_max" => 0, "ebc_max" => 0, "abv_max" => 0, "style_val" => "", "type_val" => "", "page" => 0)));
 		$router->addRoute("picker_preview",new Zend_Controller_Router_Route("/paieska/preview/:ibu_min/:ibu_max/:ebc_min/:ebc_max/:abv_min/:abv_max/:style_val/:type_val",array("module"=>"default","controller" => "picker","action" => "preview", "ibu_min" => 0, "ebc_min" => 0, "abv_min" => 0, "ibu_max" => 0, "ebc_max" => 0, "abv_max" => 0, "style_val" => "", "type_val" => "")));

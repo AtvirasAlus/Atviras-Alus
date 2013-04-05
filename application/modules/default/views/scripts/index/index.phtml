@@ -273,6 +273,103 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 				<a href="/comments" >Visi komentarai</a>
 			</div>
 		</div>
+		<?php
+		if ($this->market && sizeof($this->market) > 0){
+			?>
+			<!-- VIRTUALUS TURGUS -->
+			<div class="index_block index_sessions">
+				<div class="block_header">Virtualaus turgaus skelbimai:</div>
+				<div class="block_content">
+					<?php
+					foreach ($this->market as $item):
+						?>
+						<div>
+							<a href="/brewers/<?=$item['user_id']; ?>">
+								<?=$item["user_name"] ?>
+							</a>
+							<b>
+								<?php
+								switch($item['market_action']){
+									case "buy":
+										?>
+										<span class="market_action_buy">
+											ieško
+											<?php
+											switch($item['market_category']){
+												case "yeast":
+													echo " mielių:";
+												break;
+												case "malt":
+													echo " salyklo:";
+												break;
+												case "hop":
+													echo " apynių:";
+												break;
+												case "beer":
+													echo " alaus:";
+												break;
+												case "other":
+													echo ":";
+												break;
+											}
+											?>
+										</span>
+										<?
+									break;
+									case "sell":
+										?>
+										<span class="market_action_sell">
+											<?php
+											switch($item['market_sell_option']){
+												case "sell":
+													echo "parduoda";
+												break;
+												case "give":
+													echo "dovanoja";
+												break;
+												case "exchange":
+													echo "siūlo mainams";
+												break;
+											}
+											switch($item['market_category']){
+												case "yeast":
+													echo " mieles:";
+												break;
+												case "malt":
+													echo " salyklą:";
+												break;
+												case "hop":
+													echo " apynius:";
+												break;
+												case "beer":
+													echo " alų:";
+												break;
+												case "other":
+													echo ":";
+												break;
+											}
+											?>
+										</span>
+										<?php
+									break;
+								}								
+								?>
+							</b>
+							<a href="/turgus/skelbimas/<?=$item['market_id']?>" style="font-size: 14px;">
+								<?=$item["market_title"];?>
+							</a>
+						</div>
+						<?php
+					endforeach;
+					?>
+				</div>
+				<div class="block_footer">
+					<a href="/turgus" >Visi skelbimai</a>
+				</div>
+			</div>
+			<?php
+		}
+		?>
 		
 		<!-- KUBILUOSE GYVENA -->
 		<div class="index_block index_sessions">

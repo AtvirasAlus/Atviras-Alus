@@ -1,0 +1,182 @@
+<?php
+$this->headTitle()->headTitle("Virtualus turgus");
+?>
+<script type="text/javascript">
+	$(document).ready(function() {0
+		$(".confirmdel").click(function(){
+			if (confirm("Ar tikrai norite pašalinti skelbimą?")) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+		$("#market_filter_cat").change(function(){
+			$("#market_filter_form").submit();
+		})
+		$("#market_filter_act").change(function(){
+			$("#market_filter_form").submit();
+		})
+		$("#market_filter_form").submit(function(){
+			window.location.href = "/turgus/1/"+$("#market_filter_cat").val()+"/"+$("#market_filter_act").val();
+			return false;
+		});
+	});
+</script>
+<div class="inner_container">
+	<div class="inner_header">Virtualus turgus</div>
+	<div class="market_filters">
+		<div class="ideas_actions" style="line-height: 28px; float: right;">
+			<a href="/turgus"><b>Skelbimų sąrašas</b></a>
+			<?php
+			if ($this->uid != 0){
+				?>
+				<a href="/turgus/mano">Mano skelbimai</a>
+				<a href="/turgus/naujas">Naujas skelbimas</a>
+				<?php
+			}
+			?>
+		</div>
+		<form action="" id="market_filter_form">
+			<div class="market_f1_label">Kategorija: </div>
+			<div class="market_f1">
+				<select id="market_filter_cat">
+					<option value="0">- Visos -</option>
+					<option <?=((string)$this->f_cat == "beer") ? "selected='selected'" : "";?> value="beer">Alus</option>
+					<option <?=((string)$this->f_cat == "hop") ? "selected='selected'" : "";?> value="hop">Apyniai</option>
+					<option <?=((string)$this->f_cat == "other") ? "selected='selected'" : "";?> value="other">Kita</option>
+					<option <?=((string)$this->f_cat == "yeast") ? "selected='selected'" : "";?> value="yeast">Mielės</option>
+					<option <?=((string)$this->f_cat == "malt") ? "selected='selected'" : "";?> value="malt">Salyklas</option>
+				</select>
+			</div>
+			<div class="market_f2_label">Veiksmas: </div>
+			<div class="market_f2">
+				<select id="market_filter_act">
+					<option value="0">- Visi -</option>
+					<option <?=((string)$this->f_act == "buy") ? "selected='selected'" : "";?> value="buy">Ieško</option>
+					<option <?=((string)$this->f_act == "sell") ? "selected='selected'" : "";?> value="sell">Siūlo</option>
+				</select>
+			</div>
+			<div class="clear"></div>
+		</form>
+	</div>
+	<?php
+	if (sizeof($this->items) == 0){
+		?>
+		<div>Skelbimų sąrašas tuščias</div>
+		<?php
+	}
+	foreach ($this->items as $item){
+		?>
+		<div class="market_item <?=$item['market_category']?>">
+			<div class="market_avatar">
+				<a href="/brewers/<?=$item['user_id']?>">
+					<img src="http://www.gravatar.com/avatar/<?= md5($item['user_email']); ?>?rating=G&size=50&default=mm" border="0" />
+					<span><?=$item['user_name']?></span>
+				</a>
+				<div style="text-align: center; margin-top: px;"><?=$item['market_city']?></div>
+			</div>
+			<div class="market_content">
+				<div class="market_title">
+					<a href="/turgus/skelbimas/<?=$item['market_id']?>">
+						<?php
+						switch($item['market_action']){
+							case "buy":
+								?>
+								<span class="market_action_buy">
+									Ieško
+									<?php
+									switch($item['market_category']){
+										case "yeast":
+											echo " mielių:";
+										break;
+										case "malt":
+											echo " salyklo:";
+										break;
+										case "hop":
+											echo " apynių:";
+										break;
+										case "beer":
+											echo " alaus:";
+										break;
+										case "other":
+											echo ":";
+										break;
+									}
+									?>
+								</span>
+								<?
+							break;
+							case "sell":
+								?>
+								<span class="market_action_sell">
+									<?php
+									switch($item['market_sell_option']){
+										case "sell":
+											echo "Parduoda";
+										break;
+										case "give":
+											echo "Dovanoja";
+										break;
+										case "exchange":
+											echo "Siūlo mainams";
+										break;
+									}
+									switch($item['market_category']){
+										case "yeast":
+											echo " mieles:";
+										break;
+										case "malt":
+											echo " salyklą:";
+										break;
+										case "hop":
+											echo " apynius:";
+										break;
+										case "beer":
+											echo " alų:";
+										break;
+										case "other":
+											echo ":";
+										break;
+									}
+									?>
+								</span>
+								<?php
+							break;
+						}
+						echo $item['market_title'];
+						?>
+					</a>
+					<span class="market_comments_count">(<?=(!empty($item['comments'])) ? $item['comments'] : "0" ;?>)</span>
+					<img src="/public/images/new/comments_icon.png" />
+				</div>
+				<div class="market_text">
+					<?
+					$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p")));
+					$f = new Entities_Filter_Excerpt();
+					$item['market_text'] = str_replace("\n", "<br />", $item['market_text']);
+					?>
+					<?=$f->filter($fhtml->filter($item['market_text']), 60); ?>
+				</div>
+				<div class="market_stamp">
+					<?php
+					if ($this->uid == $item['user_id']){
+						?>
+						<a href="/turgus/redaguoti/<?=$item['market_id']?>">Redaguoti</a>
+						<a href="/turgus/trinti/<?=$item['market_id']?>" class="confirmdel">Trinti</a>
+						<?php
+					} else if ($this->ugroup == "admin"){
+						?>
+						<a href="/turgus/trinti/<?=$item['market_id']?>" class="confirmdel">Trinti</a>
+						<?php
+					}
+					?>
+					<span title="<?=$item['market_posted']?>"><?=$this->prettyStamp($item['market_posted']);?></span>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<?php
+	}
+	?>
+	<div><?=$this->paginationControl($this->items, 'Sliding', 'paginator/item.phtml');?></div>
+</div>

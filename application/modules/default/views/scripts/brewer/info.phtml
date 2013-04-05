@@ -392,6 +392,10 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
 							<option value="idea" <?= ($this->filter_type == "idea") ? 'selected="selected"' : '' ?>>Idėjos</option>
 							<option value="idea_comment" <?= ($this->filter_type == "idea_comment") ? 'selected="selected"' : '' ?>>Idėjų komentarai</option>
 						</optgroup>
+						<optgroup label="Virtualus turgus">
+							<option value="market" <?= ($this->filter_type == "market") ? 'selected="selected"' : '' ?>>Skelbimai</option>
+							<option value="market_comment" <?= ($this->filter_type == "market_comment") ? 'selected="selected"' : '' ?>>Skelbimų komentarai</option>
+						</optgroup>
 						<optgroup label="Skaitykla">
 							<option value="tweet" <?= ($this->filter_type == "tweet") ? 'selected="selected"' : '' ?>>Aludarių pranešimai</option>
 						</optgroup>
@@ -428,6 +432,12 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
 							break;
 						case "idea":
 							include("partials/idea.phtml");
+							break;
+						case "market_comment":
+							include("partials/market_comment.phtml");
+							break;
+						case "market":
+							include("partials/market.phtml");
 							break;
 						case "food":
 							include("partials/food.phtml");
