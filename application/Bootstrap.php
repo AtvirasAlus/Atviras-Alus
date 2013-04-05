@@ -53,8 +53,8 @@ function _initAutoLoad() {
 		$router = $this->fc->getRouter();
 		$router->addRoute("beta_enable",new Zend_Controller_Router_Route("/beta_on",array("module"=>"default","controller" => "index","action" => "enablebeta")));
 		$router->addRoute("beta_disable",new Zend_Controller_Router_Route("/beta_off",array("module"=>"default","controller" => "index","action" => "disablebeta")));
-		$router->addRoute("enable_blocks",new Zend_Controller_Router_Route("/brewer/show_blocks",array("module"=>"default","controller" => "brewer","action" => "enableblocks")));
-		$router->addRoute("enable_list",new Zend_Controller_Router_Route("/brewer/show_list",array("module"=>"default","controller" => "brewer","action" => "enablelist")));
+		$router->addRoute("enable_blocks",new Zend_Controller_Router_Route("/brewer/show_blocks/:archive",array("module"=>"default","controller" => "brewer","action" => "enableblocks", "archive" => 0)));
+		$router->addRoute("enable_list",new Zend_Controller_Router_Route("/brewer/show_list/:archive",array("module"=>"default","controller" => "brewer","action" => "enablelist", "archive" => 0)));
 		$router->addRoute("activate",new Zend_Controller_Router_Route("auth/activate/:emailhash",array("module"=>"default","controller" => "auth","action" => "activate","emailhash"=>0)));
 		$router->addRoute("show_empty_recipes_on",new Zend_Controller_Router_Route("/show_empty_recipes_on",array("module"=>"default","controller" => "recipes","action" => "show_empty_recipes_on")));
 		$router->addRoute("show_empty_recipes_off",new Zend_Controller_Router_Route("/show_empty_recipes_off",array("module"=>"default","controller" => "recipes","action" => "show_empty_recipes_off")));

@@ -6,12 +6,12 @@ $this->headTitle()->headTitle("Mano receptai");
 	<div style="margin: 0px 0px 20px 8px;">
 		<input type="button" onclick="window.location.href='/index/calculus'" value="Sukurti naują receptą" class="ui-button" />
 		<input type="button" onclick="window.location.href='/brew-session/brewer'" value="Mano virimai" class="ui-button" />
-		<input type="button" onclick="window.location.href='/brewer/archive'" value="Receptų archyvas" class="ui-button" />
+		<input type="button" onclick="window.location.href='/brewer/recipes'" value="Mano receptai" class="ui-button" />
 		<div style="float: right;">
-			<a href="/brewer/show_blocks" alt="Blokai" title="Blokai" class="ui-button">
+			<a href="/brewer/show_blocks/1" alt="Blokai" title="Blokai" class="ui-button">
 				<span class="display_blocks"></span>
 			</a>
-			<a href="/brewer/show_list" alt="Sąrašas" title="Sąrašas" class="ui-button">
+			<a href="/brewer/show_list/1" alt="Sąrašas" title="Sąrašas" class="ui-button">
 				<span class="display_list"></span>
 			</a>
 		</div>
@@ -19,7 +19,7 @@ $this->headTitle()->headTitle("Mano receptai");
 	<? 
 	if (!count($this->content)) { 
 		?>
-		<div>Jūs nesate sukūrę receptų. <a href="/index/calculus">Kurti naują receptą</a></div>
+		<div>Jūsų archyve receptų nėra</div>
 		<?
 	} else {
 		if ($this->show_list === true){
@@ -65,8 +65,8 @@ $this->headTitle()->headTitle("Mano receptai");
 									<a href='javascript:setRecipeStatus(<?= $item['recipe_id']; ?>,"<?= $recipe_status; ?>",unescape("<?= urlencode(str_replace('"', "'", $item['recipe_name'])); ?>"))' alt="Viešumas" title="Viešumas">
 										<span class="ui-icon ui-icon-<?= $ico_name ?>">Viešas</span>
 									</a>
-									<a href='javascript:archiveRecipe(<?= $item['recipe_id']; ?>,unescape("<?= urlencode(str_replace('"', "'", $item['recipe_name'])); ?>"))' alt="Archyvuoti" title="Archyvuoti">
-										<span class="ui-icon ui-icon-folder-open">Archyvuoti</span>
+									<a href='javascript:unarchiveRecipe(<?= $item['recipe_id']; ?>,unescape("<?= urlencode(str_replace('"', "'", $item['recipe_name'])); ?>"))' alt="Perkelti iš archyvo" title="Perkelti iš archyvo">
+										<span class="ui-icon ui-icon-folder-collapsed">Perkelti iš archyvo</span>
 									</a>
 									<?php
 									if ($this->recipeDeletable($item['recipe_id'])){
@@ -108,8 +108,8 @@ $this->headTitle()->headTitle("Mano receptai");
 							<a href='javascript:setRecipeStatus(<?= $item['recipe_id']; ?>,"<?= $recipe_status; ?>",unescape("<?= urlencode(str_replace('"', "'", $item['recipe_name'])); ?>"))' alt="Viešumas" title="Viešumas">
 								<span class="ui-icon ui-icon-<?= $ico_name ?>">Viešas</span>
 							</a>
-							<a href='javascript:archiveRecipe(<?= $item['recipe_id']; ?>,unescape("<?= urlencode(str_replace('"', "'", $item['recipe_name'])); ?>"))' alt="Archyvuoti" title="Archyvuoti">
-								<span class="ui-icon ui-icon-folder-open">Archyvuoti</span>
+							<a href='javascript:unarchiveRecipe(<?= $item['recipe_id']; ?>,unescape("<?= urlencode(str_replace('"', "'", $item['recipe_name'])); ?>"))' alt="Perkelti iš archyvo" title="Perkelti iš archyvo">
+								<span class="ui-icon ui-icon-folder-collapsed">Perkelti iš archyvo</span>
 							</a>
 							<?php
 							if ($this->recipeDeletable($item['recipe_id'])){
@@ -202,11 +202,12 @@ $this->headTitle()->headTitle("Mano receptai");
 			})
 		}
 	}
-	function archiveRecipe(id, recipe_name) {
-		if (confirm("Ar norite patalpinti '" + recipe_name + "' į archyvą?")) {
+
+	function unarchiveRecipe(id, recipe_name) {
+		if (confirm("Ar norite iškelti '" + recipe_name + "' iš archyvo?")) {
 			$.ajax({
 				type: 'POST',
-				url: "/recipes/archive/",
+				url: "/recipes/unarchive/",
 				data: "recipe_id=" + id,
 				success: function (d) {
 

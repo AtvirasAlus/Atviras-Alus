@@ -811,6 +811,65 @@ class RecipesController extends Zend_Controller_Action {
 			}
 		}
 	}
+	public function archiveAction() {
+		if (isset($_POST)) {
+			$this->_helper->layout->setLayout('empty');
+			$this->_helper->viewRenderer->setNoRender(true);
+			$storage = new Zend_Auth_Storage_Session();
+			$u = $storage->read();
+			if (isset($u->user_name)) {
+				$db = Zend_Registry::get('db');
+				if (strlen($_POST["recipe_id"]) > 0) {
+					$select = $db->select();
+					$select->from("beer_recipes", array("recipe_id"))
+							->where("brewer_id = ?", $u->user_id)
+							->where("recipe_id = ?", $_POST["recipe_id"]);
+					$r = $db->fetchRow($select);
+					if (isset($r)) {
+						$db->update("beer_recipes", array(
+							"recipe_archived" => 1,
+							"recipe_publish" => 0
+						), "recipe_id = " . $r['recipe_id']);
+						print Zend_Json::encode(array("status" => 0));
+						return;
+					} else {
+						
+					}
+				}print Zend_Json::encode(array("status" => 1, "errors" => array(array("message" => "Receptas nerastas", "type" => "system"))));
+			} else {
+				print Zend_Json::encode(array("status" => 1, "errors" => array(array("message" => "Neregistruotas naudotojas", "type" => "authentication"))));
+			}
+		}
+	}
+	public function unarchiveAction() {
+		if (isset($_POST)) {
+			$this->_helper->layout->setLayout('empty');
+			$this->_helper->viewRenderer->setNoRender(true);
+			$storage = new Zend_Auth_Storage_Session();
+			$u = $storage->read();
+			if (isset($u->user_name)) {
+				$db = Zend_Registry::get('db');
+				if (strlen($_POST["recipe_id"]) > 0) {
+					$select = $db->select();
+					$select->from("beer_recipes", array("recipe_id"))
+							->where("brewer_id = ?", $u->user_id)
+							->where("recipe_id = ?", $_POST["recipe_id"]);
+					$r = $db->fetchRow($select);
+					if (isset($r)) {
+						$db->update("beer_recipes", array(
+							"recipe_archived" => 0
+						), "recipe_id = " . $r['recipe_id']);
+						print Zend_Json::encode(array("status" => 0));
+						return;
+					} else {
+						
+					}
+				}print Zend_Json::encode(array("status" => 1, "errors" => array(array("message" => "Receptas nerastas", "type" => "system"))));
+			} else {
+				print Zend_Json::encode(array("status" => 1, "errors" => array(array("message" => "Neregistruotas naudotojas", "type" => "authentication"))));
+			}
+		}
+	}
 
 	public function saveAction() {
 		if (isset($_POST)) {

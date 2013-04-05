@@ -538,6 +538,51 @@ class BrewerController extends Zend_Controller_Action {
 				$select->where("beer_recipes.recipe_publish = ?", '1');
 			}
 			$select->where("beer_recipes.brewer_id= ?", $brewer["user_id"]);
+			$select->where("beer_recipes.recipe_archived = ?", 0);
+			$select->order("beer_recipes.recipe_created DESC");
+
+			if ($this->show_list === true && $this->_getParam('brewer') == 0) {
+				$this->view->content = $db->fetchAll($select);
+			} else {
+				$adapter = new Zend_Paginator_Adapter_DbSelect($select);
+				$this->view->content = new Zend_Paginator($adapter);
+				$this->view->content->setCurrentPageNumber($this->_getParam('page'));
+				$this->view->content->setItemCountPerPage(15);
+			}
+			$this->view->brewer = $brewer;
+			$this->view->brewer["total"] = $total["count"];
+		}
+	}
+	public function archiveAction() {
+		$this->view->show_list = $this->show_list;
+		$storage = new Zend_Auth_Storage_Session();
+		$u = $storage->read();
+		$db = Zend_Registry::get('db');
+		$select = $db->select()
+				->from("beer_awards")
+				->order("posted DESC");
+		$result = $db->FetchAll($select);
+		$aw = array();
+		foreach ($result as $key => $val) {
+			$aw[$val['recipe_id']][] = $val;
+		}
+		$this->view->awards = $aw;
+		$brewer = $u->user_id;
+		$select = $db->select()
+				->from("beer_recipes", array("count" => "count(*)"))
+				->where("beer_recipes.brewer_id= ?", $brewer);
+		$total = $db->fetchRow($select);
+		$select = $db->select()
+				->from("users")
+				->where("user_id = ?", $brewer);
+		$brewer = $db->fetchRow($select);
+		if (isset($brewer)) {
+			$select = $db->select()
+					->from("beer_recipes")
+					->join("users", "users.user_id = beer_recipes.brewer_id", array("user_name"))
+					->joinLeft("beer_styles", "beer_recipes.recipe_style = beer_styles.style_id", array("style_name"));
+			$select->where("beer_recipes.brewer_id= ?", $brewer["user_id"]);
+			$select->where("beer_recipes.recipe_archived = ?", 1);
 			$select->order("beer_recipes.recipe_created DESC");
 
 			if ($this->show_list === true && $this->_getParam('brewer') == 0) {
@@ -560,7 +605,11 @@ class BrewerController extends Zend_Controller_Action {
 			$db = Zend_Registry::get("db");
 			$db->update("users_attributes", array("recipe_list" => "0"), array("user_id = '" . $user_info->user_id . "'"));
 		}
-		$this->_redirect("/brewer/recipes");
+		if ($this->_getParam("archive") == 1){
+			$this->_redirect("/brewer/archive");
+		} else {
+			$this->_redirect("/brewer/recipes");
+		}
 	}
 
 	public function enablelistAction() {
@@ -570,7 +619,11 @@ class BrewerController extends Zend_Controller_Action {
 			$db = Zend_Registry::get("db");
 			$db->update("users_attributes", array("recipe_list" => "1"), array("user_id = '" . $user_info->user_id . "'"));
 		}
-		$this->_redirect("/brewer/recipes");
+		if ($this->_getParam("archive") == 1){
+			$this->_redirect("/brewer/archive");
+		} else {
+			$this->_redirect("/brewer/recipes");
+		}
 	}
 
 }
