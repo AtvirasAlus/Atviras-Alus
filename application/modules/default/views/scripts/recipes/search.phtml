@@ -185,6 +185,11 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 	function submitForm() {
 		var filter = [];
 		
+		var vt = $('#vote').val();
+		if (vt.length > 0){
+			filter.push("vote:"+encodeURIComponent(vt));
+		}
+		
 		var rn = $('#recipe_name').val();
 		if (rn.length > 0){
 			filter.push("name:"+encodeURIComponent(rn));
@@ -312,6 +317,11 @@ $this->headLink()->appendStylesheet("/public/ui/themes/pepper-grinder/jquery.ui.
 		<dl>
 			<dt>Žymos:</dt>
 			<dd><input type="text" id="tags" value="<?= $this->filter_values['tag_text']; ?>" /></dd>
+			<div class="clear"></div>
+		</dl>
+		<dl>
+			<dt>Minimalus įvertinimas:</dt>
+			<dd><input type="text" id="vote" value="<?= $this->filter_values['vote']; ?>" /></dd>
 			<div class="clear"></div>
 		</dl>
 		<dl>

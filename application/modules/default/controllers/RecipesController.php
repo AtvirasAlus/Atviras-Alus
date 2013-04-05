@@ -250,7 +250,7 @@ class RecipesController extends Zend_Controller_Action {
 	public function searchAction() {
 		$db = Zend_Registry::get("db");
 		$params = explode("|", $this->getRequest()->getParam("params"));
-		$mask = array("type" => "recipe_type", "style" => "recipe_style", "medals" => "medals", "name" => "recipe_name", "hops" => "hop_name", "malts" => "malt_name", "yeasts" => "yeast_name", "brewer" => "user_name", "tags" => "tag_text", "mine" => 'mine');
+		$mask = array("type" => "recipe_type", "style" => "recipe_style", "medals" => "medals", "name" => "recipe_name", "hops" => "hop_name", "malts" => "malt_name", "yeasts" => "yeast_name", "brewer" => "user_name", "tags" => "tag_text", "mine" => 'mine', "vote" => "vote");
 		$select = $db->select()
 				->from("beer_styles", array("style_name", "style_id", "style_cat"))
 				->joinLeft("VIEW_public_recipes", "VIEW_public_recipes.recipe_style=beer_styles.style_id", array("count" => "count(VIEW_public_recipes.recipe_id)"))
@@ -308,6 +308,12 @@ class RecipesController extends Zend_Controller_Action {
 				$select->where("recipe_name LIKE '%" . $filter["recipe_name"] . "%'");
 			} else {
 				$filter["recipe_name"] = "";
+			}
+			if (isset($filter["vote"])) {
+				$filter["vote"] = (float)$filter["vote"];
+				$select->where("(recipe_votes_value / recipe_votes_count) / 5 >= '" . $filter["vote"] . "'");
+			} else {
+				$filter["vote"] = "";
 			}
 			if (isset($filter["medals"]) && $filter["medals"] == "1") {
 				$select->where("recipe_total_awards > 0");
@@ -396,7 +402,7 @@ class RecipesController extends Zend_Controller_Action {
 			}
 			$this->view->awards = $aw;
 		} else {
-			$filter = array("recipe_style" => 0, "recipe_type" => 0, "recipe_name" => "", "hop_name" => "", "yeast_name" => "", "malt_name" => "", "user_name" => "", "tag_text" => "", "medals" => "");
+			$filter = array("recipe_style" => 0, "recipe_type" => 0, "recipe_name" => "", "hop_name" => "", "yeast_name" => "", "malt_name" => "", "user_name" => "", "tag_text" => "", "medals" => "", "vote" => "");
 		}
 		$this->view->filter_values = $filter;
 	}
