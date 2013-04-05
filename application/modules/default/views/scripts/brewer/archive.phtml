@@ -62,9 +62,6 @@ $this->headTitle()->headTitle("Mano receptai");
 									<a href="/index/calculus/<?= $item['recipe_id']; ?>" alt="Redaguoti" title="Redaguoti">
 										<span class="ui-icon ui-icon-wrench">Redaguoti</span>
 									</a>
-									<a href='javascript:setRecipeStatus(<?= $item['recipe_id']; ?>,"<?= $recipe_status; ?>",unescape("<?= urlencode(str_replace('"', "'", $item['recipe_name'])); ?>"))' alt="Viešumas" title="Viešumas">
-										<span class="ui-icon ui-icon-<?= $ico_name ?>">Viešas</span>
-									</a>
 									<a href='javascript:unarchiveRecipe(<?= $item['recipe_id']; ?>,unescape("<?= urlencode(str_replace('"', "'", $item['recipe_name'])); ?>"))' alt="Perkelti iš archyvo" title="Perkelti iš archyvo">
 										<span class="ui-icon ui-icon-folder-collapsed">Perkelti iš archyvo</span>
 									</a>
@@ -105,9 +102,6 @@ $this->headTitle()->headTitle("Mano receptai");
 							</a>
 							<? $ico_name = ($item["recipe_publish"] == 1) ? 'unlocked' : 'locked'; ?>
 							<? $recipe_status = ($item["recipe_publish"] == 1) ? '0' : '1'; ?>
-							<a href='javascript:setRecipeStatus(<?= $item['recipe_id']; ?>,"<?= $recipe_status; ?>",unescape("<?= urlencode(str_replace('"', "'", $item['recipe_name'])); ?>"))' alt="Viešumas" title="Viešumas">
-								<span class="ui-icon ui-icon-<?= $ico_name ?>">Viešas</span>
-							</a>
 							<a href='javascript:unarchiveRecipe(<?= $item['recipe_id']; ?>,unescape("<?= urlencode(str_replace('"', "'", $item['recipe_name'])); ?>"))' alt="Perkelti iš archyvo" title="Perkelti iš archyvo">
 								<span class="ui-icon ui-icon-folder-collapsed">Perkelti iš archyvo</span>
 							</a>
@@ -143,38 +137,6 @@ $this->headTitle()->headTitle("Mano receptai");
 </div>
 
 <script>
-	function setRecipeStatus(id, status, recipe_name) {
-		var w = "";
-		if (status == 0) {
-			w = 'paslėpti'
-		} else {
-			w = 'paviešinti'
-		}
-		if (confirm("Ar norite " + w + " '" + recipe_name + "' ?")) {
-			$.ajax({
-				type: 'POST',
-				url: "/recipes/publish",
-				data: "recipe_id=" + id+"&publish="+status,
-				success: function (d) {
-
-					var data = jQuery.parseJSON(d);
-					if (data) {
-						if (data.status == "1") {
-
-							if (data.errors[0].type == "authentication") {
-								showLogin();
-								return
-							}
-						} else {
-							location.reload()
-						}
-					} else {
-						alert("Klaida")
-					}
-				}
-			})
-		}
-	}
 
 	function deleteRecipe(id, recipe_name) {
 		if (confirm("Ar norite ištrinti '" + recipe_name + "' ?")) {
