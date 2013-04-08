@@ -64,6 +64,8 @@ class BrewerController extends Zend_Controller_Action {
 		$this->view->user_info = array("total_brewed_mead" => 0, "total_brewed_kvass" => 0, "total_brewed_cider" => 0, "total_sessions" => 0, "total_brewed" => 0, "total_recipes" => 0, "user_lastlogin" => 0, "user_created" => 0, "user_name" => '');
 		if ($this->_getParam('brewer') > 0) {
 			$brewer = $this->_getParam('brewer');
+
+			// BREWER INFO
 			$select = $db->select()
 					->from("beer_awards")
 					->join("beer_recipes", "beer_recipes.recipe_id=beer_awards.recipe_id", array("recipe_name"))
@@ -258,7 +260,194 @@ class BrewerController extends Zend_Controller_Action {
 				}
 				$result = $db->fetchAll($select);
 				$this->view->activity = $result;
+
+				// STATISTICS INFO
+				$select = $db->select()
+						->from("beer_brew_sessions", array("DISTINCT(session_brewer) AS brewer_id", "SUM(session_size) AS kiekis"))
+						->order("kiekis DESC")
+						->group("session_brewer");
+				$result = $db->FetchAll($select);
+				$this->view->total_positions = sizeof($result);
+				$this->view->positions = $result;
+				$pos = 0;
+				foreach($result as $key=>$val){
+					$pos++;
+					if ($val['brewer_id'] == $this->_getParam("brewer")) {
+						$this->view->position = $pos;
+						$this->view->position_amount = $val['kiekis'];
+						break;
+					}
+				}
+
+				$select = $db->select()
+						->from("beer_brew_sessions", array("session_primarydate AS date", "session_size AS size"))
+						->where("session_brewer = ?", $this->_getParam("brewer"))
+						->where("session_primarydate <= ?", date("Y-m-d"))
+						->where("session_primarydate >= ?", $this->view->user_info['user_created'])
+						->order("session_primarydate ASC");
+				$result = $db->FetchAll($select);
+				$statsess = array();
+				$sum = 0;
+				foreach($result as $key=>$val){
+					$d = strtotime($val['date'])*1000;
+					if (isset($statsess[$d])){
+						$statsess[$d] += $val['size'];
+					} else {
+						$statsess[$d] = $sum + $val['size'];
+					}
+					$sum += $val['size'];
+				}
+				if (sizeof($statsess) > 0){
+					$now = strtotime(date("Y-m-d"))*1000;
+					if (!isset($statsess[$now])){
+						$statsess[$now] = $sum;
+					}
+				}
+				$this->view->statsess = $statsess;
 				
+				$select = $db->select()
+						->from("beer_recipes", array("recipe_ibu"))
+						->where("brewer_id = ?", $brewer)
+						->order("recipe_ibu DESC");
+				$result = $db->FetchAll($select);
+				$iburt['light'] = false;
+				$iburt['medium'] = false;
+				$iburt['strong'] = false;
+				foreach($result as $key=>$val){
+					if ($iburt['light'] === false && $val['recipe_ibu'] <= 30) $iburt['light'] = $key;
+					if ($iburt['medium'] === false && $val['recipe_ibu'] <= 60 && $val['recipe_ibu'] > 30) $iburt['medium'] = $key;
+					if ($iburt['strong'] === false && $val['recipe_ibu'] > 60) $iburt['strong'] = $key;
+				}
+				$this->view->iburt = $iburt;
+				$this->view->statribu = $result;
+				if (sizeof($result) > 0){
+					$select = $db->select()
+							->from("beer_recipes", array("AVG(recipe_ibu) as average_ibu"))
+							->where("brewer_id = ?", $brewer);
+					$result = $db->FetchRow($select);
+					$this->view->statribu_avg = $result['average_ibu'];
+				}
+
+				$select = $db->select()
+						->from("beer_brew_sessions", array())
+						->join("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe", array("recipe_ibu"))
+						->where("beer_brew_sessions.session_brewer = ?", $brewer)
+						->order("recipe_ibu DESC");
+				$result = $db->FetchAll($select);
+				$ibust['light'] = false;
+				$ibust['medium'] = false;
+				$ibust['strong'] = false;
+				foreach($result as $key=>$val){
+					if ($ibust['light'] === false && $val['recipe_ibu'] <= 30) $ibust['light'] = $key;
+					if ($ibust['medium'] === false && $val['recipe_ibu'] <= 60 && $val['recipe_ibu'] > 30) $ibust['medium'] = $key;
+					if ($ibust['strong'] === false && $val['recipe_ibu'] > 60) $ibust['strong'] = $key;
+				}
+				$this->view->ibust = $ibust;
+				$this->view->statsibu = $result;
+				if (sizeof($result) > 0){
+					$select = $db->select()
+							->from("beer_brew_sessions", array())
+							->join("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe", array("AVG(recipe_ibu) as average_ibu"))
+							->where("beer_brew_sessions.session_brewer = ?", $brewer);
+					$result = $db->FetchRow($select);
+					$this->view->statsibu_avg = $result['average_ibu'];
+				}
+				
+				$select = $db->select()
+						->from("beer_recipes", array("recipe_ebc"))
+						->where("brewer_id = ?", $brewer)
+						->order("recipe_ebc DESC");
+				$result = $db->FetchAll($select);
+				$ebcrt['light'] = false;
+				$ebcrt['medium'] = false;
+				$ebcrt['strong'] = false;
+				foreach($result as $key=>$val){
+					if ($ebcrt['light'] === false && $val['recipe_ebc'] <= 15) $ebcrt['light'] = $key;
+					if ($ebcrt['medium'] === false && $val['recipe_ebc'] <= 38 && $val['recipe_ebc'] > 15) $ebcrt['medium'] = $key;
+					if ($ebcrt['strong'] === false && $val['recipe_ebc'] > 38) $ebcrt['strong'] = $key;
+				}
+				$this->view->ebcrt = $ebcrt;
+				$this->view->statrebc = $result;
+				if (sizeof($result) > 0){
+					$select = $db->select()
+							->from("beer_recipes", array("AVG(recipe_ebc) as average_ebc"))
+							->where("brewer_id = ?", $brewer);
+					$result = $db->FetchRow($select);
+					$this->view->statrebc_avg = $result['average_ebc'];
+				}
+
+				$select = $db->select()
+						->from("beer_brew_sessions", array())
+						->join("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe", array("recipe_ebc"))
+						->where("beer_brew_sessions.session_brewer = ?", $brewer)
+						->order("recipe_ebc DESC");
+				$result = $db->FetchAll($select);
+				$ebcst['light'] = false;
+				$ebcst['medium'] = false;
+				$ebcst['strong'] = false;
+				foreach($result as $key=>$val){
+					if ($ebcst['light'] === false && $val['recipe_ebc'] <= 15) $ebcst['light'] = $key;
+					if ($ebcst['medium'] === false && $val['recipe_ebc'] <= 38 && $val['recipe_ebc'] > 15) $ebcst['medium'] = $key;
+					if ($ebcst['strong'] === false && $val['recipe_ebc'] > 38) $ebcst['strong'] = $key;
+				}
+				$this->view->ebcst = $ebcst;
+				$this->view->statsebc = $result;
+				if (sizeof($result) > 0){
+					$select = $db->select()
+							->from("beer_brew_sessions", array())
+							->join("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe", array("AVG(recipe_ebc) as average_ebc"))
+							->where("beer_brew_sessions.session_brewer = ?", $brewer);
+					$result = $db->FetchRow($select);
+					$this->view->statsebc_avg = $result['average_ebc'];
+				}
+				
+				$select = $db->select()
+						->from("beer_recipes", array("recipe_abv"))
+						->where("brewer_id = ?", $brewer)
+						->order("recipe_abv DESC");
+				$result = $db->FetchAll($select);
+				$abvrt['light'] = false;
+				$abvrt['medium'] = false;
+				$abvrt['strong'] = false;
+				foreach($result as $key=>$val){
+					if ($abvrt['light'] === false && $val['recipe_abv'] <= 5.5) $abvrt['light'] = $key;
+					if ($abvrt['medium'] === false && $val['recipe_abv'] <= 9.5 && $val['recipe_abv'] > 5.5) $abvrt['medium'] = $key;
+					if ($abvrt['strong'] === false && $val['recipe_abv'] > 9.5) $abvrt['strong'] = $key;
+				}
+				$this->view->abvrt = $abvrt;
+				$this->view->statrabv = $result;
+				if (sizeof($result) > 0){
+					$select = $db->select()
+							->from("beer_recipes", array("AVG(recipe_abv) as average_abv"))
+							->where("brewer_id = ?", $brewer);
+					$result = $db->FetchRow($select);
+					$this->view->statrabv_avg = $result['average_abv'];
+				}
+
+				$select = $db->select()
+						->from("beer_brew_sessions", array())
+						->join("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe", array("recipe_abv"))
+						->where("beer_brew_sessions.session_brewer = ?", $brewer)
+						->order("recipe_abv DESC");
+				$result = $db->FetchAll($select);
+				$abvst['light'] = false;
+				$abvst['medium'] = false;
+				$abvst['strong'] = false;
+				foreach($result as $key=>$val){
+					if ($abvst['light'] === false && $val['recipe_abv'] <= 5.5) $abvst['light'] = $key;
+					if ($abvst['medium'] === false && $val['recipe_abv'] <= 9.5 && $val['recipe_abv'] > 5.5) $abvst['medium'] = $key;
+					if ($abvst['strong'] === false && $val['recipe_abv'] > 9.5) $abvst['strong'] = $key;
+				}
+				$this->view->abvst = $abvst;
+				$this->view->statsabv = $result;
+				if (sizeof($result) > 0){
+					$select = $db->select()
+							->from("beer_brew_sessions", array())
+							->join("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe", array("AVG(recipe_abv) as average_abv"))
+							->where("beer_brew_sessions.session_brewer = ?", $brewer);
+					$result = $db->FetchRow($select);
+					$this->view->statsabv_avg = $result['average_abv'];
+				}
 			}
 		}
 	}

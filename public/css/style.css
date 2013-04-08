@@ -3534,3 +3534,6 @@ html ul.topnav li ul.subnav li a:hover {
 	background-color: #fff;
 	vertical-align: top;
 }
+.user_stat_graph {
+	margin-bottom: 25px;
+}

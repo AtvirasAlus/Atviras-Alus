@@ -6,6 +6,7 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.js");
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.selection.js");
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.pie.js");
 $this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
+$this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 ?>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -15,6 +16,24 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
 	});
 </script>
 <script type="text/javascript">
+    function showTooltip(x, y, contents) {
+        $('<div id="tooltip">' + contents + '</div>').css( {
+            position: 'absolute',
+            display: 'none',
+            top: y-20,
+            left: x + 5,
+            padding: '2px'
+        }).appendTo("body").fadeIn(200);
+    }
+	function timeConverter(UNIX_timestamp){
+		var a = new Date(UNIX_timestamp);
+		var months = ['Sausio','Vasario','Kovo','Balandžio','Gegužės','Birželio','Liepos','Rugpjūčio','Rugsėjo','Spalio','Lapkričio','Gruodžio'];
+		var year = a.getFullYear();
+		var month = months[a.getMonth()];
+		var date = a.getDate();
+		var time = year+' m. '+month+' mėn. '+date+' d.';
+		return time;
+	}
 	var timeOutIdle = null;
 	var currentURL = null;
 	var currentImage = null;
@@ -172,33 +191,518 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
 		}
 		if (sizeof($this->awards) > 0 || sizeof($this->nominations) > 0) {
 			?>
-			<li><a href="#tabs-awards">Apdovanojimai (<?=(sizeof($this->awards) + sizeof($this->nominations));?>)</a></li>
+			<li><a href="#tabs-awards">Apdovanojimai (<?= (sizeof($this->awards) + sizeof($this->nominations)); ?>)</a></li>
 			<?php
 		}
 		if (sizeof($this->user_info['tags']) > 0) {
 			?>
-			<li><a href="#tabs-tags">Žymos (<?=sizeof($this->user_info['tags']);?>)</a></li>
+			<li><a href="#tabs-tags">Žymos (<?= sizeof($this->user_info['tags']); ?>)</a></li>
+			<?php
+		}
+		if (isset($this->position) && !empty($this->position)) {
+			?>
+			<li><a href="#tabs-stats">Statistika</a></li>
 			<?php
 		}
 		?>
 	</ul>
+	<div id="tabs-stats" class="inner_container">
+		<?
+		if (isset($this->position) && !empty($this->position)) {
+			?>
+			<div class="inner_header">Pozicija daugiausiai gėrimų išvirusių aludarių sąraše (# <?=$this->position?>)</div>
+			<div id="posstat" style="height: 200px; width: 830px;" class="user_stat_graph"></div>
+			<script type="text/javascript">
+				$(function () {
+					var d1 = [];
+					var markings = [
+						{ color: '#ff0000', lineWidth: 1, xaxis: { from: <?=$this->position-1?>, to: <?=$this->position-1?> } }
+					];
+					<?php
+					foreach($this->positions as $key=>$val){
+						?>
+						d1.push([<?=$key?>, <?=$val['kiekis']?>]);
+						<?php
+					}
+					?>
+					$.plot($("#posstat"), [d1], {
+							lines: { show: true, fill: true },
+							yaxis: { show: true, tickFormatter: function (v) { return v + " ltr"; }, reserveSpace: true, labelWidth: 50 },
+							xaxis: { show: false },
+							grid: { borderWidth: 1, markings: markings, borderColor: '#ccc' }
+						}
+					);
+				});
+			</script>
+			<?php
+		}
+		if (isset($this->statsess) && !empty($this->statsess)) {
+			?>
+			<div class="inner_header">Aludario virimų augimas</div>
+			<div id="statsess" style="height: 200px; width: 830px;" class="user_stat_graph"></div>
+			<script type="text/javascript">
+				$(function () {
+					var d2 = [];
+					<?php
+					foreach($this->statsess as $key=>$val){
+						?>
+						d2.push([<?=$key?>, <?=$val?>]);
+						<?php
+					}
+					?>
+					var plot = $.plot($("#statsess"), [{data: d2, label: "0.00 ltr"}], {
+							crosshair: { mode: "x" },
+							lines: { show: true, fill: true, steps: true },
+							yaxis: { show: true, tickFormatter: function (v) { return v + " ltr"; }, reserveSpace: true, labelWidth: 50 },
+							xaxis: { 
+								show: true, 
+								mode: "time",
+								monthNames: ["Sau", "Vas", "Kov", "Bal", "Geg", "Bir", "Lie", "Rgp", "Rgs", "Spa", "Lap", "Grd"],
+								timeformat: "%y m. %b."
+							},
+							grid: { 
+								borderWidth: 1, 
+								borderColor: '#ccc',  
+								hoverable: true, 
+								autoHighlight: false
+							},
+							legend: {
+								position: "nw"
+							}
+						}
+					);
+					var legends = $("#statsess .legendLabel");
+					legends.each(function () {
+						$(this).css('width', "200px");
+					});
+					var updateLegendTimeout = null;
+					var latestPosition = null;
+
+					function updateLegend() {
+						updateLegendTimeout = null;
+						var pos = latestPosition;
+						var axes = plot.getAxes();
+						if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max ||
+							pos.y < axes.yaxis.min || pos.y > axes.yaxis.max)
+							return;
+						var i, j, dataset = plot.getData();
+						for (i = 0; i < dataset.length; ++i) {
+							var series = dataset[i];
+							for (j = 0; j < series.data.length; ++j)
+								if (series.data[j][0] > pos.x)
+									break;
+							var y, p1 = series.data[j - 1], p2 = series.data[j];
+								y = p1[1];
+							legends.eq(i).text(timeConverter(pos.x) + " = " + y.toFixed(2)+" ltr.");
+						}
+					}
+					$("#statsess").bind("plothover",  function (event, pos, item) {
+						latestPosition = pos;
+						if (!updateLegendTimeout)
+							updateLegendTimeout = setTimeout(updateLegend, 50);
+					});
+				});
+			</script>
+			<?php
+		}
+		if (isset($this->statrabv) && !empty($this->statrabv)) {
+			?>
+			<div class="inner_header">Aludario receptų ABV</div>
+			<div id="statrabv" style="height: 200px; width: 830px;" class="user_stat_graph"></div>
+			<script type="text/javascript">
+				$(function () {
+					var d3 = [];
+					<?php
+					foreach($this->statrabv as $key=>$val){
+						?>
+						d3.push([<?=$key?>, <?=$val['recipe_abv']?>]);
+						<?php
+					}
+					?>
+					var markings = [
+						<?php
+						if ($this->abvrt['strong'] !== false){
+							?>
+							{ color: '#d5d5d5', xaxis: { from: <?=$this->abvrt['strong'];?> } },
+							<?php
+						}
+						if ($this->abvrt['medium'] !== false){
+							?>
+							{ color: '#e5e5e5', xaxis: { from: <?=$this->abvrt['medium'];?> } },
+							<?php
+						}
+						if ($this->abvrt['light'] !== false){
+							?>
+							{ color: '#f5f5f5', xaxis: { from: <?=$this->abvrt['light'];?> } },
+							<?php
+						}
+						?>
+						{ color: '#999', yaxis: { from: <?=$this->statrabv_avg?>, to: <?=$this->statrabv_avg?> } }
+					];								
+					var plot = $.plot($("#statrabv"), [{data: d3}], {
+							lines: { show: true, fill: true },
+							yaxis: { show: true, tickFormatter: function (v) { return v.toFixed(1) + "% ABV"; }, reserveSpace: true, labelWidth: 50 },
+							xaxis: { 
+								show: false
+							},
+							grid: { borderWidth: 1, borderColor: '#ccc', markings: markings, hoverable: true }
+						}
+					);
+					var o;
+					o = plot.pointOffset({ x: 1, y: <?=$this->statrabv_avg?>});
+					$("#statrabv").append('<div style="position:absolute;left: 70px;top:' + o.top + 'px;color:#000;">Vidurkis: <?=  number_format($this->statrabv_avg, 1);?>% ABV</div>');
+					var previousPoint = null;
+					$("#statrabv").bind("plothover", function (event, pos, item) {
+						if (item) {
+							if (previousPoint != item.dataIndex) {
+								previousPoint = item.dataIndex;
+								$("#tooltip").remove();
+								var y = item.datapoint[1].toFixed(1);
+								showTooltip(item.pageX, item.pageY, y + "% ABV");
+							}
+						} else {
+							$("#tooltip").remove();
+							previousPoint = null;            
+						}
+					});
+					
+				});
+			</script>
+			<?php
+		}
+		if (isset($this->statsabv) && !empty($this->statsabv)) {
+			?>
+			<div class="inner_header">Aludario virimų ABV</div>
+			<div id="statsabv" style="height: 200px; width: 830px;" class="user_stat_graph"></div>
+			<script type="text/javascript">
+				$(function () {
+					var d4 = [];
+					<?php
+					foreach($this->statsabv as $key=>$val){
+						?>
+						d4.push([<?=$key?>, <?=$val['recipe_abv']?>]);
+						<?php
+					}
+					?>
+					var markings = [
+						<?php
+						if ($this->abvst['strong'] !== false){
+							?>
+							{ color: '#d5d5d5', xaxis: { from: <?=$this->abvst['strong'];?> } },
+							<?php
+						}
+						if ($this->abvst['medium'] !== false){
+							?>
+							{ color: '#e5e5e5', xaxis: { from: <?=$this->abvst['medium'];?> } },
+							<?php
+						}
+						if ($this->abvst['light'] !== false){
+							?>
+							{ color: '#f5f5f5', xaxis: { from: <?=$this->abvst['light'];?> } },
+							<?php
+						}
+						?>
+						{ color: '#999', yaxis: { from: <?=$this->statsabv_avg?>, to: <?=$this->statsabv_avg?> } }
+					];								
+					var plot = $.plot($("#statsabv"), [{data: d4}], {
+							lines: { show: true, fill: true },
+							yaxis: { show: true, tickFormatter: function (v) { return v.toFixed(1) + "% ABV"; }, reserveSpace: true, labelWidth: 50 },
+							xaxis: { 
+								show: false
+							},
+							grid: { borderWidth: 1, borderColor: '#ccc', markings: markings, hoverable: true }
+						}
+					);
+					$("#statsabv").bind("plothover", function (event, pos, item) {
+						if (item) {
+							if (previousPoint != item.dataIndex) {
+								previousPoint = item.dataIndex;
+								$("#tooltip").remove();
+								var y = item.datapoint[1].toFixed(1);
+								showTooltip(item.pageX, item.pageY, y + "% ABV");
+							}
+						} else {
+							$("#tooltip").remove();
+							previousPoint = null;            
+						}
+					});
+					var o;
+					o = plot.pointOffset({ x: 1, y: <?=$this->statsabv_avg?>});
+					$("#statsabv").append('<div style="position:absolute;left: 70px;top:' + o.top + 'px;color:#000;">Vidurkis: <?=  number_format($this->statsabv_avg, 1);?>% ABV</div>');
+				});
+			</script>
+			<?php
+		}
+		if (isset($this->statribu) && !empty($this->statribu)) {
+			?>
+			<div class="inner_header">Aludario receptų IBU</div>
+			<div id="statribu" style="height: 200px; width: 830px;" class="user_stat_graph"></div>
+			<script type="text/javascript">
+				$(function () {
+					var d5 = [];
+					<?php
+					foreach($this->statribu as $key=>$val){
+						?>
+						d5.push([<?=$key?>, <?=$val['recipe_ibu']?>]);
+						<?php
+					}
+					?>
+					var markings = [
+						<?php
+						if ($this->iburt['strong'] !== false){
+							?>
+							{ color: '#d5d5d5', xaxis: { from: <?=$this->iburt['strong'];?> } },
+							<?php
+						}
+						if ($this->iburt['medium'] !== false){
+							?>
+							{ color: '#e5e5e5', xaxis: { from: <?=$this->iburt['medium'];?> } },
+							<?php
+						}
+						if ($this->iburt['light'] !== false){
+							?>
+							{ color: '#f5f5f5', xaxis: { from: <?=$this->iburt['light'];?> } },
+							<?php
+						}
+						?>
+						{ color: '#999', yaxis: { from: <?=$this->statribu_avg?>, to: <?=$this->statribu_avg?> } }
+					];								
+					var plot = $.plot($("#statribu"), [{data: d5}], {
+							lines: { show: true, fill: true },
+							yaxis: { show: true, tickFormatter: function (v) { return v + " IBU"; }, reserveSpace: true, labelWidth: 50 },
+							xaxis: { 
+								show: false
+							},
+							grid: { borderWidth: 1, borderColor: '#ccc', markings: markings, hoverable: true }
+						}
+					);
+					$("#statribu").bind("plothover", function (event, pos, item) {
+						if (item) {
+							if (previousPoint != item.dataIndex) {
+								previousPoint = item.dataIndex;
+								$("#tooltip").remove();
+								var y = item.datapoint[1];
+								showTooltip(item.pageX, item.pageY, y + " IBU");
+							}
+						} else {
+							$("#tooltip").remove();
+							previousPoint = null;            
+						}
+					});
+					var o;
+					o = plot.pointOffset({ x: 1, y: <?=$this->statribu_avg?>});
+					$("#statribu").append('<div style="position:absolute;left: 70px;top:' + o.top + 'px;color:#000;">Vidurkis: <?=round($this->statribu_avg);?> IBU</div>');
+				});
+			</script>
+			<?php
+		}
+		if (isset($this->statsibu) && !empty($this->statsibu)) {
+			?>
+			<div class="inner_header">Aludario virimų IBU</div>
+			<div id="statsibu" style="height: 200px; width: 830px;" class="user_stat_graph"></div>
+			<script type="text/javascript">
+				$(function () {
+					var d6 = [];
+					<?php
+					foreach($this->statsibu as $key=>$val){
+						?>
+						d6.push([<?=$key?>, <?=$val['recipe_ibu']?>]);
+						<?php
+					}
+					?>
+					var markings = [
+						<?php
+						if ($this->ibust['strong'] !== false){
+							?>
+							{ color: '#d5d5d5', xaxis: { from: <?=$this->ibust['strong'];?> } },
+							<?php
+						}
+						if ($this->ibust['medium'] !== false){
+							?>
+							{ color: '#e5e5e5', xaxis: { from: <?=$this->ibust['medium'];?> } },
+							<?php
+						}
+						if ($this->ibust['light'] !== false){
+							?>
+							{ color: '#f5f5f5', xaxis: { from: <?=$this->ibust['light'];?> } },
+							<?php
+						}
+						?>
+						{ color: '#999', yaxis: { from: <?=$this->statsibu_avg?>, to: <?=$this->statsibu_avg?> } }					];								
+					var plot = $.plot($("#statsibu"), [{data: d6}], {
+							lines: { show: true, fill: true },
+							yaxis: { show: true, tickFormatter: function (v) { return v + " IBU"; }, reserveSpace: true, labelWidth: 50 },
+							xaxis: { 
+								show: false
+							},
+							grid: { borderWidth: 1, borderColor: '#ccc', markings: markings, hoverable: true }
+						}
+					);
+					$("#statsibu").bind("plothover", function (event, pos, item) {
+						if (item) {
+							if (previousPoint != item.dataIndex) {
+								previousPoint = item.dataIndex;
+								$("#tooltip").remove();
+								var y = item.datapoint[1];
+								showTooltip(item.pageX, item.pageY, y + " IBU");
+							}
+						} else {
+							$("#tooltip").remove();
+							previousPoint = null;            
+						}
+					});
+					var o;
+					o = plot.pointOffset({ x: 1, y: <?=$this->statsibu_avg?>});
+					$("#statsibu").append('<div style="position:absolute;left: 70px;top:' + o.top + 'px;color:#000;">Vidurkis: <?=round($this->statsibu_avg);?> IBU</div>');
+				});
+			</script>
+			<?php
+		}
+		if (isset($this->statrebc) && !empty($this->statrebc)) {
+			?>
+			<div class="inner_header">Aludario receptų EBC</div>
+			<div id="statrebc" style="height: 200px; width: 830px;" class="user_stat_graph"></div>
+			<script type="text/javascript">
+				$(function () {
+					var d5 = [];
+					<?php
+					foreach($this->statrebc as $key=>$val){
+						?>
+						d5.push([<?=$key?>, <?=$val['recipe_ebc']?>]);
+						<?php
+					}
+					?>
+					var markings = [
+						<?php
+						if ($this->ebcrt['strong'] !== false){
+							?>
+							{ color: '#d5d5d5', xaxis: { from: <?=$this->ebcrt['strong'];?> } },
+							<?php
+						}
+						if ($this->ebcrt['medium'] !== false){
+							?>
+							{ color: '#e5e5e5', xaxis: { from: <?=$this->ebcrt['medium'];?> } },
+							<?php
+						}
+						if ($this->ebcrt['light'] !== false){
+							?>
+							{ color: '#f5f5f5', xaxis: { from: <?=$this->ebcrt['light'];?> } },
+							<?php
+						}
+						?>
+						{ color: '#999', yaxis: { from: <?=$this->statrebc_avg?>, to: <?=$this->statrebc_avg?> } }
+					];								
+					var plot = $.plot($("#statrebc"), [{data: d5}], {
+							lines: { show: true, fill: true },
+							yaxis: { show: true, tickFormatter: function (v) { return v + " EBC"; }, reserveSpace: true, labelWidth: 50 },
+							xaxis: { 
+								show: false
+							},
+							grid: { borderWidth: 1, borderColor: '#ccc', markings: markings, hoverable: true }
+						}
+					);
+					$("#statrebc").bind("plothover", function (event, pos, item) {
+						if (item) {
+							if (previousPoint != item.dataIndex) {
+								previousPoint = item.dataIndex;
+								$("#tooltip").remove();
+								var y = item.datapoint[1];
+								showTooltip(item.pageX, item.pageY, y + " EBC");
+							}
+						} else {
+							$("#tooltip").remove();
+							previousPoint = null;            
+						}
+					});
+					var o;
+					o = plot.pointOffset({ x: 1, y: <?=$this->statrebc_avg?>});
+					$("#statrebc").append('<div style="position:absolute;left: 70px;top:' + o.top + 'px;color:#000;">Vidurkis: <?=round($this->statrebc_avg);?> EBC</div>');
+				});
+			</script>
+			<?php
+		}
+		if (isset($this->statsebc) && !empty($this->statsebc)) {
+			?>
+			<div class="inner_header">Aludario virimų EBC</div>
+			<div id="statsebc" style="height: 200px; width: 830px;" class="user_stat_graph"></div>
+			<script type="text/javascript">
+				$(function () {
+					var d6 = [];
+					<?php
+					foreach($this->statsebc as $key=>$val){
+						?>
+						d6.push([<?=$key?>, <?=$val['recipe_ebc']?>]);
+						<?php
+					}
+					?>
+					var markings = [
+						<?php
+						if ($this->ebcst['strong'] !== false){
+							?>
+							{ color: '#d5d5d5', xaxis: { from: <?=$this->ebcst['strong'];?> } },
+							<?php
+						}
+						if ($this->ebcst['medium'] !== false){
+							?>
+							{ color: '#e5e5e5', xaxis: { from: <?=$this->ebcst['medium'];?> } },
+							<?php
+						}
+						if ($this->ebcst['light'] !== false){
+							?>
+							{ color: '#f5f5f5', xaxis: { from: <?=$this->ebcst['light'];?> } },
+							<?php
+						}
+						?>
+						{ color: '#999', yaxis: { from: <?=$this->statsebc_avg?>, to: <?=$this->statsebc_avg?> } }
+					];								
+					var plot = $.plot($("#statsebc"), [{data: d6}], {
+							lines: { show: true, fill: true },
+							yaxis: { show: true, tickFormatter: function (v) { return v + " EBC"; }, reserveSpace: true, labelWidth: 50 },
+							xaxis: { 
+								show: false
+							},
+							grid: { borderWidth: 1, borderColor: '#ccc', markings: markings, hoverable: true }
+						}
+					);
+					$("#statsebc").bind("plothover", function (event, pos, item) {
+						if (item) {
+							if (previousPoint != item.dataIndex) {
+								previousPoint = item.dataIndex;
+								$("#tooltip").remove();
+								var y = item.datapoint[1];
+								showTooltip(item.pageX, item.pageY, y + " EBC");
+							}
+						} else {
+							$("#tooltip").remove();
+							previousPoint = null;            
+						}
+					});
+					var o;
+					o = plot.pointOffset({ x: 1, y: <?=$this->statsebc_avg?>});
+					$("#statsebc").append('<div style="position:absolute;left: 70px;top:' + o.top + 'px;color:#000;">Vidurkis: <?=round($this->statsebc_avg);?> EBC</div>');
+				});
+			</script>
+			<?php
+		}
+		?>
+	</div>
 	<?php
 	if (sizeof($this->awards) > 0 || sizeof($this->nominations) > 0) {
 		?>
 		<div id="tabs-awards" class="inner_container">
 			<?php
-			if (sizeof($this->awards) > 0){
+			if (sizeof($this->awards) > 0) {
 				?>
 				<div class="inner_header">Receptų apdovanojimai</div>
 				<div class="aw_table">
 					<?php
-					foreach($this->awards as $key=>$val){
+					foreach ($this->awards as $key => $val) {
 						?>
 						<div class="aw_row">
-							<div class="aw_col aw_icon"><img src="/public/images/<?=$val['icon']?>-32.gif"/></div>
-							<div class="aw_col aw_recipe"><a href="/alus/receptas/<?=$val['recipe_id']?>-<?=$this->urlMaker($val['recipe_name'])?>"><?=$val['recipe_name']?></a></div>
-							<div class="aw_col aw_place"><?=$val['place']?> <?=($val['place'] == "I" || $val['place'] == "II" || $val['place'] == "III") ? "vieta" : ""; ?> <?=(!empty($val['category']) ? "kategorijoje \"".$val['category']."\"" : "")?> <?=($val['points']!=0) ? " (".$val['points']." tšk.)" : "";?></div>
-							<div class="aw_col aw_event"><?=$val['event_name']?></div>
+							<div class="aw_col aw_icon"><img src="/public/images/<?= $val['icon'] ?>-32.gif"/></div>
+							<div class="aw_col aw_recipe"><a href="/alus/receptas/<?= $val['recipe_id'] ?>-<?= $this->urlMaker($val['recipe_name']) ?>"><?= $val['recipe_name'] ?></a></div>
+							<div class="aw_col aw_place"><?= $val['place'] ?> <?= ($val['place'] == "I" || $val['place'] == "II" || $val['place'] == "III") ? "vieta" : ""; ?> <?= (!empty($val['category']) ? "kategorijoje \"" . $val['category'] . "\"" : "") ?> <?= ($val['points'] != 0) ? " (" . $val['points'] . " tšk.)" : ""; ?></div>
+							<div class="aw_col aw_event"><?= $val['event_name'] ?></div>
 						</div>
 						<?php
 					}
@@ -206,17 +710,17 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.stack.js");
 				</div>
 				<?php
 			}
-			if (sizeof($this->nominations) > 0){
+			if (sizeof($this->nominations) > 0) {
 				?>
 				<div class="inner_header">Kiti apdovanojimai</div>
 				<div class="aw_table">
 					<?php
-					foreach($this->nominations as $key=>$val){
+					foreach ($this->nominations as $key => $val) {
 						?>
 						<div class="aw_row">
 							<div class="aw_col aw_icon"><img src="/public/images/common-32.gif"/></div>
-							<div class="aw_col aw_nomination"><?=$val['nomination_title']?></div>
-							<div class="aw_col aw_description"><?=$val['nomination_description']?></div>
+							<div class="aw_col aw_nomination"><?= $val['nomination_title'] ?></div>
+							<div class="aw_col aw_description"><?= $val['nomination_description'] ?></div>
 						</div>
 						<?php
 					}
