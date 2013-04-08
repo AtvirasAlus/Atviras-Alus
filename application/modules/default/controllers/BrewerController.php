@@ -494,6 +494,11 @@ class BrewerController extends Zend_Controller_Action {
 	}
 
 	public function recipesAction() {
+		$par = array();
+		$par['brewer'] = $this->_getParam("brewer");
+		$par['page'] = $this->_getParam("page");
+		$par['sort'] = $this->_getParam("sort");
+		$this->view->param = $par;
 		$this->view->show_list = $this->show_list;
 		$storage = new Zend_Auth_Storage_Session();
 		$u = $storage->read();
@@ -539,7 +544,18 @@ class BrewerController extends Zend_Controller_Action {
 			}
 			$select->where("beer_recipes.brewer_id= ?", $brewer["user_id"]);
 			$select->where("beer_recipes.recipe_archived = ?", 0);
-			$select->order("beer_recipes.recipe_created DESC");
+			switch($this->_getParam("sort")){
+				case "1":
+					$select->order("beer_recipes.recipe_name ASC");
+				break;
+				case "2":
+					$select->order(array("beer_styles.style_name ASC", "beer_recipes.recipe_created DESC"));
+				break;
+				case "0":
+				default:
+					$select->order("beer_recipes.recipe_created DESC");
+				break;
+			}
 
 			if ($this->show_list === true && $this->_getParam('brewer') == 0) {
 				$this->view->content = $db->fetchAll($select);
@@ -554,6 +570,11 @@ class BrewerController extends Zend_Controller_Action {
 		}
 	}
 	public function archiveAction() {
+		$par = array();
+		$par['brewer'] = $this->_getParam("brewer");
+		$par['page'] = $this->_getParam("page");
+		$par['sort'] = $this->_getParam("sort");
+		$this->view->param = $par;
 		$this->view->show_list = $this->show_list;
 		$storage = new Zend_Auth_Storage_Session();
 		$u = $storage->read();
@@ -583,7 +604,18 @@ class BrewerController extends Zend_Controller_Action {
 					->joinLeft("beer_styles", "beer_recipes.recipe_style = beer_styles.style_id", array("style_name"));
 			$select->where("beer_recipes.brewer_id= ?", $brewer["user_id"]);
 			$select->where("beer_recipes.recipe_archived = ?", 1);
-			$select->order("beer_recipes.recipe_created DESC");
+			switch($this->_getParam("sort")){
+				case "1":
+					$select->order("beer_recipes.recipe_name ASC");
+				break;
+				case "2":
+					$select->order(array("beer_styles.style_name ASC", "beer_recipes.recipe_created DESC"));
+				break;
+				case "0":
+				default:
+					$select->order("beer_recipes.recipe_created DESC");
+				break;
+			}
 
 			if ($this->show_list === true && $this->_getParam('brewer') == 0) {
 				$this->view->content = $db->fetchAll($select);

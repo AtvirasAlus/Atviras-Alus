@@ -1,6 +1,14 @@
 <?php
 $this->headTitle()->headTitle("Mano receptai");
 ?>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#recipe_list_selector").change(function(){
+			var sort = $(this).val();
+			window.location.href = "/brewer/archive/<?=$this->param['brewer']?>/<?=$this->param['page']?>/"+sort;
+		});
+	});
+</script>
 <div id="style_recipes_container" class="inner_container">
 	<div class="inner_header">Mano receptai</div>
 	<div style="margin: 0px 0px 20px 8px;">
@@ -8,6 +16,11 @@ $this->headTitle()->headTitle("Mano receptai");
 		<input type="button" onclick="window.location.href='/brew-session/brewer'" value="Mano virimai" class="ui-button" />
 		<input type="button" onclick="window.location.href='/brewer/recipes'" value="Mano receptai" class="ui-button" />
 		<div style="float: right;">
+			<select id="recipe_list_selector">
+				<option value="0" <?=($this->param['sort'] == 0) ? "selected='selected'" : ""?>>Pagal sukūrimo datą</option>
+				<option value="1" <?=($this->param['sort'] == 1) ? "selected='selected'" : ""?>>Pagal pavadinimą</option>
+				<option value="2" <?=($this->param['sort'] == 2) ? "selected='selected'" : ""?>>Pagal kategoriją</option>
+			</select>
 			<a href="/brewer/show_blocks/1" alt="Blokai" title="Blokai" class="ui-button">
 				<span class="display_blocks"></span>
 			</a>

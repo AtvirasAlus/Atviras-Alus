@@ -63,7 +63,6 @@ function _initAutoLoad() {
 		
 		$router->addRoute("orders",new Zend_Controller_Router_Route("/order/:shop/:recipe",array("module"=>"default","controller" => "order", "action" => "recipe", "shop" => "savasalus", "recipe" => 0)));
 		
-		$router->addRoute("recipes",new Zend_Controller_Router_Route("brewer/recipes/:page",array("module"=>"default","controller" => "brewer","action" => "recipes","page"=>0)));
 		$router->addRoute("recipes_favorites",new Zend_Controller_Router_Route("recipes/favorites/:page",array("module"=>"default","controller" => "recipes","action" => "favorites","page"=>0)));
 		$router->addRoute("recipes_view_0",new Zend_Controller_Router_Route("recipes/view/:recipe",array("module"=>"default","controller" => "recipes","action" => "view","recipe"=>0)));
 		$router->addRoute("recipes_view",new Zend_Controller_Router_Route("alus/receptas/:recipe",array("module"=>"default","controller" => "recipes","action" => "view","recipe"=>0)));
@@ -127,7 +126,8 @@ function _initAutoLoad() {
 		$router->addRoute("brewer",new Zend_Controller_Router_Route("/brewers/:brewer",array("module"=>"default","controller" => "brewer","action" => "info","brewer"=>0)));
 		$router->addRoute("brewer_filter",new Zend_Controller_Router_Route("/brewers/:brewer/filter/:type",array("module"=>"default","controller" => "brewer","action" => "info","brewer"=>0, "type"=>'all')));
 		$router->addRoute("brewer_more",new Zend_Controller_Router_Route("/brewers/:brewer/more/last/:last/type/:type",array("module"=>"default","controller" => "brewer","action" => "more","brewer"=>0, "type"=>'all', "last"=>0)));
-		$router->addRoute("brewer_recipes",new Zend_Controller_Router_Route("/brewer/recipes/:brewer/:page",array("module"=>"default","controller" => "brewer","action" => "recipes","brewer"=>0,"page"=>0)));
+		$router->addRoute("brewer_recipes",new Zend_Controller_Router_Route("/brewer/recipes/:brewer/:page/:sort",array("module"=>"default","controller" => "brewer","action" => "recipes","brewer"=>0,"page"=>0, "sort" => 0)));
+		$router->addRoute("brewer_archive",new Zend_Controller_Router_Route("/brewer/archive/:brewer/:page/:sort",array("module"=>"default","controller" => "brewer","action" => "archive","brewer"=>0,"page"=>0, "sort" => 0)));
 		$router->addRoute("brewer_sessions",new Zend_Controller_Router_Route("/brewer/sessions/:brewer",array("module"=>"default","controller" => "brewer","action" => "sessions","brewer"=>0)));
 		$router->addRoute("brewer_list",new Zend_Controller_Router_Route("/brewer/list/:brewer_search/:page",array("module"=>"default","controller" => "brewer","action" => "list", "brewer_search" => "","page"=>0)));
 		

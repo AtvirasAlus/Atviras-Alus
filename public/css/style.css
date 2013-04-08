@@ -3523,3 +3523,14 @@ html ul.topnav li ul.subnav li a:hover {
 	margin-left: 0px;
 	cursor: pointer;
 }
+
+#recipe_list_selector {
+	height: 32px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 2px;
+	background-color: #fff;
+	vertical-align: top;
+}
