@@ -179,6 +179,11 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 <div id="tabs">
 	<ul>
 		<?php
+		if (isset($this->position) && !empty($this->position)) {
+			?>
+			<li><a href="#tabs-stats">Statistika</a></li>
+			<?php
+		}
 		if (sizeof($this->user_info['recipes']) > 0) {
 			?>
 			<li><a href="#tabs-recipes">Alaus receptai (<?= $this->user_info['total_recipes']; ?>)</a></li>
@@ -197,11 +202,6 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 		if (sizeof($this->user_info['tags']) > 0) {
 			?>
 			<li><a href="#tabs-tags">Žymos (<?= sizeof($this->user_info['tags']); ?>)</a></li>
-			<?php
-		}
-		if (isset($this->position) && !empty($this->position)) {
-			?>
-			<li><a href="#tabs-stats">Statistika</a></li>
 			<?php
 		}
 		?>
@@ -680,6 +680,204 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 					var o;
 					o = plot.pointOffset({ x: 1, y: <?=$this->statsebc_avg?>});
 					$("#statsebc").append('<div style="position:absolute;left: 70px;top:' + o.top + 'px;color:#000;">Vidurkis: <?=round($this->statsebc_avg);?> EBC</div>');
+				});
+			</script>
+			<?php
+		}
+		if (isset($this->statstyles) && !empty($this->statstyles)) {
+			?>
+			<div class="inner_header">Aludario receptų stilius</div>
+			<div>
+				<div style="width: 500px; float: left;">
+					<div id="statstyles" style="height: 500px; width: 500px;" class="user_stat_graph"></div>
+					<div style="text-align: center; font-size: 14px; margin-bottom: 20px;" id="statstyles_desc">&nbsp;</div>
+				</div>
+				<div id="statstyles_legend" style="float: right;"></div>
+				<div class="clear"></div>
+			</div>
+			<script type="text/javascript">
+				$(function () {
+					var d7 = [
+					<?php
+					foreach($this->statstyles as $key=>$val){
+						?>
+						{ label: "<?=$val['style_name']?>", data: <?=$val['kiekis']?>},
+						<?php
+					}
+					?>
+					];
+					$.plot($("#statstyles"), d7, 
+						{
+							series: {
+								pie: { 
+									show: true,
+									radius: 1,
+									innerRadius: 0.4,
+									label: {
+										show: true,
+										radius: 3/4,
+										backgroundColor: "#000000",
+										formatter: function(label, series){
+											if (label.length > 15){
+												label = label.substr(0, 15) + "...";
+											}
+											return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">'+label+'<br/>'+series.percent.toFixed(2)+'%</div>';
+										},
+										threshold: 0.05,
+										background: { 
+											opacity: 0.5,
+											color: '#000'
+										}
+									}
+								}
+							}, 
+							grid: {
+								hoverable: true
+							},
+							legend: {
+								container: "#statstyles_legend"
+							}
+						});
+						$("#statstyles").bind("plothover", pieHover);
+						function pieHover(event, pos, obj) {
+							if (!obj) return;
+							percent = parseFloat(obj.series.percent).toFixed(2);
+							dta = obj.series.data.toString();
+							dta = dta.substr(2);
+							$("#statstyles_desc").html('<span>'+obj.series.label+' ('+percent+'%, '+dta+' vnt.)</span>');
+						}
+				});
+			</script>
+			<?php
+		}
+		if (isset($this->statsstyles) && !empty($this->statsstyles)) {
+			?>
+			<div class="inner_header">Aludario virimų stilius (virimų kiekis)</div>
+			<div>
+				<div style="width: 500px; float: left;">
+					<div id="statsstyles" style="height: 500px; width: 500px;" class="user_stat_graph"></div>
+					<div style="text-align: center; font-size: 14px; margin-bottom: 20px;" id="statsstyles_desc">&nbsp;</div>
+				</div>
+				<div id="statsstyles_legend" style="float: right;"></div>
+				<div class="clear"></div>
+			</div>
+			<script type="text/javascript">
+				$(function () {
+					var d7 = [
+					<?php
+					foreach($this->statsstyles as $key=>$val){
+						?>
+						{ label: "<?=$val['style_name']?>", data: <?=$val['kiekis']?>},
+						<?php
+					}
+					?>
+					];
+					$.plot($("#statsstyles"), d7, 
+						{
+							series: {
+								pie: { 
+									show: true,
+									radius: 1,
+									innerRadius: 0.4,
+									label: {
+										show: true,
+										radius: 3/4,
+										backgroundColor: "#000000",
+										formatter: function(label, series){
+											if (label.length > 15){
+												label = label.substr(0, 15) + "...";
+											}
+											return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">'+label+'<br/>'+series.percent.toFixed(2)+'%</div>';
+										},
+										threshold: 0.05,
+										background: { 
+											opacity: 0.5,
+											color: '#000'
+										}
+									}
+								}
+							}, 
+							grid: {
+								hoverable: true
+							},
+							legend: {
+								container: "#statsstyles_legend"
+							}
+						});
+						$("#statsstyles").bind("plothover", pieHover2);
+						function pieHover2(event, pos, obj) {
+							if (!obj) return;
+							percent = parseFloat(obj.series.percent).toFixed(2);
+							dta = obj.series.data.toString();
+							dta = dta.substr(2);
+							$("#statsstyles_desc").html('<span>'+obj.series.label+' ('+percent+'%, '+dta+' vnt.)</span>');
+						}
+				});
+			</script>
+			<?php
+		}
+		if (isset($this->statcstyles) && !empty($this->statcstyles)) {
+			?>
+			<div class="inner_header">Aludario virimų stilius (virimų dydis)</div>
+			<div>
+				<div style="width: 500px; float: left;">
+					<div id="statcstyles" style="height: 500px; width: 500px;" class="user_stat_graph"></div>
+					<div style="text-align: center; font-size: 14px; margin-bottom: 20px;" id="statcstyles_desc">&nbsp;</div>
+				</div>
+				<div id="statcstyles_legend" style="float: right;"></div>
+				<div class="clear"></div>
+			</div>
+			<script type="text/javascript">
+				$(function () {
+					var d7 = [
+					<?php
+					foreach($this->statcstyles as $key=>$val){
+						?>
+						{ label: "<?=$val['style_name']?>", data: <?=$val['kiekis']?>},
+						<?php
+					}
+					?>
+					];
+					$.plot($("#statcstyles"), d7, 
+						{
+							series: {
+								pie: { 
+									show: true,
+									radius: 1,
+									innerRadius: 0.4,
+									label: {
+										show: true,
+										radius: 3/4,
+										backgroundColor: "#000000",
+										formatter: function(label, series){
+											if (label.length > 15){
+												label = label.substr(0, 15) + "...";
+											}
+											return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">'+label+'<br/>'+series.percent.toFixed(2)+'%</div>';
+										},
+										threshold: 0.05,
+										background: { 
+											opacity: 0.5,
+											color: '#000'
+										}
+									}
+								}
+							}, 
+							grid: {
+								hoverable: true
+							},
+							legend: {
+								container: "#statcstyles_legend"
+							}
+						});
+						$("#statcstyles").bind("plothover", pieHover3);
+						function pieHover3(event, pos, obj) {
+							if (!obj) return;
+							percent = parseFloat(obj.series.percent).toFixed(2);
+							dta = obj.series.data.toString();
+							dta = dta.substr(2);
+							$("#statcstyles_desc").html('<span>'+obj.series.label+' ('+percent+'%, '+dta+' ltr.)</span>');
+						}
 				});
 			</script>
 			<?php

@@ -448,6 +448,35 @@ class BrewerController extends Zend_Controller_Action {
 					$result = $db->FetchRow($select);
 					$this->view->statsabv_avg = $result['average_abv'];
 				}
+				
+				$select = $db->select()
+						->from("beer_recipes", array("COUNT(recipe_style) AS kiekis"))
+						->join("beer_styles", "beer_recipes.recipe_style = beer_styles.style_id", array("style_name"))
+						->where("beer_recipes.brewer_id = ?", $brewer)
+						->group("recipe_style")
+						->order(array("kiekis DESC", "style_name ASC"));
+				$result = $db->FetchAll($select);
+				$this->view->statstyles = $result;
+
+				$select = $db->select()
+						->from("beer_brew_sessions", array())
+						->join("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe", array("COUNT(recipe_style) AS kiekis"))
+						->join("beer_styles", "beer_recipes.recipe_style = beer_styles.style_id", array("style_name"))
+						->where("beer_brew_sessions.session_brewer = ?", $brewer)
+						->group("recipe_style")
+						->order(array("kiekis DESC", "style_name ASC"));
+				$result = $db->FetchAll($select);
+				$this->view->statsstyles = $result;
+
+				$select = $db->select()
+						->from("beer_brew_sessions", array("SUM(session_size) AS kiekis"))
+						->join("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe", array())
+						->join("beer_styles", "beer_recipes.recipe_style = beer_styles.style_id", array("style_name"))
+						->where("beer_brew_sessions.session_brewer = ?", $brewer)
+						->group("recipe_style")
+						->order(array("kiekis DESC", "style_name ASC"));
+				$result = $db->FetchAll($select);
+				$this->view->statcstyles = $result;
 			}
 		}
 	}
