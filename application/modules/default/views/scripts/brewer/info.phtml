@@ -179,11 +179,6 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 <div id="tabs">
 	<ul>
 		<?php
-		if (isset($this->position) && !empty($this->position)) {
-			?>
-			<li><a href="#tabs-stats">Statistika</a></li>
-			<?php
-		}
 		if (sizeof($this->user_info['recipes']) > 0) {
 			?>
 			<li><a href="#tabs-recipes">Alaus receptai (<?= $this->user_info['total_recipes']; ?>)</a></li>
@@ -202,6 +197,11 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 		if (sizeof($this->user_info['tags']) > 0) {
 			?>
 			<li><a href="#tabs-tags">Žymos (<?= sizeof($this->user_info['tags']); ?>)</a></li>
+			<?php
+		}
+		if (isset($this->position) && !empty($this->position)) {
+			?>
+			<li><a href="#tabs-stats">Statistika</a></li>
 			<?php
 		}
 		?>
