@@ -42,6 +42,8 @@ class StatsController extends Zend_Controller_Action {
 						->from("users", array("count" => "count(users.user_id)"))
 						->joinLeft("users_attributes", "users_attributes.user_id=users.user_id", array("user_location"))
 						->where("users.user_active = ?", '1')
+						->where("users_attributes.user_location != ''")
+						->order(array("count DESC", "user_location ASC"))
 						->group("user_location");
 
 				$this->view->location_count = Zend_Json::encode($db->fetchAll($select));

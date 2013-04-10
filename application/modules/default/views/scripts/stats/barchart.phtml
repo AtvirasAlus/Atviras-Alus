@@ -24,9 +24,37 @@ $_options = array("recipes" => "Sukurtų receptų skaičius (mėnesiais)", "user
 			?>
 		</select>
 	</div> 
-	<div id="placeholder" style="width:800px;height:600px;"></div> 
-	<div id="hover" style="margin-left:50px;margin-top:10px;width:700px;"></div> 
+	<?php
+	if ($id == "locations"){
+		?>
+		<div style="margin-bottom: 20px;">
+			<div id="placeholder" style="width:700px;height:600px; float: left;"></div> 
+			<div id="locat_legend" style="width: 100px; float: left;"></div>
+			<div class="clear"></div>
+		</div>
+		<?php
+	} else {
+		?>
+		<div id="placeholder" style="width:800px;height:600px;"></div> 
+		<div id="hover" style="margin-left:50px;margin-top:10px;width:700px;"></div> 
+		<?php
+	}
+	?>
 </div> 
+<?php
+if ($id == "locations"){
+	?>
+	<style>
+		.xAxis .tickLabel {
+			-webkit-transform: rotate(-90deg); 
+			-moz-transform: rotate(-90deg);	
+			margin-top: 50px;
+			filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+		}
+	</style>
+	<?php
+}
+?>
 <script id="source"> 
 	var stack = 1, bars = true, lines = false, steps = false;
 	<?
@@ -47,8 +75,11 @@ $_options = array("recipes" => "Sukurtų receptų skaičius (mėnesiais)", "user
 
 
 				bars:{show: true, barWidth: 0.9, align: 'center'}, 
-				xaxis: { ticks: dn, autoscaleMargin: .10 }, 
-				grid: { hoverable: true, clickable: true }
+				xaxis: { ticks: dn, autoscaleMargin: .10, labelAngle: 90  }, 
+				grid: { hoverable: true, clickable: true },
+				legend: {
+					container: "#locat_legend"
+				}
 			}
 			<?
 		break;
