@@ -22,8 +22,10 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
             display: 'none',
             top: y-20,
             left: x + 5,
-            padding: '2px'
-        }).appendTo("body").fadeIn(200);
+            padding: '2px',
+            border: '1px solid #ccc',
+            'background-color': '#fff'
+        }).appendTo("body").fadeIn(0);
     }
 	function timeConverter(UNIX_timestamp){
 		var a = new Date(UNIX_timestamp);
@@ -690,7 +692,6 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 			<div>
 				<div style="width: 500px; float: left;">
 					<div id="statstyles" style="height: 500px; width: 500px;" class="user_stat_graph"></div>
-					<div style="text-align: center; font-size: 14px; margin-bottom: 20px;" id="statstyles_desc">&nbsp;</div>
 				</div>
 				<div id="statstyles_legend" style="float: right;"></div>
 				<div class="clear"></div>
@@ -727,11 +728,16 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 						});
 						$("#statstyles").bind("plothover", pieHover);
 						function pieHover(event, pos, obj) {
-							if (!obj) return;
-							percent = parseFloat(obj.series.percent).toFixed(2);
-							dta = obj.series.data.toString();
-							dta = dta.substr(2);
-							$("#statstyles_desc").html('<span>'+obj.series.label+' ('+percent+'%, '+dta+' vnt.)</span>');
+							if (obj) {
+								previousPoint = obj.dataIndex;
+								$("#tooltip").remove();
+								dta = obj.series.data.toString();
+								dta = dta.substr(2);
+								showTooltip(pos.pageX, pos.pageY, obj.series.label + " (" + obj.series.percent.toFixed(2) + "%, " + dta + " vnt.)");
+							} else {
+								$("#tooltip").remove();
+								previousPoint = null;            
+							}
 						}
 				});
 			</script>
@@ -743,7 +749,6 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 			<div>
 				<div style="width: 500px; float: left;">
 					<div id="statsstyles" style="height: 500px; width: 500px;" class="user_stat_graph"></div>
-					<div style="text-align: center; font-size: 14px; margin-bottom: 20px;" id="statsstyles_desc">&nbsp;</div>
 				</div>
 				<div id="statsstyles_legend" style="float: right;"></div>
 				<div class="clear"></div>
@@ -780,11 +785,16 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 						});
 						$("#statsstyles").bind("plothover", pieHover2);
 						function pieHover2(event, pos, obj) {
-							if (!obj) return;
-							percent = parseFloat(obj.series.percent).toFixed(2);
-							dta = obj.series.data.toString();
-							dta = dta.substr(2);
-							$("#statsstyles_desc").html('<span>'+obj.series.label+' ('+percent+'%, '+dta+' vnt.)</span>');
+							if (obj) {
+								previousPoint = obj.dataIndex;
+								$("#tooltip").remove();
+								dta = obj.series.data.toString();
+								dta = dta.substr(2);
+								showTooltip(pos.pageX, pos.pageY, obj.series.label + " (" + obj.series.percent.toFixed(2) + "%, " + dta + " vnt.)");
+							} else {
+								$("#tooltip").remove();
+								previousPoint = null;            
+							}
 						}
 				});
 			</script>
@@ -796,7 +806,6 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 			<div>
 				<div style="width: 500px; float: left;">
 					<div id="statcstyles" style="height: 500px; width: 500px;" class="user_stat_graph"></div>
-					<div style="text-align: center; font-size: 14px; margin-bottom: 20px;" id="statcstyles_desc">&nbsp;</div>
 				</div>
 				<div id="statcstyles_legend" style="float: right;"></div>
 				<div class="clear"></div>
@@ -833,11 +842,16 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 						});
 						$("#statcstyles").bind("plothover", pieHover3);
 						function pieHover3(event, pos, obj) {
-							if (!obj) return;
-							percent = parseFloat(obj.series.percent).toFixed(2);
-							dta = obj.series.data.toString();
-							dta = dta.substr(2);
-							$("#statcstyles_desc").html('<span>'+obj.series.label+' ('+percent+'%, '+dta+' ltr.)</span>');
+							if (obj) {
+								previousPoint = obj.dataIndex;
+								$("#tooltip").remove();
+								dta = obj.series.data.toString();
+								dta = dta.substr(2);
+								showTooltip(pos.pageX, pos.pageY, obj.series.label + " (" + obj.series.percent.toFixed(2) + "%, " + dta + " ltr.)");
+							} else {
+								$("#tooltip").remove();
+								previousPoint = null;            
+							}
 						}
 				});
 			</script>
