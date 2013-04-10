@@ -53,8 +53,8 @@ elseif (!is_bb_feed()) {add_filter('topic_title', 'best_answer_title',255);}
 add_action('bb_head','best_answer_head'); 
 if ($best_answer['add_views']) {	// doing it this way hides them from the default view list
 	$query=array('started' => '>0','append_meta'=>false,'sticky'=>false,'topic_status'=>'all','order_by'=>1,'per_page'=>1);
-	bb_register_view("best-answer","Topics with Best Answer",$query);
-	bb_register_view("no-best-answer","Topics without Best Answer",$query);
+	bb_register_view("best-answer","Temos su Geriausiu atsakymu",$query);
+	bb_register_view("no-best-answer","Temos be Geriausio atsakymo",$query);
 	add_action( 'bb_custom_view', 'best_answer_views' );
 }
 

@@ -103,9 +103,9 @@ a.prev.page-numbers, a.next.page-numbers, span.page-numbers.dots {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	padding: 4px 15px 4px 15px !important;
+	padding: 4px 10px 4px 10px !important;
 	color: #000;
-	margin-left: 10px;
+	margin-left: 5px;
 }
 .forum_subactions a:hover{
 	border-color: #000;

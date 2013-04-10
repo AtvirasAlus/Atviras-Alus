@@ -69,7 +69,7 @@ if (strpos($self, "subscribe-to-topic.php") === false) : //  _ck_'s patent-pendi
 			function stt_view_09() {
 				if (bb_is_user_logged_in()) {
 					$query = array('append_meta' => false, 'sticky' => false); // attempt to short-circuit bb_query	
-					bb_register_view("subscribed-topics", "Subscribed Topics", $query);
+					bb_register_view("subscribed-topics", "Prenumeruojamos temos", $query);
 				}
 			}
 
