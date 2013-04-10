@@ -26,6 +26,19 @@ class Form_Register extends Zend_Form {
 				->addFilter(new Zend_Filter_StripTags())
 				->setLabel('El. paštas:')
 				->setRequired(true);
+		$captcha = new Zend_Form_Element_Captcha(
+						'captcha',
+						array('label' => 'Saugos kodas:',
+							'captcha' => array(
+								'captcha' => 'Image',
+								'wordLen' => 6,
+								'timeout' => 3000,
+								'dotNoiseLevel' => 2,
+								'font' => './public/fonts/verdanab.ttf',
+								'imgDir' => './public/captcha/',
+								'imgUrl' => '/public/captcha/'
+						)));
+		$this->addElement($captcha);
 
 		$this->addElement('submit', 'register_action', array("label" => 'Registruotis', "class" => "ui-button"));
 		$this->getElement('register_action')
