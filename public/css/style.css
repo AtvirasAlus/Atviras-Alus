@@ -3537,3 +3537,9 @@ html ul.topnav li ul.subnav li a:hover {
 .user_stat_graph {
 	margin-bottom: 25px;
 }
+.vote_del_container {
+	text-align: right;
+}
+.vote_del_container a {
+	font-size: 11px;
+}

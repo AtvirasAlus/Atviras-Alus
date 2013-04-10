@@ -12,6 +12,12 @@ if (($this->data['recipe']['style_class'] == "beer" && $this->data['recipe']['re
 <link rel="stylesheet" href="/public/colorbox/colorbox.css" />
 <script>
 	$(function(){
+		$(".vote_del_link").click(function(){
+			if (confirm("Ar tikrai norite ištrinti vertinimą?")) { 
+				return true;
+			}
+			return false;
+		});
 		$("#show_vote_form").click(function(){
 			$("#show_vote_button").hide();
 			$(".recipe_vote_form_div").show("slide", {}, 500);
@@ -720,6 +726,13 @@ function i_bu($ibu,$og) {
 												</div>
 												<?
 											break;
+										}
+										if (isset($this->user_info->user_id) && $this->user_info->user_id == $item['user_id']){
+											?>
+											<div class="vote_del_container">
+												<a href="/recipes/delvote/vote/<?=$item['rate_id']?>" class="vote_del_link">Trinti</a>
+											</div>
+											<?php
 										}
 										?>
 									</div>

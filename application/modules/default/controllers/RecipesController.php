@@ -28,6 +28,34 @@ class RecipesController extends Zend_Controller_Action {
 		$this->view->use_plato = $this->use_plato;
 		$this->view->uid = $this->uid;
 	}
+	public function delvoteAction(){
+		$this->_helper->layout->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		if ($this->uid == 0) {
+			$this->_redirect("/");
+			exit;
+		}
+		$rate_id = $this->_getParam("vote");
+		if (empty($rate_id)) {
+			$this->_redirect("/");
+			exit;
+		}
+		$db = Zend_Registry::get('db');
+		$select = $db->select()
+				->from("beer_votes")
+				->where("rate_id = ?", $rate_id);
+		$result = $db->fetchRow($select);
+		if ($result == false){
+			$this->_redirect("/");
+			exit;
+		}
+		if ($result['user_id'] != $this->uid){
+			$this->_redirect("/");
+			exit;
+		}
+		$delete = $db->delete("beer_votes", "rate_id = '".$rate_id."'");
+		$this->_redirect("/alus/receptas/".$result['recipe_id']);
+	}
 	public function specialAction(){
 		$db = Zend_Registry::get('db');
 		$select = $db->select()
