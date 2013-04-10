@@ -714,20 +714,7 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 									radius: 1,
 									innerRadius: 0.4,
 									label: {
-										show: true,
-										radius: 3/4,
-										backgroundColor: "#000000",
-										formatter: function(label, series){
-											if (label.length > 15){
-												label = label.substr(0, 15) + "...";
-											}
-											return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">'+label+'<br/>'+series.percent.toFixed(2)+'%</div>';
-										},
-										threshold: 0.05,
-										background: { 
-											opacity: 0.5,
-											color: '#000'
-										}
+										show: false
 									}
 								}
 							}, 
@@ -780,20 +767,7 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 									radius: 1,
 									innerRadius: 0.4,
 									label: {
-										show: true,
-										radius: 3/4,
-										backgroundColor: "#000000",
-										formatter: function(label, series){
-											if (label.length > 15){
-												label = label.substr(0, 15) + "...";
-											}
-											return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">'+label+'<br/>'+series.percent.toFixed(2)+'%</div>';
-										},
-										threshold: 0.05,
-										background: { 
-											opacity: 0.5,
-											color: '#000'
-										}
+										show: false
 									}
 								}
 							}, 
@@ -846,20 +820,7 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 									radius: 1,
 									innerRadius: 0.4,
 									label: {
-										show: true,
-										radius: 3/4,
-										backgroundColor: "#000000",
-										formatter: function(label, series){
-											if (label.length > 15){
-												label = label.substr(0, 15) + "...";
-											}
-											return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">'+label+'<br/>'+series.percent.toFixed(2)+'%</div>';
-										},
-										threshold: 0.05,
-										background: { 
-											opacity: 0.5,
-											color: '#000'
-										}
+										show: false
 									}
 								}
 							}, 
