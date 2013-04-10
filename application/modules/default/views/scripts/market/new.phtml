@@ -93,7 +93,7 @@ $this->headScript()->appendFile("/public/js/ui.datepicker-lt.js");
 			<dl>
 				<dt>Miestas:</dt>
 				<dd>
-					<input type="text" name="market_city" value="<?= $this->city ?>" />
+					<input type="text" name="market_city" value="<?= htmlentities($this->city, ENT_COMPAT, "UTF-8") ?>" />
 				</dd>
 				<div class="clear"></div>
 			</dl>

@@ -115,10 +115,8 @@ class MarketController extends Zend_Controller_Action {
 			$data['market_posted'] = date("Y-m-d H:i:s");
 			$data['market_title'] = trim($this->_getParam("market_title"));
 			$data['market_title'] = strip_tags($data['market_title']);
-			$data['market_title'] = htmlentities($data['market_title']);
 			$data['market_text'] = trim($this->_getParam("market_text"));
 			$data['market_text'] = strip_tags($data['market_text'], "<a><b><i>");
-			$data['market_text'] = htmlentities($data['market_text']);
 			$data['market_category'] = $this->_getParam("market_category");
 			$data['market_action'] = $this->_getParam("market_action");
 			$data['market_till'] = $this->_getParam("market_till");
@@ -142,10 +140,8 @@ class MarketController extends Zend_Controller_Action {
 			$data = array();
 			$data['market_title'] = trim($this->_getParam("market_title"));
 			$data['market_title'] = strip_tags($data['market_title']);
-			$data['market_title'] = htmlentities($data['market_title']);
 			$data['market_text'] = trim($this->_getParam("market_text"));
 			$data['market_text'] = strip_tags($data['market_text'], "<a><b><i>");
-			$data['market_text'] = htmlentities($data['market_text']);
 			$data['market_category'] = $this->_getParam("market_category");
 			$data['market_action'] = $this->_getParam("market_action");
 			$data['market_till'] = $this->_getParam("market_till");
