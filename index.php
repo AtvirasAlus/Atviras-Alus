@@ -1,5 +1,4 @@
 <?
-$appStartTime = microtime();
 defined('ROOT_DIR')
     || define('ROOT_DIR',
               realpath('.'));
