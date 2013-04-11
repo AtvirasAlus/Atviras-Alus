@@ -185,3 +185,8 @@
 		</script>
 	</body>
 </html>
+<?php
+global $appStartTime;
+@list( $startMilli, $startSeconds, $endMilli, $endSeconds) = explode(' ',$appStartTime . ' ' . microtime());
+$generateTime = ($endSeconds+$endMilli)-($startSeconds+$startMilli);
+printf( '<!-- %.3f -->', $generateTime);
