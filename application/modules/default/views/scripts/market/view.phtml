@@ -106,7 +106,7 @@ $this->headTitle()->headTitle("Virtualus turgus");
 			</div>
 			<div class="market_text">
 				<?
-				$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p")));
+				$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p", "b", "i", "a")));
 				$f = new Entities_Filter_Excerpt();
 				$this->item['market_text'] = str_replace("\n", "<br />", $this->item['market_text']);
 				?>
