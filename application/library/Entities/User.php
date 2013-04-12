@@ -24,7 +24,7 @@ class Entities_User {
         ->from("users_attributes")
         ->where("user_id = ?", $this->user_id);
         if (!$row = $this->db->fetchRow($select)) {
-          $row = array("user_id" => $this->user_id, "user_location" => "", "user_about" => "","user_mail_comments"=>'0', "beta_tester"=>'0');
+          $row = array("user_id" => $this->user_id, "user_location" => "", "user_about" => "","user_mail_comments"=>'0', "beta_tester"=>'0', "plato"=>'0');
         }
         $row["user_about_plain"] = $row["user_about"];
         $row["user_about"] = preg_replace('/((?:[^"\'])(?:http|https|ftp):\/\/(?:[A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?[^\s\"\']+)/i', '<a href="$1" rel="nofollow" target="blank">$1</a>', nl2br($row["user_about"]));
