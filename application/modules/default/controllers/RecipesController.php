@@ -718,10 +718,11 @@ class RecipesController extends Zend_Controller_Action {
 	public function galleryAction() {
 		$db = Zend_Registry::get('db');
 		$select = $db->select()
-				->from("beer_images", array("*", "DATE_FORMAT(posted, '%Y-%m-%d') as postedf"))
-				->join("users", "users.user_id = beer_images.user_id", array("user_name"))
-				->join("beer_recipes", "beer_recipes.recipe_id=beer_images.recipe_id", array("recipe_name"))
-				->order("beer_images.posted DESC");
+				->from("beer_images AS b", array("b.*", "DATE_FORMAT(b.posted, '%Y-%m-%d') as postedf"))
+				->join($db->select()->from("beer_images AS a", "a.recipe_id, MAX(a.posted) AS max")->group("a.recipe_id"), "t.recipe_id = b.recipe_id")
+				->join("users", "users.user_id = b.user_id", array("user_name"))
+				->join("beer_recipes", "beer_recipes.recipe_id=b.recipe_id", array("recipe_name"))
+				->order(array("t.max DESC", "b.posted DESC"));
 		$adapter = new Zend_Paginator_Adapter_DbSelect($select);
 		$this->view->content = new Zend_Paginator($adapter);
 		$this->view->content->setCurrentPageNumber($this->_getParam('page'));

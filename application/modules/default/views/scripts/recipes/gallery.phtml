@@ -17,14 +17,27 @@ $this->headTitle()->headTitle("Atviro alaus galerija");
 	<div class="inner_header"><h1>Atviro alaus galerija</h1></div>
 	<div class="beer_images">
 		<?php
+		$last = false;
+		$first = true;
 		foreach ($this->content as $img) {
+			if ($last != $img['recipe_id']){
+				?>
+				<div class="clear"></div>
+				<h1 style="font-size: 18px; font-weight: bold; margin-bottom: 5px; display: block; <?=($first) ? "" : "margin-top: 20px;"?>">
+					<a href="/alus/receptas/<?=$img['recipe_id']?>-<?=$this->urlMaker($img['recipe_name'])?>"><?=$img['recipe_name']?></a>
+				</h1>
+				<div class="clear"></div>
+				<?php
+			}
 			?>
 			<div class="beer_image">
 				<div>
-					<a title="<?= htmlentities($img['recipe_name'])?>, <?=$img['user_name']?>, <?=$img['postedf']?>" rel="gallery" class="fancybox" href="/recipe_images/<?=$img['recipe_id']?>/<?=$img['file_name']?>.jpg"><img src="/recipe_images/<?=$img['recipe_id']?>/t_<?=$img['file_name']?>.jpg" alt="" /></a>
+					<a title="<?= htmlentities($img['recipe_name'], ENT_COMPAT, 'UTF-8')?>, <?=$img['user_name']?>, <?=$img['postedf']?>" rel="gallery" class="fancybox" href="/recipe_images/<?=$img['recipe_id']?>/<?=$img['file_name']?>.jpg"><img src="/recipe_images/<?=$img['recipe_id']?>/t_<?=$img['file_name']?>.jpg" alt="" /></a>
 				</div>
 			</div>
 			<?
+			$last = $img['recipe_id'];
+			$first = false;
 		}
 		?>
 		<div class="clear"></div>
