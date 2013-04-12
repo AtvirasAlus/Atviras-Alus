@@ -105,6 +105,7 @@ $this->headTitle()->headTitle("Virtualus turgus");
 				?>
 			</div>
 			<div class="market_text">
+				<div style="margin-bottom: 5px;"><b>Miestas:</b> <?=$this->item['market_city']?></div>
 				<?
 				$fhtml = new Zend_Filter_StripTags(array("allowTags" => array("br", "p", "b", "i", "a"), "allowAttribs" => array("href", "target")));
 				$f = new Entities_Filter_Excerpt();
