@@ -221,6 +221,13 @@ $user_info = isset($this->user_info->user_id) ? $this->user_info : 0;
 						<div class="idea_label_rejected">ATMESTA</div>
 						<?php
 					break;
+					case "0":
+						if ($idea['idea_in'] == 1){
+							?>
+							<div class="idea_label_in">PRADĖTA ĮGYVENDINTI</div>
+							<?php
+						}
+					break;
 				}
 				?>
 		</div>

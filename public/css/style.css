@@ -3191,6 +3191,21 @@ html ul.topnav li ul.subnav li a:hover {
 	border-radius: 5px;
 	font-size: 9px;
 }
+.idea_label_in {
+	display: block;
+	text-align: center;
+	background-color: orange;
+	color: white;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 4px;
+	margin-top: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 9px;
+}
 
 .eval_block {
 	float: right;

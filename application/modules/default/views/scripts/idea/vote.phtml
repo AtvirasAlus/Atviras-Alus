@@ -37,5 +37,12 @@ switch ($this->idea['idea_status']){
 		<div class="idea_label_rejected">ATMESTA</div>
 		<?php
 	break;
+	case "0":
+		if ($this->idea['idea_in'] == 1){
+			?>
+			<div class="idea_label_in">PRADĖTA ĮGYVENDINTI</div>
+			<?php
+		}
+	break;
 }
 ?>
