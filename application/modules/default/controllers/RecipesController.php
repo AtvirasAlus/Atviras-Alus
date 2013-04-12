@@ -483,10 +483,6 @@ class RecipesController extends Zend_Controller_Action {
 	}
 
 	public function viewAction() {
-		$show_added = $this->_getParam("added");
-		if ($show_added == "1"){
-			$this->view->show_added = true;
-		}
 		$storage = new Zend_Auth_Storage_Session();
 
 		$ruid = explode("-", $this->_getParam('recipe'));

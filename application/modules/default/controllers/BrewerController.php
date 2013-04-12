@@ -40,7 +40,7 @@ class BrewerController extends Zend_Controller_Action {
 				"user_id" => $u->user_id,
 				"recipe_id" => $rid
 			));
-			$this->_redirect("/alus/receptas/".$rid."?added=1");
+			$this->_redirect("/planuojami_virimai");
 		} else {
 			$this->_redirect("/alus/receptas/".$rid);
 		}
