@@ -12,9 +12,10 @@ $this->headTitle()->headTitle("Mano receptai");
 <div id="style_recipes_container" class="inner_container">
 	<div class="inner_header">Mano receptai</div>
 	<div style="margin: 0px 0px 20px 8px;">
-		<input type="button" onclick="window.location.href='/index/calculus'" value="Sukurti naują receptą" class="ui-button" />
+		<input type="button" onclick="window.location.href='/index/calculus'" value="Naujas receptas" class="ui-button" />
 		<input type="button" onclick="window.location.href='/brew-session/brewer'" value="Mano virimai" class="ui-button" />
 		<input type="button" onclick="window.location.href='/brewer/archive'" value="Receptų archyvas" class="ui-button" />
+		<input type="button" onclick="window.location.href='/planuojami_virimai'" value="Planuojami virimai" class="ui-button" />
 		<div style="float: right;">
 			<select id="recipe_list_selector">
 				<option value="0" <?=($this->param['sort'] == 0) ? "selected='selected'" : ""?>>Pagal sukūrimo datą</option>

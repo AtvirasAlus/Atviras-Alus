@@ -117,6 +117,7 @@ class BrewsessionController extends Zend_Controller_Action {
 		$select = $db->select()
 				->from("beer_recipes")
 				->where("recipe_id=?", $this->getRequest()->getParam("recipe"));
+		$this->view->plan = $this->_getParam("plan");
 		$this->view->recipe = $db->fetchRow($select);
 	}
 
@@ -242,6 +243,7 @@ class BrewsessionController extends Zend_Controller_Action {
 			}
 
 			$db->insert("beer_brew_sessions", $ins);
+			$db->delete("beer_session_plan", "user_id = '".$u->user_id."' AND plan_id='".$_POST['session_plan']."'");
 		}
 		$this->_helper->viewRenderer->setNoRender();
 		$this->_redirect($_POST['redirect']);

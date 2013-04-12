@@ -1,0 +1,116 @@
+<?php
+$this->headTitle()->headTitle("Virimų planas");
+$this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
+$this->headScript()->appendFile("/public/js/ui.datepicker-lt.js");
+?>
+<script type="text/javascript">
+	$(function() {
+		$(".plan_del_link").click(function(){
+			if (confirm("Ar tikrai norite pašalinti planuojamą virimą?")) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+		$(".datep").datepicker();
+		$(".plan_edit_link").click(function(){
+			iid = $(this).attr("data-item");
+			$("#plan"+iid+"title").hide();
+			$("#plan"+iid+"input").show();
+		});
+		$(".plan_cancel").click(function(){
+			iid = $(this).attr("data-item");
+			$("#plan"+iid+"input").hide();
+			$("#plan"+iid+"title").show();
+		});
+		$(".plan_confirm").click(function(){
+			var plan_id = $(this).attr("data-item");
+			var plan_date = $("#plan"+plan_id+"input input").val();
+			$.post("/brewer/updateplan", 
+				{
+					plan_id: plan_id, 
+					plan_date: plan_date
+				},
+				function(data) {
+					if (plan_date == ""){
+						$("#plan"+plan_id+"title").html("<i>nenumatyta</i>");
+					} else {
+						$("#plan"+plan_id+"title").html(plan_date);
+					}
+					$("#plan"+plan_id+"input").hide();
+					$("#plan"+plan_id+"title").show();
+				}
+			);
+		});
+	})
+</script>
+<div id="brewer_session_container" class="inner_container">
+	<div class="inner_header">Virimų planas</div>
+	<?php
+	if (sizeof($this->items) > 0){
+		?>
+		<div class="as-table">
+			<div class="as-row">
+				<div class="as-cell"><b>Receptas</b></div>
+				<div class="as-cell"><b>Autorius</b></div>
+				<div class="as-cell"><b>Stilius</b></div>
+				<div class="as-cell"><b>ABV</b></div>
+				<div class="as-cell"><b>IBU</b></div>
+				<div class="as-cell"><b>EBC</b></div>
+				<div class="as-cell"><b>Planuojamo virimo data</b></div>
+				<div class="as-cell"><b>&nbsp</b></div>
+			</div>
+			<?php
+			foreach($this->items as $item){
+				?>
+				<div class="as-row">
+					<div class="as-cell">
+						<a href="/alus/receptas/<?=$item['recipe_id']?>-<?=$this->urlMaker($item['recipe_name'])?>">
+							<?=$item['recipe_name']?>
+						</a>
+					</div>
+					<div class="as-cell">
+						<a href="/brewers/<?=$item['brewer_id']?>">
+							<?=$item['user_name']?>
+						</a>
+					</div>
+					<div class="as-cell">
+						<a href="/stilius/<?=$item['recipe_style']?>-<?=$this->urlMaker($item['style_name'])?>">
+							<?=$item['style_name']?>
+						</a>
+					</div>
+					<div class="as-cell"><?=  number_format($item['recipe_abv'], 1)?>%</div>
+					<div class="as-cell"><?=$item['recipe_ibu']?></div>
+					<div class="as-cell"><?=$item['recipe_ebc']?></div>
+					<div class="as-cell" style="width: 150px;">
+						<span id="plan<?=$item['plan_id']?>title"><?=($item['plan_date'] == null) ? "<i>nenumatyta</i>" : $item['plan_date'];?></span>
+						<span id="plan<?=$item['plan_id']?>input" style="display: none;">
+							<input type="text" class="datep plan_input" value="<?=($item['plan_date'] == null) ? "" : $item['plan_date'];?>" />
+							<a href="javascript:void(0)" class="ui-button plan_tool plan_confirm" data-item="<?=$item['plan_id']?>"><span class="ui-icon ui-icon-check">Patvirtinti</span></a>
+							<a href="javascript:void(0)" class="ui-button plan_tool plan_cancel" data-item="<?=$item['plan_id']?>"><span class="ui-icon ui-icon-closethick">Atšaukti</span></a>
+						</span>
+					</div>
+					<div class="as-cell recipe_edit_tools_list" style="width: 80px;">
+						<a href="javascript:void(0);" alt="Keisti virimo datą" title="Keisti virimo datą" data-item="<?=$item['plan_id']?>" class="plan_edit_link">
+							<span class="ui-icon ui-icon-wrench">Keisti virimo datą</span>
+						</a>
+						<a href="/brew-session/new/<?=$item['recipe_id']?>/<?=$item['plan_id']?>" alt="Registruoti virimą" title="Registruoti virimą">
+							<span class="ui-icon ui-icon-check">Registruoti virimą</span>
+						</a>
+						<a href="/brewer/delplan/plan_id/<?=$item['plan_id']?>" alt="Trinti" title="Trinti" class="plan_del_link">
+							<span class="ui-icon ui-icon-trash">Trinti</span>
+						</a>
+					</div>
+				</div>
+				<?php
+			}
+			?>
+		</div>
+		<?php
+	} else {
+		?>
+		<div>Planuojamų virimų sąrašas tuščias</div>
+		<?php
+	}
+	?>
+</div>

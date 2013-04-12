@@ -36,6 +36,7 @@ class Zend_View_Helper_BrewSession extends Zend_View_Helper_Abstract {
 						<input type="hidden" name="redirect" value="' . $session['redirect'] . '" />
 						<input type="hidden" name="session_recipe" value="' . $session['recipe_id'] . '" />
 						<input type="hidden" name="session_brewer" value="' . $session['user_id'] . '" />
+						<input type="hidden" name="session_plan" value="' . $session['plan'] . '" />
 						<input class="ui-button" type="submit" value="Pridėti" />
 					</dd>
 					<div class="clear"></div>

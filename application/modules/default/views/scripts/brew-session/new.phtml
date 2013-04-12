@@ -38,7 +38,7 @@ if ($this->use_plato === false){
 			<?
 		}
 		if($this->user_id) {
-			echo $this->brewSession()->editableRow(array('session_og'=>$this->recipe['recipe_sg'], 'session_primarydate'=>date("Y-m-d"), 'session_name'=> $this->recipe['recipe_name'], 'session_size'=>(float)$this->recipe['recipe_batch'], 'user_id'=>$this->user_id,'user_name'=>$this->user_name,'recipe_name'=>$this->recipe["recipe_name"],"recipe_id"=>$this->recipe["recipe_id"],"redirect"=>$this->backLink("/brew-session/brewer")), true, $this->use_plato);
+			echo $this->brewSession()->editableRow(array('session_og'=>$this->recipe['recipe_sg'], 'session_primarydate'=>date("Y-m-d"), 'session_name'=> $this->recipe['recipe_name'], 'session_size'=>(float)$this->recipe['recipe_batch'], 'user_id'=>$this->user_id,'user_name'=>$this->user_name,'recipe_name'=>$this->recipe["recipe_name"],"recipe_id"=>$this->recipe["recipe_id"],"redirect"=>$this->backLink("/brew-session/brewer"), "plan" => $this->plan), true, $this->use_plato);
 		} 
 		if(!$this->user_id) {
 			?>

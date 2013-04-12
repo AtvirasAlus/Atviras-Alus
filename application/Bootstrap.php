@@ -70,6 +70,7 @@ function _initAutoLoad() {
 
 		$router->addRoute("event_delete",new Zend_Controller_Router_Route("/events/delete/:event_id/:group_id", array("module"=>"default","controller" => "events","action" => "delete","event_id"=>0, "group_id"=>0)));
 	
+		$router->addRoute("session_plan",new Zend_Controller_Router_Route("/planuojami_virimai",array("module"=>"default","controller" => "brewer","action" => "plan")));
 		$router->addRoute("market",new Zend_Controller_Router_Route("/turgus/:page",array("module"=>"default","controller" => "market","action" => "index", "cat" => 0, "act" => 0, "page" => 0)));
 		$router->addRoute("market_filter",new Zend_Controller_Router_Route("/turgus/:page/:cat/:act",array("module"=>"default","controller" => "market","action" => "index", "cat" => 0, "act" => 0, "page" => 0)));
 		$router->addRoute("market_new",new Zend_Controller_Router_Route("/turgus/naujas",array("module"=>"default","controller" => "market","action" => "new")));
@@ -140,7 +141,7 @@ function _initAutoLoad() {
 		$router->addRoute("recipes_brew_session",new Zend_Controller_Router_Route("/brew-session/recipe/:recipe",array("module"=>"default","controller" => "brew-session","action" => "recipe","recipe"=>0)));
 		$router->addRoute("brewer_brew_session",new Zend_Controller_Router_Route("/brew-session/brewer/:brewer",array("module"=>"default","controller" => "brew-session","action" => "brewer","brewer"=>0)));
 		$router->addRoute("edit_brew_session",new Zend_Controller_Router_Route("/brew-session/edit/:session",array("module"=>"default","controller" => "brew-session","action" => "edit","session"=>0)));
-		$router->addRoute("new_brew_session",new Zend_Controller_Router_Route("/brew-session/new/:recipe",array("module"=>"default","controller" => "brew-session","action" => "new","recipe"=>0)));
+		$router->addRoute("new_brew_session",new Zend_Controller_Router_Route("/brew-session/new/:recipe/:plan",array("module"=>"default","controller" => "brew-session","action" => "new","recipe"=>0, "plan"=>0)));
 		$router->addRoute("history_brew_session",new Zend_Controller_Router_Route("/brew-session/history/:page",array("module"=>"default","controller" => "brew-session","action" => "history","page"=>0)));
 		$router->addRoute("detail_brew_session",new Zend_Controller_Router_Route("/brew-session/detail/:session",array("module"=>"default","controller" => "brew-session","action" => "detail","session"=>0)));
 		

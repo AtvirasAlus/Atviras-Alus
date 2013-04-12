@@ -2,7 +2,7 @@
 $this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
 $this->headScript()->appendFile("/public/js/ui.datepicker-lt.js");
 $this->headTitle()->headTitle($this->data['recipe']['recipe_name']);
-if (($this->data['recipe']['style_class'] == "beer" && $this->data['recipe']['recipe_abv'] > 9.5) || ($this->data['recipe']['style_class'] != "beer" && $this->data['recipe']['recipe_abv'] > 18)){
+if (($this->data['recipe']['style_class'] == "beer" && $this->data['recipe']['recipe_abv'] > 9.5) || ($this->data['recipe']['style_class'] != "beer" && $this->data['recipe']['recipe_abv'] > 18)) {
 	$legal = false;
 } else {
 	$legal = true;
@@ -112,7 +112,7 @@ if (($this->data['recipe']['style_class'] == "beer" && $this->data['recipe']['re
 			$("span#votes_count").fadeOut("fast");
 			$.ajax({
 				type: "POST",
-				data: "action=vote_up&id=<?=$this->data['recipe']['recipe_id'];?>",
+				data: "action=vote_up&id=<?= $this->data['recipe']['recipe_id']; ?>",
 				url: "/recipes/vote",
 				success: function(msg){
 					$("#vote_icon").html('<img src="/public/images/thumb_up.png">');
@@ -134,7 +134,7 @@ if (($this->data['recipe']['style_class'] == "beer" && $this->data['recipe']['re
 			$("#vote_icon").html("<img src='/public/images/spinner.gif'/>");
 			$.ajax({
 				type: "POST",
-				data: "action=vote_down&id=<?=$this->data['recipe']['recipe_id'];?>",
+				data: "action=vote_down&id=<?= $this->data['recipe']['recipe_id']; ?>",
 				url: "/recipes/vote",
 				success: function(msg){
 					var data = jQuery.parseJSON(msg);
@@ -153,13 +153,14 @@ if (($this->data['recipe']['style_class'] == "beer" && $this->data['recipe']['re
 </script>
 
 <?php
-function i_bu($ibu,$og) {
-	$bu = round($ibu/(($og*1000)-1000),2);
+
+function i_bu($ibu, $og) {
+	$bu = round($ibu / (($og * 1000) - 1000), 2);
 	if ($bu >= 0 && $bu <= 0.19) {
 		return "kartumo nėra, dominuoja salyklas";
-	} else if ($bu >= 0.2 && $bu <= 0.39) { 
+	} else if ($bu >= 0.2 && $bu <= 0.39) {
 		return "jaučiami apyniai, dominuoja salyklas";
-	} else if ($bu >= 0.4 && $bu <= 0.59) { 
+	} else if ($bu >= 0.4 && $bu <= 0.59) {
 		return "kartumas ir salyklo skonis subalansuotas";
 	} else if ($bu >= 0.6 && $bu <= 0.79) {
 		return "ryškus apynių skonis";
@@ -169,22 +170,34 @@ function i_bu($ibu,$og) {
 }
 ?>
 <div id="style_info_container" class="inner_container">
-	<div class="inner_header"><h1><?=$this->data['recipe']['recipe_name'];?></h1></div>
+	<div class="inner_header"><h1><?= $this->data['recipe']['recipe_name']; ?></h1></div>
+	<?php
+	if (isset($this->show_added) && $this->show_added === true) {
+		?>
+		<div class="ui-widget">
+			<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+				<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+					Receptas įtrauktas į <a href="/planuojami_virimai">planuojamų virimų sąrašą</a></p>
+			</div>
+		</div>
+		<?php
+	}
+	?>
 	<div class="recipe_tools_container">
-		<? if ($this->data['recipe']['recipe_total_awards'] > 0) :?>
+			<? if ($this->data['recipe']['recipe_total_awards'] > 0) : ?>
 			<div class="recipe_awards">
 				<?
 				$awards = $this->awards[$this->data['recipe']['recipe_id']];
-				foreach ($awards as $key=>$val):
+				foreach ($awards as $key => $val):
 					$title = $val['event_name'];
-					if (!empty($val['category'])){
-						$title .= ", ".$val['category'];
+					if (!empty($val['category'])) {
+						$title .= ", " . $val['category'];
 					}
-					if (!empty($val['place'])){
-						$title .= ", ".$val['place']." vieta";
+					if (!empty($val['place'])) {
+						$title .= ", " . $val['place'] . " vieta";
 					}
-					if (!empty($val['points']) && $val['points'] != "0"){
-						$title .= " (".$val['points']." tšk.)";
+					if (!empty($val['points']) && $val['points'] != "0") {
+						$title .= " (" . $val['points'] . " tšk.)";
 					}
 					?>
 					<img src="/public/images/<?= trim($val['icon']) ?>-32.gif" width="32" title="<?= trim($title) ?>" />
@@ -192,57 +205,64 @@ function i_bu($ibu,$og) {
 				endforeach;
 				?>
 			</div>
-		<? endif; ?>
+			<? endif; ?>
 		<div class="recipe_tools">
 			<?php
-			if (isset($this->user_info->user_id) && $this->user_info->user_id == $this->data['recipe']['brewer_id']){
+			if (isset($this->user_info->user_id) && $this->user_info->user_id == $this->data['recipe']['brewer_id']) {
 				?>
 				<a href="#" id="recipe_share">Dalintis nuoroda</a>
 				<div id="recipe_share_dialog" style="display: none;">
-					<textarea style="width: 400px; height: 50px;">http://<?=$_SERVER['SERVER_NAME']?>/recipes/view/<?=$this->data['recipe']['recipe_id']?>-<?=$this->urlMaker($this->data['recipe']['recipe_name']);?>?auth_key=<?=md5($this->data['recipe']['recipe_id'].$this->data['recipe']['recipe_created'])?></textarea>
+					<textarea style="width: 400px; height: 50px;">http://<?= $_SERVER['SERVER_NAME'] ?>/recipes/view/<?= $this->data['recipe']['recipe_id'] ?>-<?= $this->urlMaker($this->data['recipe']['recipe_name']); ?>?auth_key=<?= md5($this->data['recipe']['recipe_id'] . $this->data['recipe']['recipe_created']) ?></textarea>
 				</div>
 				<?php
 			}
 			?>
-			<a href="/recipes/print-label/?recipe_id=<?=$this->data['recipe']['recipe_id'];?>" target="_blank">Spausdinti etiketę</a>
+			<a href="/recipes/print-label/?recipe_id=<?= $this->data['recipe']['recipe_id']; ?>" target="_blank">Spausdinti etiketę</a>
 			<?php
-			if ($legal === true){
+			if ($legal === true) {
 				?>
-				<a href="/brew-session/recipe/<?=$this->data['recipe']['recipe_id'];?>">Virimai (<?=$this->data['brew_session']['count'];?>)</a>
+				<a href="/brew-session/recipe/<?= $this->data['recipe']['recipe_id']; ?>">Virimai (<?= $this->data['brew_session']['count']; ?>)</a>
 				<?php
 			}
 			?>
-			<a href="/index/calculus/<?=$this->data['recipe']['recipe_id'];?><?=(isset($_GET['auth_key'])) ? "?auth_key=".$_GET['auth_key'] : ""; ?>">
+			<a href="/index/calculus/<?= $this->data['recipe']['recipe_id']; ?><?= (isset($_GET['auth_key'])) ? "?auth_key=" . $_GET['auth_key'] : ""; ?>">
 				<?php
-				if (isset($this->user_info->user_id) && $this->user_info->user_id == $this->data['recipe']['brewer_id']){
+				if (isset($this->user_info->user_id) && $this->user_info->user_id == $this->data['recipe']['brewer_id']) {
 					echo "Redaguoti";
 				} else {
 					echo "Į skaičiuoklę";
 				}
 				?>
 			</a>
-			<a href="/index/print-recipe/?recipe_id=<?=$this->data['recipe']['recipe_id'];?><?=(isset($_GET['auth_key'])) ? "&auth_key=".$_GET['auth_key'] : ""; ?>" target="_blank">Spausdinti receptą</a>
+			<?php
+			if (isset($this->user_info->user_id)) {
+				?>
+				<a href="/brewer/addplan/recipe_id/<?= $this->data['recipe']['recipe_id']; ?>">Įtraukti į virimų planą</a>
+				<?php
+			}
+			?>
+			<a href="/index/print-recipe/?recipe_id=<?= $this->data['recipe']['recipe_id']; ?><?= (isset($_GET['auth_key'])) ? "&auth_key=" . $_GET['auth_key'] : ""; ?>" target="_blank">Spausdinti receptą</a>
 			<?php
 			if (isset($this->user_info)) {
-				 /*
-				?>
-				<a href="/order/savasalus/<?=$this->data['recipe']['recipe_id']?>">Užsakyti ingridientus</a>
-				<?php
+				/*
+				  ?>
+				  <a href="/order/savasalus/<?=$this->data['recipe']['recipe_id']?>">Užsakyti ingridientus</a>
+				  <?php
 				 */
 				if ($this->recipe_votes["user_vote"]) {
 					?>
 					<a href='javascript:void(0);' id='vote_up_button' style="display:none">Patinka</a>
 					<a href='javascript:void(0);' id='vote_down_button'>Nebepatinka</a>
-					<?php 
+					<?php
 				} else {
 					?>
 					<a href='javascript:void(0);' id='vote_down_button' style="display:none">Nebepatinka</a>
 					<a href='javascript:void(0);' id='vote_up_button'>Patinka</a>
 					<?
 				}
-            }
+			}
 			?>
-			<span id='votes_count'><?=$this->recipe_votes["total"];?></span>
+			<span id='votes_count'><?= $this->recipe_votes["total"]; ?></span>
 			<div id='vote_icon'><img src="/public/images/thumb_up.png"  border="0" /></div>
 		</div>
 		<div class="clear"></div>
@@ -251,37 +271,37 @@ function i_bu($ibu,$og) {
 		<div class="recipe_info">
 			<div class="recipe_info_block">
 				<div class="recipe_info_label">Alaus kiekis:</div>
-				<div class="recipe_info_text"><?=round($this->data['recipe']['recipe_batch'],1);?></div>
+				<div class="recipe_info_text"><?= round($this->data['recipe']['recipe_batch'], 1); ?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_info_block">
 				<div class="recipe_info_label"><span class="ttip ttip_efektyvumas">Efektyvumas</span>:</div>
-				<div class="recipe_info_text"><?=round($this->data['recipe']['recipe_efficiency'],2);?></div>
+				<div class="recipe_info_text"><?= round($this->data['recipe']['recipe_efficiency'], 2); ?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_info_block">
 				<div class="recipe_info_label">Virimo laikas:</div>
-				<div class="recipe_info_text"><?=$this->data['recipe']['recipe_boiltime'];?> min.</div>
+				<div class="recipe_info_text"><?= $this->data['recipe']['recipe_boiltime']; ?> min.</div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_info_block">
 				<div class="recipe_info_label"><span class="ttip ttip_atenuacija">Atenuacija</span>:</div>
-				<div class="recipe_info_text"><?=round($this->data['recipe']['recipe_attenuation'],2);?></div>
+				<div class="recipe_info_text"><?= round($this->data['recipe']['recipe_attenuation'], 2); ?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_info_block">
 				<div class="recipe_info_label">Stilius:</div>
-				<div class="recipe_info_text"><h2><a href="/stilius/<? print $this->data['recipe']['recipe_style'];?>"><?=$this->data['recipe']['style_name'];?></a></h2></div>
+				<div class="recipe_info_text"><h2><a href="/stilius/<? print $this->data['recipe']['recipe_style']; ?>"><?= $this->data['recipe']['style_name']; ?></a></h2></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_info_block">
 				<div class="recipe_info_label">Aludaris:</div>
-				<div class="recipe_info_text"><a href="/brewers/<? print $this->data['recipe']['brewer_id'];?>"><?=$this->data['recipe']['user_name'];?></a></div>
+				<div class="recipe_info_text"><a href="/brewers/<? print $this->data['recipe']['brewer_id']; ?>"><?= $this->data['recipe']['user_name']; ?></a></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_info_block">
 				<div class="recipe_info_label">Receptas sukurtas:</div>
-				<div class="recipe_info_text"><?=$this->data['recipe']['recipe_created'];?></div>
+				<div class="recipe_info_text"><?= $this->data['recipe']['recipe_created']; ?></div>
 				<div class="clear"></div>
 			</div>
 			<?php
@@ -289,7 +309,7 @@ function i_bu($ibu,$og) {
 				?>
 				<div class="recipe_info_block">
 					<div class="recipe_info_label">Receptas modifikuotas:</div>
-					<div class="recipe_info_text"><?=$this->data['recipe']['recipe_modified'];?></div>
+					<div class="recipe_info_text"><?= $this->data['recipe']['recipe_modified']; ?></div>
 					<div class="clear"></div>
 				</div>
 				<?php
@@ -313,7 +333,7 @@ function i_bu($ibu,$og) {
 					<?php
 				}
 			endif;
-			if ($legal === false){
+			if ($legal === false) {
 				?>
 				<div class="legal_warning">
 					<span>ĮSPĖJIMAS:</span> <a href="http://www3.lrs.lt/pls/inter3/dokpaieska.showdoc_l?p_id=430458#straipsnis10" target="_blank">Lietuvos Respublikos Alkoholio kontrolės Įstatymas</a> griežtai reglamentuoja leistiną alkoholio koncentraciją naminiuose alkoholiniuose gėrimuose.
@@ -325,7 +345,7 @@ function i_bu($ibu,$og) {
 			?>
 		</div>
 		<div class="recipe_image">
-			<div style="background-color:<?=$this->colorHex($this->data['recipe']['recipe_ebc']);?>"><img src="/public/images/glass_s.png" alt="<?=$this->data['recipe']['recipe_name'];?>" /></div>
+			<div style="background-color:<?= $this->colorHex($this->data['recipe']['recipe_ebc']); ?>"><img src="/public/images/glass_s.png" alt="<?= $this->data['recipe']['recipe_name']; ?>" /></div>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -334,7 +354,7 @@ function i_bu($ibu,$og) {
 			<div class="recipe_malts">
 				<div class="ingridient_category">Salyklas</div>
 				<?
-				$total=0;
+				$total = 0;
 				foreach ($this->data['malt'] as $malt) {
 					$total += floatval($malt['malt_weight']);
 				}
@@ -346,14 +366,14 @@ function i_bu($ibu,$og) {
 					<div class="amount_p"><b>Kiekis (%)</b></div>
 					<div class="clear"></div>
 				</div>
-				<?php 
+				<?php
 				foreach ($this->data['malt'] as $malt) :
 					?>
 					<div class="malt_item">
-						<div class="title"><?=$malt['malt_name'];?></div>
-						<div class="color"><?=$malt['malt_ebc'];?></div>
-						<div class="amount_w"><?=$malt['malt_weight'];?></div>
-						<div class="amount_p"><?=round(floatval ($malt['malt_weight'])/$total*100,1);?></div>
+						<div class="title"><?= $malt['malt_name']; ?></div>
+						<div class="color"><?= $malt['malt_ebc']; ?></div>
+						<div class="amount_w"><?= $malt['malt_weight']; ?></div>
+						<div class="amount_p"><?= round(floatval($malt['malt_weight']) / $total * 100, 1); ?></div>
 						<div class="clear"></div>
 					</div>
 					<?php
@@ -362,7 +382,7 @@ function i_bu($ibu,$og) {
 				<div class="malt_item">
 					<div class="title">&nbsp;</div>
 					<div class="color">&nbsp;</div>
-					<div class="amount_w" style="border-top: 1px solid #999; padding-top: 5px;"><?=number_format($total, 3, '.', '');?></div>
+					<div class="amount_w" style="border-top: 1px solid #999; padding-top: 5px;"><?= number_format($total, 3, '.', ''); ?></div>
 					<div class="amount_p">&nbsp;</div>
 					<div class="clear"></div>
 				</div>
@@ -370,7 +390,7 @@ function i_bu($ibu,$og) {
 			<div class="recipe_hops">
 				<div class="ingridient_category2">Apyniai</div>
 				<?
-				$total=0;
+				$total = 0;
 				foreach ($this->data['hops'] as $hop) {
 					$total += floatval($hop['hop_weight']);
 				}
@@ -382,14 +402,14 @@ function i_bu($ibu,$og) {
 					<div class="time"><b>Laikas</b></div>
 					<div class="clear"></div>
 				</div>
-				<?php 
+				<?php
 				foreach ($this->data['hops'] as $hop) :
 					?>
 					<div class="hop_item">
-						<div class="title"><?=$hop['hop_name'];?></div>
-						<div class="alpha"><?=$hop['hop_alpha'];?></div>
-						<div class="amount_w"><?=$hop['hop_weight'];?></div>
-						<div class="time"><?=$hop['hop_time'];?></div>
+						<div class="title"><?= $hop['hop_name']; ?></div>
+						<div class="alpha"><?= $hop['hop_alpha']; ?></div>
+						<div class="amount_w"><?= $hop['hop_weight']; ?></div>
+						<div class="time"><?= $hop['hop_time']; ?></div>
 						<div class="clear"></div>
 					</div>
 					<?php
@@ -398,7 +418,7 @@ function i_bu($ibu,$og) {
 				<div class="hop_item">
 					<div class="title">&nbsp;</div>
 					<div class="alpha">&nbsp;</div>
-					<div class="amount_w" style="border-top: 1px solid #999; padding-top: 5px;"><?=$total;?></div>
+					<div class="amount_w" style="border-top: 1px solid #999; padding-top: 5px;"><?= $total; ?></div>
 					<div class="time">&nbsp;</div>
 					<div class="clear"></div>
 				</div>
@@ -410,12 +430,12 @@ function i_bu($ibu,$og) {
 					<div class="amount"><b>Kiekis (g)</b></div>
 					<div class="clear"></div>
 				</div>
-				<?php 
+				<?php
 				foreach ($this->data['yeast'] as $hop) :
 					?>
 					<div class="yeast_item">
-						<div class="title"><?=$hop['yeast_name'];?></div>
-						<div class="amount"><?=$hop['yeast_weight'];?></div>
+						<div class="title"><?= $hop['yeast_name']; ?></div>
+						<div class="amount"><?= $hop['yeast_weight']; ?></div>
 						<div class="clear"></div>
 					</div>
 					<?php
@@ -424,41 +444,41 @@ function i_bu($ibu,$og) {
 			</div>
 			<div class="recipe_notes">
 				<div class="ingridient_category2">Pastabos</div>
-				<div><?=nl2br($this->data['recipe']['recipe_comments']);?></div>
+				<div><?= nl2br($this->data['recipe']['recipe_comments']); ?></div>
 			</div>
 			<div class="recipe_tags">
 				<? $this->headLink()->appendStylesheet("/public/ui/external/jquery.tagsinput.css"); ?>
-				<? $this->headScript()->appendFile("/public/ui/external/jquery.tagsinput.min.js");  ?>
+<? $this->headScript()->appendFile("/public/ui/external/jquery.tagsinput.min.js"); ?>
 				<script>
-				$(function() {
-					$('#tags_input_field').tagsInput({
-						width: 'auto',defaultText:'Nauja žyma',
-						autocomplete_url:'/recipes/find?tags' // jquery ui autocomplete requires a json endpoint
-					})
-				});
-				function showInput() {
-					$("#tag_cloud").hide();
-					$("#tag_input").show();
-				}
-				function hideInput() {
-					$("#tag_cloud").show();
-					$("#tag_input").hide();
-				}
-				function saveTags() {
-					$("#tag_cloud").show();
-					$("#tag_input").hide();
-					$.ajax({type:"POST", data:"tags=" + $('#tags_input_field').val() + "&recipe_id=<?=$this->data['recipe']['recipe_id'];?>", url:"/recipes/mod-tags", success:function (msg) {
-						var data = jQuery.parseJSON(msg);
-						if (data) {
-							var tags = data.tags.split(",");
-							$("#tag_cloud").html('');
-							$("#tags_input_field").val(data.tags);
-							for (var i = 0; i < tags.length; i++) {
-								$("#tag_cloud").append('<a href="/search/tags:' + tags[i] + '"><span style="font-weight:normal;padding:5;color:#7B4A12">' + tags[i] + '</span></a>');
-							}
-						}
-					}});
-				}
+					$(function() {
+						$('#tags_input_field').tagsInput({
+							width: 'auto',defaultText:'Nauja žyma',
+							autocomplete_url:'/recipes/find?tags' // jquery ui autocomplete requires a json endpoint
+						})
+					});
+					function showInput() {
+						$("#tag_cloud").hide();
+						$("#tag_input").show();
+					}
+					function hideInput() {
+						$("#tag_cloud").show();
+						$("#tag_input").hide();
+					}
+					function saveTags() {
+						$("#tag_cloud").show();
+						$("#tag_input").hide();
+						$.ajax({type:"POST", data:"tags=" + $('#tags_input_field').val() + "&recipe_id=<?= $this->data['recipe']['recipe_id']; ?>", url:"/recipes/mod-tags", success:function (msg) {
+								var data = jQuery.parseJSON(msg);
+								if (data) {
+									var tags = data.tags.split(",");
+									$("#tag_cloud").html('');
+									$("#tags_input_field").val(data.tags);
+									for (var i = 0; i < tags.length; i++) {
+										$("#tag_cloud").append('<a href="/search/tags:' + tags[i] + '"><span style="font-weight:normal;padding:5;color:#7B4A12">' + tags[i] + '</span></a>');
+									}
+								}
+							}});
+					}
 				</script>
 				<?php
 				$is_owner = false;
@@ -480,13 +500,13 @@ function i_bu($ibu,$og) {
 					$tags = explode(",", $this->tags);
 					foreach ($tags as $value) {
 						?>
-						<a href="/search/tags:<?=$value;?>"><?=$value;?></a>
+						<a href="/search/tags:<?= $value; ?>"><?= $value; ?></a>
 						<?php
 					}
 					?>
 				</div>
 				<div id="tag_input" style="display:none">
-					<input id="tags_input_field" type="text" class="tags" value="<?=$this->tags;?>" />
+					<input id="tags_input_field" type="text" class="tags" value="<?= $this->tags; ?>" />
 					<div align="right">
 						<input type="button" onClick="saveTags()" class="ui-button" value="saugoti" />
 						<input type="button" onClick="hideInput()" class="ui-button" value="atšaukti" />
@@ -497,17 +517,17 @@ function i_bu($ibu,$og) {
 				<div class="ingridient_category2">Nuotraukos</div>
 				<div>
 					<?php
-					foreach($this->images as $img){
+					foreach ($this->images as $img) {
 						?>
 						<div class="beer_image">
 							<div>
-								<a title="<?=$img['user_name']?>, <?=$img['postedf']?>" rel="gallery" class="fancybox" href="/recipe_images/<?=$this->data['recipe']['recipe_id']?>/<?=$img['file_name']?>.jpg"><img src="/recipe_images/<?=$this->data['recipe']['recipe_id']?>/t_<?=$img['file_name']?>.jpg" alt="" /></a>
+								<a title="<?= $img['user_name'] ?>, <?= $img['postedf'] ?>" rel="gallery" class="fancybox" href="/recipe_images/<?= $this->data['recipe']['recipe_id'] ?>/<?= $img['file_name'] ?>.jpg"><img src="/recipe_images/<?= $this->data['recipe']['recipe_id'] ?>/t_<?= $img['file_name'] ?>.jpg" alt="" /></a>
 							</div>
 							<?php
-							if (isset($this->user_info->user_id) && $this->user_info->user_id!=0 && ($this->user_info->user_id == $this->data['recipe']['brewer_id'] || $this->user_info->user_id == $img['user_id'])){
+							if (isset($this->user_info->user_id) && $this->user_info->user_id != 0 && ($this->user_info->user_id == $this->data['recipe']['brewer_id'] || $this->user_info->user_id == $img['user_id'])) {
 								?>
 								<div>
-									<a href="/alus/trinti_nuotrauka/<?=$img['id']?>" class="del_image">Trinti</a>
+									<a href="/alus/trinti_nuotrauka/<?= $img['id'] ?>" class="del_image">Trinti</a>
 								</div>
 								<?php
 							} else {
@@ -523,7 +543,7 @@ function i_bu($ibu,$og) {
 					<div class="clear"></div>
 				</div>
 				<?php
-				if (isset($this->user_info->user_id) && $this->user_info->user_id!=0){
+				if (isset($this->user_info->user_id) && $this->user_info->user_id != 0) {
 					?>
 					<div>
 						<form id="recipe_image_form" method="post" action="/recipes/upload_image" enctype="multipart/form-data">
@@ -536,7 +556,7 @@ function i_bu($ibu,$og) {
 								<dt>&nbsp;</dt>
 								<dd>
 									<input name="submit" type="submit" value="Įkelti" class="ui-button" />
-									<input name="recipe_id" type="hidden" value="<?=$this->data['recipe']['recipe_id']?>" />
+									<input name="recipe_id" type="hidden" value="<?= $this->data['recipe']['recipe_id'] ?>" />
 								</dd>
 								<div class="clear"></div>
 							</dl>
@@ -547,35 +567,35 @@ function i_bu($ibu,$og) {
 				?>
 			</div>
 			<?php
-			if ($this->data['recipe']['recipe_total_sessions']>0){
+			if ($this->data['recipe']['recipe_total_sessions'] > 0) {
 				?>
 				<div class="recipe_votes">
 					<div class="ingridient_category2">Recepto vertinimai</div>
 					<div id="rate_results">
 						<?php
-						if (sizeof($this->rates) > 0){
-							foreach($this->rates as $item){
+						if (sizeof($this->rates) > 0) {
+							foreach ($this->rates as $item) {
 								?>
 								<div class="rate_result">
 									<div class="rate_avatar">
-										<a href="/brewers/<?=$item['user_id'];?>">
-											<img src="http://www.gravatar.com/avatar/<?=md5($item['user_email']);?>?rating=G&size=40&default=mm" border="0"/>
-											<span><?=$item['user_name'];?></span>
+										<a href="/brewers/<?= $item['user_id']; ?>">
+											<img src="http://www.gravatar.com/avatar/<?= md5($item['user_email']); ?>?rating=G&size=40&default=mm" border="0"/>
+											<span><?= $item['user_name']; ?></span>
 										</a>
 									</div>
 									<div class="rate_info">
 										<div class="rate_row">
 											<div class="rate_text"><b>Ragavimo data</b>: </div>
-											<div class="brewery_rate_fixed"><?=$item['rate_date']?></div>
+											<div class="brewery_rate_fixed"><?= $item['rate_date'] ?></div>
 											<div class="clear"></div>
 										</div>
 										<div class="rate_row">
 											<div class="rate_text"><b>Virimo autorius</b>: </div>
-											<div class="brewery_rate_fixed"><a href="/brewers/<?=$item['brewer_id']?>"><?=$item['brewer_name']?></a></div>
+											<div class="brewery_rate_fixed"><a href="/brewers/<?= $item['brewer_id'] ?>"><?= $item['brewer_name'] ?></a></div>
 											<div class="clear"></div>
 										</div>
 										<?php
-										switch($item['rate_type']){
+										switch ($item['rate_type']) {
 											case "simple":
 												?>
 												<div class="rate_row">
@@ -586,18 +606,18 @@ function i_bu($ibu,$og) {
 													$offset = 130 - $votes_avg * 10;
 													$offset = $offset - (floor($votes_avg) * 3 + 1);
 													?>
-													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
-													<div class="rate_value"><b><?=$item['simple_vote']?> / <?=10?></b></div>
+													<div class="brewery_rate_bar" style="background-position: -<?= $offset; ?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><b><?= $item['simple_vote'] ?> / <?= 10 ?></b></div>
 													<div class="clear"></div>
 												</div>
 												<?php
 												$item['simple_comment'] = trim($item['simple_comment']);
-												if (isset($item['simple_comment']) && !empty($item['simple_comment'])){
+												if (isset($item['simple_comment']) && !empty($item['simple_comment'])) {
 													?>
-													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['simple_comment'])?></div>
+													<div class="rate_comment"><?= str_replace("\n", "<br />", $item['simple_comment']) ?></div>
 													<?php
 												}
-											break;
+												break;
 											case "advanced":
 												$total = 0;
 												$total_system = 0;
@@ -612,15 +632,15 @@ function i_bu($ibu,$og) {
 													$offset = 130 - $votes_avg * 10;
 													$offset = $offset - (floor($votes_avg) * 3 + 1);
 													?>
-													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
-													<div class="rate_value"><?=$item['aroma_vote']?> / 10</div>
+													<div class="brewery_rate_bar" style="background-position: -<?= $offset; ?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><?= $item['aroma_vote'] ?> / 10</div>
 													<div class="clear"></div>
 												</div>
 												<?php
 												$item['aroma_comment'] = trim($item['aroma_comment']);
-												if (isset($item['aroma_comment']) && !empty($item['aroma_comment'])){
+												if (isset($item['aroma_comment']) && !empty($item['aroma_comment'])) {
 													?>
-													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['aroma_comment'])?></div>
+													<div class="rate_comment"><?= str_replace("\n", "<br />", $item['aroma_comment']) ?></div>
 													<?php
 												}
 												?>
@@ -634,15 +654,15 @@ function i_bu($ibu,$og) {
 													$offset = 130 - $votes_avg * 10;
 													$offset = $offset - (floor($votes_avg) * 3 + 1);
 													?>
-													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
-													<div class="rate_value"><?=$item['appearance_vote']?> / 5</div>
+													<div class="brewery_rate_bar" style="background-position: -<?= $offset; ?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><?= $item['appearance_vote'] ?> / 5</div>
 													<div class="clear"></div>
 												</div>
 												<?php
 												$item['appearance_comment'] = trim($item['appearance_comment']);
-												if (isset($item['appearance_comment']) && !empty($item['appearance_comment'])){
+												if (isset($item['appearance_comment']) && !empty($item['appearance_comment'])) {
 													?>
-													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['appearance_comment'])?></div>
+													<div class="rate_comment"><?= str_replace("\n", "<br />", $item['appearance_comment']) ?></div>
 													<?php
 												}
 												?>
@@ -656,15 +676,15 @@ function i_bu($ibu,$og) {
 													$offset = 130 - $votes_avg * 10;
 													$offset = $offset - (floor($votes_avg) * 3 + 1);
 													?>
-													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
-													<div class="rate_value"><?=$item['taste_vote']?> / 10</div>
+													<div class="brewery_rate_bar" style="background-position: -<?= $offset; ?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><?= $item['taste_vote'] ?> / 10</div>
 													<div class="clear"></div>
 												</div>
 												<?php
 												$item['taste_comment'] = trim($item['taste_comment']);
-												if (isset($item['taste_comment']) && !empty($item['taste_comment'])){
+												if (isset($item['taste_comment']) && !empty($item['taste_comment'])) {
 													?>
-													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['taste_comment'])?></div>
+													<div class="rate_comment"><?= str_replace("\n", "<br />", $item['taste_comment']) ?></div>
 													<?php
 												}
 												?>
@@ -678,15 +698,15 @@ function i_bu($ibu,$og) {
 													$offset = 130 - $votes_avg * 10;
 													$offset = $offset - (floor($votes_avg) * 3 + 1);
 													?>
-													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
-													<div class="rate_value"><?=$item['palate_vote']?> / 5</div>
+													<div class="brewery_rate_bar" style="background-position: -<?= $offset; ?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><?= $item['palate_vote'] ?> / 5</div>
 													<div class="clear"></div>
 												</div>
 												<?php
 												$item['palate_comment'] = trim($item['palate_comment']);
-												if (isset($item['palate_comment']) && !empty($item['palate_comment'])){
+												if (isset($item['palate_comment']) && !empty($item['palate_comment'])) {
 													?>
-													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['palate_comment'])?></div>
+													<div class="rate_comment"><?= str_replace("\n", "<br />", $item['palate_comment']) ?></div>
 													<?php
 												}
 												?>
@@ -700,15 +720,15 @@ function i_bu($ibu,$og) {
 													$offset = 130 - $votes_avg * 10;
 													$offset = $offset - (floor($votes_avg) * 3 + 1);
 													?>
-													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
-													<div class="rate_value"><?=$item['overall_vote']?> / 20</div>
+													<div class="brewery_rate_bar" style="background-position: -<?= $offset; ?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><?= $item['overall_vote'] ?> / 20</div>
 													<div class="clear"></div>
 												</div>
 												<?php
 												$item['overall_comment'] = trim($item['overall_comment']);
-												if (isset($item['overall_comment']) && !empty($item['overall_comment'])){
+												if (isset($item['overall_comment']) && !empty($item['overall_comment'])) {
 													?>
-													<div class="rate_comment"><?=  str_replace("\n", "<br />", $item['overall_comment'])?></div>
+													<div class="rate_comment"><?= str_replace("\n", "<br />", $item['overall_comment']) ?></div>
 													<?php
 												}
 												?>
@@ -720,24 +740,24 @@ function i_bu($ibu,$og) {
 													$offset = 130 - $votes_avg * 10;
 													$offset = $offset - (floor($votes_avg) * 3 + 1);
 													?>
-													<div class="brewery_rate_bar" style="background-position: -<?=$offset;?>px 0px;"><img src="/public/images/rate.png" /></div>
-													<div class="rate_value"><b><?=$total?> / <?=$total_system?></b></div>
+													<div class="brewery_rate_bar" style="background-position: -<?= $offset; ?>px 0px;"><img src="/public/images/rate.png" /></div>
+													<div class="rate_value"><b><?= $total ?> / <?= $total_system ?></b></div>
 													<div class="clear"></div>
 												</div>
 												<?
-											break;
+												break;
 										}
-										if (isset($this->user_info->user_id) && $this->user_info->user_id == $item['user_id']){
+										if (isset($this->user_info->user_id) && $this->user_info->user_id == $item['user_id']) {
 											?>
 											<div class="vote_del_container">
-												<a href="/recipes/delvote/vote/<?=$item['rate_id']?>" class="vote_del_link">Trinti</a>
+												<a href="/recipes/delvote/vote/<?= $item['rate_id'] ?>" class="vote_del_link">Trinti</a>
 											</div>
 											<?php
 										}
 										?>
 									</div>
 									<div class="rate_score">
-										<?=number_format($votes_avg, 1, ".", "")?>
+			<?= number_format($votes_avg, 1, ".", "") ?>
 									</div>
 									<div class="clear"></div>
 								</div>
@@ -749,10 +769,10 @@ function i_bu($ibu,$og) {
 							<?php
 						}
 						?>
-						
+
 					</div>
 					<?php
-					if (isset($this->user_info->user_id)){
+					if (isset($this->user_info->user_id)) {
 						?>
 						<div id="show_vote_button">
 							<a href="javascript:void(0);" id="show_vote_form" class="ui-button" style="color: #000;">Įvertinti šį alų</a>
@@ -762,7 +782,7 @@ function i_bu($ibu,$og) {
 							<form action="/recipes/rate" method="post" id="recipe_vote_form">
 								<dl>
 									<dt>Alaus ragavimo data:</dt>
-									<dd><input name="vote_date" id="vote_date" type="text" value="<?=date("Y-m-d")?>" /></dd>
+									<dd><input name="vote_date" id="vote_date" type="text" value="<?= date("Y-m-d") ?>" /></dd>
 									<div class="clear"></div>
 								</dl>
 								<dl>
@@ -770,9 +790,9 @@ function i_bu($ibu,$og) {
 									<dd>
 										<select name="vote_brewer" id="vote_brewer">
 											<?php
-											foreach($this->brewers as $key=>$val){
+											foreach ($this->brewers as $key => $val) {
 												?>
-												<option value="<?=$val['brewer_id']?>"><?=$val['brewer_name']?></option>
+												<option value="<?= $val['brewer_id'] ?>"><?= $val['brewer_name'] ?></option>
 												<?php
 											}
 											?>
@@ -793,8 +813,8 @@ function i_bu($ibu,$og) {
 								<div id="vote_simple_form">
 									<dl>
 										<dt class="vote_val_label">
-											Bendras įvertinimas:
-											<span>(1-10)</span>
+										Bendras įvertinimas:
+										<span>(1-10)</span>
 										</dt>
 										<dd class="vote_val_select">
 											<select name="vote_simple_value" id="vote_simple_value">
@@ -818,8 +838,8 @@ function i_bu($ibu,$og) {
 								<div id="vote_advanced_form" style="display: none;">
 									<dl>
 										<dt class="vote_val_label">
-											Aromatas:
-											<span>(1-10)<br />salyklas, apyniai, esteriai ir kt. aromatai</span>
+										Aromatas:
+										<span>(1-10)<br />salyklas, apyniai, esteriai ir kt. aromatai</span>
 										</dt>
 										<dd class="vote_val_select">
 											<select name="vote_aroma_value" id="vote_aroma_value">
@@ -841,8 +861,8 @@ function i_bu($ibu,$og) {
 									</dl>
 									<dl>
 										<dt class="vote_val_label">
-											Išvaizda:
-											<span>(1-5)<br />spalva, skaidrumas, puta</span>
+										Išvaizda:
+										<span>(1-5)<br />spalva, skaidrumas, puta</span>
 										</dt>
 										<dd class="vote_val_select">
 											<select name="vote_appearance_value" id="vote_appearance_value">
@@ -859,8 +879,8 @@ function i_bu($ibu,$og) {
 									</dl>
 									<dl>
 										<dt class="vote_val_label">
-											Skonis:
-											<span>(1-10)<br />salyklas, apyniai, ferment. charakteris, balansas, finišas/poskonis ir kt.</span>
+										Skonis:
+										<span>(1-10)<br />salyklas, apyniai, ferment. charakteris, balansas, finišas/poskonis ir kt.</span>
 										</dt>
 										<dd class="vote_val_select">
 											<select name="vote_taste_value" id="vote_taste_value">
@@ -882,8 +902,8 @@ function i_bu($ibu,$og) {
 									</dl>
 									<dl>
 										<dt class="vote_val_label">
-											Gomurys:
-											<span>(1-5)<br />kūnas, karbonizacija, šiluma, kreminis, kt.</span>
+										Gomurys:
+										<span>(1-5)<br />kūnas, karbonizacija, šiluma, kreminis, kt.</span>
 										</dt>
 										<dd class="vote_val_select">
 											<select name="vote_palate_value" id="vote_palate_value">
@@ -900,8 +920,8 @@ function i_bu($ibu,$og) {
 									</dl>
 									<dl>
 										<dt class="vote_val_label">
-											Bendras įspūdis:
-											<span>(1-20)<br />bendras gėrimo malonumas</span>
+										Bendras įspūdis:
+										<span>(1-20)<br />bendras gėrimo malonumas</span>
 										</dt>
 										<dd class="vote_val_select">
 											<select name="vote_overall_value" id="vote_overall_value">
@@ -936,7 +956,7 @@ function i_bu($ibu,$og) {
 									<dt>&nbsp;</dt>
 									<dd>
 										<input name="submit" type="submit" value="Įvertinti" class="ui-button" />
-										<input name="recipe_id" type="hidden" value="<?=$this->data['recipe']['recipe_id']?>" />
+										<input name="recipe_id" type="hidden" value="<?= $this->data['recipe']['recipe_id'] ?>" />
 									</dd>
 									<div class="clear"></div>
 								</dl>
@@ -951,62 +971,62 @@ function i_bu($ibu,$og) {
 			?>
 			<div class="recipe_comments">
 				<div class="ingridient_category2">Komentarai</div>
-				<div><?=$this->recipeComments($this->data['recipe']['recipe_id']);?></div>
+				<div><?= $this->recipeComments($this->data['recipe']['recipe_id']); ?></div>
 			</div>
 		</div>
 		<div class="recipe_result">
 			<div class="recipe_result_block">
 				<div class="recipe_result_label"><span class="ttip ttip_og"><b>OG:</b></span></div>
-				<div class="recipe_result_text"><?=$this->usePlato($this->data['recipe']['recipe_sg'], true);?></div>
+				<div class="recipe_result_text"><?= $this->usePlato($this->data['recipe']['recipe_sg'], true); ?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_result_block">
 				<div class="recipe_result_label"><span class="ttip ttip_fg"><b>FG:</b></span></div>
-				<div class="recipe_result_text"><?=$this->usePlato($this->data['recipe']['recipe_fg'], true);?></div>
+				<div class="recipe_result_text"><?= $this->usePlato($this->data['recipe']['recipe_fg'], true); ?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_result_block">
 				<div class="recipe_result_label"><span class="ttip ttip_abv"><b>ABV:</b></span></div>
-				<div class="recipe_result_text"><?=$this->data['recipe']['recipe_abv'];?> %</div>
+				<div class="recipe_result_text"><?= $this->data['recipe']['recipe_abv']; ?> %</div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_result_block">
 				<div class="recipe_result_label"><span class="ttip ttip_ebc"><b>EBC:</b></span></div>
-				<div class="recipe_result_text"><?=$this->data['recipe']['recipe_ebc'];?></div>
+				<div class="recipe_result_text"><?= $this->data['recipe']['recipe_ebc']; ?></div>
 				<div class="clear"></div>
 			</div>
 			<div class="recipe_result_block">
 				<div class="recipe_result_label"><span title="Kalorijų kiekis litre"><b>CAL/L:</b></span></div>
-				<div class="recipe_result_text"><?=Entities_BrewCalc::calories($this->data['recipe']['recipe_sg'],$this->data['recipe']['recipe_fg']);?></div>
+				<div class="recipe_result_text"><?= Entities_BrewCalc::calories($this->data['recipe']['recipe_sg'], $this->data['recipe']['recipe_fg']); ?></div>
 				<div class="clear"></div>
 			</div>
 			<?php
-			if (count($this->data['hops'])>0){
+			if (count($this->data['hops']) > 0) {
 				?>
 				<div class="recipe_result_block">
 					<div class="recipe_result_label"><span class="ttip ttip_ibu"><b>IBU:</b></span></div>
-					<div class="recipe_result_text"><?=$this->data['recipe']['recipe_ibu'];?></div>
+					<div class="recipe_result_text"><?= $this->data['recipe']['recipe_ibu']; ?></div>
 					<div class="clear"></div>
 				</div>
 				<div class="recipe_result_block">
 					<div class="recipe_result_label"><span class="ttip ttip_ibuog"><b>IBU/OG:</b></span></div>
-					<div class="recipe_result_text"><?=round($this->data['recipe']['recipe_ibu']/(($this->data['recipe']['recipe_sg']*1000)-1000),2);?></div>
+					<div class="recipe_result_text"><?= round($this->data['recipe']['recipe_ibu'] / (($this->data['recipe']['recipe_sg'] * 1000) - 1000), 2); ?></div>
 					<div class="clear"></div>
 				</div>
 				<div class="recipe_result_block">
-					<div class="recipe_i_bu"><?= i_bu($this->data['recipe']['recipe_ibu'],$this->data['recipe']['recipe_sg']);?></div>
+					<div class="recipe_i_bu"><?= i_bu($this->data['recipe']['recipe_ibu'], $this->data['recipe']['recipe_sg']); ?></div>
 				</div>
 				<?php
 			}
 			?>
 		</div>
 		<?php
-		if ($this->data['recipe']['recipe_votes_count'] > 0){
+		if ($this->data['recipe']['recipe_votes_count'] > 0) {
 			?>
 			<div class="eval_block">
 				<div class="eval_label">Įvertinimas</div>
-				<div class="eval_line" style="background-position: -<?=(100 - ($this->data['recipe']['recipe_votes_value']/$this->data['recipe']['recipe_votes_count']/5)*10)?>px 0px;"></div>
-				<div class="eval_val"><span><?=  number_format($this->data['recipe']['recipe_votes_value']/$this->data['recipe']['recipe_votes_count']/5, 1)?></span> (balsai: <?=$this->data['recipe']['recipe_votes_count']?>)</div>
+				<div class="eval_line" style="background-position: -<?= (100 - ($this->data['recipe']['recipe_votes_value'] / $this->data['recipe']['recipe_votes_count'] / 5) * 10) ?>px 0px;"></div>
+				<div class="eval_val"><span><?= number_format($this->data['recipe']['recipe_votes_value'] / $this->data['recipe']['recipe_votes_count'] / 5, 1) ?></span> (balsai: <?= $this->data['recipe']['recipe_votes_count'] ?>)</div>
 			</div>
 			<?php
 		}
@@ -1018,11 +1038,11 @@ function i_bu($ibu,$og) {
 // Info for third-parties
 ?>
 <div id="aat" style="display: none;">
-	<div id="aat_id"><?=$this->data['recipe']['recipe_id']?></div>
-	<div id="aat_title"><?=$this->data['recipe']['recipe_name']?></div>
-	<div id="aat_style_name"><?=$this->data['recipe']['style_name']?></div>
-	<div id="aat_style_id"><?=$this->data['recipe']['recipe_style']?></div>
-	<div id="aat_abv"><?=$this->data['recipe']['recipe_abv']?></div>
-	<div id="aat_ebc"><?=$this->data['recipe']['recipe_ebc']?></div>
-	<div id="aat_ibu"><?=$this->data['recipe']['recipe_ibu']?></div>
+	<div id="aat_id"><?= $this->data['recipe']['recipe_id'] ?></div>
+	<div id="aat_title"><?= $this->data['recipe']['recipe_name'] ?></div>
+	<div id="aat_style_name"><?= $this->data['recipe']['style_name'] ?></div>
+	<div id="aat_style_id"><?= $this->data['recipe']['recipe_style'] ?></div>
+	<div id="aat_abv"><?= $this->data['recipe']['recipe_abv'] ?></div>
+	<div id="aat_ebc"><?= $this->data['recipe']['recipe_ebc'] ?></div>
+	<div id="aat_ibu"><?= $this->data['recipe']['recipe_ibu'] ?></div>
 </div>

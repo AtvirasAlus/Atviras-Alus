@@ -27,6 +27,75 @@ class BrewerController extends Zend_Controller_Action {
 		
 	}
 
+	public function addplanAction() {
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get('db');
+		$rid = $this->_getParam("recipe_id");
+		$storage = new Zend_Auth_Storage_Session();
+		$this->view->user_info = $storage->read();
+		$u = $this->view->user_info;
+		if (isset($u->user_id) && !empty($u->user_id)) {
+			$db->insert("beer_session_plan", array(
+				"user_id" => $u->user_id,
+				"recipe_id" => $rid
+			));
+			$this->_redirect("/alus/receptas/".$rid."?added=1");
+		} else {
+			$this->_redirect("/alus/receptas/".$rid);
+		}
+	}
+	public function updateplanAction() {
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get('db');
+		$plan_id = $this->_getParam("plan_id");
+		$plan_date = $this->_getParam("plan_date");
+		$storage = new Zend_Auth_Storage_Session();
+		$this->view->user_info = $storage->read();
+		$u = $this->view->user_info;
+		if (isset($u->user_id) && !empty($u->user_id)) {
+			if (empty($plan_date)) $plan_date = null;
+			$db->update("beer_session_plan", array(
+				"plan_date" => $plan_date
+			), "user_id = '".$u->user_id."' AND plan_id = '".$plan_id."'");
+		}
+	}
+	public function delplanAction() {
+		$this->_helper->layout->setLayout('empty');
+		$this->_helper->viewRenderer->setNoRender(true);
+		$db = Zend_Registry::get('db');
+		$plan_id = $this->_getParam("plan_id");
+		$storage = new Zend_Auth_Storage_Session();
+		$this->view->user_info = $storage->read();
+		$u = $this->view->user_info;
+		if (isset($u->user_id) && !empty($u->user_id)) {
+			$db->delete("beer_session_plan", "user_id = '".$u->user_id."' AND plan_id = '".$plan_id."'");
+		}
+		$this->_redirect("/planuojami_virimai");
+	}
+	
+	public function planAction(){
+		$db = Zend_Registry::get('db');
+		$storage = new Zend_Auth_Storage_Session();
+		$this->view->user_info = $storage->read();
+		$u = $this->view->user_info;
+		if (isset($u->user_id) && !empty($u->user_id)) {
+			$select = $db->select()
+					->from("beer_session_plan")
+					->join("beer_recipes", "beer_recipes.recipe_id=beer_session_plan.recipe_id")
+					->join("beer_styles", "beer_recipes.recipe_style=beer_styles.style_id", array("style_name"))
+					->join("users", "beer_recipes.brewer_id = users.user_id", array("user_name"))
+					->where("beer_session_plan.user_id = ?", $u->user_id)
+					->order(array(new Zend_Db_Expr("plan_date IS NULL DESC"), "plan_date DESC"), true);
+			$result = $db->fetchAll($select);
+			$this->view->items = $result;
+		} else {
+			$this->_redirect("/");
+		}
+		
+	}
+
 	public function favoritesAction() {
 		$db = Zend_Registry::get('db');
 		$storage = new Zend_Auth_Storage_Session();
@@ -270,7 +339,7 @@ class BrewerController extends Zend_Controller_Action {
 				$this->view->total_positions = sizeof($result);
 				$this->view->positions = $result;
 				$pos = 0;
-				foreach($result as $key=>$val){
+				foreach ($result as $key => $val) {
 					$pos++;
 					if ($val['brewer_id'] == $this->_getParam("brewer")) {
 						$this->view->position = $pos;
@@ -288,23 +357,23 @@ class BrewerController extends Zend_Controller_Action {
 				$result = $db->FetchAll($select);
 				$statsess = array();
 				$sum = 0;
-				foreach($result as $key=>$val){
-					$d = strtotime($val['date'])*1000;
-					if (isset($statsess[$d])){
+				foreach ($result as $key => $val) {
+					$d = strtotime($val['date']) * 1000;
+					if (isset($statsess[$d])) {
 						$statsess[$d] += $val['size'];
 					} else {
 						$statsess[$d] = $sum + $val['size'];
 					}
 					$sum += $val['size'];
 				}
-				if (sizeof($statsess) > 0){
-					$now = strtotime(date("Y-m-d"))*1000;
-					if (!isset($statsess[$now])){
+				if (sizeof($statsess) > 0) {
+					$now = strtotime(date("Y-m-d")) * 1000;
+					if (!isset($statsess[$now])) {
 						$statsess[$now] = $sum;
 					}
 				}
 				$this->view->statsess = $statsess;
-				
+
 				$select = $db->select()
 						->from("beer_recipes", array("recipe_ibu"))
 						->where("brewer_id = ?", $brewer)
@@ -313,14 +382,17 @@ class BrewerController extends Zend_Controller_Action {
 				$iburt['light'] = false;
 				$iburt['medium'] = false;
 				$iburt['strong'] = false;
-				foreach($result as $key=>$val){
-					if ($iburt['light'] === false && $val['recipe_ibu'] <= 30) $iburt['light'] = $key;
-					if ($iburt['medium'] === false && $val['recipe_ibu'] <= 60 && $val['recipe_ibu'] > 30) $iburt['medium'] = $key;
-					if ($iburt['strong'] === false && $val['recipe_ibu'] > 60) $iburt['strong'] = $key;
+				foreach ($result as $key => $val) {
+					if ($iburt['light'] === false && $val['recipe_ibu'] <= 30)
+						$iburt['light'] = $key;
+					if ($iburt['medium'] === false && $val['recipe_ibu'] <= 60 && $val['recipe_ibu'] > 30)
+						$iburt['medium'] = $key;
+					if ($iburt['strong'] === false && $val['recipe_ibu'] > 60)
+						$iburt['strong'] = $key;
 				}
 				$this->view->iburt = $iburt;
 				$this->view->statribu = $result;
-				if (sizeof($result) > 0){
+				if (sizeof($result) > 0) {
 					$select = $db->select()
 							->from("beer_recipes", array("AVG(recipe_ibu) as average_ibu"))
 							->where("brewer_id = ?", $brewer);
@@ -337,14 +409,17 @@ class BrewerController extends Zend_Controller_Action {
 				$ibust['light'] = false;
 				$ibust['medium'] = false;
 				$ibust['strong'] = false;
-				foreach($result as $key=>$val){
-					if ($ibust['light'] === false && $val['recipe_ibu'] <= 30) $ibust['light'] = $key;
-					if ($ibust['medium'] === false && $val['recipe_ibu'] <= 60 && $val['recipe_ibu'] > 30) $ibust['medium'] = $key;
-					if ($ibust['strong'] === false && $val['recipe_ibu'] > 60) $ibust['strong'] = $key;
+				foreach ($result as $key => $val) {
+					if ($ibust['light'] === false && $val['recipe_ibu'] <= 30)
+						$ibust['light'] = $key;
+					if ($ibust['medium'] === false && $val['recipe_ibu'] <= 60 && $val['recipe_ibu'] > 30)
+						$ibust['medium'] = $key;
+					if ($ibust['strong'] === false && $val['recipe_ibu'] > 60)
+						$ibust['strong'] = $key;
 				}
 				$this->view->ibust = $ibust;
 				$this->view->statsibu = $result;
-				if (sizeof($result) > 0){
+				if (sizeof($result) > 0) {
 					$select = $db->select()
 							->from("beer_brew_sessions", array())
 							->join("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe", array("AVG(recipe_ibu) as average_ibu"))
@@ -352,7 +427,7 @@ class BrewerController extends Zend_Controller_Action {
 					$result = $db->FetchRow($select);
 					$this->view->statsibu_avg = $result['average_ibu'];
 				}
-				
+
 				$select = $db->select()
 						->from("beer_recipes", array("recipe_ebc"))
 						->where("brewer_id = ?", $brewer)
@@ -361,14 +436,17 @@ class BrewerController extends Zend_Controller_Action {
 				$ebcrt['light'] = false;
 				$ebcrt['medium'] = false;
 				$ebcrt['strong'] = false;
-				foreach($result as $key=>$val){
-					if ($ebcrt['light'] === false && $val['recipe_ebc'] <= 15) $ebcrt['light'] = $key;
-					if ($ebcrt['medium'] === false && $val['recipe_ebc'] <= 38 && $val['recipe_ebc'] > 15) $ebcrt['medium'] = $key;
-					if ($ebcrt['strong'] === false && $val['recipe_ebc'] > 38) $ebcrt['strong'] = $key;
+				foreach ($result as $key => $val) {
+					if ($ebcrt['light'] === false && $val['recipe_ebc'] <= 15)
+						$ebcrt['light'] = $key;
+					if ($ebcrt['medium'] === false && $val['recipe_ebc'] <= 38 && $val['recipe_ebc'] > 15)
+						$ebcrt['medium'] = $key;
+					if ($ebcrt['strong'] === false && $val['recipe_ebc'] > 38)
+						$ebcrt['strong'] = $key;
 				}
 				$this->view->ebcrt = $ebcrt;
 				$this->view->statrebc = $result;
-				if (sizeof($result) > 0){
+				if (sizeof($result) > 0) {
 					$select = $db->select()
 							->from("beer_recipes", array("AVG(recipe_ebc) as average_ebc"))
 							->where("brewer_id = ?", $brewer);
@@ -385,14 +463,17 @@ class BrewerController extends Zend_Controller_Action {
 				$ebcst['light'] = false;
 				$ebcst['medium'] = false;
 				$ebcst['strong'] = false;
-				foreach($result as $key=>$val){
-					if ($ebcst['light'] === false && $val['recipe_ebc'] <= 15) $ebcst['light'] = $key;
-					if ($ebcst['medium'] === false && $val['recipe_ebc'] <= 38 && $val['recipe_ebc'] > 15) $ebcst['medium'] = $key;
-					if ($ebcst['strong'] === false && $val['recipe_ebc'] > 38) $ebcst['strong'] = $key;
+				foreach ($result as $key => $val) {
+					if ($ebcst['light'] === false && $val['recipe_ebc'] <= 15)
+						$ebcst['light'] = $key;
+					if ($ebcst['medium'] === false && $val['recipe_ebc'] <= 38 && $val['recipe_ebc'] > 15)
+						$ebcst['medium'] = $key;
+					if ($ebcst['strong'] === false && $val['recipe_ebc'] > 38)
+						$ebcst['strong'] = $key;
 				}
 				$this->view->ebcst = $ebcst;
 				$this->view->statsebc = $result;
-				if (sizeof($result) > 0){
+				if (sizeof($result) > 0) {
 					$select = $db->select()
 							->from("beer_brew_sessions", array())
 							->join("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe", array("AVG(recipe_ebc) as average_ebc"))
@@ -400,7 +481,7 @@ class BrewerController extends Zend_Controller_Action {
 					$result = $db->FetchRow($select);
 					$this->view->statsebc_avg = $result['average_ebc'];
 				}
-				
+
 				$select = $db->select()
 						->from("beer_recipes", array("recipe_abv"))
 						->where("brewer_id = ?", $brewer)
@@ -409,14 +490,17 @@ class BrewerController extends Zend_Controller_Action {
 				$abvrt['light'] = false;
 				$abvrt['medium'] = false;
 				$abvrt['strong'] = false;
-				foreach($result as $key=>$val){
-					if ($abvrt['light'] === false && $val['recipe_abv'] <= 5.5) $abvrt['light'] = $key;
-					if ($abvrt['medium'] === false && $val['recipe_abv'] <= 9.5 && $val['recipe_abv'] > 5.5) $abvrt['medium'] = $key;
-					if ($abvrt['strong'] === false && $val['recipe_abv'] > 9.5) $abvrt['strong'] = $key;
+				foreach ($result as $key => $val) {
+					if ($abvrt['light'] === false && $val['recipe_abv'] <= 5.5)
+						$abvrt['light'] = $key;
+					if ($abvrt['medium'] === false && $val['recipe_abv'] <= 9.5 && $val['recipe_abv'] > 5.5)
+						$abvrt['medium'] = $key;
+					if ($abvrt['strong'] === false && $val['recipe_abv'] > 9.5)
+						$abvrt['strong'] = $key;
 				}
 				$this->view->abvrt = $abvrt;
 				$this->view->statrabv = $result;
-				if (sizeof($result) > 0){
+				if (sizeof($result) > 0) {
 					$select = $db->select()
 							->from("beer_recipes", array("AVG(recipe_abv) as average_abv"))
 							->where("brewer_id = ?", $brewer);
@@ -433,14 +517,17 @@ class BrewerController extends Zend_Controller_Action {
 				$abvst['light'] = false;
 				$abvst['medium'] = false;
 				$abvst['strong'] = false;
-				foreach($result as $key=>$val){
-					if ($abvst['light'] === false && $val['recipe_abv'] <= 5.5) $abvst['light'] = $key;
-					if ($abvst['medium'] === false && $val['recipe_abv'] <= 9.5 && $val['recipe_abv'] > 5.5) $abvst['medium'] = $key;
-					if ($abvst['strong'] === false && $val['recipe_abv'] > 9.5) $abvst['strong'] = $key;
+				foreach ($result as $key => $val) {
+					if ($abvst['light'] === false && $val['recipe_abv'] <= 5.5)
+						$abvst['light'] = $key;
+					if ($abvst['medium'] === false && $val['recipe_abv'] <= 9.5 && $val['recipe_abv'] > 5.5)
+						$abvst['medium'] = $key;
+					if ($abvst['strong'] === false && $val['recipe_abv'] > 9.5)
+						$abvst['strong'] = $key;
 				}
 				$this->view->abvst = $abvst;
 				$this->view->statsabv = $result;
-				if (sizeof($result) > 0){
+				if (sizeof($result) > 0) {
 					$select = $db->select()
 							->from("beer_brew_sessions", array())
 							->join("beer_recipes", "beer_recipes.recipe_id = beer_brew_sessions.session_recipe", array("AVG(recipe_abv) as average_abv"))
@@ -448,7 +535,7 @@ class BrewerController extends Zend_Controller_Action {
 					$result = $db->FetchRow($select);
 					$this->view->statsabv_avg = $result['average_abv'];
 				}
-				
+
 				$select = $db->select()
 						->from("beer_recipes", array("COUNT(recipe_style) AS kiekis"))
 						->join("beer_styles", "beer_recipes.recipe_style = beer_styles.style_id", array("style_name"))
@@ -762,17 +849,17 @@ class BrewerController extends Zend_Controller_Action {
 			}
 			$select->where("beer_recipes.brewer_id= ?", $brewer["user_id"]);
 			$select->where("beer_recipes.recipe_archived = ?", 0);
-			switch($this->_getParam("sort")){
+			switch ($this->_getParam("sort")) {
 				case "1":
 					$select->order("beer_recipes.recipe_name ASC");
-				break;
+					break;
 				case "2":
 					$select->order(array("beer_styles.style_name ASC", "beer_recipes.recipe_created DESC"));
-				break;
+					break;
 				case "0":
 				default:
 					$select->order("beer_recipes.recipe_created DESC");
-				break;
+					break;
 			}
 
 			if ($this->show_list === true && $this->_getParam('brewer') == 0) {
@@ -787,6 +874,7 @@ class BrewerController extends Zend_Controller_Action {
 			$this->view->brewer["total"] = $total["count"];
 		}
 	}
+
 	public function archiveAction() {
 		$par = array();
 		$par['brewer'] = $this->_getParam("brewer");
@@ -822,17 +910,17 @@ class BrewerController extends Zend_Controller_Action {
 					->joinLeft("beer_styles", "beer_recipes.recipe_style = beer_styles.style_id", array("style_name"));
 			$select->where("beer_recipes.brewer_id= ?", $brewer["user_id"]);
 			$select->where("beer_recipes.recipe_archived = ?", 1);
-			switch($this->_getParam("sort")){
+			switch ($this->_getParam("sort")) {
 				case "1":
 					$select->order("beer_recipes.recipe_name ASC");
-				break;
+					break;
 				case "2":
 					$select->order(array("beer_styles.style_name ASC", "beer_recipes.recipe_created DESC"));
-				break;
+					break;
 				case "0":
 				default:
 					$select->order("beer_recipes.recipe_created DESC");
-				break;
+					break;
 			}
 
 			if ($this->show_list === true && $this->_getParam('brewer') == 0) {
@@ -855,7 +943,7 @@ class BrewerController extends Zend_Controller_Action {
 			$db = Zend_Registry::get("db");
 			$db->update("users_attributes", array("recipe_list" => "0"), array("user_id = '" . $user_info->user_id . "'"));
 		}
-		if ($this->_getParam("archive") == 1){
+		if ($this->_getParam("archive") == 1) {
 			$this->_redirect("/brewer/archive");
 		} else {
 			$this->_redirect("/brewer/recipes");
@@ -869,7 +957,7 @@ class BrewerController extends Zend_Controller_Action {
 			$db = Zend_Registry::get("db");
 			$db->update("users_attributes", array("recipe_list" => "1"), array("user_id = '" . $user_info->user_id . "'"));
 		}
-		if ($this->_getParam("archive") == 1){
+		if ($this->_getParam("archive") == 1) {
 			$this->_redirect("/brewer/archive");
 		} else {
 			$this->_redirect("/brewer/recipes");
