@@ -241,6 +241,19 @@ ul#topmenu li a:hover {
 	padding: 10px;
 	padding-right: 20px;
 }
+.gsc-control-cse {
+	background-color: #fff;
+	margin-bottom: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.gsc-search-button {
+	display: none;
+}
+.gsc-search-box-tools .gsc-search-box .gsc-input {
+	padding: 0px !important;
+}
 .block_header {
 	font-size: 12px;
 	font-weight: bold;
