@@ -3315,14 +3315,14 @@ html ul.topnav li ul.subnav li a:hover {
 	background-color: #fff;
 }
 .vote_val_select {
-	width: 50px !important;
+	width: 60px !important;
 	vertical-align: top;
 }
 .vote_val_select select {
-	width: 40px !important;
+	width: 50px !important;
 }
 .vote_val_comment {
-	width: 310px !important;
+	width: 300px !important;
 	vertical-align: top;
 	margin-left: 17px !important;
 }
@@ -3332,7 +3332,7 @@ html ul.topnav li ul.subnav li a:hover {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	border: 1px solid #ccc;
-	width: 300px;
+	width: 290px;
 	padding: 2px;
 	background-color: #fff;
 }
