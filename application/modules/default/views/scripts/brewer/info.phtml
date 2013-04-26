@@ -201,7 +201,19 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 			<li><a href="#tabs-tags">Žymos (<?= sizeof($this->user_info['tags']); ?>)</a></li>
 			<?php
 		}
-		if (isset($this->position) && !empty($this->position)) {
+		if (
+			(isset($this->position) && !empty($this->position)) || 
+			(isset($this->statsess) && !empty($this->statsess)) ||
+			(isset($this->statrabv) && !empty($this->statrabv)) ||
+			(isset($this->statsabv) && !empty($this->statsabv)) ||
+			(isset($this->statribu) && !empty($this->statribu)) ||
+			(isset($this->statsibu) && !empty($this->statsibu)) ||
+			(isset($this->statrebc) && !empty($this->statrebc)) ||
+			(isset($this->statsebc) && !empty($this->statsebc)) ||
+			(isset($this->statstyles) && !empty($this->statstyles)) ||
+			(isset($this->statsstyles) && !empty($this->statsstyles)) ||
+			(isset($this->statcstyles) && !empty($this->statcstyles))
+		) {
 			?>
 			<li><a href="#tabs-stats">Statistika</a></li>
 			<?php
