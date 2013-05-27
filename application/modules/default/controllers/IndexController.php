@@ -126,6 +126,24 @@ class IndexController extends Zend_Controller_Action {
 					->order("id DESC")
 					->where("id > '".$out['last']."'");
 			switch($filter_type){
+				case "all_recipes":
+					$select->where("(type = 'recipe' OR type = 'recipe_comment' OR type = 'session' OR type='vote')");
+				break;
+				case "all_foods":
+					$select->where("(type = 'food' OR type = 'food_comment')");
+				break;
+				case "all_events":
+					$select->where("(type = 'event' OR type = 'event_comment')");
+				break;
+				case "all_ideas":
+					$select->where("(type = 'idea' OR type = 'idea_comment')");
+				break;
+				case "all_markets":
+					$select->where("(type = 'market' OR type = 'market_comment')");
+				break;
+				case "all_reads":
+					$select->where("(type = 'tweet' OR type = 'rss' OR type = 'article' OR type = 'article_comment')");
+				break;
 				case "vote":
 					$select->where("type = 'vote'");
 				break;
@@ -221,6 +239,24 @@ class IndexController extends Zend_Controller_Action {
 					->where("posted < '".$last_stamp."'")
 					->limit(30);
 			switch($filter_type){
+				case "all_recipes":
+					$select->where("(type = 'recipe' OR type = 'recipe_comment' OR type = 'session' OR type='vote')");
+				break;
+				case "all_foods":
+					$select->where("(type = 'food' OR type = 'food_comment')");
+				break;
+				case "all_events":
+					$select->where("(type = 'event' OR type = 'event_comment')");
+				break;
+				case "all_ideas":
+					$select->where("(type = 'idea' OR type = 'idea_comment')");
+				break;
+				case "all_markets":
+					$select->where("(type = 'market' OR type = 'market_comment')");
+				break;
+				case "all_reads":
+					$select->where("(type = 'tweet' OR type = 'rss' OR type = 'article' OR type = 'article_comment')");
+				break;
 				case "vote":
 					$select->where("type = 'vote'");
 				break;
@@ -354,6 +390,24 @@ class IndexController extends Zend_Controller_Action {
 					->order("id DESC")
 					->limit(30);
 			switch($filter_type){
+				case "all_recipes":
+					$select->where("(type = 'recipe' OR type = 'recipe_comment' OR type = 'session' OR type='vote')");
+				break;
+				case "all_foods":
+					$select->where("(type = 'food' OR type = 'food_comment')");
+				break;
+				case "all_events":
+					$select->where("(type = 'event' OR type = 'event_comment')");
+				break;
+				case "all_ideas":
+					$select->where("(type = 'idea' OR type = 'idea_comment')");
+				break;
+				case "all_markets":
+					$select->where("(type = 'market' OR type = 'market_comment')");
+				break;
+				case "all_reads":
+					$select->where("(type = 'tweet' OR type = 'rss' OR type = 'article' OR type = 'article_comment')");
+				break;
 				case "vote":
 					$select->where("type = 'vote'");
 				break;

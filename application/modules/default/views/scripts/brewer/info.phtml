@@ -1061,33 +1061,30 @@ $this->headScript()->appendFile("/public/ui/flot/jquery.flot.crosshair.js");
 				<div>
 					<select id="new_filter_select" name="new_filter_select">
 						<option value="all" <?= ($this->filter_type == "all") ? 'selected="selected"' : '' ?>>Visi įrašai</option>
-						<optgroup label="Receptai">
-							<option value="recipe" <?= ($this->filter_type == "recipe") ? 'selected="selected"' : '' ?>>Receptai</option>
-							<option value="recipe_comment" <?= ($this->filter_type == "recipe_comment") ? 'selected="selected"' : '' ?>>Receptų komentarai</option>
-							<option style="font-weight: bold;" value="session" <?= ($this->filter_type == "session") ? 'selected="selected"' : '' ?>>Virimai</option>
-							<option value="vote" <?= ($this->filter_type == "vote") ? 'selected="selected"' : '' ?>>Receptų vertinimai</option>
-						</optgroup>
-						<optgroup label="Alus ir maistas">
-							<option value="food" <?= ($this->filter_type == "food") ? 'selected="selected"' : '' ?>>Patiekalai</option>
-							<option value="food_comment" <?= ($this->filter_type == "food_comment") ? 'selected="selected"' : '' ?>>Patiekalų komentarai</option>
-						</optgroup>
-						<optgroup label="Forumas">
-							<option value="forum_post" <?= ($this->filter_type == "forum_post") ? 'selected="selected"' : '' ?>>Forumo žinutės</option>
-						</optgroup>
-						<optgroup label="Įvykiai">
-							<option value="event_comment" <?= ($this->filter_type == "event_comment") ? 'selected="selected"' : '' ?>>Įvykių komentarai</option>
-						</optgroup>
-						<optgroup label="Idėjos">
-							<option value="idea" <?= ($this->filter_type == "idea") ? 'selected="selected"' : '' ?>>Idėjos</option>
-							<option value="idea_comment" <?= ($this->filter_type == "idea_comment") ? 'selected="selected"' : '' ?>>Idėjų komentarai</option>
-						</optgroup>
-						<optgroup label="Virtualus turgus">
-							<option value="market" <?= ($this->filter_type == "market") ? 'selected="selected"' : '' ?>>Skelbimai</option>
-							<option value="market_comment" <?= ($this->filter_type == "market_comment") ? 'selected="selected"' : '' ?>>Skelbimų komentarai</option>
-						</optgroup>
-						<optgroup label="Skaitykla">
-							<option value="tweet" <?= ($this->filter_type == "tweet") ? 'selected="selected"' : '' ?>>Aludarių pranešimai</option>
-						</optgroup>
+						<option value="all_recipes" <?= ($this->filter_type == "all_recipes") ? 'selected="selected"' : '' ?>>Receptai</option>
+							<option value="recipe" <?= ($this->filter_type == "recipe") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Receptai</option>
+							<option value="recipe_comment" <?= ($this->filter_type == "recipe_comment") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Receptų komentarai</option>
+							<option value="session" <?= ($this->filter_type == "session") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Virimai</option>
+							<option value="vote" <?= ($this->filter_type == "vote") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Receptų vertinimai</option>
+						<option value="all_foods" <?= ($this->filter_type == "all_foods") ? 'selected="selected"' : '' ?>>Alus ir maistas</option>
+							<option value="food" <?= ($this->filter_type == "food") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Patiekalai</option>
+							<option value="food_comment" <?= ($this->filter_type == "food_comment") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Patiekalų komentarai</option>
+						<option value="forum_post" <?= ($this->filter_type == "forum_post") ? 'selected="selected"' : '' ?>>Forumo žinutės</option>
+						<option value="all_events" <?= ($this->filter_type == "all_events") ? 'selected="selected"' : '' ?>>Įvykiai</option>
+							<option value="event" <?= ($this->filter_type == "event") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Įvykiai</option>
+							<option value="event_comment" <?= ($this->filter_type == "event_comment") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Įvykių komentarai</option>
+						<option value="all_ideas" <?= ($this->filter_type == "all_ideas") ? 'selected="selected"' : '' ?>>Idėjos</option>
+							<option value="idea" <?= ($this->filter_type == "idea") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Idėjos</option>
+							<option value="idea_comment" <?= ($this->filter_type == "idea_comment") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Idėjų komentarai</option>
+						<option value="all_markets" <?= ($this->filter_type == "all_markets") ? 'selected="selected"' : '' ?>>Virtualus turgus</option>
+							<option value="market" <?= ($this->filter_type == "market") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Skelbimai</option>
+							<option value="market_comment" <?= ($this->filter_type == "market_comment") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Skelbimų komentarai</option>
+						<option value="all_reads" <?= ($this->filter_type == "all_reads") ? 'selected="selected"' : '' ?>>Skaitykla</option>
+							<option value="tweet" <?= ($this->filter_type == "tweet") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Aludarių pranešimai</option>
+							<option value="rss" <?= ($this->filter_type == "rss") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Naujienos iš kitų svetainių</option>
+							<option value="article" <?= ($this->filter_type == "article") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Straipsniai</option>
+							<option value="article_comment" <?= ($this->filter_type == "article_comment") ? 'selected="selected"' : '' ?>>&nbsp;&nbsp;&nbsp;Straipsnių komentarai</option>
+						<option value="user" <?= ($this->filter_type == "user") ? 'selected="selected"' : '' ?>>Nauji aludariai</option>
 					</select>
 					<div class="clear"></div>
 				</div>

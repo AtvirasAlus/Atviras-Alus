@@ -272,6 +272,24 @@ class BrewerController extends Zend_Controller_Action {
 						->where("activity.user_id = ?", $brewer)
 						->limit(30);
 				switch ($filter_type) {
+					case "all_recipes":
+						$select->where("(type = 'recipe' OR type = 'recipe_comment' OR type = 'session' OR type='vote')");
+					break;
+					case "all_foods":
+						$select->where("(type = 'food' OR type = 'food_comment')");
+					break;
+					case "all_events":
+						$select->where("(type = 'event' OR type = 'event_comment')");
+					break;
+					case "all_ideas":
+						$select->where("(type = 'idea' OR type = 'idea_comment')");
+					break;
+					case "all_markets":
+						$select->where("(type = 'market' OR type = 'market_comment')");
+					break;
+					case "all_reads":
+						$select->where("(type = 'tweet' OR type = 'rss' OR type = 'article' OR type = 'article_comment')");
+					break;
 					case "vote":
 						$select->where("type = 'vote'");
 						break;
@@ -594,6 +612,24 @@ class BrewerController extends Zend_Controller_Action {
 				->where("activity.user_id = ?", $brewer)
 				->limit(30);
 		switch ($filter_type) {
+			case "all_recipes":
+				$select->where("(type = 'recipe' OR type = 'recipe_comment' OR type = 'session' OR type='vote')");
+			break;
+			case "all_foods":
+				$select->where("(type = 'food' OR type = 'food_comment')");
+			break;
+			case "all_events":
+				$select->where("(type = 'event' OR type = 'event_comment')");
+			break;
+			case "all_ideas":
+				$select->where("(type = 'idea' OR type = 'idea_comment')");
+			break;
+			case "all_markets":
+				$select->where("(type = 'market' OR type = 'market_comment')");
+			break;
+			case "all_reads":
+				$select->where("(type = 'tweet' OR type = 'rss' OR type = 'article' OR type = 'article_comment')");
+			break;
 			case "vote":
 				$select->where("type = 'vote'");
 				break;
