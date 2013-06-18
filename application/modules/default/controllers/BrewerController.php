@@ -370,7 +370,6 @@ class BrewerController extends Zend_Controller_Action {
 						->from("beer_brew_sessions", array("session_primarydate AS date", "session_size AS size"))
 						->where("session_brewer = ?", $this->_getParam("brewer"))
 						->where("session_primarydate <= ?", date("Y-m-d"))
-						->where("session_primarydate >= ?", $this->view->user_info['user_created'])
 						->order("session_primarydate ASC");
 				$result = $db->FetchAll($select);
 				$statsess = array();
