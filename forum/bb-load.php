@@ -227,4 +227,30 @@ if (isset($_COOKIE["user_email"])){
 	
 }
 
+$u = bb_get_current_user();
 
+$sql = "SELECT * FROM users_ban_ip WHERE ban_ip = '".$_SERVER['REMOTE_ADDR']."'";
+$result = mysql_query($sql) or die(mysql_error());
+if (mysql_num_rows($result) > 0){
+	setcookie("user_btoken", md5("loremipsum"), time() + 1209600, "/", $chost);
+	header('HTTP/1.0 403 Forbidden');
+	exit;
+}
+if ($u !== 0){
+	$uuid = $u->data->ID;
+	$sql = "SELECT * FROM users WHERE user_id = '".$uuid."' AND user_enabled='0'";
+	$result = mysql_query($sql) or die(mysql_error());
+	if (mysql_num_rows($result) > 0){
+		$row = mysql_fetch_assoc($result);
+		$sql2 = "SELECT * FROM users_ban_ip WHERE ban_ip = '".$_SERVER['REMOTE_ADDR']."'";
+		$result2 = mysql_query($sql2) or die(mysql_error());
+		if (mysql_num_rows($result2) === 0){
+			mysql_query("INSERT INTO users_ban_ip SET ban_ip='".$_SERVER['REMOTE_ADDR']."', ban_user_id='".$uuid."'") or die(mysql_error());
+			$chost = explode(".", $_SERVER["SERVER_NAME"]);
+			$chost = ".".$chost[sizeof($chost)-2].".".$chost[sizeof($chost)-1];
+			setcookie("user_btoken", md5("loremipsum"), time() + 1209600, "/", $chost);
+			header('HTTP/1.0 403 Forbidden');
+			exit;
+		}
+	}
+}

@@ -43,6 +43,12 @@ class Entities_AUTH {
 			$storage = new Zend_Auth_Storage_Session();
 			$storage->write($authAdapter->getResultRowObject());
 			$db->update("users", array("user_lastlogin" => new Zend_Db_Expr("NOW()")), array("user_email = '" . $user_email . "'"));
+			$db->insert("users_log", array(
+				"log_posted" => date("Y-m-d H:i:s"),
+				"log_user_email" => $user_email,
+				"log_user_ip" => $_SERVER["REMOTE_ADDR"],
+				"log_user_agent" => $_SERVER["HTTP_USER_AGENT"]
+			));
 			return $storage->read();
 		} else {
 

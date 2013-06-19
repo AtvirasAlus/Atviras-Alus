@@ -174,6 +174,10 @@ class AuthController extends Zend_Controller_Action {
 						if (isset($_COOKIE['user_btoken']) && $_COOKIE['user_btoken'] == md5("loremipsum")){
 							$user_data['user_enabled'] = 0;
 						}
+						if (strpos($user_data['user_email'], "@translator.lt") !== false) $user_data['user_enabled'] = 0;
+						if (strpos($user_data['user_email'], "@atextum.com") !== false) $user_data['user_enabled'] = 0;
+						if (strpos($user_data['user_name'], "mariusval") !== false) $user_data['user_enabled'] = 0;
+						if (strpos($user_data['user_name'], "martinsam") !== false) $user_data['user_enabled'] = 0;
 						if (@$db->insert('users', $user_data)) {
 							$succes = true;
 							$this->view->success = true;

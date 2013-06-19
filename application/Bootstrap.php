@@ -57,6 +57,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 					->where("ban_ip = ?", $ip);
 			$result = $db->fetchAll($select);
 			if (sizeof($result) > 0){
+				$chost = explode(".", $_SERVER["SERVER_NAME"]);
+				$chost = ".".$chost[sizeof($chost)-2].".".$chost[sizeof($chost)-1];
+				setcookie("user_btoken", md5("loremipsum"), time() + 1209600, "/", $chost);
 				header('HTTP/1.0 403 Forbidden');
 				exit;
 			}
