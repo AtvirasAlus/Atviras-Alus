@@ -953,7 +953,7 @@ class RecipesController extends Zend_Controller_Action {
 				}
 
 				$fields_malt = array("malt_id" => "malt_id", "malt_type" => "malt_type", "malt_name" => 'malt_list', "malt_extract" => "malt_extract", "malt_ebc" => "malt_color", "malt_weight" => "malt_weight");
-				$fields_hops = array("hop_id" => "hop_id", "hop_time" => "hop_time", "hop_name" => 'hop_list', "hop_alpha" => "hop_alpha", "hop_weight" => "hop_weight");
+				$fields_hops = array("hop_id" => "hop_id", "hop_time" => "hop_time", "hop_name" => 'hop_list', "hop_alpha" => "hop_alpha", "hop_weight" => "hop_weight", "hop_use" => "hop_use", "hop_form" => "hop_form");
 				$fields_yeast = array("yeast_id" => "yeast_id", "yeast_name" => 'yeast_list', "yeast_weight" => "yeast_weight");
 
 				if ($recipe_id) {

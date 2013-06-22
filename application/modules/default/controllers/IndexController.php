@@ -777,11 +777,15 @@ class IndexController extends Zend_Controller_Action {
 						$this->view->print_data['hop_alpha'] = array();
 						$this->view->print_data['hop_weight'] = array();
 						$this->view->print_data['hop_time'] = array();
+						$this->view->print_data['hop_use'] = array();
+						$this->view->print_data['hop_form'] = array();
 						foreach ($hop_list as $hop) {
 							$this->view->print_data['hop_list'][] = $hop['hop_name'];
 							$this->view->print_data['hop_alpha'][] = $hop['hop_alpha'];
 							$this->view->print_data['hop_weight'][] = $hop['hop_weight'];
 							$this->view->print_data['hop_time'][] = $hop['hop_time'];
+							$this->view->print_data['hop_use'][] = $hop['hop_use'];
+							$this->view->print_data['hop_form'][] = $hop['hop_form'];
 						}
 					}
 					$yeast_list = $recipe->getYeasts();

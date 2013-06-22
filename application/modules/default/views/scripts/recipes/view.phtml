@@ -1,4 +1,39 @@
 <?php
+function translateform($form){
+	switch ($form){
+		case 'pelet':
+			return "Granulės";
+			break;
+		case 'cone':
+			return "Spurgai";
+			break;
+		default:
+			return "-";
+			break;
+	}
+}
+function translateuse($use){
+	switch ($use){
+		case 'Boil':
+			return "Virimui (kartumui)";
+			break;
+		case 'Dry Hop':
+			return "Sausam apyniavimui";
+			break;
+		case 'Mash':
+			return "Salinimui";
+			break;
+		case 'First Wort':
+			return "Pirmam misos apyniavimui";
+			break;
+		case 'Aroma':
+			return "Aromatui";
+			break;
+		default:
+			return "-";
+			break;
+	}
+}
 $this->headScript()->appendFile("/public/ui/ui/jquery.ui.datepicker.js");
 $this->headScript()->appendFile("/public/js/ui.datepicker-lt.js");
 $this->headTitle()->headTitle($this->data['recipe']['recipe_name']);
@@ -385,9 +420,11 @@ function i_bu($ibu, $og) {
 				?>
 				<div class="hop_item">
 					<div class="title"><b>Pavadinimas</b></div>
-					<div class="alpha"><span class="ttip ttip_alfa"><b>Kartumas (AA%)</b></span></div>
-					<div class="amount_w"><b>Kiekis (g)</b></div>
-					<div class="time"><b>Laikas</b></div>
+					<div class="form"><b>Forma</b></div>
+					<div class="alpha"><span class="ttip ttip_alfa"><b>AA<br />(%)</b></span></div>
+					<div class="amount_w"><b>Kiekis<br />(g)</b></div>
+					<div class="time"><b>Laikas<br />(min)</b></div>
+					<div class="use"><b>Paskirtis</b></div>
 					<div class="clear"></div>
 				</div>
 				<?php
@@ -395,9 +432,11 @@ function i_bu($ibu, $og) {
 					?>
 					<div class="hop_item">
 						<div class="title"><?= $hop['hop_name']; ?></div>
+						<div class="form"><?= translateform($hop['hop_form']); ?></div>
 						<div class="alpha"><?= $hop['hop_alpha']; ?></div>
 						<div class="amount_w"><?= $hop['hop_weight']; ?></div>
 						<div class="time"><?= $hop['hop_time']; ?></div>
+						<div class="use"><?= translateuse($hop['hop_use']); ?></div>
 						<div class="clear"></div>
 					</div>
 					<?php
@@ -405,9 +444,11 @@ function i_bu($ibu, $og) {
 				?>
 				<div class="hop_item">
 					<div class="title">&nbsp;</div>
+					<div class="form">&nbsp;</div>
 					<div class="alpha">&nbsp;</div>
 					<div class="amount_w" style="border-top: 1px solid #999; padding-top: 5px;"><?= $total; ?></div>
 					<div class="time">&nbsp;</div>
+					<div class="use">&nbsp;</div>
 					<div class="clear"></div>
 				</div>
 			</div>

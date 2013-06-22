@@ -637,6 +637,17 @@ ul#topmenu li a:hover {
 	float: left;
 	width: 310px;
 }
+.hop_item .title {
+	width: 210px;
+}
+.hop_item .form {
+	float: left;
+	width: 60px;
+}
+.hop_item .use {
+	float: left;
+	width: 150px;
+}
 .malt_item .color,
 .yeast_item .amount,
 .hop_item .alpha {
@@ -644,17 +655,26 @@ ul#topmenu li a:hover {
 	width: 100px;
 	margin-left: 10px;
 }
+.hop_item .alpha {
+	width: 40px;
+}
 .malt_item .amount_w,
 .hop_item .amount_w {
 	float: left;
 	width: 80px;
 	margin-left: 10px;
 }
+.hop_item .amount_w {
+	width: 50px;
+}
 .malt_item .amount_p,
 .hop_item .time {
 	float: left;
 	width: 80px;
 	margin-left: 10px;
+}
+.hop_item .time {
+	width: 60px;
 }
 .recipe_tags div a {
 	display: inline-block;
@@ -1595,7 +1615,7 @@ label, input[type="checkbox"], input[type="radio"] {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	border: 1px solid #ccc;
-	width: 40px;
+	width: 30px;
 	padding-left: 4px;
 	font-size: 11px;
 }
@@ -1661,7 +1681,13 @@ select.malt_list {
 	width: 280px;
 }
 select.hop_list {
-	width: 430px;
+	width: 205px;
+}
+select.hop_use {
+	width: 155px;
+}
+select.hop_form {
+	width: 70px;
 }
 select.yeast_list {
 	width: 690px;

@@ -27,6 +27,23 @@
 		?>
 		return hops;
 	}
+	function getHopUse() {
+		var uses = '';
+		uses+='<option value="none">-</option>';
+		uses+='<option value="Mash">Salinimui</option>';
+		uses+='<option value="First Wort">Pirmam miso apyniavimui</option>';
+		uses+='<option value="Boil">Virimui (kartumui)</option>';
+		uses+='<option value="Aroma">Aromatui</option>';
+		uses+='<option value="Dry Hop">Sausam apyniavimui</option>';
+		return uses;
+	}
+	function getHopForm() {
+		var uses = '';
+		uses+='<option value="none">-</option>';
+		uses+='<option value="pelet">Granulės</option>';
+		uses+='<option value="cone">Spurgai</option>';
+		return uses;
+	}
 	function getYeasts() {
 		var yeasts = '';
 		<? 
@@ -371,10 +388,14 @@
 
 		$("#hops_template .hop_tr").attr("id", "hop_tr_" + rid);
 		$("#hops_template .hop_weight").attr("id", "hop_weight_" + rid);
+		$("#hops_template .hop_use").attr("id", "hop_use_" + rid);
+		$("#hops_template .hop_form").attr("id", "hop_form_" + rid);
 		$("#hops_template .hop_alpha").attr("id", "hop_alpha_" + rid);
 		$("#hops_template .hop_time").attr("id", "hop_time_" + rid);
 		$("#hops_template .hop_list").attr("id", "hop-list_" + rid);
 		$("#hops_template .hop_list").html(getHops());
+		$("#hops_template .hop_use").html(getHopUse());
+		$("#hops_template .hop_form").html(getHopForm());
 		$('#hop-table').append($("#hops_template").html());
 
 		$("#hop_weight_" + rid).spinner({min:0});
@@ -407,6 +428,8 @@
 			$("#hop_alpha_" + rid).val(values["hop_alpha"]);
 			$("#hop_time_" + rid).val(values["hop_time"]);
 			$("#hop-list_" + rid).val(values["hop_name"]);
+			$("#hop_use_" + rid).val(values["hop_use"]);
+			$("#hop_form_" + rid).val(values["hop_form"]);
 		}
 	}
 	function createYeastList(id) {
@@ -939,9 +962,11 @@
 			<div id="hop-table" class="as-table">
 				<div class="as-row">
 					<div class="as-cell"><b>Apyniai</b></div>
-					<div class="as-cell" style="width: 120px"><b>Kiekis (gr.)</b></div>
-					<div class="as-cell" style="width: 120px"><span class="ttip ttip_alfa"><b>Alfa (%)</b></span></div>
-					<div class="as-cell" style="width: 120px"><b>Laikas (min.)</b></div>
+					<div class="as-cell" style="width: 80px"><b>Forma</b></div>
+					<div class="as-cell" style="width: 110px"><b>Kiekis (gr.)</b></div>
+					<div class="as-cell" style="width: 110px"><span class="ttip ttip_alfa"><b>Alfa (%)</b></span></div>
+					<div class="as-cell" style="width: 120px"><b>Paskirtis</b></div>
+					<div class="as-cell" style="width: 110px"><b>Laikas (min.)</b></div>
 				</div>
 			</div>
 		</form>
@@ -1015,10 +1040,16 @@
 			<select name="hop_list" class="editable-select hop_list"></select>
 		</div>
 		<div class="as-cell">
+			<select name="hop_form" class="hop_form"></select>
+		</div>
+		<div class="as-cell">
 			<input type="text" name="hop_weight" class="hop_weight" value="1" />
 		</div>
 		<div class="as-cell">
 			<input type="text" name="hop_alpha" class="hop_alpha" value="1" />
+		</div>
+		<div class="as-cell">
+			<select name="hop_use" class="hop_use"></select>
 		</div>
 		<div class="as-cell">
 			<input type="text" name="hop_time" class="hop_time" value="60" />

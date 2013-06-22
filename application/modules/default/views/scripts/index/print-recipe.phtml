@@ -1,4 +1,39 @@
 <?php
+function translateform($form){
+	switch ($form){
+		case 'pelet':
+			return "Granulės";
+			break;
+		case 'cone':
+			return "Spurgai";
+			break;
+		default:
+			return "-";
+			break;
+	}
+}
+function translateuse($use){
+	switch ($use){
+		case 'Boil':
+			return "Virimui (kartumui)";
+			break;
+		case 'Dry Hop':
+			return "Sausam apyniavimui";
+			break;
+		case 'Mash':
+			return "Salinimui";
+			break;
+		case 'First Wort':
+			return "Pirmam misos apyniavimui";
+			break;
+		case 'Aroma':
+			return "Aromatui";
+			break;
+		default:
+			return "-";
+			break;
+	}
+}
 if (isset($this->print_data['beer_name'])){
 	$this->headTitle()->headTitle($this->print_data['beer_name']);
 } else {
@@ -83,20 +118,24 @@ if (isset($this->print_data['beer_name'])){
 					?>
 					<div style="margin-bottom: 10px; margin-top: 14px;"><b>Apyniai</b></div>
 					<div style="border-bottom: 1px solid #999; margin-bottom: 5px; padding-bottom: 4px;">
-						<div style="float: left; width: 360px;">Apynys</div>
-						<div style="float: left; width: 160px;">Kartumas (AA%)</div>
-						<div style="float: left; width: 145px;">Kiekis (g)</div>
+						<div style="float: left; width: 220px;">Apynys</div>
+						<div style="float: left; width: 90px;">Forma</div>
+						<div style="float: left; width: 70px;">AA (%)</div>
+						<div style="float: left; width: 105px;">Kiekis (g)</div>
 						<div style="float: left; width: 115px;">Laikas (min)</div>
+						<div style="float: left; width: 200px;">Paskirtis</div>
 						<div style="clear: both;"></div>
 					</div>
 					<?
 					for ($i = 0; $i < count($this->print_data['hop_list']); $i++) {
 						?>
 						<div>
-							<div style="float: left; width: 360px;"><?= $this->print_data['hop_list'][$i]; ?></div>
-							<div style="float: left; width: 160px;"><?= $this->print_data['hop_alpha'][$i]; ?></div>
-							<div style="float: left; width: 145px;"><?= $this->print_data['hop_weight'][$i]; ?></div>
+							<div style="float: left; width: 220px;"><?= $this->print_data['hop_list'][$i]; ?></div>
+							<div style="float: left; width: 90px;"><?= translateform($this->print_data['hop_form'][$i]); ?></div>
+							<div style="float: left; width: 70px;"><?= $this->print_data['hop_alpha'][$i]; ?></div>
+							<div style="float: left; width: 105px;"><?= $this->print_data['hop_weight'][$i]; ?></div>
 							<div style="float: left; width: 115px;"><?= $this->print_data['hop_time'][$i]; ?></div>
+							<div style="float: left; width: 200px;"><?= translateuse($this->print_data['hop_use'][$i]); ?></div>
 							<div style="clear: both;"></div>
 						</div>
 						<?
@@ -104,9 +143,9 @@ if (isset($this->print_data['beer_name'])){
 					if (count($this->print_data['hop_list']) > 1) {
 						?>
 						<div>
-							<div style="float: left; width: 360px;">&nbsp;</div>
-							<div style="float: left; width: 160px;">&nbsp;</div>
-							<div style="float: left; width: 125px;border-top: 1px solid #999;"><?= $total; ?></div>
+							<div style="float: left; width: 310px;">&nbsp;</div>
+							<div style="float: left; width: 70px;">&nbsp;</div>
+							<div style="float: left; width: 105px;border-top: 1px solid #999;"><?= $total; ?></div>
 							<div style="clear: both;"></div>
 						</div>
 						<?
