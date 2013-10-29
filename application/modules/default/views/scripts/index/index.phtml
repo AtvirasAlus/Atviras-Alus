@@ -2,6 +2,7 @@
 $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 ?>
 <div class="index_container">
+
 	<?php
 	if (isset($this->unvoted) && $this->unvoted > 0){
 		?>
@@ -13,6 +14,11 @@ $this->headScript()->appendFile("/public/ui/external/jquery.zrssfeed.min.js");
 	}
 	?>
 	<div id="index_left">
+<div class="index_block index_events" style="border-color: red; background-color: #ffecec;">
+<b>Dėmesio!</b> Primename, kad iki paskutinės alaus pridavimo renginiui "<a href="http://www.atvirasalus.lt/ivykis/44-mai-scaron-as-salyklo-rudens-gerybes">Maišas salyklo: rudens gėrybės</a>" dienos liko visai nedaug! Nepražiopsokite ir pristatykite alų laiku.
+
+</div>
+
 		<!-- RECEPTAI -->
 		<div class="index_block index_recipes">
 			<div class="block_header">Naujausi alaus receptai:</div>

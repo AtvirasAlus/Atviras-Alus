@@ -359,29 +359,35 @@ $this->headLink()->appendStylesheet('/public/css/flow.css')
 		<div style="height: 70px;"><gcse:search></gcse:search></div>
 		<?php
 		/*
-		  foreach($this->widgets['right'] as $widget){
-		  switch($widget['type']){
-		  case "last_recipe_comments":
-		  include("widgets/right/last_recipe_comments.phtml");
-		  break;
-		  case "new_recipe_images":
-		  include("widgets/right/new_recipe_images.phtml");
-		  break;
-		  case "random_recipe_images":
-		  include("widgets/right/random_recipe_images.phtml");
-		  break;
-		  case "random_recipe":
-		  include("widgets/right/random_recipe.phtml");
-		  break;
-		  case "new_recipes":
-		  include("widgets/right/new_recipes.phtml");
-		  break;
-		  case "last_commented_recipes":
-		  include("widgets/right/last_commented_recipes.phtml");
-		  break;
-		  }
-		  }
-		 */
+		foreach($this->widgets['right'] as $widget){
+			switch($widget['type']){
+				case "last_recipe_comments":
+					include("widgets/right/last_recipe_comments.phtml");
+				break;
+				case "new_recipe_images":
+					include("widgets/right/new_recipe_images.phtml");
+				break;
+				case "random_recipe_images":
+					include("widgets/right/random_recipe_images.phtml");
+				break;
+				case "random_recipe":
+					include("widgets/right/random_recipe.phtml");
+				break;
+				case "new_recipes":
+					include("widgets/right/new_recipes.phtml");
+				break;
+				case "last_commented_recipes":
+					include("widgets/right/last_commented_recipes.phtml");
+				break;
+			}
+		}
+		*/
+		?>
+<div class="index_block index_events" style="border-color: red; background-color: #ffecec;">
+<b>Dėmesio!</b> Primename, kad iki paskutinės alaus pridavimo renginiui "<a href="http://www.atvirasalus.lt/ivykis/44-mai-scaron-as-salyklo-rudens-gerybes">Maišas salyklo: rudens gėrybės</a>" dienos liko visai nedaug! Nepražiopsokite ir pristatykite alų laiku.
+
+</div>
+		<?php
 		if (isset($this->unvoted) && $this->unvoted > 0) {
 			?>
 			<div class="inner_container">

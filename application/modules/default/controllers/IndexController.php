@@ -452,6 +452,8 @@ class IndexController extends Zend_Controller_Action {
 				break;
 				case "recipe_comment":
 					$select->where("type = 'recipe_comment'");
+                                        $select->joinLeft("beer_recipes", "beer_recipes.recipe_id = activity.recipe_comment_recipe_id", array("recipe_publish"));
+                                        $select->where("recipe_publish = ?", 1);
 				break;
 				case "tweet":
 					$select->where("type = 'tweet'");

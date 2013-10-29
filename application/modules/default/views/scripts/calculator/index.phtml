@@ -1,0 +1,515 @@
+<?php
+$this->headTitle()->headTitle("Receptų skaičiuoklė");
+$this->headLink()->appendStylesheet("/public/css/calculator.css");
+$this->headLink()->appendStylesheet("/public/select2/select2.css");
+$this->headScript()->appendFile("/public/select2/select2.js");
+?>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#calculator_style_select").select2();
+		$("input.units").focus(function(){
+			value = $(this).val();
+			units = $(this).attr("data-units");
+			$(this).val(value.replace(" "+units, ""));
+		});
+		$("input.units").blur(function(){
+			if ($(this).attr("data-type") == "int"){
+				$(this).val(parseInt($(this).val()));
+			}
+			if ($(this).attr("data-type") == "float"){
+				value = parseFloat($(this).val());
+				value = value * Math.pow(10, $(this).attr("data-precision"));
+				value = Math.round(value);
+				value = value / Math.pow(10, $(this).attr("data-precision"));
+				$(this).val(value.toFixed($(this).attr("data-precision")));
+			}
+			
+			if ($(this).val() == "NaN") $(this).val("0");
+			value = $(this).val();
+			units = $(this).attr("data-units");
+			$(this).val(value.replace(" "+units, "") + " " + $(this).attr("data-units"));
+		});
+		$("input.units").blur();
+		$("input[readonly=readonly]").focus(function(){
+			$(this).blur();
+		});
+		
+		$("input[name='c_size']").change(function(){
+			calculate_boil_size();
+			calculate_ebc();
+			calculate_og();
+		});
+		$("input[name='c_time']").change(function(){
+			calculate_boil_size();
+		});
+		$("input[name='c_evaporate']").change(function(){
+			calculate_boil_size();
+		});
+		$("input[name='c_topup']").change(function(){
+			calculate_boil_size();
+		});
+		$(".c_malt_amount input").change(function(){
+			calculate_malt_precents();
+			calculate_ebc();
+			calculate_og();
+		});
+		$(".c_yeast_attenuation input").change(function(){
+			calculate_og();
+		});
+		calculate_all();
+		
+		function get_unit_val(sel){
+			value = $(sel).val();
+			units = $(sel).attr("data-units");
+			return value.replace(" "+units, "");
+		}
+		function get_strip_val(value, units){
+			return value.replace(" "+units, "");
+		}
+		function calculate_all(){
+			calculate_boil_size();
+			calculate_malt_precents();
+			calculate_ebc();
+			calculate_og();
+		}
+		function calculate_ibu(og){
+			var water = get_unit_val("input[name='c_size']");
+			var gallons = water * 0.264172052;
+			var ttlIBU_Tinseth = 0;
+			var ttlIBU_Rager = 0;
+			$(".c_hop_amount").each(function(index) {
+				var thisIBU_Tinseth = 0;
+				var thisIBU_Rager = 0;
+				var util = (1.65 * Math.pow(0.000125, og - 1)) * ((1 - Math.exp(-0.04 * get_strip_val($(this).parent().children(".c_hop_time").children("input").val(), $(this).parent().children(".c_hop_time").children("input").attr("data-units")))) / 4.15);
+				thisIBU_Tinseth = util * ((0.0352739619 * get_strip_val($(this).parent().children(".c_hop_amount").children("input").val(), $(this).parent().children(".c_hop_amount").children("input").attr("data-units"))) * (get_strip_val($(this).parent().children(".c_hop_alpha").children("input").val(), $(this).parent().children(".c_hop_alpha").children("input").attr("data-units")) / 100) * 7490) / gallons;
+				thisIBU_Rager = ((0.0352739619 * get_strip_val($(this).parent().children(".c_hop_amount").children("input").val(), $(this).parent().children(".c_hop_amount").children("input").attr("data-units"))) * util * (get_strip_val($(this).parent().children(".c_hop_alpha").children("input").val(), $(this).parent().children(".c_hop_alpha").children("input").attr("data-units")) / 100) * 7489) / (gallons * og);
+				ttlIBU_Tinseth = ttlIBU_Tinseth + thisIBU_Tinseth;
+				ttlIBU_Rager = ttlIBU_Rager + thisIBU_Rager;
+			});
+			
+			ibu_tinseth = Math.round(ttlIBU_Tinseth);
+			ibu_rager = Math.round(ttlIBU_Rager); 
+			ibu = ibu_tinseth;
+			$("#temp_ibu span").html(ibu);
+			calculate_balance(og, ibu);
+		}
+		function calculate_balance(og, ibu){
+			bu = ibu / ((og * 1000) - 1000)
+			bu = Math.round(bu * 100) / 100;
+			bu = bu.toFixed(2);
+			if (bu >= 0 && bu <= 0.19) {
+				feel = "kartumo nėra, dominuoja salyklas";
+			} else if (bu >= 0.2 && bu <= 0.39) { 
+				feel = "jaučiami apyniai, dominuoja salyklas";
+			} else if (bu >= 0.4 && bu <= 0.59) { 
+				feel = "kartumas ir salyklo skonis subalansuotas";
+			} else if (bu >= 0.6 && bu <= 0.79) {
+				feel = "ryškus apynių skonis";
+			} else if (bu >= 0.8 && bu <= 100) {
+				feel = "dominuoja apynių skonis";
+			}
+			
+			$("#temp_balance span").html(bu);
+			$("#temp_feel span").html(feel);
+		}
+		function calculate_og(){
+			var og = 0;
+			$(".c_malt_amount").each(function(index) {
+				malt_type = $(this).parent().children(".c_malt_type").text();
+				malt_amount = get_strip_val($(this).children("input").val(), $(this).children("input").attr("data-units"));
+				malt_extract = $(this).parent().children(".c_malt_ppg").text();
+				water_l = get_unit_val("input[name='c_size']");
+				ef = get_unit_val("input[name='c_efficiency']")/100;
+				if (malt_type == "Salyklas") {
+					og += (((malt_amount * 2.20462262) * malt_extract) / (water_l * 0.264172052)) * ef;
+				} else {
+					og += (((malt_amount * 2.20462262) * malt_extract) / (water_l * 0.264172052));
+				}
+			});
+			og = (Math.round(og) + 1000) / 1000;
+			og = og.toFixed(3);
+			$("#temp_og span").html(og);
+			calculate_fg(og);
+			calculate_ibu(og);
+		}
+		function calculate_fg(og){
+			att = 0;
+			$(".c_yeast_attenuation").each(function(index) {
+				attenuation = get_strip_val($(this).children("input").val(), $(this).children("input").attr("data-units"));
+				if (attenuation > att) att = attenuation;
+			});
+			att = att / 100;
+			fg = (Math.round((og * 1000 - 1000) * (1 - att)) + 1000) / 1000
+			fg = fg.toFixed(3);
+			$("#temp_fg span").html(fg);
+			calculate_abv(og, fg);
+		}
+		function calculate_abv(og, fg){
+			abv = (og*1000 - fg*1000) * 0.131;
+			abv = Math.round(abv*10) / 10;
+			abv = abv.toFixed(1);
+			$("#temp_abv span").html(abv);
+		}
+		function calculate_ebc(){
+			var mcu = 0;
+			$(".c_malt_amount").each(function(index) {
+				malt_ebc = $(this).parent().children(".c_malt_color").text();
+				malt_amount = get_strip_val($(this).children("input").val(), $(this).children("input").attr("data-units"));
+				size = get_unit_val("input[name='c_size']");
+				mcu += ((malt_ebc / 1.97) * (malt_amount * 2.20462262)) / (size * 0.264172052);
+			});
+			ebc = (1.4922 * Math.pow(mcu, 0.6859)) * 1.97;
+			ebc = Math.round(ebc);
+			$("#temp_ebc span").html(ebc);
+		}
+		function liters_to_gallons(l) {
+			return l;
+		}
+		function srm_to_ecb(srm) {
+			return srm;
+		}
+		function calculate_malt_precents(){
+			sum = 0;
+			$(".c_malt_amount input").each(function(index) {
+				value = get_strip_val($(this).val(), $(this).attr("data-units"));
+				sum = sum + parseFloat(value);
+			});
+			$(".c_malt_amount input").each(function(index) {
+				value = get_strip_val($(this).val(), $(this).attr("data-units"));
+				percent = parseFloat(value) / sum * 100;
+				$(this).prev().text(percent.toFixed(1)+"%");
+			});
+		}
+		function calculate_boil_size(){
+			batch = get_unit_val("input[name='c_size']");
+			time = get_unit_val("input[name='c_time']");
+			evaporate = get_unit_val("input[name='c_evaporate']");
+			topup = get_unit_val("input[name='c_topup']");
+			boil = ((batch - topup) / (1 - (evaporate / 100 * (time / 60))));
+			$("input[name='c_boil']").val(boil);
+			$("input[name='c_boil']").blur();
+		}
+	});
+</script>
+<div id="calculator_container" class="inner_container">
+	<div class="inner_header">Receptų skaičiuoklė</div>
+	<div>
+		<div style="padding-bottom: 50px;">
+			<div id="temp_og">OG: <span></span> </div>
+			<div id="temp_fg">FG: <span></span></div>
+			<div id="temp_abv">ABV: <span></span></div>
+			<div id="temp_ibu">IBU: <span></span></div>
+			<div id="temp_ebc">EBC: <span></span></div>
+			<div id="temp_balance">IBU/OG: <span></span></div>
+			<div id="temp_feel">Pojutis: <span></span></div>
+		</div>
+		<div id="calculator_tools">
+			<div id="calculator_tools_left">
+				<input type="button" value="" name="" id="calculator_save" title="Saugoti" />
+				<input type="button" value="" name="" id="calculator_copy" title="Dublikuoti" />
+				<div class="clear"></div>
+			</div>
+			<div id="calculator_tools_right">
+				<a href="#" id="calculator_settings" title="Nustatymai"></a>
+				<a href="#" id="calculator_help" title="Pagalba"></a>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div id="calculator_naming">
+			<dl>
+				<dt>Pavadinimas</dt>
+				<dd><input type="text" name="c_name" value="<?=$this->data['recipe']['c_name']?>" /></dd>
+				<div class="clear"></div>
+			</dl>
+			<dl>
+				<dt>Stilius</dt>
+				<dd>
+					<select name="c_style" id="calculator_style_select" style="width: 300px;">
+						<?php
+						foreach ($this->styles as $cat) {
+							?>
+							<optgroup label="<?= $cat['cat_name'] ?>">
+								<?php
+								foreach ($cat['childs'] as $style) {
+									if ($style['style_id'] == $this->data['recipe']['c_style']) {
+										?>
+										<option value="<?= $style['style_id'] ?>" selected="selected"><?= $style['style_name'] ?></option>
+										<?php
+									} else {
+										?>
+										<option value="<?= $style['style_id'] ?>"><?= $style['style_name'] ?></option>
+										<?php
+									}
+								}
+								?>
+							</optgroup>
+							<?php
+						}
+						?>
+					</select>
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl>
+				<dt>Statusas</dt>
+				<dd><select name="c_visibility">
+						<option value="0" <?=($this->data['recipe']['c_status'] == 0) ? "selected='selected'" : "";?>>Privatus</option>
+						<option value="1" <?=($this->data['recipe']['c_status'] == 1) ? "selected='selected'" : "";?>>Viešas</option>
+					</select></dd>
+				<div class="clear"></div>
+			</dl>
+		</div>
+		<div id="calculator_details">
+			<h1>Recepto detalės</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Efektyvumas</th>
+						<th>Alaus kiekis</th>
+						<th>Virimo laikas</th>
+						<th>Garavimo intensyvumas</th>
+						<th>Papildomas vanduo</th>
+						<th>Kiekis prieš virimą</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" name="c_efficiency" value="<?=$this->data['details']['c_efficiency']?>" data-units="%" class="units" data-type="int" /></td>
+						<td><input type="text" name="c_size" value="<?=$this->data['details']['c_size']?>" data-units="L" class="units" data-type="float" data-precision="1" /></td>
+						<td><input type="text" name="c_time" value="<?=$this->data['details']['c_time']?>" data-units="min" class="units" data-type="int" /></td>
+						<td><input type="text" name="c_evaporate" value="<?=$this->data['details']['c_evaporate']?>" data-units="%" class="units" data-type="int" /></td>
+						<td><input type="text" name="c_topup" value="<?=$this->data['details']['c_topup']?>" data-units="L" class="units" data-type="float" data-precision="1" /></td>
+						<td><input type="text" name="c_boil" value="" readonly="readonly" data-units="L" class="units" data-type="float" data-precision="2" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="calculator_malts">
+			<h1>Fermentuojamos medžiagos</h1>
+			<table>
+				<thead>
+					<tr>
+						<th id="th_malt_amount">Kiekis</th>
+						<th id="th_malt_name">Pavadinimas</th>
+						<th id="th_malt_use">Naudojimas</th>
+						<th id="th_malt_type">Tipas</th>
+						<th id="th_malt_ppg">PPG</th>
+						<th id="th_malt_color">Spalva</th>
+						<th id="th_malt_action">+</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					foreach ($this->data['fermentables'] as $item){
+						?>
+						<tr class="c_malt_row">
+							<td class="c_malt_amount"><span></span> <input type="text" name="c_malt_amount[]" value="<?=$item['malt_weight']?>" class="units" data-units="kg" data-type="float" data-precision="3" /></td>
+							<td class="c_malt_name"><a href="#"><?=$item['malt_name']?></a></td>
+							<td class="c_malt_use">
+								<select name="c_malt_use">
+									<option value="mash" <?=($item['malt_use'] == "mash") ? 'selected="selected"' : "";?>>Salinimas</option>
+									<option value="steep" <?=($item['malt_use'] == "steep") ? 'selected="selected"' : "";?>>Mirkymas</option>
+									<option value="boil" <?=($item['malt_use'] == "boil") ? 'selected="selected"' : "";?>>Virimas</option>
+								</select>
+							</td>
+							<?php
+							switch($item['malt_type']){
+								case 'sugar':
+									$malt_type = "Cukrus";
+									break;
+								case 'malt':
+									$malt_type = "Salyklas";
+									break;
+								case 'extract':
+									$malt_type = "Ekstraktas";
+									break;
+							}
+							?>
+							<td class="c_malt_type"><?=$malt_type;?></td>
+							<td class="c_malt_ppg"><?=$item['malt_extract']?></td>
+							<td class="c_malt_color"><div class="ebc<?=($item['malt_ebc'] < 80) ? $item['malt_ebc'] : "80";?>"></div><span><?=$item['malt_ebc']?></span></td>
+							<td class="c_malt_actions"><a href="#"></a></td>
+						</tr>
+						<?
+					}
+					?>
+				</tbody>
+			</table>
+			<div class="add_new">
+				<a href="#" class="add_new">Pridėti fermentuojamas medžiagas</a>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="calculator_hops">
+			<h1>Apyniai</h1>
+			<table>
+				<thead>
+					<tr>
+						<th id="th_hop_time">Laikas</th>
+						<th id="th_hop_amount">Kiekis</th>
+						<th id="th_hop_name">Pavadinimas</th>
+						<th id="th_hop_use">Naudojimas</th>
+						<th id="th_hop_form">Forma</th>
+						<th id="th_hop_alpha">AA%</th>
+						<th id="th_hop_action">+</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					foreach($this->data['hops'] as $item){
+						?>
+						<tr>
+							<td class="c_hop_time"><input type="text" name="c_hop_time[]" value="<?=$item['hop_time']?>" class="units" data-units="min" data-type="int" /></td>
+							<td class="c_hop_amount"><input type="text" name="c_hop_amount[]" value="<?=$item['hop_weight']?>" class="units" data-units="g" data-type="int" /></td>
+							<td class="c_hop_name"><a href="#"><?=$item['hop_name']?></a></td>
+							<td class="c_hop_use"><select name="c_hop_use[]">
+									<option value="none" <?=($item['hop_use'] == "none" || $item['hop_use'] == "") ? 'selected="selected"' : ""?>>-</option>
+									<option value="mash" <?=($item['hop_use'] == "Mash") ? 'selected="selected"' : ""?>>Salinimui</option>
+									<option value="firstwort" <?=($item['hop_use'] == "First Wort") ? 'selected="selected"' : ""?>>Pirmam misos apyniavimui</option>
+									<option value="boil" <?=($item['hop_use'] == "Boil" || $item['hop_use'] == "Aroma") ? 'selected="selected"' : ""?>>Virimui</option>
+									<option value="dryhop" <?=($item['hop_use'] == "Dry Hop") ? 'selected="selected"' : ""?>>Sausam apyniavimui</option>
+								</select></td>
+							<td class="c_hop_form"><select name="c_hop_form[]">
+									<option value="none" <?=($item['hop_form'] == "none" || $item['hop_form'] == "") ? 'selected="selected"' : ""?>>-</option>
+									<option value="pelet" <?=($item['hop_form'] == "pelet") ? 'selected="selected"' : ""?>>Granulės</option>
+									<option value="plug" <?=($item['hop_form'] == "cone") ? 'selected="selected"' : ""?>>Spurgai</option>
+								</select></td>
+							<td class="c_hop_alpha"><input type="text" name="c_hop_alpha[]" value="<?=$item['hop_alpha']?>" class="units" data-units="%" data-type="float" data-precision="1" /></td>
+							<td class="c_hop_actions"><a href="#"></a></td>
+						</tr>
+						<?
+					}
+					?>
+				</tbody>
+			</table>
+			<div class="add_new">
+				<a href="#" class="add_new">Pridėti apynius</a>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="calculator_yeasts">
+			<h1>Mielės</h1>
+			<table>
+				<thead>
+					<tr>
+						<th id="th_yeast_name">Pavadinimas</th>
+						<th id="th_yeast_attenuation">Atenuacija</th>
+						<th id="th_yeast_action">+</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					foreach ($this->data['yeasts'] as $item){
+						?>
+						<tr>
+							<td class="c_yeast_name"><a href="#"><?=$item['yeast_name']?></a></td>
+							<td class="c_yeast_attenuation"><input type="text" name="c_yeast_attenuation[]" value="<?=$item['yeast_attenuation']?>" class="units" data-units="%" data-type="int" /></td>
+							<td class="c_yeast_actions"><a href="#"></a></td>
+						</tr>
+						<?php
+					}
+					?>
+				</tbody>
+			</table>
+			<div class="add_new">
+				<a href="#" class="add_new">Pridėti mieles</a>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="calculator_others">
+			<h1>Kitos medžiagos</h1>
+			<table>
+				<thead>
+					<tr>
+						<th id="th_other_time">Laikas</th>
+						<th id="th_other_amount">Kiekis</th>
+						<th id="th_other_name">Pavadinimas</th>
+						<th id="th_other_use">Naudojimas</th>
+						<th id="th_other_action">+</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					foreach ($this->data['others'] as $item){
+						?>
+						<tr>
+							<td class="c_other_time"><input type="text" name="c_other_time[]" value="<?=$item['other_time']?>" class="units" data-units="min" data-type="int" /></td>
+							<td class="c_other_amount"><input type="text" name="c_other_amount[]" value="<?=$item['other_amount']?>" class="units" data-units="g" data-type="int" /></td>
+							<td class="c_other_name"><a href="#"><?=$item['other_name']?></a></td>
+							<td class="c_other_use"><select name="c_other_use[]">
+									<option value="none" <?=($item['other_use'] == "none" || $item['other_use'] == "") ? 'selected="selected"' : "";?>>-</option>
+									<option value="mash" <?=($item['other_use'] == "mash") ? 'selected="selected"' : "";?>>Salinimas</option>
+									<option value="boil" <?=($item['other_use'] == "boil") ? 'selected="selected"' : "";?>>Virimas</option>
+									<option value="primary" <?=($item['other_use'] == "primary") ? 'selected="selected"' : "";?>>Pirminė fermentacija</option>
+									<option value="secondary" <?=($item['other_use'] == "secondary") ? 'selected="selected"' : "";?>>Antrinė fermentacija</option>
+									<option value="bottle" <?=($item['other_use'] == "bottle") ? 'selected="selected"' : "";?>>Buteliuose</option>
+									<option value="keg" <?=($item['other_use'] == "keg") ? 'selected="selected"' : "";?>>Statinėse</option>
+								</select></td>
+							<td class="c_other_actions"><a href="#"></a></td>
+						</tr>
+						<?php
+					}
+					?>
+				</tbody>
+			</table>
+			<div class="add_new">
+				<a href="#" class="add_new">Pridėti kitas medžiagas</a>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="calculator_steps">
+			<h1>Salinimo žingsniai</h1>
+			<table>
+				<thead>
+					<tr>
+						<th id="th_step_name">Žingsnis</th>
+						<th id="th_step_type">Tipas</th>
+						<th id="th_step_temperature">Galutinė temperatūra</th>
+						<th id="th_step_amount">Kiekis</th>
+						<th id="th_step_time">Laikas</th>
+						<th id="th_step_action">+</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					foreach ($this->data['steps'] as $item){
+						?>
+						<tr>
+							<td class="c_step_name"><select name="c_step_name[]">
+									<option <?=($item['step_name'] == "none" || $item['step_name'] == "") ? 'selected="selected"' : "";?> value="none">-</option>
+									<option <?=($item['step_name'] == "acid") ? 'selected="selected"' : "";?> value="acid">Rūgščių pauzė</option>
+									<option <?=($item['step_name'] == "beta") ? 'selected="selected"' : "";?> value="beta">Beta-Gliukano pauzė</option>
+									<option <?=($item['step_name'] == "protein") ? 'selected="selected"' : "";?> value="protein">Baltymų pauzė</option>
+									<option <?=($item['step_name'] == "maltose") ? 'selected="selected"' : "";?> value="maltose">Maltozės pauzė</option>
+									<option <?=($item['step_name'] == "saccharification") ? 'selected="selected"' : "";?> value="saccharification">Sucukrinimo pauzė</option>
+									<option <?=($item['step_name'] == "dextrinization") ? 'selected="selected"' : "";?> value="dextrinization">Dekstrinizacijos pauzė</option>
+									<option <?=($item['step_name'] == "mashout") ? 'selected="selected"' : "";?> value="mashout">Tekinimas</option>
+								</select></td>
+							<td class="c_step_type"><select name="c_step_type[]">
+									<option <?=($item['step_type'] == "none" || $item['step_type'] == "") ? 'selected="selected"' : "";?> value="none">-</option>
+									<option <?=($item['step_type'] == "direct") ? 'selected="selected"' : "";?> value="direct" selected="selected">Tiesioginis kaitinimas</option>
+									<option <?=($item['step_type'] == "infusion") ? 'selected="selected"' : "";?> value="infusion">Infuzija</option>
+									<option <?=($item['step_type'] == "decoction") ? 'selected="selected"' : "";?> value="decoction">Dekokcija</option>
+								</select></td>
+							<td class="c_step_temperature"><input type="text" name="c_step_temperature" value="<?=$item['step_temperature']?>" class="units" data-units="&deg;C" data-type="int" /></td>
+							<td class="c_step_amount"><input type="text" name="c_step_amount[]" value="<?=$item['step_amount']?>" class="units" data-units="L" data-type="float" data-precision="1" /></td>
+							<td class="c_step_time"><input type="text" name="c_step_time[]" value="<?=$item['step_time']?>" class="units" data-units="min" data-type="int" /></td>
+							<td class="c_step_actions"><a href="#"></a></td>
+						</tr>
+						<?php
+					}
+					?>
+				</tbody>
+			</table>
+			<div class="add_new">
+				<a href="#" class="add_new">Pridėti salinimo žingsnį</a>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="calculator_notes">
+			<h1>Pastabos</h1>
+			<textarea name="c_notes"><?=$this->data['recipe']['c_notes'];?></textarea>
+		</div>
+	</div>
+</div>

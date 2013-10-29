@@ -1,0 +1,637 @@
+.ebc0,.ebc1,.ebc2{
+	background-color:#fee799
+}
+.ebc3,.ebc4{
+	background-color:#fdd978
+}
+.ebc5,.ebc6{
+	background-color:#fdcb5a
+}
+.ebc7,.ebc8{
+	background-color:#fcc143
+}
+.ebc9,.ebc10{
+	background-color:#f7b324
+}
+.ebc11,.ebc12{
+	background-color:#f5a800
+}
+.ebc13,.ebc14{
+	background-color:#ee9e00
+}
+.ebc15,.ebc16{
+	background-color:#e69100
+}
+.ebc17,.ebc18{
+	background-color:#e38901
+}
+.ebc19,.ebc20{
+	background-color:#da7e01
+}
+.ebc21,.ebc22{
+	background-color:#d37400
+}
+.ebc23,.ebc24{
+	background-color:#cb6c00
+}
+.ebc25,.ebc26{
+	background-color:#c66401
+}
+.ebc27,.ebc28{
+	background-color:#bf5c01
+}
+.ebc29,.ebc30{
+	background-color:#b65300
+}
+.ebc31,.ebc32{
+	background-color:#b04f00
+}
+.ebc33,.ebc34{
+	background-color:#ac4701
+}
+.ebc35,.ebc36{
+	background-color:#a24001
+}
+.ebc37,.ebc38{
+	background-color:#9c3900
+}
+.ebc39,.ebc40{
+	background-color:#963500
+}
+.ebc41,.ebc42{
+	background-color:#912f00
+}
+.ebc43,.ebc44{
+	background-color:#8c2d01
+}
+.ebc45,.ebc46{
+	background-color:#832501
+}
+.ebc47,.ebc48{
+	background-color:#7e1f01
+}
+.ebc49,.ebc50{
+	background-color:#771c01
+}
+.ebc51,.ebc52{
+	background-color:#721b00
+}
+.ebc53,.ebc54{
+	background-color:#6c1501
+}
+.ebc55,.ebc56{
+	background-color:#670f01
+}
+.ebc57,.ebc58{
+	background-color:#620f01
+}
+.ebc59,.ebc60{
+	background-color:#5b0d01
+}
+.ebc61,.ebc62{
+	background-color:#560c03
+}
+.ebc63{
+	background-color:#5d0a02
+}
+.ebc64,.ebc65{
+	background-color:#500a08
+}
+.ebc66,.ebc67{
+	background-color:#4a0605
+}
+.ebc68,.ebc69{
+	background-color:#440706
+}
+.ebc70,.ebc71{
+	background-color:#420807
+}
+.ebc72,.ebc73{
+	background-color:#3c0908
+}
+.ebc74,.ebc75{
+	background-color:#390708
+}
+.ebc76,.ebc77{
+	background-color:#39080b
+}
+.ebc78,.ebc79{
+	background-color:#35090a
+}
+.ebc80 {
+	background-color:#000000
+}
+
+#calculator_tools_left {
+	float: left;
+	width: 80px;
+}
+#calculator_tools_right {
+	float: right;
+	width: 80px;
+}
+#calculator_save {
+	display: block;
+	float: left;
+	background: none;
+	border: none;
+	background-image: url("/public/images/ico_save.png");
+	width: 32px;
+	height: 32px;
+	margin-right: 10px;
+	cursor: pointer;
+	opacity: 0.7;
+}
+#calculator_save.disabled,
+#calculator_save.disabled:hover {
+	opacity: 0.2;	
+}
+#calculator_save:hover {
+	opacity: 1;
+}
+#calculator_copy {
+	display: block;
+	float: left;
+	background: none;
+	border: none;
+	background-image: url("/public/images/ico_copy.png");
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	opacity: 0.7;
+}
+#calculator_copy.disabled,
+#calculator_copy.disabled:hover {
+	opacity: 0.2;	
+}
+#calculator_copy:hover {
+	opacity: 1;
+}
+#calculator_help {
+	display: block;
+	float: right;
+	background: none;
+	border: none;
+	background-image: url("/public/images/ico_info.png");
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+	margin-right: 10px;
+	opacity: 0.7;
+}
+#calculator_help.disabled,
+#calculator_help.disabled:hover {
+	opacity: 0.2;	
+}
+#calculator_help:hover {
+	opacity: 1;
+}
+#calculator_settings {
+	display: block;
+	float: right;
+	background: none;
+	border: none;
+	background-image: url("/public/images/ico_settings.png");
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+	opacity: 0.7;
+}
+#calculator_settings.disabled,
+#calculator_settings.disabled:vover {
+	opacity: 0.2;	
+}
+#calculator_settings:hover {
+	opacity: 1;
+}
+#calculator_container dl {
+	margin-bottom: 10px;
+}
+#calculator_container dt {
+	float: left;
+	width: 100px;
+	font-size: 13px;
+	line-height: 26px;
+}
+#calculator_container dd {
+	float: left;
+	margin: 0px;
+}
+#calculator_container dd input[type="text"] {
+	height: 24px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 294px;
+	padding-left: 4px;
+	font-size: 13px;
+}
+#calculator_container dd select{
+	height: 27px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	width: 300px;
+	padding: 2px;
+	background-color: #fff;
+}
+
+#calculator_container h1 {
+	display: block;
+	font-weight: bold;
+	font-size: 18px;
+	margin-bottom: 20px;
+	margin-top: 30px;
+}
+#calculator_naming {
+	margin-top: 30px;
+}
+#calculator_details th {
+	padding: 10px;
+	text-align: left;
+	background-color: #f3f3f3;
+	font-size: 13px;
+}
+#calculator_details th {
+	width: 130px;
+}
+#calculator_details input[type="text"] {
+	border: 1px solid #999;
+	width: 117px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}
+#calculator_details input[readonly="readonly"] {
+	background-color: #f0f0f0;
+}
+
+
+#calculator_malts th {
+	padding: 10px;
+	text-align: left;
+	background-color: #f3f3f3;
+	font-size: 13px;
+}
+#calculator_malts input[type="text"] {
+	border: 1px solid #999;
+	width: 70px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}
+#calculator_malts .c_malt_amount span {
+	display: inline-block;
+	font-size: 13px;
+	text-align: right;
+	margin-right: 5px;
+	width: 50px;
+}
+#th_malt_amount {
+	width: 130px;
+}
+#calculator_malts select{
+	height: 30px;
+	border: 1px solid #999;
+	width: 100px;
+	padding: 2px;
+	background-color: #fff;
+}
+#th_malt_use {
+	width: 83px;
+}
+#th_malt_type {
+	width: 65px;
+}
+#th_malt_ppg {
+	width: 30px;
+}
+#th_malt_color {
+	width: 45px;
+}
+#th_malt_action{
+	width: 20px;
+	text-align: center !important;
+}
+#th_malt_name{
+	width: 310px;
+}
+.c_malt_type {
+	padding-left: 10px;
+	font-size: 13px;
+}
+.c_malt_ppg {
+	padding-left: 10px;
+	font-size: 13px;
+}
+.c_malt_color {
+	padding-left: 10px;
+	font-size: 13px;
+}
+.c_malt_name {
+	padding-left: 10px;
+	font-size: 13px;
+}
+#calculator_malts table tr:hover td {
+	background-color: #f9f9f9;
+}
+#calculator_malts a.add_new {
+	display: block;
+	float: right;
+	font-size: 14px;
+	line-height: 30px;
+}
+#calculator_hops a.add_new {
+	display: block;
+	float: right;
+	font-size: 14px;
+	line-height: 30px;
+}
+#calculator_yeasts a.add_new {
+	display: block;
+	float: right;
+	font-size: 14px;
+	line-height: 30px;
+}
+#calculator_others a.add_new {
+	display: block;
+	float: right;
+	font-size: 14px;
+	line-height: 30px;
+}
+#calculator_steps a.add_new {
+	display: block;
+	float: right;
+	font-size: 14px;
+	line-height: 30px;
+}
+div.add_new {
+	border-top: 1px solid #ccc;
+}
+.c_malt_color div {
+	width: 8px;
+	height: 9px;
+	float: left;
+	margin-top: 4px;
+	margin-right: 5px;
+}
+.c_malt_actions a {
+	display: block;
+	width: 16px;
+	height: 16px;
+	background-image: url("/public/images/action_delete.png");
+	margin: auto;
+	opacity: 0.7;
+}
+.c_malt_actions a:hover {
+	opacity: 1;
+}
+
+
+#calculator_hops th {
+	padding: 10px;
+	text-align: left;
+	background-color: #f3f3f3;
+	font-size: 13px;
+}
+#calculator_hops .c_hop_time input[type="text"] {
+	border: 1px solid #999;
+	width: 58px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}
+#calculator_hops .c_hop_amount input[type="text"] {
+	border: 1px solid #999;
+	width: 47px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}
+#calculator_hops .c_hop_alpha input[type="text"] {
+	border: 1px solid #999;
+	width: 50px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}
+#th_hop_time {
+	width: 58px;
+}
+#th_hop_amount {
+	width: 47px;
+}
+#th_hop_alpha{
+	width: 50px;
+}
+#calculator_hops .c_hop_form select{
+	height: 30px;
+	border: 1px solid #999;
+	width: 85px;
+	padding: 2px;
+	background-color: #fff;
+}
+#th_hop_form {
+	width: 67px;
+}
+#th_hop_action{
+	width: 20px;
+	text-align: center !important;
+}
+.c_hop_actions a {
+	display: block;
+	width: 16px;
+	height: 16px;
+	background-image: url("/public/images/action_delete.png");
+	margin: auto;
+	opacity: 0.7;
+}
+.c_hop_actions a:hover {
+	opacity: 1;
+}
+#calculator_hops .c_hop_use select{
+	height: 30px;
+	border: 1px solid #999;
+	width: 190px;
+	padding: 2px;
+	background-color: #fff;
+}
+#th_hop_name {
+	width: 268px;
+}
+.c_hop_name {
+	padding-left: 10px;
+	font-size: 13px;
+}
+#th_hop_use {
+	width: 172px;
+}
+
+
+#calculator_yeasts th {
+	padding: 10px;
+	text-align: left;
+	background-color: #f3f3f3;
+	font-size: 13px;
+}
+#calculator_yeasts .c_yeast_attenuation input[type="text"] {
+	border: 1px solid #999;
+	width: 70px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}
+#th_yeast_attenuation {
+	width: 70px;
+}
+.c_yeast_actions a {
+	display: block;
+	width: 16px;
+	height: 16px;
+	background-image: url("/public/images/action_delete.png");
+	margin: auto;
+	opacity: 0.7;
+}
+.c_yeast_actions a:hover {
+	opacity: 1;
+}
+#th_yeast_action{
+	width: 20px;
+	text-align: center !important;
+}
+.c_yeast_name {
+	padding-left: 10px;
+	font-size: 13px;
+}
+#th_yeast_name {
+	width: 680px;
+}
+#calculator_others th {
+	padding: 10px;
+	text-align: left;
+	background-color: #f3f3f3;
+	font-size: 13px;
+}
+.c_other_actions a {
+	display: block;
+	width: 16px;
+	height: 16px;
+	background-image: url("/public/images/action_delete.png");
+	margin: auto;
+	opacity: 0.7;
+}
+.c_other_actions a:hover {
+	opacity: 1;
+}
+#th_other_action{
+	width: 20px;
+	text-align: center !important;
+}
+#calculator_others .c_other_amount input[type="text"] {
+	border: 1px solid #999;
+	width: 47px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}
+#calculator_others .c_other_time input[type="text"] {
+	border: 1px solid #999;
+	width: 58px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}
+
+#th_other_time {
+	width: 58px;
+}
+#th_other_amount {
+	width: 47px;
+}
+#calculator_others .c_other_use select{
+	height: 30px;
+	border: 1px solid #999;
+	width: 155px;
+	padding: 2px;
+	background-color: #fff;
+}
+#th_other_use {
+	width: 137px;
+}
+.c_other_name {
+	padding-left: 10px;
+	font-size: 13px;
+}
+#th_other_name {
+	width: 464px;
+}
+
+#calculator_steps th {
+	padding: 10px;
+	text-align: left;
+	background-color: #f3f3f3;
+	font-size: 13px;
+}
+.c_step_actions a {
+	display: block;
+	width: 16px;
+	height: 16px;
+	background-image: url("/public/images/action_delete.png");
+	margin: auto;
+	opacity: 0.7;
+}
+.c_step_actions a:hover {
+	opacity: 1;
+}
+#th_step_action{
+	width: 20px;
+	text-align: center !important;
+}
+#calculator_steps .c_step_name select{
+	height: 30px;
+	border: 1px solid #999;
+	width: 235px;
+	padding: 2px;
+	background-color: #fff;
+}
+#th_step_name {
+	width: 217px;
+}
+#calculator_steps .c_step_type select{
+	height: 30px;
+	border: 1px solid #999;
+	width: 235px;
+	padding: 2px;
+	background-color: #fff;
+}
+#th_step_type {
+	width: 217px;
+}
+#calculator_steps .c_step_temperature input[type="text"] {
+	border: 1px solid #999;
+	width: 130px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}
+#calculator_steps .c_step_amount input[type="text"] {
+	border: 1px solid #999;
+	width: 60px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}
+#calculator_steps .c_step_time input[type="text"] {
+	border: 1px solid #999;
+	width: 60px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}
+#th_step_temperature {
+	width: 130px;
+}
+#th_step_time {
+	width: 60px;
+}
+#th_step_amount {
+	width: 60px;
+}
+#calculator_notes textarea {
+	border: 1px solid #999;
+	width: 820px;
+	height: 150px;
+	padding: 4px 10px 4px 6px;
+	line-height: 20px;
+}

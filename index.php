@@ -1,4 +1,4 @@
-<?
+<?php
 defined('ROOT_DIR')
     || define('ROOT_DIR',
               realpath('.'));
