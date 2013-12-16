@@ -422,6 +422,7 @@ function i_bu($ibu, $og) {
 					<div class="title"><b>Pavadinimas</b></div>
 					<div class="form"><b>Forma</b></div>
 					<div class="alpha"><span class="ttip ttip_alfa"><b>AA<br />(%)</b></span></div>
+					<div class="ibu"><span class="ttip ttip_ibu"><b>IBU</b></span></div>
 					<div class="amount_w"><b>Kiekis<br />(g)</b></div>
 					<div class="time"><b>Laikas<br />(min)</b></div>
 					<div class="use"><b>Paskirtis</b></div>
@@ -434,6 +435,7 @@ function i_bu($ibu, $og) {
 						<div class="title"><?= $hop['hop_name']; ?></div>
 						<div class="form"><?= translateform($hop['hop_form']); ?></div>
 						<div class="alpha"><?= $hop['hop_alpha']; ?></div>
+						<div class="ibu"><?= $hop['hop_ibu']; ?></div>
 						<div class="amount_w"><?= $hop['hop_weight']; ?></div>
 						<div class="time"><?= $hop['hop_time']; ?></div>
 						<div class="use"><?= translateuse($hop['hop_use']); ?></div>
@@ -446,6 +448,7 @@ function i_bu($ibu, $og) {
 					<div class="title">&nbsp;</div>
 					<div class="form">&nbsp;</div>
 					<div class="alpha">&nbsp;</div>
+					<div class="ibu">&nbsp;</div>
 					<div class="amount_w" style="border-top: 1px solid #999; padding-top: 5px;"><?= $total; ?></div>
 					<div class="time">&nbsp;</div>
 					<div class="use">&nbsp;</div>
