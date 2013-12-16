@@ -37,11 +37,26 @@ class Entities_Recipe {
 	public function getHops() {
 		if ($this->recipe_id > 0) {
 			$select = $this->db->select();
+			$select->from("beer_recipes")
+					->where("recipe_id = ?", $this->recipe_id);
+			$result = $this->db->fetchRow($select);
+			$liters = $result['recipe_batch'];
+			$gravity = $result['recipe_sg'];
+
+			$select = $this->db->select();
 			$select->from("beer_recipes_hops")
 					->where("recipe_id = ?", $this->recipe_id)
 					->order("hop_time DESC")
 					->order("hop_name ASC");
-			return $this->db->fetchAll($select);
+			$result = $this->db->fetchAll($select);
+			$gallons = $liters * 0.264172052;
+			foreach ($result as $k=>$v){
+				$ibu = 0;
+				$util = (1.65 * pow(0.000125, $gravity - 1)) * ((1 - exp(-0.04 * $v['hop_time'])) / 4.15);
+				$ibu = $util * ($v['hop_weight'] * 0.0352739619 * ($v['hop_alpha'] / 100) * 7490) / $gallons;
+				$result[$k]['hop_ibu'] = number_format($ibu, 1);
+			}
+			return $result;
 		}
 	}
 
