@@ -644,9 +644,13 @@ ul#topmenu li a:hover {
 	float: left;
 	width: 60px;
 }
+.hop_item .ibu {
+	float: left;
+	width: 40px;
+}
 .hop_item .use {
 	float: left;
-	width: 150px;
+	width: 110px;
 }
 .malt_item .color,
 .yeast_item .amount,
