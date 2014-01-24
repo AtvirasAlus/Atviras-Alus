@@ -30,6 +30,10 @@
 						$author = "<b>Ponasniekas</b> bloge";
 					} else if (strpos($item['rss_link'], "http://www.petrashka.lt") !== false){-
 						$author = "<b>Petráshka</b> bloge";
+					} else if (strpos($item['rss_link'], "http://www.apiealu.lt") !== false){-
+						$author = "<b>ApieAlu.lt</b> svetainėje";
+					} else if (strpos($item['rss_link'], "http://beer.lucky.lt") !== false){-
+						$author = "<b>beer.lucky.lt</b> svetainėje";
 					}
 					?>
 					<?=$author; ?> patalpintas naujas įrašas<a href="<?=$item['rss_link']?>">
